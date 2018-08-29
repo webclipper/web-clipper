@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "removeComments": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "inlineSources": true,
+    "jsx": "react"
+  }
+}

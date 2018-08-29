@@ -1,0 +1,42 @@
+{
+  "manifest_version": 2,
+  "name": "语雀剪藏",
+  "description": "非官语雀客户端",
+  "version": "0.0.1",
+  "icons": {
+    "16": "yuque-16.png",
+    "48": "yuque-48.png",
+    "128": "yuque-128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "yuque-19.png",
+      "38": "yuque-38.png"
+    },
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/vendor.js",
+        "js/content_script.js"
+      ]
+    }
+  ],
+  "background": {
+    "scripts": [
+      "js/vendor.js",
+      "js/background.js"
+    ]
+  },
+  "permissions": [
+    "cookies",
+    "tabs",
+    "storage",
+    "contextMenus",
+    "<all_urls>"
+  ]
+}

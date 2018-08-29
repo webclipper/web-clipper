@@ -1,0 +1,46 @@
+{
+  "name": "yuque-web-clipper",
+  "version": "0.0.1",
+  "description": "非官语雀客户端",
+  "scripts": {
+    "dev": "webpack --config webpack/webpack.dev.js --watch",
+    "build": "webpack --config webpack/webpack.prod.js",
+    "lint": "eslint --ext .js webpack && tslint --project tsconfig.json"
+  },
+  "author": "Diamondyuan",
+  "license": "MIT",
+  "dependencies": {
+    "antd": "^3.8.4",
+    "axios": "^0.18.0",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.10",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.72",
+    "@types/jquery": "^3.3.6",
+    "@types/lodash": "^4.14.116",
+    "@types/react": "^16.4.12",
+    "@types/react-dom": "^16.0.7",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^1.0.0",
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-html": "^4.0.5",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.22.1",
+    "ts-loader": "^4.5.0",
+    "tslint": "^5.11.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.0.1",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-merge": "^4.1.4"
+  }
+}
