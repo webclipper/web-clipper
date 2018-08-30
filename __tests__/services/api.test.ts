@@ -19,4 +19,9 @@ describe('测试语雀接口', () => {
         const 用户信息 = await 语雀接口.userService.getUser();
         expect(用户信息).toEqual(测试用户);
     });
+
+    test('测试获取仓库', async () => {
+        const 仓库列表 = await 语雀接口.reposService.getUserRepos('yuquewebclipper');
+        expect(仓库列表.length).toBeGreaterThanOrEqual(2);
+    });
 });
