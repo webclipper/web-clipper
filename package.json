@@ -3,11 +3,17 @@
     "version": "0.0.1",
     "description": "非官语雀客户端",
     "scripts": {
+        "commit": "git-cz",
         "dist": "tsc",
         "test": "jest --verbose",
         "dev": "webpack --config webpack/webpack.dev.js --watch",
         "build": "webpack --config webpack/webpack.prod.js",
         "lint": "eslint --ext .js,.vue --ignore-pattern bad.* . && tslint --project tsconfig.json"
+    },
+    "config": {
+        "commitizen": {
+            "path": "node_modules/cz-conventional-changelog"
+        }
     },
     "author": "Diamondyuan",
     "license": "MIT",
@@ -30,8 +36,10 @@
         "@types/request-promise-native": "^1.0.15",
         "babel-eslint": "^9.0.0",
         "clean-webpack-plugin": "^0.1.19",
+        "commitizen": "^2.10.1",
         "copy-webpack-plugin": "^4.5.2",
         "css-loader": "^1.0.0",
+        "cz-conventional-changelog": "^2.1.0",
         "eslint": "^5.4.0",
         "eslint-config-airbnb": "^17.1.0",
         "eslint-config-alloy": "^1.4.2",
