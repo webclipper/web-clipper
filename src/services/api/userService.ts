@@ -33,6 +33,4 @@ export class UserServiceImpl implements UserService {
                 return Promise.reject(err);
             });
     }
-
-
 }

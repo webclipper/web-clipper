@@ -1,7 +1,9 @@
 
 import axios from 'axios';
-import { UserService, UserServiceImpl } from './users';
+import { UserService, UserServiceImpl } from './userService';
 import { ReposService, ReposServiceImpl } from './reposService';
+import { DocumentService, DocumentServiceImpl } from './documentService';
+
 
 export interface YuqueConfigServer {
     baseURL: string;
@@ -12,6 +14,8 @@ export default class YuqueApi {
 
     public userService: UserService;
     public reposService: ReposService;
+    public documentService: DocumentService;
+
 
     constructor(config: YuqueConfigServer) {
         const request = axios.create({
@@ -29,5 +33,6 @@ export default class YuqueApi {
 
         this.userService = new UserServiceImpl(request);
         this.reposService = new ReposServiceImpl(request);
+        this.documentService = new DocumentServiceImpl(request);
     }
 }
