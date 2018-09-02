@@ -4,7 +4,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
-        popup: path.join(__dirname, '../src/popup/index.tsx'),
+        popup: path.join(__dirname, '../src/pages/popup/index.tsx'),
+        initialize: path.join(__dirname, '../src/pages/initialize/index.tsx'),
         background: path.join(__dirname, '../src/background/index.ts'),
         content_script: path.join(__dirname, '../src/content/index.tsx')
     },
@@ -57,7 +58,7 @@ module.exports = {
                 ignore: ['.*']
             },
             {
-                from: path.resolve(__dirname, '../index.html'),
+                from: path.resolve(__dirname, '../src/html/'),
                 to: path.resolve(__dirname, '../dist'),
                 ignore: ['.*']
             }

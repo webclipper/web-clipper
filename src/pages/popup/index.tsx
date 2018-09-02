@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import './popup.scss';
 
-import { testStorageInChrome } from '../services/common/store/test';
+import './style/index.scss';
+import { testStorageInChrome } from '../../services/common/store/test';
 
 testStorageInChrome().then((_) => {
     console.log('storage is ok in content');
