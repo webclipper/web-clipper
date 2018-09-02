@@ -8,11 +8,30 @@ body {
     background: white;
     text-align: center;
 }
-.initializeForm{
+.Footer{
+    text-align: center;
+}
+.form{
     background: #ffffff; 
-    padding: 24px; 
+    padding-top: 10px;
     min-height: 500px;
-    min-width: 500px;
-    margin: 100px;
+    width: 900px;
+    margin: 40px auto 0;
     padding: 20px;
+}
+.form__main{
+    margin: 40px auto 0;
+}
+.step2__card{
+    margin-bottom: 12px;
+}
+.step2__card_selected{
+    border: 1px solid blue;
+}
+
+.step__crad-textarea{
+    outline: none;
+    border: none;
+    resize:none;
+    overflow-y:hidden;
 }

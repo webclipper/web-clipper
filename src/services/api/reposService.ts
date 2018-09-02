@@ -25,7 +25,9 @@ export interface GetUserReposQuery {
 export interface BookSerializer {
     id: number;
     type: RepoType;
+    description: string;
     name: string;
+    slug: string;
     namespace: string;
     user_id: string; // 所属的团队/用户编号
     public: RepoPublicType;

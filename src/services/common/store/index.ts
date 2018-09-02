@@ -1,8 +1,9 @@
+import { RepoPublicType } from '../../../enums';
 
 export interface CommonStorage {
-    set(key: string, value: Object): Promise<{}>;
+    set(key: string, value: any): Promise<{}>;
 
-    get(key: string): Promise<undefined | Object>;
+    get(key: string): Promise<any>;
 }
 
 
@@ -35,5 +36,30 @@ export class ChromeSyncStoregeImpl implements CommonStorage {
             });
         });
     }
-
 }
+
+
+export interface StorageUserInfo {
+    token: string;
+    baseURL: string;
+    defualtBookId?: number;
+    defualtDocumentPublic?: RepoPublicType;
+}
+
+
+
+class TypedCommonStorage {
+    store: CommonStorage
+    constructor() {
+        this.store = new ChromeSyncStoregeImpl();
+    }
+    async saveUserInfo(userInfo: StorageUserInfo) {
+        await this.store.set('userInfo', userInfo);
+    }
+    async getUserInfo(): Promise<StorageUserInfo> {
+        return this.store.get('userInfo');
+    }
+}
+
+
+export default new TypedCommonStorage();

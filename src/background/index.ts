@@ -10,7 +10,7 @@ testStorageInChrome().then((_) => {
 chrome.runtime.onInstalled.addListener(function (details) {
     if (details.reason === 'install') {
         console.log('安装成功');
-        chrome.windows.create({ url: chrome.extension.getURL('initialize.html'), type: 'normal' });
+        chrome.tabs.create({ url: chrome.extension.getURL('initialize.html') });
     } else if (details.reason === 'update') {
         console.log('更新成功');
     }

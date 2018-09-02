@@ -1,6 +1,5 @@
 import YuqueApi from '../../src/services/api/api';
 import { RepoPublicType, RepoType, DocumentPublicType } from '../../src/enums';
-import * as _ from 'lodash';
 
 //用中文写测试试试看
 describe('测试语雀接口', () => {
@@ -15,7 +14,7 @@ describe('测试语雀接口', () => {
 
     const 语雀接口 = new YuqueApi({
         baseURL: 'https://www.yuque.com/api/v2/',
-        token: 'MFq8s26HCYI8bPkP5XjptwxTgSAhhpgh2EfcggFZ',
+        token: '48B9VGXvPsEx9z5ZLhf7KYaj8CvmrV25mdHu7mQh',
     });
 
 
