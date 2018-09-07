@@ -5,3 +5,4 @@ lib/
 coverage/
 tmp/
 .DS_Store
+*.scss.d.ts

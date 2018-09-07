@@ -1,23 +1,18 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-    entry: {
-        popup: path.join(__dirname, '../src/pages/popup/index.tsx'),
-        initialize: path.join(__dirname, '../src/pages/initialize/index.tsx'),
-        background: path.join(__dirname, '../src/background/index.ts'),
-        content_script: path.join(__dirname, '../src/content/index.tsx')
-    },
+function resolve(dir) {
+    return path.join(__dirname, '..', dir);
+}
+
+const baseConfig = {
     output: {
-        path: path.join(__dirname, '../dist/js'),
+        path: resolve('dist/js'),
         filename: '[name].js'
-    },
-    optimization: {
-        splitChunks: {
-            name: 'vendor',
-            chunks: 'initial'
-        }
     },
     module: {
         rules: [
@@ -27,24 +22,62 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                exclude: /node_modules/,
-                test: /\.s?css$/,
+                test: /\.less$/,
                 use: [
                     {
-                        loader: 'style-loader', // Creates style nodes from JS strings
+                        loader: 'style-loader'
+                    }, {
+                        loader: 'css-loader'
+                    }, {
+                        loader: 'less-loader',
+                        options: {
+                            javascriptEnabled: true
+                        }
+                    }]
+            },
+            {
+                exclude: /node_modules/,
+                test: [/\.scss$/, /\.css$/],
+                use: [
+                    {
+                        loader: 'style-loader'
                     },
                     {
-                        loader: 'css-loader', // Translates CSS into CommonJS
+                        loader: 'typings-for-css-modules-loader',
+                        options: {
+                            modules: true,
+                            namedExport: true,
+                            camelCase: true,
+                            localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                        }
                     },
+
                     {
-                        loader: 'sass-loader', // Compiles Sass to CSS
+                        loader: 'sass-loader'
                     }
                 ]
             }
         ]
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js']
+        extensions: ['.ts', '.tsx', '.js', 'scss', 'less'],
+        alias: {
+            '@': resolve('src'),
+            'antd-style': resolve('/node_modules/antd/dist/antd.less')
+        }
+    }
+};
+
+const commonConfig = merge(baseConfig, {
+    entry: {
+        initialize: resolve('src/pages/initialize/index.tsx'),
+        background: resolve('src/background/index.ts')
+    },
+    optimization: {
+        splitChunks: {
+            name: 'vendor',
+            chunks: 'initial'
+        }
     },
     plugins: [
         new CleanWebpackPlugin(['dist'], {
@@ -53,15 +86,26 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             {
-                from: path.resolve(__dirname, '../chrome'),
-                to: path.resolve(__dirname, '../dist'),
-                ignore: ['.*']
-            },
-            {
-                from: path.resolve(__dirname, '../src/html/'),
-                to: path.resolve(__dirname, '../dist'),
+                from: resolve('chrome'),
+                to: resolve('dist'),
                 ignore: ['.*']
             }
-        ])
+        ]),
+        new HtmlWebpackPlugin({
+            title: '语雀剪藏向导',
+            filename: '../initialize.html',
+            chunks: ['initialize', 'vendor']
+        })
     ]
-};
+});
+
+const resetAntdConfig = merge(baseConfig, {
+    entry: {
+        content_script: resolve('src/content/index.tsx')
+    },
+    plugins: [
+        new webpack.NormalModuleReplacementPlugin(/node_modules\/antd\/dist\/antd\.less/, resolve('src/content/antd-reset.less'))
+    ]
+});
+
+module.exports = [commonConfig, resetAntdConfig];

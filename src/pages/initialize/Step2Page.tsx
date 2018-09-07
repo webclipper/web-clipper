@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Button, Row, Col, Card } from 'antd';
 import { BookSerializer } from '../../services/api/reposService';
+import * as styles from './style/step2.scss';
 
 interface Step2PageProps {
     bookList: BookSerializer[];
@@ -35,19 +36,19 @@ class Step2Page extends React.Component<Step2PageProps, Step2State> {
     buttonText = () => {
         return this.state.value === -1 ? '自动创建' : '下一步';
     }
+    cardStatus = (id: number) => {
+        return id === this.state.value ? styles.card__selected : '';
+    }
 
     render() {
-
-
-
         return (
             <div>
                 <Row gutter={16}>
                     {this.props.bookList.map(o =>
                         <Col key={o.id} span={8}>
                             <Card bordered={true} onClick={() => { this.onRadioChange(o.id) }}
-                                title={o.name} className={`step2__card  ${this.state.value === o.id ? 'step2__card_selected' : ''}`} >
-                                <textarea rows={4} readOnly={true} value={o.description} className="step__crad-textarea">
+                                title={o.name} className={`${styles.card} ${this.cardStatus(o.id)}`}>
+                                <textarea rows={4} readOnly={true} value={o.description} className={styles.cradTextarea}>
                                 </textarea>
                             </Card>
                         </Col>

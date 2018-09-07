@@ -12,8 +12,7 @@
         "default_icon": {
             "19": "icons/yuque-19.png",
             "38": "icons/yuque-38.png"
-        },
-        "default_popup": "index.html"
+        }
     },
     "content_scripts": [
         {
@@ -21,7 +20,6 @@
                 "<all_urls>"
             ],
             "js": [
-                "js/vendor.js",
                 "js/content_script.js"
             ]
         }

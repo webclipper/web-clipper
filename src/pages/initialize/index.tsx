@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Layout, Steps, message, Spin } from 'antd';
+import 'antd-style';
 import YuqueApi from '../../services/api/api';
 import store from '../../services/common/store';
 import Step1Page, { Step1PageValue } from './Step1Page';
@@ -10,8 +11,9 @@ import { BookSerializer } from '../../services/api/reposService';
 import { UserProfile } from '../../services/api/userService';
 import Step3Page from './Step3Page';
 import * as dayjs from 'dayjs';
-import './style/index.scss';
+import * as styles from './style/index.scss';
 import { UUID } from '../../services/utils/uuid';
+
 
 const { Header, Content, Footer } = Layout;
 const Step = Steps.Step;
@@ -192,22 +194,22 @@ class App extends React.Component<{}, AppState> {
         const { current } = this.state;
         return (
             <Layout>
-                <Header className="Header">
+                <Header className={styles.header}>
                     <p>语雀 剪藏 保存精彩网页</p>
                 </Header>
                 <Content>
                     <Spin spinning={this.state.contentLoading}>
-                        <div className="form" >
+                        <div className={styles.form} >
                             <Steps current={current}>
                                 {this.steps().map(item => <Step key={item.title} title={item.title} />)}
                             </Steps>
-                            <div className="form__main">
+                            <div className={styles.formMain}>
                                 {this.steps()[current].content}
                             </div>
                         </div>
                     </Spin>
                 </Content>
-                <Footer className="Footer">
+                <Footer className={styles.footer}>
                     语雀 剪藏 ©2018 Created by <a href="https://github.com/DiamondYuan" target="_blank">DiamondYuan</a>
                 </Footer>
             </Layout >
@@ -218,6 +220,11 @@ class App extends React.Component<{}, AppState> {
 
 
 chrome.tabs.query({ active: true, currentWindow: true }, async () => {
+    if (document.getElementById('initializeWindow') == null) {
+        const element = document.createElement('div');
+        element.setAttribute('id', 'initializeWindow');
+        document.body.appendChild(element);
+    }
     ReactDOM.render(<App />,
         document.getElementById('initializeWindow')
     );

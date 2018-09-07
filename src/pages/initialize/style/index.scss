@@ -1,14 +1,8 @@
-@import '../../../styles/global.scss';
-
-body {
-  width: 100%;
-  height: 100%;
-}
-.Header{
+.header{
     background: white;
     text-align: center;
 }
-.Footer{
+.footer{
     text-align: center;
 }
 .form{
@@ -19,19 +13,6 @@ body {
     margin: 40px auto 0;
     padding: 20px;
 }
-.form__main{
+.form-main{
     margin: 40px auto 0;
-}
-.step2__card{
-    margin-bottom: 12px;
-}
-.step2__card_selected{
-    border: 1px solid blue;
-}
-
-.step__crad-textarea{
-    outline: none;
-    border: none;
-    resize:none;
-    overflow-y:hidden;
 }

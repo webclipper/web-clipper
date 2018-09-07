@@ -1,0 +1,14 @@
+.card{
+    margin-bottom: 12px;
+}
+
+.crad-textarea{
+    outline: none;
+    border: none;
+    resize:none;
+    overflow-y:hidden;
+}
+
+.card__selected{
+    border: 1px solid blue;
+}
