@@ -65,7 +65,13 @@ const baseConfig = {
             '@': resolve('src'),
             'antd-style': resolve('/node_modules/antd/dist/antd.less')
         }
-    }
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+        })
+    ]
 };
 
 const commonConfig = merge(baseConfig, {
@@ -99,6 +105,7 @@ const commonConfig = merge(baseConfig, {
     ]
 });
 
+// 主要还是为了 antd 的样式不影响到其他页面。
 const resetAntdConfig = merge(baseConfig, {
     entry: {
         content_script: resolve('src/content/index.tsx')
