@@ -1,13 +1,5 @@
-
-import { testStorageInChrome } from '../services/common/store/test';
 import { ActionMessage } from '../model/Message';
 import { ActionMessageType } from '../enums';
-
-testStorageInChrome().then((_) => {
-    console.log('storage is ok in content');
-}).catch((err: Error) => {
-    console.log(err.message);
-});
 
 chrome.runtime.onInstalled.addListener(function (details) {
     if (details.reason === 'install') {
@@ -17,7 +9,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
         console.log('Update Success');
     }
 });
-
 
 
 async function tabStatus(tabId: number): Promise<any> {
@@ -34,12 +25,13 @@ async function tabStatus(tabId: number): Promise<any> {
     });
 }
 
-
-
 chrome.browserAction.onClicked.addListener(async (tab: any) => {
     if (!await tabStatus(tab.id)) {
-        //todo 发消息提醒
-        console.log('tab is not prepare');
+        //Todo 发消息提醒
         return;
     }
+    const massage: ActionMessage = {
+        action: ActionMessageType.ICON_CLICK,
+    };
+    chrome.tabs.sendMessage(tab.id, massage);
 });

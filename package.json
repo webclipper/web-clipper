@@ -6,7 +6,7 @@
         "commit": "git-cz",
         "dist": "tsc",
         "test": "jest --verbose",
-        "dev": "webpack --config webpack/webpack.dev.js --watch",
+        "dev": "NODE_ENV=development webpack --config webpack/webpack.dev.js --watch",
         "build": "webpack --config webpack/webpack.prod.js",
         "lint": "eslint --ext .js,.vue --ignore-pattern bad.* ."
     },
@@ -62,6 +62,7 @@
         "typescript-eslint-parser": "^18.0.0",
         "typings-for-css-modules-loader": "^1.7.0",
         "webpack": "^4.17.1",
+        "webpack-chrome-extension-reloader": "^0.8.3",
         "webpack-cli": "^3.1.0",
         "webpack-merge": "^4.1.4"
     }
