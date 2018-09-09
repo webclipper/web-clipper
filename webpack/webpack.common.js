@@ -6,7 +6,6 @@ const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackChromeReloaderPlugin = require('webpack-chrome-extension-reloader');
 
-
 function resolve(dir) {
     return path.join(__dirname, '..', dir);
 }
@@ -70,6 +69,7 @@ const baseConfig = {
     },
     plugins: [
         process.env.NODE_ENV === 'development' ? new WebpackChromeReloaderPlugin({
+            reloadPage: false,
             entries: {
                 contentScript: 'content_script',
                 background: 'background'
@@ -122,7 +122,5 @@ const resetAntdConfig = merge(baseConfig, {
         new webpack.NormalModuleReplacementPlugin(/node_modules\/antd\/dist\/antd\.less/, resolve('src/content/antd-reset.less'))
     ]
 });
-
-
 
 module.exports = [commonConfig, resetAntdConfig];
