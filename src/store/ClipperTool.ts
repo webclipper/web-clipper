@@ -98,4 +98,8 @@ export class ToolStore {
         });
     }
 
+    onClosePage = () => {
+        $(`#${this.elementId}`).toggle();
+    }
+
 }
