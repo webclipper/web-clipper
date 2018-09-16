@@ -27,11 +27,19 @@ async function tabStatus(tabId: number): Promise<any> {
 
 chrome.browserAction.onClicked.addListener(async (tab: any) => {
     if (!await tabStatus(tab.id)) {
-        //Todo 发消息提醒
+        alert('暂时无法剪辑此类型的页面。要不刷新试试看？');
         return;
     }
     const massage: ActionMessage = {
         action: ActionMessageType.ICON_CLICK,
     };
     chrome.tabs.sendMessage(tab.id, massage);
+});
+
+
+chrome.runtime.onMessage.addListener(async (message: ActionMessage, _, __) => {
+    if (!message.action || message.action !== ActionMessageType.GO_TO_SETTINGS) {
+        return;
+    }
+    chrome.tabs.create({ url: chrome.extension.getURL('initialize.html') });
 });

@@ -1,11 +1,11 @@
-#container {
+.clipperToolContainer {
     position: fixed;
     top: 0px;
     right: 0px;
     bottom: initial;
     left: initial;
     width: 324px;
-    height: 597px;
+    height: auto;
     border: 0px;
     z-index: 2147483646;
     display: block !important;
@@ -13,51 +13,4 @@
     border: 2px solid #DDDDDD;
     margin: 12px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 12px 0px;
-
-    .close-button{
-        position: absolute;
-        right: 16px;
-        top: 16px;
-        z-index: 1;
-    }
-
-    .content{
-        padding-left: 16px;
-        padding-right: 16px;
-        padding-bottom: 18px;
-    }
-    
-    .section{
-        padding-top: 16px;
-    }
-    .section-title{
-        text-align: left;
-        color: rgba(0, 0, 0, 0.45);
-        font-size: 14px;
-        line-height: 1.5;
-        margin: 0 0 8px 0;
-    }
-    
-    .menu-button{
-        text-align: left;
-        border: none;
-    }
-    
-    .toolbar{
-        font-size: 18px ;
-        display: flex ;
-        justify-content: space-between ; 
-    }
-    .toolbar-button{
-        border: none ;
-        columns: #E8E8E8 ;
-        font-size: 18px;
-    }
-    
-    .section-line{
-        border-top: 1px solid #E8E8E8;
-        margin-top: 24px;
-        padding-top: 16px;
-    }
-    
 }

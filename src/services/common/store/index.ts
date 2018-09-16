@@ -1,5 +1,7 @@
 import { RepoPublicType } from '../../../enums';
 
+
+
 export interface CommonStorage {
     set(key: string, value: any): Promise<{}>;
 
@@ -57,6 +59,9 @@ class TypedCommonStorage {
         await this.store.set('userInfo', userInfo);
     }
     async getUserInfo(): Promise<StorageUserInfo> {
+        return this.store.get('userInfo');
+    }
+    async getUserSetting(): Promise<StorageUserInfo> {
         return this.store.get('userInfo');
     }
 }

@@ -8,6 +8,7 @@
         "__tests__/**/*"
     ],
     "compilerOptions": {
+        "experimentalDecorators": true,
         "target": "es5",
         "module": "commonjs",
         "declaration": true,

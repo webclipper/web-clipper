@@ -4,6 +4,7 @@ export interface UserProfile {
     id: number;
     avatar_url: string;
     name: string;
+    login: string;
 }
 
 export interface UserService {
@@ -27,6 +28,7 @@ export class UserServiceImpl implements UserService {
                     avatar_url: result.data.avatar_url,
                     id: result.data.id,
                     name: result.data.name,
+                    login: result.data.login
                 });
             })
             .catch((err) => {

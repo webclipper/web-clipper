@@ -6,6 +6,7 @@ describe('测试语雀接口', () => {
 
     // 不要担心 这是小号测试号 为了方便先写代码里了
     const 测试用户 = {
+        login: 'yuquewebclipper',
         name: 'yuque-web-clipper',
         id: 165510,
         avatar_url: 'https://gw.alipayobjects.com/zos/rmsportal/wYnHWSXDmBhiEmuwXsym.png'
