@@ -4,25 +4,25 @@ import 'antd-style';
 import * as styles from './index.scss';
 import { UserProfile } from '../../services/api/userService';
 import { BookSerializer } from '../../services/api/reposService';
-
-
+import { ClipperPreiviewDataTypeEnum } from '../../enums';
 
 export interface ClipperToolPorps {
     title: string;
     submitting: boolean;
+    clipperPreiviewDataType: ClipperPreiviewDataTypeEnum;
     books: BookSerializer[];
     userProfile: UserProfile;
-    defaultBookId: number;
+    book: BookSerializer;
     userHomePage: string;
     onSetBookId: (input: number) => void;
     onPostNote: () => void;
     onChangeTitle: (input: string) => void;
     onDeleteElement: () => void;
     onGoToSetting: () => void;
+    onClipperUrl: () => void;
 }
 
 const Option = Select.Option;
-
 
 class ClipperTool extends React.Component<ClipperToolPorps> {
 
@@ -34,12 +34,15 @@ class ClipperTool extends React.Component<ClipperToolPorps> {
         this.props.onSetBookId(select);
     }
 
-
-
     onFilterOption = (select: any, option: React.ReactElement<any>) => {
         const title: string = option.props.children;
         return title.indexOf(select) !== -1;
     }
+
+    saveButtondisabled = () => {
+        return !this.props.clipperPreiviewDataType;
+    }
+
 
     render() {
         return (
@@ -47,7 +50,7 @@ class ClipperTool extends React.Component<ClipperToolPorps> {
                 <section className={styles.section}>
                     <h1 className={styles.sectionTitle}>笔记标题</h1>
                     <Input defaultValue={this.props.title} onChange={this.onTitleChange} ></Input>
-                    <Button loading={this.props.submitting} style={{ marginTop: 16 }} size="large" type="primary" block onClick={this.props.onPostNote}>保存内容</Button>
+                    <Button disabled={this.saveButtondisabled()} loading={this.props.submitting} style={{ marginTop: 16 }} size="large" type="primary" block onClick={this.props.onPostNote}>保存内容</Button>
                 </section>
                 <section className={`${styles.section} ${styles.sectionLine}`}>
                     <h1 className={styles.sectionTitle}>小工具</h1>
@@ -55,12 +58,10 @@ class ClipperTool extends React.Component<ClipperToolPorps> {
                 </section>
                 <section className={`${styles.section} ${styles.sectionLine}`}>
                     <h1 className={styles.sectionTitle}>剪藏格式</h1>
-                    <Button block className={styles.menuButton} ><Icon type="copy" />网页链接</Button>
-                    <Button block className={styles.menuButton} ><Icon type="copy" />手动选择</Button>
+                    <Button block className={styles.menuButton} onClick={this.props.onClipperUrl}><Icon type="copy" />网页链接</Button>
                 </section>
                 <section className={styles.section}>
                     <h1 className={styles.sectionTitle}>保存的知识库</h1>
-
                     <Select
                         onSelect={this.onBookSelect}
                         style={{ width: '100%' }}
@@ -68,7 +69,7 @@ class ClipperTool extends React.Component<ClipperToolPorps> {
                         optionFilterProp="children"
                         filterOption={this.onFilterOption}
                         getPopupContainer={() => { return document.getElementById(styles.mainTool)! }}
-                        defaultValue={this.props.defaultBookId}
+                        defaultValue={this.props.book.id}
                         dropdownMatchSelectWidth={true}
                     >
                         {this.props.books.map(o => { return <Option key={o.id} value={o.id}>{o.name}</Option> })}

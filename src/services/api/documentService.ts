@@ -1,6 +1,7 @@
 import { AxiosInstance } from 'axios';
 import * as qs from 'qs';
 import { DocumentPublicType } from '../../enums';
+import { UUID } from '../utils/uuid';
 
 export interface DocumentDetail {
     id: number;
@@ -16,8 +17,8 @@ export interface DocumentDetail {
 
 export interface PostDocRequest {
     title: string;
-    slug: string;
-    public: DocumentPublicType;
+    slug?: string;
+    public?: DocumentPublicType;
     body: string;
 }
 
@@ -68,6 +69,14 @@ export class DocumentServiceImpl implements DocumentService {
 
 
     public async createDocument(repoIdentity: string | number, postDocRequest: PostDocRequest) {
+        if (postDocRequest) {
+            if (!postDocRequest.slug) {
+                postDocRequest.slug = UUID.UUID();
+            }
+            if (!postDocRequest.public) {
+                postDocRequest.public = DocumentPublicType.PRIVATE;
+            }
+        }
         return this.request.post(`/repos/${repoIdentity}/docs`, qs.stringify(postDocRequest))
             .then((re) => {
                 return Promise.resolve(re.data);

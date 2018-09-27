@@ -12,30 +12,33 @@ import { UserProfile } from '../services/api/userService';
 import store from '../services/common/store';
 import Highlighter from '../services/common/highlight';
 import { ActionMessageType } from '../enums/actionMessageType';
+import { ClipperPreiviewDataTypeEnum } from '../enums';
+import { PostDocRequest } from '../services/api/documentService';
+import { ClipperUrlPreiviewData, ClipperPreiviewData } from './ClipperPreview';
 
 
-function sleep(time: number) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-}
 
 export class ToolStore {
 
     //是否初始化
     initialization: boolean;
     yuqueApi: YuqueApi
-    defaultBookId: number;
     //知识库列表
     books: BookSerializer[];
     //用户信息
     userProfile: UserProfile;
     userHomePage: string
+    baseHost: string
     //笔记的标题
     @observable title: string;
     @observable elementId: string;
     @observable submitting: boolean;
     @observable loading: boolean;
     @observable complate: boolean;
-    @observable bookId: number;
+    @observable book: BookSerializer;
+    @observable createdDocumentHref: string;
+    @observable clipperPreiviewDataType: ClipperPreiviewDataTypeEnum;
+    @observable clipperPreiviewDataMap: { [key: string]: ClipperPreiviewData };
 
     constructor(elementId: string) {
         this.initialization = false;
@@ -44,23 +47,31 @@ export class ToolStore {
         this.loading = true;
         this.elementId = elementId;
     }
+
+
     async init() {
         const userSetting = await store.getUserSetting();
         const prepart = !!userSetting && !!userSetting.defualtBookId && !!userSetting.baseURL && !!userSetting.token;
         if (!prepart) {
-            throw Error('语雀基础设施没设置好');
+            throw Error('语雀基础设置没设置好');
         }
-        this.defaultBookId = userSetting.defualtBookId!;
         const yuqueApi = new YuqueApi({
             baseURL: userSetting.baseURL,
             token: userSetting.token
         });
+        this.baseHost = userSetting.baseURL.replace('/api/v2/', '');
         const userProfile = await yuqueApi.userService.getUser();
         const books = await yuqueApi.reposService.getUserRepos(userProfile.id);
+        const defaultBook = books.find(o => { return o.id === userSetting.defualtBookId });
+        if (!defaultBook) {
+            throw Error('默认的知识库被删除了');
+        }
+        this.userHomePage = `${this.baseHost}/${userProfile.login}`;
         this.yuqueApi = yuqueApi;
         this.userProfile = userProfile;
         this.books = books;
-        this.userHomePage = `${userSetting.baseURL.replace('/api/v2/', '')}/${userProfile.login}`;
+        this.book = defaultBook;
+        this.clipperPreiviewDataMap = {};
         this.complateLoading();
     }
 
@@ -74,10 +85,15 @@ export class ToolStore {
     @action.bound
     async onPostNote() {
         this.submitting = true;
-        await sleep(1000);
-        console.log(this);
+        const postDocRequest: PostDocRequest = {
+            title: this.title,
+            body: this.clipperPreiviewDataMap[this.clipperPreiviewDataType].toBody()
+        };
+        const createdDocument = await this.yuqueApi.documentService.createDocument(this.book.id, postDocRequest);
         runInAction(() => {
+            this.complate = true;
             this.submitting = false;
+            this.createdDocumentHref = `${this.baseHost}/${this.book.namespace}/${createdDocument.slug}`;
         });
     }
 
@@ -88,9 +104,14 @@ export class ToolStore {
     }
 
     @action onSetBookId = (input: number) => {
-        this.bookId = input;
+        this.book = this.books.find(o => { return o.id === input })!;
     }
 
+    //剪藏URL
+    @action onClipperUrl = () => {
+        this.clipperPreiviewDataType = ClipperPreiviewDataTypeEnum.URL;
+        this.clipperPreiviewDataMap[this.clipperPreiviewDataType] = new ClipperUrlPreiviewData(window.location.href);
+    }
 
     onGoToSetting = () => {
         chrome.runtime.sendMessage({

@@ -6,6 +6,9 @@ import { Icon } from 'antd';
 import * as styles from './index.scss';
 import Loading from '../../components/loading';
 import ClipperTool from '../../components/clippertool';
+import Complate from '../../components/complate';
+
+import PreviewContent from '../../components/preview';
 
 
 
@@ -22,6 +25,10 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
         return this.props.toolState;
     }
 
+    @computed get showPreiview() {
+        return !!this.toolStore.clipperPreiviewDataType && !this.toolStore.submitting && !this.toolStore.complate && !this.toolStore.loading;
+    }
+
     render() {
         let content;
         if (this.toolStore.loading) {
@@ -29,32 +36,46 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
         } else {
             if (!this.toolStore.complate) {
                 content = <ClipperTool
-                    defaultBookId={this.toolStore.defaultBookId}
+                    clipperPreiviewDataType={this.toolStore.clipperPreiviewDataType}
+                    book={this.toolStore.book}
                     books={this.toolStore.books}
                     onGoToSetting={this.toolStore.onGoToSetting}
                     onDeleteElement={this.toolStore.onDeleteElement}
                     submitting={this.toolStore.submitting}
                     onPostNote={this.toolStore.onPostNote}
+                    onClipperUrl={this.toolStore.onClipperUrl}
                     userProfile={this.toolStore.userProfile}
                     onSetBookId={this.toolStore.onSetBookId}
                     userHomePage={this.toolStore.userHomePage}
                     onChangeTitle={this.toolStore.changeTitle}
                     title={this.toolStore.title} ></ClipperTool>;
             } else {
-                content = <p>success</p>;
+                content = <Complate href={this.toolStore.createdDocumentHref}></Complate>;
             }
         }
         return (
-            <div className={styles.clipperToolContainer}>
-                <div style={{ position: 'relative' }}>
-                    <div className={styles.closeButton} onClick={this.toolStore.onClosePage}>
-                        <Icon type="close" />
-                    </div>
-                    <div>
-                        {content}
+            <div className={styles.previewContainer}>
+                <div className={styles.clipperToolContainer}>
+                    <div style={{ position: 'relative' }}>
+                        <div className={styles.closeButton} onClick={this.toolStore.onClosePage}>
+                            <Icon type="close" />
+                        </div>
+                        <div>
+                            {content}
+                        </div>
+                        {
+                            this.showPreiview && <div className={styles.toolArea}>
+                                <div className={styles.toolAreaTitle}>
+                                    <span>书签</span>
+                                </div>
+                                <div className={styles.previewContent}>
+                                    <PreviewContent map={this.toolStore.clipperPreiviewDataMap} type={this.toolStore.clipperPreiviewDataType}></PreviewContent>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
 }
