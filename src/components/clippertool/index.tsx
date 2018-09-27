@@ -50,7 +50,7 @@ class ClipperTool extends React.Component<ClipperToolPorps> {
                 <section className={styles.section}>
                     <h1 className={styles.sectionTitle}>笔记标题</h1>
                     <Input defaultValue={this.props.title} onChange={this.onTitleChange} ></Input>
-                    <Button disabled={this.saveButtondisabled()} loading={this.props.submitting} style={{ marginTop: 16 }} size="large" type="primary" block onClick={this.props.onPostNote}>保存内容</Button>
+                    <Button className={styles.saveButton} disabled={this.saveButtondisabled()} loading={this.props.submitting} style={{ marginTop: 16 }} size="large" type="primary" block onClick={this.props.onPostNote}>保存内容</Button>
                 </section>
                 <section className={`${styles.section} ${styles.sectionLine}`}>
                     <h1 className={styles.sectionTitle}>小工具</h1>
