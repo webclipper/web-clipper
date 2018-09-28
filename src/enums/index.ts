@@ -4,8 +4,6 @@ import { StorageKeyEnum } from './storageKeyEnum';
 import { ActionMessageType } from './actionMessageType';
 import { ClipperPreiviewDataTypeEnum } from './ClipperDataTypeEnum';
 
-
-
 export {
     ClipperPreiviewDataTypeEnum,
     RepoPublicType,

@@ -33,7 +33,6 @@ export default class Highlighter {
         });
     }
 
-
     private mousemoveEvent = (event: any) => {
         if (!this.previous) {
             $(event.target).addClass(highlight_class);
@@ -43,7 +42,5 @@ export default class Highlighter {
         }
         this.previous = $(event.target);
     };
-
-
 
 }

@@ -29,7 +29,6 @@ export interface UpdateDocRequest {
     body: string;
 }
 
-
 export interface DocumentService {
     getDocumentsList(repoIdentity: string | number): Promise<DocumentDetail[]>;
 
@@ -67,7 +66,6 @@ export class DocumentServiceImpl implements DocumentService {
             });
     }
 
-
     public async createDocument(repoIdentity: string | number, postDocRequest: PostDocRequest) {
         if (postDocRequest) {
             if (!postDocRequest.slug) {
@@ -102,6 +100,5 @@ export class DocumentServiceImpl implements DocumentService {
                 return Promise.reject(err);
             });
     }
-
 
 }

@@ -6,14 +6,12 @@ import 'antd-style';
 import ClipperToolContainer from '../pages/clippertool';
 import { ToolStore } from '../store/ClipperTool';
 
-
 chrome.runtime.onMessage.addListener((message: ActionMessage, _, sendResponse) => {
     if (!message.action || message.action !== ActionMessageType.DO_YOU_ALIVE_NOW) {
         return;
     }
     sendResponse(true);
 });
-
 
 //用来存放之后全部的内容
 

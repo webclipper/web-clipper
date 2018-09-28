@@ -33,8 +33,6 @@ export interface BookSerializer {
     public: RepoPublicType;
 }
 
-
-
 export interface CreateBookResponse {
     id: number;
     type: RepoType;
@@ -43,7 +41,6 @@ export interface CreateBookResponse {
     user_id: string; // 所属的团队/用户编号
     public: RepoPublicType;
 }
-
 
 export interface ReposService {
     createUsersRepos(
@@ -56,7 +53,6 @@ export interface ReposService {
 
     deleteRepos(repoIdentity: string | number): Promise<any>;
 }
-
 
 export class ReposServiceImpl implements ReposService {
     private request: AxiosInstance;
@@ -81,7 +77,6 @@ export class ReposServiceImpl implements ReposService {
         });
     }
 
-
     public async getUserRepos(userIdentity: string | number, query: GetUserReposQuery): Promise<BookSerializer[]> {
         return this.request.get(`/users/${userIdentity}/repos?${qs.stringify(query)}`).then(
             re => {
@@ -94,7 +89,6 @@ export class ReposServiceImpl implements ReposService {
             return Promise.reject(err);
         });
     }
-
 
     public async getRepoDetails(repoIdentity: string | number): Promise<BookSerializer> {
         return this.request.get(`/repos/${repoIdentity}`).then(

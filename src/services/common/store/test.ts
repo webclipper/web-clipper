@@ -2,7 +2,6 @@ import { ChromeSyncStoregeImpl } from './index';
 import { StorageKeyEnum } from '../../../enums';
 import * as _ from 'lodash';
 
-
 async function testStorageInChrome(): Promise<void> {
     const storage = new ChromeSyncStoregeImpl();
     //测试储存数字

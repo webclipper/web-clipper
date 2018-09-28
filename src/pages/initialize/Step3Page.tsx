@@ -3,8 +3,6 @@ import { Row, Col, Avatar, Button } from 'antd';
 import { BookSerializer } from '../../services/api/reposService';
 import { UserProfile } from '../../services/api/userService';
 
-
-
 interface Step3PageProps {
     defaultRepos: BookSerializer;
     userInfo: UserProfile;

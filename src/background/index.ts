@@ -10,7 +10,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
     }
 });
 
-
 async function tabStatus(tabId: number): Promise<any> {
     return new Promise((resolve, _) => {
         const massage: ActionMessage = {
@@ -35,7 +34,6 @@ chrome.browserAction.onClicked.addListener(async (tab: any) => {
     };
     chrome.tabs.sendMessage(tab.id, massage);
 });
-
 
 chrome.runtime.onMessage.addListener(async (message: ActionMessage, _, __) => {
     if (!message.action || message.action !== ActionMessageType.GO_TO_SETTINGS) {

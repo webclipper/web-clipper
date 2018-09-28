@@ -12,12 +12,10 @@ describe('测试语雀接口', () => {
         avatar_url: 'https://gw.alipayobjects.com/zos/rmsportal/wYnHWSXDmBhiEmuwXsym.png'
     };
 
-
     const 语雀接口 = new YuqueApi({
         baseURL: 'https://www.yuque.com/api/v2/',
         token: '48B9VGXvPsEx9z5ZLhf7KYaj8CvmrV25mdHu7mQh',
     });
-
 
     beforeEach(async () => {
         let reposList = await 语雀接口.reposService.getUserRepos(测试用户.id, {
@@ -87,7 +85,6 @@ describe('测试语雀接口', () => {
             include_membered: false
         });
         expect(总文档列表.length).toBe(repoToCreate.length);
-
 
         let 文档列表 = await 语雀接口.reposService.getUserRepos(测试用户.id, {
             type: RepoType.BOOK,
@@ -164,7 +161,6 @@ describe('测试语雀接口', () => {
             expect(创建后返回的文档.id > 0).toBe(true);
         }
 
-
         // 命名真简单
         // 测试用 repo Id 获取文档列表
         const 用ID获取的文档列表 = await 语雀接口.documentService.getDocumentsList(repoData.id);
@@ -179,8 +175,6 @@ describe('测试语雀接口', () => {
 
         const 用NameSpace获取的文档列表 = await 语雀接口.documentService.getDocumentsList(namespace);
         expect(用NameSpace获取的文档列表.length).toBe(documentToCreate.length);
-
-
 
         for (let i = 0; i < 用NameSpace获取的文档列表.length; i++) {
             const 文档 = 用NameSpace获取的文档列表[i];

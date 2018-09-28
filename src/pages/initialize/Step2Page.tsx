@@ -10,7 +10,6 @@ interface Step2PageProps {
     onStepNext(state: Step2State): void;
 }
 
-
 export interface Step2State {
     value: number;
 }

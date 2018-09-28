@@ -16,8 +16,6 @@ import { ClipperPreiviewDataTypeEnum } from '../enums';
 import { PostDocRequest } from '../services/api/documentService';
 import { ClipperUrlPreiviewData, ClipperPreiviewData, ClipperFullPagePreiviewData } from './ClipperPreview';
 
-
-
 export class ToolStore {
 
     containerId: string
@@ -48,7 +46,6 @@ export class ToolStore {
         this.loading = true;
         this.elementId = elementId;
     }
-
 
     async init(containerId: string) {
         this.containerId = containerId;

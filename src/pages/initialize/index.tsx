@@ -14,13 +14,10 @@ import * as dayjs from 'dayjs';
 import * as styles from './style/index.scss';
 import { UUID } from '../../services/utils/uuid';
 
-
 const { Header, Content, Footer } = Layout;
 const Step = Steps.Step;
 
 let yuqueApi: YuqueApi;
-
-
 
 interface AppState {
     //当前步骤
@@ -87,7 +84,6 @@ class App extends React.Component<{}, AppState> {
         });
     }
 
-
     steps = () => {
         return [
             {
@@ -107,7 +103,6 @@ class App extends React.Component<{}, AppState> {
             current: this.state.current - 1
         });
     }
-
 
     onStep1Next = async (form: Step1PageValue) => {
         this.setState({
@@ -216,8 +211,6 @@ class App extends React.Component<{}, AppState> {
         );
     }
 }
-
-
 
 chrome.tabs.query({ active: true, currentWindow: true }, async () => {
     if (document.getElementById('initializeWindow') == null) {

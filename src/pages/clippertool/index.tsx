@@ -10,13 +10,9 @@ import Complate from '../../components/complate';
 
 import PreviewContent from '../../components/preview';
 
-
-
 interface ClipperToolContainerProps {
     toolState: ToolStore;
 }
-
-
 
 @observer
 class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
@@ -72,7 +68,5 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
         );
     }
 }
-
-
 
 export default ClipperToolContainer;

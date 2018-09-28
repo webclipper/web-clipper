@@ -7,7 +7,6 @@ interface ComplateProps {
     href: string;
 }
 
-
 const Complate = (props: ComplateProps) => {
     return (<div id={styles.mainTool}>
         <section className={styles.section}>

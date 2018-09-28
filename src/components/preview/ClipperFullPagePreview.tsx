@@ -3,17 +3,13 @@ import { Input } from 'antd';
 import { ClipperFullPagePreiviewData } from '../../store/ClipperPreview';
 import * as styles from './index.scss';
 
-
-
 export interface ClipperFullPagePreiviewProps {
     data: ClipperFullPagePreiviewData;
 }
 
 const { TextArea } = Input;
 
-
 class ClipperFullPagePreiview extends React.Component<ClipperFullPagePreiviewProps> {
-
 
     onDataChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { value } = e.target;
@@ -22,8 +18,6 @@ class ClipperFullPagePreiview extends React.Component<ClipperFullPagePreiviewPro
 
     render() {
         return (
-
-
 
             <div className={styles.preview}>
                 <div className={styles.previewTitle}>
@@ -36,12 +30,8 @@ class ClipperFullPagePreiview extends React.Component<ClipperFullPagePreiviewPro
                 </div>
             </div>
 
-
-
         );
     }
 }
-
-
 
 export default ClipperFullPagePreiview;

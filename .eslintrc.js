@@ -14,7 +14,9 @@ module.exports = {
             ecmaFeatures: {
                 ts: false
             }
-        }
+        },
+        // 空行不超过一个
+        "no-multiple-empty-lines": [2, { "max": 1 }],
         // 这里填入你的项目需要的个性化配置，比如：
         //
         // // @fixable 一个缩进必须用两个空格替代

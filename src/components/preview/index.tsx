@@ -6,18 +6,13 @@ import { computed } from 'mobx';
 import { ClipperUrlPreiviewData, ClipperPreiviewData, ClipperFullPagePreiviewData } from '../../store/ClipperPreview';
 import ClipperFullPagePreiview from './ClipperFullPagePreview';
 
-
-
 interface PreviewContentProps {
     map: { [key: string]: ClipperPreiviewData };
     type: ClipperPreiviewDataTypeEnum;
 }
 
-
-
 @observer
 class PreviewContent extends React.Component<PreviewContentProps> {
-
 
     @computed get data(): ClipperPreiviewData | null {
         if (this.props.type && this.props.map) {
@@ -26,7 +21,6 @@ class PreviewContent extends React.Component<PreviewContentProps> {
         }
         return null;
     }
-
 
     render() {
 

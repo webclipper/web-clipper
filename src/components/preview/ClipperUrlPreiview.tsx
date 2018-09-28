@@ -3,8 +3,6 @@ import { Input } from 'antd';
 import { ClipperUrlPreiviewData } from '../../store/ClipperPreview';
 import * as styles from './index.scss';
 
-
-
 export interface ClipperUrlPreiviewProps {
     data: ClipperUrlPreiviewData;
 }
@@ -12,7 +10,6 @@ export interface ClipperUrlPreiviewProps {
 const { TextArea } = Input;
 
 class ClipperUrlPreiview extends React.Component<ClipperUrlPreiviewProps> {
-
 
     onHrefChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { value } = e.target;
@@ -40,7 +37,5 @@ class ClipperUrlPreiview extends React.Component<ClipperUrlPreiviewProps> {
         );
     }
 }
-
-
 
 export default ClipperUrlPreiview;

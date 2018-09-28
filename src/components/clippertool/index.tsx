@@ -43,7 +43,6 @@ class ClipperTool extends React.Component<ClipperToolPorps> {
         return !this.props.clipperPreiviewDataType;
     }
 
-
     render() {
         return (
             <div id={styles.mainTool}>
@@ -84,7 +83,5 @@ class ClipperTool extends React.Component<ClipperToolPorps> {
         );
     }
 }
-
-
 
 export default ClipperTool;

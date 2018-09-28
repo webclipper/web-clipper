@@ -4,7 +4,6 @@ import { UserService, UserServiceImpl } from './userService';
 import { ReposService, ReposServiceImpl } from './reposService';
 import { DocumentService, DocumentServiceImpl } from './documentService';
 
-
 export interface YuqueConfigServer {
     baseURL: string;
     token: string;
@@ -15,7 +14,6 @@ export default class YuqueApi {
     public userService: UserService;
     public reposService: ReposService;
     public documentService: DocumentService;
-
 
     constructor(config: YuqueConfigServer) {
         const request = axios.create({

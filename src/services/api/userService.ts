@@ -11,8 +11,6 @@ export interface UserService {
     getUser(): Promise<UserProfile>;
 }
 
-
-
 export class UserServiceImpl implements UserService {
     private request: AxiosInstance;
 

@@ -11,8 +11,6 @@ export interface ClipperPreiviewData {
     toBody(): string;
 }
 
-
-
 export class ClipperUrlPreiviewData implements ClipperPreiviewData {
 
     @observable href: string

@@ -2,8 +2,6 @@ import * as React from 'react';
 import { Form, Input, Tooltip, Icon, Button, Checkbox } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 
-
-
 const FormItem = Form.Item;
 
 interface Step1PageProps extends FormComponentProps {
@@ -15,8 +13,6 @@ export interface Step1PageValue {
     apiHost: string;
     token: string;
 }
-
-
 
 const formItemLayout = {
     labelCol: {
@@ -35,8 +31,6 @@ const tailFormItemLayout = {
         },
     },
 };
-
-
 
 class Step1Page extends React.Component<Step1PageProps & FormComponentProps> {
 
@@ -112,7 +106,5 @@ class Step1Page extends React.Component<Step1PageProps & FormComponentProps> {
         </Form>);
     }
 }
-
-
 
 export default Form.create<Step1PageProps>()(Step1Page);
