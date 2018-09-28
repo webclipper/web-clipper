@@ -20,6 +20,7 @@ import { ClipperUrlPreiviewData, ClipperPreiviewData } from './ClipperPreview';
 
 export class ToolStore {
 
+    containerId: string
     //是否初始化
     initialization: boolean;
     yuqueApi: YuqueApi
@@ -49,7 +50,8 @@ export class ToolStore {
     }
 
 
-    async init() {
+    async init(containerId: string) {
+        this.containerId = containerId;
         const userSetting = await store.getUserSetting();
         const prepart = !!userSetting && !!userSetting.defualtBookId && !!userSetting.baseURL && !!userSetting.token;
         if (!prepart) {
@@ -97,10 +99,16 @@ export class ToolStore {
         });
     }
 
-    @action onDeleteElement = () => {
-        new Highlighter().start().then(element => {
-            $(element).remove();
-        });
+    @action onDeleteElement = async () => {
+        $(`#${this.containerId}`).hide();
+        try {
+            await new Highlighter().start().then(element => {
+                $(element).remove();
+            });
+        } catch (error) {
+
+        }
+        $(`#${this.containerId}`).show();
     }
 
     @action onSetBookId = (input: number) => {

@@ -32,7 +32,7 @@ chrome.runtime.onMessage.addListener(async (message: ActionMessage, _, __) => {
                 document.getElementById(yuqueClipperToolContainerId)
             );
             $(`#${yuqueClipperToolContainerId}`).toggle();
-            await appState.init();
+            await appState.init(yuqueClipperToolContainerId);
             appState.initialization = true;
         } catch (err) {
             chrome.runtime.sendMessage({
