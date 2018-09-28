@@ -43,7 +43,7 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
                     onDeleteElement={this.toolStore.onDeleteElement}
                     submitting={this.toolStore.submitting}
                     onPostNote={this.toolStore.onPostNote}
-                    onClipperUrl={this.toolStore.onClipperUrl}
+                    onClipperData={this.toolStore.onClipperData}
                     userProfile={this.toolStore.userProfile}
                     onSetBookId={this.toolStore.onSetBookId}
                     userHomePage={this.toolStore.userHomePage}
@@ -64,14 +64,7 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
                             {content}
                         </div>
                         {
-                            this.showPreiview && <div className={styles.toolArea}>
-                                <div className={styles.toolAreaTitle}>
-                                    <span>书签</span>
-                                </div>
-                                <div className={styles.previewContent}>
-                                    <PreviewContent map={this.toolStore.clipperPreiviewDataMap} type={this.toolStore.clipperPreiviewDataType}></PreviewContent>
-                                </div>
-                            </div>
+                            this.showPreiview && <PreviewContent map={this.toolStore.clipperPreiviewDataMap} type={this.toolStore.clipperPreiviewDataType}></PreviewContent>
                         }
                     </div>
                 </div>

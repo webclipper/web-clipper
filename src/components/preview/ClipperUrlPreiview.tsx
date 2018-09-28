@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Input } from 'antd';
 import { ClipperUrlPreiviewData } from '../../store/ClipperPreview';
+import * as styles from './index.scss';
 
 
 
@@ -25,11 +26,16 @@ class ClipperUrlPreiview extends React.Component<ClipperUrlPreiviewProps> {
 
     render() {
         return (
-            <div>
-                <p>链接</p>
-                <TextArea defaultValue={this.props.data.href} autosize={{ minRows: 2, maxRows: 2 }} onChange={this.onHrefChange} />
-                <p>备注</p>
-                <TextArea autosize={{ minRows: 6, maxRows: 6 }} onChange={this.onMaskChange} />
+            <div className={styles.preview}>
+                <div className={styles.previewTitle}>
+                    <span>书签</span>
+                </div>
+                <div className={styles.previewContent}>
+                    <p>链接</p>
+                    <TextArea defaultValue={this.props.data.href} autosize={{ minRows: 2, maxRows: 2 }} onChange={this.onHrefChange} />
+                    <p>备注</p>
+                    <TextArea defaultValue={this.props.data.mark} autosize={{ minRows: 6, maxRows: 6 }} onChange={this.onMaskChange} />
+                </div>
             </div>
         );
     }

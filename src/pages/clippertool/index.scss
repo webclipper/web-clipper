@@ -20,14 +20,6 @@
     right: 16px;
     top: 10px;
 }
-.toolArea{
-    position: absolute;
-    top: 0px;
-    right: 330px;
-    width: 400px;
-    height: auto;
-    background: white;
-}
 .previewContainer{
     background-color: rgba(0,0,0,.6);
     z-index: 2147483646;
@@ -36,18 +28,4 @@
     right: 0;
     bottom: 0;
     left: 0
-}
-.toolAreaTitle{
-    color: white;
-    background: black;
-    height: 32px;
-    span{
-        padding: 10px;
-        font-size: 16px;
-        cursor: default;
-        line-height: 32px;   
-    }
-}
-.previewContent{
-    padding: 10px;
 }

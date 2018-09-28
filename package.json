@@ -8,7 +8,7 @@
         "test": "jest --verbose",
         "dev": "NODE_ENV=development webpack --config webpack/webpack.dev.js --watch",
         "build": "webpack --config webpack/webpack.prod.js",
-        "lint": "eslint --ext .js,.vue --ignore-pattern bad.* ."
+        "lint": "eslint --ext .js,.ts,.tsx --ignore-pattern bad.* ."
     },
     "config": {
         "commitizen": {
@@ -27,7 +27,8 @@
         "mobx-react": "^5.2.8",
         "qs": "^6.5.2",
         "react": "^16.4.2",
-        "react-dom": "^16.4.2"
+        "react-dom": "^16.4.2",
+        "turndown": "^5.0.1"
     },
     "devDependencies": {
         "@types/chrome": "^0.0.72",

@@ -3,7 +3,8 @@ import * as React from 'react';
 import { ClipperPreiviewDataTypeEnum } from '../../enums';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
-import { ClipperUrlPreiviewData, ClipperPreiviewData } from '../../store/ClipperPreview';
+import { ClipperUrlPreiviewData, ClipperPreiviewData, ClipperFullPagePreiviewData } from '../../store/ClipperPreview';
+import ClipperFullPagePreiview from './ClipperFullPagePreview';
 
 
 
@@ -30,14 +31,13 @@ class PreviewContent extends React.Component<PreviewContentProps> {
     render() {
 
         if (this.props.type && this.props.map) {
-            console.log('data', this.data);
-            console.log(this.data instanceof ClipperUrlPreiviewData);
             if (this.data instanceof ClipperUrlPreiviewData) {
                 return (<ClipperUrlPreiview data={this.data}></ClipperUrlPreiview>);
             }
+            if (this.data instanceof ClipperFullPagePreiviewData) {
+                return (<ClipperFullPagePreiview data={this.data}></ClipperFullPagePreiview>);
+            }
         }
-        console.log('map', this.props.map);
-        console.log('url', this.props.type);
         return (
             <p>你看到我说明你遇到了bug</p>
         );

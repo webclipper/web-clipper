@@ -19,7 +19,7 @@ export interface ClipperToolPorps {
     onChangeTitle: (input: string) => void;
     onDeleteElement: () => void;
     onGoToSetting: () => void;
-    onClipperUrl: () => void;
+    onClipperData: (type: ClipperPreiviewDataTypeEnum) => void;
 }
 
 const Option = Select.Option;
@@ -58,7 +58,8 @@ class ClipperTool extends React.Component<ClipperToolPorps> {
                 </section>
                 <section className={`${styles.section} ${styles.sectionLine}`}>
                     <h1 className={styles.sectionTitle}>剪藏格式</h1>
-                    <Button block className={styles.menuButton} onClick={this.props.onClipperUrl}><Icon type="copy" />网页链接</Button>
+                    <Button block className={styles.menuButton} onClick={() => { this.props.onClipperData(ClipperPreiviewDataTypeEnum.FULL_PAGE) }}><Icon type="copy" />整个页面</Button>
+                    <Button block className={styles.menuButton} onClick={() => { this.props.onClipperData(ClipperPreiviewDataTypeEnum.URL) }}><Icon type="copy" />网页链接</Button>
                 </section>
                 <section className={styles.section}>
                     <h1 className={styles.sectionTitle}>保存的知识库</h1>

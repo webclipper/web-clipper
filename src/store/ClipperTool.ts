@@ -14,7 +14,7 @@ import Highlighter from '../services/common/highlight';
 import { ActionMessageType } from '../enums/actionMessageType';
 import { ClipperPreiviewDataTypeEnum } from '../enums';
 import { PostDocRequest } from '../services/api/documentService';
-import { ClipperUrlPreiviewData, ClipperPreiviewData } from './ClipperPreview';
+import { ClipperUrlPreiviewData, ClipperPreiviewData, ClipperFullPagePreiviewData } from './ClipperPreview';
 
 
 
@@ -115,10 +115,25 @@ export class ToolStore {
         this.book = this.books.find(o => { return o.id === input })!;
     }
 
-    //剪藏URL
-    @action onClipperUrl = () => {
-        this.clipperPreiviewDataType = ClipperPreiviewDataTypeEnum.URL;
-        this.clipperPreiviewDataMap[this.clipperPreiviewDataType] = new ClipperUrlPreiviewData(window.location.href);
+    @action onClipperData = (type: ClipperPreiviewDataTypeEnum) => {
+        let ClipperPreiviewData = this.clipperPreiviewDataMap[type];
+        if (ClipperPreiviewData) {
+            this.clipperPreiviewDataType = type;
+            return;
+        }
+        switch (type) {
+            case ClipperPreiviewDataTypeEnum.URL:
+                ClipperPreiviewData = new ClipperUrlPreiviewData(window.location.href);
+                break;
+
+            case ClipperPreiviewDataTypeEnum.FULL_PAGE:
+                ClipperPreiviewData = new ClipperFullPagePreiviewData();
+                break;
+            default:
+                return;
+        }
+        this.clipperPreiviewDataType = type;
+        this.clipperPreiviewDataMap[type] = ClipperPreiviewData;
     }
 
     onGoToSetting = () => {

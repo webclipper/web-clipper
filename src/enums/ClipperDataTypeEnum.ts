@@ -3,5 +3,6 @@
  */
 
 export enum ClipperPreiviewDataTypeEnum {
-    URL = 'URL'
+    URL = 'URL',
+    FULL_PAGE = 'FULL_PAGE'
 }

@@ -38,7 +38,6 @@ chrome.runtime.onMessage.addListener(async (message: ActionMessage, _, __) => {
             chrome.runtime.sendMessage({
                 action: ActionMessageType.GO_TO_SETTINGS,
             });
-            console.log(err.message);
             return;
         }
     } else {
