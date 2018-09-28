@@ -1,31 +1,31 @@
 {
-    "include": [
-        "src/**/*"
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "__tests__/**/*"
+  ],
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "rootDir": "src",
+    "outDir": "lib",
+    "removeComments": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "lib": [
+      "es2015",
+      "dom"
     ],
-    "exclude": [
-        "node_modules",
-        "lib",
-        "__tests__/**/*"
-    ],
-    "compilerOptions": {
-        "experimentalDecorators": true,
-        "target": "es5",
-        "module": "commonjs",
-        "declaration": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "rootDir": "src",
-        "outDir": "lib",
-        "removeComments": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "lib": [
-            "es2015",
-            "dom"
-        ],
-        "inlineSources": true,
-        "jsx": "react"
-    }
+    "inlineSources": true,
+    "jsx": "react"
+  }
 }

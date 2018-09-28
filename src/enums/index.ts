@@ -5,10 +5,10 @@ import { ActionMessageType } from './actionMessageType';
 import { ClipperPreiviewDataTypeEnum } from './ClipperDataTypeEnum';
 
 export {
-    ClipperPreiviewDataTypeEnum,
-    RepoPublicType,
-    RepoType,
-    DocumentPublicType,
-    StorageKeyEnum,
-    ActionMessageType
+  ClipperPreiviewDataTypeEnum,
+  RepoPublicType,
+  RepoType,
+  DocumentPublicType,
+  StorageKeyEnum,
+  ActionMessageType
 };

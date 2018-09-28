@@ -1,24 +1,24 @@
 {
-    "editor.detectIndentation": false,
-    "eslint.autoFixOnSave": true,
-    "editor.formatOnSave": true,
-    "eslint.trace.server": "messages",
-    "eslint.packageManager": "yarn",
-    "tslint.enable": false,
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        {
-            "language": "typescript",
-            "autoFix": true
-        },
-        {
-            "language": "typescriptreact",
-            "autoFix": true
-        }
-    ],
-    "editor.tabSize": 4,
-    "tslint.autoFixOnSave": true,
-    "tslint.configFile": "tslint.json",
-    "files.insertFinalNewline": true
+  "editor.detectIndentation": false,
+  "eslint.autoFixOnSave": true,
+  "editor.formatOnSave": true,
+  "eslint.trace.server": "messages",
+  "eslint.packageManager": "yarn",
+  "tslint.enable": false,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "typescript",
+      "autoFix": true
+    },
+    {
+      "language": "typescriptreact",
+      "autoFix": true
+    }
+  ],
+  "editor.tabSize": 2,
+  "tslint.autoFixOnSave": true,
+  "tslint.configFile": "tslint.json",
+  "files.insertFinalNewline": true
 }

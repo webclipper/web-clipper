@@ -7,10 +7,10 @@ import ClipperToolContainer from '../pages/clippertool';
 import { ToolStore } from '../store/ClipperTool';
 
 chrome.runtime.onMessage.addListener((message: ActionMessage, _, sendResponse) => {
-    if (!message.action || message.action !== ActionMessageType.DO_YOU_ALIVE_NOW) {
-        return;
-    }
-    sendResponse(true);
+  if (!message.action || message.action !== ActionMessageType.DO_YOU_ALIVE_NOW) {
+    return;
+  }
+  sendResponse(true);
 });
 
 //用来存放之后全部的内容
@@ -21,24 +21,24 @@ $(`#${yuqueClipperToolContainerId}`).hide();
 const appState = new ToolStore(yuqueClipperToolContainerId);
 
 chrome.runtime.onMessage.addListener(async (message: ActionMessage, _, __) => {
-    if (!message.action || message.action !== ActionMessageType.ICON_CLICK) {
-        return;
+  if (!message.action || message.action !== ActionMessageType.ICON_CLICK) {
+    return;
+  }
+  if (!appState.initialization) {
+    try {
+      ReactDOM.render(<ClipperToolContainer toolState={appState} />,
+        document.getElementById(yuqueClipperToolContainerId)
+      );
+      $(`#${yuqueClipperToolContainerId}`).toggle();
+      await appState.init(yuqueClipperToolContainerId);
+      appState.initialization = true;
+    } catch (err) {
+      chrome.runtime.sendMessage({
+        action: ActionMessageType.GO_TO_SETTINGS,
+      });
+      return;
     }
-    if (!appState.initialization) {
-        try {
-            ReactDOM.render(<ClipperToolContainer toolState={appState} />,
-                document.getElementById(yuqueClipperToolContainerId)
-            );
-            $(`#${yuqueClipperToolContainerId}`).toggle();
-            await appState.init(yuqueClipperToolContainerId);
-            appState.initialization = true;
-        } catch (err) {
-            chrome.runtime.sendMessage({
-                action: ActionMessageType.GO_TO_SETTINGS,
-            });
-            return;
-        }
-    } else {
-        $(`#${yuqueClipperToolContainerId}`).toggle();
-    }
+  } else {
+    $(`#${yuqueClipperToolContainerId}`).toggle();
+  }
 });

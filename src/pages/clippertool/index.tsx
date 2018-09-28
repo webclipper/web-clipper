@@ -11,62 +11,62 @@ import Complate from '../../components/complate';
 import PreviewContent from '../../components/preview';
 
 interface ClipperToolContainerProps {
-    toolState: ToolStore;
+  toolState: ToolStore;
 }
 
 @observer
 class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
 
-    @computed get toolStore() {
-        return this.props.toolState;
-    }
+  @computed get toolStore() {
+    return this.props.toolState;
+  }
 
-    @computed get showPreiview() {
-        return !!this.toolStore.clipperPreiviewDataType && !this.toolStore.submitting && !this.toolStore.complate && !this.toolStore.loading;
-    }
+  @computed get showPreiview() {
+    return !!this.toolStore.clipperPreiviewDataType && !this.toolStore.submitting && !this.toolStore.complate && !this.toolStore.loading;
+  }
 
-    render() {
-        let content;
-        if (this.toolStore.loading) {
-            content = <Loading></Loading>;
-        } else {
-            if (!this.toolStore.complate) {
-                content = <ClipperTool
-                    clipperPreiviewDataType={this.toolStore.clipperPreiviewDataType}
-                    book={this.toolStore.book}
-                    books={this.toolStore.books}
-                    onGoToSetting={this.toolStore.onGoToSetting}
-                    onDeleteElement={this.toolStore.onDeleteElement}
-                    submitting={this.toolStore.submitting}
-                    onPostNote={this.toolStore.onPostNote}
-                    onClipperData={this.toolStore.onClipperData}
-                    userProfile={this.toolStore.userProfile}
-                    onSetBookId={this.toolStore.onSetBookId}
-                    userHomePage={this.toolStore.userHomePage}
-                    onChangeTitle={this.toolStore.changeTitle}
-                    title={this.toolStore.title} ></ClipperTool>;
-            } else {
-                content = <Complate href={this.toolStore.createdDocumentHref}></Complate>;
+  render() {
+    let content;
+    if (this.toolStore.loading) {
+      content = <Loading></Loading>;
+    } else {
+      if (!this.toolStore.complate) {
+        content = <ClipperTool
+          clipperPreiviewDataType={this.toolStore.clipperPreiviewDataType}
+          book={this.toolStore.book}
+          books={this.toolStore.books}
+          onGoToSetting={this.toolStore.onGoToSetting}
+          onDeleteElement={this.toolStore.onDeleteElement}
+          submitting={this.toolStore.submitting}
+          onPostNote={this.toolStore.onPostNote}
+          onClipperData={this.toolStore.onClipperData}
+          userProfile={this.toolStore.userProfile}
+          onSetBookId={this.toolStore.onSetBookId}
+          userHomePage={this.toolStore.userHomePage}
+          onChangeTitle={this.toolStore.changeTitle}
+          title={this.toolStore.title} ></ClipperTool>;
+      } else {
+        content = <Complate href={this.toolStore.createdDocumentHref}></Complate>;
+      }
+    }
+    return (
+      <div className={styles.previewContainer}>
+        <div className={styles.clipperToolContainer}>
+          <div style={{ position: 'relative' }}>
+            <div className={styles.closeButton} onClick={this.toolStore.onClosePage}>
+              <Icon type="close" />
+            </div>
+            <div>
+              {content}
+            </div>
+            {
+              this.showPreiview && <PreviewContent map={this.toolStore.clipperPreiviewDataMap} type={this.toolStore.clipperPreiviewDataType}></PreviewContent>
             }
-        }
-        return (
-            <div className={styles.previewContainer}>
-                <div className={styles.clipperToolContainer}>
-                    <div style={{ position: 'relative' }}>
-                        <div className={styles.closeButton} onClick={this.toolStore.onClosePage}>
-                            <Icon type="close" />
-                        </div>
-                        <div>
-                            {content}
-                        </div>
-                        {
-                            this.showPreiview && <PreviewContent map={this.toolStore.clipperPreiviewDataMap} type={this.toolStore.clipperPreiviewDataType}></PreviewContent>
-                        }
-                    </div>
-                </div>
-            </div >
-        );
-    }
+          </div>
+        </div>
+      </div >
+    );
+  }
 }
 
 export default ClipperToolContainer;
