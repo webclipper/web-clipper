@@ -5,5 +5,6 @@
 export enum ClipperPreiviewDataTypeEnum {
   URL = 'URL',
   FULL_PAGE = 'FULL_PAGE',
-  SELECTED_ITEM = 'SELECTED_ITEM'
+  SELECTED_ITEM = 'SELECTED_ITEM',
+  READABILITY = 'READABILITY'
 }

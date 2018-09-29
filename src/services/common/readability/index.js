@@ -1683,4 +1683,4 @@ let readability = {
 
 };
 
-readability.init();
+export default readability;
