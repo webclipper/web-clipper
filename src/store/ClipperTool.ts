@@ -14,7 +14,7 @@ import Highlighter from '../services/common/highlight';
 import { ActionMessageType } from '../enums/actionMessageType';
 import { ClipperPreiviewDataTypeEnum } from '../enums';
 import { PostDocRequest } from '../services/api/documentService';
-import { ClipperUrlPreiviewData, ClipperPreiviewData, ClipperFullPagePreiviewData } from './ClipperPreview';
+import { ClipperUrlPreiviewData, ClipperPreiviewData, ClipperFullPagePreiviewData, ClipperSelectedItemPreiviewData } from './ClipperPreview';
 
 export class ToolStore {
 
@@ -122,9 +122,11 @@ export class ToolStore {
       case ClipperPreiviewDataTypeEnum.URL:
         ClipperPreiviewData = new ClipperUrlPreiviewData(window.location.href);
         break;
-
       case ClipperPreiviewDataTypeEnum.FULL_PAGE:
         ClipperPreiviewData = new ClipperFullPagePreiviewData();
+        break;
+      case ClipperPreiviewDataTypeEnum.SELECTED_ITEM:
+        ClipperPreiviewData = new ClipperSelectedItemPreiviewData(this.containerId);
         break;
       default:
         return;

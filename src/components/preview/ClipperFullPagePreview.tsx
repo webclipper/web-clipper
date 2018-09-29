@@ -18,7 +18,6 @@ class ClipperFullPagePreiview extends React.Component<ClipperFullPagePreiviewPro
 
   render() {
     return (
-
       <div className={styles.preview}>
         <div className={styles.previewTitle}>
           <span>书签</span>
@@ -26,7 +25,6 @@ class ClipperFullPagePreiview extends React.Component<ClipperFullPagePreiviewPro
         <div className={styles.previewContent}>
           <p>备注</p>
           <TextArea defaultValue={this.props.data.fullPage} autosize={{ minRows: 20, maxRows: 20 }} onChange={this.onDataChange} />
-
         </div>
       </div>
 

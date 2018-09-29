@@ -4,6 +4,7 @@ import {
 } from 'mobx';
 
 import TurndownService from 'turndown';
+import Highlighter from '../services/common/highlight';
 
 export interface ClipperPreiviewData {
   toBody(): string;
@@ -54,3 +55,37 @@ export class ClipperFullPagePreiviewData implements ClipperPreiviewData {
     return this.fullPage;
   }
 }
+
+export class ClipperSelectedItemPreiviewData implements ClipperPreiviewData {
+
+  @observable selectedItem: string
+
+  private toolId: string;
+
+  constructor(toolId: string) {
+    this.selectedItem = '';
+    this.toolId = toolId;
+    this.clipWeb();
+  }
+
+  @action setFullPage = (input: string) => {
+    this.selectedItem = input;
+  }
+
+  @action addMore = () => {
+    this.clipWeb();
+  }
+
+  toBody = () => {
+    return this.selectedItem;
+  }
+  private clipWeb = () => {
+    $(`#${this.toolId}`).hide();
+    new Highlighter().start().then(element => {
+      const turndownService = TurndownService();
+      this.selectedItem += turndownService.turndown($(element).html());
+      $(`#${this.toolId}`).show();
+    });
+  }
+}
+
