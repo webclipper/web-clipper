@@ -1,5 +1,5 @@
 /*jslint undef: true, nomen: true, eqeqeq: true, plusplus: true, newcap: true, immed: true, browser: true, devel: true, passfail: false */
-/*global window: false, readConvertLinksToFootnotes: false, readStyle: false, readSize: false, readMargin: false, ActiveXObject: false */
+/*global window: false, readConvertLinksToFootnotes: false, ActiveXObject: false */
 
 /* eslint-disable complexity */
 /* eslint-disable no-param-reassign */
@@ -8,6 +8,8 @@
 let dbg = (typeof console !== 'undefined') ? function (s) {
   console.log('Readability: ' + s);
 } : function () { };
+
+import ReadabilityTs from './readability';
 
 /*
 * Readability. An Arc90 Lab Experiment.
@@ -20,6 +22,7 @@ let dbg = (typeof console !== 'undefined') ? function (s) {
 * Readability is licensed under the Apache License, Version 2.0.
 **/
 let readability = {
+
   version: '1.7.1',
   iframeLoads: 0,
   convertLinksToFootnotes: false,
@@ -77,7 +80,12 @@ let readability = {
    * @return void
    **/
   init: function () {
+
+    let readabilityTs = new ReadabilityTs();
+    console.log(readabilityTs);
+
     /* Before we do anything, remove all scripts that are not readability. */
+    //貌似我不需要
     window.onload = window.onunload = function () { };
 
     readability.removeScripts(document);
@@ -96,7 +104,6 @@ let readability = {
     /* Build readability's DOM tree */
     let overlay = document.createElement('DIV');
     let innerDiv = document.createElement('DIV');
-    let articleTools = readability.getArticleTools();
     let articleTitle = readability.getArticleTitle();
     let articleContent = readability.grabArticle();
 
@@ -116,11 +123,11 @@ let readability = {
     innerDiv.id = 'readInner';
 
     /* Apply user-selected styling */
-    document.body.className = readStyle;
+    // document.body.className = readStyle;
     document.dir = readability.getSuggestedDirection(articleTitle.innerHTML);
 
-    overlay.className = readStyle;
-    innerDiv.className = readMargin + ' ' + readSize;
+    // overlay.className = readStyle;
+    // innerDiv.className = readMargin + ' ' + readSize;
 
     if (typeof (readConvertLinksToFootnotes) !== 'undefined' && readConvertLinksToFootnotes === true) {
       readability.convertLinksToFootnotes = true;
@@ -129,7 +136,6 @@ let readability = {
     /* Glue the structure of our document together. */
     innerDiv.appendChild(articleTitle);
     innerDiv.appendChild(articleContent);
-    overlay.appendChild(articleTools);
     overlay.appendChild(innerDiv);
 
     /* Clear the old HTML, insert the new content. */
@@ -158,7 +164,7 @@ let readability = {
 
     readability.postProcessContent(articleContent);
 
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
 
     if (nextPageLink) {
       /**
@@ -236,22 +242,6 @@ let readability = {
         image.className += ' blockImage';
       }
     }
-  },
-
-  /**
-   * Get the article tools Element that has buttons like reload, print, email.
-   *
-   * @return void
-   **/
-  getArticleTools: function () {
-    let articleTools = document.createElement('DIV');
-
-    articleTools.id = 'readTools';
-    articleTools.innerHTML =
-      "<a href='#' onclick='return window.location.reload()' title='Reload original page' id='reload-page'>Reload Original Page</a>" +
-      "<a href='#' onclick='javascript:window.print();' title='Print page' id='print-page'>Print Page</a>";
-
-    return articleTools;
   },
 
   /**

@@ -20,8 +20,8 @@ describe('测试 Loading 组件', function () {
       map: map
     };
 
-    const we = shallow(<Preview map={prop.map} type={prop.type}></Preview>);
-    expect(we.find(ClipperUrlPreiview).text()).toEqual('<ClipperUrlPreiview />');
+    const result = shallow(<Preview map={prop.map} type={prop.type}></Preview>);
+    expect(result.find(ClipperUrlPreiview).text()).toEqual('<ClipperUrlPreiview />');
 
   });
 
