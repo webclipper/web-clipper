@@ -28,6 +28,7 @@
     "qs": "^6.5.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "readability": "https://github.com/DiamondYuan/readability",
     "turndown": "^5.0.1"
   },
   "devDependencies": {

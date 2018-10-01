@@ -14,7 +14,7 @@ import Highlighter from '../services/common/highlight';
 import { ActionMessageType } from '../enums/actionMessageType';
 import { ClipperPreiviewDataTypeEnum } from '../enums';
 import { PostDocRequest } from '../services/api/documentService';
-import readability from '../services/common/readability';
+import * as Readability from 'readability';
 import { ClipperUrlPreiviewData, ClipperPreiviewData, ClipperFullPagePreiviewData, ClipperSelectedItemPreiviewData } from './ClipperPreview';
 
 export class ToolStore {
@@ -129,9 +129,12 @@ export class ToolStore {
       case ClipperPreiviewDataTypeEnum.SELECTED_ITEM:
         ClipperPreiviewData = new ClipperSelectedItemPreiviewData(this.containerId);
         break;
-      case ClipperPreiviewDataTypeEnum.READABILITY:
-        readability.init();
+      case ClipperPreiviewDataTypeEnum.READABILITY: {
+        let documentClone = document.cloneNode(true);
+        let article = new Readability(documentClone).parse();
+        console.log(article);
         break;
+      }
       default:
         return;
     }
