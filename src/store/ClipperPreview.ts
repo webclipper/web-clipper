@@ -5,6 +5,7 @@ import {
 
 import TurndownService from 'turndown';
 import Highlighter from '../services/common/highlight';
+import * as Readability from 'readability';
 
 export interface ClipperPreiviewData {
   toBody(): string;
@@ -87,5 +88,22 @@ export class ClipperSelectedItemPreiviewData implements ClipperPreiviewData {
       $(`#${this.toolId}`).show();
     });
   }
+}
+
+export class ClipperReadabilityPreiviewData implements ClipperPreiviewData {
+
+  @observable content: string
+
+  constructor() {
+    let documentClone = document.cloneNode(true);
+    let article = new Readability(documentClone).parse();
+    const turndownService = TurndownService();
+    this.content = turndownService.turndown(article.content);
+  }
+
+  toBody = () => {
+    return `${this.content}`;
+  }
+
 }
 

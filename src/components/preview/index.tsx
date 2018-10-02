@@ -3,9 +3,10 @@ import * as React from 'react';
 import { ClipperPreiviewDataTypeEnum } from '../../enums';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
-import { ClipperUrlPreiviewData, ClipperPreiviewData, ClipperFullPagePreiviewData, ClipperSelectedItemPreiviewData } from '../../store/ClipperPreview';
+import { ClipperUrlPreiviewData, ClipperPreiviewData, ClipperFullPagePreiviewData, ClipperSelectedItemPreiviewData, ClipperReadabilityPreiviewData } from '../../store/ClipperPreview';
 import ClipperFullPagePreiview from './ClipperFullPagePreview';
 import ClipperSelectedItemPreiview from './ClipperSelectedItemPreview';
+import ClipperReadabilityPreiview from './ClipperReadabilityPreiview';
 
 interface PreviewContentProps {
   map: { [key: string]: ClipperPreiviewData };
@@ -34,6 +35,9 @@ class PreviewContent extends React.Component<PreviewContentProps> {
       }
       if (this.data instanceof ClipperSelectedItemPreiviewData) {
         return (<ClipperSelectedItemPreiview data={this.data}></ClipperSelectedItemPreiview>);
+      }
+      if (this.data instanceof ClipperReadabilityPreiviewData) {
+        return (<ClipperReadabilityPreiview data={this.data}></ClipperReadabilityPreiview>);
       }
     }
     return (
