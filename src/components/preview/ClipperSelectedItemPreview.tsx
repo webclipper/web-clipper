@@ -19,11 +19,15 @@ class ClipperSelectedItemPreiview extends React.Component<ClipperSelectedItemPre
     this.mirror = HyperMD.fromTextArea(myTextarea, {
       hmdModeLoader: false,
     });
-    setTimeout(async () => {
-      await this.props.data.clipWeb().then(() => {
-        this.mirror.setValue(this.props.data.selectedItem);
+    if (!this.props.data.selectedItem) {
+      setTimeout(async () => {
+        await this.props.data.clipWeb().then(() => {
+          this.mirror.setValue(this.props.data.selectedItem);
+        });
       });
-    });
+    } else {
+      this.mirror.setValue(this.props.data.selectedItem);
+    }
     this.mirror.on('change', (editor: any) => {
       this.props.data.setSelectedItem(editor.getValue());
     });
