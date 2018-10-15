@@ -29,3 +29,21 @@
 .previewContent{
     padding: 10px;
 }
+
+.clipperReadabilityPreview{
+  position: absolute;
+  top: 0px;
+  right: 330px;
+  width: 800px;
+  height: auto;
+  background: white;
+}
+
+#previewMarkdownInputArea{
+  display: block;
+}
+.clipperSelectedItemPreviewButton{
+  text-align: left;
+  padding: 10px;
+  background: gainsboro;
+}

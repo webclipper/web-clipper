@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import * as React from 'react';
 import Preview from '../index';
 import { shallow, configure } from 'enzyme';

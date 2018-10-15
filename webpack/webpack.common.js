@@ -23,6 +23,22 @@ const baseConfig = {
         exclude: /node_modules/
       },
       {
+        include: /hypermd|codemirror/,
+        test: [/\.css$/],
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        loader: 'url-loader?limit=1024000',
+      },
+      {
         test: /\.less$/,
         use: [
           {

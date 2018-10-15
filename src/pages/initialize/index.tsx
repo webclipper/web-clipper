@@ -188,7 +188,7 @@ class App extends React.Component<{}, AppState> {
   render() {
     const { current } = this.state;
     return (
-      <Layout>
+      <Layout className={styles.layouy}>
         <Header className={styles.header}>
           <p>语雀 剪藏 保存精彩网页</p>
         </Header>
@@ -217,6 +217,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, async () => {
     const element = document.createElement('div');
     element.setAttribute('id', 'initializeWindow');
     document.body.appendChild(element);
+    element.className = styles.initializeWindow;
   }
   ReactDOM.render(<App />,
     document.getElementById('initializeWindow')

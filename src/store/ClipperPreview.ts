@@ -66,25 +66,20 @@ export class ClipperSelectedItemPreiviewData implements ClipperPreiviewData {
   constructor(toolId: string) {
     this.selectedItem = '';
     this.toolId = toolId;
-    this.clipWeb();
   }
 
-  @action setFullPage = (input: string) => {
+  @action setSelectedItem = (input: string) => {
     this.selectedItem = input;
-  }
-
-  @action addMore = () => {
-    this.clipWeb();
   }
 
   toBody = () => {
     return this.selectedItem;
   }
-  private clipWeb = () => {
+  clipWeb = async () => {
     $(`#${this.toolId}`).hide();
-    new Highlighter().start().then(element => {
+    await new Highlighter().start().then(element => {
       const turndownService = TurndownService();
-      this.selectedItem += turndownService.turndown($(element).html());
+      this.selectedItem += `\n${turndownService.turndown($(element).html())}`;
       $(`#${this.toolId}`).show();
     });
   }
@@ -99,6 +94,10 @@ export class ClipperReadabilityPreiviewData implements ClipperPreiviewData {
     let article = new Readability(documentClone).parse();
     const turndownService = TurndownService();
     this.content = turndownService.turndown(article.content);
+  }
+
+  @action changeContent = (input: string) => {
+    this.content = input;
   }
 
   toBody = () => {
