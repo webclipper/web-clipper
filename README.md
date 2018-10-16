@@ -2,6 +2,29 @@
 
 剪切网页保存到语雀中。
 
+
+### 如何开发
+
+#### 开发
+
+```
+$ git clone https://github.com/yuquewebclipper/yuque-web-clipper.git
+$ cd yuque-web-clipper
+$ yarn
+$ yarn dev
+```
+
+在 chrome 导入 dist 文件夹。为了区分测试和正式，测试的插件是红色背景的。
+
+
+#### 测试
+
+```
+$ yarn test /src
+```
+
+⚠️ 目前测试文件中写了一个 token。请**不要**用自己的 token 替换，否则会造成你**删除全部的个人以及团队知识库**
+
 ### 剪藏所使用的开源框架与工具
 
 + [React](https://github.com/facebook/react/)  
