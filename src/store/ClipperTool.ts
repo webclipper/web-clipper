@@ -145,7 +145,7 @@ export class ToolStore {
     });
   }
 
-  onClosePage = () => {
+  handleCloseTool = () => {
     $(`#${this.elementId}`).toggle();
   }
 

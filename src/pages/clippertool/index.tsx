@@ -50,10 +50,11 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
       }
     }
     return (
-      <div className={styles.previewContainer}>
+      <div>
+        <div className={styles.previewContainer} onClick={this.toolStore.handleCloseTool}></div>
         <div className={styles.clipperToolContainer}>
           <div style={{ position: 'relative' }}>
-            <div className={styles.closeButton} onClick={this.toolStore.onClosePage}>
+            <div className={styles.closeButton} onClick={this.toolStore.handleCloseTool}>
               <Icon type="close" />
             </div>
             <div>
@@ -64,7 +65,7 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
             }
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }
