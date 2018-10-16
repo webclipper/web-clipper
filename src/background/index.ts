@@ -1,6 +1,10 @@
 import { ActionMessage } from '../model/Message';
 import { ActionMessageType } from '../enums';
 
+if (process.env.NODE_ENV === 'development') {
+  chrome.browserAction.setIcon({ path: 'icons/yuque-dev.png' });
+}
+
 chrome.runtime.onInstalled.addListener(function (details) {
   if (details.reason === 'install') {
     console.log('Install Success');
@@ -26,8 +30,17 @@ async function tabStatus(tabId: number): Promise<any> {
 
 chrome.browserAction.onClicked.addListener(async (tab: any) => {
   if (!await tabStatus(tab.id)) {
-    alert('暂时无法剪辑此类型的页面。要不刷新试试看？');
-    return;
+    chrome.tabs.executeScript(tab.id, { file: 'js/content_script.js' }, () => {
+      if (chrome.runtime.lastError) {
+        alert('暂时无法剪辑此类型的页面。');
+        return;
+      }
+      const massage: ActionMessage = {
+        action: ActionMessageType.ICON_CLICK,
+      };
+      chrome.tabs.sendMessage(tab.id, massage);
+      return;
+    });
   }
   const massage: ActionMessage = {
     action: ActionMessageType.ICON_CLICK,
