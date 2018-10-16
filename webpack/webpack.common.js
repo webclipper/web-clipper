@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackChromeReloaderPlugin = require('webpack-chrome-extension-reloader');
+const ChromeManifestPlugin = require('./chromeManifestPlugin');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
@@ -121,6 +122,10 @@ const commonConfig = merge(baseConfig, {
         ignore: ['.*']
       }
     ]),
+    new ChromeManifestPlugin({
+      packageJson: path.resolve(__dirname, '../package.json'),
+      out: path.resolve(__dirname, '../dist/manifest.json'),
+    }),
     new HtmlWebpackPlugin({
       title: '语雀剪藏向导',
       filename: '../initialize.html',

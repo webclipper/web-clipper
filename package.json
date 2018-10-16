@@ -1,6 +1,6 @@
 {
   "name": "yuque-web-clipper",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "非官方语雀剪藏软件",
   "scripts": {
     "commit": "git-cz",
@@ -76,5 +76,43 @@
     "webpack-chrome-extension-reloader": "^0.8.3",
     "webpack-cli": "^3.1.0",
     "webpack-merge": "^4.1.4"
+  },
+  "chrome": {
+    "manifest_version": 2,
+    "name": "语雀剪藏",
+    "icons": {
+      "16": "icons/yuque-16.png",
+      "48": "icons/yuque-48.png",
+      "128": "icons/yuque-128.png"
+    },
+    "browser_action": {
+      "default_icon": {
+        "19": "icons/yuque-19.png",
+        "38": "icons/yuque-38.png"
+      }
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "<all_urls>"
+        ],
+        "js": [
+          "js/content_script.js"
+        ]
+      }
+    ],
+    "background": {
+      "scripts": [
+        "js/vendor.js",
+        "js/background.js"
+      ]
+    },
+    "permissions": [
+      "cookies",
+      "tabs",
+      "storage",
+      "contextMenus",
+      "<all_urls>"
+    ]
   }
 }
