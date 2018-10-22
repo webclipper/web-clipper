@@ -6,17 +6,15 @@ import ClipperToolContainer from '../clippertool';
 import { ToolStore } from '../../store/ClipperTool';
 import { ContentScriptToolImpl } from '../../services/common/contentScripttool';
 
-export interface APPProps {
-}
+const appState = new ToolStore(new ContentScriptToolImpl());
+appState.init().catch(err => {
+  console.log(err);
+  chrome.tabs.create({ url: chrome.extension.getURL('initialize.html') });
+});
 
-export default class App extends React.Component<APPProps, any> {
+export default class App extends React.Component<{}, any> {
+
   public render() {
-    const appState = new ToolStore(new ContentScriptToolImpl());
-    try {
-      appState.init();
-    } catch (error) {
-      console.log(error);
-    }
     return (
       <ClipperToolContainer toolState={appState}></ClipperToolContainer>
     );

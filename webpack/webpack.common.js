@@ -140,14 +140,10 @@ const commonConfig = merge(baseConfig, {
   ]
 });
 
-// 主要还是为了 antd 的样式不影响到其他页面。
-const resetAntdConfig = merge(baseConfig, {
+const contentScriptConfig = merge(baseConfig, {
   entry: {
     content_script: resolve('src/content/index.tsx')
-  },
-  plugins: [
-    new webpack.NormalModuleReplacementPlugin(/node_modules\/antd\/dist\/antd\.less/, resolve('src/content/antd-reset.less'))
-  ]
+  }
 });
 
-module.exports = [commonConfig, resetAntdConfig];
+module.exports = [commonConfig, contentScriptConfig];
