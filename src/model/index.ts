@@ -1,4 +1,4 @@
-import { ActionMessage } from './Message';
+import { ActionMessage } from './message';
 export {
   ActionMessage
 };

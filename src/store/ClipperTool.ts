@@ -1,16 +1,15 @@
+import { ContentScriptTool } from './../services/common/contentScripttool/index';
 
 import {
   observable,
   action,
   runInAction
-
 } from 'mobx';
 
 import YuqueApi from '../services/api/api';
 import { BookSerializer } from '../services/api/reposService';
 import { UserProfile } from '../services/api/userService';
 import store from '../services/common/store';
-import Highlighter from '../services/common/highlight';
 import { ActionMessageType } from '../enums/actionMessageType';
 import { ClipperPreiviewDataTypeEnum } from '../enums';
 import { PostDocRequest } from '../services/api/documentService';
@@ -18,7 +17,6 @@ import { ClipperUrlPreiviewData, ClipperReadabilityPreiviewData, ClipperPreiview
 
 export class ToolStore {
 
-  containerId: string
   //是否初始化
   initialization: boolean;
   yuqueApi: YuqueApi
@@ -28,6 +26,8 @@ export class ToolStore {
   userProfile: UserProfile;
   userHomePage: string
   baseHost: string
+  contentScriptTool: ContentScriptTool
+  url: string
   //笔记的标题
   @observable title: string;
   @observable elementId: string;
@@ -39,16 +39,18 @@ export class ToolStore {
   @observable clipperPreiviewDataType: ClipperPreiviewDataTypeEnum;
   @observable clipperPreiviewDataMap: { [key: string]: ClipperPreiviewData };
 
-  constructor(elementId: string) {
+  constructor(contentScriptTool: ContentScriptTool) {
+    this.contentScriptTool = contentScriptTool;
     this.initialization = false;
-    this.title = document.title;
     this.submitting = false;
     this.loading = true;
-    this.elementId = elementId;
+    contentScriptTool.getDocumentInfo().then(re => {
+      this.title = re.title;
+      this.url = re.url;
+    });
   }
 
-  async init(containerId: string) {
-    this.containerId = containerId;
+  async init() {
     const userSetting = await store.getUserSetting();
     const prepart = !!userSetting && !!userSetting.defualtBookId && !!userSetting.baseURL && !!userSetting.token;
     if (!prepart) {
@@ -97,39 +99,33 @@ export class ToolStore {
   }
 
   @action onDeleteElement = async () => {
-    $(`#${this.containerId}`).hide();
-    try {
-      await new Highlighter().start().then(element => {
-        $(element).remove();
-      });
-    } catch (error) {
-
-    }
-    $(`#${this.containerId}`).show();
+    await this.contentScriptTool.cleanElement();
   }
 
   @action onSetBookId = (input: number) => {
     this.book = this.books.find(o => { return o.id === input })!;
   }
 
-  @action onClipperData = (type: ClipperPreiviewDataTypeEnum) => {
+  @action onClipperData = async (type: ClipperPreiviewDataTypeEnum) => {
     let ClipperPreiviewData = this.clipperPreiviewDataMap[type];
     if (ClipperPreiviewData) {
       this.clipperPreiviewDataType = type;
       return;
     }
+    const { getFullPage, getSelectElement, getReadabilityContent } = this.contentScriptTool;
+
     switch (type) {
       case ClipperPreiviewDataTypeEnum.URL:
-        ClipperPreiviewData = new ClipperUrlPreiviewData(window.location.href);
+        ClipperPreiviewData = new ClipperUrlPreiviewData(this.url);
         break;
       case ClipperPreiviewDataTypeEnum.FULL_PAGE:
-        ClipperPreiviewData = new ClipperFullPagePreiviewData();
+        ClipperPreiviewData = new ClipperFullPagePreiviewData(await getFullPage());
         break;
       case ClipperPreiviewDataTypeEnum.SELECTED_ITEM:
-        ClipperPreiviewData = new ClipperSelectedItemPreiviewData(this.containerId);
+        ClipperPreiviewData = new ClipperSelectedItemPreiviewData(getSelectElement);
         break;
       case ClipperPreiviewDataTypeEnum.READABILITY: {
-        ClipperPreiviewData = new ClipperReadabilityPreiviewData();
+        ClipperPreiviewData = new ClipperReadabilityPreiviewData(await getReadabilityContent());
         break;
       }
       default:
@@ -146,7 +142,7 @@ export class ToolStore {
   }
 
   handleCloseTool = () => {
-    $(`#${this.elementId}`).toggle();
+    this.contentScriptTool.toggleClipperTool();
   }
 
 }

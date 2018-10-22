@@ -6,6 +6,9 @@ module.exports = common.map(config => {
   return merge(config, {
     devtool: 'inline-source-map',
     mode: 'development',
+    watchOptions: {
+      ignored: /dist/
+    }
   });
 });
 

@@ -98,7 +98,8 @@
         ],
         "js": [
           "js/content_script.js"
-        ]
+        ],
+        "all_frames": true
       }
     ],
     "background": {
@@ -107,6 +108,9 @@
         "js/background.js"
       ]
     },
+    "web_accessible_resources": [
+      "tool.html"
+    ],
     "permissions": [
       "cookies",
       "tabs",

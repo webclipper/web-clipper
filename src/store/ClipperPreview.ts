@@ -3,10 +3,6 @@ import {
   observable, action,
 } from 'mobx';
 
-import TurndownService from 'turndown';
-import Highlighter from '../services/common/highlight';
-import * as Readability from 'readability';
-
 export interface ClipperPreiviewData {
   toBody(): string;
 }
@@ -38,14 +34,8 @@ export class ClipperFullPagePreiviewData implements ClipperPreiviewData {
 
   @observable fullPage: string
 
-  constructor() {
-    const $body = $('html').clone();
-    $body.find('#yuque-clipper-tool-container').remove();
-    $body.find('script').remove();
-    $body.find('style').remove();
-    $body.removeClass();
-    const turndownService = TurndownService();
-    this.fullPage = turndownService.turndown($body.html());
+  constructor(fullPage: string) {
+    this.fullPage = fullPage;
   }
 
   @action setFullPage = (input: string) => {
@@ -61,11 +51,11 @@ export class ClipperSelectedItemPreiviewData implements ClipperPreiviewData {
 
   @observable selectedItem: string
 
-  private toolId: string;
+  private getSelectItem: () => Promise<String>;
 
-  constructor(toolId: string) {
+  constructor(getSelectItem: () => Promise<String>) {
     this.selectedItem = '';
-    this.toolId = toolId;
+    this.getSelectItem = getSelectItem;
   }
 
   @action setSelectedItem = (input: string) => {
@@ -76,12 +66,10 @@ export class ClipperSelectedItemPreiviewData implements ClipperPreiviewData {
     return this.selectedItem;
   }
   clipWeb = async () => {
-    $(`#${this.toolId}`).hide();
-    await new Highlighter().start().then(element => {
-      const turndownService = TurndownService();
-      this.selectedItem += `\n${turndownService.turndown($(element).html())}`;
-      $(`#${this.toolId}`).show();
-    });
+    if (this.selectedItem) {
+      this.selectedItem += '\n';
+    }
+    this.selectedItem += await this.getSelectItem();
   }
 }
 
@@ -89,11 +77,8 @@ export class ClipperReadabilityPreiviewData implements ClipperPreiviewData {
 
   @observable content: string
 
-  constructor() {
-    let documentClone = document.cloneNode(true);
-    let article = new Readability(documentClone).parse();
-    const turndownService = TurndownService();
-    this.content = turndownService.turndown(article.content);
+  constructor(fullPage: string) {
+    this.content = fullPage;
   }
 
   @action changeContent = (input: string) => {

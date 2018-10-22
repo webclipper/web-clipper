@@ -102,7 +102,8 @@ const baseConfig = {
 const commonConfig = merge(baseConfig, {
   entry: {
     initialize: resolve('src/pages/initialize/index.tsx'),
-    background: resolve('src/background/index.ts')
+    background: resolve('src/background/index.ts'),
+    tool: resolve('src/pages/tool/index.tsx')
   },
   optimization: {
     splitChunks: {
@@ -130,7 +131,12 @@ const commonConfig = merge(baseConfig, {
       title: '语雀剪藏向导',
       filename: '../initialize.html',
       chunks: ['initialize', 'vendor']
-    })
+    }),
+    new HtmlWebpackPlugin({
+      title: '语雀剪藏插件',
+      filename: '../tool.html',
+      chunks: ['tool', 'vendor']
+    }),
   ]
 });
 
