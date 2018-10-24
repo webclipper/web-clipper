@@ -1,13 +1,14 @@
 {
   "name": "yuque-web-clipper",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "非官方语雀剪藏软件",
   "scripts": {
     "commit": "git-cz",
     "test": "jest --verbose",
     "dev": "NODE_ENV=development webpack --config webpack/webpack.dev.js --watch",
     "build": "webpack --config webpack/webpack.prod.js",
-    "lint": "eslint --ext .js,.ts,.tsx --ignore-pattern bad.* ."
+    "lint": "eslint --ext .js,.ts,.tsx --ignore-pattern bad.* .",
+    "release": "zsh shell/release.zsh"
   },
   "config": {
     "commitizen": {
