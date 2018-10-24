@@ -9,6 +9,7 @@ import ClipperTool from '../../components/clippertool';
 import Complate from '../../components/complate';
 
 import PreviewContent from '../../components/preview';
+import Preference from '../../components/preference';
 
 interface ClipperToolContainerProps {
   toolState: ToolStore;
@@ -57,11 +58,20 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
             <div className={styles.closeButton} onClick={this.toolStore.handleCloseTool}>
               <Icon type="close" />
             </div>
-            <div>
-              {content}
-            </div>
+            <div>{content}</div>
             {
-              this.showPreiview && <PreviewContent map={this.toolStore.clipperPreiviewDataMap} type={this.toolStore.clipperPreiviewDataType}></PreviewContent>
+              !this.toolStore.settingPreferemce && this.showPreiview && <PreviewContent map={this.toolStore.clipperPreiviewDataMap} type={this.toolStore.clipperPreiviewDataType}></PreviewContent>
+            }
+            {
+              this.toolStore.settingPreferemce &&
+              <div className={styles.settingContainer}>
+                <Preference
+                  storage={this.toolStore.storage}
+                  books={this.toolStore.books}
+                  defaultBook={this.toolStore.book}
+                  yuqueapi={this.toolStore.yuqueApi} >
+                </Preference>
+              </div>
             }
           </div>
         </div>

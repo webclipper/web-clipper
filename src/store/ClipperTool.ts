@@ -1,3 +1,4 @@
+import { TypedCommonStorageInterface } from './../services/common/store/index';
 import { ContentScriptTool } from './../services/common/contentScripttool/index';
 
 import {
@@ -10,7 +11,6 @@ import YuqueApi from '../services/api/api';
 import { BookSerializer } from '../services/api/reposService';
 import { UserProfile } from '../services/api/userService';
 import store from '../services/common/store';
-import { ActionMessageType } from '../enums/actionMessageType';
 import { ClipperPreiviewDataTypeEnum } from '../enums';
 import { PostDocRequest } from '../services/api/documentService';
 import { ClipperUrlPreiviewData, ClipperReadabilityPreiviewData, ClipperPreiviewData, ClipperFullPagePreiviewData, ClipperSelectedItemPreiviewData } from './ClipperPreview';
@@ -28,11 +28,13 @@ export class ToolStore {
   baseHost: string
   contentScriptTool: ContentScriptTool
   url: string
+  storage: TypedCommonStorageInterface
   //笔记的标题
   @observable title: string;
   @observable elementId: string;
   @observable submitting: boolean;
   @observable loading: boolean;
+  @observable settingPreferemce: boolean;
   @observable complate: boolean;
   @observable book: BookSerializer;
   @observable createdDocumentHref: string;
@@ -44,6 +46,8 @@ export class ToolStore {
     this.initialization = false;
     this.submitting = false;
     this.loading = true;
+    this.settingPreferemce = false;
+    this.storage = store;
     contentScriptTool.getDocumentInfo().then(re => {
       this.title = re.title;
       this.url = re.url;
@@ -107,6 +111,7 @@ export class ToolStore {
   }
 
   @action onClipperData = async (type: ClipperPreiviewDataTypeEnum) => {
+    this.settingPreferemce = false;
     let ClipperPreiviewData = this.clipperPreiviewDataMap[type];
     if (ClipperPreiviewData) {
       this.clipperPreiviewDataType = type;
@@ -135,10 +140,8 @@ export class ToolStore {
     this.clipperPreiviewDataMap[type] = ClipperPreiviewData;
   }
 
-  onGoToSetting = () => {
-    chrome.runtime.sendMessage({
-      action: ActionMessageType.GO_TO_SETTINGS,
-    });
+  @action onGoToSetting = () => {
+    this.settingPreferemce = !this.settingPreferemce;
   }
 
   handleCloseTool = () => {

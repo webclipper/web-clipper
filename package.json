@@ -22,6 +22,7 @@
     "codemirror": "^5.40.2",
     "dayjs": "^1.7.5",
     "hypermd": "^0.3.10",
+    "immutability-helper": "^2.8.1",
     "jquery": "^3.3.1",
     "lodash": "^4.17.10",
     "mobx": "^5.1.0",

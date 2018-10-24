@@ -59,7 +59,7 @@ class App extends React.Component<{}, AppState> {
   }
 
   init = async () => {
-    const localUserInfo = await store.getUserInfo();
+    const localUserInfo = await store.getUserSetting();
     yuqueApi = new YuqueApi({
       baseURL: localUserInfo.baseURL,
       token: localUserInfo.token
@@ -117,7 +117,7 @@ class App extends React.Component<{}, AppState> {
 
     yuqueApi.userService.getUser()
       .then(user => {
-        store.saveUserInfo({
+        store.setUserSetting({
           baseURL: baseURL,
           token: token,
         });
@@ -174,9 +174,9 @@ class App extends React.Component<{}, AppState> {
         });
       }
     }
-    const localUserInfo = await store.getUserInfo();
+    const localUserInfo = await store.getUserSetting();
     localUserInfo.defualtBookId = finalValue;
-    await store.saveUserInfo(localUserInfo);
+    await store.setUserSetting(localUserInfo);
     this.setState((pre) => {
       this.setState({
         defualtBook: pre.bookList.filter(o => o.id === finalValue)[0],

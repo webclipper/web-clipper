@@ -16,7 +16,6 @@ export interface ContentScriptTool {
 }
 
 export class ContentScriptToolImpl implements ContentScriptTool {
-
   public toggleClipperTool() {
     chrome.tabs.getCurrent((tab: any) => {
       chrome.tabs.sendMessage(tab.id, {
@@ -43,11 +42,11 @@ export class ContentScriptToolImpl implements ContentScriptTool {
 }
 
 const gerResult = function <T>(message: ActionMessageType): Promise<T> {
-  return new Promise((resolve, _) => {
+  return new Promise<T>((resolve, _) => {
     chrome.tabs.getCurrent((tab: any) => {
       chrome.tabs.sendMessage(tab.id, {
         action: message
-      }, (re: any) => {
+      }, (re: T) => {
         resolve(re);
       });
     });
