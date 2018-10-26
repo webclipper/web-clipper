@@ -4,6 +4,7 @@ import * as styles from './index.scss';
 import TurndownService from 'turndown';
 import * as Readability from 'readability';
 import Highlighter from '../services/common/highlight';
+import AreaSelector from '../services/common/areaSelector';
 
 chrome.runtime.onMessage.addListener((message: ActionMessage, _, sendResponse) => {
   if (!message.action || message.action !== ActionMessageType.DO_YOU_ALIVE_NOW) {
@@ -13,7 +14,7 @@ chrome.runtime.onMessage.addListener((message: ActionMessage, _, sendResponse) =
 });
 
 //用来存放之后全部的内容
-chrome.runtime.onMessage.addListener(async (message: ActionMessage, _, __) => {
+chrome.runtime.onMessage.addListener((message: ActionMessage, _, sendResponse) => {
   if (!message.action || message.action !== ActionMessageType.ICON_CLICK) {
     return;
   }
@@ -22,6 +23,11 @@ chrome.runtime.onMessage.addListener(async (message: ActionMessage, _, __) => {
   } else {
     $(`.${styles.toolFrame}`).toggle();
   }
+  //todo 这是不对滴
+  setTimeout(() => {
+    sendResponse(true);
+  }, 100);
+  return true;
 });
 
 chrome.runtime.onMessage.addListener(async (message: ActionMessage, _, sendResponse) => {
@@ -81,6 +87,19 @@ chrome.runtime.onMessage.addListener((message: ActionMessage, _, sendResponse) =
     $(`.${styles.toolFrame}`).toggle();
     const turndownService = TurndownService();
     sendResponse(turndownService.turndown(re));
+  });
+  return true;
+});
+
+chrome.runtime.onMessage.addListener((message: ActionMessage, _, sendResponse) => {
+  if (!message.action || message.action !== ActionMessageType.GET_SELECT_AREA) {
+    return;
+  }
+  $(`.${styles.toolFrame}`).toggle();
+  new AreaSelector().start(
+  ).then((re: any) => {
+    $(`.${styles.toolFrame}`).toggle();
+    sendResponse(re);
   });
   return true;
 });

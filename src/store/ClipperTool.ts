@@ -1,5 +1,6 @@
 import { TypedCommonStorageInterface } from './../services/common/store/index';
 import { ContentScriptTool } from './../services/common/contentScripttool/index';
+// import axios from 'axios';
 
 import {
   observable,
@@ -13,7 +14,14 @@ import { UserProfile } from '../services/api/userService';
 import store from '../services/common/store';
 import { ClipperPreiviewDataTypeEnum } from '../enums';
 import { PostDocRequest } from '../services/api/documentService';
-import { ClipperUrlPreiviewData, ClipperReadabilityPreiviewData, ClipperPreiviewData, ClipperFullPagePreiviewData, ClipperSelectedItemPreiviewData } from './ClipperPreview';
+import {
+  ClipperUrlPreiviewData,
+  ClipperReadabilityPreiviewData,
+  ClipperPreiviewData,
+  ClipperFullPagePreiviewData,
+  ClipperSelectedItemPreiviewData,
+  ClipperScreenshootPreviewDate
+} from './ClipperPreview';
 
 export class ToolStore {
 
@@ -90,9 +98,14 @@ export class ToolStore {
   @action.bound
   async onPostNote() {
     this.submitting = true;
+
+    const data = this.clipperPreiviewDataMap[this.clipperPreiviewDataType];
+    if (data.perpare) {
+      await data.perpare();
+    }
     const postDocRequest: PostDocRequest = {
       title: this.title,
-      body: this.clipperPreiviewDataMap[this.clipperPreiviewDataType].toBody()
+      body: data.toBody()
     };
     const createdDocument = await this.yuqueApi.documentService.createDocument(this.book.id, postDocRequest);
     runInAction(() => {
@@ -117,7 +130,7 @@ export class ToolStore {
       this.clipperPreiviewDataType = type;
       return;
     }
-    const { getFullPage, getSelectElement, getReadabilityContent } = this.contentScriptTool;
+    const { toggleClipperTool, getFullPage, getSelectElement, getReadabilityContent, getSelectArea, captureVisibleTabBase64 } = this.contentScriptTool;
 
     switch (type) {
       case ClipperPreiviewDataTypeEnum.URL:
@@ -131,6 +144,15 @@ export class ToolStore {
         break;
       case ClipperPreiviewDataTypeEnum.READABILITY: {
         ClipperPreiviewData = new ClipperReadabilityPreiviewData(await getReadabilityContent());
+        break;
+      }
+      case ClipperPreiviewDataTypeEnum.SCREENSHOT: {
+        //todo 这里逻辑以后需要修改
+        const selectArea = await getSelectArea();
+        await toggleClipperTool();
+        const base64Capture = await captureVisibleTabBase64();
+        await toggleClipperTool();
+        ClipperPreiviewData = new ClipperScreenshootPreviewDate(selectArea, base64Capture, this.baseHost);
         break;
       }
       default:

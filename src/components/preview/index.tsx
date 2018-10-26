@@ -3,10 +3,11 @@ import * as React from 'react';
 import { ClipperPreiviewDataTypeEnum } from '../../enums';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
-import { ClipperUrlPreiviewData, ClipperPreiviewData, ClipperFullPagePreiviewData, ClipperSelectedItemPreiviewData, ClipperReadabilityPreiviewData } from '../../store/ClipperPreview';
+import { ClipperUrlPreiviewData, ClipperPreiviewData, ClipperFullPagePreiviewData, ClipperSelectedItemPreiviewData, ClipperReadabilityPreiviewData, ClipperScreenshootPreviewDate } from '../../store/ClipperPreview';
 import ClipperFullPagePreiview from './ClipperFullPagePreview';
 import ClipperSelectedItemPreiview from './ClipperSelectedItemPreview';
 import ClipperReadabilityPreiview from './ClipperReadabilityPreiview';
+import ClipperScreenshootPreview from './ClipperScreenshootPreview';
 
 interface PreviewContentProps {
   map: { [key: string]: ClipperPreiviewData };
@@ -25,7 +26,6 @@ class PreviewContent extends React.Component<PreviewContentProps> {
   }
 
   render() {
-
     if (this.props.type && this.props.map) {
       if (this.data instanceof ClipperUrlPreiviewData) {
         return (<ClipperUrlPreiview data={this.data}></ClipperUrlPreiview>);
@@ -38,6 +38,9 @@ class PreviewContent extends React.Component<PreviewContentProps> {
       }
       if (this.data instanceof ClipperReadabilityPreiviewData) {
         return (<ClipperReadabilityPreiview data={this.data}></ClipperReadabilityPreiview>);
+      }
+      if (this.data instanceof ClipperScreenshootPreviewDate) {
+        return (<ClipperScreenshootPreview data={this.data} ></ClipperScreenshootPreview>);
       }
     }
     return (

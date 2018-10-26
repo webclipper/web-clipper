@@ -47,3 +47,18 @@
   padding: 10px;
   background: gainsboro;
 }
+
+.screenshotCapturePreview{
+  position: fixed;
+  top: 12px;
+  right: 400px;
+  width: 960px;
+  height: 540px;
+  background: gainsboro;
+}
+.screenshotCaptureCanvasContainer{
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  height: 540px;
+}

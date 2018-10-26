@@ -59,8 +59,9 @@ class ClipperTool extends React.Component<ClipperToolPorps> {
           <h1 className={styles.sectionTitle}>剪藏格式</h1>
           <Button block className={styles.menuButton} onClick={() => { this.props.onClipperData(ClipperPreiviewDataTypeEnum.FULL_PAGE) }}><Icon type="copy" />整个页面</Button>
           <Button block className={styles.menuButton} onClick={() => { this.props.onClipperData(ClipperPreiviewDataTypeEnum.READABILITY) }}><Icon type="copy" />智能提取</Button>
-          <Button block className={styles.menuButton} onClick={() => { this.props.onClipperData(ClipperPreiviewDataTypeEnum.URL) }}><Icon type="copy" />网页链接</Button>
-          <Button block className={styles.menuButton} onClick={() => { this.props.onClipperData(ClipperPreiviewDataTypeEnum.SELECTED_ITEM) }}><Icon type="copy" />手动选择</Button>
+          <Button block className={styles.menuButton} onClick={() => { this.props.onClipperData(ClipperPreiviewDataTypeEnum.URL) }}><Icon type="link" />网页链接</Button>
+          <Button block className={styles.menuButton} onClick={() => { this.props.onClipperData(ClipperPreiviewDataTypeEnum.SELECTED_ITEM) }}><Icon type="select" />手动选择</Button>
+          <Button block className={styles.menuButton} onClick={() => { this.props.onClipperData(ClipperPreiviewDataTypeEnum.SCREENSHOT) }}><Icon type="picture" />屏幕截图</Button>
         </section>
         <section className={styles.section}>
           <h1 className={styles.sectionTitle}>保存的知识库</h1>
