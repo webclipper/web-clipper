@@ -1,0 +1,11 @@
+sudo: required
+
+services:
+  - docker
+
+script:
+  - docker build -t test:test -f Dockerfile .
+  
+after_success:
+  - docker run --rm -v $(pwd)/tmp:/tmp test:test sh -c "cp -r /coverage/* /tmp"
+  - bash <(curl -s https://codecov.io/bash)
