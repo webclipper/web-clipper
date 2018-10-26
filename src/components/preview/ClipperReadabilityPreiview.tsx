@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ClipperReadabilityPreiviewData } from '../../store/ClipperPreview';
 import * as styles from './index.scss';
-import * as HyperMD from 'HyperMD';
+import * as HyperMD from 'hypermd';
 import { observer } from 'mobx-react';
 
 export interface ClipperReadabilityPreiviewProps {
