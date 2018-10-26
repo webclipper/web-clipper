@@ -9,7 +9,8 @@ describe('测试 Loading 组件', function () {
 
   it('测试 Loading 文本', function () {
     const wrapper = shallow(<Loading></Loading>);
-    expect(wrapper.find('p').text()).toBe('loading');
+    expect(wrapper.find('div').hasClass('loadingContainer')).toBe(true);
+    expect(wrapper.find('span').text()).toBe('正在加载语雀剪藏');
   });
 
 });

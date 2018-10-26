@@ -1,7 +1,12 @@
 import * as React from 'react';
+import { Icon } from 'antd';
+import * as styles from './index.scss';
 
 const Loading = () => {
-  //todo 换一个加载动画
-  return (<p>loading</p>);
+  return (
+    <div className={styles.loadingContainer}>
+      <Icon type="loading" />
+      <span>正在加载语雀剪藏</span>
+    </div>);
 };
 export default Loading;
