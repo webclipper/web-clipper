@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 const writeFile = (path, data, opts = 'utf8') =>
   new Promise((res, rej) => {
@@ -16,6 +17,17 @@ const readFile = (path, opts = 'utf8') =>
     });
   });
 
+const mkdirsSync = (dirname) => {
+  if (fs.existsSync(dirname)) {
+    return true;
+  } else {
+    if (mkdirsSync(path.dirname(dirname))) {
+      fs.mkdirSync(dirname);
+      return true;
+    }
+  }
+};
+
 class ChromeManifestPlugin {
   constructor(options) {
     this.options = options;
@@ -27,6 +39,7 @@ class ChromeManifestPlugin {
       const manifest = packageJson.chrome;
       manifest.version = packageJson.version;
       manifest.description = packageJson.description;
+      mkdirsSync(path.dirname(this.options.out));
       await writeFile(this.options.out, JSON.stringify(manifest));
     });
 
