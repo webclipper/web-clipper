@@ -1,7 +1,19 @@
-# 语雀剪藏
 
-剪切网页保存到语雀中。
+<h1 align="center">语雀剪藏</h1>
+<p align="center">
+    <a href="https://travis-ci.org/yuquewebclipper/yuque-web-clipper">
+      <img src="https://img.shields.io/travis/yuquewebclipper/yuque-web-clipper/master.svg?style=flat-square" alt="Build Status">
+    </a>
+    <a href="https://codecov.io/gh/yuquewebclipper/yuque-web-clipper">
+      <img src="https://img.shields.io/codecov/c/github/yuquewebclipper/yuque-web-clipper/master.svg?style=flat-square" alt="Codecov">
+    </a>
+</p>
 
+### 安装
+
+[Chrome商店](https://chrome.google.com/webstore/detail/语雀剪藏/pdecnpgmmhjfnoiebndphjggimhjhdog)
+
+[离线安装](https://www.yuque.com/yuqueclipper/av5y68/ayau8f)
 
 ### 如何开发
 
@@ -23,7 +35,7 @@ $ yarn dev
 $ yarn test /src
 ```
 
-⚠️ 目前测试文件中写了一个 token。请**不要**用自己的 token 替换，否则会造成你**删除全部的个人以及团队知识库**
+⚠️ 目前测试文件中写了一个 token。在运行测试的时候，请**不要**用自己的 token 替换，否则会造成你**删除全部的个人以及团队知识库**
 
 ### 剪藏所使用的开源框架与工具
 
