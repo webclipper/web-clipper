@@ -1,4 +1,3 @@
-import { DocumentInfo } from './../../../../dist/js/lib/services/common/contentScripttool/index.d';
 import { ActionMessageType } from './../../../enums/actionMessageType';
 import { SelectAreaPosion } from '../areaSelector';
 
