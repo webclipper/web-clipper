@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as HyperMD from 'HyperMD';
+import * as HyperMD from 'hypermd';
 import { ClipperSelectedItemPreiviewData } from '../../store/ClipperPreview';
 import * as styles from './index.scss';
 import { Button } from 'antd';

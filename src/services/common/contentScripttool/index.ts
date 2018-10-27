@@ -1,6 +1,5 @@
-import { DocumentInfo } from './../../../../dist/js/lib/services/common/contentScripttool/index.d';
 import { ActionMessageType } from './../../../enums/actionMessageType';
-import { SelectAreaPosion } from '../AreaSelector';
+import { SelectAreaPosion } from '../areaSelector';
 
 export interface DocumentInfo {
   title: string;

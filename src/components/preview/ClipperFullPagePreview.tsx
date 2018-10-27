@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ClipperFullPagePreiviewData } from '../../store/ClipperPreview';
 import * as styles from './index.scss';
-import * as HyperMD from 'HyperMD';
+import * as HyperMD from 'hypermd';
 
 export interface ClipperFullPagePreiviewProps {
   data: ClipperFullPagePreiviewData;
