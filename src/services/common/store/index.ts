@@ -1,14 +1,12 @@
 import { RepoPublicType } from '../../../enums';
 
 export interface CommonStorage {
-
   set(key: string, value: any): Promise<void>;
 
   get<T>(key: string): Promise<T>;
 }
 
 export class ChromeSyncStoregeImpl implements CommonStorage {
-
   public async set(key: string, item: Object): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       let tempObject: any = {};
@@ -48,6 +46,7 @@ export interface StorageUserInfo {
   baseURL: string;
   defualtBookId?: number;
   defualtDocumentPublic?: RepoPublicType;
+  closeQRCode?: boolean;
 }
 
 export interface TypedCommonStorageInterface {
@@ -57,7 +56,7 @@ export interface TypedCommonStorageInterface {
 }
 
 class TypedCommonStorage implements TypedCommonStorageInterface {
-  store: CommonStorage
+  store: CommonStorage;
 
   constructor() {
     this.store = new ChromeSyncStoregeImpl();

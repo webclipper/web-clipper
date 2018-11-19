@@ -17,62 +17,85 @@ interface ClipperToolContainerProps {
 
 @observer
 class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
-
-  @computed get toolStore() {
+  @computed
+  get toolStore() {
     return this.props.toolState;
   }
 
-  @computed get showPreiview() {
-    return !!this.toolStore.clipperPreiviewDataType && !this.toolStore.submitting && !this.toolStore.complate && !this.toolStore.loading;
+  @computed
+  get showPreiview() {
+    return (
+      !!this.toolStore.clipperPreiviewDataType &&
+      !this.toolStore.submitting &&
+      !this.toolStore.complate &&
+      !this.toolStore.loading
+    );
   }
 
   render() {
     let content;
     if (this.toolStore.loading) {
-      content = <Loading></Loading>;
+      content = <Loading />;
     } else {
       if (!this.toolStore.complate) {
-        content = <ClipperTool
-          clipperPreiviewDataType={this.toolStore.clipperPreiviewDataType}
-          book={this.toolStore.book}
-          books={this.toolStore.books}
-          onGoToSetting={this.toolStore.onGoToSetting}
-          onDeleteElement={this.toolStore.onDeleteElement}
-          submitting={this.toolStore.submitting}
-          onPostNote={this.toolStore.onPostNote}
-          onClipperData={this.toolStore.onClipperData}
-          userProfile={this.toolStore.userProfile}
-          onSetBookId={this.toolStore.onSetBookId}
-          userHomePage={this.toolStore.userHomePage}
-          onChangeTitle={this.toolStore.changeTitle}
-          title={this.toolStore.title} ></ClipperTool>;
+        content = (
+          <ClipperTool
+            clipperPreiviewDataType={this.toolStore.clipperPreiviewDataType}
+            book={this.toolStore.book}
+            books={this.toolStore.books}
+            onGoToSetting={this.toolStore.onGoToSetting}
+            onDeleteElement={this.toolStore.onDeleteElement}
+            submitting={this.toolStore.submitting}
+            onPostNote={this.toolStore.onPostNote}
+            onClipperData={this.toolStore.onClipperData}
+            userProfile={this.toolStore.userProfile}
+            onSetBookId={this.toolStore.onSetBookId}
+            userHomePage={this.toolStore.userHomePage}
+            onChangeTitle={this.toolStore.changeTitle}
+            title={this.toolStore.title}
+          />
+        );
       } else {
-        content = <Complate href={this.toolStore.createdDocumentHref}></Complate>;
+        content = (
+          <Complate
+            userSetting={this.toolStore.userSetting}
+            createdDocumentInfo={this.toolStore.createdDocumentInfo}
+            yuqueToken={this.toolStore.yuqueToken}
+          />
+        );
       }
     }
     return (
       <div>
-        <div className={styles.previewContainer} onClick={this.toolStore.handleCloseTool}></div>
+        <div
+          className={styles.previewContainer}
+          onClick={this.toolStore.handleCloseTool}
+        />
         <div className={styles.clipperToolContainer}>
           <div style={{ position: 'relative' }}>
-            <div className={styles.closeButton} onClick={this.toolStore.handleCloseTool}>
+            <div
+              className={styles.closeButton}
+              onClick={this.toolStore.handleCloseTool}
+            >
               <Icon type="close" />
             </div>
             <div>{content}</div>
-            {
-              !this.toolStore.settingPreferemce && this.showPreiview && <PreviewContent map={this.toolStore.clipperPreiviewDataMap} type={this.toolStore.clipperPreiviewDataType}></PreviewContent>
-            }
-            {
-              this.toolStore.settingPreferemce &&
+            {!this.toolStore.settingPreferemce && this.showPreiview && (
+              <PreviewContent
+                map={this.toolStore.clipperPreiviewDataMap}
+                type={this.toolStore.clipperPreiviewDataType}
+              />
+            )}
+            {this.toolStore.settingPreferemce && (
               <div className={styles.settingContainer}>
                 <Preference
-                  storage={this.toolStore.storage}
+                  changeSetting={this.toolStore.setUserSetting}
+                  userSetting={this.toolStore.userSetting}
                   books={this.toolStore.books}
                   defaultBook={this.toolStore.book}
-                  yuqueapi={this.toolStore.yuqueApi} >
-                </Preference>
+                />
               </div>
-            }
+            )}
           </div>
         </div>
       </div>
