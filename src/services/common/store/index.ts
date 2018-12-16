@@ -1,3 +1,4 @@
+import { ClipperPreiviewDataTypeEnum } from './../../../enums/ClipperDataTypeEnum';
 import { RepoPublicType } from '../../../enums';
 
 export interface CommonStorage {
@@ -46,6 +47,8 @@ export interface StorageUserInfo {
   baseURL: string;
   defualtBookId?: number;
   defualtDocumentPublic?: RepoPublicType;
+  /** 默认的剪藏类型 */
+  defaultClipperType?: ClipperPreiviewDataTypeEnum | '';
   closeQRCode?: boolean;
 }
 

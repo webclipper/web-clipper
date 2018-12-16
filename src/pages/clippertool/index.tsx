@@ -40,6 +40,7 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
       if (!this.toolStore.complate) {
         content = (
           <ClipperTool
+            userSetting={this.toolStore.userSetting}
             clipperPreiviewDataType={this.toolStore.clipperPreiviewDataType}
             book={this.toolStore.book}
             books={this.toolStore.books}
