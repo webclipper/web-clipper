@@ -40,7 +40,7 @@ export class ToolStore {
   @observable submitting: boolean;
   @observable loading: boolean;
   @observable settingPreference: boolean;
-  @observable complate: boolean;
+  @observable complete: boolean;
   @observable book: BookSerializer;
   @observable createdDocumentInfo: {
     documentId: number;
@@ -96,10 +96,10 @@ export class ToolStore {
     this.book = defaultBook;
     this.clipperPreiviewDataMap = {};
     this.userSetting = userSetting;
-    this.complateLoading();
+    this.completeLoading();
   }
 
-  @action complateLoading = () => {
+  @action completeLoading = () => {
     this.loading = false;
   };
 
@@ -123,7 +123,7 @@ export class ToolStore {
       postDocRequest
     );
     runInAction(() => {
-      this.complate = true;
+      this.complete = true;
       this.submitting = false;
       this.createdDocumentInfo = {
         documentId: createdDocument.id,

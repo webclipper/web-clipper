@@ -5,7 +5,7 @@ import * as styles from './index.scss';
 import * as QRCode from 'qrcode';
 import { StorageUserInfo } from '../../services/common/store';
 
-interface ComplateProps {
+interface CompleteProps {
   createdDocumentInfo: {
     documentId: number;
     bookId: number;
@@ -16,15 +16,15 @@ interface ComplateProps {
   userSetting: StorageUserInfo;
   yuqueToken: string;
 }
-interface ComplateState {
+interface CompleteState {
   QRCodeUrl: string;
   incloudToken: boolean;
 }
 
 const qrcodeHost = `https://yuquewebclipper.diamondyuan.com/pro/`;
 
-class Complate extends React.Component<ComplateProps, ComplateState> {
-  constructor(props: ComplateProps) {
+class Complete extends React.Component<CompleteProps, CompleteState> {
+  constructor(props: CompleteProps) {
     super(props);
     this.state = {
       QRCodeUrl: '',
@@ -104,4 +104,4 @@ class Complate extends React.Component<ComplateProps, ComplateState> {
     );
   }
 }
-export default Complate;
+export default Complete;

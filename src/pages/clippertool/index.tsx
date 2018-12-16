@@ -6,7 +6,7 @@ import { Icon } from 'antd';
 import * as styles from './index.scss';
 import Loading from '../../components/loading';
 import ClipperTool from '../../components/clippertool';
-import Complate from '../../components/complete';
+import Complete from '../../components/complete';
 
 import PreviewContent from '../../components/preview';
 import Preference from '../../components/preference';
@@ -27,7 +27,7 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
     return (
       !!this.toolStore.clipperPreiviewDataType &&
       !this.toolStore.submitting &&
-      !this.toolStore.complate &&
+      !this.toolStore.complete &&
       !this.toolStore.loading
     );
   }
@@ -37,7 +37,7 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
     if (this.toolStore.loading) {
       content = <Loading />;
     } else {
-      if (!this.toolStore.complate) {
+      if (!this.toolStore.complete) {
         content = (
           <ClipperTool
             userSetting={this.toolStore.userSetting}
@@ -58,7 +58,7 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
         );
       } else {
         content = (
-          <Complate
+          <Complete
             userSetting={this.toolStore.userSetting}
             createdDocumentInfo={this.toolStore.createdDocumentInfo}
             yuqueToken={this.toolStore.yuqueToken}
