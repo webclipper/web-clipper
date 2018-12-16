@@ -39,7 +39,7 @@ export class ToolStore {
   @observable elementId: string;
   @observable submitting: boolean;
   @observable loading: boolean;
-  @observable settingPreferemce: boolean;
+  @observable settingPreference: boolean;
   @observable complate: boolean;
   @observable book: BookSerializer;
   @observable createdDocumentInfo: {
@@ -57,7 +57,7 @@ export class ToolStore {
     this.initialization = false;
     this.submitting = false;
     this.loading = true;
-    this.settingPreferemce = false;
+    this.settingPreference = false;
     this.storage = store;
     contentScriptTool.getDocumentInfo().then(re => {
       this.title = re.title;
@@ -146,7 +146,7 @@ export class ToolStore {
   };
 
   @action onClipperData = async (type: ClipperPreiviewDataTypeEnum) => {
-    this.settingPreferemce = false;
+    this.settingPreference = false;
     let ClipperPreiviewData = this.clipperPreiviewDataMap[type];
     if (ClipperPreiviewData) {
       this.clipperPreiviewDataType = type;
@@ -202,7 +202,7 @@ export class ToolStore {
   };
 
   @action onGoToSetting = () => {
-    this.settingPreferemce = !this.settingPreferemce;
+    this.settingPreference = !this.settingPreference;
   };
 
   handleCloseTool = () => {

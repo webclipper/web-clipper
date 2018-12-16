@@ -81,13 +81,13 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
               <Icon type="close" />
             </div>
             <div>{content}</div>
-            {!this.toolStore.settingPreferemce && this.showPreiview && (
+            {!this.toolStore.settingPreference && this.showPreiview && (
               <PreviewContent
                 map={this.toolStore.clipperPreiviewDataMap}
                 type={this.toolStore.clipperPreiviewDataType}
               />
             )}
-            {this.toolStore.settingPreferemce && (
+            {this.toolStore.settingPreference && (
               <div className={styles.settingContainer}>
                 <Preference
                   changeSetting={this.toolStore.setUserSetting}
