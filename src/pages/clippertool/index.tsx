@@ -6,7 +6,7 @@ import { Icon } from 'antd';
 import * as styles from './index.scss';
 import Loading from '../../components/loading';
 import ClipperTool from '../../components/clippertool';
-import Complate from '../../components/complate';
+import Complate from '../../components/complete';
 
 import PreviewContent from '../../components/preview';
 import Preference from '../../components/preference';
