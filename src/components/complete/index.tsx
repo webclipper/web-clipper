@@ -18,7 +18,7 @@ interface CompleteProps {
 }
 interface CompleteState {
   QRCodeUrl: string;
-  incloudToken: boolean;
+  includeToken: boolean;
 }
 
 const qrcodeHost = `https://yuquewebclipper.diamondyuan.com/pro/`;
@@ -28,7 +28,7 @@ class Complete extends React.Component<CompleteProps, CompleteState> {
     super(props);
     this.state = {
       QRCodeUrl: '',
-      incloudToken: false
+      includeToken: false
     };
   }
 
@@ -40,7 +40,7 @@ class Complete extends React.Component<CompleteProps, CompleteState> {
     let qrResult = `${qrcodeHost}/index?repo_id=${
       this.props.createdDocumentInfo.bookId
     }&id=${this.props.createdDocumentInfo.documentId}`;
-    if (this.state.incloudToken) {
+    if (this.state.includeToken) {
       qrResult += `&token=${this.props.yuqueToken}`;
     }
     QRCode.toDataURL(
@@ -58,7 +58,7 @@ class Complete extends React.Component<CompleteProps, CompleteState> {
   };
 
   handleChange = (checked: boolean) => {
-    this.setState({ incloudToken: checked }, () => {
+    this.setState({ includeToken: checked }, () => {
       this.loadQRCode();
     });
   };
@@ -92,7 +92,7 @@ class Complete extends React.Component<CompleteProps, CompleteState> {
             <div>
               <span>附带语雀 Token </span>
               <Switch onChange={this.handleChange} />
-              {this.state.incloudToken && (
+              {this.state.includeToken && (
                 <p style={{ paddingTop: '10px' }}>
                     扫描后会自动在小程序中登陆，请注意保密。
                 </p>
