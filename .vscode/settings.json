@@ -1,4 +1,5 @@
 {
+  "prettier.eslintIntegration": true,
   "editor.detectIndentation": false,
   "eslint.autoFixOnSave": true,
   "editor.formatOnSave": true,
