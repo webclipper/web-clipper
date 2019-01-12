@@ -1,45 +1,45 @@
 #main-tool {
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-bottom: 18px;
-    .section {
-        padding-top: 16px;
-        text-align: left;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 18px;
+  .section {
+    padding-top: 16px;
+    text-align: left;
+  }
+  .section-title {
+    text-align: left;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 8px 0;
+  }
+  .menu-button {
+    text-align: left;
+    border: none;
+    box-shadow: none;
+    span {
+      font-size: 16px;
     }
-    .section-title {
-        text-align: left;
-        color: rgba(0, 0, 0, 0.45);
-        font-size: 14px;
-        line-height: 1.5;
-        margin: 0 0 8px 0;
+  }
+  .save-button {
+    span {
+      font-size: 16px;
     }
-    .menu-button {
-        text-align: left;
-        border: none;
-        box-shadow:none;
-        span{
-            font-size: 16px;
-        }
-    }
-    .save-button{
-        span{
-            font-size: 16px;
-        }
-    }
-    .toolbar {
-        font-size: 18px;
-        display: flex;
-        justify-content: space-between;
-    }
-    .toolbar-button {
-        border: none;
-        columns: #E8E8E8;
-        font-size: 18px;
-        box-shadow:none;
-    }
-    .section-line {
-        border-top: 1px solid #E8E8E8;
-        margin-top: 24px;
-        padding-top: 16px;
-    }
+  }
+  .toolbar {
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .toolbar-button {
+    border: none;
+    columns: #e8e8e8;
+    font-size: 18px;
+    box-shadow: none;
+  }
+  .section-line {
+    border-top: 1px solid #e8e8e8;
+    margin-top: 24px;
+    padding-top: 16px;
+  }
 }

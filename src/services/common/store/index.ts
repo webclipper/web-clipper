@@ -3,7 +3,6 @@ import { RepoPublicType } from '../../../enums';
 
 export interface CommonStorage {
   set(key: string, value: any): Promise<void>;
-
   get<T>(key: string): Promise<T>;
 }
 

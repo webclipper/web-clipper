@@ -13,11 +13,8 @@ appState.init().catch(err => {
 });
 
 export default class App extends React.Component<{}, any> {
-
   public render() {
-    return (
-      <ClipperToolContainer toolState={appState}></ClipperToolContainer>
-    );
+    return <ClipperToolContainer toolState={appState} />;
   }
 }
 
@@ -27,7 +24,4 @@ if (document.getElementById(styles.app) == null) {
   document.body.appendChild(element);
   element.className = styles.app;
 }
-ReactDOM.render(<App />,
-  document.getElementById(styles.app)
-);
-
+ReactDOM.render(<App />, document.getElementById(styles.app));

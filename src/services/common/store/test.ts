@@ -6,12 +6,12 @@ async function testStorageInChrome(): Promise<void> {
   const storage = new ChromeSyncStoregeImpl();
   //测试储存数字
   await storage.set(StorageKeyEnum.TEST_KEY, 1);
-  if (await storage.get(StorageKeyEnum.TEST_KEY) !== 1) {
+  if ((await storage.get(StorageKeyEnum.TEST_KEY)) !== 1) {
     return Promise.reject(new Error('store 储存数字的功能失效'));
   }
   //测试储存字符串
   await storage.set(StorageKeyEnum.TEST_KEY, '123');
-  if (await storage.get(StorageKeyEnum.TEST_KEY) !== '123') {
+  if ((await storage.get(StorageKeyEnum.TEST_KEY)) !== '123') {
     return Promise.reject(new Error('store 储存字符串的功能失效'));
   }
   //测试储存对象

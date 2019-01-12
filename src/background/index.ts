@@ -5,7 +5,7 @@ if (process.env.NODE_ENV === 'development') {
   chrome.browserAction.setIcon({ path: 'icons/yuque-dev.png' });
 }
 
-chrome.runtime.onInstalled.addListener(function (details) {
+chrome.runtime.onInstalled.addListener(function(details) {
   if (details.reason === 'install') {
     console.log('Install Success');
     chrome.tabs.create({ url: chrome.extension.getURL('initialize.html') });
@@ -29,21 +29,21 @@ async function tabStatus(tabId: number): Promise<any> {
 }
 
 chrome.browserAction.onClicked.addListener(async (tab: any) => {
-  if (!await tabStatus(tab.id)) {
+  if (!(await tabStatus(tab.id))) {
     chrome.tabs.executeScript(tab.id, { file: 'js/content_script.js' }, () => {
       if (chrome.runtime.lastError) {
         alert('暂时无法剪辑此类型的页面。');
         return;
       }
       const massage: ActionMessage = {
-        action: ActionMessageType.ICON_CLICK,
+        action: ActionMessageType.ICON_CLICK
       };
       chrome.tabs.sendMessage(tab.id, massage);
       return;
     });
   }
   const massage: ActionMessage = {
-    action: ActionMessageType.ICON_CLICK,
+    action: ActionMessageType.ICON_CLICK
   };
   chrome.tabs.sendMessage(tab.id, massage);
 });

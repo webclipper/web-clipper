@@ -3,7 +3,6 @@ import * as styles from './index.scss';
 const highlight_class = styles.simpreadHighlightSelector;
 
 export default class Highlighter {
-
   private previous: any;
 
   constructor() {
@@ -12,7 +11,7 @@ export default class Highlighter {
 
   public start() {
     return new Promise((resolve, reject) => {
-      $('html').one('click', (event) => {
+      $('html').one('click', event => {
         if (!this.previous) return;
         $(event.target).removeClass(highlight_class);
         $('html').off('mousemove', this.mousemoveEvent);
@@ -22,7 +21,9 @@ export default class Highlighter {
       });
       $('html').one('keydown', event => {
         if (event.keyCode === 27 && this.previous) {
-          $('html').find(`.${highlight_class}`).removeClass(highlight_class);
+          $('html')
+            .find(`.${highlight_class}`)
+            .removeClass(highlight_class);
           $('html').off('mousemove', this.mousemoveEvent);
           this.previous = null;
           event.preventDefault();
@@ -42,5 +43,4 @@ export default class Highlighter {
     }
     this.previous = $(event.target);
   };
-
 }

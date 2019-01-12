@@ -11,11 +11,10 @@ export interface SelectAreaPosion {
 }
 
 export default class AreaSelector {
-
-  private startClip: boolean
-  private endClip: boolean
-  private mousedownPoint: Point
-  private mouseupPoint: Point
+  private startClip: boolean;
+  private endClip: boolean;
+  private mousedownPoint: Point;
+  private mouseupPoint: Point;
 
   constructor() {
     this.startClip = false;
@@ -27,14 +26,14 @@ export default class AreaSelector {
       const element = document.createElement('div');
       element.setAttribute('id', styles.crossLine);
       document.body.appendChild(element);
-      $('html').one('mousedown', (event) => {
+      $('html').one('mousedown', event => {
         this.mousedownPoint = {
           clientX: event.clientX!,
           clientY: event.clientY!
         };
         $(`#${styles.crossLine}`).remove();
         this.startClip = true;
-        $('html').one('mouseup', (event) => {
+        $('html').one('mouseup', event => {
           this.mouseupPoint = {
             clientX: event.clientX!,
             clientY: event.clientY!
@@ -76,7 +75,6 @@ export default class AreaSelector {
   }
 
   private mousemoveEvent = (event: any) => {
-
     event.preventDefault();
 
     if (this.startClip && this.endClip) {
@@ -99,10 +97,14 @@ export default class AreaSelector {
       });
       $(elemsent).css('top', area.leftTop!.clientY);
       $(elemsent).css('left', area.leftTop!.clientX);
-      $(elemsent).css('height', area.rightBottom!.clientY - area.leftTop!.clientY);
-      $(elemsent).css('width', area.rightBottom!.clientX - area.leftTop!.clientX);
+      $(elemsent).css(
+        'height',
+        area.rightBottom!.clientY - area.leftTop!.clientY
+      );
+      $(elemsent).css(
+        'width',
+        area.rightBottom!.clientX - area.leftTop!.clientX
+      );
     }
-
   };
-
 }

@@ -21,7 +21,7 @@ export class UserServiceImpl implements UserService {
   public async getUser(): Promise<UserProfile> {
     return this.request
       .get('/user')
-      .then((result) => {
+      .then(result => {
         return Promise.resolve({
           avatar_url: result.data.avatar_url,
           id: result.data.id,
@@ -29,7 +29,7 @@ export class UserServiceImpl implements UserService {
           login: result.data.login
         });
       })
-      .catch((err) => {
+      .catch(err => {
         return Promise.reject(err);
       });
   }

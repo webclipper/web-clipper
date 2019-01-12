@@ -59,7 +59,7 @@ export default class Preference extends React.Component<PreferenceProps> {
     this.props.changeSetting(newConfig);
   };
 
-  onSet = (type: ClipperPreiviewDataTypeEnum | "") => {
+  onSet = (type: ClipperPreiviewDataTypeEnum | '') => {
     const newConfig = update(this.props.userSetting, {
       defaultClipperType: {
         $set: type

@@ -44,10 +44,13 @@ export interface CreateBookResponse {
 
 export interface ReposService {
   createUsersRepos(
-    createUsersReposRequest: CreateUsersReposRequest,
+    createUsersReposRequest: CreateUsersReposRequest
   ): Promise<CreateBookResponse>;
 
-  getUserRepos(userIdentity: string | number, query?: GetUserReposQuery): Promise<BookSerializer[]>;
+  getUserRepos(
+    userIdentity: string | number,
+    query?: GetUserReposQuery
+  ): Promise<BookSerializer[]>;
 
   getRepoDetails(repoIdentity: string | number): Promise<BookSerializer>;
 
@@ -62,52 +65,64 @@ export class ReposServiceImpl implements ReposService {
   }
 
   public async createUsersRepos(
-    createUsersReposRequest: CreateUsersReposRequest,
+    createUsersReposRequest: CreateUsersReposRequest
   ): Promise<CreateBookResponse> {
-    return this.request.post(`/users/${createUsersReposRequest.userid}/repos`,
-      qs.stringify(createUsersReposRequest.repoConfig), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      },
-    ).then((re) => {
-      return Promise.resolve(re.data);
-    }).catch((err) => {
-      return Promise.reject(err);
-    });
+    return this.request
+      .post(
+        `/users/${createUsersReposRequest.userid}/repos`,
+        qs.stringify(createUsersReposRequest.repoConfig),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }
+      )
+      .then(re => {
+        return Promise.resolve(re.data);
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
   }
 
-  public async getUserRepos(userIdentity: string | number, query: GetUserReposQuery): Promise<BookSerializer[]> {
-    return this.request.get(`/users/${userIdentity}/repos?${qs.stringify(query)}`).then(
-      re => {
+  public async getUserRepos(
+    userIdentity: string | number,
+    query: GetUserReposQuery
+  ): Promise<BookSerializer[]> {
+    return this.request
+      .get(`/users/${userIdentity}/repos?${qs.stringify(query)}`)
+      .then(re => {
         if (!_.isEmpty(re.data) && _.isArray(re.data)) {
           return Promise.resolve(re.data);
         }
         return Promise.resolve([]);
-      }
-    ).catch((err) => {
-      return Promise.reject(err);
-    });
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
   }
 
-  public async getRepoDetails(repoIdentity: string | number): Promise<BookSerializer> {
-    return this.request.get(`/repos/${repoIdentity}`).then(
-      re => {
+  public async getRepoDetails(
+    repoIdentity: string | number
+  ): Promise<BookSerializer> {
+    return this.request
+      .get(`/repos/${repoIdentity}`)
+      .then(re => {
         return Promise.resolve(re.data);
-      }
-    ).catch((err) => {
-      return Promise.reject(err);
-    });
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
   }
 
   public async deleteRepos(repoIdentity: string | number): Promise<void> {
-    return this.request.delete(`/repos/${repoIdentity}`).then(
-      _ => {
+    return this.request
+      .delete(`/repos/${repoIdentity}`)
+      .then(_ => {
         return Promise.resolve();
-      }
-    ).catch((err) => {
-      return Promise.reject(err);
-    });
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
   }
-
 }

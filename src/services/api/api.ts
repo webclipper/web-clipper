@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import { UserService, UserServiceImpl } from './userService';
 import { ReposService, ReposServiceImpl } from './reposService';
@@ -10,7 +9,6 @@ export interface YuqueConfigServer {
 }
 
 export default class YuqueApi {
-
   public userService: UserService;
   public reposService: ReposService;
   public documentService: DocumentService;
@@ -19,14 +17,16 @@ export default class YuqueApi {
     const request = axios.create({
       baseURL: config.baseURL,
       headers: {
-        'X-Auth-Token': config.token,
+        'X-Auth-Token': config.token
       },
       timeout: 10000,
-      transformResponse: [(data): any => {
-        // 做任何你想要的数据转换
-        return JSON.parse(data).data;
-      }],
-      withCredentials: true,
+      transformResponse: [
+        (data): any => {
+          // 做任何你想要的数据转换
+          return JSON.parse(data).data;
+        }
+      ],
+      withCredentials: true
     });
 
     this.userService = new UserServiceImpl(request);

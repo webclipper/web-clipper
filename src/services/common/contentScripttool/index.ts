@@ -29,7 +29,6 @@ export class ContentScriptToolImpl implements ContentScriptTool {
   }
   public async getFullPage() {
     return gerResult<string>(ActionMessageType.GET_FULL_PAGE_MARKDOWN);
-
   }
   public async getReadabilityContent() {
     return gerResult<string>(ActionMessageType.GET_READABILITY_MARKDOWN);
@@ -42,22 +41,25 @@ export class ContentScriptToolImpl implements ContentScriptTool {
   }
   public async captureVisibleTabBase64() {
     return new Promise<string>((resolve, _) => {
-      chrome.tabs.captureVisibleTab((image) => {
+      chrome.tabs.captureVisibleTab(image => {
         resolve(image);
       });
     });
   }
 }
 
-const gerResult = function <T>(message: ActionMessageType): Promise<T> {
+const gerResult = function<T>(message: ActionMessageType): Promise<T> {
   return new Promise<T>((resolve, _) => {
     chrome.tabs.getCurrent((tab: any) => {
-      chrome.tabs.sendMessage(tab.id, {
-        action: message
-      }, (re: T) => {
-        resolve(re);
-      });
+      chrome.tabs.sendMessage(
+        tab.id,
+        {
+          action: message
+        },
+        (re: T) => {
+          resolve(re);
+        }
+      );
     });
   });
 };
-

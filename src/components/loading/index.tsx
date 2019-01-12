@@ -7,6 +7,7 @@ const Loading = () => {
     <div className={styles.loadingContainer}>
       <Icon type="loading" />
       <span>正在加载语雀剪藏</span>
-    </div>);
+    </div>
+  );
 };
 export default Loading;
