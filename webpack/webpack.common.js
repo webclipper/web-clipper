@@ -37,21 +37,24 @@ const baseConfig = {
       },
       {
         test: /\.(png|jpg|gif)$/,
-        loader: 'url-loader?limit=1024000',
+        loader: 'url-loader?limit=1024000'
       },
       {
         test: /\.less$/,
         use: [
           {
             loader: 'style-loader'
-          }, {
+          },
+          {
             loader: 'css-loader'
-          }, {
+          },
+          {
             loader: 'less-loader',
             options: {
               javascriptEnabled: true
             }
-          }]
+          }
+        ]
       },
       {
         exclude: /node_modules/,
@@ -85,13 +88,15 @@ const baseConfig = {
     }
   },
   plugins: [
-    process.env.NODE_ENV === 'development' ? new WebpackChromeReloaderPlugin({
-      reloadPage: false,
-      entries: {
-        contentScript: 'content_script',
-        background: 'background'
-      }
-    }) : null,
+    process.env.NODE_ENV === 'development'
+      ? new WebpackChromeReloaderPlugin({
+        reloadPage: false,
+        entries: {
+          contentScript: 'content_script',
+          background: 'background'
+        }
+      })
+      : null,
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
@@ -101,6 +106,7 @@ const baseConfig = {
 
 const commonConfig = merge(baseConfig, {
   entry: {
+    pluginStore: resolve('src/pages/pluginStore/index.tsx'),
     initialize: resolve('src/pages/initialize/index.tsx'),
     background: resolve('src/background/index.ts'),
     tool: resolve('src/pages/tool/index.tsx')
@@ -125,7 +131,7 @@ const commonConfig = merge(baseConfig, {
     ]),
     new ChromeManifestPlugin({
       packageJson: path.resolve(__dirname, '../package.json'),
-      out: path.resolve(__dirname, '../dist/manifest.json'),
+      out: path.resolve(__dirname, '../dist/manifest.json')
     }),
     new HtmlWebpackPlugin({
       title: '语雀剪藏向导',
@@ -133,10 +139,15 @@ const commonConfig = merge(baseConfig, {
       chunks: ['initialize', 'vendor']
     }),
     new HtmlWebpackPlugin({
+      title: '插件中心',
+      filename: '../pluginStore.html',
+      chunks: ['pluginStore', 'vendor']
+    }),
+    new HtmlWebpackPlugin({
       title: '语雀剪藏插件',
       filename: '../tool.html',
       chunks: ['tool', 'vendor']
-    }),
+    })
   ]
 });
 

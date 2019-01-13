@@ -23,7 +23,7 @@
     "codemirror": "^5.40.2",
     "dayjs": "^1.7.5",
     "hypermd": "^0.3.10",
-    "immutability-helper": "^2.8.1",
+    "immutability-helper": "^2.9.0",
     "jquery": "^3.3.1",
     "lodash": "^4.17.10",
     "mobx": "^5.1.0",
@@ -33,7 +33,10 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "readability": "DiamondYuan/readability",
-    "turndown": "^5.0.1"
+    "redux": "^4.0.1",
+    "redux-saga": "^0.16.2",
+    "turndown": "^5.0.1",
+    "typescript-fsa": "^3.0.0-beta-2"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.72",
