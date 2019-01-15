@@ -38,8 +38,11 @@ class ClipperToolContainer extends React.Component<ClipperToolContainerProps> {
       content = <Loading />;
     } else {
       if (!this.toolStore.complete) {
+        const { uploadingImage, uploadImage } = this.toolStore;
         content = (
           <ClipperTool
+            uploadImage={uploadImage}
+            uploadingImage={uploadingImage}
             userSetting={this.toolStore.userSetting}
             clipperPreiviewDataType={this.toolStore.clipperPreiviewDataType}
             book={this.toolStore.book}

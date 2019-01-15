@@ -10,12 +10,14 @@ import { StorageUserInfo } from '../../services/common/store';
 export interface ClipperToolPorps {
   title: string;
   submitting: boolean;
+  uploadingImage: boolean;
   clipperPreiviewDataType: ClipperPreiviewDataTypeEnum;
   books: BookSerializer[];
   userProfile: UserProfile;
   book: BookSerializer;
   userHomePage: string;
   userSetting: StorageUserInfo;
+  uploadImage: () => void;
   onSetBookId: (input: number) => void;
   onPostNote: () => void;
   onChangeTitle: (input: string) => void;
@@ -50,7 +52,16 @@ class ClipperTool extends React.Component<ClipperToolPorps> {
     return !this.props.clipperPreiviewDataType;
   };
 
+  onSyncImage = () => {
+    if (this.props.uploadingImage) {
+      return;
+    }
+    this.props.uploadImage();
+  };
+
   render() {
+    const { uploadingImage } = this.props;
+
     return (
       <div id={styles.mainTool}>
         <section className={styles.section}>
@@ -80,6 +91,13 @@ class ClipperTool extends React.Component<ClipperToolPorps> {
             onClick={this.props.onDeleteElement}
           >
             <Icon type="delete" />
+          </Button>
+          <Button
+            className={styles.menuButton}
+            title="同步图片到语雀"
+            onClick={this.onSyncImage}
+          >
+            <Icon type="sync" spin={uploadingImage} />
           </Button>
         </section>
         <section className={`${styles.section} ${styles.sectionLine}`}>

@@ -7,6 +7,8 @@ import { observable, action } from 'mobx';
 export interface ClipperPreiviewData {
   perpare?(): void;
   toBody(): string;
+  getContent?(): string;
+  setContent?(content: string): void;
 }
 
 export class ClipperUrlPreiviewData implements ClipperPreiviewData {
@@ -16,6 +18,14 @@ export class ClipperUrlPreiviewData implements ClipperPreiviewData {
   constructor(href: string) {
     this.href = href;
   }
+
+  @action getContent = () => {
+    return this.mark;
+  };
+
+  @action setContent = (input: string) => {
+    this.mark = input;
+  };
 
   @action setMark = (input: string) => {
     this.mark = input;
@@ -38,6 +48,14 @@ export class ClipperFullPagePreiviewData implements ClipperPreiviewData {
     this.fullPage = fullPage;
   }
 
+  @action getContent = () => {
+    return this.fullPage;
+  };
+
+  @action setContent = (input: string) => {
+    this.fullPage = input;
+  };
+
   @action setFullPage = (input: string) => {
     this.fullPage = input;
   };
@@ -57,6 +75,14 @@ export class ClipperSelectedItemPreiviewData implements ClipperPreiviewData {
     this.getSelectItem = getSelectItem;
   }
 
+  @action getContent = () => {
+    return this.selectedItem;
+  };
+
+  @action setContent = (input: string) => {
+    this.selectedItem = input;
+  };
+
   @action setSelectedItem = (input: string) => {
     this.selectedItem = input;
   };
@@ -75,9 +101,21 @@ export class ClipperSelectedItemPreiviewData implements ClipperPreiviewData {
 export class ClipperReadabilityPreiviewData implements ClipperPreiviewData {
   @observable content: string;
 
+  @observable findCount?: number;
+
+  @observable successCount?: number;
+
   constructor(fullPage: string) {
     this.content = fullPage;
   }
+
+  @action getContent = () => {
+    return this.content;
+  };
+
+  @action setContent = (input: string) => {
+    this.content = input;
+  };
 
   @action changeContent = (input: string) => {
     this.content = input;

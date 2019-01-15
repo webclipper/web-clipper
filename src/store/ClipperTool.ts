@@ -1,7 +1,7 @@
 import { TypedCommonStorageInterface } from './../services/common/store/index';
 import { ContentScriptTool } from './../services/common/contentScripttool/index';
 import { message } from 'antd';
-
+import axios from 'axios';
 import { observable, action, runInAction } from 'mobx';
 
 import YuqueApi from '../services/api/api';
@@ -39,6 +39,7 @@ export class ToolStore {
   @observable elementId: string;
   @observable submitting: boolean;
   @observable loading: boolean;
+  @observable uploadingImage: boolean;
   @observable settingPreference: boolean;
   @observable complete: boolean;
   @observable book: BookSerializer;
@@ -59,6 +60,7 @@ export class ToolStore {
     this.loading = true;
     this.settingPreference = false;
     this.storage = store;
+    this.uploadingImage = false;
     contentScriptTool.getDocumentInfo().then(re => {
       this.title = re.title;
       this.url = re.url;
@@ -145,6 +147,20 @@ export class ToolStore {
     })!;
   };
 
+  getCookie = async () => {
+    return new Promise<void>((resolve, _) => {
+      chrome.cookies.get(
+        {
+          url: 'https://www.yuque.com',
+          name: 'ctoken'
+        },
+        function(cookie: any) {
+          resolve(cookie.value);
+        }
+      );
+    });
+  };
+
   @action onClipperData = async (type: ClipperPreiviewDataTypeEnum) => {
     this.settingPreference = false;
     let ClipperPreiviewData = this.clipperPreiviewDataMap[type];
@@ -207,6 +223,79 @@ export class ToolStore {
 
   handleCloseTool = () => {
     this.contentScriptTool.toggleClipperTool();
+  };
+
+  @action uploadImage = async () => {
+    const {
+      clipperPreiviewDataType,
+      clipperPreiviewDataMap,
+      settingPreference
+    } = this;
+    const data = clipperPreiviewDataMap[clipperPreiviewDataType];
+    this.uploadingImage = true;
+    if (!clipperPreiviewDataType || settingPreference) {
+      this.uploadingImage = false;
+      message.info('没有数据');
+      return;
+    }
+    if (this.baseHost !== 'https://www.yuque.com') {
+      this.uploadingImage = false;
+      message.info('只支持上传到 yuque.com');
+      return;
+    }
+    const cookie = await this.getCookie();
+    if (data && data.getContent && data.setContent) {
+      let content = data.getContent();
+      const result = content.match(/!\[.*?\]\(http(.*?)\)/g);
+      if (result) {
+        const images: string[] = result
+          .map(o => {
+            const temp = /!\[.*?\]\((http.*?)\)/.exec(o);
+            if (temp) {
+              return temp[1];
+            }
+            return '';
+          })
+          .filter(o => o && !o.startsWith('https://cdn-pri.nlark.com'));
+        for (let image of images) {
+          try {
+            const res = await axios.get(image, { responseType: 'blob' });
+            let blob: Blob = res.data;
+            if (blob.type === 'image/webp') {
+              blob = blob.slice(0, blob.size, 'image/jpeg');
+            }
+            const imageContentType = [
+              'image/svg+xml',
+              'image/jpeg',
+              'image/webp',
+              'image/png',
+              'image/gif'
+            ];
+            if (imageContentType.indexOf(blob.type) !== -1) {
+              let formData = new FormData();
+              formData.append('file', blob, 'test.png');
+              const result = await axios.post(
+                `${
+                  this.baseHost
+                }/api/upload/attach?ctoken=${cookie}&type=image`,
+                formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }
+              );
+              content = content.replace(image, result.data.data.url);
+              data.setContent(content);
+            }
+          } catch (error) {
+            console.log('上传失败');
+          }
+        }
+      }
+    }
+    message.info('上传成功');
+    this.uploadingImage = false;
   };
 
   @action setUserSetting = async (newSetting: StorageUserInfo) => {

@@ -6,6 +6,18 @@ import * as Readability from 'readability';
 import Highlighter from '../services/common/highlight';
 import AreaSelector from '../services/common/areaSelector';
 
+const turndownService = TurndownService();
+turndownService.addRule('lazyLoadImage', {
+  filter: ['img'],
+  replacement: function(_: any, node: any) {
+    const dataSrc = node.getAttribute('data-src');
+    if (dataSrc) {
+      return `![](${dataSrc})`;
+    }
+    return `![](${node.getAttribute('src')})`;
+  }
+});
+
 chrome.runtime.onMessage.addListener(
   (message: ActionMessage, _, sendResponse) => {
     if (
@@ -53,7 +65,6 @@ chrome.runtime.onMessage.addListener(
     $body.find('script').remove();
     $body.find('style').remove();
     $body.removeClass();
-    const turndownService = TurndownService();
     sendResponse(turndownService.turndown($body.html()));
     return true;
   }
@@ -69,7 +80,7 @@ chrome.runtime.onMessage.addListener(
     }
     let documentClone = document.cloneNode(true);
     let article = new Readability(documentClone).parse();
-    const turndownService = TurndownService();
+
     sendResponse(turndownService.turndown(article.content));
     return true;
   }
@@ -120,7 +131,6 @@ chrome.runtime.onMessage.addListener(
     $(`.${styles.toolFrame}`).toggle();
     new Highlighter().start().then(re => {
       $(`.${styles.toolFrame}`).toggle();
-      const turndownService = TurndownService();
       sendResponse(turndownService.turndown(re));
     });
     return true;
