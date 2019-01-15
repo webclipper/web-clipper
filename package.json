@@ -1,6 +1,6 @@
 {
   "name": "yuque-web-clipper",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "非官方语雀剪藏软件",
   "scripts": {
     "commit": "git-cz",
