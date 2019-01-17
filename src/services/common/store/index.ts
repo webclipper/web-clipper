@@ -1,5 +1,4 @@
 import { ClipperPreiviewDataTypeEnum } from './../../../enums/ClipperDataTypeEnum';
-import { RepoPublicType } from '../../../enums';
 
 export interface CommonStorage {
   set(key: string, value: any): Promise<void>;
@@ -45,7 +44,6 @@ export interface StorageUserInfo {
   token: string;
   baseURL: string;
   defualtBookId?: number;
-  defualtDocumentPublic?: RepoPublicType;
   /** 默认的剪藏类型 */
   defaultClipperType?: ClipperPreiviewDataTypeEnum | '';
   closeQRCode?: boolean;
@@ -64,13 +62,13 @@ class TypedCommonStorage implements TypedCommonStorageInterface {
     this.store = new ChromeSyncStoregeImpl();
   }
 
-  async setUserSetting(userInfo: StorageUserInfo) {
+  setUserSetting = async (userInfo: StorageUserInfo) => {
     await this.store.set('userInfo', userInfo);
-  }
+  };
 
-  async getUserSetting(): Promise<StorageUserInfo> {
+  getUserSetting = async (): Promise<StorageUserInfo> => {
     return this.store.get<StorageUserInfo>('userInfo');
-  }
+  };
 }
 
 export default new TypedCommonStorage();
