@@ -109,7 +109,7 @@ const commonConfig = merge(baseConfig, {
     pluginStore: resolve('src/pages/pluginStore/index.tsx'),
     initialize: resolve('src/pages/initialize/index.tsx'),
     background: resolve('src/background/index.ts'),
-    tool: resolve('src/pages/tool/index.tsx')
+    tool: resolve('src/pages/app.tsx')
   },
   optimization: {
     splitChunks: {

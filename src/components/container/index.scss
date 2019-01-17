@@ -1,0 +1,20 @@
+.mainContainer {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 12px 0px;
+  border: 2px solid #dddddd;
+}
+
+.toolContainer {
+  position: relative;
+  width: 324px;
+  height: auto;
+  background: #fff;
+  padding: 10px;
+}
+.closeButton {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
