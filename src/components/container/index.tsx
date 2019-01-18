@@ -32,3 +32,9 @@ export class ToolContainer extends React.Component<ToolContainerProps> {
     );
   }
 }
+
+export class CenterContainer extends React.Component {
+  public render() {
+    return <div className={styles.centerContainer}>{this.props.children}</div>;
+  }
+}
