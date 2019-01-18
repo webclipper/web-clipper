@@ -4,7 +4,7 @@ import backend from '../../services/backend';
 
 export function* asyncFetchUserInfoSaga() {
   try {
-    const response: UserInfoResponse = yield call(backend.service.getUserInfo);
+    const response: UserInfo = yield call(backend.service.getUserInfo);
     yield put(
       asyncFetchUserInfo.done({
         result: {

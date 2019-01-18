@@ -1,11 +1,10 @@
 import { spawn, call, put } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 import { initUserPreference } from '../actions/userPreference';
-import { asyncFetchUserInfo } from '../actions/userInfo';
-
 import storage, { StorageUserInfo } from '../../services/common/store';
 import backendService from '../../services/backend';
-import { userInfoRootSagas } from './userInfo';
+import { userInfoRootSagas, asyncFetchUserInfoSaga } from './userInfo';
+import { clipperRootSagas, asyncFetchRepositorySaga } from './clipper';
 
 const makeRestartable = (saga: any) => {
   return function* () {
@@ -36,13 +35,16 @@ function* initStore() {
     //todo 配置转换
     const userPreferenceStore = result;
     yield put(initUserPreference({ userPreferenceStore }));
-    yield put(asyncFetchUserInfo.started());
+    yield call(asyncFetchUserInfoSaga);
+    yield call(asyncFetchRepositorySaga);
   } else {
     //todo gotoSettingPage
   }
 }
 
-export const rootSagas = [userInfoRootSagas].map(makeRestartable);
+export const rootSagas = [userInfoRootSagas, clipperRootSagas].map(
+  makeRestartable
+);
 
 export default function* root() {
   yield rootSagas.map(saga => call(saga));

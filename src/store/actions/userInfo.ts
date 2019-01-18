@@ -6,7 +6,7 @@ import { USER_INFO } from './actionTypes';
 export const asyncFetchUserInfo = actionCreator.async<
 void,
 {
-userInfo: UserInfoResponse;
+userInfo: UserInfo;
 },
 void
 >(USER_INFO.ASYNC_FETCH_USER_INFO);

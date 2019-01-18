@@ -11,7 +11,7 @@ interface Repository {
   namespace: string;
 }
 
-interface UserInfoResponse {
+interface UserInfo {
   name: string;
   avatar: string;
   homePage: string;
@@ -44,5 +44,5 @@ interface BackendService {
 
   createDocument(request: CreateDocumentRequest): Promise<void>;
 
-  getUserInfo(): Promise<UserInfoResponse>;
+  getUserInfo(): Promise<UserInfo>;
 }

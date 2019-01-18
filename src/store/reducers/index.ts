@@ -1,7 +1,7 @@
 import { HistoryType } from './../index';
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
-import { clipper } from './clipper';
+import clipper from './clipper';
 import { userInfo } from './userInfo';
 import { userPreference } from './userPreference';
 

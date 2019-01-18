@@ -5,26 +5,31 @@ import { ToolContainer } from '../../components/container';
 import { Button, Input, Icon, Select, Avatar } from 'antd';
 import * as styles from './index.scss';
 import { emptyFunction } from '../../utils';
+import { updateTitle, asyncCreateDocument } from '../../store/actions/clipper';
 
 const useActions = {
-  postDocument: emptyFunction,
-  changeTitle: emptyFunction,
+  postDocument: asyncCreateDocument.started,
+  updateTitle,
   setRepositoryId: emptyFunction,
   uploadImage: emptyFunction
 };
 
 const Option = Select.Option;
 
-const mapStateToProps = (store: GlobalStore) => {
+const mapStateToProps = ({
+  userInfo,
+  clipper,
+  userPreference
+}: GlobalStore) => {
   return {
     uploadingImage: true,
-    avatar: '',
-    userHomePage: '',
-    data: store,
-    title: '标题',
+    avatar: userInfo.avatar,
+    userHomePage: userInfo.homePage,
+    title: clipper.title,
     disabledPost: false,
+    haveImageService: userPreference.haveImageService,
     currentRepository: { id: 1 },
-    repositories: [{ id: 1, name: '12' }, { id: 2, name: '22' }]
+    repositories: clipper.repositories
   };
 };
 type PageState = {};
@@ -41,7 +46,9 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 
 class Page extends React.Component<PageProps, PageState> {
   onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.changeTitle(e.target.value);
+    this.props.updateTitle({
+      title: e.target.value
+    });
   };
 
   onRepositorySelect = (select: number) => {
@@ -64,13 +71,16 @@ class Page extends React.Component<PageProps, PageState> {
       uploadImage,
       uploadingImage,
       repositories,
-      currentRepository
+      currentRepository,
+      avatar,
+      userHomePage,
+      haveImageService
     } = this.props;
     return (
       <ToolContainer>
         <section className={styles.section}>
           <h1 className={styles.sectionTitle}>笔记标题</h1>
-          <Input value={title} onChange={this.props.changeTitle} />
+          <Input value={title} onChange={this.onTitleChange} />
           <Button
             className={styles.saveButton}
             style={{ marginTop: 16 }}
@@ -90,15 +100,17 @@ class Page extends React.Component<PageProps, PageState> {
           <Button className={styles.menuButton} title="删除网页上的元素">
             <Icon type="delete" />
           </Button>
-          <Button
-            onClick={() => {
-              uploadImage();
-            }}
-            className={styles.menuButton}
-            title="同步图片到语雀"
-          >
-            <Icon type="sync" spin={uploadingImage} />
-          </Button>
+          {haveImageService && (
+            <Button
+              onClick={() => {
+                uploadImage();
+              }}
+              className={styles.menuButton}
+              title="同步图片到语雀"
+            >
+              <Icon type="sync" spin={uploadingImage} />
+            </Button>
+          )}
         </section>
         <section className={`${styles.section} ${styles.sectionLine}`}>
           <h1 className={styles.sectionTitle}>剪藏格式</h1>
@@ -147,8 +159,8 @@ class Page extends React.Component<PageProps, PageState> {
           <Button className={`${styles.toolbarButton} `}>
             <Icon type="setting" />
           </Button>
-          <a href={this.props.userHomePage} target="_blank">
-            <Avatar src={this.props.avatar} />
+          <a href={userHomePage} target="_blank">
+            <Avatar src={avatar} />
           </a>
         </section>
       </ToolContainer>

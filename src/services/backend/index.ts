@@ -1,3 +1,5 @@
+import YuqueBackendService from './yuque';
+
 interface BackendFactoryOption {
   type: 'yuque' | 'github';
   accessToken: string;
@@ -8,15 +10,14 @@ class BackendFactory {
   service: BackendService;
   imageService?: ImageService;
 
-  config(_option: BackendFactoryOption) {
-    this.service = {} as BackendService;
-    this.service.getUserInfo = async () => {
-      return {
-        name: '1',
-        avatar: '1',
-        homePage: '1'
-      };
-    };
+  config(option: BackendFactoryOption) {
+    if (option.type === 'yuque') {
+      let { accessToken, baseURL } = option;
+      this.service = new YuqueBackendService({
+        baseURL,
+        accessToken
+      });
+    }
     //Todo
   }
 }
