@@ -1,16 +1,18 @@
-const USER_PREFERENCE = actionTypeReset('USER_PREFERENCE', {
+import { actionTypeHelper } from './actionTypeHelper';
+
+export const USER_PREFERENCE = actionTypeHelper('USER_PREFERENCE', {
   INIT_USER_PREFERENCE: ''
 });
 
-const USER_INFO = actionTypeReset('USER_INFO', {
+export const USER_INFO = actionTypeHelper('USER_INFO', {
   ASYNC_FETCH_USER_INFO: ''
 });
 
-function actionTypeReset<T>(nameSpace: string, object: T): T {
-  Object.keys(object).forEach(key => {
-    (object as any)[key] = `${nameSpace}/${key}`;
-  });
-  return object;
-}
-
-export { USER_PREFERENCE, USER_INFO };
+export const CLIPPER = actionTypeHelper('CLIPPER', {
+  ASYNC_FETCH_REPOSITORY: '',
+  ASYNC_CREATE_REPOSITORY: '',
+  ASYNC_CREATE_DOCUMENT: '',
+  ASYNC_UPLOAD_IMAGE: '',
+  SELECT_REPOSITORY: '',
+  UPDATE_TITLE: ''
+});

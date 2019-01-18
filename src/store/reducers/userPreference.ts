@@ -1,10 +1,13 @@
 import { Action } from 'redux';
 
-const defaultState: UserInfoStore = {};
+const defaultState: UserPreferenceStore = {
+  haveImageService: false,
+  closeQRCode: false
+};
 
 export function userPreference(
-  state = defaultState,
+  state: UserPreferenceStore = defaultState,
   _action: Action
-): UserInfoStore {
+): UserPreferenceStore {
   return state;
 }
