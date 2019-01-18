@@ -1,7 +1,7 @@
 import { takeEvery, fork, call, put } from 'redux-saga/effects';
 import { asyncFetchUserInfo } from '../actions/userInfo';
 import backend from '../../services/backend';
-
+import { push } from 'connected-react-router';
 export function* asyncFetchUserInfoSaga() {
   try {
     const response: UserInfo = yield call(backend.service.getUserInfo);
@@ -12,6 +12,7 @@ export function* asyncFetchUserInfoSaga() {
         }
       })
     );
+    yield put(push('/welcome/index'));
   } catch (error) {
     console.log(error);
     //todo 判断错误还是网络超时
