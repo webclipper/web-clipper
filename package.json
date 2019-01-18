@@ -10,6 +10,10 @@
     "lint": "eslint --ext .js,.ts,.tsx --ignore-pattern bad.* .",
     "release": "zsh shell/release.zsh"
   },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "config": {
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
@@ -80,6 +84,7 @@
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "node-sass": "^4.9.3",
+    "pre-commit": "^1.2.2",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
     "ts-jest": "^23.1.4",
