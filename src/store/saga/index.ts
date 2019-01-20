@@ -24,6 +24,7 @@ const makeRestartable = (saga: any) => {
 
 function* initStore() {
   const result: StorageUserInfo = yield call(storage.getUserSetting);
+  // storage.setUserSetting({} as StorageUserInfo);
   //todo 判断是否有token
   const checkToken = true;
   if (checkToken) {

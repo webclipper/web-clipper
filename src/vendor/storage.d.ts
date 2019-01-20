@@ -16,6 +16,11 @@ interface ClipperStore {
   title?: string;
   repositories: Repository[];
   currentRepository?: Repository;
+  selectRepository: {
+    createMode: boolean;
+    repositoryTitle: string;
+    creating: boolean;
+  };
 }
 
 interface CompletePageStore {
