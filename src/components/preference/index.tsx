@@ -102,7 +102,7 @@ export default class Preference extends React.Component<PreferenceProps> {
                 >
                   {this.props.books.map(o => {
                     return (
-                      <Option key={o.id} value={o.id}>
+                      <Option key={o.id.toString()} value={o.id}>
                         {o.name}
                       </Option>
                     );

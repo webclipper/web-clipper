@@ -5,13 +5,19 @@ import { ToolContainer } from '../../components/container';
 import { Button, Input, Icon, Select, Avatar } from 'antd';
 import * as styles from './index.scss';
 import { emptyFunction } from '../../utils';
-import { updateTitle, asyncCreateDocument } from '../../store/actions/clipper';
+import {
+  updateTitle,
+  asyncCreateDocument,
+  cancelCreateRepository
+} from '../../store/actions/clipper';
+import Xxx from './dropdown';
 
 const useActions = {
   postDocument: asyncCreateDocument.started,
   updateTitle,
   setRepositoryId: emptyFunction,
-  uploadImage: emptyFunction
+  uploadImage: emptyFunction,
+  onCancelCreate: cancelCreateRepository
 };
 
 const Option = Select.Option;
@@ -22,17 +28,22 @@ const mapStateToProps = ({
   userPreference
 }: GlobalStore) => {
   return {
+    createMode: true,
+    loadingRepositories: false,
     uploadingImage: true,
     avatar: userInfo.avatar,
     userHomePage: userInfo.homePage,
     title: clipper.title,
     disabledPost: false,
+    isCreateRepository: true,
     haveImageService: userPreference.haveImageService,
     currentRepository: { id: 1 },
-    repositories: clipper.repositories
+    repositories: [{ id: 1, name: 1 }]
   };
 };
-type PageState = {};
+type PageState = {
+  openSelect: boolean;
+};
 
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
@@ -45,6 +56,14 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   );
 
 class Page extends React.Component<PageProps, PageState> {
+  private lock?: any = null;
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      openSelect: false
+    };
+  }
+
   onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.props.updateTitle({
       title: e.target.value
@@ -52,7 +71,8 @@ class Page extends React.Component<PageProps, PageState> {
   };
 
   onRepositorySelect = (select: number) => {
-    this.props.setRepositoryId(select);
+    console.log('select', select);
+    // this.props.setRepositoryId(select);
   };
 
   onSyncImage = () => {
@@ -62,6 +82,23 @@ class Page extends React.Component<PageProps, PageState> {
   onFilterOption = (select: any, option: React.ReactElement<any>) => {
     const title: string = option.props.children;
     return title.indexOf(select) !== -1;
+  };
+
+  onDropdownVisibleChange = (openSelect: boolean) => {
+    if (this.lock) {
+      return;
+    }
+    this.setState({ openSelect });
+    if (!openSelect) {
+      this.props.onCancelCreate();
+    }
+  };
+
+  onLockSelect = () => {
+    clearTimeout(this.lock);
+    this.lock = setTimeout(() => {
+      this.lock = null;
+    }, 100);
   };
 
   render() {
@@ -74,7 +111,8 @@ class Page extends React.Component<PageProps, PageState> {
       currentRepository,
       avatar,
       userHomePage,
-      haveImageService
+      haveImageService,
+      loadingRepositories
     } = this.props;
     return (
       <ToolContainer>
@@ -138,6 +176,10 @@ class Page extends React.Component<PageProps, PageState> {
         <section className={styles.section}>
           <h1 className={styles.sectionTitle}>保存的知识库</h1>
           <Select
+            onDropdownVisibleChange={this.onDropdownVisibleChange}
+            open={this.state.openSelect}
+            loading={loadingRepositories}
+            disabled={loadingRepositories}
             onSelect={this.onRepositorySelect}
             style={{ width: '100%' }}
             showSearch
@@ -145,10 +187,13 @@ class Page extends React.Component<PageProps, PageState> {
             filterOption={this.onFilterOption}
             dropdownMatchSelectWidth={true}
             defaultValue={currentRepository.id}
+            dropdownRender={main => {
+              return <Xxx onLockSelect={this.onLockSelect}>{main}</Xxx>;
+            }}
           >
             {repositories.map(o => {
               return (
-                <Option key={o.id} value={o.id}>
+                <Option key={o.id.toString()} value={o.id}>
                   {o.name}
                 </Option>
               );

@@ -171,7 +171,7 @@ class ClipperTool extends React.Component<ClipperToolPorps> {
           >
             {this.props.books.map(o => {
               return (
-                <Option key={o.id} value={o.id}>
+                <Option key={o.id.toString()} value={o.id}>
                   {o.name}
                 </Option>
               );

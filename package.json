@@ -24,7 +24,7 @@
   "dependencies": {
     "@types/react-redux": "^6.0.12",
     "@types/react-router": "^4.4.3",
-    "antd": "^3.8.4",
+    "antd": "^3.12.3",
     "axios": "^0.18.0",
     "codemirror": "^5.40.2",
     "connected-react-router": "^6.2.1",
