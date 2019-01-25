@@ -9,6 +9,7 @@ interface UserInfoStore {
   name?: string;
   avatar?: string;
   homePage?: string;
+  form?: any;
 }
 
 interface ClipperStore {
@@ -29,9 +30,15 @@ interface CompletePageStore {
 }
 interface UserPreferenceStore {
   closeQRCode: boolean;
-  token?: string;
-  baseURL?: string;
+  accessToken?: string;
   defaultRepositoryId?: string;
   defaultClipperType?: string;
   haveImageService: boolean;
+  initializeForm: InitializeForm;
+}
+
+interface InitializeForm {
+  token?: any;
+  host?: any;
+  defaultRepository?: any;
 }

@@ -8,15 +8,18 @@ import { emptyFunction } from '../../utils';
 import {
   updateTitle,
   asyncCreateDocument,
-  cancelCreateRepository
+  cancelCreateRepository,
+  selectRepository
 } from '../../store/actions/clipper';
+import { push } from 'connected-react-router';
 import Xxx from './dropdown';
 
 const useActions = {
   postDocument: asyncCreateDocument.started,
   updateTitle,
-  setRepositoryId: emptyFunction,
+  selectRepository: selectRepository,
   uploadImage: emptyFunction,
+  push,
   onCancelCreate: cancelCreateRepository
 };
 
@@ -37,8 +40,8 @@ const mapStateToProps = ({
     disabledPost: false,
     isCreateRepository: true,
     haveImageService: userPreference.haveImageService,
-    currentRepository: { id: 1 },
-    repositories: [{ id: 1, name: 1 }]
+    defaultRepositoryId: userPreference.defaultRepositoryId,
+    repositories: clipper.repositories
   };
 };
 type PageState = {
@@ -70,9 +73,8 @@ class Page extends React.Component<PageProps, PageState> {
     });
   };
 
-  onRepositorySelect = (select: number) => {
-    console.log('select', select);
-    // this.props.setRepositoryId(select);
+  onRepositorySelect = (repositoryId: string) => {
+    this.props.selectRepository({ repositoryId });
   };
 
   onSyncImage = () => {
@@ -108,7 +110,7 @@ class Page extends React.Component<PageProps, PageState> {
       uploadImage,
       uploadingImage,
       repositories,
-      currentRepository,
+      defaultRepositoryId,
       avatar,
       userHomePage,
       haveImageService,
@@ -186,7 +188,7 @@ class Page extends React.Component<PageProps, PageState> {
             optionFilterProp="children"
             filterOption={this.onFilterOption}
             dropdownMatchSelectWidth={true}
-            defaultValue={currentRepository.id}
+            defaultValue={defaultRepositoryId}
             dropdownRender={main => {
               return <Xxx onLockSelect={this.onLockSelect}>{main}</Xxx>;
             }}
@@ -201,7 +203,12 @@ class Page extends React.Component<PageProps, PageState> {
           </Select>
         </section>
         <section className={`${styles.toolbar} ${styles.sectionLine}`}>
-          <Button className={`${styles.toolbarButton} `}>
+          <Button
+            className={`${styles.toolbarButton} `}
+            onClick={() => {
+              this.props.push('/preference');
+            }}
+          >
             <Icon type="setting" />
           </Button>
           <a href={userHomePage} target="_blank">

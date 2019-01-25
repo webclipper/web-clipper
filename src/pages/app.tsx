@@ -7,10 +7,8 @@ import { configStore, history } from '../store/index';
 import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from 'connected-react-router';
 import Tool from './tool';
-import Preference from './preference';
 import Complete from './tool/complete';
-import Welcome from './welcome';
-import Select from './welcome/select';
+import Preference from './preference';
 
 if (document.getElementById(styles.app) == null) {
   const element = document.createElement('div');
@@ -27,8 +25,6 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={Tool} />
         <Route exact path="/complete" component={Complete} />
-        <Route exact path="/welcome/index" component={Welcome} />
-        <Route exact path="/welcome/select" component={Select} />
         <Route exact path="/preference" component={Preference} />
       </Switch>
     </ConnectedRouter>

@@ -2,9 +2,10 @@ import { spawn, call, put } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 import { initUserPreference } from '../actions/userPreference';
 import storage, { StorageUserInfo } from '../../services/common/store';
-import backendService from '../../services/backend';
+import backendService, { documentServiceFactory } from '../../services/backend';
 import { userInfoRootSagas, asyncFetchUserInfoSaga } from './userInfo';
 import { clipperRootSagas, asyncFetchRepositorySaga } from './clipper';
+import { userPreferenceSagas } from './userPreference';
 
 const makeRestartable = (saga: any) => {
   return function* () {
@@ -24,17 +25,19 @@ const makeRestartable = (saga: any) => {
 
 function* initStore() {
   const result: StorageUserInfo = yield call(storage.getUserSetting);
-  // storage.setUserSetting({} as StorageUserInfo);
-  //todo 判断是否有token
   const checkToken = true;
   if (checkToken) {
-    backendService.config({
+    const documentService = documentServiceFactory({
       accessToken: result.token,
       baseURL: result.baseURL,
       type: 'yuque'
     });
-    //todo 配置转换
-    const userPreferenceStore = result;
+    backendService.setDocumentService(documentService);
+    const userPreferenceStore = {
+      defaultRepositoryId: '1',
+      defaultClipperType: result.defaultClipperType,
+      accessToken: result.token
+    };
     yield put(initUserPreference({ userPreferenceStore }));
     yield call(asyncFetchUserInfoSaga);
     yield call(asyncFetchRepositorySaga);
@@ -43,9 +46,11 @@ function* initStore() {
   }
 }
 
-export const rootSagas = [userInfoRootSagas, clipperRootSagas].map(
-  makeRestartable
-);
+export const rootSagas = [
+  userInfoRootSagas,
+  clipperRootSagas,
+  userPreferenceSagas
+].map(makeRestartable);
 
 export default function* root() {
   yield rootSagas.map(saga => call(saga));

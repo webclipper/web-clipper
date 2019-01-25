@@ -21,7 +21,7 @@ interface RepositoryResponse {
   created_at: string;
 }
 
-export default class YuqueBackendService implements BackendService {
+export default class YuqueDocumentService implements DocumentService {
   private request: AxiosInstance;
   private baseURL: string;
   private login?: string;
@@ -48,7 +48,7 @@ export default class YuqueBackendService implements BackendService {
   getUserInfo = async () => {
     const res = await this.request.get<UserInfoResponse>('/user');
     const apiResponse = res.data;
-    const { avatar_url, name, login } = apiResponse;
+    const { avatar_url: avatar, name, login } = apiResponse;
     this.login = login;
     const index = this.baseURL.lastIndexOf('/api/v2');
     let host = this.baseURL;
@@ -57,7 +57,7 @@ export default class YuqueBackendService implements BackendService {
     }
     return {
       name: name,
-      avatar: avatar_url,
+      avatar,
       homePage: `${host}/${login}`
     };
   };
@@ -65,12 +65,21 @@ export default class YuqueBackendService implements BackendService {
   getRepositories = async () => {
     return this.getYuqueRepositories(0);
   };
-  public async createDocument(info: any) {
-    console.log(info);
+  public async createDocument(_info: any) {
+    return '';
   }
   public async createRepository(info: any) {
     console.log(info);
   }
+  public async getAbility() {
+    return {
+      document: {
+        label: false,
+        settingPermissions: false
+      }
+    };
+  }
+
   private getYuqueRepositories = async (offset: number) => {
     if (!this.login) {
       await this.getUserInfo();
@@ -83,7 +92,13 @@ export default class YuqueBackendService implements BackendService {
     );
     const repositories = response.data;
     const result = repositories.map(repository => {
-      const { id, name, namespace, created_at, description } = repository;
+      const {
+        id,
+        name,
+        namespace,
+        created_at: createdAt,
+        description
+      } = repository;
       return {
         id: id.toString(),
         name,
@@ -91,7 +106,7 @@ export default class YuqueBackendService implements BackendService {
         description,
         owner: namespace.split('/')[0],
         private: !repository.public,
-        createdAt: created_at
+        createdAt
       };
     });
     return result;

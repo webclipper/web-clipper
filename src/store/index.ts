@@ -5,20 +5,20 @@ import createSageMiddleWare from 'redux-saga';
 import rootSaga from './saga';
 import { createMemoryHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
+import { composeWithDevTools } from 'remote-redux-devtools';
 
 const sagaMiddleware = createSageMiddleWare();
 
 export const history = createMemoryHistory();
 
 export type HistoryType = typeof history;
-
 const middleware = [routerMiddleware(history), createLogger(), sagaMiddleware];
 
 function configStore() {
   const store = createStore(
     createRootReducer(history),
     {},
-    applyMiddleware(...middleware)
+    composeWithDevTools(applyMiddleware(...middleware))
   );
   sagaMiddleware.run(rootSaga);
   return store;
