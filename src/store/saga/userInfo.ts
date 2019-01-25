@@ -1,10 +1,12 @@
 import { takeEvery, fork, call, put } from 'redux-saga/effects';
 import { asyncFetchUserInfo } from '../actions/userInfo';
 import backend from '../../services/backend';
-// import { push } from 'connected-react-router';
+import { push } from 'connected-react-router';
 export function* asyncFetchUserInfoSaga() {
   try {
-    const response: UserInfo = yield call(backend.service.getUserInfo);
+    const response: UserInfo = yield call(
+      backend.getDocumentService().getUserInfo
+    );
     yield put(
       asyncFetchUserInfo.done({
         result: {
@@ -13,7 +15,7 @@ export function* asyncFetchUserInfoSaga() {
       })
     );
   } catch (error) {
-    // yield put(push('/welcome/index'));
+    yield put(push('/preference'));
     //todo 判断错误还是网络超时
   }
 }

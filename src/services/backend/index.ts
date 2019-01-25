@@ -1,25 +1,34 @@
-import YuqueBackendService from './yuque';
+import YuqueDocumentService from './yuque';
 
-interface BackendFactoryOption {
+interface DocumentServiceOption {
   type: 'yuque' | 'github';
   accessToken: string;
   baseURL: string;
 }
 
-class BackendFactory {
-  service: BackendService;
-  imageService?: ImageService;
+export class BackendContext {
+  private documentService: DocumentService;
 
-  config(option: BackendFactoryOption) {
-    if (option.type === 'yuque') {
-      let { accessToken, baseURL } = option;
-      this.service = new YuqueBackendService({
-        baseURL,
-        accessToken
-      });
-    }
-    //Todo
+  setDocumentService(documentService: DocumentService) {
+    this.documentService = documentService;
+  }
+
+  getDocumentService() {
+    return this.documentService;
   }
 }
 
-export default new BackendFactory();
+export function documentServiceFactory(
+  option: DocumentServiceOption
+): DocumentService {
+  const { type, baseURL, accessToken } = option;
+  if (type === 'yuque') {
+    return new YuqueDocumentService({
+      baseURL,
+      accessToken
+    });
+  }
+  throw new Error('unSupport type');
+}
+
+export default new BackendContext();

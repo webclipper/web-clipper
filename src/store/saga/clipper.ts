@@ -9,13 +9,18 @@ import {
 import { delay } from 'redux-saga';
 import {
   asyncFetchRepository,
-  asyncCreateRepository
+  asyncCreateRepository,
+  asyncCreateDocument
 } from '../actions/clipper';
 import backend from '../../services/backend';
+import { message } from 'antd';
+import { push } from 'connected-react-router';
 
 export function* asyncFetchRepositorySaga() {
   try {
-    const response: Repository[] = yield call(backend.service.getRepositories);
+    const response: Repository[] = yield call(
+      backend.getDocumentService().getRepositories
+    );
     yield put(
       asyncFetchRepository.done({
         result: {
@@ -27,6 +32,22 @@ export function* asyncFetchRepositorySaga() {
     console.log(error);
     //todo 判断错误还是网络超时
   }
+}
+
+export function* asyncCreateDocumentSaga() {
+  const selector = (state: GlobalStore) => {
+    return {
+      currentRepository: state.clipper.currentRepository
+    };
+  };
+
+  const selectState: ReturnType<typeof selector> = yield select(selector);
+  if (!selectState.currentRepository) {
+    message.error('必须选择一个知识库');
+    return;
+  }
+  yield put(asyncCreateDocument.done({}));
+  yield put(push('/complete'));
 }
 
 export function* asyncCreateRepositorySaga() {
@@ -50,6 +71,10 @@ export function* watchAsyncCreateRepositorySaga() {
   );
 }
 
+export function* watchAsyncCreateDocumentSaga() {
+  yield takeLatest(asyncCreateDocument.started.type, asyncCreateDocumentSaga);
+}
+
 export function* watchAsyncFetchRepositorySaga() {
   yield takeEvery(asyncFetchRepository.started.type, asyncFetchRepositorySaga);
 }
@@ -57,4 +82,5 @@ export function* watchAsyncFetchRepositorySaga() {
 export function* clipperRootSagas() {
   yield fork(watchAsyncCreateRepositorySaga);
   yield fork(watchAsyncFetchRepositorySaga);
+  yield fork(watchAsyncCreateDocumentSaga);
 }

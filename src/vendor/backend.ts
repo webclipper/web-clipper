@@ -22,6 +22,7 @@ interface CreateDocumentRequest {
   content: string;
   private: boolean;
   repositoryId: string;
+  tags?: string[];
 }
 
 interface CreateRepositoryRequest {
@@ -37,12 +38,21 @@ interface ImageService {
   uploadImage(request: UploadImageRequest): Promise<void>;
 }
 
-interface BackendService {
+interface DocumentServiceAbility {
+  document: {
+    label: boolean;
+    settingPermissions: boolean;
+  };
+}
+
+interface DocumentService {
   getRepositories(): Promise<Repository[]>;
 
   createRepository(request: CreateRepositoryRequest): Promise<void>;
 
-  createDocument(request: CreateDocumentRequest): Promise<void>;
+  createDocument(request: CreateDocumentRequest): Promise<string>;
 
   getUserInfo(): Promise<UserInfo>;
+
+  getAbility(): Promise<DocumentServiceAbility>;
 }

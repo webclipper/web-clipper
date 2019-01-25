@@ -44,8 +44,10 @@
     "react-router": "^4.3.1",
     "readability": "DiamondYuan/readability",
     "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.7",
     "redux-logger": "^3.0.6",
     "redux-saga": "^0.16.2",
+    "remote-redux-devtools": "^0.5.16",
     "turndown": "^5.0.1",
     "typescript-fsa": "^3.0.0-beta-2"
   },

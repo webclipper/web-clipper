@@ -8,7 +8,8 @@ import { isType } from 'typescript-fsa';
 import {
   asyncFetchRepository,
   updateTitle,
-  startCreateRepository
+  startCreateRepository,
+  selectRepository
 } from '../actions/clipper';
 import update from 'immutability-helper';
 
@@ -92,6 +93,15 @@ export default function clipper(
           repositoryTitle: '',
           creating: false
         }
+      }
+    });
+  } else if (isType(action, selectRepository)) {
+    const currentRepository = state.repositories.find(
+      (o: Repository) => o.id === action.payload.repositoryId
+    );
+    return update(state, {
+      currentRepository: {
+        $set: currentRepository
       }
     });
   }
