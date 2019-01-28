@@ -41,3 +41,7 @@ repositoryTitle: string;
 export const asyncCreateRepository = actionCreator.async<void, void, void>(
   CLIPPER.ASYNC_CREATE_REPOSITORY
 );
+
+export const initTabInfo = actionCreator<{ title: string; url: string }>(
+  CLIPPER.INIT_TAB_INFO
+);

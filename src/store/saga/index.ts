@@ -1,3 +1,4 @@
+import { BrowserTab } from './../../services/browser/index';
 import { spawn, call, put } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 import { initUserPreference } from '../actions/userPreference';
@@ -6,6 +7,8 @@ import backendService, { documentServiceFactory } from '../../services/backend';
 import { userInfoRootSagas, asyncFetchUserInfoSaga } from './userInfo';
 import { clipperRootSagas, asyncFetchRepositorySaga } from './clipper';
 import { userPreferenceSagas } from './userPreference';
+import browserService from '../../services/browser';
+import { initTabInfo } from '../actions/clipper';
 
 const makeRestartable = (saga: any) => {
   return function* () {
@@ -45,6 +48,8 @@ function* initStore() {
       accessToken: result.token,
       baseHost: result.baseURL
     };
+    const tabInfo: BrowserTab = yield call(browserService.getCurrentTab);
+    yield put(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
     yield call(asyncFetchUserInfoSaga);
     yield call(asyncFetchRepositorySaga);
     yield put(initUserPreference({ userPreferenceStore }));
