@@ -2,7 +2,8 @@ import { asyncPostInitializeForm } from './../actions/userPreference';
 import {
   cancelCreateRepository,
   changeCreateRepositoryTitle,
-  asyncCreateRepository
+  asyncCreateRepository,
+  initTabInfo
 } from './../actions/clipper';
 import { Action } from 'redux';
 import { isType } from 'typescript-fsa';
@@ -109,6 +110,15 @@ export default function clipper(
     return update(state, {
       repositories: {
         $set: action.payload.result.repositories
+      }
+    });
+  } else if (isType(action, initTabInfo)) {
+    return update(state, {
+      url: {
+        $set: action.payload.url
+      },
+      title: {
+        $set: action.payload.title
       }
     });
   }

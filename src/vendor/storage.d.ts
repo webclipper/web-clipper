@@ -1,5 +1,3 @@
-// import { Router } from 'react-router';
-
 interface GlobalStore {
   userInfo: UserInfoStore;
   clipper: ClipperStore;
@@ -21,6 +19,7 @@ interface UserInfoStore {
 interface ClipperStore {
   /** 文章标题 */
   title?: string;
+  url?: string;
   repositories: Repository[];
   currentRepository?: Repository;
   selectRepository: {
