@@ -35,15 +35,22 @@ export function* asyncFetchRepositorySaga() {
 }
 
 export function* asyncCreateDocumentSaga() {
-  const selector = (state: GlobalStore) => {
+  const selector = ({ clipper, userPreference }: GlobalStore) => {
     return {
-      currentRepository: state.clipper.currentRepository
+      currentRepository: clipper.currentRepository,
+      defaultRepositoryId: userPreference.defaultRepositoryId,
+      title: clipper.title
     };
   };
 
   const selectState: ReturnType<typeof selector> = yield select(selector);
-  if (!selectState.currentRepository) {
+  const { currentRepository, defaultRepositoryId, title } = selectState;
+  if (!currentRepository && !defaultRepositoryId) {
     message.error('必须选择一个知识库');
+    return;
+  }
+  if (!title) {
+    message.error('标题不允许为空');
     return;
   }
   yield put(asyncCreateDocument.done({}));

@@ -1,18 +1,18 @@
+import { asyncPostInitializeForm } from './../actions/userPreference';
 import update from 'immutability-helper';
 import { Action } from 'redux';
 import { isType } from 'typescript-fsa';
 import {
   updateInitializeForm,
-  initUserPreference
+  initUserPreference,
+  asyncChangeDefaultRepository
 } from '../actions/userPreference';
 
 const defaultState: UserPreferenceStore = {
   haveImageService: false,
   closeQRCode: false,
   initializeForm: {
-    host: {
-      value: 'https://www.yuque.com'
-    }
+    uploading: false
   }
 };
 
@@ -21,10 +21,43 @@ export function userPreference(
   action: Action
 ): UserPreferenceStore {
   if (isType(action, updateInitializeForm)) {
-    const from = Object.assign({}, state.initializeForm, action.payload);
+    const from = Object.assign(
+      {
+        uploading: state.initializeForm.uploading
+      },
+      state.initializeForm,
+      action.payload
+    );
     return update(state, {
       initializeForm: {
         $set: from
+      }
+    });
+  }
+  if (isType(action, asyncPostInitializeForm.started)) {
+    return update(state, {
+      initializeForm: {
+        uploading: {
+          $set: true
+        }
+      }
+    });
+  }
+  if (isType(action, asyncPostInitializeForm.done)) {
+    return update(state, {
+      initializeForm: {
+        uploading: {
+          $set: false
+        }
+      }
+    });
+  }
+  if (isType(action, asyncPostInitializeForm.failed)) {
+    return update(state, {
+      initializeForm: {
+        uploading: {
+          $set: false
+        }
       }
     });
   }
@@ -32,7 +65,8 @@ export function userPreference(
     const {
       defaultRepositoryId,
       defaultClipperType,
-      accessToken
+      accessToken,
+      baseHost
     } = action.payload.userPreferenceStore;
 
     return update(state, {
@@ -42,8 +76,19 @@ export function userPreference(
       defaultRepositoryId: {
         $set: defaultRepositoryId
       },
+      baseHost: {
+        $set: baseHost
+      },
       defaultClipperType: {
         $set: defaultClipperType
+      }
+    });
+  }
+  if (isType(action, asyncChangeDefaultRepository.done)) {
+    const { defaultRepositoryId } = action.payload.params;
+    return update(state, {
+      defaultRepositoryId: {
+        $set: defaultRepositoryId
       }
     });
   }

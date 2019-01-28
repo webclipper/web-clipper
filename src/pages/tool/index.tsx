@@ -28,9 +28,11 @@ const Option = Select.Option;
 const mapStateToProps = ({
   userInfo,
   clipper,
-  userPreference
+  userPreference,
+  router
 }: GlobalStore) => {
   return {
+    router,
     createMode: true,
     loadingRepositories: false,
     uploadingImage: true,
@@ -39,6 +41,7 @@ const mapStateToProps = ({
     title: clipper.title,
     disabledPost: false,
     isCreateRepository: true,
+    currentRepository: clipper.currentRepository,
     haveImageService: userPreference.haveImageService,
     defaultRepositoryId: userPreference.defaultRepositoryId,
     repositories: clipper.repositories
@@ -114,8 +117,15 @@ class Page extends React.Component<PageProps, PageState> {
       avatar,
       userHomePage,
       haveImageService,
-      loadingRepositories
+      loadingRepositories,
+      currentRepository
     } = this.props;
+
+    let repositoryId = defaultRepositoryId;
+    if (currentRepository) {
+      repositoryId = currentRepository.id;
+    }
+
     return (
       <ToolContainer>
         <section className={styles.section}>
@@ -188,7 +198,7 @@ class Page extends React.Component<PageProps, PageState> {
             optionFilterProp="children"
             filterOption={this.onFilterOption}
             dropdownMatchSelectWidth={true}
-            defaultValue={defaultRepositoryId}
+            value={repositoryId}
             dropdownRender={main => {
               return <Xxx onLockSelect={this.onLockSelect}>{main}</Xxx>;
             }}
@@ -202,11 +212,16 @@ class Page extends React.Component<PageProps, PageState> {
             })}
           </Select>
         </section>
+
         <section className={`${styles.toolbar} ${styles.sectionLine}`}>
           <Button
             className={`${styles.toolbarButton} `}
             onClick={() => {
-              this.props.push('/preference');
+              if (this.props.router.location.pathname === '/') {
+                this.props.push('/preference');
+              } else {
+                this.props.push('/');
+              }
             }}
           >
             <Icon type="setting" />

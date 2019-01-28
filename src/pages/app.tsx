@@ -19,13 +19,26 @@ if (document.getElementById(styles.app) == null) {
 
 const store = configStore();
 
+function withTool(WrappedComponent: any) {
+  return class HOC extends React.Component {
+    render() {
+      return (
+        <React.Fragment>
+          <Tool />
+          <WrappedComponent />
+        </React.Fragment>
+      );
+    }
+  };
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
         <Route exact path="/" component={Tool} />
         <Route exact path="/complete" component={Complete} />
-        <Route exact path="/preference" component={Preference} />
+        <Route exact path="/preference" component={withTool(Preference)} />
       </Switch>
     </ConnectedRouter>
   </Provider>,

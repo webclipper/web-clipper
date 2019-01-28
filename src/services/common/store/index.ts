@@ -1,3 +1,4 @@
+import update from 'immutability-helper';
 import { ClipperPreiviewDataTypeEnum } from './../../../enums/ClipperDataTypeEnum';
 
 export interface CommonStorage {
@@ -53,6 +54,8 @@ export interface TypedCommonStorageInterface {
   setUserSetting(userInfo: StorageUserInfo): Promise<void>;
 
   getUserSetting(): Promise<StorageUserInfo>;
+
+  setDefaultBookId(id: string): Promise<void>;
 }
 
 class TypedCommonStorage implements TypedCommonStorageInterface {
@@ -68,6 +71,18 @@ class TypedCommonStorage implements TypedCommonStorageInterface {
 
   getUserSetting = async (): Promise<StorageUserInfo> => {
     return this.store.get<StorageUserInfo>('userInfo');
+  };
+
+  setDefaultBookId = async (id: string) => {
+    const response = (await this.store.get<StorageUserInfo>('userInfo')) || {};
+    await this.store.set(
+      'userInfo',
+      update(response, {
+        defualtBookId: {
+          $set: Number(id)
+        }
+      })
+    );
   };
 }
 
