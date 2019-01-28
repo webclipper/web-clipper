@@ -1,0 +1,17 @@
+.mainContent {
+  width: 960px;
+  height: 600px;
+  padding: 10px;
+  background: white;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 12px 0px;
+  border: 2px solid #dddddd;
+}
+
+.closeIcon {
+  position: absolute;
+  padding: 10px;
+  right: 0;
+  z-index: 100000;
+  top: 0;
+}
