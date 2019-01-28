@@ -9,6 +9,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import Tool from './tool';
 import Complete from './tool/complete';
 import Preference from './preference';
+import Plugins from './plugin/index';
 
 if (document.getElementById(styles.app) == null) {
   const element = document.createElement('div');
@@ -38,6 +39,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={Tool} />
         <Route exact path="/complete" component={Complete} />
+        <Route exact path="/plugins/:id" component={withTool(Plugins)} />
         <Route exact path="/preference" component={withTool(Preference)} />
       </Switch>
     </ConnectedRouter>

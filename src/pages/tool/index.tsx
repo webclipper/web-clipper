@@ -13,6 +13,7 @@ import {
 } from '../../store/actions/clipper';
 import { push } from 'connected-react-router';
 import Xxx from './dropdown';
+import { plugins } from '../plugin/index';
 
 const useActions = {
   postDocument: asyncCreateDocument.started,
@@ -32,6 +33,7 @@ const mapStateToProps = ({
   router
 }: GlobalStore) => {
   return {
+    plugins,
     router,
     createMode: true,
     loadingRepositories: false,
@@ -171,26 +173,25 @@ class Page extends React.Component<PageProps, PageState> {
         </section>
         <section className={`${styles.section} ${styles.sectionLine}`}>
           <h1 className={styles.sectionTitle}>剪藏格式</h1>
-          <Button block className={styles.menuButton}>
-            <Icon type="copy" />
-            整个页面
-          </Button>
-          <Button block className={styles.menuButton}>
-            <Icon type="copy" />
-            智能提取
-          </Button>
-          <Button block className={styles.menuButton}>
-            <Icon type="link" />
-            网页链接
-          </Button>
-          <Button block className={styles.menuButton}>
-            <Icon type="select" />
-            手动选择
-          </Button>
-          <Button block className={styles.menuButton}>
-            <Icon type="picture" />
-            屏幕截图
-          </Button>
+
+          {this.props.plugins.map(plugin => (
+            <Button
+              block
+              key={plugin.path}
+              className={styles.menuButton}
+              style={
+                plugin.path === this.props.router.location.pathname
+                  ? { color: '#40a9ff' }
+                  : {}
+              }
+              onClick={() => {
+                this.props.push(plugin.path);
+              }}
+            >
+              <Icon type={plugin.icon} />
+              {plugin.name}
+            </Button>
+          ))}
         </section>
         <section className={styles.section}>
           <h1 className={styles.sectionTitle}>保存的知识库</h1>
@@ -224,10 +225,10 @@ class Page extends React.Component<PageProps, PageState> {
           <Button
             className={`${styles.toolbarButton} `}
             onClick={() => {
-              if (this.props.router.location.pathname === '/') {
-                this.props.push('/preference');
-              } else {
+              if (this.props.router.location.pathname === '/preference') {
                 this.props.push('/');
+              } else {
+                this.props.push('/preference');
               }
             }}
           >
