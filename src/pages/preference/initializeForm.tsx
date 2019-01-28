@@ -3,7 +3,7 @@ import { Form, Input, Select, Button, Tooltip, Icon, Divider } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch,  } from 'redux';
-import { updateInitializeForm, asyncPostInitializeForm, changeDefaultRepository } from '../../store/actions/userPreference';
+import { updateInitializeForm, asyncPostInitializeForm, asyncChangeDefaultRepository } from '../../store/actions/userPreference';
 
 const Option = Select.Option;
 
@@ -27,7 +27,7 @@ const mapStateToProps = ({
   };
 };
 const useActions = {
-  changeDefaultRepository: changeDefaultRepository.started,
+  changeDefaultRepository: asyncChangeDefaultRepository.started,
   asyncPostInitializeForm: asyncPostInitializeForm.started,
   updateInitializeForm
 };
