@@ -13,5 +13,15 @@ export const updateInitializeForm = actionCreator<InitializeForm>(
 
 export const asyncPostInitializeForm = actionCreator.async<
 void,
-{ repositories: Repository[] }
+{ repositories: Repository[]; userInfo: UserInfo },
+{
+error: Error;
+}
 >(USER_PREFERENCE.ASYNC_POST_INITIALIZE_FORM);
+
+export const asyncChangeDefaultRepository = actionCreator.async<
+{
+defaultRepositoryId: string;
+},
+void
+>(USER_PREFERENCE.ASYNC_CHANGE_DEFAULT_REPOSITORY);

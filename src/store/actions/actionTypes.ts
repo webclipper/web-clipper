@@ -3,7 +3,8 @@ import { actionTypeHelper } from './actionTypeHelper';
 export const USER_PREFERENCE = actionTypeHelper('USER_PREFERENCE', {
   INIT_USER_PREFERENCE: '',
   UPDATE_INITIALIZE_FORM: '',
-  ASYNC_POST_INITIALIZE_FORM: ''
+  ASYNC_POST_INITIALIZE_FORM: '',
+  ASYNC_CHANGE_DEFAULT_REPOSITORY: ''
 });
 
 export const USER_INFO = actionTypeHelper('USER_INFO', {

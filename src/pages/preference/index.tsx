@@ -58,6 +58,7 @@ class Page extends React.Component<PageProps, PageState> {
               <TabPane tab="基本设置" key="1">
                 <div style={{ padding: '40px' }}>{<InitializeForm />}</div>
               </TabPane>
+              <TabPane tab="插件设置" key="2" />
             </Tabs>
           </div>
         </div>

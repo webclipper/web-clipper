@@ -27,8 +27,14 @@ export default class YuqueDocumentService implements DocumentService {
   private login?: string;
 
   constructor(config: YuqueBackendServiceConfig) {
+    const index = config.baseURL.indexOf('/api/v2');
+    if (index !== -1) {
+      this.baseURL = config.baseURL.substring(0, index);
+    } else {
+      this.baseURL = config.baseURL;
+    }
     const request = axios.create({
-      baseURL: config.baseURL,
+      baseURL: `${this.baseURL}/api/v2/`,
       headers: {
         'X-Auth-Token': config.accessToken
       },
@@ -42,23 +48,17 @@ export default class YuqueDocumentService implements DocumentService {
       withCredentials: true
     });
     this.request = request;
-    this.baseURL = config.baseURL;
   }
 
   getUserInfo = async () => {
-    const res = await this.request.get<UserInfoResponse>('/user');
+    const res = await this.request.get<UserInfoResponse>('user');
     const apiResponse = res.data;
     const { avatar_url: avatar, name, login } = apiResponse;
     this.login = login;
-    const index = this.baseURL.lastIndexOf('/api/v2');
-    let host = this.baseURL;
-    if (index !== -1) {
-      host = host.substring(0, index);
-    }
     return {
       name: name,
       avatar,
-      homePage: `${host}/${login}`
+      homePage: `${this.baseURL}/${login}`
     };
   };
 
@@ -88,7 +88,7 @@ export default class YuqueDocumentService implements DocumentService {
       offset: offset
     };
     const response = await this.request.get<RepositoryResponse[]>(
-      `/users/${this.login}/repos?${qs.stringify(query)}`
+      `users/${this.login}/repos?${qs.stringify(query)}`
     );
     const repositories = response.data;
     const result = repositories.map(repository => {

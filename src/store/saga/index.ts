@@ -33,14 +33,21 @@ function* initStore() {
       type: 'yuque'
     });
     backendService.setDocumentService(documentService);
+
+    let defaultBookId;
+    if (result.defualtBookId) {
+      defaultBookId = String(result.defualtBookId);
+    }
+
     const userPreferenceStore = {
-      defaultRepositoryId: '1',
+      defaultRepositoryId: defaultBookId,
       defaultClipperType: result.defaultClipperType,
-      accessToken: result.token
+      accessToken: result.token,
+      baseHost: result.baseURL
     };
-    yield put(initUserPreference({ userPreferenceStore }));
     yield call(asyncFetchUserInfoSaga);
     yield call(asyncFetchRepositorySaga);
+    yield put(initUserPreference({ userPreferenceStore }));
   } else {
     //todo gotoSettingPage
   }
