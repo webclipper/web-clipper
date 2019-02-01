@@ -2,9 +2,10 @@ import { ActionMessageType } from '../enums/actionMessageType';
 import { ActionMessage } from '../model/Message';
 import * as styles from './index.scss';
 import TurndownService from 'turndown';
-import * as Readability from 'readability';
+import { AnyAction, isType } from 'typescript-fsa';
+import { asyncRunPlugin } from '../store/actions/clipper';
 import Highlighter from '../services/common/highlight';
-import AreaSelector from '../services/common/areaSelector';
+import * as Readability from 'readability';
 
 const turndownService = TurndownService();
 turndownService.addRule('lazyLoadImage', {
@@ -53,103 +54,28 @@ chrome.runtime.onMessage.addListener(
   }
 );
 
-chrome.runtime.onMessage.addListener(
-  async (message: ActionMessage, _, sendResponse) => {
-    if (
-      !message.action ||
-      message.action !== ActionMessageType.GET_FULL_PAGE_MARKDOWN
-    ) {
-      return;
-    }
-    const $body = $('html').clone();
-    $body.find('script').remove();
-    $body.find('style').remove();
-    $body.removeClass();
-    sendResponse(turndownService.turndown($body.html()));
-    return true;
-  }
-);
-
-chrome.runtime.onMessage.addListener(
-  async (message: ActionMessage, _, sendResponse) => {
-    if (
-      !message.action ||
-      message.action !== ActionMessageType.GET_READABILITY_MARKDOWN
-    ) {
-      return;
-    }
-    let documentClone = document.cloneNode(true);
-    let article = new Readability(documentClone).parse();
-
-    sendResponse(turndownService.turndown(article.content));
-    return true;
-  }
-);
-
-chrome.runtime.onMessage.addListener(
-  async (message: ActionMessage, _, sendResponse) => {
-    if (
-      !message.action ||
-      message.action !== ActionMessageType.GET_DOCUMENT_INFO
-    ) {
-      return;
-    }
-    sendResponse({
-      title: document.title,
-      url: document.URL
-    });
-    return true;
-  }
-);
-
-chrome.runtime.onMessage.addListener(
-  async (message: ActionMessage, _, sendResponse) => {
-    if (
-      !message.action ||
-      message.action !== ActionMessageType.CLEAN_SELECT_ITEM
-    ) {
-      return;
-    }
-    $(`.${styles.toolFrame}`).toggle();
-    new Highlighter().start().then(re => {
-      $(re).remove();
+chrome.runtime.onMessage.addListener((action: AnyAction, _, sendResponse) => {
+  if (isType(action, asyncRunPlugin.started)) {
+    const toggleClipper = () => {
       $(`.${styles.toolFrame}`).toggle();
-      sendResponse(true);
-    });
-    return true;
-  }
-);
+    };
 
-chrome.runtime.onMessage.addListener(
-  (message: ActionMessage, _, sendResponse) => {
-    if (
-      !message.action ||
-      message.action !== ActionMessageType.GET_SELECT_ITEM
-    ) {
-      return;
+    if (action) {
+      // eslint-disable-next-line
+      const context: ClipperPluginContext = {
+        $,
+        turndown: turndownService,
+        Highlighter,
+        toggleClipper,
+        Readability,
+        document
+      };
+      (async () => {
+        // eslint-disable-next-line
+        const response = await eval(action.payload.plugin.script);
+        sendResponse(response);
+      })();
+      return true;
     }
-    $(`.${styles.toolFrame}`).toggle();
-    new Highlighter().start().then(re => {
-      $(`.${styles.toolFrame}`).toggle();
-      sendResponse(turndownService.turndown(re));
-    });
-    return true;
   }
-);
-
-chrome.runtime.onMessage.addListener(
-  (message: ActionMessage, _, sendResponse) => {
-    if (
-      !message.action ||
-      message.action !== ActionMessageType.GET_SELECT_AREA
-    ) {
-      return;
-    }
-    $(`.${styles.toolFrame}`).toggle();
-    new AreaSelector().start().then((re: any) => {
-      $(`.${styles.toolFrame}`).toggle();
-      sendResponse(re);
-    });
-    return true;
-  }
-);
+});

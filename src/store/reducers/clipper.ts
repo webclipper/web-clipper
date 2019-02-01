@@ -3,7 +3,9 @@ import {
   cancelCreateRepository,
   changeCreateRepositoryTitle,
   asyncCreateRepository,
-  initTabInfo
+  initTabInfo,
+  updateTextClipperData,
+  asyncCreateDocument
 } from './../actions/clipper';
 import { Action } from 'redux';
 import { isType } from 'typescript-fsa';
@@ -11,13 +13,15 @@ import {
   asyncFetchRepository,
   updateTitle,
   startCreateRepository,
-  selectRepository
+  selectRepository,
+  asyncRunPlugin
 } from '../actions/clipper';
 import update from 'immutability-helper';
 
 const defaultState: ClipperStore = {
   title: '',
   repositories: [],
+  clipperData: {},
   selectRepository: {
     createMode: false,
     repositoryTitle: '',
@@ -119,6 +123,33 @@ export default function clipper(
       },
       title: {
         $set: action.payload.title
+      }
+    });
+  } else if (isType(action, updateTextClipperData)) {
+    return update(state, {
+      clipperData: {
+        [action.payload.path]: {
+          $set: action.payload.data
+        }
+      }
+    });
+  } else if (isType(action, asyncCreateDocument.done)) {
+    return update(state, {
+      completeStatus: {
+        $set: {
+          documentHref: action.payload.result.documentHref
+        }
+      }
+    });
+  } else if (isType(action, asyncRunPlugin.done)) {
+    return update(state, {
+      clipperData: {
+        [action.payload.params.plugin.router]: {
+          $set: {
+            type: 'text',
+            data: action.payload.result.result
+          }
+        }
       }
     });
   }

@@ -38,3 +38,13 @@ export class CenterContainer extends React.Component {
     return <div className={styles.centerContainer}>{this.props.children}</div>;
   }
 }
+
+export class EditorContainer extends React.Component {
+  public render() {
+    return (
+      <Container>
+        <div className={styles.editorContainer}>{this.props.children}</div>
+      </Container>
+    );
+  }
+}

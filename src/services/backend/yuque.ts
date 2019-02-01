@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import * as qs from 'qs';
+import { UUID } from '../utils/uuid';
 
 interface YuqueBackendServiceConfig {
   accessToken: string;
@@ -25,6 +26,7 @@ export default class YuqueDocumentService implements DocumentService {
   private request: AxiosInstance;
   private baseURL: string;
   private login?: string;
+  private repositories: Repository[];
 
   constructor(config: YuqueBackendServiceConfig) {
     const index = config.baseURL.indexOf('/api/v2');
@@ -63,11 +65,43 @@ export default class YuqueDocumentService implements DocumentService {
   };
 
   getRepositories = async () => {
-    return this.getYuqueRepositories(0);
+    const repositories = await this.getYuqueRepositories(0);
+    this.repositories = repositories;
+    return repositories;
   };
-  public async createDocument(_info: any) {
-    return '';
-  }
+
+  createDocument = async (info: CreateDocumentRequest) => {
+    if (!this.login) {
+      await this.getUserInfo();
+    }
+    let slug = UUID.UUID();
+    const { private: privateInfo, content: body, title, repositoryId } = info;
+    let privateStatus = !privateInfo ? 1 : 0;
+    const request = {
+      title,
+      slug,
+      body,
+      private: privateStatus
+    };
+    const response = await this.request.post<{
+    id: number;
+    slug: string;
+    title: string;
+    created_at: string;
+    updated_at: string;
+    }>(`/repos/${repositoryId}/docs`, qs.stringify(request));
+    const data = response.data;
+    const repository = this.repositories.find(
+      (o: Repository) => o.id === repositoryId
+    );
+    if (!repository) {
+      throw new Error('12323');
+    }
+    return {
+      href: `${this.baseURL}/${repository.namespace}/${data.slug}`
+    };
+  };
+
   public async createRepository(info: any) {
     console.log(info);
   }

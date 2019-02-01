@@ -105,20 +105,17 @@ class Page extends React.Component<PageProps, PageState> {
     clearTimeout(this.lock);
     this.lock = setTimeout(() => {
       this.lock = null;
-    }, 100);
+    }, 200);
   };
 
   render() {
     const {
       disabledPost,
       title,
-      uploadImage,
-      uploadingImage,
       repositories,
       defaultRepositoryId,
       avatar,
       userHomePage,
-      haveImageService,
       loadingRepositories,
       currentRepository
     } = this.props;
@@ -155,37 +152,20 @@ class Page extends React.Component<PageProps, PageState> {
           </Button>
         </section>
         <section className={`${styles.section} ${styles.sectionLine}`}>
-          <h1 className={styles.sectionTitle}>小工具</h1>
-          <Button className={styles.menuButton} title="删除网页上的元素">
-            <Icon type="delete" />
-          </Button>
-          {haveImageService && (
-            <Button
-              onClick={() => {
-                uploadImage();
-              }}
-              className={styles.menuButton}
-              title="同步图片到语雀"
-            >
-              <Icon type="sync" spin={uploadingImage} />
-            </Button>
-          )}
-        </section>
-        <section className={`${styles.section} ${styles.sectionLine}`}>
           <h1 className={styles.sectionTitle}>剪藏格式</h1>
-
           {this.props.plugins.map(plugin => (
             <Button
+              title={plugin.description}
               block
-              key={plugin.path}
+              key={plugin.router}
               className={styles.menuButton}
               style={
-                plugin.path === this.props.router.location.pathname
+                plugin.router === this.props.router.location.pathname
                   ? { color: '#40a9ff' }
                   : {}
               }
               onClick={() => {
-                this.props.push(plugin.path);
+                this.props.push(plugin.router);
               }}
             >
               <Icon type={plugin.icon} />
