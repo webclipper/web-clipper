@@ -7,7 +7,6 @@
 }
 
 .toolContainer {
-  position: relative;
   width: 324px;
   height: auto;
   background: #fff;
@@ -25,4 +24,11 @@
   align-items: center;
   width: 100%;
   height: 100%;
+}
+.editorContainer {
+  position: absolute;
+  right: 350px;
+  top: 0;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 12px 0px;
+  border: 2px solid #dddddd;
 }

@@ -38,8 +38,8 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <Switch>
         <Route exact path="/" component={Tool} />
+        <Route path="/plugins/:id" component={withTool(Plugins)} />
         <Route exact path="/complete" component={Complete} />
-        <Route exact path="/plugins/:id" component={withTool(Plugins)} />
         <Route exact path="/preference" component={withTool(Preference)} />
       </Switch>
     </ConnectedRouter>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Input, Icon, Divider } from 'antd';
+import { Button, Input, Divider } from 'antd';
 import {
   startCreateRepository,
   cancelCreateRepository,
@@ -52,6 +52,7 @@ class DropDownRender extends React.Component<PageProps> {
         <div
           style={{ padding: '8px', cursor: 'pointer' }}
           onMouseDown={this.props.onLockSelect}
+          onMouseEnter={this.props.onLockSelect}
           onMouseUp={this.props.onLockSelect}
         >
           {!this.props.createMode && (
@@ -60,8 +61,7 @@ class DropDownRender extends React.Component<PageProps> {
                 this.props.onStartCreate();
               }}
             >
-              <Icon type="plus" />
-              新增文档
+              新建知识库
             </div>
           )}
           {this.props.createMode && (

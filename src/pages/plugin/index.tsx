@@ -1,10 +1,38 @@
 import * as React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { CenterContainer } from '../../components/container';
 import { Route } from 'react-router';
+import {
+  getFullPagePlugin,
+  getSelectItemPlugin,
+  getReadabilityPlugin,
+  bookmarkPlugin
+} from '../../plugin/index';
+import Plugin from './Plugin';
 
 const useActions = {};
+
+export const plugins: ClipperPluginWithRouter[] = [
+  getFullPagePlugin,
+  getReadabilityPlugin,
+  bookmarkPlugin,
+  getSelectItemPlugin
+].map(plugin => ({
+  ...plugin,
+  router: `/plugins/${plugin.id}`
+}));
+
+function withPlugin(plugin: ClipperPluginWithRouter) {
+  return class HOC extends React.Component {
+    render() {
+      return (
+        <React.Fragment>
+          <Plugin plugin={plugin} />
+        </React.Fragment>
+      );
+    }
+  };
+}
 
 const mapStateToProps = ({ router }: GlobalStore) => {
   return {
@@ -26,59 +54,21 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 class Page extends React.Component<PageProps, PageState> {
   render() {
     return (
-      <CenterContainer>
+      <div>
         {this.props.plugins.map(plugin => (
           <Route
-            path={plugin.path}
-            key={plugin.path}
-            component={plugin.component}
+            exact
+            path={plugin.router}
+            key={plugin.id}
+            component={withPlugin(plugin)}
           />
         ))}
-      </CenterContainer>
+      </div>
     );
   }
 }
-
-const Empty = (input?: string) => {
-  return () => {
-    return <div>{input || 'empty'}</div>;
-  };
-};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Page as React.ComponentType<PageProps>);
-
-export const plugins = [
-  {
-    name: '整个页面',
-    icon: 'copy',
-    path: '/plugins/fullPage',
-    component: Empty('fullPage')
-  },
-  {
-    name: '智能提取',
-    icon: 'copy',
-    path: '/plugins/readability',
-    component: Empty()
-  },
-  {
-    name: '网页链接',
-    icon: 'link',
-    path: '/plugins/url',
-    component: Empty()
-  },
-  {
-    name: '手动选择',
-    icon: 'select',
-    path: '/plugins/select',
-    component: Empty()
-  },
-  {
-    name: '屏幕截图',
-    icon: 'picture',
-    path: '/plugins/screenShoot',
-    component: Empty()
-  }
-];

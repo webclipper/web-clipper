@@ -24,6 +24,9 @@ interface CreateDocumentRequest {
   repositoryId: string;
   tags?: string[];
 }
+interface CreateDocumentResponse {
+  href: string;
+}
 
 interface CreateRepositoryRequest {
   name: string;
@@ -50,7 +53,9 @@ interface DocumentService {
 
   createRepository(request: CreateRepositoryRequest): Promise<void>;
 
-  createDocument(request: CreateDocumentRequest): Promise<string>;
+  createDocument(
+    request: CreateDocumentRequest
+  ): Promise<CreateDocumentResponse>;
 
   getUserInfo(): Promise<UserInfo>;
 
