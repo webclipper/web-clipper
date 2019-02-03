@@ -50,17 +50,52 @@ interface CompleteStatus {
   documentHref?: string;
 }
 interface UserPreferenceStore {
-  closeQRCode: boolean;
-  accessToken?: string;
-  baseHost?: string;
-  defaultRepositoryId?: string;
-  defaultClipperType?: string;
-  haveImageService: boolean;
+  accounts: AccountPreference[];
+  defaultPluginId?: string;
+  currentAccountIndex: number;
+  showQuickResponseCode: boolean;
+  showLineNumber: boolean;
+  liveRendering: boolean;
   initializeForm: InitializeForm;
 }
 
+interface FormProps {
+  value: string;
+}
+
 interface InitializeForm {
-  uploading: boolean;
-  token?: any;
-  host?: any;
+  type: FormProps;
+  host?: FormProps;
+  accessToken?: FormProps;
+  defaultRepositoryId?: FormProps;
+  verifying: boolean;
+  show: boolean;
+  verified: boolean;
+  repositories: Repository[];
+  userInfo: {
+    name: string;
+    avatar?: string;
+    homePage?: string;
+    description?: string;
+  };
+}
+
+interface AccountPreference {
+  type: string;
+  accessToken: string;
+  host: string;
+  defaultRepositoryId?: string;
+  name: string;
+  avatar?: string;
+  homePage?: string;
+  description?: string;
+}
+
+interface PreferenceStorage {
+  accounts: AccountPreference[];
+  defaultPluginId?: string;
+  currentAccountIndex: number;
+  showQuickResponseCode: boolean;
+  showLineNumber: boolean;
+  liveRendering: boolean;
 }

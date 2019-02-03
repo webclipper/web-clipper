@@ -3,21 +3,22 @@ const actionCreator = actionCreatorFactory();
 
 import { USER_PREFERENCE } from './actionTypes';
 
-export const initUserPreference = actionCreator<{
-userPreferenceStore: Partial<UserPreferenceStore>;
-}>(USER_PREFERENCE.INIT_USER_PREFERENCE);
-
-export const updateInitializeForm = actionCreator<InitializeForm>(
-  USER_PREFERENCE.UPDATE_INITIALIZE_FORM
+export const initUserPreference = actionCreator<PreferenceStorage>(
+  USER_PREFERENCE.INIT_USER_PREFERENCE
 );
 
-export const asyncPostInitializeForm = actionCreator.async<
+export const updateCreateAccountForm = actionCreator<InitializeForm>(
+  USER_PREFERENCE.UPDATE_CREATE_ACCOUNT_FORM
+);
+
+export const asyncVerificationAccessToken = actionCreator.async<
 void,
 { repositories: Repository[]; userInfo: UserInfo },
 {
-error: Error;
+cancel?: boolean;
+error?: Error;
 }
->(USER_PREFERENCE.ASYNC_POST_INITIALIZE_FORM);
+>(USER_PREFERENCE.ASYNC_VERIFICATION_ACCESS_TOKEN);
 
 export const asyncChangeDefaultRepository = actionCreator.async<
 {
@@ -25,3 +26,35 @@ defaultRepositoryId: string;
 },
 void
 >(USER_PREFERENCE.ASYNC_CHANGE_DEFAULT_REPOSITORY);
+
+export const asyncAddAccount = actionCreator.async<
+void,
+{
+accounts: AccountPreference[];
+},
+void
+>(USER_PREFERENCE.ASYNC_ADD_ACCOUNT);
+
+export const cancelCreateAccount = actionCreator(
+  USER_PREFERENCE.CANCEL_CREATE_ACCOUNT
+);
+
+export const startCreateAccount = actionCreator(
+  USER_PREFERENCE.START_CREATE_ACCOUNT
+);
+
+export const asyncDeleteAccount = actionCreator.async<
+{ accessToken: string },
+{
+accounts: AccountPreference[];
+},
+void
+>(USER_PREFERENCE.ASYNC_DELETE_ACCOUNT);
+
+export const asyncUpdateCurrentAccountIndex = actionCreator.async<
+{ accessToken: string },
+{
+index: number;
+},
+void
+>(USER_PREFERENCE.ASYNC_UPDATE_CURRENT_ACCOUNT_INDEX);

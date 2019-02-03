@@ -1,4 +1,3 @@
-import { asyncPostInitializeForm } from './../actions/userPreference';
 import {
   cancelCreateRepository,
   changeCreateRepositoryTitle,
@@ -108,12 +107,6 @@ export default function clipper(
     return update(state, {
       currentRepository: {
         $set: currentRepository
-      }
-    });
-  } else if (isType(action, asyncPostInitializeForm.done)) {
-    return update(state, {
-      repositories: {
-        $set: action.payload.result.repositories
       }
     });
   } else if (isType(action, initTabInfo)) {

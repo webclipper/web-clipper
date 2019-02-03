@@ -37,10 +37,10 @@ export function* asyncFetchRepositorySaga() {
 }
 
 export function* asyncCreateDocumentSaga() {
-  const selector = ({ clipper, userPreference, router }: GlobalStore) => {
+  const selector = ({ clipper, router }: GlobalStore) => {
     return {
       currentRepository: clipper.currentRepository,
-      defaultRepositoryId: userPreference.defaultRepositoryId,
+      defaultRepositoryId: '',
       clipperData: clipper.clipperData,
       router,
       title: clipper.title

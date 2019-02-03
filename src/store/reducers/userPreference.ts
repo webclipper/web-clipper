@@ -1,18 +1,38 @@
-import { asyncPostInitializeForm } from './../actions/userPreference';
+import {
+  asyncVerificationAccessToken,
+  startCreateAccount
+} from './../actions/userPreference';
 import update from 'immutability-helper';
 import { Action } from 'redux';
 import { isType } from 'typescript-fsa';
 import {
-  updateInitializeForm,
   initUserPreference,
-  asyncChangeDefaultRepository
+  updateCreateAccountForm,
+  cancelCreateAccount,
+  asyncAddAccount,
+  asyncDeleteAccount,
+  asyncUpdateCurrentAccountIndex
 } from '../actions/userPreference';
+import { backendServices } from '../../const';
 
 const defaultState: UserPreferenceStore = {
-  haveImageService: false,
-  closeQRCode: false,
+  accounts: [],
+  currentAccountIndex: 100,
+  showQuickResponseCode: true,
+  showLineNumber: true,
+  liveRendering: true,
   initializeForm: {
-    uploading: false
+    show: false,
+    verified: false,
+    verifying: false,
+    type: {
+      value: 'yuque'
+    },
+    host: {
+      value: backendServices.yuque.api
+    },
+    userInfo: { name: '' },
+    repositories: []
   }
 };
 
@@ -20,75 +40,107 @@ export function userPreference(
   state: UserPreferenceStore = defaultState,
   action: Action
 ): UserPreferenceStore {
-  if (isType(action, updateInitializeForm)) {
-    const from = Object.assign(
-      {
-        uploading: state.initializeForm.uploading
-      },
-      state.initializeForm,
-      action.payload
-    );
+  if (isType(action, cancelCreateAccount)) {
     return update(state, {
       initializeForm: {
-        $set: from
+        $set: defaultState.initializeForm
       }
     });
   }
-  if (isType(action, asyncPostInitializeForm.started)) {
+  if (isType(action, startCreateAccount)) {
     return update(state, {
       initializeForm: {
-        uploading: {
+        show: {
           $set: true
         }
       }
     });
   }
-  if (isType(action, asyncPostInitializeForm.done)) {
+  if (isType(action, asyncAddAccount.done)) {
     return update(state, {
+      accounts: {
+        $set: action.payload.result.accounts
+      },
       initializeForm: {
-        uploading: {
-          $set: false
+        $set: {
+          ...defaultState.initializeForm,
+          show: false
         }
       }
     });
   }
-  if (isType(action, asyncPostInitializeForm.failed)) {
+  if (isType(action, asyncUpdateCurrentAccountIndex.done)) {
     return update(state, {
-      initializeForm: {
-        uploading: {
-          $set: false
-        }
+      currentAccountIndex: {
+        $set: action.payload.result.index
+      }
+    });
+  }
+  if (isType(action, asyncDeleteAccount.done)) {
+    return update(state, {
+      accounts: {
+        $set: action.payload.result.accounts
       }
     });
   }
   if (isType(action, initUserPreference)) {
-    const {
-      defaultRepositoryId,
-      defaultClipperType,
-      accessToken,
-      baseHost
-    } = action.payload.userPreferenceStore;
-
     return update(state, {
-      accessToken: {
-        $set: accessToken
-      },
-      defaultRepositoryId: {
-        $set: defaultRepositoryId
-      },
-      baseHost: {
-        $set: baseHost
-      },
-      defaultClipperType: {
-        $set: defaultClipperType
+      $merge: action.payload
+    });
+  }
+  if (isType(action, asyncVerificationAccessToken.done)) {
+    return update(state, {
+      initializeForm: {
+        $merge: {
+          verified: true,
+          verifying: false,
+          repositories: action.payload.result.repositories,
+          userInfo: action.payload.result.userInfo
+        }
       }
     });
   }
-  if (isType(action, asyncChangeDefaultRepository.done)) {
-    const { defaultRepositoryId } = action.payload.params;
+  if (isType(action, asyncVerificationAccessToken.failed)) {
     return update(state, {
-      defaultRepositoryId: {
-        $set: defaultRepositoryId
+      initializeForm: {
+        $merge: {
+          verified: state.initializeForm.verified,
+          verifying: false,
+          repositories: state.initializeForm.repositories
+        }
+      }
+    });
+  }
+  if (isType(action, updateCreateAccountForm)) {
+    let type = action.payload.type;
+    if (type && backendServices[type.value as string]) {
+      const { show, verified, verifying } = state.initializeForm;
+      return update(state, {
+        initializeForm: {
+          $set: {
+            show,
+            verified,
+            verifying,
+            type: action.payload.type,
+            userInfo: action.payload.userInfo,
+            host: {
+              value: backendServices[type.value as string].api
+            },
+            repositories: []
+          }
+        }
+      });
+    }
+    if (action.payload.defaultRepositoryId) {
+      return update(state, {
+        initializeForm: {
+          $merge: action.payload
+        }
+      });
+    }
+    return update(state, {
+      initializeForm: {
+        $merge: action.payload
       }
     });
   }
