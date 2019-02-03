@@ -44,8 +44,8 @@ const mapStateToProps = ({
     disabledPost: false,
     isCreateRepository: true,
     currentRepository: clipper.currentRepository,
-    haveImageService: userPreference.haveImageService,
-    defaultRepositoryId: userPreference.defaultRepositoryId,
+    haveImageService: true,
+    defaultRepositoryId: '23',
     repositories: clipper.repositories
   };
 };

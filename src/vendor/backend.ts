@@ -15,6 +15,7 @@ interface UserInfo {
   name: string;
   avatar: string;
   homePage: string;
+  description?: string;
 }
 
 interface CreateDocumentRequest {

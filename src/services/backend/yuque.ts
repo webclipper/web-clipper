@@ -12,6 +12,7 @@ interface UserInfoResponse {
   avatar_url: string;
   name: string;
   login: string;
+  description: string;
 }
 interface RepositoryResponse {
   id: number;
@@ -55,12 +56,13 @@ export default class YuqueDocumentService implements DocumentService {
   getUserInfo = async () => {
     const res = await this.request.get<UserInfoResponse>('user');
     const apiResponse = res.data;
-    const { avatar_url: avatar, name, login } = apiResponse;
+    const { avatar_url: avatar, name, login, description } = apiResponse;
     this.login = login;
     return {
       name: name,
       avatar,
-      homePage: `${this.baseURL}/${login}`
+      homePage: `${this.baseURL}/${login}`,
+      description
     };
   };
 

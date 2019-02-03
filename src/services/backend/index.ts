@@ -1,7 +1,7 @@
 import YuqueDocumentService from './yuque';
 
 interface DocumentServiceOption {
-  type: 'yuque' | 'github';
+  type: string;
   accessToken: string;
   baseURL: string;
 }
