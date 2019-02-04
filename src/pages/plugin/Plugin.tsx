@@ -13,10 +13,16 @@ const useActions = {
   updateTextClipperData
 };
 
-const mapStateToProps = ({ router, clipper }: GlobalStore) => {
+const mapStateToProps = ({
+  router,
+  clipper,
+  userPreference: { liveRendering, showLineNumber }
+}: GlobalStore) => {
   return {
     router,
     clipper,
+    liveRendering,
+    showLineNumber,
     clipperData: clipper.clipperData,
     pathname: router.location.pathname
   };
@@ -57,6 +63,7 @@ class ClipperPluginPage extends React.Component<PageProps, PageState> {
     const { clipperData, pathname, plugin } = this.props;
     let myTextarea = document.getElementById(editorId) as HTMLTextAreaElement;
     this.myCodeMirror = HyperMD.fromTextArea(myTextarea, {
+      lineNumbers: !!this.props.showLineNumber,
       hmdModeLoader: false
     });
     if (!clipperData[pathname] && pathname === plugin.router) {
@@ -78,6 +85,12 @@ class ClipperPluginPage extends React.Component<PageProps, PageState> {
       });
     });
     this.myCodeMirror.setSize(800, 621);
+
+    if (this.props.liveRendering) {
+      HyperMD.switchToHyperMD(this.myCodeMirror);
+    } else {
+      HyperMD.switchToNormal(this.myCodeMirror);
+    }
   };
 
   render() {

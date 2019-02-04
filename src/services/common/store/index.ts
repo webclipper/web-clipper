@@ -27,11 +27,7 @@ export class ChromeSyncStorageImpl implements CommonStorage {
           reject(err);
         } else {
           const date = item[key];
-          if (date) {
-            resolve(date);
-          } else {
-            resolve();
-          }
+          resolve(date);
         }
       });
     });
@@ -163,10 +159,7 @@ class TypedCommonStorage implements TypedCommonStorageInterface {
     const value = await this.store.get<boolean>(
       keysOfStorage.showQuickResponseCode
     );
-    if (!value) {
-      return true;
-    }
-    return value;
+    return value !== false;
   };
 
   setShowLineNumber = async (value: boolean) => {
@@ -174,10 +167,7 @@ class TypedCommonStorage implements TypedCommonStorageInterface {
   };
   getShowLineNumber = async () => {
     const value = await this.store.get<boolean>(keysOfStorage.showLineNumber);
-    if (!value) {
-      return true;
-    }
-    return value;
+    return value !== false;
   };
 
   setLiveRendering = async (value: boolean) => {
@@ -185,10 +175,7 @@ class TypedCommonStorage implements TypedCommonStorageInterface {
   };
   getLiveRendering = async () => {
     const value = await this.store.get<boolean>(keysOfStorage.liveRendering);
-    if (!value) {
-      return true;
-    }
-    return value;
+    return value !== false;
   };
 }
 

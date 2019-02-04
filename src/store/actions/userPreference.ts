@@ -58,3 +58,23 @@ index: number;
 },
 void
 >(USER_PREFERENCE.ASYNC_UPDATE_CURRENT_ACCOUNT_INDEX);
+
+export const asyncSetEditorLiveRendering = actionCreator.async<
+{
+value: boolean;
+},
+{
+value: boolean;
+},
+void
+>(USER_PREFERENCE.ASYNC_SET_EDITOR_LIVE_RENDERING);
+
+export const asyncSetShowLineNumber = actionCreator.async<
+{
+value: boolean;
+},
+{
+value: boolean;
+},
+void
+>(USER_PREFERENCE.ASYNC_SET_SHOW_LINE_NUMBER);
