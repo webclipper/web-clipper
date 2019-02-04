@@ -11,7 +11,9 @@ import {
   cancelCreateAccount,
   asyncAddAccount,
   asyncDeleteAccount,
-  asyncUpdateCurrentAccountIndex
+  asyncUpdateCurrentAccountIndex,
+  asyncSetEditorLiveRendering,
+  asyncSetShowLineNumber
 } from '../actions/userPreference';
 import { backendServices } from '../../const';
 
@@ -40,6 +42,20 @@ export function userPreference(
   state: UserPreferenceStore = defaultState,
   action: Action
 ): UserPreferenceStore {
+  if (isType(action, asyncSetShowLineNumber.done)) {
+    return update(state, {
+      showLineNumber: {
+        $set: action.payload.result.value
+      }
+    });
+  }
+  if (isType(action, asyncSetEditorLiveRendering.done)) {
+    return update(state, {
+      liveRendering: {
+        $set: action.payload.result.value
+      }
+    });
+  }
   if (isType(action, cancelCreateAccount)) {
     return update(state, {
       initializeForm: {

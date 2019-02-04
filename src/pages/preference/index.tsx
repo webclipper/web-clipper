@@ -6,16 +6,26 @@ import * as styles from './index.scss';
 import { Tabs, List, Switch, Select } from 'antd';
 import { push } from 'connected-react-router';
 import UserList from './userList/index';
+import {
+  asyncSetEditorLiveRendering,
+  asyncSetShowLineNumber
+} from '../../store/actions/userPreference';
 const TabPane = Tabs.TabPane;
 
 const useActions = {
-  push: push
+  push: push,
+  asyncSetEditorLiveRendering: asyncSetEditorLiveRendering.started,
+  asyncSetShowLineNumber: asyncSetShowLineNumber.started
 };
 
-const mapStateToProps = ({ userPreference: { accounts }}: GlobalStore) => {
+const mapStateToProps = ({
+  userPreference: { accounts, liveRendering, showLineNumber }
+}: GlobalStore) => {
   return {
+    showLineNumber,
     closeQRCode: true,
     containToken: true,
+    liveRendering,
     QRCodeContent: '',
     accounts
   };
@@ -85,13 +95,37 @@ class Page extends React.Component<PageProps, PageState> {
               </TabPane>
               <TabPane tab="编辑器设置" key="editor">
                 <div style={{ padding: '40px' }}>
-                  <List.Item actions={[<Switch key="showLineNumber" />]}>
+                  <List.Item
+                    actions={[
+                      <Switch
+                        checked={this.props.showLineNumber}
+                        onChange={() => {
+                          this.props.asyncSetShowLineNumber({
+                            value: this.props.showLineNumber
+                          });
+                        }}
+                        key="showLineNumber"
+                      />
+                    ]}
+                  >
                     <List.Item.Meta
                       title="显示行号"
                       description="显示编辑器右侧的行号"
                     />
                   </List.Item>
-                  <List.Item actions={[<Switch key="liveRendering" />]}>
+                  <List.Item
+                    actions={[
+                      <Switch
+                        key="liveRendering"
+                        checked={this.props.liveRendering}
+                        onChange={() => {
+                          this.props.asyncSetEditorLiveRendering({
+                            value: this.props.liveRendering
+                          });
+                        }}
+                      />
+                    ]}
+                  >
                     <List.Item.Meta
                       title="实时预览"
                       description="是否开启实时预览"

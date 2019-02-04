@@ -3,7 +3,9 @@ import {
   updateCreateAccountForm,
   asyncAddAccount,
   asyncDeleteAccount,
-  asyncUpdateCurrentAccountIndex
+  asyncUpdateCurrentAccountIndex,
+  asyncSetEditorLiveRendering,
+  asyncSetShowLineNumber
 } from './../actions/userPreference';
 import {
   takeEvery,
@@ -153,14 +155,11 @@ export function* watchAsyncDeleteAccountSaga() {
 
 export function* asyncUpdateCurrentAccountIndexSaga(action: AnyAction) {
   if (isType(action, asyncUpdateCurrentAccountIndex.started)) {
-    console.log('-----------2');
-
     const accounts: AccountPreference[] = yield call(storage.getAccounts);
     const index = accounts.findIndex(
       o => o.accessToken === action.payload.accessToken
     );
     yield call(storage.setCurrentAccountIndex, index);
-    console.log('-----------1');
     yield put(
       asyncUpdateCurrentAccountIndex.done({
         params: action.payload,
@@ -179,9 +178,57 @@ export function* watchAsyncUpdateCurrentAccountIndexSaga() {
   );
 }
 
+export function* asyncSetShowLineNumberSaga(action: AnyAction) {
+  if (isType(action, asyncSetShowLineNumber.started)) {
+    const value = action.payload.value;
+    yield call(storage.setShowLineNumber, !value);
+    yield put(
+      asyncSetShowLineNumber.done({
+        params: {
+          value
+        },
+        result: {
+          value: !value
+        }
+      })
+    );
+  }
+}
+export function* watchAsyncSetShowLineNumberSaga() {
+  yield takeEvery(
+    asyncSetShowLineNumber.started.type,
+    asyncSetShowLineNumberSaga
+  );
+}
+
+export function* asyncSetEditorLiveRenderingSaga(action: AnyAction) {
+  if (isType(action, asyncSetEditorLiveRendering.started)) {
+    const value = action.payload.value;
+    yield call(storage.setLiveRendering, !value);
+    yield put(
+      asyncSetEditorLiveRendering.done({
+        params: {
+          value
+        },
+        result: {
+          value: !value
+        }
+      })
+    );
+  }
+}
+export function* watchAsyncSetEditorLiveRenderingSaga() {
+  yield takeEvery(
+    asyncSetEditorLiveRendering.started.type,
+    asyncSetEditorLiveRenderingSaga
+  );
+}
+
 export function* userPreferenceSagas() {
   yield fork(watchAsyncDeleteAccountSaga);
   yield fork(watchAsyncVerificationAccessTokenSaga);
   yield fork(watchAsyncAddAccountSaga);
   yield fork(watchAsyncUpdateCurrentAccountIndexSaga);
+  yield fork(watchAsyncSetEditorLiveRenderingSaga);
+  yield fork(watchAsyncSetShowLineNumberSaga);
 }
