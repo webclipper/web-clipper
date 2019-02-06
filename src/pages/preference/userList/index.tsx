@@ -16,11 +16,11 @@ const useActions = {
 };
 
 const mapStateToProps = ({
-  userPreference: { accounts, currentAccountIndex }
+  userPreference: { accounts, defaultAccountId }
 }: GlobalStore) => {
   return {
     accounts,
-    currentAccountIndex
+    defaultAccountId
   };
 };
 type PageState = {};
@@ -77,7 +77,7 @@ class Page extends React.Component<PageProps, PageState> {
   onSetDefaultAccount = (index: number) => {
     let account = this.props.accounts[index];
     this.props.asyncUpdateCurrentAccountIndex({
-      accessToken: account.accessToken
+      id: account.id
     });
   };
 
@@ -118,12 +118,14 @@ class Page extends React.Component<PageProps, PageState> {
                     key="heart"
                     type="heart"
                     title={
-                      index === this.props.currentAccountIndex
+                      this.props.accounts[index].id ===
+                      this.props.defaultAccountId
                         ? '默认账户'
                         : '设置为默认账户'
                     }
                     theme={
-                      index === this.props.currentAccountIndex
+                      this.props.accounts[index].id ===
+                      this.props.defaultAccountId
                         ? 'filled'
                         : 'outlined'
                     }

@@ -45,11 +45,11 @@ export interface TypedCommonStorageInterface {
 
   getAccounts(): Promise<AccountPreference[]>;
 
-  /** --------当前账户索引--------- */
+  /** --------当前默认账户 ID--------- */
 
-  setCurrentAccountIndex(index: number): Promise<void>;
+  setDefaultAccountId(accountId: string): Promise<void>;
 
-  getCurrentAccountIndex(): Promise<number>;
+  getDefaultAccountId(): Promise<string | undefined>;
 
   /** --------默认插件--------- */
 
@@ -77,7 +77,7 @@ export interface TypedCommonStorageInterface {
 
 const keysOfStorage = {
   accounts: 'accounts',
-  currentAccountIndex: 'currentAccountIndex',
+  defaultAccountId: 'defaultAccountId',
   defaultPluginId: 'defaultPluginId',
   showQuickResponseCode: 'showQuickResponseCode',
   liveRendering: 'liveRendering',
@@ -91,17 +91,17 @@ class TypedCommonStorage implements TypedCommonStorageInterface {
     this.store = new ChromeSyncStorageImpl();
   }
 
-  getPreference = async () => {
+  getPreference = async (): Promise<PreferenceStorage> => {
     const accounts = await this.getAccounts();
     const defaultPluginId = await this.getDefaultPluginId();
-    const currentAccountIndex = await this.getCurrentAccountIndex();
+    const defaultAccountId = await this.getDefaultAccountId();
     const showQuickResponseCode = await this.getShowQuickResponseCode();
     const showLineNumber = await this.getShowLineNumber();
     const liveRendering = await this.getLiveRendering();
     return {
       accounts,
       defaultPluginId,
-      currentAccountIndex,
+      defaultAccountId,
       showQuickResponseCode,
       showLineNumber,
       liveRendering
@@ -132,17 +132,12 @@ class TypedCommonStorage implements TypedCommonStorageInterface {
     return value;
   };
 
-  setCurrentAccountIndex = async (value: number) => {
-    await this.store.set(keysOfStorage.currentAccountIndex, value);
+  setDefaultAccountId = async (value: string) => {
+    await this.store.set(keysOfStorage.defaultAccountId, value);
   };
-  getCurrentAccountIndex = async () => {
-    const value = await this.store.get<number>(
-      keysOfStorage.currentAccountIndex
-    );
-    if (!value) {
-      return 0;
-    }
-    return value;
+
+  getDefaultAccountId = async () => {
+    return this.store.get<string>(keysOfStorage.defaultAccountId);
   };
 
   setDefaultPluginId = async (value: string) => {

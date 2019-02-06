@@ -4,7 +4,8 @@ import {
   asyncCreateRepository,
   initTabInfo,
   updateTextClipperData,
-  asyncCreateDocument
+  asyncCreateDocument,
+  asyncChangeAccount
 } from './../actions/clipper';
 import { Action } from 'redux';
 import { isType } from 'typescript-fsa';
@@ -15,10 +16,12 @@ import {
   selectRepository,
   asyncRunPlugin
 } from '../actions/clipper';
+import { initUserPreference } from '../actions/userPreference';
 import update from 'immutability-helper';
 
 const defaultState: ClipperStore = {
   title: '',
+  currentAccountId: '',
   repositories: [],
   clipperData: {},
   selectRepository: {
@@ -32,6 +35,28 @@ export default function clipper(
   state: ClipperStore = defaultState,
   action: Action
 ): ClipperStore {
+  if (isType(action, asyncChangeAccount.done)) {
+    return update(state, {
+      currentAccountId: {
+        $set: action.payload.params.id
+      },
+      repositories: {
+        $set: action.payload.result.repositories
+      },
+      currentRepository: {
+        // eslint-disable-next-line no-undefined
+        $set: undefined
+      }
+    });
+  }
+  if (isType(action, initUserPreference)) {
+    const { defaultAccountId } = action.payload;
+    return update(state, {
+      currentAccountId: {
+        $set: defaultAccountId || ''
+      }
+    });
+  }
   if (isType(action, asyncFetchRepository.done)) {
     const { repositories } = action.payload.result;
     return update(state, {

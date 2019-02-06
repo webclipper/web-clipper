@@ -33,9 +33,13 @@ function* initStore() {
     yield put(push('/preference'));
     return;
   }
-  const { accounts, currentAccountIndex } = result;
+  const { accounts, defaultAccountId } = result;
   yield put(initUserPreference(result));
-  const account = accounts[currentAccountIndex];
+  const defaultAccountIndex = accounts.findIndex(
+    o => o.id === defaultAccountId
+  );
+  const account =
+    defaultAccountIndex === -1 ? accounts[0] : accounts[defaultAccountIndex];
   const documentService = documentServiceFactory({
     accessToken: account.accessToken,
     baseURL: account.host,

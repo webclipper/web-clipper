@@ -64,3 +64,13 @@ result: string;
 },
 any
 >(CLIPPER.ASYNC_RUN_PLUGIN);
+
+export const asyncChangeAccount = actionCreator.async<
+{
+id: string;
+},
+{
+repositories: Repository[];
+},
+any
+>(CLIPPER.ASYNC_CHANGE_ACCOUNT);

@@ -52,9 +52,9 @@ void
 >(USER_PREFERENCE.ASYNC_DELETE_ACCOUNT);
 
 export const asyncUpdateCurrentAccountIndex = actionCreator.async<
-{ accessToken: string },
+{ id: string },
 {
-index: number;
+id: string;
 },
 void
 >(USER_PREFERENCE.ASYNC_UPDATE_CURRENT_ACCOUNT_INDEX);

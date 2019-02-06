@@ -30,6 +30,8 @@ interface ClipperStore {
   title?: string;
   /** 网页链接 */
   url?: string;
+  /** 当前选择账户的ID */
+  currentAccountId: string;
   /** 知识库列表 */
   repositories: Repository[];
   /** 当前选择的知识库 */
@@ -52,7 +54,7 @@ interface CompleteStatus {
 interface UserPreferenceStore {
   accounts: AccountPreference[];
   defaultPluginId?: string;
-  currentAccountIndex: number;
+  defaultAccountId?: string;
   showQuickResponseCode: boolean;
   showLineNumber: boolean;
   liveRendering: boolean;
@@ -82,6 +84,7 @@ interface InitializeForm {
 
 interface AccountPreference {
   type: string;
+  id: string;
   accessToken: string;
   host: string;
   defaultRepositoryId?: string;
@@ -94,7 +97,7 @@ interface AccountPreference {
 interface PreferenceStorage {
   accounts: AccountPreference[];
   defaultPluginId?: string;
-  currentAccountIndex: number;
+  defaultAccountId?: string;
   showQuickResponseCode: boolean;
   showLineNumber: boolean;
   liveRendering: boolean;
