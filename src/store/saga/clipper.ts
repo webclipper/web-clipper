@@ -11,9 +11,10 @@ import {
   asyncFetchRepository,
   asyncCreateRepository,
   asyncCreateDocument,
-  asyncRunPlugin
+  asyncRunPlugin,
+  asyncChangeAccount
 } from '../actions/clipper';
-import backend from '../../services/backend';
+import backend, { documentServiceFactory } from '../../services/backend';
 import { message } from 'antd';
 import { push } from 'connected-react-router';
 import { isType, AnyAction } from 'typescript-fsa';
@@ -37,10 +38,19 @@ export function* asyncFetchRepositorySaga() {
 }
 
 export function* asyncCreateDocumentSaga() {
-  const selector = ({ clipper, router }: GlobalStore) => {
+  const selector = ({
+    clipper,
+    router,
+    userPreference: { accounts }
+  }: GlobalStore) => {
+    const currentAccount = accounts.find(
+      o => o.id === clipper.currentAccountId
+    );
     return {
       currentRepository: clipper.currentRepository,
-      defaultRepositoryId: '',
+      defaultRepositoryId: currentAccount
+        ? currentAccount.defaultRepositoryId
+        : '',
       clipperData: clipper.clipperData,
       router,
       title: clipper.title
@@ -64,6 +74,7 @@ export function* asyncCreateDocumentSaga() {
     repositoryId = currentRepository.id;
   }
   if (!repositoryId) {
+    console.log(repositoryId);
     message.error('必须选择一个知识库');
     return;
   }
@@ -146,6 +157,7 @@ export function* clipperRootSagas() {
   yield fork(watchAsyncCreateRepositorySaga);
   yield fork(watchAsyncFetchRepositorySaga);
   yield fork(watchAsyncCreateDocumentSaga);
+  yield fork(watchAsyncChangeAccountSaga);
 }
 
 const gerResult = function<T>(action: AnyAction): Promise<T> {
@@ -157,3 +169,45 @@ const gerResult = function<T>(action: AnyAction): Promise<T> {
     });
   });
 };
+
+export function* asyncChangeAccountSaga(action: AnyAction) {
+  if (isType(action, asyncChangeAccount.started)) {
+    const id = action.payload.id;
+    const selector = ({ userPreference: { accounts }}: GlobalStore) => {
+      return {
+        accounts
+      };
+    };
+    const selectState: ReturnType<typeof selector> = yield select(selector);
+
+    const { accounts } = selectState;
+
+    const account = accounts.find(o => o.id === id);
+    if (!account) {
+      throw new Error('');
+    }
+
+    const documentService = documentServiceFactory({
+      accessToken: account.accessToken,
+      baseURL: account.host,
+      type: account.type
+    });
+    const repositories = yield call(documentService.getRepositories);
+    backend.setDocumentService(documentService);
+    yield delay(1000);
+    yield put(
+      asyncChangeAccount.done({
+        params: {
+          id
+        },
+        result: {
+          repositories
+        }
+      })
+    );
+  }
+}
+
+export function* watchAsyncChangeAccountSaga() {
+  yield takeEvery(asyncChangeAccount.started.type, asyncChangeAccountSaga);
+}

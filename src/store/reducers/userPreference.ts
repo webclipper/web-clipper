@@ -19,7 +19,6 @@ import { backendServices } from '../../const';
 
 const defaultState: UserPreferenceStore = {
   accounts: [],
-  currentAccountIndex: 100,
   showQuickResponseCode: true,
   showLineNumber: true,
   liveRendering: true,
@@ -87,8 +86,8 @@ export function userPreference(
   }
   if (isType(action, asyncUpdateCurrentAccountIndex.done)) {
     return update(state, {
-      currentAccountIndex: {
-        $set: action.payload.result.index
+      defaultAccountId: {
+        $set: action.payload.result.id
       }
     });
   }

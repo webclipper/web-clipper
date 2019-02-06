@@ -114,6 +114,7 @@ export function* asyncAddAccountSaga() {
     return;
   }
   const account: AccountPreference = {
+    id: accessToken.value, //todo md5
     type: type.value,
     accessToken: accessToken.value,
     host: host.value,
@@ -155,17 +156,11 @@ export function* watchAsyncDeleteAccountSaga() {
 
 export function* asyncUpdateCurrentAccountIndexSaga(action: AnyAction) {
   if (isType(action, asyncUpdateCurrentAccountIndex.started)) {
-    const accounts: AccountPreference[] = yield call(storage.getAccounts);
-    const index = accounts.findIndex(
-      o => o.accessToken === action.payload.accessToken
-    );
-    yield call(storage.setCurrentAccountIndex, index);
+    yield call(storage.setDefaultAccountId, action.payload.id);
     yield put(
       asyncUpdateCurrentAccountIndex.done({
         params: action.payload,
-        result: {
-          index: index
-        }
+        result: action.payload
       })
     );
   }

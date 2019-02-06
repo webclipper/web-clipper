@@ -9,13 +9,15 @@ import {
   updateTitle,
   asyncCreateDocument,
   cancelCreateRepository,
-  selectRepository
+  selectRepository,
+  asyncChangeAccount
 } from '../../store/actions/clipper';
 import { push } from 'connected-react-router';
 import Xxx from './dropdown';
 import { plugins } from '../plugin/index';
 
 const useActions = {
+  asyncChangeAccount: asyncChangeAccount.started,
   postDocument: asyncCreateDocument.started,
   updateTitle,
   selectRepository: selectRepository,
@@ -28,25 +30,28 @@ const Option = Select.Option;
 
 const mapStateToProps = ({
   userInfo,
-  clipper,
-  userPreference,
+  clipper: { currentAccountId, title, currentRepository, repositories },
+  userPreference: { accounts },
   router
 }: GlobalStore) => {
+  const currentAccount = accounts.find(o => o.id === currentAccountId);
   return {
+    accounts,
     plugins,
     router,
     createMode: true,
     loadingRepositories: false,
     uploadingImage: true,
     avatar: userInfo.avatar,
+    currentAccountId,
     userHomePage: userInfo.homePage,
-    title: clipper.title,
+    title: title,
     disabledPost: false,
     isCreateRepository: true,
-    currentRepository: clipper.currentRepository,
+    currentRepository,
     haveImageService: true,
-    defaultRepositoryId: '23',
-    repositories: clipper.repositories
+    currentAccount,
+    repositories: repositories
   };
 };
 type PageState = {
@@ -113,20 +118,14 @@ class Page extends React.Component<PageProps, PageState> {
       disabledPost,
       title,
       repositories,
-      defaultRepositoryId,
-      avatar,
-      userHomePage,
-      loadingRepositories,
-      currentRepository
+      currentAccount,
+      currentRepository,
+      loadingRepositories
     } = this.props;
 
     let repositoryId;
-    if (
-      repositories.findIndex(
-        (repository: Repository) => repository.id === defaultRepositoryId
-      ) !== -1
-    ) {
-      repositoryId = defaultRepositoryId;
+    if (currentAccount) {
+      repositoryId = currentAccount.defaultRepositoryId;
     }
     if (currentRepository) {
       repositoryId = currentRepository.id;
@@ -214,9 +213,19 @@ class Page extends React.Component<PageProps, PageState> {
           >
             <Icon type="setting" />
           </Button>
-          <a href={userHomePage} target="_blank">
-            <Avatar src={avatar} />
-          </a>
+          <Select
+            value={this.props.currentAccountId}
+            style={{ width: '75px' }}
+            onSelect={value => {
+              this.props.asyncChangeAccount({ id: value });
+            }}
+          >
+            {this.props.accounts.map(o => (
+              <Select.Option key={o.id || '1'}>
+                <Avatar size="small" src={o.avatar} />
+              </Select.Option>
+            ))}
+          </Select>
         </section>
       </ToolContainer>
     );
