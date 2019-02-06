@@ -18,6 +18,7 @@ import backend, { documentServiceFactory } from '../../services/backend';
 import { message } from 'antd';
 import { push } from 'connected-react-router';
 import { isType, AnyAction } from 'typescript-fsa';
+import { sendActionToCurrentTab } from '../../utils/browser';
 
 export function* asyncFetchRepositorySaga() {
   try {
@@ -143,7 +144,7 @@ export function* watchAsyncFetchRepositorySaga() {
 
 export function* asyncRunPluginSaga(action: any) {
   if (isType(action, asyncRunPlugin.started)) {
-    const result: string = yield gerResult(action);
+    const result: string = yield call(sendActionToCurrentTab, action);
     yield put(
       asyncRunPlugin.done({
         params: action.payload,
@@ -163,16 +164,6 @@ export function* clipperRootSagas() {
   yield fork(watchAsyncCreateDocumentSaga);
   yield fork(watchAsyncChangeAccountSaga);
 }
-
-const gerResult = function<T>(action: AnyAction): Promise<T> {
-  return new Promise<T>((resolve, _) => {
-    chrome.tabs.getCurrent((tab: any) => {
-      chrome.tabs.sendMessage(tab.id, action, (re: T) => {
-        resolve(re);
-      });
-    });
-  });
-};
 
 export function* asyncChangeAccountSaga(action: AnyAction) {
   if (isType(action, asyncChangeAccount.started)) {
