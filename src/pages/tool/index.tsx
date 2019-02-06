@@ -30,7 +30,13 @@ const Option = Select.Option;
 
 const mapStateToProps = ({
   userInfo,
-  clipper: { currentAccountId, title, currentRepository, repositories },
+  clipper: {
+    currentAccountId,
+    title,
+    currentRepository,
+    repositories,
+    loadingRepositories
+  },
   userPreference: { accounts },
   router
 }: GlobalStore) => {
@@ -40,7 +46,7 @@ const mapStateToProps = ({
     plugins,
     router,
     createMode: true,
-    loadingRepositories: false,
+    loadingRepositories: loadingRepositories,
     uploadingImage: true,
     avatar: userInfo.avatar,
     currentAccountId,
