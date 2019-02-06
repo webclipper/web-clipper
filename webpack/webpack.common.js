@@ -106,8 +106,6 @@ const baseConfig = {
 
 const commonConfig = merge(baseConfig, {
   entry: {
-    pluginStore: resolve('src/pages/pluginStore/index.tsx'),
-    initialize: resolve('src/pages/initialize/index.tsx'),
     background: resolve('src/background/index.ts'),
     tool: resolve('src/pages/app.tsx')
   },
@@ -132,16 +130,6 @@ const commonConfig = merge(baseConfig, {
     new ChromeManifestPlugin({
       packageJson: path.resolve(__dirname, '../package.json'),
       out: path.resolve(__dirname, '../dist/manifest.json')
-    }),
-    new HtmlWebpackPlugin({
-      title: '语雀剪藏向导',
-      filename: '../initialize.html',
-      chunks: ['initialize', 'vendor']
-    }),
-    new HtmlWebpackPlugin({
-      title: '插件中心',
-      filename: '../pluginStore.html',
-      chunks: ['pluginStore', 'vendor']
     }),
     new HtmlWebpackPlugin({
       title: '语雀剪藏插件',

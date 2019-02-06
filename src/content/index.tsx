@@ -61,6 +61,7 @@ chrome.runtime.onMessage.addListener((action: AnyAction, _, sendResponse) => {
     };
 
     if (action) {
+      // @ts-ignore
       // eslint-disable-next-line
       const context: ClipperPluginContext = {
         $,
