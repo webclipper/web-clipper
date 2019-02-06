@@ -74,7 +74,6 @@ export function* asyncCreateDocumentSaga() {
     repositoryId = currentRepository.id;
   }
   if (!repositoryId) {
-    console.log(repositoryId);
     message.error('必须选择一个知识库');
     return;
   }
@@ -113,9 +112,11 @@ export function* asyncCreateRepositorySaga() {
     const title = yield select((state: GlobalStore) => {
       return state.clipper.selectRepository.repositoryTitle;
     });
-    yield delay(1000);
+    yield call(backend.getDocumentService().createRepository, {
+      name: title,
+      private: true
+    });
     yield put(asyncCreateRepository.done({}));
-    console.log('create repository', title);
   } catch (error) {
     console.log(error);
     //todo 判断错误还是网络超时

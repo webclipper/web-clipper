@@ -43,6 +43,7 @@ export function* asyncVerificationAccessTokenSaga() {
     if (!host || !host.value) {
       return;
     }
+
     const service = documentServiceFactory({
       type: type.value,
       accessToken: accessToken.value,

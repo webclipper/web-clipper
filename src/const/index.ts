@@ -15,7 +15,7 @@ name: string;
   github: {
     icon: 'github',
     home: 'https://www.github.com',
-    api: 'https://www.github.com',
+    api: 'https://api.github.com/',
     name: 'Github'
   }
 };

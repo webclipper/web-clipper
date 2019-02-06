@@ -67,9 +67,17 @@ export default class YuqueDocumentService implements DocumentService {
   };
 
   getRepositories = async () => {
-    const repositories = await this.getYuqueRepositories(0);
-    this.repositories = repositories;
-    return repositories;
+    let offset = 0;
+    let foo = await this.getYuqueRepositories(offset);
+    let result: Repository[] = [];
+    result = result.concat(foo);
+    while (foo.length === 20) {
+      offset = offset + 20;
+      foo = await this.getYuqueRepositories(offset);
+      result = result.concat(foo);
+    }
+    this.repositories = result;
+    return result;
   };
 
   createDocument = async (info: CreateDocumentRequest) => {
