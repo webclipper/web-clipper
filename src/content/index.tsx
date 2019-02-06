@@ -6,6 +6,7 @@ import { AnyAction, isType } from 'typescript-fsa';
 import { asyncRunPlugin } from '../store/actions/clipper';
 import Highlighter from '../services/common/highlight';
 import * as Readability from 'readability';
+import { asyncHideTool } from '../store/actions/userPreference';
 
 const turndownService = TurndownService();
 turndownService.addRule('lazyLoadImage', {
@@ -32,27 +33,21 @@ chrome.runtime.onMessage.addListener(
 );
 
 //用来存放之后全部的内容
-chrome.runtime.onMessage.addListener(
-  (message: ActionMessage, _, sendResponse) => {
-    if (!message.action || message.action !== ActionMessageType.ICON_CLICK) {
-      return;
-    }
-    if ($(`.${styles.toolFrame}`).length === 0) {
-      $('body').append(
-        `<iframe src=${chrome.extension.getURL('tool.html')} class=${
-          styles.toolFrame
-        }></iframe>`
-      );
-    } else {
-      $(`.${styles.toolFrame}`).toggle();
-    }
-    //todo 这是不对滴
-    setTimeout(() => {
-      sendResponse(true);
-    }, 100);
-    return true;
+chrome.runtime.onMessage.addListener((message: ActionMessage, _, __) => {
+  if (!message.action || message.action !== ActionMessageType.ICON_CLICK) {
+    return;
   }
-);
+  if ($(`.${styles.toolFrame}`).length === 0) {
+    $('body').append(
+      `<iframe src=${chrome.extension.getURL('tool.html')} class=${
+        styles.toolFrame
+      }></iframe>`
+    );
+  } else {
+    $(`.${styles.toolFrame}`).toggle();
+  }
+  return true;
+});
 
 chrome.runtime.onMessage.addListener((action: AnyAction, _, sendResponse) => {
   if (isType(action, asyncRunPlugin.started)) {
@@ -78,5 +73,11 @@ chrome.runtime.onMessage.addListener((action: AnyAction, _, sendResponse) => {
       })();
       return true;
     }
+  }
+});
+
+chrome.runtime.onMessage.addListener((action: AnyAction, _, __) => {
+  if (isType(action, asyncHideTool.started)) {
+    $(`.${styles.toolFrame}`).hide();
   }
 });

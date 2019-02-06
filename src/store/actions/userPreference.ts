@@ -78,3 +78,7 @@ value: boolean;
 },
 void
 >(USER_PREFERENCE.ASYNC_SET_SHOW_LINE_NUMBER);
+
+export const asyncHideTool = actionCreator.async<void, void, void>(
+  USER_PREFERENCE.ASYNC_HIDE_TOOL
+);

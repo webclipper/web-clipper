@@ -15,7 +15,7 @@ interface ToolContainerProps {
 export class ToolContainer extends React.Component<ToolContainerProps> {
   onClickCloseButton = () => {
     if (this.props.onClickCloseButton) {
-      this.onClickCloseButton();
+      this.props.onClickCloseButton();
     }
   };
 

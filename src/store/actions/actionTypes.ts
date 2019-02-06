@@ -12,7 +12,8 @@ export const USER_PREFERENCE = actionTypeHelper('USER_PREFERENCE', {
   ASYNC_DELETE_ACCOUNT: '',
   ASYNC_UPDATE_CURRENT_ACCOUNT_INDEX: '',
   ASYNC_SET_SHOW_LINE_NUMBER: '配置编辑器是否显示行号',
-  ASYNC_SET_EDITOR_LIVE_RENDERING: '配置编辑器是否实时渲染'
+  ASYNC_SET_EDITOR_LIVE_RENDERING: '配置编辑器是否实时渲染',
+  ASYNC_HIDE_TOOL: '隐藏插件'
 });
 
 export const USER_INFO = actionTypeHelper('USER_INFO', {

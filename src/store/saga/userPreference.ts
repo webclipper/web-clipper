@@ -5,7 +5,8 @@ import {
   asyncDeleteAccount,
   asyncUpdateCurrentAccountIndex,
   asyncSetEditorLiveRendering,
-  asyncSetShowLineNumber
+  asyncSetShowLineNumber,
+  asyncHideTool
 } from './../actions/userPreference';
 import {
   takeEvery,
@@ -21,6 +22,7 @@ import { message } from 'antd';
 import { documentServiceFactory } from '../../services/backend';
 import storage from '../../services/common/store';
 import { isType, AnyAction } from 'typescript-fsa';
+import { sendActionToCurrentTab } from '../../utils/browser';
 
 export function* asyncVerificationAccessTokenSaga() {
   try {
@@ -227,4 +229,15 @@ export function* userPreferenceSagas() {
   yield fork(watchAsyncUpdateCurrentAccountIndexSaga);
   yield fork(watchAsyncSetEditorLiveRenderingSaga);
   yield fork(watchAsyncSetShowLineNumberSaga);
+  yield fork(watchAsyncHideToolSaga);
+}
+
+export function* asyncHideToolSaga(action: AnyAction) {
+  if (isType(action, asyncHideTool.started)) {
+    yield call(sendActionToCurrentTab, action);
+  }
+}
+
+export function* watchAsyncHideToolSaga() {
+  yield takeEvery(asyncHideTool.started.type, asyncHideToolSaga);
 }

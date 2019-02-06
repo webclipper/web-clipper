@@ -12,11 +12,13 @@ import {
   selectRepository,
   asyncChangeAccount
 } from '../../store/actions/clipper';
+import { asyncHideTool } from '../../store/actions/userPreference';
 import { push } from 'connected-react-router';
 import Xxx from './dropdown';
 import { plugins } from '../plugin/index';
 
 const useActions = {
+  asyncHideTool: asyncHideTool.started,
   asyncChangeAccount: asyncChangeAccount.started,
   postDocument: asyncCreateDocument.started,
   updateTitle,
@@ -138,7 +140,11 @@ class Page extends React.Component<PageProps, PageState> {
     }
 
     return (
-      <ToolContainer>
+      <ToolContainer
+        onClickCloseButton={() => {
+          this.props.asyncHideTool();
+        }}
+      >
         <section className={styles.section}>
           <h1 className={styles.sectionTitle}>笔记标题</h1>
           <Input value={title} onChange={this.onTitleChange} />
