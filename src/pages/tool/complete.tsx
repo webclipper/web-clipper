@@ -5,13 +5,20 @@ import { ToolContainer } from '../../components/container';
 import * as styles from './complete.scss';
 import { Button } from 'antd';
 import { emptyFunction } from '../../utils';
+import { backendServices } from '../../const/index';
 
 const useActions = {
   toggleQRCodeStatus: emptyFunction
 };
 
-const mapStateToProps = ({ clipper: { completeStatus }}: GlobalStore) => {
+const mapStateToProps = ({
+  clipper: { completeStatus, currentAccountId },
+  userPreference: { accounts }
+}: GlobalStore) => {
+  const currentAccount = accounts.find(o => o.id === currentAccountId);
+
   return {
+    currentAccount,
     completeStatus
   };
 };
@@ -29,8 +36,8 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 
 class Page extends React.Component<PageProps, PageState> {
   render() {
-    const { completeStatus } = this.props;
-    if (!completeStatus) {
+    const { completeStatus, currentAccount } = this.props;
+    if (!completeStatus || !currentAccount) {
       return (
         <ToolContainer>
           <a
@@ -52,7 +59,7 @@ class Page extends React.Component<PageProps, PageState> {
             target="_blank"
           >
             <Button style={{ marginTop: 16 }} size="large" type="primary" block>
-              前往语雀查看
+              前往 {backendServices[currentAccount.type].name} 查看
             </Button>
           </a>
         </section>

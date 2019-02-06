@@ -181,7 +181,6 @@ export function* asyncChangeAccountSaga(action: AnyAction) {
     if (!account) {
       throw new Error('');
     }
-
     const documentService = documentServiceFactory({
       accessToken: account.accessToken,
       baseURL: account.host,
