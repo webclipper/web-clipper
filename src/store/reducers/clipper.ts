@@ -24,6 +24,7 @@ const defaultState: ClipperStore = {
   currentAccountId: '',
   repositories: [],
   clipperData: {},
+  loadingRepositories: true,
   selectRepository: {
     createMode: false,
     repositoryTitle: '',
@@ -35,8 +36,18 @@ export default function clipper(
   state: ClipperStore = defaultState,
   action: Action
 ): ClipperStore {
+  if (isType(action, asyncChangeAccount.started)) {
+    return update(state, {
+      loadingRepositories: {
+        $set: true
+      }
+    });
+  }
   if (isType(action, asyncChangeAccount.done)) {
     return update(state, {
+      loadingRepositories: {
+        $set: false
+      },
       currentAccountId: {
         $set: action.payload.params.id
       },
@@ -57,9 +68,19 @@ export default function clipper(
       }
     });
   }
+  if (isType(action, asyncFetchRepository.failed)) {
+    return update(state, {
+      loadingRepositories: {
+        $set: false
+      }
+    });
+  }
   if (isType(action, asyncFetchRepository.done)) {
     const { repositories } = action.payload.result;
     return update(state, {
+      loadingRepositories: {
+        $set: false
+      },
       repositories: {
         $set: repositories
       }

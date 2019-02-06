@@ -32,6 +32,8 @@ interface ClipperStore {
   url?: string;
   /** 当前选择账户的ID */
   currentAccountId: string;
+  /** 是否在加载知识库列表 */
+  loadingRepositories: boolean;
   /** 知识库列表 */
   repositories: Repository[];
   /** 当前选择的知识库 */

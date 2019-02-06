@@ -32,8 +32,11 @@ export function* asyncFetchRepositorySaga() {
       })
     );
   } catch (error) {
-    console.log(error);
-    //todo 判断错误还是网络超时
+    yield put(
+      asyncFetchRepository.failed({
+        error: error
+      })
+    );
   }
 }
 
