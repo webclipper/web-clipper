@@ -1,4 +1,5 @@
 import YuqueDocumentService from './yuque';
+import GithubDocumentService from './github';
 
 interface DocumentServiceOption {
   type: string;
@@ -24,6 +25,12 @@ export function documentServiceFactory(
   const { type, baseURL, accessToken } = option;
   if (type === 'yuque') {
     return new YuqueDocumentService({
+      baseURL,
+      accessToken
+    });
+  }
+  if (type === 'github') {
+    return new GithubDocumentService({
       baseURL,
       accessToken
     });
