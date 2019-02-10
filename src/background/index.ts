@@ -5,15 +5,6 @@ if (process.env.NODE_ENV === 'development') {
   chrome.browserAction.setIcon({ path: 'icons/yuque-dev.png' });
 }
 
-chrome.runtime.onInstalled.addListener(function(details) {
-  if (details.reason === 'install') {
-    console.log('Install Success');
-    chrome.tabs.create({ url: chrome.extension.getURL('initialize.html') });
-  } else if (details.reason === 'update') {
-    console.log('Update Success');
-  }
-});
-
 async function tabStatus(tabId: number): Promise<any> {
   return new Promise((resolve, _) => {
     const massage: ActionMessage = {
@@ -46,11 +37,4 @@ chrome.browserAction.onClicked.addListener(async (tab: any) => {
     action: ActionMessageType.ICON_CLICK
   };
   chrome.tabs.sendMessage(tab.id, massage);
-});
-
-chrome.runtime.onMessage.addListener(async (message: ActionMessage, _, __) => {
-  if (!message.action || message.action !== ActionMessageType.GO_TO_SETTINGS) {
-    return;
-  }
-  chrome.tabs.create({ url: chrome.extension.getURL('initialize.html') });
 });
