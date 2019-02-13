@@ -14,7 +14,6 @@ import {
 } from '../../store/actions/clipper';
 import { asyncHideTool } from '../../store/actions/userPreference';
 import { push } from 'connected-react-router';
-import Xxx from './dropdown';
 import { plugins } from '../plugin/index';
 
 const useActions = {
@@ -200,9 +199,6 @@ class Page extends React.Component<PageProps, PageState> {
             filterOption={this.onFilterOption}
             dropdownMatchSelectWidth={true}
             value={repositoryId}
-            dropdownRender={main => {
-              return <Xxx onLockSelect={this.onLockSelect}>{main}</Xxx>;
-            }}
           >
             {repositories.map(o => {
               return (

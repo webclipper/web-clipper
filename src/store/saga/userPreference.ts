@@ -23,6 +23,7 @@ import { documentServiceFactory } from '../../services/backend';
 import storage from '../../services/common/store';
 import { isType, AnyAction } from 'typescript-fsa';
 import { sendActionToCurrentTab } from '../../utils/browser';
+import md5 = require('blueimp-md5');
 
 export function* asyncVerificationAccessTokenSaga() {
   try {
@@ -117,7 +118,7 @@ export function* asyncAddAccountSaga() {
     return;
   }
   const account: AccountPreference = {
-    id: accessToken.value, //todo md5
+    id: md5(accessToken.value),
     type: type.value,
     accessToken: accessToken.value,
     host: host.value,
