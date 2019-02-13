@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import {
   cancelCreateRepository,
   changeCreateRepositoryTitle,
@@ -25,6 +26,7 @@ const defaultState: ClipperStore = {
   repositories: [],
   clipperData: {},
   loadingRepositories: true,
+  creatingDocument: false,
   selectRepository: {
     createMode: false,
     repositoryTitle: '',
@@ -172,8 +174,23 @@ export default function clipper(
         }
       }
     });
+  } else if (isType(action, asyncCreateDocument.started)) {
+    return update(state, {
+      creatingDocument: {
+        $set: true
+      }
+    });
+  } else if (isType(action, asyncCreateDocument.failed)) {
+    return update(state, {
+      creatingDocument: {
+        $set: false
+      }
+    });
   } else if (isType(action, asyncCreateDocument.done)) {
     return update(state, {
+      creatingDocument: {
+        $set: false
+      },
       completeStatus: {
         $set: {
           documentHref: action.payload.result.documentHref

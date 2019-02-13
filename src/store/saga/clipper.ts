@@ -78,15 +78,30 @@ export function* asyncCreateDocumentSaga() {
     repositoryId = currentRepository.id;
   }
   if (!repositoryId) {
+    yield put(
+      asyncCreateDocument.failed({
+        error: null
+      })
+    );
     message.error('必须选择一个知识库');
     return;
   }
   if (!title) {
+    yield put(
+      asyncCreateDocument.failed({
+        error: null
+      })
+    );
     message.error('标题不允许为空');
     return;
   }
   const data = clipperData[router.location.pathname];
   if (!data) {
+    yield put(
+      asyncCreateDocument.failed({
+        error: null
+      })
+    );
     message.error('no data');
     return;
   }

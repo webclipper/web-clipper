@@ -19,7 +19,7 @@ void,
 {
 documentHref: string;
 },
-void
+null
 >(CLIPPER.ASYNC_CREATE_DOCUMENT);
 
 export const asyncUploadImage = actionCreator.async<void, void, void>(

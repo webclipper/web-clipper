@@ -25,6 +25,7 @@ interface BaseClipperType {
 }
 
 type ClipperDataType = TextClipperData;
+
 interface ClipperStore {
   /** 网页标题 */
   title?: string;
@@ -41,6 +42,8 @@ interface ClipperStore {
   clipperData: {
     [key: string]: ClipperDataType;
   };
+  /** 是否正在创建文档 */
+  creatingDocument: boolean;
   completeStatus?: CompleteStatus;
   selectRepository: {
     createMode: boolean;

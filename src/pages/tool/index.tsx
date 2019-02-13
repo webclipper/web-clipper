@@ -35,6 +35,7 @@ const mapStateToProps = ({
   clipper: {
     currentAccountId,
     title,
+    creatingDocument,
     currentRepository,
     repositories,
     loadingRepositories
@@ -48,13 +49,13 @@ const mapStateToProps = ({
     plugins,
     router,
     createMode: true,
+    creatingDocument,
     loadingRepositories: loadingRepositories,
     uploadingImage: true,
     avatar: userInfo.avatar,
     currentAccountId,
     userHomePage: userInfo.homePage,
     title: title,
-    disabledPost: false,
     isCreateRepository: true,
     currentRepository,
     haveImageService: true,
@@ -123,7 +124,7 @@ class Page extends React.Component<PageProps, PageState> {
 
   render() {
     const {
-      disabledPost,
+      creatingDocument,
       title,
       repositories,
       currentAccount,
@@ -153,7 +154,8 @@ class Page extends React.Component<PageProps, PageState> {
             style={{ marginTop: 16 }}
             size="large"
             type="primary"
-            disabled={disabledPost}
+            loading={creatingDocument}
+            disabled={creatingDocument}
             onClick={() => {
               this.props.postDocument();
             }}
