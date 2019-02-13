@@ -1,5 +1,5 @@
 import { BrowserTab } from './../../services/browser/index';
-import { spawn, call, put } from 'redux-saga/effects';
+import { spawn, call, put, all } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 import { initUserPreference } from '../actions/userPreference';
 import storage from '../../services/common/store';
@@ -59,6 +59,6 @@ export const rootSagas = [
 ].map(makeRestartable);
 
 export default function* root() {
-  yield rootSagas.map(saga => call(saga));
+  yield all(rootSagas.map(saga => call(saga)));
   yield call(initStore);
 }
