@@ -73,14 +73,7 @@ class InitializeForm extends React.Component<PageProps> {
       >
         <Form>
           <Form.Item label={<span>类型</span>} {...formItemLayout}>
-            {getFieldDecorator('type', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input the captcha you got!'
-                }
-              ]
-            })(
+            {getFieldDecorator('type')(
               <Select>
                 {typeOptions.map(o => (
                   <Select.Option key={o.key}>{o.name}</Select.Option>
@@ -122,14 +115,7 @@ class InitializeForm extends React.Component<PageProps> {
           </Form.Item>
           {
             <Form.Item label="默认知识库" {...formItemLayout}>
-              {getFieldDecorator('defaultRepositoryId', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please input the captcha you got!'
-                  }
-                ]
-              })(
+              {getFieldDecorator('defaultRepositoryId')(
                 <Select loading={verifying} disabled={verifying}>
                   {repositories.map(o => {
                     return (
