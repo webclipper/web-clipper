@@ -6,7 +6,10 @@ import { AnyAction, isType } from 'typescript-fsa';
 import { asyncRunPlugin } from '../store/actions/clipper';
 import Highlighter from '../services/common/highlight';
 import * as Readability from 'readability';
-import { asyncHideTool } from '../store/actions/userPreference';
+import {
+  asyncHideTool,
+  asyncRemoveTool
+} from '../store/actions/userPreference';
 
 const turndownService = TurndownService();
 turndownService.addRule('lazyLoadImage', {
@@ -79,5 +82,11 @@ chrome.runtime.onMessage.addListener((action: AnyAction, _, sendResponse) => {
 chrome.runtime.onMessage.addListener((action: AnyAction, _, __) => {
   if (isType(action, asyncHideTool.started)) {
     $(`.${styles.toolFrame}`).hide();
+  }
+});
+
+chrome.runtime.onMessage.addListener((action: AnyAction, _, __) => {
+  if (isType(action, asyncRemoveTool.started)) {
+    $(`.${styles.toolFrame}`).remove();
   }
 });

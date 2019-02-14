@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { ToolContainer } from '../../components/container';
 import * as styles from './complete.scss';
 import { Button } from 'antd';
-import { emptyFunction } from '../../utils';
 import { backendServices } from '../../const/index';
+import { asyncRemoveTool } from '../../store/actions/userPreference';
 
 const useActions = {
-  toggleQRCodeStatus: emptyFunction
+  asyncRemoveTool: asyncRemoveTool.started
 };
 
 const mapStateToProps = ({
@@ -39,7 +39,11 @@ class Page extends React.Component<PageProps, PageState> {
     const { completeStatus, currentAccount } = this.props;
     if (!completeStatus || !currentAccount) {
       return (
-        <ToolContainer>
+        <ToolContainer
+          onClickCloseButton={() => {
+            this.props.asyncRemoveTool();
+          }}
+        >
           <a
             target="_blank"
             href="https://github.com/yuquewebclipper/yuque-web-clipper/issues"
@@ -50,7 +54,11 @@ class Page extends React.Component<PageProps, PageState> {
       );
     }
     return (
-      <ToolContainer>
+      <ToolContainer
+        onClickCloseButton={() => {
+          this.props.asyncRemoveTool();
+        }}
+      >
         <section className={styles.section}>
           <h1 className={styles.sectionTitle}>保存成功</h1>
           <a

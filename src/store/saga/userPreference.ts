@@ -6,7 +6,8 @@ import {
   asyncUpdateCurrentAccountIndex,
   asyncSetEditorLiveRendering,
   asyncSetShowLineNumber,
-  asyncHideTool
+  asyncHideTool,
+  asyncRemoveTool
 } from './../actions/userPreference';
 import {
   takeEvery,
@@ -223,16 +224,6 @@ export function* watchAsyncSetEditorLiveRenderingSaga() {
   );
 }
 
-export function* userPreferenceSagas() {
-  yield fork(watchAsyncDeleteAccountSaga);
-  yield fork(watchAsyncVerificationAccessTokenSaga);
-  yield fork(watchAsyncAddAccountSaga);
-  yield fork(watchAsyncUpdateCurrentAccountIndexSaga);
-  yield fork(watchAsyncSetEditorLiveRenderingSaga);
-  yield fork(watchAsyncSetShowLineNumberSaga);
-  yield fork(watchAsyncHideToolSaga);
-}
-
 export function* asyncHideToolSaga(action: AnyAction) {
   if (isType(action, asyncHideTool.started)) {
     yield call(sendActionToCurrentTab, action);
@@ -241,4 +232,25 @@ export function* asyncHideToolSaga(action: AnyAction) {
 
 export function* watchAsyncHideToolSaga() {
   yield takeEvery(asyncHideTool.started.type, asyncHideToolSaga);
+}
+
+export function* asyncRemoveToolSaga(action: AnyAction) {
+  if (isType(action, asyncRemoveTool.started)) {
+    yield call(sendActionToCurrentTab, action);
+  }
+}
+
+export function* watchAsyncRemoveToolSaga() {
+  yield takeEvery(asyncRemoveTool.started.type, asyncRemoveToolSaga);
+}
+
+export function* userPreferenceSagas() {
+  yield fork(watchAsyncDeleteAccountSaga);
+  yield fork(watchAsyncVerificationAccessTokenSaga);
+  yield fork(watchAsyncAddAccountSaga);
+  yield fork(watchAsyncUpdateCurrentAccountIndexSaga);
+  yield fork(watchAsyncSetEditorLiveRenderingSaga);
+  yield fork(watchAsyncSetShowLineNumberSaga);
+  yield fork(watchAsyncHideToolSaga);
+  yield fork(watchAsyncRemoveToolSaga);
 }

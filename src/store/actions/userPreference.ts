@@ -82,3 +82,7 @@ void
 export const asyncHideTool = actionCreator.async<void, void, void>(
   USER_PREFERENCE.ASYNC_HIDE_TOOL
 );
+
+export const asyncRemoveTool = actionCreator.async<void, void, void>(
+  USER_PREFERENCE.ASYNC_REMOVE_TOOL
+);
