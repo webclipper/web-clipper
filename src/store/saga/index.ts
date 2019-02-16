@@ -29,6 +29,8 @@ const makeRestartable = (saga: any) => {
 
 function* initStore() {
   const result: PreferenceStorage = yield call(storage.getPreference);
+  const tabInfo: BrowserTab = yield call(browserService.getCurrentTab);
+  yield put(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
   if (result.accounts.length === 0) {
     yield put(push('/preference'));
     return;
@@ -46,8 +48,6 @@ function* initStore() {
     type: account.type
   });
   backendService.setDocumentService(documentService);
-  const tabInfo: BrowserTab = yield call(browserService.getCurrentTab);
-  yield put(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
   yield call(asyncFetchUserInfoSaga);
   yield call(asyncFetchRepositorySaga);
 }
