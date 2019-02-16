@@ -161,7 +161,10 @@ export function userPreference(
     }
     return update(state, {
       initializeForm: {
-        $merge: action.payload
+        $merge: action.payload,
+        verified: {
+          $set: false
+        }
       }
     });
   }
