@@ -76,6 +76,9 @@ export function userPreference(
       accounts: {
         $set: action.payload.result.accounts
       },
+      defaultAccountId: {
+        $set: action.payload.result.defaultAccountId
+      },
       initializeForm: {
         $set: {
           ...defaultState.initializeForm,
@@ -95,6 +98,9 @@ export function userPreference(
     return update(state, {
       accounts: {
         $set: action.payload.result.accounts
+      },
+      defaultAccountId: {
+        $set: action.payload.result.defaultAccountId
       }
     });
   }

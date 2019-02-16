@@ -69,7 +69,7 @@ class Page extends React.Component<PageProps, PageState> {
       title: '你确定要删除这个账户吗？',
       onOk() {
         let account = that.props.accounts[index];
-        that.props.asyncDeleteAccount({ accessToken: account.accessToken });
+        that.props.asyncDeleteAccount({ id: account.id });
       }
     });
   };

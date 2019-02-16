@@ -126,12 +126,23 @@ export function* asyncAddAccountSaga() {
     defaultRepositoryId: defaultRepositoryId ? defaultRepositoryId.value : '',
     ...userInfo
   };
-  yield call(storage.addAccount, account);
+  try {
+    yield call(storage.addAccount, account);
+  } catch (error) {
+    if (error.message === 'Do not allow duplicate accounts') {
+      message.error('不允许添加重复账户');
+      return;
+    } else {
+      message.error('添加账户失败 未知错误');
+      return;
+    }
+  }
   const accounts = yield call(storage.getAccounts);
+  const defaultAccountId = yield call(storage.getDefaultAccountId);
 
   yield put(
     asyncAddAccount.done({
-      result: { accounts }
+      result: { accounts, defaultAccountId }
     })
   );
 }
@@ -142,13 +153,15 @@ export function* watchAsyncAddAccountSaga() {
 
 export function* asyncDeleteAccountSaga(action: AnyAction) {
   if (isType(action, asyncDeleteAccount.started)) {
-    yield call(storage.deleteAccountByAccessToken, action.payload.accessToken);
+    yield call(storage.deleteAccountById, action.payload.id);
     const accounts = yield call(storage.getAccounts);
+    const defaultAccountId = yield call(storage.getDefaultAccountId);
     yield put(
       asyncDeleteAccount.done({
         params: action.payload,
         result: {
-          accounts: accounts
+          accounts: accounts,
+          defaultAccountId: defaultAccountId
         }
       })
     );

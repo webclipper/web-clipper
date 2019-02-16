@@ -58,7 +58,7 @@ interface CompleteStatus {
 }
 interface UserPreferenceStore {
   accounts: AccountPreference[];
-  defaultPluginId?: string;
+  defaultPluginId?: string | null;
   defaultAccountId?: string;
   showQuickResponseCode: boolean;
   showLineNumber: boolean;
@@ -101,7 +101,7 @@ interface AccountPreference {
 
 interface PreferenceStorage {
   accounts: AccountPreference[];
-  defaultPluginId?: string;
+  defaultPluginId?: string | null;
   defaultAccountId?: string;
   showQuickResponseCode: boolean;
   showLineNumber: boolean;

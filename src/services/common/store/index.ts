@@ -1,5 +1,5 @@
-interface CommonStorage {
-  set(key: string, value: any): Promise<void>;
+export interface CommonStorage {
+  set(key: string, value: any): void | Promise<void>;
   get<T>(key: string): Promise<T | undefined>;
 }
 
@@ -41,11 +41,9 @@ export interface TypedCommonStorageInterface {
 
   addAccount(account: AccountPreference): Promise<void>;
 
-  deleteAccountByAccessToken(accessToken: string): Promise<void>;
+  deleteAccountById(accessToken: string): Promise<void>;
 
   getAccounts(): Promise<AccountPreference[]>;
-
-  /** --------当前默认账户 ID--------- */
 
   setDefaultAccountId(accountId: string): Promise<void>;
 
@@ -53,9 +51,9 @@ export interface TypedCommonStorageInterface {
 
   /** --------默认插件--------- */
 
-  setDefaultPluginId(id: string): Promise<void>;
+  setDefaultPluginId(id: string | null): Promise<void>;
 
-  getDefaultPluginId(): Promise<string | undefined>;
+  getDefaultPluginId(): Promise<string | undefined | null>;
 
   /** --------显示二维码--------- */
 
@@ -84,11 +82,11 @@ const keysOfStorage = {
   showLineNumber: 'showLineNumber'
 };
 
-class TypedCommonStorage implements TypedCommonStorageInterface {
+export class TypedCommonStorage implements TypedCommonStorageInterface {
   store: CommonStorage;
 
-  constructor() {
-    this.store = new ChromeSyncStorageImpl();
+  constructor(store: CommonStorage) {
+    this.store = store;
   }
 
   getPreference = async (): Promise<PreferenceStorage> => {
@@ -108,17 +106,30 @@ class TypedCommonStorage implements TypedCommonStorageInterface {
     };
   };
 
-  deleteAccountByAccessToken = async (accessToken: string) => {
+  deleteAccountById = async (id: string) => {
     const accounts = await this.getAccounts();
-    await this.store.set(
-      keysOfStorage.accounts,
-      accounts.filter(account => account.accessToken !== accessToken)
-    );
+    const newAccounts = accounts.filter(account => account.id !== id);
+    const defaultAccountId = await this.getDefaultAccountId();
+    if (defaultAccountId === id) {
+      if (newAccounts.length > 0) {
+        await this.setDefaultAccountId(newAccounts[0].id);
+      } else {
+        // eslint-disable-next-line no-undefined
+        await this.store.set(keysOfStorage.defaultAccountId, undefined);
+      }
+    }
+    await this.store.set(keysOfStorage.accounts, newAccounts);
   };
 
   addAccount = async (account: AccountPreference) => {
     const accounts = await this.getAccounts();
+    if (accounts.findIndex(o => o.id === account.id) !== -1) {
+      throw new Error('Do not allow duplicate accounts');
+    }
     accounts.push(account);
+    if (accounts.length === 1) {
+      await this.setDefaultAccountId(account.id);
+    }
     await this.store.set(keysOfStorage.accounts, accounts);
   };
 
@@ -140,7 +151,7 @@ class TypedCommonStorage implements TypedCommonStorageInterface {
     return this.store.get<string>(keysOfStorage.defaultAccountId);
   };
 
-  setDefaultPluginId = async (value: string) => {
+  setDefaultPluginId = async (value: string | null) => {
     await this.store.set(keysOfStorage.defaultPluginId, value);
   };
   getDefaultPluginId = async () => {
@@ -154,7 +165,7 @@ class TypedCommonStorage implements TypedCommonStorageInterface {
     const value = await this.store.get<boolean>(
       keysOfStorage.showQuickResponseCode
     );
-    return value !== false;
+    return value === true;
   };
 
   setShowLineNumber = async (value: boolean) => {
@@ -174,4 +185,6 @@ class TypedCommonStorage implements TypedCommonStorageInterface {
   };
 }
 
-export default new TypedCommonStorage() as TypedCommonStorageInterface;
+export default new TypedCommonStorage(
+  new ChromeSyncStorageImpl()
+) as TypedCommonStorageInterface;

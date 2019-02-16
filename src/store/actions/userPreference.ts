@@ -31,6 +31,7 @@ export const asyncAddAccount = actionCreator.async<
 void,
 {
 accounts: AccountPreference[];
+defaultAccountId: string;
 },
 void
 >(USER_PREFERENCE.ASYNC_ADD_ACCOUNT);
@@ -44,9 +45,10 @@ export const startCreateAccount = actionCreator(
 );
 
 export const asyncDeleteAccount = actionCreator.async<
-{ accessToken: string },
+{ id: string },
 {
 accounts: AccountPreference[];
+defaultAccountId: string;
 },
 void
 >(USER_PREFERENCE.ASYNC_DELETE_ACCOUNT);
