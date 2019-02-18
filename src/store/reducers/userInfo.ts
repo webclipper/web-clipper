@@ -1,8 +1,7 @@
-import { isType } from 'typescript-fsa';
+import update from 'immutability-helper';
 import { Action } from 'redux';
 import { asyncFetchUserInfo } from '../actions/userInfo';
-
-import update from 'immutability-helper';
+import { isType } from 'typescript-fsa';
 
 const defaultState: UserInfoStore = {};
 

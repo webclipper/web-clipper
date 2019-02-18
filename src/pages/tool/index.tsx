@@ -1,20 +1,20 @@
 import * as React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { ToolContainer } from '../../components/container';
-import { Button, Input, Icon, Select, Avatar } from 'antd';
 import * as styles from './index.scss';
-import { emptyFunction } from '../../utils';
 import {
-  updateTitle,
+  asyncChangeAccount,
   asyncCreateDocument,
   cancelCreateRepository,
   selectRepository,
-  asyncChangeAccount
+  updateTitle
 } from '../../store/actions/clipper';
 import { asyncHideTool } from '../../store/actions/userPreference';
-import { push } from 'connected-react-router';
+import { Avatar, Button, Icon, Input, Select } from 'antd';
+import { bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import { emptyFunction } from '../../utils';
 import { plugins } from '../plugin/index';
+import { push } from 'connected-react-router';
+import { ToolContainer } from '../../components/container';
 
 const useActions = {
   asyncHideTool: asyncHideTool.started,
@@ -151,8 +151,8 @@ class Page extends React.Component<PageProps, PageState> {
           <Button
             className={styles.saveButton}
             style={{ marginTop: 16 }}
-            size="large"
-            type="primary"
+            size='large'
+            type='primary'
             loading={creatingDocument}
             disabled={creatingDocument}
             onClick={() => {
@@ -195,7 +195,7 @@ class Page extends React.Component<PageProps, PageState> {
             onSelect={this.onRepositorySelect}
             style={{ width: '100%' }}
             showSearch
-            optionFilterProp="children"
+            optionFilterProp='children'
             filterOption={this.onFilterOption}
             dropdownMatchSelectWidth={true}
             value={repositoryId}
@@ -221,7 +221,7 @@ class Page extends React.Component<PageProps, PageState> {
               }
             }}
           >
-            <Icon type="setting" />
+            <Icon type='setting' />
           </Button>
           <Select
             value={this.props.currentAccountId}
@@ -232,7 +232,7 @@ class Page extends React.Component<PageProps, PageState> {
           >
             {this.props.accounts.map(o => (
               <Select.Option key={o.id || '1'}>
-                <Avatar size="small" src={o.avatar} />
+                <Avatar size='small' src={o.avatar} />
               </Select.Option>
             ))}
           </Select>

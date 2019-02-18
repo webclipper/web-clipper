@@ -1,7 +1,8 @@
-import { takeEvery, fork, call, put } from 'redux-saga/effects';
-import { asyncFetchUserInfo } from '../actions/userInfo';
 import backend from '../../services/backend';
+import { asyncFetchUserInfo } from '../actions/userInfo';
+import { call, fork, put, takeEvery } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
 export function* asyncFetchUserInfoSaga() {
   try {
     const response: UserInfo = yield call(

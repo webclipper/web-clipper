@@ -1,5 +1,5 @@
-import YuqueDocumentService from './yuque';
 import GithubDocumentService from './github';
+import YuqueDocumentService from './yuque';
 
 interface DocumentServiceOption {
   type: string;

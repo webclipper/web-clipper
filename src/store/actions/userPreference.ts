@@ -88,3 +88,13 @@ export const asyncHideTool = actionCreator.async<void, void, void>(
 export const asyncRemoveTool = actionCreator.async<void, void, void>(
   USER_PREFERENCE.ASYNC_REMOVE_TOOL
 );
+
+export const asyncSetShowQuickResponseCode = actionCreator.async<
+{
+value: boolean;
+},
+{
+value: boolean;
+},
+void
+>(USER_PREFERENCE.ASYNC_SET_SHOW_QUICK_RESPONSE_CODE);

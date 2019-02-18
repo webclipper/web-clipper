@@ -6,6 +6,7 @@ import * as styles from './complete.scss';
 import { Button } from 'antd';
 import { backendServices } from '../../const/index';
 import { asyncRemoveTool } from '../../store/actions/userPreference';
+import { QuickResponseCode } from '../complete/QuickResponseCode';
 
 const useActions = {
   asyncRemoveTool: asyncRemoveTool.started
@@ -13,13 +14,13 @@ const useActions = {
 
 const mapStateToProps = ({
   clipper: { completeStatus, currentAccountId },
-  userPreference: { accounts }
+  userPreference: { accounts, showQuickResponseCode }
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
-
   return {
     currentAccount,
-    completeStatus
+    completeStatus,
+    showQuickResponseCode
   };
 };
 type PageState = {};
@@ -36,7 +37,11 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 
 class Page extends React.Component<PageProps, PageState> {
   render() {
-    const { completeStatus, currentAccount } = this.props;
+    const {
+      completeStatus,
+      currentAccount,
+      showQuickResponseCode
+    } = this.props;
     if (!completeStatus || !currentAccount) {
       return (
         <ToolContainer
@@ -45,8 +50,8 @@ class Page extends React.Component<PageProps, PageState> {
           }}
         >
           <a
-            target="_blank"
-            href="https://github.com/yuquewebclipper/yuque-web-clipper/issues"
+            target='_blank'
+            href='https://github.com/yuquewebclipper/yuque-web-clipper/issues'
           >
             发生错误
           </a>
@@ -64,13 +69,23 @@ class Page extends React.Component<PageProps, PageState> {
           <a
             className={styles.menuButton}
             href={completeStatus.documentHref}
-            target="_blank"
+            target='_blank'
           >
-            <Button style={{ marginTop: 16 }} size="large" type="primary" block>
+            <Button style={{ marginTop: 16 }} size='large' type='primary' block>
               前往 {backendServices[currentAccount.type].name} 查看
             </Button>
           </a>
         </section>
+        {showQuickResponseCode && currentAccount.type === 'yuque' && (
+          <section className={styles.section}>
+            <h1 className={styles.sectionTitle}>小程序二维码</h1>
+            <QuickResponseCode
+              repositoryId={completeStatus.repositoryId}
+              documentId={completeStatus.documentId}
+              accessToken={this.props.currentAccount!.accessToken}
+            />
+          </section>
+        )}
       </ToolContainer>
     );
   }

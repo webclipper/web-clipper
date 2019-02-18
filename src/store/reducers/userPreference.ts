@@ -1,21 +1,22 @@
+import update from 'immutability-helper';
+import { Action } from 'redux';
+import {
+  asyncAddAccount,
+  asyncDeleteAccount,
+  asyncSetEditorLiveRendering,
+  asyncSetShowLineNumber,
+  asyncSetShowQuickResponseCode,
+  asyncUpdateCurrentAccountIndex,
+  cancelCreateAccount,
+  initUserPreference,
+  updateCreateAccountForm
+} from '../actions/userPreference';
 import {
   asyncVerificationAccessToken,
   startCreateAccount
 } from './../actions/userPreference';
-import update from 'immutability-helper';
-import { Action } from 'redux';
-import { isType } from 'typescript-fsa';
-import {
-  initUserPreference,
-  updateCreateAccountForm,
-  cancelCreateAccount,
-  asyncAddAccount,
-  asyncDeleteAccount,
-  asyncUpdateCurrentAccountIndex,
-  asyncSetEditorLiveRendering,
-  asyncSetShowLineNumber
-} from '../actions/userPreference';
 import { backendServices } from '../../const';
+import { isType } from 'typescript-fsa';
 
 const defaultState: UserPreferenceStore = {
   accounts: [],
@@ -51,6 +52,13 @@ export function userPreference(
   if (isType(action, asyncSetEditorLiveRendering.done)) {
     return update(state, {
       liveRendering: {
+        $set: action.payload.result.value
+      }
+    });
+  }
+  if (isType(action, asyncSetShowQuickResponseCode.done)) {
+    return update(state, {
+      showQuickResponseCode: {
         $set: action.payload.result.value
       }
     });

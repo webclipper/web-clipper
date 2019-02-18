@@ -86,18 +86,21 @@ export default class GithubDocumentService implements DocumentService {
     }
     const response = await this.request.post<{
     html_url: string;
+    id: number;
     }>(`/repos/${repository.namespace}/issues`, {
       title,
       body
     });
     return {
-      href: response.data.html_url
+      href: response.data.html_url,
+      repositoryId,
+      documentId: response.data.id.toString()
     };
   };
 
   createRepository = async (info: CreateRepositoryRequest) => {
     const { name } = info;
-    await this.request.post(`/user/repos`, {
+    await this.request.post('/user/repos', {
       name,
       private: info.private
     });

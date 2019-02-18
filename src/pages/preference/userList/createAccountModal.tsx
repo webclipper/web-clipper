@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { Form, Input, Select, Button, Row, Col, Modal } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
 import {
-  updateCreateAccountForm,
-  asyncVerificationAccessToken,
   asyncAddAccount,
-  cancelCreateAccount
+  asyncVerificationAccessToken,
+  cancelCreateAccount,
+  updateCreateAccountForm
 } from '../../../store/actions/userPreference';
 import { backendServices } from '../../../const';
+import { bindActionCreators, Dispatch } from 'redux';
+import { Button, Col, Form, Input, Modal, Row, Select } from 'antd';
+import { connect } from 'react-redux';
+import { FormComponentProps } from 'antd/lib/form';
 
 const Option = Select.Option;
 
@@ -58,8 +58,8 @@ class InitializeForm extends React.Component<PageProps> {
     return (
       <Modal
         visible={show}
-        title="绑定新账号"
-        okText="绑定"
+        title='绑定新账号'
+        okText='绑定'
         okType={disableOkButton ? 'dashed' : 'primary'}
         onCancel={() => {
           this.props.cancelCreateAccount();
@@ -81,12 +81,12 @@ class InitializeForm extends React.Component<PageProps> {
               </Select>
             )}
           </Form.Item>
-          <Form.Item label="域名" {...formItemLayout}>
+          <Form.Item label='域名' {...formItemLayout}>
             {getFieldDecorator('host', {
               rules: [{ required: true, message: 'host is required!' }]
             })(<Input disabled={verifying} />)}
           </Form.Item>
-          <Form.Item label="AccessToken" {...formItemLayout}>
+          <Form.Item label='AccessToken' {...formItemLayout}>
             <Row>
               <Col span={18}>
                 {getFieldDecorator('accessToken', {
@@ -101,7 +101,7 @@ class InitializeForm extends React.Component<PageProps> {
               <Col offset={1} span={4}>
                 <Button
                   block
-                  type="primary"
+                  type='primary'
                   disabled={verifying || verified}
                   loading={verifying}
                   onClick={() => {
@@ -114,7 +114,7 @@ class InitializeForm extends React.Component<PageProps> {
             </Row>
           </Form.Item>
           {
-            <Form.Item label="默认知识库" {...formItemLayout}>
+            <Form.Item label='默认知识库' {...formItemLayout}>
               {getFieldDecorator('defaultRepositoryId')(
                 <Select loading={verifying} disabled={verifying}>
                   {repositories.map(o => {

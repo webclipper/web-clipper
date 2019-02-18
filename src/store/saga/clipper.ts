@@ -1,24 +1,32 @@
+import backend, { documentServiceFactory } from '../../services/backend';
+import { AnyAction, isType } from 'typescript-fsa';
 import {
-  takeEvery,
-  fork,
+  asyncChangeAccount,
+  asyncCreateDocument,
+  asyncCreateRepository,
+  asyncFetchRepository,
+  asyncRunPlugin
+} from '../actions/clipper';
+import {
   call,
+  fork,
   put,
-  takeLatest,
-  select
+  select,
+  takeEvery,
+  takeLatest
 } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
-import {
-  asyncFetchRepository,
-  asyncCreateRepository,
-  asyncCreateDocument,
-  asyncRunPlugin,
-  asyncChangeAccount
-} from '../actions/clipper';
-import backend, { documentServiceFactory } from '../../services/backend';
 import { message } from 'antd';
 import { push } from 'connected-react-router';
-import { isType, AnyAction } from 'typescript-fsa';
 import { sendActionToCurrentTab } from '../../utils/browser';
+
+export function* clipperRootSagas() {
+  yield fork(watchAsyncRunPluginSaga);
+  yield fork(watchAsyncCreateRepositorySaga);
+  yield fork(watchAsyncFetchRepositorySaga);
+  yield fork(watchAsyncCreateDocumentSaga);
+  yield fork(watchAsyncChangeAccountSaga);
+}
 
 export function* asyncFetchRepositorySaga() {
   try {
@@ -115,10 +123,13 @@ export function* asyncCreateDocumentSaga() {
         content: data.data
       }
     );
+    const { href: documentHref, documentId } = response;
     yield put(
       asyncCreateDocument.done({
         result: {
-          documentHref: response.href
+          documentHref,
+          repositoryId: response.repositoryId,
+          documentId
         }
       })
     );
@@ -170,14 +181,6 @@ export function* asyncRunPluginSaga(action: any) {
 }
 export function* watchAsyncRunPluginSaga() {
   yield takeEvery(asyncRunPlugin.started.type, asyncRunPluginSaga);
-}
-
-export function* clipperRootSagas() {
-  yield fork(watchAsyncRunPluginSaga);
-  yield fork(watchAsyncCreateRepositorySaga);
-  yield fork(watchAsyncFetchRepositorySaga);
-  yield fork(watchAsyncCreateDocumentSaga);
-  yield fork(watchAsyncChangeAccountSaga);
 }
 
 export function* asyncChangeAccountSaga(action: AnyAction) {

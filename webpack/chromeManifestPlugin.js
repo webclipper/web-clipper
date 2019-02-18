@@ -3,7 +3,7 @@ const path = require('path');
 
 const writeFile = (path, data, opts = 'utf8') =>
   new Promise((res, rej) => {
-    fs.writeFile(path, data, opts, (err) => {
+    fs.writeFile(path, data, opts, err => {
       if (err) rej(err);
       else res();
     });
@@ -17,7 +17,7 @@ const readFile = (path, opts = 'utf8') =>
     });
   });
 
-const mkdirsSync = (dirname) => {
+const mkdirsSync = dirname => {
   if (fs.existsSync(dirname)) {
     return true;
   } else {
@@ -34,15 +34,19 @@ class ChromeManifestPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.done.tapPromise('ChromeManifestPlugin', async (compilation) => {
-      const packageJson = JSON.parse(await readFile(this.options.packageJson));
-      const manifest = packageJson.chrome;
-      manifest.version = packageJson.version;
-      manifest.description = packageJson.description;
-      mkdirsSync(path.dirname(this.options.out));
-      await writeFile(this.options.out, JSON.stringify(manifest));
-    });
-
+    compiler.hooks.done.tapPromise(
+      'ChromeManifestPlugin',
+      async compilation => {
+        const packageJson = JSON.parse(
+          await readFile(this.options.packageJson)
+        );
+        const manifest = packageJson.chrome;
+        manifest.version = packageJson.version;
+        manifest.description = packageJson.description;
+        mkdirsSync(path.dirname(this.options.out));
+        await writeFile(this.options.out, JSON.stringify(manifest));
+      }
+    );
   }
 }
 

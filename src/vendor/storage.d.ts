@@ -54,7 +54,9 @@ interface ClipperStore {
 
 interface CompleteStatus {
   /** 裁剪成功后的文章地址 */
-  documentHref?: string;
+  documentHref: string;
+  documentId: string;
+  repositoryId: string;
 }
 interface UserPreferenceStore {
   accounts: AccountPreference[];

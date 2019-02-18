@@ -1,15 +1,15 @@
-import { BrowserTab } from './../../services/browser/index';
-import { spawn, call, put, all } from 'redux-saga/effects';
-import { delay } from 'redux-saga';
-import { initUserPreference } from '../actions/userPreference';
-import storage from '../../services/common/store';
 import backendService, { documentServiceFactory } from '../../services/backend';
-import { userInfoRootSagas, asyncFetchUserInfoSaga } from './userInfo';
-import { clipperRootSagas, asyncFetchRepositorySaga } from './clipper';
-import { userPreferenceSagas } from './userPreference';
 import browserService from '../../services/browser';
+import storage from '../../services/common/store';
+import { all, call, put, spawn } from 'redux-saga/effects';
+import { asyncFetchRepositorySaga, clipperRootSagas } from './clipper';
+import { asyncFetchUserInfoSaga, userInfoRootSagas } from './userInfo';
+import { BrowserTab } from './../../services/browser/index';
+import { delay } from 'redux-saga';
 import { initTabInfo } from '../actions/clipper';
+import { initUserPreference } from '../actions/userPreference';
 import { push } from 'connected-react-router';
+import { userPreferenceSagas } from './userPreference';
 
 const makeRestartable = (saga: any) => {
   return function* () {

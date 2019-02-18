@@ -24,7 +24,7 @@ export class ToolContainer extends React.Component<ToolContainerProps> {
       <Container>
         <div className={styles.toolContainer}>
           <div className={styles.closeButton} onClick={this.onClickCloseButton}>
-            <Icon type="close" />
+            <Icon type='close' />
           </div>
           {<div>{this.props.children}</div>}
         </div>

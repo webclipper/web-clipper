@@ -27,6 +27,8 @@ interface CreateDocumentRequest {
 }
 interface CreateDocumentResponse {
   href: string;
+  repositoryId: string;
+  documentId: string;
 }
 
 interface CreateRepositoryRequest {

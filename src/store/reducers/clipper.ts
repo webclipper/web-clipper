@@ -192,9 +192,7 @@ export default function clipper(
         $set: false
       },
       completeStatus: {
-        $set: {
-          documentHref: action.payload.result.documentHref
-        }
+        $set: action.payload.result
       }
     });
   } else if (isType(action, asyncRunPlugin.done)) {

@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
-import * as qs from 'qs';
 import { UUID } from '../utils/uuid';
+import * as qs from 'qs';
 
 interface YuqueBackendServiceConfig {
   accessToken: string;
@@ -59,8 +59,8 @@ export default class YuqueDocumentService implements DocumentService {
     const { avatar_url: avatar, name, login, description } = apiResponse;
     this.login = login;
     return {
-      name: name,
       avatar,
+      name: name,
       homePage: `${this.baseURL}/${login}`,
       description
     };
@@ -93,6 +93,12 @@ export default class YuqueDocumentService implements DocumentService {
       body,
       private: privateStatus
     };
+    const repository = this.repositories.find(
+      (o: Repository) => o.id === repositoryId
+    );
+    if (!repository) {
+      throw new Error('illegal repositoryId');
+    }
     const response = await this.request.post<{
     id: number;
     slug: string;
@@ -101,14 +107,10 @@ export default class YuqueDocumentService implements DocumentService {
     updated_at: string;
     }>(`/repos/${repositoryId}/docs`, qs.stringify(request));
     const data = response.data;
-    const repository = this.repositories.find(
-      (o: Repository) => o.id === repositoryId
-    );
-    if (!repository) {
-      throw new Error('12323');
-    }
     return {
-      href: `${this.baseURL}/${repository.namespace}/${data.slug}`
+      href: `${this.baseURL}/${repository.namespace}/${data.slug}`,
+      repositoryId,
+      documentId: data.id.toString()
     };
   };
 

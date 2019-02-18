@@ -1,30 +1,31 @@
+import { AnyAction, isType } from 'typescript-fsa';
 import {
-  asyncVerificationAccessToken,
-  updateCreateAccountForm,
   asyncAddAccount,
   asyncDeleteAccount,
-  asyncUpdateCurrentAccountIndex,
+  asyncHideTool,
+  asyncRemoveTool,
   asyncSetEditorLiveRendering,
   asyncSetShowLineNumber,
-  asyncHideTool,
-  asyncRemoveTool
+  asyncUpdateCurrentAccountIndex,
+  asyncVerificationAccessToken,
+  asyncSetShowQuickResponseCode,
+  updateCreateAccountForm
 } from './../actions/userPreference';
 import {
-  takeEvery,
-  fork,
-  select,
   call,
+  cancelled,
+  fork,
   put,
   race,
+  select,
   take,
-  cancelled
+  takeEvery
 } from 'redux-saga/effects';
-import { message } from 'antd';
 import { documentServiceFactory } from '../../services/backend';
-import storage from '../../services/common/store';
-import { isType, AnyAction } from 'typescript-fsa';
+import { message } from 'antd';
 import { sendActionToCurrentTab } from '../../utils/browser';
 import md5 = require('blueimp-md5');
+import storage from '../../services/common/store';
 
 export function* asyncVerificationAccessTokenSaga() {
   try {
@@ -207,6 +208,7 @@ export function* asyncSetShowLineNumberSaga(action: AnyAction) {
     );
   }
 }
+
 export function* watchAsyncSetShowLineNumberSaga() {
   yield takeEvery(
     asyncSetShowLineNumber.started.type,
@@ -230,6 +232,31 @@ export function* asyncSetEditorLiveRenderingSaga(action: AnyAction) {
     );
   }
 }
+
+export function* asyncSetShowQuickResponseCodeSaga(action: AnyAction) {
+  if (isType(action, asyncSetShowQuickResponseCode.started)) {
+    const value = action.payload.value;
+    yield call(storage.setShowQuickResponseCode, !value);
+    yield put(
+      asyncSetShowQuickResponseCode.done({
+        params: {
+          value
+        },
+        result: {
+          value: !value
+        }
+      })
+    );
+  }
+}
+
+export function* watchAsyncSetShowQuickResponseCodeSaga() {
+  yield takeEvery(
+    asyncSetShowQuickResponseCode.started.type,
+    asyncSetShowQuickResponseCodeSaga
+  );
+}
+
 export function* watchAsyncSetEditorLiveRenderingSaga() {
   yield takeEvery(
     asyncSetEditorLiveRendering.started.type,
@@ -266,4 +293,5 @@ export function* userPreferenceSagas() {
   yield fork(watchAsyncSetShowLineNumberSaga);
   yield fork(watchAsyncHideToolSaga);
   yield fork(watchAsyncRemoveToolSaga);
+  yield fork(watchAsyncSetShowQuickResponseCodeSaga);
 }

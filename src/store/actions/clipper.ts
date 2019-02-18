@@ -1,6 +1,6 @@
+import { CLIPPER } from './actionTypes';
 import actionCreatorFactory from 'typescript-fsa';
 const actionCreator = actionCreatorFactory();
-import { CLIPPER } from './actionTypes';
 
 export const asyncFetchRepository = actionCreator.async<
 void,
@@ -18,6 +18,8 @@ export const asyncCreateDocument = actionCreator.async<
 void,
 {
 documentHref: string;
+repositoryId: string;
+documentId: string;
 },
 null
 >(CLIPPER.ASYNC_CREATE_DOCUMENT);

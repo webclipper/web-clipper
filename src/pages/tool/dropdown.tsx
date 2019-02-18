@@ -70,11 +70,11 @@ class DropDownRender extends React.Component<PageProps> {
                 <Input
                   value={this.props.repositoryTitle}
                   onChange={this.onTitleChange}
-                  placeholder="请输入知识库的名称"
+                  placeholder='请输入知识库的名称'
                 />
               </div>
               <Button
-                type="primary"
+                type='primary'
                 disabled={!this.props.repositoryTitle || this.props.creating}
                 loading={this.props.creating}
                 onClick={this.props.onCreateRepository.bind(this, null, null)}
