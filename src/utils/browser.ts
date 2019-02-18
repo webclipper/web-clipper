@@ -11,3 +11,14 @@ export const sendActionToCurrentTab = function<T>(
     });
   });
 };
+
+export const sendActionByTabId = function<T>(
+  tabId: number,
+  action: AnyAction
+): Promise<T> {
+  return new Promise<T>((resolve, _) => {
+    chrome.tabs.sendMessage(tabId, action, (re: T) => {
+      resolve(re);
+    });
+  });
+};

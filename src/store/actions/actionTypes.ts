@@ -37,3 +37,8 @@ export const CLIPPER = actionTypeHelper('CLIPPER', {
   ASYNC_RUN_PLUGIN: '',
   ASYNC_CHANGE_ACCOUNT: ''
 });
+
+export const BROWSER = actionTypeHelper('BROWSER', {
+  DO_YOU_ALIVE_NOW: '',
+  CLICK_ICON: ''
+});

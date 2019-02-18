@@ -1,40 +1,26 @@
-import { ActionMessage } from '../model/Message';
-import { ActionMessageType } from '../enums';
+import { clickIcon, doYouAliveNow } from '../store/actions/browser';
+import { sendActionByTabId } from '../utils/browser';
 
 if (process.env.NODE_ENV === 'development') {
   chrome.browserAction.setIcon({ path: 'icons/yuque-dev.png' });
 }
 
-async function tabStatus(tabId: number): Promise<any> {
-  return new Promise((resolve, _) => {
-    const massage: ActionMessage = {
-      action: ActionMessageType.DO_YOU_ALIVE_NOW
-    };
-    chrome.tabs.sendMessage(tabId, massage, (cb: boolean) => {
-      if (!cb) {
-        resolve(false);
-      }
-      resolve(true);
-    });
-  });
-}
-
-chrome.browserAction.onClicked.addListener(async (tab: any) => {
-  if (!(await tabStatus(tab.id))) {
-    chrome.tabs.executeScript(tab.id, { file: 'js/content_script.js' }, () => {
+chrome.browserAction.onClicked.addListener(async (tab: chrome.tabs.Tab) => {
+  const tabId = tab.id;
+  if (!tabId) {
+    alert('暂时无法剪辑此类型的页面。');
+    return;
+  }
+  const status = await sendActionByTabId(tabId, doYouAliveNow());
+  if (!status) {
+    chrome.tabs.executeScript(tabId, { file: 'js/content_script.js' }, () => {
       if (chrome.runtime.lastError) {
         alert('暂时无法剪辑此类型的页面。');
         return;
       }
-      const massage: ActionMessage = {
-        action: ActionMessageType.ICON_CLICK
-      };
-      chrome.tabs.sendMessage(tab.id, massage);
+      sendActionByTabId(tabId, clickIcon());
       return;
     });
   }
-  const massage: ActionMessage = {
-    action: ActionMessageType.ICON_CLICK
-  };
-  chrome.tabs.sendMessage(tab.id, massage);
+  sendActionByTabId(tabId, clickIcon());
 });
