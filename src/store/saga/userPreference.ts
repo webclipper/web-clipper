@@ -1,3 +1,5 @@
+import browserService from '../../services/browser';
+import storage from '../../services/common/store';
 import { AnyAction, isType } from 'typescript-fsa';
 import {
   asyncAddAccount,
@@ -6,9 +8,9 @@ import {
   asyncRemoveTool,
   asyncSetEditorLiveRendering,
   asyncSetShowLineNumber,
+  asyncSetShowQuickResponseCode,
   asyncUpdateCurrentAccountIndex,
   asyncVerificationAccessToken,
-  asyncSetShowQuickResponseCode,
   updateCreateAccountForm
 } from './../actions/userPreference';
 import {
@@ -23,9 +25,7 @@ import {
 } from 'redux-saga/effects';
 import { documentServiceFactory } from '../../services/backend';
 import { message } from 'antd';
-import { sendActionToCurrentTab } from '../../utils/browser';
 import md5 = require('blueimp-md5');
-import storage from '../../services/common/store';
 
 export function* asyncVerificationAccessTokenSaga() {
   try {
@@ -266,7 +266,7 @@ export function* watchAsyncSetEditorLiveRenderingSaga() {
 
 export function* asyncHideToolSaga(action: AnyAction) {
   if (isType(action, asyncHideTool.started)) {
-    yield call(sendActionToCurrentTab, action);
+    yield call(browserService.sendActionToCurrentTab, action);
   }
 }
 
@@ -276,7 +276,7 @@ export function* watchAsyncHideToolSaga() {
 
 export function* asyncRemoveToolSaga(action: AnyAction) {
   if (isType(action, asyncRemoveTool.started)) {
-    yield call(sendActionToCurrentTab, action);
+    yield call(browserService.sendActionToCurrentTab, action);
   }
 }
 

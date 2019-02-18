@@ -1,4 +1,5 @@
 import backend, { documentServiceFactory } from '../../services/backend';
+import browserService from '../../services/browser';
 import { AnyAction, isType } from 'typescript-fsa';
 import {
   asyncChangeAccount,
@@ -18,7 +19,6 @@ import {
 import { delay } from 'redux-saga';
 import { message } from 'antd';
 import { push } from 'connected-react-router';
-import { sendActionToCurrentTab } from '../../utils/browser';
 
 export function* clipperRootSagas() {
   yield fork(watchAsyncRunPluginSaga);
@@ -170,7 +170,10 @@ export function* watchAsyncFetchRepositorySaga() {
 
 export function* asyncRunPluginSaga(action: any) {
   if (isType(action, asyncRunPlugin.started)) {
-    const result: string = yield call(sendActionToCurrentTab, action);
+    const result: string = yield call(
+      browserService.sendActionToCurrentTab,
+      action
+    );
     yield put(
       asyncRunPlugin.done({
         params: action.payload,
