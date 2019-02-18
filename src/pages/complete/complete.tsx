@@ -6,7 +6,7 @@ import * as styles from './complete.scss';
 import { Button } from 'antd';
 import { backendServices } from '../../const/index';
 import { asyncRemoveTool } from '../../store/actions/userPreference';
-import { QuickResponseCode } from './QuickResponseCode';
+import { QuickResponseCode } from './quickResponseCode';
 
 const useActions = {
   asyncRemoveTool: asyncRemoveTool.started
