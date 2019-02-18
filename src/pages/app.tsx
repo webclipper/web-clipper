@@ -2,7 +2,7 @@ import 'antd-style';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as styles from './app.scss';
-import Complete from './tool/complete';
+import Complete from './complete/complete';
 import Plugins from './plugin/index';
 import Preference from './preference';
 import Tool from './tool';
