@@ -11,4 +11,3 @@ module.exports = common.map(config => {
     }
   });
 });
-

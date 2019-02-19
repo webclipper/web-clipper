@@ -64,10 +64,9 @@ const baseConfig = {
             loader: 'style-loader'
           },
           {
-            loader: 'typings-for-css-modules-loader',
+            loader: 'css-loader',
             options: {
               modules: true,
-              namedExport: true,
               camelCase: true,
               localIdentName: '[path][name]__[local]--[hash:base64:5]'
             }

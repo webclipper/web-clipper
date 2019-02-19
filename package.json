@@ -95,7 +95,6 @@
     "ts-loader": "^4.5.0",
     "typescript": "^3.0.3",
     "typescript-eslint-parser": "^18.0.0",
-    "typings-for-css-modules-loader": "^1.7.0",
     "url-loader": "^1.1.1",
     "webpack": "^4.17.1",
     "webpack-chrome-extension-reloader": "^0.8.3",
