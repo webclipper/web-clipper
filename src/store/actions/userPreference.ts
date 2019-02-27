@@ -98,3 +98,11 @@ value: boolean;
 },
 void
 >(USER_PREFERENCE.ASYNC_SET_SHOW_QUICK_RESPONSE_CODE);
+
+export const asyncSetDefaultPluginId = actionCreator.async<
+{
+pluginId: string | null;
+},
+void,
+void
+>(USER_PREFERENCE.ASYNC_SET_DEFAULT_PLUGIN_ID);

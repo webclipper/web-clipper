@@ -11,7 +11,8 @@ import {
   asyncSetShowQuickResponseCode,
   asyncUpdateCurrentAccountIndex,
   asyncVerificationAccessToken,
-  updateCreateAccountForm
+  updateCreateAccountForm,
+  asyncSetDefaultPluginId
 } from './../actions/userPreference';
 import {
   call,
@@ -284,6 +285,24 @@ export function* watchAsyncRemoveToolSaga() {
   yield takeEvery(asyncRemoveTool.started.type, asyncRemoveToolSaga);
 }
 
+export function* asyncSetDefaultPluginIdSaga(action: AnyAction) {
+  if (isType(action, asyncSetDefaultPluginId.started)) {
+    yield call(storage.setDefaultPluginId, action.payload.pluginId);
+    yield put(
+      asyncSetDefaultPluginId.done({
+        params: action.payload
+      })
+    );
+  }
+}
+
+export function* watchAsyncSetDefaultPluginIdSaga() {
+  yield takeEvery(
+    asyncSetDefaultPluginId.started.type,
+    asyncSetDefaultPluginIdSaga
+  );
+}
+
 export function* userPreferenceSagas() {
   yield fork(watchAsyncDeleteAccountSaga);
   yield fork(watchAsyncVerificationAccessTokenSaga);
@@ -294,4 +313,5 @@ export function* userPreferenceSagas() {
   yield fork(watchAsyncHideToolSaga);
   yield fork(watchAsyncRemoveToolSaga);
   yield fork(watchAsyncSetShowQuickResponseCodeSaga);
+  yield fork(watchAsyncSetDefaultPluginIdSaga);
 }

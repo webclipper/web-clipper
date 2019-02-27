@@ -50,6 +50,9 @@ function* initStore() {
   backendService.setDocumentService(documentService);
   yield call(asyncFetchUserInfoSaga);
   yield call(asyncFetchRepositorySaga);
+  if (result.defaultPluginId) {
+    yield put(push('/plugins/' + result.defaultPluginId));
+  }
 }
 
 export const rootSagas = [

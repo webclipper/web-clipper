@@ -9,7 +9,8 @@ import {
   asyncUpdateCurrentAccountIndex,
   cancelCreateAccount,
   initUserPreference,
-  updateCreateAccountForm
+  updateCreateAccountForm,
+  asyncSetDefaultPluginId
 } from '../actions/userPreference';
 import {
   asyncVerificationAccessToken,
@@ -60,6 +61,13 @@ export function userPreference(
     return update(state, {
       showQuickResponseCode: {
         $set: action.payload.result.value
+      }
+    });
+  }
+  if (isType(action, asyncSetDefaultPluginId.done)) {
+    return update(state, {
+      defaultPluginId: {
+        $set: action.payload.params.pluginId
       }
     });
   }

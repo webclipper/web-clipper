@@ -4,20 +4,23 @@ import UserList from './userList/index';
 import {
   asyncSetEditorLiveRendering,
   asyncSetShowLineNumber,
-  asyncSetShowQuickResponseCode
+  asyncSetShowQuickResponseCode,
+  asyncSetDefaultPluginId
 } from '../../store/actions/userPreference';
 import { bindActionCreators, Dispatch } from 'redux';
 import { CenterContainer } from '../../components/container';
 import { connect } from 'react-redux';
 import { List, Select, Switch, Tabs } from 'antd';
 import { push } from 'connected-react-router';
+import { plugins } from '../plugin/index';
 const TabPane = Tabs.TabPane;
 
 const useActions = {
   push: push,
   asyncSetEditorLiveRendering: asyncSetEditorLiveRendering.started,
   asyncSetShowLineNumber: asyncSetShowLineNumber.started,
-  asyncSetShowQuickResponseCode: asyncSetShowQuickResponseCode.started
+  asyncSetShowQuickResponseCode: asyncSetShowQuickResponseCode.started,
+  asyncSetDefaultPluginId: asyncSetDefaultPluginId.started
 };
 
 const mapStateToProps = ({
@@ -25,12 +28,14 @@ const mapStateToProps = ({
     accounts,
     liveRendering,
     showLineNumber,
-    showQuickResponseCode
+    showQuickResponseCode,
+    defaultPluginId
   }
 }: GlobalStore) => {
   return {
     showLineNumber,
     showQuickResponseCode,
+    defaultPluginId,
     closeQRCode: true,
     containToken: true,
     liveRendering,
@@ -52,6 +57,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 
 class Page extends React.Component<PageProps, PageState> {
   render() {
+    const { defaultPluginId } = this.props;
     return (
       <CenterContainer>
         <div className={styles.mainContent}>
@@ -94,9 +100,23 @@ class Page extends React.Component<PageProps, PageState> {
                   actions={[
                     <Select
                       key='selectDefaultPlugin'
+                      allowClear
+                      value={defaultPluginId ? defaultPluginId : -1}
                       style={{ width: '100px' }}
+                      onSelect={(value: string | -1) => {
+                        let selectValue = null;
+                        if (value !== -1) {
+                          selectValue = value;
+                        }
+                        this.props.asyncSetDefaultPluginId({
+                          pluginId: selectValue
+                        });
+                      }}
                     >
-                      <Select.Option key='undifined'>无</Select.Option>
+                      <Select.Option value={-1}>无</Select.Option>
+                      {plugins.map(o => (
+                        <Select.Option key={o.id}>{o.name}</Select.Option>
+                      ))}
                     </Select>
                   ]}
                 >

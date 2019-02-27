@@ -15,7 +15,8 @@ export const USER_PREFERENCE = actionTypeHelper('USER_PREFERENCE', {
   ASYNC_SET_EDITOR_LIVE_RENDERING: '配置编辑器是否实时渲染',
   ASYNC_SET_SHOW_QUICK_RESPONSE_CODE: '',
   ASYNC_HIDE_TOOL: '隐藏插件',
-  ASYNC_REMOVE_TOOL: '移除插件'
+  ASYNC_REMOVE_TOOL: '移除插件',
+  ASYNC_SET_DEFAULT_PLUGIN_ID: ''
 });
 
 export const USER_INFO = actionTypeHelper('USER_INFO', {
