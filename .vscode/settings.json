@@ -21,5 +21,11 @@
   "editor.tabSize": 2,
   "tslint.autoFixOnSave": true,
   "tslint.configFile": "tslint.json",
-  "files.insertFinalNewline": true
+  "files.insertFinalNewline": true,
+  "cSpell.words": [
+    "hosting",
+    "image",
+    "option",
+    "yuque"
+  ]
 }
