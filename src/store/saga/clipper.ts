@@ -6,7 +6,8 @@ import {
   asyncCreateDocument,
   asyncCreateRepository,
   asyncFetchRepository,
-  asyncRunPlugin
+  asyncRunPlugin,
+  asyncTakeScreenshot
 } from '../actions/clipper';
 import {
   call,
@@ -19,6 +20,8 @@ import {
 import { delay } from 'redux-saga';
 import { message } from 'antd';
 import { push } from 'connected-react-router';
+import { SelectAreaPosition } from '../../services/common/areaSelector';
+import { loadImage } from '../../services/utils/bolb';
 
 export function* clipperRootSagas() {
   yield fork(watchAsyncRunPluginSaga);
@@ -26,6 +29,7 @@ export function* clipperRootSagas() {
   yield fork(watchAsyncFetchRepositorySaga);
   yield fork(watchAsyncCreateDocumentSaga);
   yield fork(watchAsyncChangeAccountSaga);
+  yield fork(watchAsyncTakeScreenshotSaga);
 }
 
 export function* asyncFetchRepositorySaga() {
@@ -113,28 +117,54 @@ export function* asyncCreateDocumentSaga() {
     message.error('no data');
     return;
   }
+  let createDocumentRequest;
   if (data.type === 'text') {
-    const response: CreateDocumentResponse = yield call(
-      backend.getDocumentService().createDocument,
-      {
+    createDocumentRequest = {
+      title: title,
+      private: true,
+      repositoryId,
+      content: data.data
+    };
+  }
+  if (data.type === 'image') {
+    try {
+      const responseUrl: string = yield call(
+        backend.getImageHostingService().uploadImage,
+        {
+          data: data.dataUrl
+        }
+      );
+      createDocumentRequest = {
         title: title,
         private: true,
         repositoryId,
-        content: data.data
-      }
-    );
-    const { href: documentHref, documentId } = response;
-    yield put(
-      asyncCreateDocument.done({
-        result: {
-          documentHref,
-          repositoryId: response.repositoryId,
-          documentId
-        }
-      })
-    );
-    yield put(push('/complete'));
+        content: `![](${responseUrl})`
+      };
+    } catch (error) {
+      message.error('上传图片到图床失败');
+      yield put(
+        asyncCreateDocument.failed({
+          error: null
+        })
+      );
+      return;
+    }
   }
+  const response: CreateDocumentResponse = yield call(
+    backend.getDocumentService().createDocument,
+    createDocumentRequest
+  );
+  const { href: documentHref, documentId } = response;
+  yield put(
+    asyncCreateDocument.done({
+      result: {
+        documentHref,
+        repositoryId: response.repositoryId,
+        documentId
+      }
+    })
+  );
+  yield put(push('/complete'));
 }
 
 export function* asyncCreateRepositorySaga() {
@@ -225,4 +255,54 @@ export function* asyncChangeAccountSaga(action: AnyAction) {
 
 export function* watchAsyncChangeAccountSaga() {
   yield takeEvery(asyncChangeAccount.started.type, asyncChangeAccountSaga);
+}
+
+export function* asyncTakeScreenshotSaga(action: AnyAction) {
+  if (isType(action, asyncTakeScreenshot.started)) {
+    const selectArea: SelectAreaPosition = yield call(
+      browserService.sendActionToCurrentTab,
+      action
+    );
+    const base64Capture = yield call(browserService.captureVisibleTab);
+    const img = yield call(loadImage, base64Capture);
+    let canvas: HTMLCanvasElement = document.createElement('canvas');
+    let ctx = canvas.getContext('2d');
+    let sx;
+    let sy;
+    let sheight;
+    let swidth;
+    let {
+      rightBottom: { clientX: rightBottomX, clientY: rightBottomY },
+      leftTop: { clientX: leftTopX, clientY: leftTopY }
+    } = selectArea;
+    if (rightBottomX === leftTopX && rightBottomY === leftTopY) {
+      sx = 0;
+      sy = 0;
+      swidth = img.width;
+      sheight = img.height;
+    } else {
+      const dpi = img.width / document.body.clientWidth;
+      sx = leftTopX * dpi;
+      sy = leftTopY * dpi;
+      swidth = (rightBottomX - leftTopX) * dpi;
+      sheight = (rightBottomY - leftTopY) * dpi;
+    }
+    canvas.height = sheight;
+    canvas.width = swidth;
+    ctx!.drawImage(img, sx, sy, swidth, sheight, 0, 0, swidth, sheight);
+    const doneAction = asyncTakeScreenshot.done({
+      params: action.payload,
+      result: {
+        dataUrl: canvas.toDataURL(),
+        width: swidth,
+        height: sheight
+      }
+    });
+    yield put(doneAction);
+    yield call(browserService.sendActionToCurrentTab, doneAction);
+  }
+}
+
+export function* watchAsyncTakeScreenshotSaga() {
+  yield takeEvery(asyncTakeScreenshot.started.type, asyncTakeScreenshotSaga);
 }

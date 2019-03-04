@@ -45,7 +45,19 @@ const mapStateToProps = ({
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   return {
     accounts,
-    plugins,
+    plugins: plugins
+      .map(o => ({
+        router: o.router,
+        icon: o.icon,
+        name: o.name,
+        description: o.description
+      }))
+      .concat({
+        router: '/plugins/DiamondYuan/screenshot',
+        name: '屏幕截图',
+        icon: 'picture',
+        description: '屏幕截图'
+      }),
     router,
     createMode: true,
     creatingDocument,
@@ -177,7 +189,9 @@ class Page extends React.Component<PageProps, PageState> {
                   : {}
               }
               onClick={() => {
-                this.props.push(plugin.router);
+                if (plugin.router !== this.props.router.location.pathname) {
+                  this.props.push(plugin.router);
+                }
               }}
             >
               <Icon type={plugin.icon} />

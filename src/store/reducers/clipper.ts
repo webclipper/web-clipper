@@ -6,7 +6,8 @@ import {
   initTabInfo,
   updateTextClipperData,
   asyncCreateDocument,
-  asyncChangeAccount
+  asyncChangeAccount,
+  asyncTakeScreenshot
 } from './../actions/clipper';
 import { Action } from 'redux';
 import { isType } from 'typescript-fsa';
@@ -202,6 +203,17 @@ export default function clipper(
           $set: {
             type: 'text',
             data: action.payload.result.result
+          }
+        }
+      }
+    });
+  } else if (isType(action, asyncTakeScreenshot.done)) {
+    return update(state, {
+      clipperData: {
+        [action.payload.params.url]: {
+          $set: {
+            type: 'image',
+            ...action.payload.result
           }
         }
       }

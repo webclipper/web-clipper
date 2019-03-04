@@ -76,3 +76,14 @@ repositories: Repository[];
 },
 any
 >(CLIPPER.ASYNC_CHANGE_ACCOUNT);
+
+export const asyncTakeScreenshot = actionCreator.async<
+{
+url: string;
+},
+{
+dataUrl: string;
+width: number;
+height: number;
+}
+>(CLIPPER.ASYNC_TAKE_SCREENSHOT);

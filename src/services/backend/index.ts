@@ -1,5 +1,8 @@
 import GithubDocumentService from './github';
 import YuqueDocumentService from './yuque';
+import YuqueImageHostingService, {
+  YuqueImageHostingOption
+} from './imageHosting/yuque';
 
 interface DocumentServiceOption {
   type: string;
@@ -9,6 +12,7 @@ interface DocumentServiceOption {
 
 export class BackendContext {
   private documentService: DocumentService;
+  private imageHostingService: ImageHostingService;
 
   setDocumentService(documentService: DocumentService) {
     this.documentService = documentService;
@@ -16,6 +20,14 @@ export class BackendContext {
 
   getDocumentService() {
     return this.documentService;
+  }
+
+  setImageHostingService(imageHostingService: ImageHostingService) {
+    this.imageHostingService = imageHostingService;
+  }
+
+  getImageHostingService() {
+    return this.imageHostingService;
   }
 }
 
@@ -36,6 +48,17 @@ export function documentServiceFactory(
     });
   }
   throw new Error('unSupport type');
+}
+
+type ImageHostingServiceFactoryOption = YuqueImageHostingOption;
+
+export function imageHostingServiceFactory(
+  option: ImageHostingServiceFactoryOption
+) {
+  if (option.type === 'yuque') {
+    return new YuqueImageHostingService();
+  }
+  throw new Error('un support image hosting type');
 }
 
 export default new BackendContext();

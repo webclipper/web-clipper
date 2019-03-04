@@ -40,8 +40,8 @@ interface UploadImageRequest {
   data: string;
 }
 
-interface ImageService {
-  uploadImage(request: UploadImageRequest): Promise<void>;
+interface ImageHostingService {
+  uploadImage(request: UploadImageRequest): Promise<string>;
 }
 
 interface DocumentServiceAbility {

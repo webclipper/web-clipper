@@ -5,9 +5,9 @@ interface Point {
   clientY: number;
 }
 
-export interface SelectAreaPosion {
-  leftTop?: Point;
-  rightBottom?: Point;
+export interface SelectAreaPosition {
+  leftTop: Point;
+  rightBottom: Point;
 }
 
 export default class AreaSelector {
@@ -40,16 +40,18 @@ export default class AreaSelector {
           };
           this.endClip = true;
           $(document).unbind('mousemove', this.mousemoveEvent);
-          const result = this.getpoint(this.mousedownPoint, this.mouseupPoint);
+          const result = this.getPoint(this.mousedownPoint, this.mouseupPoint);
           $(`#${styles.selectArea}`).remove();
-          resolve(result);
+          setTimeout(() => {
+            resolve(result);
+          });
         });
       });
       $('html').bind('mousemove', this.mousemoveEvent);
     });
   }
 
-  private getpoint(first: Point, second: Point): SelectAreaPosion {
+  private getPoint(first: Point, second: Point): SelectAreaPosition {
     return {
       leftTop: {
         clientX: Math.min(first.clientX, second.clientX),
@@ -80,28 +82,28 @@ export default class AreaSelector {
     if (this.startClip && this.endClip) {
       return;
     }
-    const moustPosion = {
+    const mousePosition = {
       clientX: event.clientX!,
       clientY: event.clientY!
     };
 
     if (!this.startClip) {
-      const elemsent = this.getOrCreate(styles.crossLine);
-      $(elemsent).css('top', moustPosion.clientY);
-      $(elemsent).css('left', moustPosion.clientX);
+      const element = this.getOrCreate(styles.crossLine);
+      $(element).css('top', mousePosition.clientY);
+      $(element).css('left', mousePosition.clientX);
     } else {
-      const elemsent = this.getOrCreate(styles.selectArea);
-      const area = this.getpoint(this.mousedownPoint, {
+      const element = this.getOrCreate(styles.selectArea);
+      const area = this.getPoint(this.mousedownPoint, {
         clientX: event.clientX!,
         clientY: event.clientY!
       });
-      $(elemsent).css('top', area.leftTop!.clientY);
-      $(elemsent).css('left', area.leftTop!.clientX);
-      $(elemsent).css(
+      $(element).css('top', area.leftTop!.clientY);
+      $(element).css('left', area.leftTop!.clientX);
+      $(element).css(
         'height',
         area.rightBottom!.clientY - area.leftTop!.clientY
       );
-      $(elemsent).css(
+      $(element).css(
         'width',
         area.rightBottom!.clientX - area.leftTop!.clientX
       );

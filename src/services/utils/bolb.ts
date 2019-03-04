@@ -13,4 +13,13 @@ const Base64ImageToBolb = (image: string): Blob => {
   return blob;
 };
 
-export { Base64ImageToBolb };
+function loadImage(date: string): Promise<HTMLImageElement> {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    let img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = date;
+  });
+}
+
+export { Base64ImageToBolb, loadImage };

@@ -1,4 +1,7 @@
-import backendService, { documentServiceFactory } from '../../services/backend';
+import backendService, {
+  documentServiceFactory,
+  imageHostingServiceFactory
+} from '../../services/backend';
 import browserService from '../../services/browser';
 import storage from '../../services/common/store';
 import { all, call, put, spawn } from 'redux-saga/effects';
@@ -28,8 +31,12 @@ const makeRestartable = (saga: any) => {
 };
 
 function* initStore() {
+  console.log(window.location.href);
   const result: PreferenceStorage = yield call(storage.getPreference);
   const tabInfo: BrowserTab = yield call(browserService.getCurrentTab);
+  backendService.setImageHostingService(
+    imageHostingServiceFactory({ type: 'yuque' })
+  );
   yield put(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
   if (result.accounts.length === 0) {
     yield put(push('/preference'));

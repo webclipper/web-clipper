@@ -19,12 +19,18 @@ interface TextClipperData extends BaseClipperType {
   type: 'text';
   data: string;
 }
+interface ImageClipperData extends BaseClipperType {
+  type: 'image';
+  dataUrl: string;
+  width: number;
+  height: number;
+}
 
 interface BaseClipperType {
   type: string;
 }
 
-type ClipperDataType = TextClipperData;
+type ClipperDataType = TextClipperData | ImageClipperData;
 
 interface ClipperStore {
   /** 网页标题 */
