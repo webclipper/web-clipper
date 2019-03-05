@@ -34,19 +34,14 @@ class ChromeManifestPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.done.tapPromise(
-      'ChromeManifestPlugin',
-      async compilation => {
-        const packageJson = JSON.parse(
-          await readFile(this.options.packageJson)
-        );
-        const manifest = packageJson.chrome;
-        manifest.version = packageJson.version;
-        manifest.description = packageJson.description;
-        mkdirsSync(path.dirname(this.options.out));
-        await writeFile(this.options.out, JSON.stringify(manifest));
-      }
-    );
+    compiler.hooks.done.tapPromise('ChromeManifestPlugin', async () => {
+      const packageJson = JSON.parse(await readFile(this.options.packageJson));
+      const manifest = packageJson.chrome;
+      manifest.version = packageJson.version;
+      manifest.description = packageJson.description;
+      mkdirsSync(path.dirname(this.options.out));
+      await writeFile(this.options.out, JSON.stringify(manifest));
+    });
   }
 }
 
