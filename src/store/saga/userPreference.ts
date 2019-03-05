@@ -88,11 +88,9 @@ export function* asyncVerificationAccessTokenSaga() {
 }
 
 export function* watchAsyncVerificationAccessTokenSaga() {
-  yield takeEvery(asyncVerificationAccessToken.started.type, function* (
-    ...args
-  ) {
+  yield takeEvery(asyncVerificationAccessToken.started.type, function* () {
     yield race({
-      task: call(asyncVerificationAccessTokenSaga, ...args),
+      task: call(asyncVerificationAccessTokenSaga),
       cancel: take(updateCreateAccountForm.type)
     });
   });

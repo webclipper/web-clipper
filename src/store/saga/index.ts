@@ -4,11 +4,10 @@ import backendService, {
 } from '../../services/backend';
 import browserService from '../../services/browser';
 import storage from '../../services/common/store';
-import { all, call, put, spawn } from 'redux-saga/effects';
+import { all, call, put, spawn, delay } from 'redux-saga/effects';
 import { asyncFetchRepositorySaga, clipperRootSagas } from './clipper';
 import { asyncFetchUserInfoSaga, userInfoRootSagas } from './userInfo';
 import { BrowserTab } from './../../services/browser/index';
-import { delay } from 'redux-saga';
 import { initTabInfo } from '../actions/clipper';
 import { initUserPreference } from '../actions/userPreference';
 import { push } from 'connected-react-router';

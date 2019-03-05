@@ -15,9 +15,9 @@ import {
   put,
   select,
   takeEvery,
-  takeLatest
+  takeLatest,
+  delay
 } from 'redux-saga/effects';
-import { delay } from 'redux-saga';
 import { message } from 'antd';
 import { push } from 'connected-react-router';
 import { SelectAreaPosition } from '../../services/common/areaSelector';
@@ -149,6 +149,9 @@ export function* asyncCreateDocumentSaga() {
       );
       return;
     }
+  }
+  if (!createDocumentRequest) {
+    return;
   }
   const response: CreateDocumentResponse = yield call(
     backend.getDocumentService().createDocument,
