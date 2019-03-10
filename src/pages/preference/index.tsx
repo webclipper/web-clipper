@@ -12,7 +12,6 @@ import { CenterContainer } from '../../components/container';
 import { connect } from 'react-redux';
 import { List, Select, Switch, Tabs } from 'antd';
 import { push } from 'connected-react-router';
-import { plugins } from '../plugin/index';
 const TabPane = Tabs.TabPane;
 
 const useActions = {
@@ -29,7 +28,8 @@ const mapStateToProps = ({
     liveRendering,
     showLineNumber,
     showQuickResponseCode,
-    defaultPluginId
+    defaultPluginId,
+    plugins
   }
 }: GlobalStore) => {
   return {
@@ -40,11 +40,11 @@ const mapStateToProps = ({
     containToken: true,
     liveRendering,
     QRCodeContent: '',
-    accounts
+    accounts,
+    plugins: plugins.filter(o => o.type === 'clipper')
   };
 };
 type PageState = {};
-
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
 type PageOwnProps = {};
@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 
 class Page extends React.Component<PageProps, PageState> {
   render() {
-    const { defaultPluginId } = this.props;
+    const { defaultPluginId, plugins } = this.props;
     return (
       <CenterContainer>
         <div className={styles.mainContent}>

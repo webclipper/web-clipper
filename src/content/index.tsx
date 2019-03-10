@@ -8,7 +8,11 @@ import {
   asyncHideTool,
   asyncRemoveTool
 } from '../store/actions/userPreference';
-import { asyncRunPlugin, asyncTakeScreenshot } from '../store/actions/clipper';
+import {
+  asyncRunPlugin,
+  asyncTakeScreenshot,
+  asyncRunToolPlugin
+} from '../store/actions/clipper';
 import { clickIcon, doYouAliveNow } from '../store/actions/browser';
 
 const turndownService = TurndownService();
@@ -98,5 +102,34 @@ chrome.runtime.onMessage.addListener((action: AnyAction, _, sendResponse) => {
 chrome.runtime.onMessage.addListener((action: AnyAction, _, __) => {
   if (isType(action, asyncTakeScreenshot.done)) {
     $(`.${styles.toolFrame}`).show();
+  }
+});
+
+chrome.runtime.onMessage.addListener((action: AnyAction, _, sendResponse) => {
+  if (isType(action, asyncRunToolPlugin.started)) {
+    const toggleClipper = () => {
+      $(`.${styles.toolFrame}`).toggle();
+    };
+
+    if (action) {
+      // @ts-ignore
+      // eslint-disable-next-line
+      const context: ClipperPluginContext = {
+        $,
+        turndown: turndownService,
+        Highlighter,
+        toggleClipper,
+        Readability,
+        document
+      };
+      (async () => {
+        // eslint-disable-next-line
+        const response = await eval(
+          action.payload.plugin.processingDocumentObjectModel!
+        );
+        sendResponse(response);
+      })();
+      return true;
+    }
   }
 });

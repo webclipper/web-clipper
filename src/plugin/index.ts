@@ -18,10 +18,6 @@ const getReadability = (context: ClipperPluginContext) => {
 
 const selectElement = async (context: ClipperPluginContext) => {
   const { turndown, Highlighter, toggleClipper } = context;
-  const $body = $('html').clone();
-  $body.find('script').remove();
-  $body.find('style').remove();
-  $body.removeClass();
   toggleClipper();
   const data = await new Highlighter().start();
   toggleClipper();
@@ -35,43 +31,77 @@ const bookmark = async (context: ClipperPluginContext) => {
 
 export const getFullPagePlugin: ClipperPlugin = {
   type: 'clipper',
-  id: 'fullPage',
-  version: 1,
+  id: 'DiamondYuan/fullPage',
+  version: '0.0.1',
   name: '整个页面',
   icon: 'copy',
   description: '保存整个页面',
-  script: codeCallWithContext(getFullPage),
-  path: ['*']
+  script: codeCallWithContext(getFullPage)
 };
 
 export const getSelectItemPlugin: ClipperPlugin = {
   type: 'clipper',
-  id: 'selectItem',
-  version: 1,
+  id: 'DiamondYuan/selectItem',
+  version: '0.0.1',
   name: '手动选取',
   icon: 'select',
-  script: codeCallWithContext(selectElement),
-  path: ['*']
+  script: codeCallWithContext(selectElement)
 };
 
 export const getReadabilityPlugin: ClipperPlugin = {
   type: 'clipper',
-  id: 'readability',
-  version: 1,
+  id: 'DiamondYuan/readability',
+  version: '0.0.1',
   name: '智能提取',
   icon: 'copy',
   script: codeCallWithContext(getReadability),
-  description: '智能分析出页面的主要部分',
-  path: ['*']
+  description: '智能分析出页面的主要部分'
 };
 
 export const bookmarkPlugin: ClipperPlugin = {
   type: 'clipper',
-  id: 'bookmark',
-  version: 1,
+  id: 'DiamondYuan/bookmark',
+  version: '0.0.1',
   name: '书签',
   icon: 'link',
   description: '保存网页链接和增加备注',
-  script: codeCallWithContext(bookmark),
-  path: ['*']
+  script: codeCallWithContext(bookmark)
+};
+
+export const removeElement: ToolPlugin = {
+  type: 'tool',
+  id: 'DiamondYuan/removeElement',
+  version: '0.0.1',
+  name: 'removeElement',
+  icon: 'delete',
+  processingDocumentObjectModel: codeCallWithContext(
+    async (context: ClipperPluginContext) => {
+      const { $, Highlighter, toggleClipper } = context;
+      toggleClipper();
+      const data = await new Highlighter().start();
+      $(data).remove();
+      toggleClipper();
+    }
+  )
+};
+
+export const selectElementTool: ToolPlugin = {
+  type: 'tool',
+  id: 'DiamondYuan/selectElement',
+  version: '0.0.1',
+  name: 'selectElement',
+  icon: 'select',
+  processingDocuments: codeCallWithContext((context: PagePluginContext) => {
+    const { currentData, previous } = context;
+    return `${currentData}\n${previous}`;
+  }),
+  processingDocumentObjectModel: codeCallWithContext(
+    async (context: ClipperPluginContext) => {
+      const { turndown, Highlighter, toggleClipper } = context;
+      toggleClipper();
+      const data = await new Highlighter().start();
+      toggleClipper();
+      return turndown.turndown(data);
+    }
+  )
 };

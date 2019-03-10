@@ -30,9 +30,7 @@ const mapStateToProps = ({
   };
 };
 type PageState = {};
-type PageOwnProps = {
-  plugin: ClipperPluginWithRouter;
-};
+type PageOwnProps = {};
 type PageProps = ReturnType<typeof mapStateToProps> &
   typeof useActions &
   PageOwnProps;
@@ -40,7 +38,7 @@ type PageProps = ReturnType<typeof mapStateToProps> &
 class ImagePluginPage extends React.Component<PageProps, PageState> {
   componentDidMount = () => {
     this.props.asyncTakeScreenshot({
-      url: this.props.pathname
+      pathname: this.props.pathname
     });
   };
 

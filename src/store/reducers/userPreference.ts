@@ -18,9 +18,25 @@ import {
 } from './../actions/userPreference';
 import { backendServices } from '../../const';
 import { isType } from 'typescript-fsa';
+import {
+  getFullPagePlugin,
+  getSelectItemPlugin,
+  getReadabilityPlugin,
+  removeElement,
+  bookmarkPlugin,
+  selectElementTool
+} from '../../plugin';
 
 const defaultState: UserPreferenceStore = {
   accounts: [],
+  plugins: [
+    removeElement,
+    getSelectItemPlugin,
+    getReadabilityPlugin,
+    getFullPagePlugin,
+    bookmarkPlugin,
+    selectElementTool
+  ],
   showQuickResponseCode: true,
   showLineNumber: true,
   liveRendering: true,

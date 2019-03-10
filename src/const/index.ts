@@ -19,3 +19,7 @@ name: string;
     name: 'Github'
   }
 };
+
+export function pluginRouterCreator(id: string) {
+  return `/plugins/` + id;
+}

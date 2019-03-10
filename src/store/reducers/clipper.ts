@@ -1,5 +1,13 @@
+import { asyncRunToolPlugin } from './../actions/clipper';
 /* eslint-disable complexity */
+import { Action } from 'redux';
+import { isType } from 'typescript-fsa';
 import {
+  asyncFetchRepository,
+  updateTitle,
+  startCreateRepository,
+  selectRepository,
+  asyncRunPlugin,
   cancelCreateRepository,
   changeCreateRepositoryTitle,
   asyncCreateRepository,
@@ -8,15 +16,6 @@ import {
   asyncCreateDocument,
   asyncChangeAccount,
   asyncTakeScreenshot
-} from './../actions/clipper';
-import { Action } from 'redux';
-import { isType } from 'typescript-fsa';
-import {
-  asyncFetchRepository,
-  updateTitle,
-  startCreateRepository,
-  selectRepository,
-  asyncRunPlugin
 } from '../actions/clipper';
 import { initUserPreference } from '../actions/userPreference';
 import update from 'immutability-helper';
@@ -199,7 +198,7 @@ export default function clipper(
   } else if (isType(action, asyncRunPlugin.done)) {
     return update(state, {
       clipperData: {
-        [action.payload.params.plugin.router]: {
+        [action.payload.params.pathname]: {
           $set: {
             type: 'text',
             data: action.payload.result.result
@@ -210,10 +209,21 @@ export default function clipper(
   } else if (isType(action, asyncTakeScreenshot.done)) {
     return update(state, {
       clipperData: {
-        [action.payload.params.url]: {
+        [action.payload.params.pathname]: {
           $set: {
             type: 'image',
             ...action.payload.result
+          }
+        }
+      }
+    });
+  } else if (isType(action, asyncRunToolPlugin.done)) {
+    return update(state, {
+      clipperData: {
+        [action.payload.result.pathname]: {
+          $set: {
+            type: 'text',
+            data: action.payload.result.result
           }
         }
       }

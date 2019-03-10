@@ -59,7 +59,8 @@ data: TextClipperData;
 
 export const asyncRunPlugin = actionCreator.async<
 {
-plugin: ClipperPluginWithRouter;
+pathname: string;
+plugin: ClipperPlugin;
 },
 {
 result: string;
@@ -79,7 +80,7 @@ any
 
 export const asyncTakeScreenshot = actionCreator.async<
 {
-url: string;
+pathname: string;
 },
 {
 dataUrl: string;
@@ -87,3 +88,9 @@ width: number;
 height: number;
 }
 >(CLIPPER.ASYNC_TAKE_SCREENSHOT);
+
+export const asyncRunToolPlugin = actionCreator.async<
+{ plugin: ToolPlugin },
+{ result: string; pathname: string },
+void
+>(CLIPPER.ASYNC_RUN_TOOL_PLUGIN);

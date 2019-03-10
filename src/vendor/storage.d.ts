@@ -72,6 +72,7 @@ interface UserPreferenceStore {
   showLineNumber: boolean;
   liveRendering: boolean;
   initializeForm: InitializeForm;
+  plugins: (ToolPlugin | ClipperPlugin)[];
 }
 
 interface FormProps {

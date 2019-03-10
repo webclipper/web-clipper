@@ -5,21 +5,23 @@ import {
   asyncCreateDocument,
   cancelCreateRepository,
   selectRepository,
-  updateTitle
+  updateTitle,
+  asyncRunToolPlugin
 } from '../../store/actions/clipper';
 import { asyncHideTool } from '../../store/actions/userPreference';
 import { Avatar, Button, Icon, Input, Select } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { emptyFunction } from '../../utils';
-import { plugins } from '../plugin/index';
 import { push } from 'connected-react-router';
 import { ToolContainer } from '../../components/container';
+import { pluginRouterCreator } from '../../const';
 
 const useActions = {
   asyncHideTool: asyncHideTool.started,
   asyncChangeAccount: asyncChangeAccount.started,
   postDocument: asyncCreateDocument.started,
+  asyncRunToolPlugin: asyncRunToolPlugin.started,
   updateTitle,
   selectRepository: selectRepository,
   uploadImage: emptyFunction,
@@ -39,15 +41,19 @@ const mapStateToProps = ({
     repositories,
     loadingRepositories
   },
-  userPreference: { accounts },
+
+  userPreference: { accounts, plugins },
   router
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
+  const toolPlugins = plugins.filter(o => o.type === 'tool') as ToolPlugin[];
   return {
     accounts,
+    toolPlugins,
     plugins: plugins
+      .filter(o => o.type === 'clipper')
       .map(o => ({
-        router: o.router,
+        router: pluginRouterCreator(o.id),
         icon: o.icon,
         name: o.name,
         description: o.description
@@ -174,6 +180,21 @@ class Page extends React.Component<PageProps, PageState> {
           >
             保存内容
           </Button>
+        </section>
+        <section className={`${styles.section} ${styles.sectionLine}`}>
+          <h1 className={styles.sectionTitle}>小工具</h1>
+          {this.props.toolPlugins.map(o => (
+            <Button
+              key={o.id}
+              className={styles.menuButton}
+              title={o.description}
+              onClick={() => {
+                this.props.asyncRunToolPlugin({ plugin: o });
+              }}
+            >
+              <Icon type={o.icon} />
+            </Button>
+          ))}
         </section>
         <section className={`${styles.section} ${styles.sectionLine}`}>
           <h1 className={styles.sectionTitle}>剪藏格式</h1>

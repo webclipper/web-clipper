@@ -30,7 +30,6 @@ const makeRestartable = (saga: any) => {
 };
 
 function* initStore() {
-  console.log(window.location.href);
   const result: PreferenceStorage = yield call(storage.getPreference);
   const tabInfo: BrowserTab = yield call(browserService.getCurrentTab);
   backendService.setImageHostingService(

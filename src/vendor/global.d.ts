@@ -2,18 +2,14 @@ declare module '*';
 /// <reference path="../../node_modules/@types/chrome/index.d.ts"/>
 interface ClipperPlugin extends BasePlugin {
   type: 'clipper';
+  /** 脚本代码 */
+  script: string;
 }
 
 interface ToolPlugin extends BasePlugin {
   type: 'tool';
-}
-
-interface PagePlugin extends BasePlugin {
-  type: 'page';
-}
-
-interface ClipperPluginWithRouter extends ClipperPlugin {
-  router: string;
+  processingDocumentObjectModel?: string;
+  processingDocuments?: string;
 }
 
 interface BasePlugin {
@@ -21,17 +17,15 @@ interface BasePlugin {
   /** id 不能重复 */
   id: string;
   /** 版本号 */
-  version: number;
-  /** 名字 可重复*/
+  version: string;
+  /** 名字可重复*/
   name: string;
   /** 如果是 http 开头，则为图片。否则是 ant design 的icon*/
   icon: string;
   /** 介绍 */
   description?: string;
   /** 匹配的域名 */
-  path: string[];
-  /** 脚本代码 */
-  script: string;
+  match?: string[];
   /** 根据环境判断是否显示在工具栏，如果为空则一直显示 */
   display?: string;
 }
@@ -46,4 +40,9 @@ interface ClipperPluginContext {
   toggleClipper: any;
   Readability: any;
   document: any;
+}
+
+interface PagePluginContext {
+  currentData: string;
+  previous: string;
 }

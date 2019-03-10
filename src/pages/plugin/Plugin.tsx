@@ -7,6 +7,7 @@ import {
   asyncRunPlugin
 } from '../../store/actions/clipper';
 import { EditorContainer } from '../../components/container';
+import { pluginRouterCreator } from '../../const';
 
 const useActions = {
   asyncRunPlugin: asyncRunPlugin.started,
@@ -29,7 +30,7 @@ const mapStateToProps = ({
 };
 type PageState = {};
 type PageOwnProps = {
-  plugin: ClipperPluginWithRouter;
+  plugin: ClipperPlugin;
 };
 type PageProps = ReturnType<typeof mapStateToProps> &
   typeof useActions &
@@ -45,7 +46,6 @@ class ClipperPluginPage extends React.Component<PageProps, PageState> {
     const data: TextClipperData = (clipperData[
       pathname
     ] as TextClipperData) || { type: 'text', data: '' };
-
     if (this.myCodeMirror) {
       const value = this.myCodeMirror.getValue();
       if (data.data !== value) {
@@ -61,8 +61,9 @@ class ClipperPluginPage extends React.Component<PageProps, PageState> {
       lineNumbers: !!this.props.showLineNumber,
       hmdModeLoader: false
     });
-    if (!clipperData[pathname] && pathname === plugin.router) {
+    if (!clipperData[pathname] && pathname === pluginRouterCreator(plugin.id)) {
       this.props.asyncRunPlugin({
+        pathname,
         plugin
       });
     }
@@ -80,7 +81,6 @@ class ClipperPluginPage extends React.Component<PageProps, PageState> {
       });
     });
     this.myCodeMirror.setSize(800, 621);
-
     if (this.props.liveRendering) {
       HyperMD.switchToHyperMD(this.myCodeMirror);
     } else {

@@ -2,27 +2,13 @@ import * as React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Route } from 'react-router';
-import {
-  getFullPagePlugin,
-  getSelectItemPlugin,
-  getReadabilityPlugin,
-  bookmarkPlugin
-} from '../../plugin/index';
+
 import Plugin from './Plugin';
+import { pluginRouterCreator } from '../../const';
 
 const useActions = {};
 
-export const plugins: ClipperPluginWithRouter[] = [
-  getFullPagePlugin,
-  getReadabilityPlugin,
-  bookmarkPlugin,
-  getSelectItemPlugin
-].map(plugin => ({
-  ...plugin,
-  router: `/plugins/${plugin.id}`
-}));
-
-function withPlugin(plugin: ClipperPluginWithRouter) {
+function withPlugin(plugin: ClipperPlugin) {
   return class HOC extends React.Component {
     render() {
       return (
@@ -34,9 +20,12 @@ function withPlugin(plugin: ClipperPluginWithRouter) {
   };
 }
 
-const mapStateToProps = ({ router }: GlobalStore) => {
+const mapStateToProps = ({
+  router,
+  userPreference: { plugins }
+}: GlobalStore) => {
   return {
-    plugins,
+    plugins: plugins.filter(o => o.type === 'clipper') as ClipperPlugin[],
     router
   };
 };
@@ -58,7 +47,7 @@ class Page extends React.Component<PageProps, PageState> {
         {this.props.plugins.map(plugin => (
           <Route
             exact
-            path={plugin.router}
+            path={pluginRouterCreator(plugin.id)}
             key={plugin.id}
             component={withPlugin(plugin)}
           />

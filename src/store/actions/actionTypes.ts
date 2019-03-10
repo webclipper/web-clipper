@@ -37,7 +37,8 @@ export const CLIPPER = actionTypeHelper('CLIPPER', {
   UPDATE_TEXT_CLIPPER_DATA: '',
   ASYNC_RUN_PLUGIN: '',
   ASYNC_CHANGE_ACCOUNT: '',
-  ASYNC_TAKE_SCREENSHOT: ''
+  ASYNC_TAKE_SCREENSHOT: '',
+  ASYNC_RUN_TOOL_PLUGIN: ''
 });
 
 export const BROWSER = actionTypeHelper('BROWSER', {

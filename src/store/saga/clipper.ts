@@ -7,7 +7,8 @@ import {
   asyncCreateRepository,
   asyncFetchRepository,
   asyncRunPlugin,
-  asyncTakeScreenshot
+  asyncTakeScreenshot,
+  asyncRunToolPlugin
 } from '../actions/clipper';
 import {
   call,
@@ -30,6 +31,7 @@ export function* clipperRootSagas() {
   yield fork(watchAsyncCreateDocumentSaga);
   yield fork(watchAsyncChangeAccountSaga);
   yield fork(watchAsyncTakeScreenshotSaga);
+  yield fork(watchAsyncRunToolPluginSaga);
 }
 
 export function* asyncFetchRepositorySaga() {
@@ -308,4 +310,51 @@ export function* asyncTakeScreenshotSaga(action: AnyAction) {
 
 export function* watchAsyncTakeScreenshotSaga() {
   yield takeEvery(asyncTakeScreenshot.started.type, asyncTakeScreenshotSaga);
+}
+
+export function* asyncRunToolPluginSaga(action: AnyAction) {
+  if (isType(action, asyncRunToolPlugin.started)) {
+    const result: string = yield call(
+      browserService.sendActionToCurrentTab,
+      action
+    );
+
+    const selector = (state: GlobalStore) => {
+      const pathname = state.router.location.pathname;
+      const data = state.clipper.clipperData[pathname];
+      return {
+        data,
+        pathname
+      };
+    };
+
+    const { data, pathname }: ReturnType<typeof selector> = yield select(
+      selector
+    );
+
+    if (action.payload.plugin.processingDocuments) {
+      // eslint-disable-next-line
+      const context: PagePluginContext = {
+        previous: result,
+        currentData: (data as TextClipperData).data
+      };
+      // eslint-disable-next-line no-eval
+      const response: string = yield eval(
+        action.payload.plugin.processingDocuments
+      );
+      yield put(
+        asyncRunToolPlugin.done({
+          params: action.payload,
+          result: {
+            result: response,
+            pathname
+          }
+        })
+      );
+    }
+  }
+}
+
+export function* watchAsyncRunToolPluginSaga() {
+  yield takeEvery(asyncRunToolPlugin.started.type, asyncRunToolPluginSaga);
 }
