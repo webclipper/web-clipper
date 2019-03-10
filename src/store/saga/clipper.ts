@@ -333,6 +333,7 @@ export function* asyncRunToolPluginSaga(action: AnyAction) {
     );
 
     if (action.payload.plugin.processingDocuments) {
+      // @ts-ignore
       // eslint-disable-next-line
       const context: PagePluginContext = {
         previous: result,

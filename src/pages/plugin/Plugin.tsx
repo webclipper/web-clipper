@@ -15,23 +15,23 @@ const useActions = {
 };
 
 const mapStateToProps = ({
-  router,
+  router: {
+    location: { pathname }
+  },
   clipper,
-  userPreference: { liveRendering, showLineNumber }
+  userPreference: { liveRendering, showLineNumber, plugins }
 }: GlobalStore) => {
   return {
-    router,
     clipper,
     liveRendering,
     showLineNumber,
     clipperData: clipper.clipperData,
-    pathname: router.location.pathname
+    pathname,
+    plugins
   };
 };
 type PageState = {};
-type PageOwnProps = {
-  plugin: ClipperPlugin;
-};
+type PageOwnProps = {};
 type PageProps = ReturnType<typeof mapStateToProps> &
   typeof useActions &
   PageOwnProps;
@@ -55,13 +55,18 @@ class ClipperPluginPage extends React.Component<PageProps, PageState> {
   }
 
   componentDidMount = () => {
-    const { clipperData, pathname, plugin } = this.props;
+    const { clipperData, pathname, plugins } = this.props;
     let myTextarea = document.getElementById(editorId) as HTMLTextAreaElement;
     this.myCodeMirror = HyperMD.fromTextArea(myTextarea, {
       lineNumbers: !!this.props.showLineNumber,
       hmdModeLoader: false
     });
-    if (!clipperData[pathname] && pathname === pluginRouterCreator(plugin.id)) {
+
+    const plugin = plugins.find(
+      o => pluginRouterCreator(o.id) === pathname
+    ) as ClipperPlugin;
+
+    if (!clipperData[pathname]) {
       this.props.asyncRunPlugin({
         pathname,
         plugin

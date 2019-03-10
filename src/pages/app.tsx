@@ -22,16 +22,12 @@ if (document.getElementById(styles.app) == null) {
 const store = configStore();
 
 function withTool(WrappedComponent: any) {
-  return class HOC extends React.Component {
-    render() {
-      return (
-        <React.Fragment>
-          <Tool />
-          <WrappedComponent />
-        </React.Fragment>
-      );
-    }
-  };
+  return () => (
+    <React.Fragment>
+      <Tool />
+      <WrappedComponent />
+    </React.Fragment>
+  );
 }
 
 ReactDOM.render(
