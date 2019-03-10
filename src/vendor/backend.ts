@@ -42,6 +42,8 @@ interface UploadImageRequest {
 
 interface ImageHostingService {
   uploadImage(request: UploadImageRequest): Promise<string>;
+
+  uploadImageUrl(url: string): Promise<string>;
 }
 
 interface DocumentServiceAbility {

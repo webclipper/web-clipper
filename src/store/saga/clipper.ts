@@ -332,17 +332,19 @@ export function* asyncRunToolPluginSaga(action: AnyAction) {
       selector
     );
 
-    if (action.payload.plugin.processingDocuments) {
-      // @ts-ignore
-      // eslint-disable-next-line
-      const context: PagePluginContext = {
-        previous: result,
-        currentData: (data as TextClipperData).data
-      };
-      // eslint-disable-next-line no-eval
-      const response: string = yield eval(
-        action.payload.plugin.processingDocuments
-      );
+    if (action.payload.plugin.processingDocuments && data) {
+      const response: string = yield (async () => {
+        // @ts-ignore
+        // eslint-disable-next-line
+        const context: PagePluginContext = {
+          previous: result,
+          currentData: (data as TextClipperData).data,
+          imageService: backend.getImageHostingService(),
+          message
+        };
+        // eslint-disable-next-line
+        return await eval(action.payload.plugin.processingDocuments!);
+      })();
       yield put(
         asyncRunToolPlugin.done({
           params: action.payload,

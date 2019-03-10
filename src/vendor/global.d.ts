@@ -42,7 +42,12 @@ interface ClipperPluginContext {
   document: any;
 }
 
+interface MessageApi {
+  info(content: string): void;
+}
 interface PagePluginContext {
   currentData: string;
   previous: string;
+  imageService: ImageHostingService;
+  message: MessageApi;
 }

@@ -24,7 +24,8 @@ import {
   getReadabilityPlugin,
   removeElement,
   bookmarkPlugin,
-  selectElementTool
+  selectElementTool,
+  uploadImage
 } from '../../plugin';
 
 const defaultState: UserPreferenceStore = {
@@ -35,7 +36,8 @@ const defaultState: UserPreferenceStore = {
     getReadabilityPlugin,
     getFullPagePlugin,
     bookmarkPlugin,
-    selectElementTool
+    selectElementTool,
+    uploadImage
   ],
   showQuickResponseCode: true,
   showLineNumber: true,

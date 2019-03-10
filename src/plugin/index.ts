@@ -74,6 +74,7 @@ export const removeElement: ToolPlugin = {
   version: '0.0.1',
   name: 'removeElement',
   icon: 'delete',
+  description: '删除页面元素',
   processingDocumentObjectModel: codeCallWithContext(
     async (context: ClipperPluginContext) => {
       const { $, Highlighter, toggleClipper } = context;
@@ -91,6 +92,7 @@ export const selectElementTool: ToolPlugin = {
   version: '0.0.1',
   name: 'selectElement',
   icon: 'select',
+  description: '选择页面元素',
   processingDocuments: codeCallWithContext((context: PagePluginContext) => {
     const { currentData, previous } = context;
     return `${currentData}\n${previous}`;
@@ -102,6 +104,41 @@ export const selectElementTool: ToolPlugin = {
       const data = await new Highlighter().start();
       toggleClipper();
       return turndown.turndown(data);
+    }
+  )
+};
+
+export const uploadImage: ToolPlugin = {
+  type: 'tool',
+  id: 'DiamondYuan/uploadImage',
+  version: '0.0.1',
+  name: 'uploadImage',
+  icon: 'sync',
+  description: '同步图片到语雀图床',
+  processingDocuments: codeCallWithContext(
+    async (context: PagePluginContext) => {
+      const { currentData, imageService, message } = context;
+      let foo = currentData;
+      const result = currentData.match(/!\[.*?\]\(http(.*?)\)/g);
+      if (result) {
+        const images: string[] = result
+          .map(o => {
+            const temp = /!\[.*?\]\((http.*?)\)/.exec(o);
+            if (temp) {
+              return temp[1];
+            }
+            return '';
+          })
+          .filter(o => o && !o.startsWith('https://cdn-pri.nlark.com'));
+        for (let image of images) {
+          try {
+            const url = await imageService.uploadImageUrl(image);
+            foo = foo.replace(image, url);
+          } catch (error) {}
+        }
+      }
+      message.info('上传图片成功');
+      return foo;
     }
   )
 };
