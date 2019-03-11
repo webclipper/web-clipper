@@ -2,7 +2,6 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackChromeReloaderPlugin = require('webpack-chrome-extension-reloader');
 const ChromeManifestPlugin = require('./chromeManifestPlugin');
@@ -12,6 +11,11 @@ function resolve(dir) {
 }
 
 const baseConfig = {
+  entry: {
+    background: resolve('src/background/index.ts'),
+    tool: resolve('src/pages/app.tsx'),
+    content_script: resolve('src/content/index.tsx')
+  },
   output: {
     path: resolve('dist/js'),
     filename: '[name].js'
@@ -99,22 +103,7 @@ const baseConfig = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
-    })
-  ].filter(plugin => !!plugin)
-};
-
-const commonConfig = merge(baseConfig, {
-  entry: {
-    background: resolve('src/background/index.ts'),
-    tool: resolve('src/pages/app.tsx')
-  },
-  optimization: {
-    splitChunks: {
-      name: 'vendor',
-      chunks: 'initial'
-    }
-  },
-  plugins: [
+    }),
     new CleanWebpackPlugin(['dist'], {
       root: path.resolve(__dirname, '../'),
       verbose: true
@@ -135,13 +124,7 @@ const commonConfig = merge(baseConfig, {
       filename: '../tool.html',
       chunks: ['tool', 'vendor']
     })
-  ]
-});
+  ].filter(plugin => !!plugin)
+};
 
-const contentScriptConfig = merge(baseConfig, {
-  entry: {
-    content_script: resolve('src/content/index.tsx')
-  }
-});
-
-module.exports = [commonConfig, contentScriptConfig];
+module.exports = baseConfig;

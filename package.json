@@ -124,7 +124,6 @@
     ],
     "background": {
       "scripts": [
-        "js/vendor.js",
         "js/background.js"
       ]
     },
