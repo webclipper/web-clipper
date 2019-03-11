@@ -12,6 +12,11 @@
 
 [Chrome Store](https://chrome.google.com/webstore/detail/语雀剪藏/pdecnpgmmhjfnoiebndphjggimhjhdog)
 
+### Support Site
+
+- [Yuque](https://www.yuque.com)
+- [Github](https://github.com)
+
 ### Develop
 
 ```bash
