@@ -122,7 +122,7 @@ const baseConfig = {
     new HtmlWebpackPlugin({
       title: '语雀剪藏插件',
       filename: '../tool.html',
-      chunks: ['tool', 'vendor']
+      chunks: ['tool']
     })
   ].filter(plugin => !!plugin)
 };
