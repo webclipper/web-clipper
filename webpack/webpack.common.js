@@ -4,8 +4,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackChromeReloaderPlugin = require('webpack-chrome-extension-reloader');
-const ChromeManifestPlugin = require('./chromeManifestPlugin');
 const tsImportPluginFactory = require('ts-import-plugin');
+const WebpackCreateExtensionManifestPlugin = require('webpack-create-extension-manifest-plugin');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
@@ -85,7 +85,6 @@ const baseConfig = {
               localIdentName: '[path][name]__[local]--[hash:base64:5]'
             }
           },
-
           {
             loader: 'sass-loader'
           }
@@ -121,9 +120,9 @@ const baseConfig = {
         ignore: ['.*']
       }
     ]),
-    new ChromeManifestPlugin({
-      packageJson: path.resolve(__dirname, '../package.json'),
-      out: path.resolve(__dirname, '../dist/manifest.json')
+    new WebpackCreateExtensionManifestPlugin({
+      output: resolve('dist/manifest.json'),
+      extra: { name: '语雀剪藏' }
     }),
     new HtmlWebpackPlugin({
       title: '语雀剪藏插件',
