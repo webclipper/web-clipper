@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackChromeReloaderPlugin = require('webpack-chrome-extension-reloader');
 const ChromeManifestPlugin = require('./chromeManifestPlugin');
+const tsImportPluginFactory = require('ts-import-plugin');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
@@ -23,8 +24,17 @@ const baseConfig = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
+        test: /\.(jsx|tsx|js|ts)$/,
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+          getCustomTransformers: () => ({
+            before: [tsImportPluginFactory({ style: true })]
+          }),
+          compilerOptions: {
+            module: 'es2015'
+          }
+        },
         exclude: /node_modules/
       },
       {
@@ -84,11 +94,7 @@ const baseConfig = {
     ]
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', 'scss', 'less'],
-    alias: {
-      '@': resolve('src'),
-      'antd-style': resolve('/node_modules/antd/dist/antd.less')
-    }
+    extensions: ['.ts', '.tsx', '.js', 'scss', 'less']
   },
   plugins: [
     process.env.NODE_ENV === 'development'

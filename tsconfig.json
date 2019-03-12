@@ -4,7 +4,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "target": "es5",
-    "module": "commonjs",
+    "module": "ESNext",
     "declaration": false,
     "noImplicitAny": true,
     "strictNullChecks": true,

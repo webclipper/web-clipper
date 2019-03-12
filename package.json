@@ -86,6 +86,7 @@
     "pre-commit": "^1.2.2",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
+    "ts-import-plugin": "^1.5.5",
     "ts-jest": "^23.1.4",
     "ts-loader": "^4.5.0",
     "typescript": "^3.3.3333",

@@ -8498,6 +8498,13 @@ trim-right@^1.0.1:
   dependencies:
     glob "^7.1.2"
 
+ts-import-plugin@^1.5.5:
+  version "1.5.5"
+  resolved "https://registry.npmjs.org/ts-import-plugin/-/ts-import-plugin-1.5.5.tgz#3c57b6f8e42486404f4124146dd44090d98a740c"
+  integrity sha512-i0ULERaX+vycmASUeJFbAqx+KeMBAH+iFaSim+U9t05DxK+ZGpMCHT18zTRzTEh1dA6OWsHzVZmHgFKh5UTKUA==
+  dependencies:
+    tslib "^1.9.2"
+
 ts-jest@^23.1.4:
   version "23.10.5"
   resolved "https://registry.npmjs.org/ts-jest/-/ts-jest-23.10.5.tgz#cdb550df4466a30489bf70ba867615799f388dd5"
@@ -8524,7 +8531,7 @@ ts-loader@^4.5.0:
     micromatch "^3.1.4"
     semver "^5.0.1"
 
-tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.2:
   version "1.9.3"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
