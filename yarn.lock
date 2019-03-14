@@ -230,6 +230,13 @@
   resolved "https://registry.npmjs.org/@types/history/-/history-4.7.2.tgz#0e670ea254d559241b6eeb3894f8754991e73220"
   integrity sha512-ui3WwXmjTaY73fOQ3/m3nnajU/Orhi6cEu5rzX+BrAAJxa3eITXZ5ch9suPqtM03OWhAHhPSyBGCN4UKoxO20Q==
 
+"@types/hoist-non-react-statics@*":
+  version "3.3.0"
+  resolved "http://registry.npm.taobao.org/@types/hoist-non-react-statics/download/@types/hoist-non-react-statics-3.3.0.tgz#a59c0c995cc885bef1b8ec2241b114f9b35b517b"
+  integrity sha1-pZwMmVzIhb7xuOwiQbEU+bNbUXs=
+  dependencies:
+    "@types/react" "*"
+
 "@types/jest@^23.3.1":
   version "23.3.14"
   resolved "https://registry.npmjs.org/@types/jest/-/jest-23.3.14.tgz#37daaf78069e7948520474c87b80092ea912520a"
@@ -276,11 +283,12 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-redux@^6.0.12":
-  version "6.0.13"
-  resolved "https://registry.npmjs.org/@types/react-redux/-/react-redux-6.0.13.tgz#490ace7b49e57281edf85671bb455b31cdfa7d0b"
-  integrity sha512-69lPYT69CSvzQ75Ut4MfT+oQU9TAjCycdL6BQOrPztqbzdhzSe1d4Qj8vrMkTOm454Xz151zh+YT6S4t2OBopw==
+"@types/react-redux@^7.0.3":
+  version "7.0.3"
+  resolved "http://registry.npm.taobao.org/@types/react-redux/download/@types/react-redux-7.0.3.tgz#b8dc3faa954b7f28e4b0209bcf9209b45251ed6b"
+  integrity sha1-uNw/qpVLfyjksCCbz5IJtFJR7Ws=
   dependencies:
+    "@types/hoist-non-react-statics" "*"
     "@types/react" "*"
     redux "^4.0.0"
 
