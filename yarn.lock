@@ -299,10 +299,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.4.12":
-  version "16.8.6"
-  resolved "https://registry.npmjs.org/@types/react/-/react-16.8.6.tgz#fa1de3fe56cc9b6afeddc73d093d7f30fd5e31cc"
-  integrity sha512-bN9qDjEMltmHrl0PZRI4IF2AbB7V5UlRfG+OOduckVnRQ4VzXVSzy/1eLAh778IEqhTnW0mmgL9yShfinNverA==
+"@types/react@*", "@types/react@^16.8.8":
+  version "16.8.8"
+  resolved "http://registry.npm.taobao.org/@types/react/download/@types/react-16.8.8.tgz#4b60a469fd2469f7aa6eaa0f8cfbc51f6d76e662"
+  integrity sha1-S2Ckaf0kafeqbqoPjPvFH2125mI=
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
