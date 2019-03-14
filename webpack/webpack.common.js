@@ -65,6 +65,9 @@ const baseConfig = {
           {
             loader: 'less-loader',
             options: {
+              modifyVars: {
+                '@body-background': 'transparent',
+              },
               javascriptEnabled: true,
             },
           },

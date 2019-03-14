@@ -26,7 +26,7 @@ import {
 } from 'redux-saga/effects';
 import { documentServiceFactory } from '../../services/backend';
 import { message } from 'antd';
-import md5 = require('blueimp-md5');
+const md5 = require('blueimp-md5');
 
 export function* asyncVerificationAccessTokenSaga() {
   try {
@@ -99,7 +99,13 @@ export function* watchAsyncVerificationAccessTokenSaga() {
 export function* asyncAddAccountSaga() {
   const selector = ({
     userPreference: {
-      initializeForm: { accessToken, host, type, userInfo, defaultRepositoryId },
+      initializeForm: {
+        accessToken,
+        host,
+        type,
+        userInfo,
+        defaultRepositoryId,
+      },
     },
   }: GlobalStore) => {
     return {
