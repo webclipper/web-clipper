@@ -12,7 +12,7 @@ import {
   asyncUpdateCurrentAccountIndex,
   asyncVerificationAccessToken,
   updateCreateAccountForm,
-  asyncSetDefaultPluginId
+  asyncSetDefaultPluginId,
 } from './../actions/userPreference';
 import {
   call,
@@ -22,7 +22,7 @@ import {
   race,
   select,
   take,
-  takeEvery
+  takeEvery,
 } from 'redux-saga/effects';
 import { documentServiceFactory } from '../../services/backend';
 import { message } from 'antd';
@@ -32,13 +32,13 @@ export function* asyncVerificationAccessTokenSaga() {
   try {
     const selector = ({
       userPreference: {
-        initializeForm: { accessToken, host, type }
-      }
+        initializeForm: { accessToken, host, type },
+      },
     }: GlobalStore) => {
       return {
         accessToken,
         host,
-        type
+        type,
       };
     };
     const selectState: ReturnType<typeof selector> = yield select(selector);
@@ -53,7 +53,7 @@ export function* asyncVerificationAccessTokenSaga() {
     const service = documentServiceFactory({
       type: type.value,
       accessToken: accessToken.value,
-      baseURL: host.value
+      baseURL: host.value,
     });
     const userInfo = yield call(service.getUserInfo);
     const repositories = yield call(service.getRepositories);
@@ -61,8 +61,8 @@ export function* asyncVerificationAccessTokenSaga() {
       asyncVerificationAccessToken.done({
         result: {
           repositories,
-          userInfo
-        }
+          userInfo,
+        },
       })
     );
   } catch (error) {
@@ -70,8 +70,8 @@ export function* asyncVerificationAccessTokenSaga() {
     yield put(
       asyncVerificationAccessToken.failed({
         error: {
-          error: error
-        }
+          error: error,
+        },
       })
     );
   } finally {
@@ -79,8 +79,8 @@ export function* asyncVerificationAccessTokenSaga() {
       yield put(
         asyncVerificationAccessToken.failed({
           error: {
-            cancel: true
-          }
+            cancel: true,
+          },
         })
       );
     }
@@ -91,7 +91,7 @@ export function* watchAsyncVerificationAccessTokenSaga() {
   yield takeEvery(asyncVerificationAccessToken.started.type, function* () {
     yield race({
       task: call(asyncVerificationAccessTokenSaga),
-      cancel: take(updateCreateAccountForm.type)
+      cancel: take(updateCreateAccountForm.type),
     });
   });
 }
@@ -99,15 +99,15 @@ export function* watchAsyncVerificationAccessTokenSaga() {
 export function* asyncAddAccountSaga() {
   const selector = ({
     userPreference: {
-      initializeForm: { accessToken, host, type, userInfo, defaultRepositoryId }
-    }
+      initializeForm: { accessToken, host, type, userInfo, defaultRepositoryId },
+    },
   }: GlobalStore) => {
     return {
       accessToken,
       host,
       type,
       userInfo,
-      defaultRepositoryId
+      defaultRepositoryId,
     };
   };
   const selectState: ReturnType<typeof selector> = yield select(selector);
@@ -124,7 +124,7 @@ export function* asyncAddAccountSaga() {
     accessToken: accessToken.value,
     host: host.value,
     defaultRepositoryId: defaultRepositoryId ? defaultRepositoryId.value : '',
-    ...userInfo
+    ...userInfo,
   };
   try {
     yield call(storage.addAccount, account);
@@ -142,7 +142,7 @@ export function* asyncAddAccountSaga() {
 
   yield put(
     asyncAddAccount.done({
-      result: { accounts, defaultAccountId }
+      result: { accounts, defaultAccountId },
     })
   );
 }
@@ -161,8 +161,8 @@ export function* asyncDeleteAccountSaga(action: AnyAction) {
         params: action.payload,
         result: {
           accounts: accounts,
-          defaultAccountId: defaultAccountId
-        }
+          defaultAccountId: defaultAccountId,
+        },
       })
     );
   }
@@ -178,7 +178,7 @@ export function* asyncUpdateCurrentAccountIndexSaga(action: AnyAction) {
     yield put(
       asyncUpdateCurrentAccountIndex.done({
         params: action.payload,
-        result: action.payload
+        result: action.payload,
       })
     );
   }
@@ -198,11 +198,11 @@ export function* asyncSetShowLineNumberSaga(action: AnyAction) {
     yield put(
       asyncSetShowLineNumber.done({
         params: {
-          value
+          value,
         },
         result: {
-          value: !value
-        }
+          value: !value,
+        },
       })
     );
   }
@@ -222,11 +222,11 @@ export function* asyncSetEditorLiveRenderingSaga(action: AnyAction) {
     yield put(
       asyncSetEditorLiveRendering.done({
         params: {
-          value
+          value,
         },
         result: {
-          value: !value
-        }
+          value: !value,
+        },
       })
     );
   }
@@ -239,11 +239,11 @@ export function* asyncSetShowQuickResponseCodeSaga(action: AnyAction) {
     yield put(
       asyncSetShowQuickResponseCode.done({
         params: {
-          value
+          value,
         },
         result: {
-          value: !value
-        }
+          value: !value,
+        },
       })
     );
   }
@@ -288,7 +288,7 @@ export function* asyncSetDefaultPluginIdSaga(action: AnyAction) {
     yield call(storage.setDefaultPluginId, action.payload.pluginId);
     yield put(
       asyncSetDefaultPluginId.done({
-        params: action.payload
+        params: action.payload,
       })
     );
   }

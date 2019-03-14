@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
   updateTextClipperData,
   asyncRunPlugin,
-  asyncTakeScreenshot
+  asyncTakeScreenshot,
 } from '../../store/actions/clipper';
 import { EditorContainer } from '../../components/container';
 import * as styles from './index.scss';
@@ -12,13 +12,13 @@ import * as styles from './index.scss';
 const useActions = {
   asyncRunPlugin: asyncRunPlugin.started,
   asyncTakeScreenshot: asyncTakeScreenshot.started,
-  updateTextClipperData
+  updateTextClipperData,
 };
 
 const mapStateToProps = ({
   router,
   clipper,
-  userPreference: { liveRendering, showLineNumber }
+  userPreference: { liveRendering, showLineNumber },
 }: GlobalStore) => {
   return {
     router,
@@ -26,19 +26,19 @@ const mapStateToProps = ({
     liveRendering,
     showLineNumber,
     clipperData: clipper.clipperData,
-    pathname: router.location.pathname
+    pathname: router.location.pathname,
   };
 };
 type PageState = {};
 type PageOwnProps = {};
 type PageProps = ReturnType<typeof mapStateToProps> &
   typeof useActions &
-  PageOwnProps;
+PageOwnProps;
 
 class ImagePluginPage extends React.Component<PageProps, PageState> {
   componentDidMount = () => {
     this.props.asyncTakeScreenshot({
-      pathname: this.props.pathname
+      pathname: this.props.pathname,
     });
   };
 

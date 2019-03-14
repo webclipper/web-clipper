@@ -10,5 +10,5 @@ export default (history: HistoryType) =>
     router: connectRouter(history),
     clipper,
     userInfo,
-    userPreference
+    userPreference,
   });

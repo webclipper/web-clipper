@@ -1,6 +1,6 @@
 import backendService, {
   documentServiceFactory,
-  imageHostingServiceFactory
+  imageHostingServiceFactory,
 } from '../../services/backend';
 import browserService from '../../services/browser';
 import storage from '../../services/common/store';
@@ -50,7 +50,7 @@ function* initStore() {
   const documentService = documentServiceFactory({
     accessToken: account.accessToken,
     baseURL: account.host,
-    type: account.type
+    type: account.type,
   });
   backendService.setDocumentService(documentService);
   yield call(asyncFetchUserInfoSaga);
@@ -63,7 +63,7 @@ function* initStore() {
 export const rootSagas = [
   userInfoRootSagas,
   clipperRootSagas,
-  userPreferenceSagas
+  userPreferenceSagas,
 ].map(makeRestartable);
 
 export default function* root() {

@@ -4,22 +4,22 @@ import { connect } from 'react-redux';
 import * as HyperMD from 'hypermd';
 import {
   updateTextClipperData,
-  asyncRunPlugin
+  asyncRunPlugin,
 } from '../../store/actions/clipper';
 import { EditorContainer } from '../../components/container';
 import { pluginRouterCreator } from '../../const';
 
 const useActions = {
   asyncRunPlugin: asyncRunPlugin.started,
-  updateTextClipperData
+  updateTextClipperData,
 };
 
 const mapStateToProps = ({
   router: {
-    location: { pathname }
+    location: { pathname },
   },
   clipper,
-  userPreference: { liveRendering, showLineNumber, plugins }
+  userPreference: { liveRendering, showLineNumber, plugins },
 }: GlobalStore) => {
   return {
     clipper,
@@ -27,14 +27,14 @@ const mapStateToProps = ({
     showLineNumber,
     clipperData: clipper.clipperData,
     pathname,
-    plugins
+    plugins,
   };
 };
 type PageState = {};
 type PageOwnProps = {};
 type PageProps = ReturnType<typeof mapStateToProps> &
   typeof useActions &
-  PageOwnProps;
+PageOwnProps;
 
 const editorId = 'DiamondYuan_Love_LJ';
 
@@ -59,7 +59,7 @@ class ClipperPluginPage extends React.Component<PageProps, PageState> {
     let myTextarea = document.getElementById(editorId) as HTMLTextAreaElement;
     this.myCodeMirror = HyperMD.fromTextArea(myTextarea, {
       lineNumbers: !!this.props.showLineNumber,
-      hmdModeLoader: false
+      hmdModeLoader: false,
     });
 
     const plugin = plugins.find(
@@ -69,7 +69,7 @@ class ClipperPluginPage extends React.Component<PageProps, PageState> {
     if (!clipperData[pathname]) {
       this.props.asyncRunPlugin({
         pathname,
-        plugin
+        plugin,
       });
     }
     const data: TextClipperData = (clipperData[
@@ -81,8 +81,8 @@ class ClipperPluginPage extends React.Component<PageProps, PageState> {
         path: pathname,
         data: {
           type: 'text',
-          data: editor.getValue()
-        }
+          data: editor.getValue(),
+        },
       });
     });
     this.myCodeMirror.setSize(800, 621);

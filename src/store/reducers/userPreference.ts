@@ -10,11 +10,11 @@ import {
   cancelCreateAccount,
   initUserPreference,
   updateCreateAccountForm,
-  asyncSetDefaultPluginId
+  asyncSetDefaultPluginId,
 } from '../actions/userPreference';
 import {
   asyncVerificationAccessToken,
-  startCreateAccount
+  startCreateAccount,
 } from './../actions/userPreference';
 import { backendServices } from '../../const';
 import { isType } from 'typescript-fsa';
@@ -25,7 +25,7 @@ import {
   removeElement,
   bookmarkPlugin,
   selectElementTool,
-  uploadImage
+  uploadImage,
 } from '../../plugin';
 
 const defaultState: UserPreferenceStore = {
@@ -37,7 +37,7 @@ const defaultState: UserPreferenceStore = {
     getFullPagePlugin,
     bookmarkPlugin,
     selectElementTool,
-    uploadImage
+    uploadImage,
   ],
   showQuickResponseCode: true,
   showLineNumber: true,
@@ -47,14 +47,14 @@ const defaultState: UserPreferenceStore = {
     verified: false,
     verifying: false,
     type: {
-      value: 'yuque'
+      value: 'yuque',
     },
     host: {
-      value: backendServices.yuque.api
+      value: backendServices.yuque.api,
     },
     userInfo: { name: '' },
-    repositories: []
-  }
+    repositories: [],
+  },
 };
 
 export function userPreference(
@@ -64,83 +64,83 @@ export function userPreference(
   if (isType(action, asyncSetShowLineNumber.done)) {
     return update(state, {
       showLineNumber: {
-        $set: action.payload.result.value
-      }
+        $set: action.payload.result.value,
+      },
     });
   }
   if (isType(action, asyncSetEditorLiveRendering.done)) {
     return update(state, {
       liveRendering: {
-        $set: action.payload.result.value
-      }
+        $set: action.payload.result.value,
+      },
     });
   }
   if (isType(action, asyncSetShowQuickResponseCode.done)) {
     return update(state, {
       showQuickResponseCode: {
-        $set: action.payload.result.value
-      }
+        $set: action.payload.result.value,
+      },
     });
   }
   if (isType(action, asyncSetDefaultPluginId.done)) {
     return update(state, {
       defaultPluginId: {
-        $set: action.payload.params.pluginId
-      }
+        $set: action.payload.params.pluginId,
+      },
     });
   }
   if (isType(action, cancelCreateAccount)) {
     return update(state, {
       initializeForm: {
-        $set: defaultState.initializeForm
-      }
+        $set: defaultState.initializeForm,
+      },
     });
   }
   if (isType(action, startCreateAccount)) {
     return update(state, {
       initializeForm: {
         show: {
-          $set: true
-        }
-      }
+          $set: true,
+        },
+      },
     });
   }
   if (isType(action, asyncAddAccount.done)) {
     return update(state, {
       accounts: {
-        $set: action.payload.result.accounts
+        $set: action.payload.result.accounts,
       },
       defaultAccountId: {
-        $set: action.payload.result.defaultAccountId
+        $set: action.payload.result.defaultAccountId,
       },
       initializeForm: {
         $set: {
           ...defaultState.initializeForm,
-          show: false
-        }
-      }
+          show: false,
+        },
+      },
     });
   }
   if (isType(action, asyncUpdateCurrentAccountIndex.done)) {
     return update(state, {
       defaultAccountId: {
-        $set: action.payload.result.id
-      }
+        $set: action.payload.result.id,
+      },
     });
   }
   if (isType(action, asyncDeleteAccount.done)) {
     return update(state, {
       accounts: {
-        $set: action.payload.result.accounts
+        $set: action.payload.result.accounts,
       },
       defaultAccountId: {
-        $set: action.payload.result.defaultAccountId
-      }
+        $set: action.payload.result.defaultAccountId,
+      },
     });
   }
   if (isType(action, initUserPreference)) {
     return update(state, {
-      $merge: action.payload
+      $merge: action.payload,
     });
   }
   if (isType(action, asyncVerificationAccessToken.done)) {
@@ -150,9 +150,9 @@ export function userPreference(
           verified: true,
           verifying: false,
           repositories: action.payload.result.repositories,
-          userInfo: action.payload.result.userInfo
-        }
-      }
+          userInfo: action.payload.result.userInfo,
+        },
+      },
     });
   }
   if (isType(action, asyncVerificationAccessToken.failed)) {
@@ -161,9 +161,9 @@ export function userPreference(
         $merge: {
           verified: state.initializeForm.verified,
           verifying: false,
-          repositories: state.initializeForm.repositories
-        }
-      }
+          repositories: state.initializeForm.repositories,
+        },
+      },
     });
   }
   if (isType(action, updateCreateAccountForm)) {
@@ -179,27 +179,27 @@ export function userPreference(
             type: action.payload.type,
             userInfo: action.payload.userInfo,
             host: {
-              value: backendServices[type.value as string].api
+              value: backendServices[type.value as string].api,
             },
-            repositories: []
-          }
-        }
+            repositories: [],
+          },
+        },
       });
     }
     if (action.payload.defaultRepositoryId) {
       return update(state, {
         initializeForm: {
-          $merge: action.payload
-        }
+          $merge: action.payload,
+        },
       });
     }
     return update(state, {
       initializeForm: {
         $merge: action.payload,
         verified: {
-          $set: false
-        }
-      }
+          $set: false,
+        },
+      },
     });
   }
   return state;

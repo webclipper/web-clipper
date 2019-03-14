@@ -6,14 +6,14 @@ import {
   startCreateRepository,
   cancelCreateRepository,
   changeCreateRepositoryTitle,
-  asyncCreateRepository
+  asyncCreateRepository,
 } from '../../store/actions/clipper';
 
 const useActions = {
   onChangeTitle: changeCreateRepositoryTitle,
   onCreateRepository: asyncCreateRepository.started,
   onCancelCreate: cancelCreateRepository,
-  onStartCreate: startCreateRepository
+  onStartCreate: startCreateRepository,
 };
 
 const mapStateToProps = ({ clipper }: GlobalStore) => {
@@ -21,7 +21,7 @@ const mapStateToProps = ({ clipper }: GlobalStore) => {
   return {
     createMode: createMode,
     repositoryTitle: repositoryTitle,
-    creating: creating
+    creating: creating,
   };
 };
 
@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 class DropDownRender extends React.Component<PageProps> {
   onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.props.onChangeTitle({
-      repositoryTitle: e.target.value
+      repositoryTitle: e.target.value,
     });
   };
 

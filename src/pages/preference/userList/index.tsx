@@ -3,7 +3,7 @@ import CreateAccountModal from './createAccountModal';
 import {
   asyncDeleteAccount,
   asyncUpdateCurrentAccountIndex,
-  startCreateAccount
+  startCreateAccount,
 } from '../../../store/actions/userPreference';
 import { Avatar, Button, Card, Icon, List, Modal } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -12,15 +12,15 @@ import { connect } from 'react-redux';
 const useActions = {
   startCreateAccount,
   asyncDeleteAccount: asyncDeleteAccount.started,
-  asyncUpdateCurrentAccountIndex: asyncUpdateCurrentAccountIndex.started
+  asyncUpdateCurrentAccountIndex: asyncUpdateCurrentAccountIndex.started,
 };
 
 const mapStateToProps = ({
-  userPreference: { accounts, defaultAccountId }
+  userPreference: { accounts, defaultAccountId },
 }: GlobalStore) => {
   return {
     accounts,
-    defaultAccountId
+    defaultAccountId,
   };
 };
 type PageState = {};
@@ -70,14 +70,14 @@ class Page extends React.Component<PageProps, PageState> {
       onOk() {
         let account = that.props.accounts[index];
         that.props.asyncDeleteAccount({ id: account.id });
-      }
+      },
     });
   };
 
   onSetDefaultAccount = (index: number) => {
     let account = this.props.accounts[index];
     this.props.asyncUpdateCurrentAccountIndex({
-      id: account.id
+      id: account.id,
     });
   };
 
@@ -89,7 +89,7 @@ class Page extends React.Component<PageProps, PageState> {
           style={{
             display: 'flex',
             flexWrap: 'wrap',
-            overflow: 'hidden'
+            overflow: 'hidden',
           }}
         >
           <List.Item>
@@ -109,7 +109,7 @@ class Page extends React.Component<PageProps, PageState> {
                 style={{
                   width: '300px',
                   height: '200px',
-                  margin: '10px'
+                  margin: '10px',
                 }}
                 title={cardMeta(account.avatar, account.name)}
                 extra={typeToIcon(account.type)}
@@ -136,7 +136,7 @@ class Page extends React.Component<PageProps, PageState> {
                     type='delete'
                     title='删除'
                     onClick={this.onDeleteAccount.bind(this, index)}
-                  />
+                  />,
                 ]}
               >
                 <div style={{ height: '46px', overflow: 'hidden' }}>

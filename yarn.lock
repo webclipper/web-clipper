@@ -110,32 +110,32 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@diamondyuan/eslint-config-javascript@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-javascript/-/eslint-config-javascript-2.0.0.tgz#098a30d0b05f14bb51af3c6890a1d37f06c70805"
-  integrity sha512-1QhXLml1gyhRg1YKNMaqfFAS8WNUG7YdFC5Nt76nd89on4lv3TmPgKwH0iQobPzutvxYoRgHpl0Q6TWNjq4IsA==
+"@diamondyuan/eslint-config-javascript@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-javascript/-/eslint-config-javascript-3.0.0.tgz#7fd5612ed2b4b718db2dcee5ed9e65f31620326b"
+  integrity sha512-WU3SxaYNIOzp5xqCMCBiGyfMKRnS7WXJg7SM0q9RxCNQMC06VRQT3qTQAV5i85M8vBli/ZqAW0EHLYDqEPdu+A==
 
-"@diamondyuan/eslint-config-react-typescript@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-react-typescript/-/eslint-config-react-typescript-2.0.3.tgz#66e633949d2832f457d75941e42c5c9aed8a68a0"
-  integrity sha512-vntv58cqBC+l5kzuXzjVO5DmmAMpQ3o/Y1ViefiW0QxlXZzoJR/Y8JhtKOreJS7bkEG0OcY105G5hnsg2yEeZA==
+"@diamondyuan/eslint-config-react-typescript@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-react-typescript/-/eslint-config-react-typescript-3.0.0.tgz#240d1d15718366dec931fbb783bf3e2e091ea190"
+  integrity sha512-vOD1J8g9i91MwtpQHS1QMbgc0qrFEOv/YP0fDMPh9I+vaCwgvlXI8URBaOITErP4ZmJJRjWi8u79591/k3PRdA==
   dependencies:
-    "@diamondyuan/eslint-config-react" "^2.0.3"
-    "@diamondyuan/eslint-config-typescript" "^2.0.2"
+    "@diamondyuan/eslint-config-react" "^3.0.0"
+    "@diamondyuan/eslint-config-typescript" "^3.0.0"
 
-"@diamondyuan/eslint-config-react@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-react/-/eslint-config-react-2.0.3.tgz#290f2edf6c715eb714af50f18c677f37df10788f"
-  integrity sha512-6QWq69bEYTnY+ThvFynT31WX5LFUubHk5IdAVqlLI+Woy5t1CEh91z5YWixujyzPoPUm8W2NSg006SectxpARg==
+"@diamondyuan/eslint-config-react@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-react/-/eslint-config-react-3.0.0.tgz#852146bbc45cfd913bd35b5624f0762bc090b0e0"
+  integrity sha512-LnTm9Cui8Ee5m44hHk6lmC+VNxovuiMgSFMu8WJjNdKpQki3zwqh7uA7mhV3QyyEYqQyP21C6GEvPjgSoGl8Zw==
   dependencies:
-    "@diamondyuan/eslint-config-javascript" "^2.0.0"
+    "@diamondyuan/eslint-config-javascript" "^3.0.0"
 
-"@diamondyuan/eslint-config-typescript@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-typescript/-/eslint-config-typescript-2.0.2.tgz#2dc7e79678f0728c99394e5bcdbc70071292d7af"
-  integrity sha512-VAUjY9OqtvDBVQFWqSNmL+YR4d5no+ObRfNloRzzUp+ZmudIn+Pbe/dyyArtZgnU28vpr3S7TfktiVeQkWSxdA==
+"@diamondyuan/eslint-config-typescript@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-typescript/-/eslint-config-typescript-3.0.0.tgz#cb610c515b0fa48d3b89645bb21a4702ee371de7"
+  integrity sha512-lTFB9rSo0qux/XeMQu12EVLtn8exLnlMFTeiFFk8qgfvVK+ZaCW3w2qb2t9KzQdhTpPt5+ZaKsKp78HRIMMY4w==
   dependencies:
-    "@diamondyuan/eslint-config-javascript" "^2.0.0"
+    "@diamondyuan/eslint-config-javascript" "^3.0.0"
 
 "@redux-saga/core@^1.0.2":
   version "1.0.2"

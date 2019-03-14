@@ -15,7 +15,7 @@ import {
   updateTextClipperData,
   asyncCreateDocument,
   asyncChangeAccount,
-  asyncTakeScreenshot
+  asyncTakeScreenshot,
 } from '../actions/clipper';
 import { initUserPreference } from '../actions/userPreference';
 import update from 'immutability-helper';
@@ -30,8 +30,8 @@ const defaultState: ClipperStore = {
   selectRepository: {
     createMode: false,
     repositoryTitle: '',
-    creating: false
-  }
+    creating: false,
+  },
 };
 
 export default function clipper(
@@ -41,57 +41,57 @@ export default function clipper(
   if (isType(action, asyncChangeAccount.started)) {
     return update(state, {
       loadingRepositories: {
-        $set: true
-      }
+        $set: true,
+      },
     });
   }
   if (isType(action, asyncChangeAccount.done)) {
     return update(state, {
       loadingRepositories: {
-        $set: false
+        $set: false,
       },
       currentAccountId: {
-        $set: action.payload.params.id
+        $set: action.payload.params.id,
       },
       repositories: {
-        $set: action.payload.result.repositories
+        $set: action.payload.result.repositories,
       },
       currentRepository: {
         // eslint-disable-next-line no-undefined
-        $set: undefined
-      }
+        $set: undefined,
+      },
     });
   }
   if (isType(action, initUserPreference)) {
     const { defaultAccountId } = action.payload;
     return update(state, {
       currentAccountId: {
-        $set: defaultAccountId || ''
-      }
+        $set: defaultAccountId || '',
+      },
     });
   }
   if (isType(action, asyncFetchRepository.failed)) {
     return update(state, {
       loadingRepositories: {
-        $set: false
-      }
+        $set: false,
+      },
     });
   }
   if (isType(action, asyncFetchRepository.done)) {
     const { repositories } = action.payload.result;
     return update(state, {
       loadingRepositories: {
-        $set: false
+        $set: false,
       },
       repositories: {
-        $set: repositories
-      }
+        $set: repositories,
+      },
     });
   } else if (isType(action, updateTitle)) {
     return update(state, {
       title: {
-        $set: action.payload.title
-      }
+        $set: action.payload.title,
+      },
     });
   } else if (isType(action, startCreateRepository)) {
     return update(state, {
@@ -99,9 +99,9 @@ export default function clipper(
         $set: {
           createMode: true,
           repositoryTitle: '',
-          creating: false
-        }
-      }
+          creating: false,
+        },
+      },
     });
   } else if (isType(action, cancelCreateRepository)) {
     return update(state, {
@@ -109,34 +109,34 @@ export default function clipper(
         $set: {
           createMode: false,
           repositoryTitle: '',
-          creating: false
-        }
-      }
+          creating: false,
+        },
+      },
     });
   } else if (isType(action, changeCreateRepositoryTitle)) {
     const title = action.payload.repositoryTitle;
     return update(state, {
       selectRepository: {
         repositoryTitle: {
-          $set: title
-        }
-      }
+          $set: title,
+        },
+      },
     });
   } else if (isType(action, asyncCreateRepository.started)) {
     return update(state, {
       selectRepository: {
         creating: {
-          $set: true
-        }
-      }
+          $set: true,
+        },
+      },
     });
   } else if (isType(action, asyncCreateRepository.failed)) {
     return update(state, {
       selectRepository: {
         creating: {
-          $set: false
-        }
-      }
+          $set: false,
+        },
+      },
     });
   } else if (isType(action, asyncCreateRepository.done)) {
     return update(state, {
@@ -144,9 +144,9 @@ export default function clipper(
         $set: {
           createMode: false,
           repositoryTitle: '',
-          creating: false
-        }
-      }
+          creating: false,
+        },
+      },
     });
   } else if (isType(action, selectRepository)) {
     const currentRepository = state.repositories.find(
@@ -154,46 +154,46 @@ export default function clipper(
     );
     return update(state, {
       currentRepository: {
-        $set: currentRepository
-      }
+        $set: currentRepository,
+      },
     });
   } else if (isType(action, initTabInfo)) {
     return update(state, {
       url: {
-        $set: action.payload.url
+        $set: action.payload.url,
       },
       title: {
-        $set: action.payload.title
-      }
+        $set: action.payload.title,
+      },
     });
   } else if (isType(action, updateTextClipperData)) {
     return update(state, {
       clipperData: {
         [action.payload.path]: {
-          $set: action.payload.data
-        }
-      }
+          $set: action.payload.data,
+        },
+      },
     });
   } else if (isType(action, asyncCreateDocument.started)) {
     return update(state, {
       creatingDocument: {
-        $set: true
-      }
+        $set: true,
+      },
     });
   } else if (isType(action, asyncCreateDocument.failed)) {
     return update(state, {
       creatingDocument: {
-        $set: false
-      }
+        $set: false,
+      },
     });
   } else if (isType(action, asyncCreateDocument.done)) {
     return update(state, {
       creatingDocument: {
-        $set: false
+        $set: false,
       },
       completeStatus: {
-        $set: action.payload.result
-      }
+        $set: action.payload.result,
+      },
     });
   } else if (isType(action, asyncRunPlugin.done)) {
     return update(state, {
@@ -201,10 +201,10 @@ export default function clipper(
         [action.payload.params.pathname]: {
           $set: {
             type: 'text',
-            data: action.payload.result.result
-          }
-        }
-      }
+            data: action.payload.result.result,
+          },
+        },
+      },
     });
   } else if (isType(action, asyncTakeScreenshot.done)) {
     return update(state, {
@@ -212,10 +212,10 @@ export default function clipper(
         [action.payload.params.pathname]: {
           $set: {
             type: 'image',
-            ...action.payload.result
-          }
-        }
-      }
+            ...action.payload.result,
+          },
+        },
+      },
     });
   } else if (isType(action, asyncRunToolPlugin.done)) {
     return update(state, {
@@ -223,10 +223,10 @@ export default function clipper(
         [action.payload.result.pathname]: {
           $set: {
             type: 'text',
-            data: action.payload.result.result
-          }
-        }
-      }
+            data: action.payload.result.result,
+          },
+        },
+      },
     });
   }
   return state;

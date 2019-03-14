@@ -5,7 +5,7 @@ const actionCreator = actionCreatorFactory();
 export const asyncFetchRepository = actionCreator.async<
 void,
 {
-repositories: Repository[];
+  repositories: Repository[];
 },
 void
 >(CLIPPER.ASYNC_FETCH_REPOSITORY);
@@ -17,9 +17,9 @@ export const updateTitle = actionCreator<{ title: string }>(
 export const asyncCreateDocument = actionCreator.async<
 void,
 {
-documentHref: string;
-repositoryId: string;
-documentId: string;
+  documentHref: string;
+  repositoryId: string;
+  documentId: string;
 },
 null
 >(CLIPPER.ASYNC_CREATE_DOCUMENT);
@@ -41,7 +41,7 @@ export const cancelCreateRepository = actionCreator(
 );
 
 export const changeCreateRepositoryTitle = actionCreator<{
-repositoryTitle: string;
+  repositoryTitle: string;
 }>(CLIPPER.CHANGE_CREATE_REPOSITORY_TITLE);
 
 export const asyncCreateRepository = actionCreator.async<void, void, void>(
@@ -53,39 +53,39 @@ export const initTabInfo = actionCreator<{ title: string; url: string }>(
 );
 
 export const updateTextClipperData = actionCreator<{
-path: string;
-data: TextClipperData;
+  path: string;
+  data: TextClipperData;
 }>(CLIPPER.UPDATE_TEXT_CLIPPER_DATA);
 
 export const asyncRunPlugin = actionCreator.async<
 {
-pathname: string;
-plugin: ClipperPlugin;
+  pathname: string;
+  plugin: ClipperPlugin;
 },
 {
-result: string;
+  result: string;
 },
 any
 >(CLIPPER.ASYNC_RUN_PLUGIN);
 
 export const asyncChangeAccount = actionCreator.async<
 {
-id: string;
+  id: string;
 },
 {
-repositories: Repository[];
+  repositories: Repository[];
 },
 any
 >(CLIPPER.ASYNC_CHANGE_ACCOUNT);
 
 export const asyncTakeScreenshot = actionCreator.async<
 {
-pathname: string;
+  pathname: string;
 },
 {
-dataUrl: string;
-width: number;
-height: number;
+  dataUrl: string;
+  width: number;
+  height: number;
 }
 >(CLIPPER.ASYNC_TAKE_SCREENSHOT);
 

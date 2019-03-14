@@ -8,7 +8,7 @@ const Base64ImageToBolb = (image: string): Blob => {
     ia[i] = bytes.charCodeAt(i);
   }
   const blob = new Blob([ab], {
-    type: mime
+    type: mime,
   });
   return blob;
 };

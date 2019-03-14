@@ -11,8 +11,8 @@ export function* asyncFetchUserInfoSaga() {
     yield put(
       asyncFetchUserInfo.done({
         result: {
-          userInfo: response
-        }
+          userInfo: response,
+        },
       })
     );
   } catch (error) {

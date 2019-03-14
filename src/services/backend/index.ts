@@ -1,7 +1,7 @@
 import GithubDocumentService from './github';
 import YuqueDocumentService from './yuque';
 import YuqueImageHostingService, {
-  YuqueImageHostingOption
+  YuqueImageHostingOption,
 } from './imageHosting/yuque';
 
 interface DocumentServiceOption {
@@ -38,13 +38,13 @@ export function documentServiceFactory(
   if (type === 'yuque') {
     return new YuqueDocumentService({
       baseURL,
-      accessToken
+      accessToken,
     });
   }
   if (type === 'github') {
     return new GithubDocumentService({
       baseURL,
-      accessToken
+      accessToken,
     });
   }
   throw new Error('unSupport type');

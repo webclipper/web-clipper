@@ -6,7 +6,7 @@ import { pluginRouterCreator } from '../../const';
 
 const mapStateToProps = ({ userPreference: { plugins }}: GlobalStore) => {
   return {
-    idList: plugins.filter(o => o.type === 'clipper').map(o => o.id)
+    idList: plugins.filter(o => o.type === 'clipper').map(o => o.id),
   };
 };
 

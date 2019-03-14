@@ -12,7 +12,7 @@ export function userInfo(
   if (isType(action, asyncFetchUserInfo.done)) {
     const { userInfo } = action.payload.result;
     return update(state, {
-      $set: userInfo
+      $set: userInfo,
     });
   }
   return state;

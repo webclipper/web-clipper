@@ -16,11 +16,11 @@ export const USER_PREFERENCE = actionTypeHelper('USER_PREFERENCE', {
   ASYNC_SET_SHOW_QUICK_RESPONSE_CODE: '',
   ASYNC_HIDE_TOOL: '隐藏插件',
   ASYNC_REMOVE_TOOL: '移除插件',
-  ASYNC_SET_DEFAULT_PLUGIN_ID: ''
+  ASYNC_SET_DEFAULT_PLUGIN_ID: '',
 });
 
 export const USER_INFO = actionTypeHelper('USER_INFO', {
-  ASYNC_FETCH_USER_INFO: ''
+  ASYNC_FETCH_USER_INFO: '',
 });
 
 export const CLIPPER = actionTypeHelper('CLIPPER', {
@@ -38,10 +38,10 @@ export const CLIPPER = actionTypeHelper('CLIPPER', {
   ASYNC_RUN_PLUGIN: '',
   ASYNC_CHANGE_ACCOUNT: '',
   ASYNC_TAKE_SCREENSHOT: '',
-  ASYNC_RUN_TOOL_PLUGIN: ''
+  ASYNC_RUN_TOOL_PLUGIN: '',
 });
 
 export const BROWSER = actionTypeHelper('BROWSER', {
   DO_YOU_ALIVE_NOW: '',
-  CLICK_ICON: ''
+  CLICK_ICON: '',
 });

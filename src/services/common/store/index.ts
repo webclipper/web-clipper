@@ -79,7 +79,7 @@ const keysOfStorage = {
   defaultPluginId: 'defaultPluginId',
   showQuickResponseCode: 'showQuickResponseCode',
   liveRendering: 'liveRendering',
-  showLineNumber: 'showLineNumber'
+  showLineNumber: 'showLineNumber',
 };
 
 export class TypedCommonStorage implements TypedCommonStorageInterface {
@@ -102,7 +102,7 @@ export class TypedCommonStorage implements TypedCommonStorageInterface {
       defaultAccountId,
       showQuickResponseCode,
       showLineNumber,
-      liveRendering
+      liveRendering,
     };
   };
 

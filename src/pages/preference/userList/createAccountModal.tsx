@@ -3,7 +3,7 @@ import {
   asyncAddAccount,
   asyncVerificationAccessToken,
   cancelCreateAccount,
-  updateCreateAccountForm
+  updateCreateAccountForm,
 } from '../../../store/actions/userPreference';
 import { backendServices } from '../../../const';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -15,25 +15,25 @@ const Option = Select.Option;
 
 const formItemLayout = {
   labelCol: { span: 6, offset: 0 },
-  wrapperCol: { span: 18 }
+  wrapperCol: { span: 18 },
 };
 
 const typeOptions = Object.keys(backendServices).map(key => ({
   ...backendServices[key],
-  key
+  key,
 }));
 const mapStateToProps = ({
-  userPreference: { initializeForm }
+  userPreference: { initializeForm },
 }: GlobalStore) => {
   return {
-    initializeForm
+    initializeForm,
   };
 };
 const useActions = {
   updateCreateAccountForm,
   cancelCreateAccount,
   asyncAddAccount: asyncAddAccount.started,
-  asyncVerificationAccessToken: asyncVerificationAccessToken.started
+  asyncVerificationAccessToken: asyncVerificationAccessToken.started,
 };
 
 type PageStateProps = ReturnType<typeof mapStateToProps>;
@@ -51,7 +51,7 @@ class InitializeForm extends React.Component<PageProps> {
       verified,
       repositories,
       verifying,
-      show
+      show,
     } = this.props.initializeForm;
     const disableOkButton = verified ? false : true;
 
@@ -83,7 +83,7 @@ class InitializeForm extends React.Component<PageProps> {
           </Form.Item>
           <Form.Item label='域名' {...formItemLayout}>
             {getFieldDecorator('host', {
-              rules: [{ required: true, message: 'host is required!' }]
+              rules: [{ required: true, message: 'host is required!' }],
             })(<Input disabled={verifying} />)}
           </Form.Item>
           <Form.Item label='AccessToken' {...formItemLayout}>
@@ -93,9 +93,9 @@ class InitializeForm extends React.Component<PageProps> {
                   rules: [
                     {
                       required: true,
-                      message: 'AccessToken is required!'
-                    }
-                  ]
+                      message: 'AccessToken is required!',
+                    },
+                  ],
                 })(<Input />)}
               </Col>
               <Col offset={1} span={4}>
@@ -146,29 +146,29 @@ export default connect(
       accessToken,
       host,
       type,
-      defaultRepositoryId
+      defaultRepositoryId,
     } = props.initializeForm;
     return {
       defaultRepositoryId: defaultRepositoryId
         ? Form.createFormField({
-          ...defaultRepositoryId
+          ...defaultRepositoryId,
         })
         : null,
       type: type
         ? Form.createFormField({
-          ...type
+          ...type,
         })
         : null,
       accessToken: accessToken
         ? Form.createFormField({
-          ...accessToken
+          ...accessToken,
         })
         : null,
       host: host
         ? Form.createFormField({
-          ...host
+          ...host,
         })
-        : null
+        : null,
     };
-  }
+  },
 })(InitializeForm) as React.ComponentType);

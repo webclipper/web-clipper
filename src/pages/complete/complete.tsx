@@ -9,18 +9,18 @@ import { asyncRemoveTool } from '../../store/actions/userPreference';
 import { QuickResponseCode } from './quickResponseCode';
 
 const useActions = {
-  asyncRemoveTool: asyncRemoveTool.started
+  asyncRemoveTool: asyncRemoveTool.started,
 };
 
 const mapStateToProps = ({
   clipper: { completeStatus, currentAccountId },
-  userPreference: { accounts, showQuickResponseCode }
+  userPreference: { accounts, showQuickResponseCode },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   return {
     currentAccount,
     completeStatus,
-    showQuickResponseCode
+    showQuickResponseCode,
   };
 };
 type PageState = {};
@@ -40,7 +40,7 @@ class Page extends React.Component<PageProps, PageState> {
     const {
       completeStatus,
       currentAccount,
-      showQuickResponseCode
+      showQuickResponseCode,
     } = this.props;
     if (!completeStatus || !currentAccount) {
       return (

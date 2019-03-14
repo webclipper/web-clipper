@@ -5,7 +5,7 @@ import {
   asyncSetEditorLiveRendering,
   asyncSetShowLineNumber,
   asyncSetShowQuickResponseCode,
-  asyncSetDefaultPluginId
+  asyncSetDefaultPluginId,
 } from '../../store/actions/userPreference';
 import { bindActionCreators, Dispatch } from 'redux';
 import { CenterContainer } from '../../components/container';
@@ -19,7 +19,7 @@ const useActions = {
   asyncSetEditorLiveRendering: asyncSetEditorLiveRendering.started,
   asyncSetShowLineNumber: asyncSetShowLineNumber.started,
   asyncSetShowQuickResponseCode: asyncSetShowQuickResponseCode.started,
-  asyncSetDefaultPluginId: asyncSetDefaultPluginId.started
+  asyncSetDefaultPluginId: asyncSetDefaultPluginId.started,
 };
 
 const mapStateToProps = ({
@@ -29,8 +29,8 @@ const mapStateToProps = ({
     showLineNumber,
     showQuickResponseCode,
     defaultPluginId,
-    plugins
-  }
+    plugins,
+  },
 }: GlobalStore) => {
   return {
     showLineNumber,
@@ -41,7 +41,7 @@ const mapStateToProps = ({
     liveRendering,
     QRCodeContent: '',
     accounts,
-    plugins: plugins.filter(o => o.type === 'clipper')
+    plugins: plugins.filter(o => o.type === 'clipper'),
   };
 };
 type PageState = {};
@@ -85,10 +85,10 @@ class Page extends React.Component<PageProps, PageState> {
                       key='qrcode'
                       onChange={() => {
                         this.props.asyncSetShowQuickResponseCode({
-                          value: this.props.showQuickResponseCode
+                          value: this.props.showQuickResponseCode,
                         });
                       }}
-                    />
+                    />,
                   ]}
                 >
                   <List.Item.Meta
@@ -109,7 +109,7 @@ class Page extends React.Component<PageProps, PageState> {
                           selectValue = value;
                         }
                         this.props.asyncSetDefaultPluginId({
-                          pluginId: selectValue
+                          pluginId: selectValue,
                         });
                       }}
                     >
@@ -117,7 +117,7 @@ class Page extends React.Component<PageProps, PageState> {
                       {plugins.map(o => (
                         <Select.Option key={o.id}>{o.name}</Select.Option>
                       ))}
-                    </Select>
+                    </Select>,
                   ]}
                 >
                   <List.Item.Meta
@@ -133,11 +133,11 @@ class Page extends React.Component<PageProps, PageState> {
                       checked={this.props.showLineNumber}
                       onChange={() => {
                         this.props.asyncSetShowLineNumber({
-                          value: this.props.showLineNumber
+                          value: this.props.showLineNumber,
                         });
                       }}
                       key='showLineNumber'
-                    />
+                    />,
                   ]}
                 >
                   <List.Item.Meta
@@ -152,10 +152,10 @@ class Page extends React.Component<PageProps, PageState> {
                       checked={this.props.liveRendering}
                       onChange={() => {
                         this.props.asyncSetEditorLiveRendering({
-                          value: this.props.liveRendering
+                          value: this.props.liveRendering,
                         });
                       }}
-                    />
+                    />,
                   ]}
                 >
                   <List.Item.Meta

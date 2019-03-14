@@ -29,14 +29,14 @@ export default class AreaSelector {
       $('html').one('mousedown', event => {
         this.mousedownPoint = {
           clientX: event.clientX!,
-          clientY: event.clientY!
+          clientY: event.clientY!,
         };
         $(`#${styles.crossLine}`).remove();
         this.startClip = true;
         $('html').one('mouseup', event => {
           this.mouseupPoint = {
             clientX: event.clientX!,
-            clientY: event.clientY!
+            clientY: event.clientY!,
           };
           this.endClip = true;
           $(document).unbind('mousemove', this.mousemoveEvent);
@@ -55,12 +55,12 @@ export default class AreaSelector {
     return {
       leftTop: {
         clientX: Math.min(first.clientX, second.clientX),
-        clientY: Math.min(first.clientY, second.clientY)
+        clientY: Math.min(first.clientY, second.clientY),
       },
       rightBottom: {
         clientX: Math.max(first.clientX, second.clientX),
-        clientY: Math.max(first.clientY, second.clientY)
-      }
+        clientY: Math.max(first.clientY, second.clientY),
+      },
     };
   }
 
@@ -84,7 +84,7 @@ export default class AreaSelector {
     }
     const mousePosition = {
       clientX: event.clientX!,
-      clientY: event.clientY!
+      clientY: event.clientY!,
     };
 
     if (!this.startClip) {
@@ -95,7 +95,7 @@ export default class AreaSelector {
       const element = this.getOrCreate(styles.selectArea);
       const area = this.getPoint(this.mousedownPoint, {
         clientX: event.clientX!,
-        clientY: event.clientY!
+        clientY: event.clientY!,
       });
       $(element).css('top', area.leftTop!.clientY);
       $(element).css('left', area.leftTop!.clientX);

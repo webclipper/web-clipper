@@ -4,7 +4,7 @@ describe('test actionTypeHelper', () => {
   it('prefix show add to value', () => {
     const TEST_ACTION = {
       UPDATE: '',
-      CREATE: ''
+      CREATE: '',
     };
     const data = actionTypeHelper('TEST_ACTION', TEST_ACTION);
     expect(data.UPDATE).toEqual('TEST_ACTION/UPDATE');

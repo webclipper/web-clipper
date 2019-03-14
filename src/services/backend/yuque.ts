@@ -39,16 +39,16 @@ export default class YuqueDocumentService implements DocumentService {
     const request = axios.create({
       baseURL: `${this.baseURL}/api/v2/`,
       headers: {
-        'X-Auth-Token': config.accessToken
+        'X-Auth-Token': config.accessToken,
       },
       timeout: 10000,
       transformResponse: [
         (data): any => {
           // 做任何你想要的数据转换
           return JSON.parse(data).data;
-        }
+        },
       ],
-      withCredentials: true
+      withCredentials: true,
     });
     this.request = request;
   }
@@ -62,7 +62,7 @@ export default class YuqueDocumentService implements DocumentService {
       avatar,
       name: name,
       homePage: `${this.baseURL}/${login}`,
-      description
+      description,
     };
   };
 
@@ -91,7 +91,7 @@ export default class YuqueDocumentService implements DocumentService {
       title,
       slug,
       body,
-      private: privateStatus
+      private: privateStatus,
     };
     const repository = this.repositories.find(
       (o: Repository) => o.id === repositoryId
@@ -100,17 +100,17 @@ export default class YuqueDocumentService implements DocumentService {
       throw new Error('illegal repositoryId');
     }
     const response = await this.request.post<{
-    id: number;
-    slug: string;
-    title: string;
-    created_at: string;
-    updated_at: string;
+      id: number;
+      slug: string;
+      title: string;
+      created_at: string;
+      updated_at: string;
     }>(`/repos/${repositoryId}/docs`, qs.stringify(request));
     const data = response.data;
     return {
       href: `${this.baseURL}/${repository.namespace}/${data.slug}`,
       repositoryId,
-      documentId: data.id.toString()
+      documentId: data.id.toString(),
     };
   };
 
@@ -121,8 +121,8 @@ export default class YuqueDocumentService implements DocumentService {
     return {
       document: {
         label: false,
-        settingPermissions: false
-      }
+        settingPermissions: false,
+      },
     };
   }
 
@@ -131,7 +131,7 @@ export default class YuqueDocumentService implements DocumentService {
       await this.getUserInfo();
     }
     const query = {
-      offset: offset
+      offset: offset,
     };
     const response = await this.request.get<RepositoryResponse[]>(
       `users/${this.login}/repos?${qs.stringify(query)}`
@@ -143,7 +143,7 @@ export default class YuqueDocumentService implements DocumentService {
         name,
         namespace,
         created_at: createdAt,
-        description
+        description,
       } = repository;
       return {
         id: id.toString(),
@@ -152,7 +152,7 @@ export default class YuqueDocumentService implements DocumentService {
         description,
         owner: namespace.split('/')[0],
         private: !repository.public,
-        createdAt
+        createdAt,
       };
     });
     return result;

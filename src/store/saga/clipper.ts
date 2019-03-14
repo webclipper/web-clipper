@@ -8,7 +8,7 @@ import {
   asyncFetchRepository,
   asyncRunPlugin,
   asyncTakeScreenshot,
-  asyncRunToolPlugin
+  asyncRunToolPlugin,
 } from '../actions/clipper';
 import {
   call,
@@ -17,7 +17,7 @@ import {
   select,
   takeEvery,
   takeLatest,
-  delay
+  delay,
 } from 'redux-saga/effects';
 import { message } from 'antd';
 import { push } from 'connected-react-router';
@@ -42,14 +42,14 @@ export function* asyncFetchRepositorySaga() {
     yield put(
       asyncFetchRepository.done({
         result: {
-          repositories: response
-        }
+          repositories: response,
+        },
       })
     );
   } catch (error) {
     yield put(
       asyncFetchRepository.failed({
-        error: error
+        error: error,
       })
     );
   }
@@ -59,7 +59,7 @@ export function* asyncCreateDocumentSaga() {
   const selector = ({
     clipper,
     router,
-    userPreference: { accounts }
+    userPreference: { accounts },
   }: GlobalStore) => {
     const currentAccount = accounts.find(
       o => o.id === clipper.currentAccountId
@@ -71,7 +71,7 @@ export function* asyncCreateDocumentSaga() {
         : '',
       clipperData: clipper.clipperData,
       router,
-      title: clipper.title
+      title: clipper.title,
     };
   };
 
@@ -81,7 +81,7 @@ export function* asyncCreateDocumentSaga() {
     defaultRepositoryId,
     title,
     router,
-    clipperData
+    clipperData,
   } = selectState;
 
   let repositoryId;
@@ -94,7 +94,7 @@ export function* asyncCreateDocumentSaga() {
   if (!repositoryId) {
     yield put(
       asyncCreateDocument.failed({
-        error: null
+        error: null,
       })
     );
     message.error('必须选择一个知识库');
@@ -103,7 +103,7 @@ export function* asyncCreateDocumentSaga() {
   if (!title) {
     yield put(
       asyncCreateDocument.failed({
-        error: null
+        error: null,
       })
     );
     message.error('标题不允许为空');
@@ -113,7 +113,7 @@ export function* asyncCreateDocumentSaga() {
   if (!data) {
     yield put(
       asyncCreateDocument.failed({
-        error: null
+        error: null,
       })
     );
     message.error('no data');
@@ -125,7 +125,7 @@ export function* asyncCreateDocumentSaga() {
       title: title,
       private: true,
       repositoryId,
-      content: data.data
+      content: data.data,
     };
   }
   if (data.type === 'image') {
@@ -133,20 +133,20 @@ export function* asyncCreateDocumentSaga() {
       const responseUrl: string = yield call(
         backend.getImageHostingService().uploadImage,
         {
-          data: data.dataUrl
+          data: data.dataUrl,
         }
       );
       createDocumentRequest = {
         title: title,
         private: true,
         repositoryId,
-        content: `![](${responseUrl})`
+        content: `![](${responseUrl})`,
       };
     } catch (error) {
       message.error('上传图片到图床失败');
       yield put(
         asyncCreateDocument.failed({
-          error: null
+          error: null,
         })
       );
       return;
@@ -165,8 +165,8 @@ export function* asyncCreateDocumentSaga() {
       result: {
         documentHref,
         repositoryId: response.repositoryId,
-        documentId
-      }
+        documentId,
+      },
     })
   );
   yield put(push('/complete'));
@@ -179,7 +179,7 @@ export function* asyncCreateRepositorySaga() {
     });
     yield call(backend.getDocumentService().createRepository, {
       name: title,
-      private: true
+      private: true,
     });
     yield put(asyncCreateRepository.done({}));
   } catch (error) {
@@ -212,7 +212,7 @@ export function* asyncRunPluginSaga(action: any) {
     yield put(
       asyncRunPlugin.done({
         params: action.payload,
-        result: { result }
+        result: { result },
       })
     );
   }
@@ -226,7 +226,7 @@ export function* asyncChangeAccountSaga(action: AnyAction) {
     const id = action.payload.id;
     const selector = ({ userPreference: { accounts }}: GlobalStore) => {
       return {
-        accounts
+        accounts,
       };
     };
     const selectState: ReturnType<typeof selector> = yield select(selector);
@@ -240,7 +240,7 @@ export function* asyncChangeAccountSaga(action: AnyAction) {
     const documentService = documentServiceFactory({
       accessToken: account.accessToken,
       baseURL: account.host,
-      type: account.type
+      type: account.type,
     });
     const repositories = yield call(documentService.getRepositories);
     backend.setDocumentService(documentService);
@@ -248,11 +248,11 @@ export function* asyncChangeAccountSaga(action: AnyAction) {
     yield put(
       asyncChangeAccount.done({
         params: {
-          id
+          id,
         },
         result: {
-          repositories
-        }
+          repositories,
+        },
       })
     );
   }
@@ -278,7 +278,7 @@ export function* asyncTakeScreenshotSaga(action: AnyAction) {
     let swidth;
     let {
       rightBottom: { clientX: rightBottomX, clientY: rightBottomY },
-      leftTop: { clientX: leftTopX, clientY: leftTopY }
+      leftTop: { clientX: leftTopX, clientY: leftTopY },
     } = selectArea;
     if (rightBottomX === leftTopX && rightBottomY === leftTopY) {
       sx = 0;
@@ -300,8 +300,8 @@ export function* asyncTakeScreenshotSaga(action: AnyAction) {
       result: {
         dataUrl: canvas.toDataURL(),
         width: swidth,
-        height: sheight
-      }
+        height: sheight,
+      },
     });
     yield put(doneAction);
     yield call(browserService.sendActionToCurrentTab, doneAction);
@@ -324,7 +324,7 @@ export function* asyncRunToolPluginSaga(action: AnyAction) {
       const data = state.clipper.clipperData[pathname];
       return {
         data,
-        pathname
+        pathname,
       };
     };
 
@@ -340,7 +340,7 @@ export function* asyncRunToolPluginSaga(action: AnyAction) {
           previous: result,
           currentData: (data as TextClipperData).data,
           imageService: backend.getImageHostingService(),
-          message
+          message,
         };
         // eslint-disable-next-line
         return await eval(action.payload.plugin.processingDocuments!);
@@ -350,8 +350,8 @@ export function* asyncRunToolPluginSaga(action: AnyAction) {
           params: action.payload,
           result: {
             result: response,
-            pathname
-          }
+            pathname,
+          },
         })
       );
     }

@@ -4,7 +4,7 @@ import update from 'immutability-helper';
 import {
   TypedCommonStorage,
   CommonStorage,
-  TypedCommonStorageInterface
+  TypedCommonStorageInterface,
 } from '../index';
 
 class MockStorage implements CommonStorage {
@@ -30,7 +30,7 @@ describe('test storage', () => {
     defaultPluginId: undefined,
     showQuickResponseCode: false,
     showLineNumber: true,
-    liveRendering: true
+    liveRendering: true,
   };
 
   beforeEach(() => {
@@ -63,7 +63,7 @@ describe('test storage', () => {
       accessToken: 'github',
       id: 'github',
       name: 'DiamondYuan',
-      host: 'https://github.com'
+      host: 'https://github.com',
     };
 
     const mockYuqueAccount = {
@@ -71,7 +71,7 @@ describe('test storage', () => {
       accessToken: 'yuque',
       id: 'yuque',
       name: 'DiamondYuan',
-      host: 'https://yuque.com'
+      host: 'https://yuque.com',
     };
 
     const mockGitlabAccount = {
@@ -79,7 +79,7 @@ describe('test storage', () => {
       accessToken: 'gitlab',
       id: 'gitlab',
       name: 'DiamondYuan',
-      host: 'https://gitlab.com'
+      host: 'https://gitlab.com',
     };
 
     it('test add account should change defaultAccountId when defaultAccountId is undefined', async () => {
@@ -127,8 +127,8 @@ describe('test storage', () => {
       expect(await storage.getPreference()).toEqual(
         update(defaultPreference, {
           defaultPluginId: {
-            $set: value
-          }
+            $set: value,
+          },
         })
       );
     }
@@ -141,8 +141,8 @@ describe('test storage', () => {
       expect(await storage.getPreference()).toEqual(
         update(defaultPreference, {
           showQuickResponseCode: {
-            $set: value
-          }
+            $set: value,
+          },
         })
       );
     }
@@ -155,8 +155,8 @@ describe('test storage', () => {
       expect(await storage.getPreference()).toEqual(
         update(defaultPreference, {
           showLineNumber: {
-            $set: value
-          }
+            $set: value,
+          },
         })
       );
     }
@@ -169,8 +169,8 @@ describe('test storage', () => {
       expect(await storage.getPreference()).toEqual(
         update(defaultPreference, {
           liveRendering: {
-            $set: value
-          }
+            $set: value,
+          },
         })
       );
     }

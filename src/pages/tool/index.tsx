@@ -6,7 +6,7 @@ import {
   cancelCreateRepository,
   selectRepository,
   updateTitle,
-  asyncRunToolPlugin
+  asyncRunToolPlugin,
 } from '../../store/actions/clipper';
 import { asyncHideTool } from '../../store/actions/userPreference';
 import { Avatar, Button, Icon, Input, Select } from 'antd';
@@ -26,7 +26,7 @@ const useActions = {
   selectRepository: selectRepository,
   uploadImage: emptyFunction,
   push,
-  onCancelCreate: cancelCreateRepository
+  onCancelCreate: cancelCreateRepository,
 };
 
 const Option = Select.Option;
@@ -39,11 +39,11 @@ const mapStateToProps = ({
     creatingDocument,
     currentRepository,
     repositories,
-    loadingRepositories
+    loadingRepositories,
   },
 
   userPreference: { accounts, plugins },
-  router
+  router,
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   const toolPlugins = plugins.filter(o => o.type === 'tool') as ToolPlugin[];
@@ -56,13 +56,13 @@ const mapStateToProps = ({
         router: pluginRouterCreator(o.id),
         icon: o.icon,
         name: o.name,
-        description: o.description
+        description: o.description,
       }))
       .concat({
         router: '/plugins/DiamondYuan/screenshot',
         name: '屏幕截图',
         icon: 'picture',
-        description: '屏幕截图'
+        description: '屏幕截图',
       }),
     router,
     createMode: true,
@@ -77,7 +77,7 @@ const mapStateToProps = ({
     currentRepository,
     haveImageService: true,
     currentAccount,
-    repositories: repositories
+    repositories: repositories,
   };
 };
 type PageState = {
@@ -99,13 +99,13 @@ class Page extends React.Component<PageProps, PageState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      openSelect: false
+      openSelect: false,
     };
   }
 
   onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.props.updateTitle({
-      title: e.target.value
+      title: e.target.value,
     });
   };
 
@@ -146,7 +146,7 @@ class Page extends React.Component<PageProps, PageState> {
       repositories,
       currentAccount,
       currentRepository,
-      loadingRepositories
+      loadingRepositories,
     } = this.props;
 
     let repositoryId;

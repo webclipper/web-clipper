@@ -6,12 +6,12 @@ import TurndownService from 'turndown';
 import { AnyAction, isType } from 'typescript-fsa';
 import {
   asyncHideTool,
-  asyncRemoveTool
+  asyncRemoveTool,
 } from '../store/actions/userPreference';
 import {
   asyncRunPlugin,
   asyncTakeScreenshot,
-  asyncRunToolPlugin
+  asyncRunToolPlugin,
 } from '../store/actions/clipper';
 import { clickIcon, doYouAliveNow } from '../store/actions/browser';
 
@@ -24,7 +24,7 @@ turndownService.addRule('lazyLoadImage', {
       return `![](${dataSrc})`;
     }
     return `![](${node.getAttribute('src')})`;
-  }
+  },
 });
 
 chrome.runtime.onMessage.addListener((action: AnyAction, _, sendResponse) => {
@@ -64,7 +64,7 @@ chrome.runtime.onMessage.addListener((action: AnyAction, _, sendResponse) => {
         Highlighter,
         toggleClipper,
         Readability,
-        document
+        document,
       };
       (async () => {
         // eslint-disable-next-line
@@ -120,7 +120,7 @@ chrome.runtime.onMessage.addListener((action: AnyAction, _, sendResponse) => {
         Highlighter,
         toggleClipper,
         Readability,
-        document
+        document,
       };
       (async () => {
         // eslint-disable-next-line

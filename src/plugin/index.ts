@@ -36,7 +36,7 @@ export const getFullPagePlugin: ClipperPlugin = {
   name: '整个页面',
   icon: 'copy',
   description: '保存整个页面',
-  script: codeCallWithContext(getFullPage)
+  script: codeCallWithContext(getFullPage),
 };
 
 export const getSelectItemPlugin: ClipperPlugin = {
@@ -45,7 +45,7 @@ export const getSelectItemPlugin: ClipperPlugin = {
   version: '0.0.1',
   name: '手动选取',
   icon: 'select',
-  script: codeCallWithContext(selectElement)
+  script: codeCallWithContext(selectElement),
 };
 
 export const getReadabilityPlugin: ClipperPlugin = {
@@ -55,7 +55,7 @@ export const getReadabilityPlugin: ClipperPlugin = {
   name: '智能提取',
   icon: 'copy',
   script: codeCallWithContext(getReadability),
-  description: '智能分析出页面的主要部分'
+  description: '智能分析出页面的主要部分',
 };
 
 export const bookmarkPlugin: ClipperPlugin = {
@@ -65,7 +65,7 @@ export const bookmarkPlugin: ClipperPlugin = {
   name: '书签',
   icon: 'link',
   description: '保存网页链接和增加备注',
-  script: codeCallWithContext(bookmark)
+  script: codeCallWithContext(bookmark),
 };
 
 export const removeElement: ToolPlugin = {
@@ -83,7 +83,7 @@ export const removeElement: ToolPlugin = {
       $(data).remove();
       toggleClipper();
     }
-  )
+  ),
 };
 
 export const selectElementTool: ToolPlugin = {
@@ -105,7 +105,7 @@ export const selectElementTool: ToolPlugin = {
       toggleClipper();
       return turndown.turndown(data);
     }
-  )
+  ),
 };
 
 export const uploadImage: ToolPlugin = {
@@ -140,5 +140,5 @@ export const uploadImage: ToolPlugin = {
       message.info('上传图片成功');
       return foo;
     }
-  )
+  ),
 };

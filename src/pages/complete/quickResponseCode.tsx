@@ -20,7 +20,7 @@ export class QuickResponseCode extends React.Component<PageProps, PageState> {
     super(props);
     this.state = {
       includeToken: false,
-      quickResponseCodeData: null
+      quickResponseCodeData: null,
     };
   }
 
@@ -53,7 +53,7 @@ export class QuickResponseCode extends React.Component<PageProps, PageState> {
           console.log(err);
         }
         this.setState({
-          quickResponseCodeData
+          quickResponseCodeData,
         });
       }
     );

@@ -10,7 +10,7 @@ export default class YuqueImageHostingService implements ImageHostingService {
   uploadImage = async ({ data }: UploadImageRequest) => {
     const cookie = await browserService.getCookie({
       url: 'https://yuque.com',
-      name: 'ctoken'
+      name: 'ctoken',
     });
     let formData = new FormData();
     const blob = Base64ImageToBolb(data);
@@ -20,8 +20,8 @@ export default class YuqueImageHostingService implements ImageHostingService {
       formData,
       {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       }
     );
     return result.data.data.url;
@@ -38,15 +38,15 @@ export default class YuqueImageHostingService implements ImageHostingService {
     formData.append('file', blob, 'test.png');
     const cookie = await browserService.getCookie({
       url: 'https://yuque.com',
-      name: 'ctoken'
+      name: 'ctoken',
     });
     const result = await axios.post(
       `https://www.yuque.com/api/upload/attach?ctoken=${cookie}&type=image`,
       formData,
       {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       }
     );
     return result.data.data.url;

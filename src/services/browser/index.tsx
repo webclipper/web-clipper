@@ -42,7 +42,7 @@ class ChromeBrowserService implements BrowserService {
       chrome.cookies.get(
         {
           url: option.url,
-          name: option.name
+          name: option.name,
         },
         cookie => {
           if (cookie != null) {

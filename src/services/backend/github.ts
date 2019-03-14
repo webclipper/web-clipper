@@ -30,16 +30,16 @@ export default class GithubDocumentService implements DocumentService {
       baseURL: config.baseURL,
       headers: {
         Accept: 'application/vnd.github.v3+json',
-        Authorization: `token ${config.accessToken}`
+        Authorization: `token ${config.accessToken}`,
       },
       timeout: 10000,
       transformResponse: [
         (data): any => {
           // 做任何你想要的数据转换
           return JSON.parse(data);
-        }
+        },
       ],
-      withCredentials: true
+      withCredentials: true,
     });
     this.request = request;
   }
@@ -50,13 +50,13 @@ export default class GithubDocumentService implements DocumentService {
       name,
       avatar_url: avatar,
       html_url: homePage,
-      bio: description
+      bio: description,
     } = data.data;
     return {
       name,
       avatar,
       homePage,
-      description
+      description,
     };
   };
 
@@ -85,16 +85,16 @@ export default class GithubDocumentService implements DocumentService {
       throw new Error('can not find repository');
     }
     const response = await this.request.post<{
-    html_url: string;
-    id: number;
+      html_url: string;
+      id: number;
     }>(`/repos/${repository.namespace}/issues`, {
       title,
-      body
+      body,
     });
     return {
       href: response.data.html_url,
       repositoryId,
-      documentId: response.data.id.toString()
+      documentId: response.data.id.toString(),
     };
   };
 
@@ -102,15 +102,15 @@ export default class GithubDocumentService implements DocumentService {
     const { name } = info;
     await this.request.post('/user/repos', {
       name,
-      private: info.private
+      private: info.private,
     });
   };
   public async getAbility() {
     return {
       document: {
         label: false,
-        settingPermissions: false
-      }
+        settingPermissions: false,
+      },
     };
   }
 
@@ -127,7 +127,7 @@ export default class GithubDocumentService implements DocumentService {
         name,
         full_name: namespace,
         created_at: createdAt,
-        description
+        description,
       } = repository;
       return {
         id: id.toString(),
@@ -136,7 +136,7 @@ export default class GithubDocumentService implements DocumentService {
         description,
         owner: namespace.split('/')[0],
         private: repository.private,
-        createdAt
+        createdAt,
       };
     });
   };
