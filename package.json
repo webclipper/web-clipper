@@ -71,7 +71,7 @@
     "clean-webpack-plugin": "^0.1.19",
     "commitizen": "^2.10.1",
     "copy-webpack-plugin": "^4.5.2",
-    "css-loader": "^1.0.0",
+    "css-loader": "^2.1.1",
     "cz-conventional-changelog": "^2.1.0",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
