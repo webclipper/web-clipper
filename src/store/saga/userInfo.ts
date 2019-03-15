@@ -15,7 +15,7 @@ export function* asyncFetchUserInfoSaga() {
         },
       })
     );
-  } catch (error) {
+  } catch (_error) {
     yield put(push('/preference'));
     //todo 判断错误还是网络超时
   }

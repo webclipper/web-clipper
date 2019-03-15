@@ -142,7 +142,7 @@ export function* asyncCreateDocumentSaga() {
         repositoryId,
         content: `![](${responseUrl})`,
       };
-    } catch (error) {
+    } catch (_error) {
       message.error('上传图片到图床失败');
       yield put(
         asyncCreateDocument.failed({

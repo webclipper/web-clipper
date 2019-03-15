@@ -134,7 +134,7 @@ export const uploadImage: ToolPlugin = {
           try {
             const url = await imageService.uploadImageUrl(image);
             foo = foo.replace(image, url);
-          } catch (error) {}
+          } catch (_error) {}
         }
       }
       message.info('上传图片成功');
