@@ -2,6 +2,10 @@ sudo: false
 
 language: nodejs
 
+node_js:
+  - "8"
+  - "10"
+
 script:
   - npm install
   - npm run lint
