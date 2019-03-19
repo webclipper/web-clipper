@@ -49,8 +49,7 @@
     "typescript-fsa": "^3.0.0-beta-2"
   },
   "devDependencies": {
-    "@diamondyuan/eslint-config-react-typescript": "^4.0.0",
-    "@diamondyuan/eslint-config-typescript": "^4.0.1",
+    "@diamondyuan/eslint-config-react-typescript": "^4.0.1",
     "@types/blueimp-md5": "^2.7.0",
     "@types/chrome": "^0.0.72",
     "@types/enzyme": "^3.1.14",
