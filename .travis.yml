@@ -1,19 +1,12 @@
-sudo: required
+sudo: false
 
 language: nodejs
 
-before_install:
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  - sudo apt-get update
-  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-
-install:
-  - npm install -g codecov
-
 script:
-  - docker build -t test:test -f Dockerfile .
-  
+  - npm install
+  - npm run lint
+  - npm run test
+  - npm run build
+
 after_success:
-  - docker run --rm -v $(pwd)/tmp:/tmp test:test sh -c "cp -r /source/coverage/* /tmp"
-  - codecov -f ./tmp/clover.xml
+  - npm i codecov && codecov
