@@ -46,13 +46,6 @@ interface ImageHostingService {
   uploadImageUrl(url: string): Promise<string>;
 }
 
-interface DocumentServiceAbility {
-  document: {
-    label: boolean;
-    settingPermissions: boolean;
-  };
-}
-
 interface DocumentService {
   getRepositories(): Promise<Repository[]>;
 
