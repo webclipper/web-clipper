@@ -7257,10 +7257,10 @@ react-redux@^6.0.1:
     prop-types "^15.7.2"
     react-is "^16.8.2"
 
-react-router@^4.4.0:
-  version "4.4.0"
-  resolved "http://registry.npm.taobao.org/react-router/download/react-router-4.4.0.tgz#e8b8b88329f564d4c48b7ee631b10310188c6888"
-  integrity sha1-6Li4gyn1ZNTEi37mMbEDEBiMaIg=
+react-router@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/react-router/-/react-router-5.0.0.tgz#349863f769ffc2fa10ee7331a4296e86bc12879d"
+  integrity sha512-6EQDakGdLG/it2x9EaCt9ZpEEPxnd0OCLBHQ1AcITAAx7nCnyvnzf76jKWG1s2/oJ7SSviUgfWHofdYljFexsA==
   dependencies:
     "@babel/runtime" "^7.1.2"
     create-react-context "^0.2.2"
