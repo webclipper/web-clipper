@@ -2,12 +2,11 @@
 /* eslint-disable no-loop-func */
 import { Action } from 'redux';
 import * as clipperActions from '../clipper';
-import * as userInfo from '../userInfo';
 import * as userPreference from '../userPreference';
 
 describe('test action list', () => {
-  const prefixList = ['CLIPPER', 'USER_INFO', 'USER_PREFERENCE'];
-  const testActionList = [clipperActions, userInfo, userPreference];
+  const prefixList = ['CLIPPER', 'USER_PREFERENCE'];
+  const testActionList = [clipperActions, userPreference];
 
   for (let i = 0; i < testActionList.length; i++) {
     const testAction = testActionList[i];

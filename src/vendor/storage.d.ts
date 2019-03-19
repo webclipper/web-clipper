@@ -1,5 +1,4 @@
 interface GlobalStore {
-  userInfo: UserInfoStore;
   clipper: ClipperStore;
   userPreference: UserPreferenceStore;
   router: {
@@ -7,12 +6,6 @@ interface GlobalStore {
       pathname: string;
     };
   };
-}
-
-interface UserInfoStore {
-  name?: string;
-  avatar?: string;
-  homePage?: string;
 }
 
 interface TextClipperData extends BaseClipperType {
@@ -51,11 +44,6 @@ interface ClipperStore {
   /** 是否正在创建文档 */
   creatingDocument: boolean;
   completeStatus?: CompleteStatus;
-  selectRepository: {
-    createMode: boolean;
-    repositoryTitle: string;
-    creating: boolean;
-  };
 }
 
 interface CompleteStatus {

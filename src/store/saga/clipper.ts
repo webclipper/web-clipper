@@ -4,7 +4,6 @@ import { AnyAction, isType } from 'typescript-fsa';
 import {
   asyncChangeAccount,
   asyncCreateDocument,
-  asyncCreateRepository,
   asyncFetchRepository,
   asyncRunPlugin,
   asyncTakeScreenshot,
@@ -26,7 +25,6 @@ import { loadImage } from '../../services/utils/bolb';
 
 export function* clipperRootSagas() {
   yield fork(watchAsyncRunPluginSaga);
-  yield fork(watchAsyncCreateRepositorySaga);
   yield fork(watchAsyncFetchRepositorySaga);
   yield fork(watchAsyncCreateDocumentSaga);
   yield fork(watchAsyncChangeAccountSaga);
@@ -172,28 +170,7 @@ export function* asyncCreateDocumentSaga() {
   yield put(push('/complete'));
 }
 
-export function* asyncCreateRepositorySaga() {
-  try {
-    const title = yield select((state: GlobalStore) => {
-      return state.clipper.selectRepository.repositoryTitle;
-    });
-    yield call(backend.getDocumentService().createRepository, {
-      name: title,
-      private: true,
-    });
-    yield put(asyncCreateRepository.done({}));
-  } catch (error) {
-    console.log(error);
-    //todo 判断错误还是网络超时
-  }
-}
 
-export function* watchAsyncCreateRepositorySaga() {
-  yield takeLatest(
-    asyncCreateRepository.started.type,
-    asyncCreateRepositorySaga
-  );
-}
 
 export function* watchAsyncCreateDocumentSaga() {
   yield takeLatest(asyncCreateDocument.started.type, asyncCreateDocumentSaga);

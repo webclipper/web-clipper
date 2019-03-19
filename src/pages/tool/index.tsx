@@ -3,7 +3,6 @@ import * as styles from './index.scss';
 import {
   asyncChangeAccount,
   asyncCreateDocument,
-  cancelCreateRepository,
   selectRepository,
   updateTitle,
   asyncRunToolPlugin,
@@ -26,13 +25,11 @@ const useActions = {
   selectRepository: selectRepository,
   uploadImage: emptyFunction,
   push,
-  onCancelCreate: cancelCreateRepository,
 };
 
 const Option = Select.Option;
 
 const mapStateToProps = ({
-  userInfo,
   clipper: {
     currentAccountId,
     title,
@@ -65,17 +62,11 @@ const mapStateToProps = ({
         description: '屏幕截图',
       }),
     router,
-    createMode: true,
     creatingDocument,
-    loadingRepositories: loadingRepositories,
-    uploadingImage: true,
-    avatar: userInfo.avatar,
+    loadingRepositories,
     currentAccountId,
-    userHomePage: userInfo.homePage,
-    title: title,
-    isCreateRepository: true,
+    title,
     currentRepository,
-    haveImageService: true,
     currentAccount,
     repositories: repositories,
   };
@@ -122,15 +113,7 @@ class Page extends React.Component<PageProps, PageState> {
     return title.indexOf(select) !== -1;
   };
 
-  onDropdownVisibleChange = (openSelect: boolean) => {
-    if (this.lock) {
-      return;
-    }
-    this.setState({ openSelect });
-    if (!openSelect) {
-      this.props.onCancelCreate();
-    }
-  };
+
 
   onLockSelect = () => {
     clearTimeout(this.lock);
@@ -223,7 +206,6 @@ class Page extends React.Component<PageProps, PageState> {
         <section className={styles.section}>
           <h1 className={styles.sectionTitle}>保存的知识库</h1>
           <Select
-            onDropdownVisibleChange={this.onDropdownVisibleChange}
             open={this.state.openSelect}
             loading={loadingRepositories}
             disabled={loadingRepositories}

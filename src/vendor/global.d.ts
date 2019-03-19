@@ -1,4 +1,4 @@
-declare module '*';
+declare module '*.scss';
 /// <reference path="../../node_modules/@types/chrome/index.d.ts"/>
 interface ClipperPlugin extends BasePlugin {
   type: 'clipper';

@@ -6,7 +6,6 @@ import browserService from '../../services/browser';
 import storage from '../../services/common/store';
 import { all, call, put, spawn, delay } from 'redux-saga/effects';
 import { asyncFetchRepositorySaga, clipperRootSagas } from './clipper';
-import { asyncFetchUserInfoSaga, userInfoRootSagas } from './userInfo';
 import { BrowserTab } from './../../services/browser/index';
 import { initTabInfo } from '../actions/clipper';
 import { initUserPreference } from '../actions/userPreference';
@@ -53,18 +52,15 @@ function* initStore() {
     type: account.type,
   });
   backendService.setDocumentService(documentService);
-  yield call(asyncFetchUserInfoSaga);
   yield call(asyncFetchRepositorySaga);
   if (result.defaultPluginId) {
     yield put(push('/plugins/' + result.defaultPluginId));
   }
 }
 
-export const rootSagas = [
-  userInfoRootSagas,
-  clipperRootSagas,
-  userPreferenceSagas,
-].map(makeRestartable);
+export const rootSagas = [clipperRootSagas, userPreferenceSagas].map(
+  makeRestartable
+);
 
 export default function* root() {
   yield all(rootSagas.map(saga => call(saga)));
