@@ -6,8 +6,10 @@ node_js:
   - "8"
   - "10"
 
-script:
+install:
   - npm install
+
+script:
   - npm run lint
   - npm run test
   - npm run build
