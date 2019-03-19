@@ -497,10 +497,10 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.0.tgz#4c48fed958d6dcf9487195a0ef6456d5f6e0163a"
   integrity sha512-eItQyV43bj4rR3JPV0Skpl1SncRCdziTEK9/v8VwXmV6d/qOUO8/EuWeHBbCZcsfSHfzI5UyMJLCSXtxxznyZg==
 
-"@types/qrcode@^1.3.0":
-  version "1.3.1"
-  resolved "https://registry.npmjs.org/@types/qrcode/-/qrcode-1.3.1.tgz#afaa18cd3bfc719d977665454d0865f0006ebe8e"
-  integrity sha512-hmCM2k6+oo7Ey0NFu3qoxLMt1JCV4NZHMSa6PIfvP84Xe3OWh+wpax7HsHAohilpQBJBm6CmhuVZexoV10z+rQ==
+"@types/qrcode@^1.3.2":
+  version "1.3.2"
+  resolved "http://registry.npm.taobao.org/@types/qrcode/download/@types/qrcode-1.3.2.tgz#d24be2145d549677677a9239778f5af5c3f3056c"
+  integrity sha1-0kviFF1UlndnepI5d49a9cPzBWw=
   dependencies:
     "@types/node" "*"
 
