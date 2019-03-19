@@ -186,6 +186,13 @@
   dependencies:
     "@diamondyuan/eslint-config-javascript" "^4.0.0"
 
+"@diamondyuan/eslint-config-typescript@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-typescript/-/eslint-config-typescript-4.0.1.tgz#5519f9e0f8d55b5c4622343ba6d4b5eb66373dd1"
+  integrity sha512-KwYFNo3xH93wsCN3VhYQgCVtdTLuMyoGrrp1l24VUFhq+zr5mv3LuOj309fBZB5UAq0PAW5G42YknLyU90STkQ==
+  dependencies:
+    "@diamondyuan/eslint-config-javascript" "^4.0.0"
+
 "@jest/console@^24.3.0":
   version "24.3.0"
   resolved "http://registry.npm.taobao.org/@jest/console/download/@jest/console-24.3.0.tgz#7bd920d250988ba0bf1352c4493a48e1cb97671e"

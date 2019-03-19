@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { UUID } from '../utils/uuid';
+import { generateUuid } from '../../common/uuid';
 import * as qs from 'qs';
 
 interface YuqueBackendServiceConfig {
@@ -84,7 +84,7 @@ export default class YuqueDocumentService implements DocumentService {
     if (!this.login) {
       await this.getUserInfo();
     }
-    let slug = UUID.UUID();
+    let slug = generateUuid();
     const { private: privateInfo, content: body, title, repositoryId } = info;
     let privateStatus = !privateInfo ? 1 : 0;
     const request = {
