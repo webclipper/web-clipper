@@ -85,7 +85,7 @@
     "node-sass": "^4.9.3",
     "pre-commit": "^1.2.2",
     "sass-loader": "^7.1.0",
-    "style-loader": "^0.22.1",
+    "style-loader": "^0.23.1",
     "ts-import-plugin": "^1.5.5",
     "ts-jest": "^24.0.0",
     "ts-loader": "^4.5.0",
