@@ -94,7 +94,7 @@
     "url-loader": "^1.1.1",
     "webpack": "^4.29.6",
     "webpack-chrome-extension-reloader": "^1.2.0",
-    "webpack-cli": "^3.2.3",
+    "webpack-cli": "^3.3.0",
     "webpack-create-extension-manifest-plugin": "^1.1.0",
     "webpack-merge": "^4.2.1"
   },
