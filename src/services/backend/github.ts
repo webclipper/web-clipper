@@ -98,22 +98,6 @@ export default class GithubDocumentService implements DocumentService {
     };
   };
 
-  createRepository = async (info: CreateRepositoryRequest) => {
-    const { name } = info;
-    await this.request.post('/user/repos', {
-      name,
-      private: info.private,
-    });
-  };
-  public async getAbility() {
-    return {
-      document: {
-        label: false,
-        settingPermissions: false,
-      },
-    };
-  }
-
   private getGithubRepositories = async (
     page: number
   ): Promise<Repository[]> => {

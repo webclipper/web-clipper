@@ -56,13 +56,9 @@ interface DocumentServiceAbility {
 interface DocumentService {
   getRepositories(): Promise<Repository[]>;
 
-  createRepository(request: CreateRepositoryRequest): Promise<void>;
-
   createDocument(
     request: CreateDocumentRequest
   ): Promise<CreateDocumentResponse>;
 
   getUserInfo(): Promise<UserInfo>;
-
-  getAbility(): Promise<DocumentServiceAbility>;
 }
