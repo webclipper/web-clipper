@@ -52,7 +52,7 @@
     "@diamondyuan/eslint-config-react-typescript": "^4.0.1",
     "@types/blueimp-md5": "^2.7.0",
     "@types/chrome": "^0.0.72",
-    "@types/enzyme": "^3.1.14",
+    "@types/enzyme": "^3.9.1",
     "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/history": "^4.7.2",
     "@types/jest": "^24.0.11",
