@@ -37,9 +37,13 @@ PageOwnProps;
 
 class ImagePluginPage extends React.Component<PageProps, PageState> {
   componentDidMount = () => {
-    this.props.asyncTakeScreenshot({
-      pathname: this.props.pathname,
-    });
+    const { clipperData, pathname } = this.props;
+    const data = clipperData[pathname];
+    if (!data || data.type !== 'image') {
+      this.props.asyncTakeScreenshot({
+        pathname: this.props.pathname,
+      });
+    }
   };
 
   render() {
