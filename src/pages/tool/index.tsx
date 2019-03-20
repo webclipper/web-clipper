@@ -15,11 +15,12 @@ import { emptyFunction } from '../../utils';
 import { push } from 'connected-react-router';
 import { ToolContainer } from '../../components/container';
 import { pluginRouterCreator } from '../../const';
+import { isEqual } from 'lodash';
 
 const useActions = {
   asyncHideTool: asyncHideTool.started,
   asyncChangeAccount: asyncChangeAccount.started,
-  postDocument: asyncCreateDocument.started,
+  asyncCreateDocument: asyncCreateDocument.started,
   asyncRunToolPlugin: asyncRunToolPlugin.started,
   updateTitle,
   selectRepository: selectRepository,
@@ -38,7 +39,6 @@ const mapStateToProps = ({
     repositories,
     loadingRepositories,
   },
-
   userPreference: { accounts, plugins },
   router,
 }: GlobalStore) => {
@@ -68,13 +68,9 @@ const mapStateToProps = ({
     title,
     currentRepository,
     currentAccount,
-    repositories: repositories,
+    repositories,
   };
 };
-type PageState = {
-  openSelect: boolean;
-};
-
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
 type PageOwnProps = {};
@@ -85,13 +81,31 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     dispatch
   );
 
-class Page extends React.Component<PageProps, PageState> {
-  private lock?: any = null;
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      openSelect: false,
+class Page extends React.Component<PageProps> {
+  shouldComponentUpdate = (nextProps: PageProps) => {
+    const selector = ({
+      creatingDocument,
+      repositories,
+      currentAccount,
+      currentRepository,
+      loadingRepositories,
+      title,
+      router: { location: { pathname }},
+    }: PageProps) => {
+      return {
+        currentRepository,
+        creatingDocument,
+        loadingRepositories,
+        repositories,
+        currentAccount,
+        title,
+        pathname,
+      };
     };
+    if (!isEqual(selector(nextProps), selector(this.props))) {
+      return true;
+    }
+    return false;
   }
 
   onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,13 +128,6 @@ class Page extends React.Component<PageProps, PageState> {
   };
 
 
-
-  onLockSelect = () => {
-    clearTimeout(this.lock);
-    this.lock = setTimeout(() => {
-      this.lock = null;
-    }, 200);
-  };
 
   render() {
     const {
@@ -157,7 +164,7 @@ class Page extends React.Component<PageProps, PageState> {
             loading={creatingDocument}
             disabled={creatingDocument}
             onClick={() => {
-              this.props.postDocument();
+              this.props.asyncCreateDocument();
             }}
             block
           >
@@ -206,7 +213,6 @@ class Page extends React.Component<PageProps, PageState> {
         <section className={styles.section}>
           <h1 className={styles.sectionTitle}>保存的知识库</h1>
           <Select
-            open={this.state.openSelect}
             loading={loadingRepositories}
             disabled={loadingRepositories}
             onSelect={this.onRepositorySelect}

@@ -29,7 +29,17 @@ const baseConfig = {
         options: {
           transpileOnly: true,
           getCustomTransformers: () => ({
-            before: [tsImportPluginFactory({ style: true })],
+            before: [
+              tsImportPluginFactory([
+                {
+                  style: false,
+                  libraryName: 'lodash',
+                  libraryDirectory: null,
+                  camel2DashComponentName: false,
+                },
+                { style: true },
+              ]),
+            ],
           }),
           compilerOptions: {
             module: 'es2015',
