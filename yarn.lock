@@ -509,10 +509,10 @@
   resolved "https://registry.npmjs.org/@types/qs/-/qs-6.5.2.tgz#7f347062655056662845ba4bb79dcbfdc382cd61"
   integrity sha512-47kAAs3yV/hROraCTQYDMh4p/6zI9+gtssjD0kq9OWsGdLcBge59rl49FnCuJ+iWxEKiqFz6KXzeGH5DRVjNJA==
 
-"@types/react-dom@^16.0.7":
-  version "16.8.2"
-  resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-16.8.2.tgz#9bd7d33f908b243ff0692846ef36c81d4941ad12"
-  integrity sha512-MX7n1wq3G/De15RGAAqnmidzhr2Y9O/ClxPxyqaNg96pGyeXUYPSvujgzEVpLo9oIP4Wn1UETl+rxTN02KEpBw==
+"@types/react-dom@^16.8.3":
+  version "16.8.3"
+  resolved "http://registry.npm.taobao.org/@types/react-dom/download/@types/react-dom-16.8.3.tgz#6131b7b6158bc7ed1925a3374b88b7c00481f0cb"
+  integrity sha1-YTG3thWLx+0ZJaM3S4i3wASB8Ms=
   dependencies:
     "@types/react" "*"
 
