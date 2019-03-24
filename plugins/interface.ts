@@ -28,7 +28,7 @@ export interface ToolContext<T, Out> {
 }
 
 export interface BasePlugin<T = string, Out = string> {
-  type: 'text' | 'tool' | 'image';
+  type: 'text';
   id: string;
   version: string;
   name: string;
@@ -42,7 +42,7 @@ export interface BasePlugin<T = string, Out = string> {
   /**
    * 执行插件
    */
-  run?: (context: ContentScriptContext) => Promise<T>;
+  run?: (context: ContentScriptContext) => Promise<T> | T;
 
   /**
    * 执行插件后
@@ -53,4 +53,8 @@ export interface BasePlugin<T = string, Out = string> {
    * 清理环境
    */
   clean?: (context: ContentScriptContext) => void;
+}
+
+export interface ClipTextPlugin<T = string> extends BasePlugin<T, string> {
+  type: 'text';
 }
