@@ -13,8 +13,8 @@ export interface SelectAreaPosition {
 export default class AreaSelector {
   private startClip: boolean;
   private endClip: boolean;
-  private mousedownPoint: Point;
-  private mouseupPoint: Point;
+  private mousedownPoint?: Point;
+  private mouseupPoint?: Point;
 
   constructor() {
     this.startClip = false;
@@ -40,7 +40,7 @@ export default class AreaSelector {
           };
           this.endClip = true;
           $(document).unbind('mousemove', this.mousemoveEvent);
-          const result = this.getPoint(this.mousedownPoint, this.mouseupPoint);
+          const result = this.getPoint(this.mousedownPoint!, this.mouseupPoint);
           $(`#${styles.selectArea}`).remove();
           setTimeout(() => {
             resolve(result);
@@ -93,7 +93,7 @@ export default class AreaSelector {
       $(element).css('left', mousePosition.clientX);
     } else {
       const element = this.getOrCreate(styles.selectArea);
-      const area = this.getPoint(this.mousedownPoint, {
+      const area = this.getPoint(this.mousedownPoint!, {
         clientX: event.clientX!,
         clientY: event.clientY!,
       });

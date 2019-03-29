@@ -1,3 +1,8 @@
+import {
+  DocumentService,
+  Repository,
+  CreateDocumentRequest,
+} from './../../common/backend/index';
 import axios, { AxiosInstance } from 'axios';
 
 interface GithubBackendServiceConfig {
@@ -42,6 +47,7 @@ export default class GithubDocumentService implements DocumentService {
       withCredentials: true,
     });
     this.request = request;
+    this.repositories = [];
   }
 
   getUserInfo = async () => {

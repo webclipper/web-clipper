@@ -2,10 +2,8 @@
   "prettier.eslintIntegration": true,
   "editor.detectIndentation": false,
   "eslint.autoFixOnSave": true,
-  "editor.formatOnSave": true,
   "eslint.trace.server": "messages",
   "eslint.packageManager": "yarn",
-  "tslint.enable": false,
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -19,13 +17,6 @@
     }
   ],
   "editor.tabSize": 2,
-  "tslint.autoFixOnSave": true,
-  "tslint.configFile": "tslint.json",
   "files.insertFinalNewline": true,
-  "cSpell.words": [
-    "hosting",
-    "image",
-    "option",
-    "yuque"
-  ]
+  "cSpell.words": ["hosting", "image", "option", "yuque"]
 }

@@ -7,7 +7,7 @@ import {
 } from '../../../store/actions/userPreference';
 import { backendServices } from '../../../const';
 import { bindActionCreators, Dispatch } from 'redux';
-import { Button, Form, Input, Modal,  Select, Col, Row } from 'antd';
+import { Button, Form, Input, Modal, Select, Col, Row } from 'antd';
 import { connect } from 'react-redux';
 import { FormComponentProps } from 'antd/lib/form';
 
@@ -39,10 +39,9 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     dispatch
   );
 class InitializeForm extends React.Component<PageProps> {
-
   handleVerificationAccount = () => {
     this.props.asyncVerificationAccessToken();
-  }
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -58,8 +57,8 @@ class InitializeForm extends React.Component<PageProps> {
     return (
       <Modal
         visible={show}
-        title='绑定新账号'
-        okText='绑定'
+        title="绑定新账号"
+        okText="绑定"
         okType={disableOkButton ? 'dashed' : 'primary'}
         onCancel={() => {
           this.props.cancelCreateAccount();
@@ -72,7 +71,7 @@ class InitializeForm extends React.Component<PageProps> {
         }}
       >
         <Form labelCol={{ span: 6, offset: 0 }} wrapperCol={{ span: 18 }}>
-          <Form.Item label='类型' >
+          <Form.Item label="类型">
             {getFieldDecorator('type')(
               <Select>
                 {typeOptions.map(o => (
@@ -81,12 +80,12 @@ class InitializeForm extends React.Component<PageProps> {
               </Select>
             )}
           </Form.Item>
-          <Form.Item label='域名' >
+          <Form.Item label="域名">
             {getFieldDecorator('host', {
               rules: [{ required: true, message: 'host is required!' }],
             })(<Input disabled={verifying} />)}
           </Form.Item>
-          <Form.Item label='AccessToken' >
+          <Form.Item label="AccessToken">
             {getFieldDecorator('accessToken', {
               rules: [
                 {
@@ -97,30 +96,33 @@ class InitializeForm extends React.Component<PageProps> {
             })(<Input />)}
           </Form.Item>
           {
-            <Form.Item label='默认知识库' >
-              <Row gutter={16} type='flex'>
-                <Col span={18} >
+            <Form.Item label="默认知识库">
+              <Row gutter={16} type="flex">
+                <Col span={18}>
                   {getFieldDecorator('defaultRepositoryId')(
                     <Select loading={verifying} disabled={verifying}>
                       {repositories.map(o => {
                         return (
-                          <Select.Option key={o.id.toString()} value={o.id.toString()}>
+                          <Select.Option
+                            key={o.id.toString()}
+                            value={o.id.toString()}
+                          >
                             {o.name}
-                          </Select.Option >
+                          </Select.Option>
                         );
                       })}
                     </Select>
                   )}
                 </Col>
-                <Col span={6} >
+                <Col span={6}>
                   <Button
                     block
-                    type='primary'
+                    type="primary"
                     disabled={verifying || verified}
                     loading={verifying}
                     onClick={this.handleVerificationAccount}
                   >
-                  校验
+                    校验
                   </Button>
                 </Col>
               </Row>
@@ -149,23 +151,23 @@ export default connect(
     return {
       defaultRepositoryId: defaultRepositoryId
         ? Form.createFormField({
-          ...defaultRepositoryId,
-        })
+            ...defaultRepositoryId,
+          })
         : null,
       type: type
         ? Form.createFormField({
-          ...type,
-        })
+            ...type,
+          })
         : null,
       accessToken: accessToken
         ? Form.createFormField({
-          ...accessToken,
-        })
+            ...accessToken,
+          })
         : null,
       host: host
         ? Form.createFormField({
-          ...host,
-        })
+            ...host,
+          })
         : null,
     };
   },

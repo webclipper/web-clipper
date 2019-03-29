@@ -13,3 +13,45 @@ export interface DocumentService {
 
   getUserInfo(): Promise<UserInfo>;
 }
+
+export interface Repository {
+  id: string;
+  name: string;
+  private: boolean;
+  description: string;
+  createdAt: string;
+  owner: string;
+  /**
+   * namespace = owner/name
+   */
+  namespace: string;
+}
+
+export interface UserInfo {
+  name: string;
+  avatar: string;
+  homePage: string;
+  description?: string;
+}
+
+export interface CreateDocumentRequest {
+  title: string;
+  content: string;
+  private: boolean;
+  repositoryId: string;
+  tags?: string[];
+}
+export interface CreateDocumentResponse {
+  href: string;
+  repositoryId: string;
+  documentId: string;
+}
+
+export interface CreateRepositoryRequest {
+  name: string;
+  private: boolean;
+}
+
+interface UploadImageRequest {
+  data: string;
+}

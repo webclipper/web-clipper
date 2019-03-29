@@ -2,8 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as styles from './app.scss';
 import Complete from './complete/complete';
-import Plugins from './plugin/index';
-import ImagePluginPage from './plugin/imagePlugin';
+import PluginPage from './plugin/Page';
 import Preference from './preference';
 import Tool from './tool';
 import { configStore, history } from '../store/index';
@@ -33,15 +32,10 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route exact path='/' component={Tool} />
-        <Route
-          exact
-          path='/plugins/DiamondYuan/screenshot'
-          component={withTool(ImagePluginPage)}
-        />
-        <Route path='/plugins/:id' component={withTool(Plugins)} />
-        <Route exact path='/complete' component={Complete} />
-        <Route exact path='/preference' component={withTool(Preference)} />
+        <Route exact path="/" component={Tool} />
+        <Route path="/plugins/:id" component={withTool(PluginPage)} />
+        <Route exact path="/complete" component={Complete} />
+        <Route exact path="/preference" component={withTool(Preference)} />
       </Switch>
     </ConnectedRouter>
   </Provider>,

@@ -8,6 +8,12 @@ export default new ToolExtension(
     description: '同步图片到语雀图床',
   },
   {
+    init: ({ pathname }) => {
+      if (pathname === '/') {
+        return false;
+      }
+      return true;
+    },
     afterRun: async context => {
       const { data, imageService, message } = context;
       let foo = data;

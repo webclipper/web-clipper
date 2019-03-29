@@ -1,4 +1,3 @@
-import { asyncRunToolPlugin } from './../actions/clipper';
 /* eslint-disable complexity */
 import { Action } from 'redux';
 import { isType } from 'typescript-fsa';
@@ -6,14 +5,15 @@ import {
   asyncFetchRepository,
   updateTitle,
   selectRepository,
-  asyncRunPlugin,
   initTabInfo,
-  updateTextClipperData,
   asyncCreateDocument,
   asyncChangeAccount,
-  asyncTakeScreenshot,
+  changeData,
 } from '../actions/clipper';
-import { initUserPreference } from '../actions/userPreference';
+import {
+  initUserPreference,
+  asyncRunExtension,
+} from '../actions/userPreference';
 import update from 'immutability-helper';
 
 const defaultState: ClipperStore = {
@@ -86,7 +86,7 @@ export default function clipper(
     });
   } else if (isType(action, selectRepository)) {
     const currentRepository = state.repositories.find(
-      (o: Repository) => o.id === action.payload.repositoryId
+      o => o.id === action.payload.repositoryId
     );
     return update(state, {
       currentRepository: {
@@ -100,14 +100,6 @@ export default function clipper(
       },
       title: {
         $set: action.payload.title,
-      },
-    });
-  } else if (isType(action, updateTextClipperData)) {
-    return update(state, {
-      clipperData: {
-        [action.payload.path]: {
-          $set: action.payload.data,
-        },
       },
     });
   } else if (isType(action, asyncCreateDocument.started)) {
@@ -131,36 +123,23 @@ export default function clipper(
         $set: action.payload.result,
       },
     });
-  } else if (isType(action, asyncRunPlugin.done)) {
+  }
+  if (isType(action, asyncRunExtension.done)) {
+    const { result } = action.payload;
     return update(state, {
       clipperData: {
-        [action.payload.params.pathname]: {
-          $set: {
-            type: 'text',
-            data: action.payload.result.result,
-          },
+        [result.pathname]: {
+          $set: result.result,
         },
       },
     });
-  } else if (isType(action, asyncTakeScreenshot.done)) {
+  }
+  if (isType(action, changeData)) {
+    const { data, pathName } = action.payload;
     return update(state, {
       clipperData: {
-        [action.payload.params.pathname]: {
-          $set: {
-            type: 'image',
-            ...action.payload.result,
-          },
-        },
-      },
-    });
-  } else if (isType(action, asyncRunToolPlugin.done)) {
-    return update(state, {
-      clipperData: {
-        [action.payload.result.pathname]: {
-          $set: {
-            type: 'text',
-            data: action.payload.result.result,
-          },
+        [pathName]: {
+          $set: data,
         },
       },
     });

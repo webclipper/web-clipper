@@ -1,3 +1,7 @@
+import {
+  DocumentService,
+  ImageHostingService,
+} from './../../common/backend/index';
 import GithubDocumentService from './github';
 import YuqueDocumentService from './yuque';
 import YuqueImageHostingService, {
@@ -11,8 +15,8 @@ interface DocumentServiceOption {
 }
 
 export class BackendContext {
-  private documentService: DocumentService;
-  private imageHostingService: ImageHostingService;
+  private documentService?: DocumentService;
+  private imageHostingService?: ImageHostingService;
 
   setDocumentService(documentService: DocumentService) {
     this.documentService = documentService;

@@ -10,7 +10,7 @@ export default new TextExtension(
   {
     run: async context => {
       const { document } = context;
-      return `## 链接 \n ${document.URL} \n ## 备注: \n`;
+      return `## 链接 \n ${document.URL} \n ## 备注:`;
     },
   }
 );

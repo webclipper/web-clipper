@@ -1,55 +1,50 @@
-import * as React from 'react';
+import React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import {
-  updateTextClipperData,
-  asyncRunPlugin,
-  asyncTakeScreenshot,
-} from '../../store/actions/clipper';
+import { asyncRunExtension } from '../../store/actions/userPreference';
+import { SerializedExtensionWithId } from '../../extensions/interface';
 import { EditorContainer } from '../../components/container';
 import * as styles from './index.scss';
+import { isUndefined } from '../../common/object';
 
 const useActions = {
-  asyncRunPlugin: asyncRunPlugin.started,
-  asyncTakeScreenshot: asyncTakeScreenshot.started,
-  updateTextClipperData,
+  asyncRunExtension: asyncRunExtension.started,
 };
 
 const mapStateToProps = ({
-  router,
-  clipper,
-  userPreference: { liveRendering, showLineNumber },
+  router: {
+    location: { pathname },
+  },
+  clipper: { clipperData },
 }: GlobalStore) => {
   return {
-    router,
-    clipper,
-    liveRendering,
-    showLineNumber,
-    clipperData: clipper.clipperData,
-    pathname: router.location.pathname,
+    clipperData,
+    pathname,
   };
 };
 type PageState = {};
-type PageOwnProps = {};
+type PageOwnProps = {
+  extension: SerializedExtensionWithId;
+};
 type PageProps = ReturnType<typeof mapStateToProps> &
   typeof useActions &
-PageOwnProps;
+  PageOwnProps;
 
-class ImagePluginPage extends React.Component<PageProps, PageState> {
+class ClipperPluginPage extends React.Component<PageProps, PageState> {
   componentDidMount = () => {
-    const { clipperData, pathname } = this.props;
+    const { extension, clipperData, pathname } = this.props;
     const data = clipperData[pathname];
-    if (!data || data.type !== 'image') {
-      this.props.asyncTakeScreenshot({
-        pathname: this.props.pathname,
+    if (isUndefined(data)) {
+      this.props.asyncRunExtension({
+        extension,
       });
     }
   };
 
   render() {
     const { clipperData, pathname } = this.props;
-    const data = clipperData[pathname];
-    if (!data || data.type !== 'image') {
+    const data = clipperData[pathname] as ImageClipperData;
+    if (!data) {
       return <EditorContainer />;
     }
     return (
@@ -67,4 +62,4 @@ export default connect(
       useActions,
       dispatch
     )
-)(ImagePluginPage as React.ComponentType<PageProps>);
+)(ClipperPluginPage as React.ComponentType<PageProps>);

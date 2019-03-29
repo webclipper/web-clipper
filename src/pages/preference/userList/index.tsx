@@ -45,7 +45,7 @@ const typeToIcon = (type: string) => {
   const data = map.get(type);
   if (data) {
     return (
-      <a href={data.href} target='blank'>
+      <a href={data.href} target="blank">
         <Icon type={data.icon} />
       </a>
     );
@@ -56,7 +56,7 @@ const typeToIcon = (type: string) => {
 const cardMeta = (avatar: string | undefined, name: string) => {
   return (
     <Card.Meta
-      avatar={avatar ? <Avatar src={avatar} /> : <Avatar icon='user' />}
+      avatar={avatar ? <Avatar src={avatar} /> : <Avatar icon="user" />}
       title={name}
     />
   );
@@ -94,13 +94,13 @@ class Page extends React.Component<PageProps, PageState> {
         >
           <List.Item>
             <Button
-              type='dashed'
+              type="dashed"
               onClick={() => {
                 this.props.startCreateAccount();
               }}
               style={{ width: '300px', height: '200px', margin: '10px' }}
             >
-              <Icon type='plus' /> 绑定账户
+              <Icon type="plus" /> 绑定账户
             </Button>
           </List.Item>
           {this.props.accounts.map((account, index) => (
@@ -115,8 +115,8 @@ class Page extends React.Component<PageProps, PageState> {
                 extra={typeToIcon(account.type)}
                 actions={[
                   <Icon
-                    key='heart'
-                    type='heart'
+                    key="heart"
+                    type="heart"
                     title={
                       this.props.accounts[index].id ===
                       this.props.defaultAccountId
@@ -132,9 +132,9 @@ class Page extends React.Component<PageProps, PageState> {
                     onClick={this.onSetDefaultAccount.bind(this, index)}
                   />,
                   <Icon
-                    key='delete'
-                    type='delete'
-                    title='删除'
+                    key="delete"
+                    type="delete"
+                    title="删除"
                     onClick={this.onDeleteAccount.bind(this, index)}
                   />,
                 ]}

@@ -5,23 +5,29 @@ import {
   asyncCreateDocument,
   selectRepository,
   updateTitle,
-  asyncRunToolPlugin,
 } from '../../store/actions/clipper';
-import { asyncHideTool } from '../../store/actions/userPreference';
+import {
+  asyncRunExtension,
+  asyncHideTool,
+} from '../../store/actions/userPreference';
 import { Avatar, Button, Icon, Input, Select } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { emptyFunction } from '../../utils';
 import { push } from 'connected-react-router';
 import { ToolContainer } from '../../components/container';
-import { pluginRouterCreator } from '../../const';
 import { isEqual } from 'lodash';
+import {
+  SerializedExtensionWithId,
+  ExtensionType,
+  InitContext,
+} from '../../extensions/interface';
 
 const useActions = {
   asyncHideTool: asyncHideTool.started,
+  asyncRunExtension: asyncRunExtension.started,
   asyncChangeAccount: asyncChangeAccount.started,
   asyncCreateDocument: asyncCreateDocument.started,
-  asyncRunToolPlugin: asyncRunToolPlugin.started,
   updateTitle,
   selectRepository: selectRepository,
   uploadImage: emptyFunction,
@@ -34,33 +40,20 @@ const mapStateToProps = ({
   clipper: {
     currentAccountId,
     title,
+    url,
     creatingDocument,
     currentRepository,
     repositories,
     loadingRepositories,
   },
-  userPreference: { accounts, plugins },
+  userPreference: { accounts, extensions },
   router,
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
-  const toolPlugins = plugins.filter(o => o.type === 'tool') as ToolPlugin[];
   return {
     accounts,
-    toolPlugins,
-    plugins: plugins
-      .filter(o => o.type === 'clipper')
-      .map(o => ({
-        router: pluginRouterCreator(o.id),
-        icon: o.icon,
-        name: o.name,
-        description: o.description,
-      }))
-      .concat({
-        router: '/plugins/DiamondYuan/screenshot',
-        name: '屏幕截图',
-        icon: 'picture',
-        description: '屏幕截图',
-      }),
+    extensions,
+    url,
     router,
     creatingDocument,
     loadingRepositories,
@@ -90,7 +83,9 @@ class Page extends React.Component<PageProps> {
       currentRepository,
       loadingRepositories,
       title,
-      router: { location: { pathname }},
+      router: {
+        location: { pathname },
+      },
     }: PageProps) => {
       return {
         currentRepository,
@@ -106,7 +101,7 @@ class Page extends React.Component<PageProps> {
       return true;
     }
     return false;
-  }
+  };
 
   onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.props.updateTitle({
@@ -127,8 +122,6 @@ class Page extends React.Component<PageProps> {
     return title.indexOf(select) !== -1;
   };
 
-
-
   render() {
     const {
       creatingDocument,
@@ -137,6 +130,9 @@ class Page extends React.Component<PageProps> {
       currentAccount,
       currentRepository,
       loadingRepositories,
+      extensions,
+      url,
+      router,
     } = this.props;
 
     let repositoryId;
@@ -146,6 +142,33 @@ class Page extends React.Component<PageProps> {
     if (currentRepository) {
       repositoryId = currentRepository.id;
     }
+
+    const enableExtensions: SerializedExtensionWithId[] = extensions.filter(
+      (o: SerializedExtensionWithId) => {
+        if (o.init) {
+          // @ts-ignore
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const context: InitContext = {
+            accountInfo: {
+              type: currentAccount && currentAccount.type,
+            },
+            url,
+            pathname: router.location.pathname,
+          };
+          // eslint-disable-next-line no-eval
+          return eval(o.init);
+        }
+        return true;
+      }
+    );
+
+    const toolExtensions: SerializedExtensionWithId[] = enableExtensions.filter(
+      o => o.type === ExtensionType.Tool
+    );
+
+    const clipExtensions: SerializedExtensionWithId[] = enableExtensions.filter(
+      o => o.type !== ExtensionType.Tool
+    );
 
     return (
       <ToolContainer
@@ -159,8 +182,8 @@ class Page extends React.Component<PageProps> {
           <Button
             className={styles.saveButton}
             style={{ marginTop: 16 }}
-            size='large'
-            type='primary'
+            size="large"
+            type="primary"
             loading={creatingDocument}
             disabled={creatingDocument}
             onClick={() => {
@@ -172,41 +195,42 @@ class Page extends React.Component<PageProps> {
           </Button>
         </section>
         <section className={`${styles.section} ${styles.sectionLine}`}>
-          <h1 className={styles.sectionTitle}>小工具</h1>
-          {this.props.toolPlugins.map(o => (
+          <h1 className={styles.sectionTitle}>扩展</h1>
+          {toolExtensions.map(o => (
             <Button
               key={o.id}
               className={styles.menuButton}
-              title={o.description}
+              title={o.manifest.description}
               onClick={() => {
-                this.props.asyncRunToolPlugin({ plugin: o });
+                this.props.asyncRunExtension({ extension: o });
               }}
             >
-              <Icon type={o.icon} />
+              <Icon type={o.manifest.icon} />
             </Button>
           ))}
         </section>
         <section className={`${styles.section} ${styles.sectionLine}`}>
           <h1 className={styles.sectionTitle}>剪藏格式</h1>
-          {this.props.plugins.map(plugin => (
+
+          {clipExtensions.map(plugin => (
             <Button
-              title={plugin.description}
+              title={plugin.manifest.description}
               block
-              key={plugin.router}
+              key={plugin.id}
               className={styles.menuButton}
               style={
-                plugin.router === this.props.router.location.pathname
+                plugin.id === this.props.router.location.pathname
                   ? { color: '#40a9ff' }
                   : {}
               }
               onClick={() => {
-                if (plugin.router !== this.props.router.location.pathname) {
-                  this.props.push(plugin.router);
+                if (plugin.id !== this.props.router.location.pathname) {
+                  this.props.push('/plugins/' + plugin.id);
                 }
               }}
             >
-              <Icon type={plugin.icon} />
-              {plugin.name}
+              <Icon type={plugin.manifest.icon} />
+              {plugin.manifest.name}
             </Button>
           ))}
         </section>
@@ -218,7 +242,7 @@ class Page extends React.Component<PageProps> {
             onSelect={this.onRepositorySelect}
             style={{ width: '100%' }}
             showSearch
-            optionFilterProp='children'
+            optionFilterProp="children"
             filterOption={this.onFilterOption}
             dropdownMatchSelectWidth={true}
             value={repositoryId}
@@ -244,7 +268,7 @@ class Page extends React.Component<PageProps> {
               }
             }}
           >
-            <Icon type='setting' />
+            <Icon type="setting" />
           </Button>
           <Select
             value={this.props.currentAccountId}
@@ -255,7 +279,7 @@ class Page extends React.Component<PageProps> {
           >
             {this.props.accounts.map(o => (
               <Select.Option key={o.id || '1'}>
-                <Avatar size='small' src={o.avatar} />
+                <Avatar size="small" src={o.avatar} />
               </Select.Option>
             ))}
           </Select>

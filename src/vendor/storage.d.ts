@@ -4,26 +4,18 @@ interface GlobalStore {
   router: {
     location: {
       pathname: string;
+      search: string;
     };
   };
 }
 
-interface TextClipperData extends BaseClipperType {
-  type: 'text';
-  data: string;
-}
-interface ImageClipperData extends BaseClipperType {
-  type: 'image';
+interface ImageClipperData {
   dataUrl: string;
   width: number;
   height: number;
 }
 
-interface BaseClipperType {
-  type: string;
-}
-
-type ClipperDataType = TextClipperData | ImageClipperData;
+type ClipperDataType = string | ImageClipperData;
 
 interface ClipperStore {
   /** 网页标题 */
@@ -60,13 +52,12 @@ interface UserPreferenceStore {
   showLineNumber: boolean;
   liveRendering: boolean;
   initializeForm: InitializeForm;
-  plugins: (ToolPlugin | ClipperPlugin)[];
+  extensions: any[];
 }
 
 interface FormProps {
   value: string;
 }
-
 interface InitializeForm {
   type: FormProps;
   host?: FormProps;

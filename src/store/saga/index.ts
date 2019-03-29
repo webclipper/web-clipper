@@ -13,8 +13,8 @@ import { push } from 'connected-react-router';
 import { userPreferenceSagas } from './userPreference';
 
 const makeRestartable = (saga: any) => {
-  return function* () {
-    yield spawn(function* () {
+  return function*() {
+    yield spawn(function*() {
       while (true) {
         try {
           yield call(saga);

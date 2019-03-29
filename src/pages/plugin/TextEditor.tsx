@@ -1,88 +1,86 @@
-import  React from 'react';
+import React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { asyncRunExtension } from '../../store/actions/userPreference';
+import { changeData } from '../../store/actions/clipper';
+import { SerializedExtensionWithId } from '../../extensions/interface';
 import * as HyperMD from 'hypermd';
-import {
-  updateTextClipperData,
-  asyncRunPlugin,
-} from '../../store/actions/clipper';
 import { EditorContainer } from '../../components/container';
-import { pluginRouterCreator } from '../../const';
+import { isUndefined } from '../../common/object';
 
 const useActions = {
-  asyncRunPlugin: asyncRunPlugin.started,
-  updateTextClipperData,
+  asyncRunExtension: asyncRunExtension.started,
+  changeData,
 };
 
 const mapStateToProps = ({
   router: {
     location: { pathname },
   },
-  clipper,
-  userPreference: { liveRendering, showLineNumber, plugins },
+  clipper: { clipperData },
+  userPreference: { liveRendering, showLineNumber },
 }: GlobalStore) => {
   return {
-    clipper,
     liveRendering,
     showLineNumber,
-    clipperData: clipper.clipperData,
+    clipperData,
     pathname,
-    plugins,
   };
 };
 type PageState = {};
-type PageOwnProps = {};
+type PageOwnProps = {
+  extension: SerializedExtensionWithId;
+};
 type PageProps = ReturnType<typeof mapStateToProps> &
   typeof useActions &
-PageOwnProps;
+  PageOwnProps;
 
 const editorId = 'DiamondYuan_Love_LJ';
 
 class ClipperPluginPage extends React.Component<PageProps, PageState> {
   private myCodeMirror: any;
 
-  componentDidUpdate() {
-    const { clipperData, pathname } = this.props;
-    const data: TextClipperData = (clipperData[
-      pathname
-    ] as TextClipperData) || { type: 'text', data: '' };
+  checkExtension = () => {
+    const { extension, clipperData, pathname } = this.props;
+    const data = clipperData[pathname];
+    // eslint-disable-next-line no-undefined
+    if (isUndefined(data)) {
+      this.props.asyncRunExtension({
+        extension,
+      });
+    }
+    return data || '';
+  };
+
+  componentDidUpdate = () => {
+    const data = this.checkExtension();
     if (this.myCodeMirror) {
       const value = this.myCodeMirror.getValue();
-      if (data.data !== value) {
-        this.myCodeMirror.setValue(data.data);
+      if (data !== value) {
+        try {
+          this.myCodeMirror.setValue(data);
+        } catch (_error) {}
       }
     }
-  }
+  };
 
   componentDidMount = () => {
-    const { clipperData, pathname, plugins } = this.props;
+    const data = this.checkExtension();
     let myTextarea = document.getElementById(editorId) as HTMLTextAreaElement;
     this.myCodeMirror = HyperMD.fromTextArea(myTextarea, {
       lineNumbers: !!this.props.showLineNumber,
       hmdModeLoader: false,
     });
-
-    const plugin = plugins.find(
-      o => pluginRouterCreator(o.id) === pathname
-    ) as ClipperPlugin;
-
-    if (!clipperData[pathname]) {
-      this.props.asyncRunPlugin({
-        pathname,
-        plugin,
-      });
+    if (this.myCodeMirror) {
+      const value = this.myCodeMirror.getValue();
+      if (data !== value) {
+        this.myCodeMirror.setValue(data);
+      }
     }
-    const data: TextClipperData = (clipperData[
-      pathname
-    ] as TextClipperData) || { type: 'text', data: '' };
-    this.myCodeMirror.setValue(data.data);
     this.myCodeMirror.on('change', (editor: any) => {
-      this.props.updateTextClipperData({
-        path: pathname,
-        data: {
-          type: 'text',
-          data: editor.getValue(),
-        },
+      this.props.changeData({
+        data: editor.getValue(),
+        pathName: this.props.pathname,
       });
     });
     this.myCodeMirror.setSize(800, 621);

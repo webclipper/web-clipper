@@ -50,8 +50,8 @@ class Page extends React.Component<PageProps, PageState> {
           }}
         >
           <a
-            target='_blank'
-            href='https://github.com/yuquewebclipper/yuque-web-clipper/issues'
+            target="_blank"
+            href="https://github.com/yuquewebclipper/yuque-web-clipper/issues"
           >
             发生错误
           </a>
@@ -69,9 +69,9 @@ class Page extends React.Component<PageProps, PageState> {
           <a
             className={styles.menuButton}
             href={completeStatus.documentHref}
-            target='_blank'
+            target="_blank"
           >
-            <Button style={{ marginTop: 16 }} size='large' type='primary' block>
+            <Button style={{ marginTop: 16 }} size="large" type="primary" block>
               前往 {backendServices[currentAccount.type].name} 查看
             </Button>
           </a>

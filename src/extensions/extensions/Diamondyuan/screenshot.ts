@@ -1,5 +1,5 @@
 import { ImageExtension } from '../../interface';
-import { SelectAreaPosition } from '../../../src/services/common/areaSelector/index';
+import { SelectAreaPosition } from '../../../services/common/areaSelector/index';
 
 export default new ImageExtension<SelectAreaPosition>(
   {
@@ -9,7 +9,8 @@ export default new ImageExtension<SelectAreaPosition>(
   },
   {
     run: async context => {
-      const { AreaSelector } = context;
+      const { AreaSelector, toggleClipper } = context;
+      toggleClipper();
       const response = new AreaSelector().start();
       return response;
     },
@@ -43,6 +44,10 @@ export default new ImageExtension<SelectAreaPosition>(
       canvas.width = swidth;
       ctx!.drawImage(img, sx, sy, swidth, sheight, 0, 0, swidth, sheight);
       return { dataUrl: canvas.toDataURL(), width: swidth, height: sheight };
+    },
+    destroy: async context => {
+      const { toggleClipper } = context;
+      toggleClipper();
     },
   }
 );

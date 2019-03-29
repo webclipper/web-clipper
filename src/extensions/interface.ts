@@ -1,11 +1,13 @@
-import { ImageHostingService } from './../src/common/backend/index';
+import { SerializedExtension } from './interface';
+import { ImageHostingService } from '../common/backend/index';
 import { codeCallWithContext } from './utils';
 
 export interface InitContext {
   accountInfo: {
-    type: string;
+    type?: string;
   };
-  url: string;
+  url?: string;
+  pathname: string;
 }
 
 export interface ContentScriptContext {
@@ -83,7 +85,7 @@ export interface IExtensionManifest {
 export const enum ExtensionType {
   Text = 'Text',
   Image = 'Image',
-  Tool = 'tool'
+  Tool = 'tool',
 }
 
 export interface SerializeAble {
@@ -101,8 +103,7 @@ export interface SerializedExtension {
 
 export interface Extension<T, U> extends IExtensionLifeCycle<T, U> {}
 
-export class Extension<T, U>
-implements IExtensionLifeCycle<T, U>, SerializeAble {
+export class Extension<T, U> implements Extension<T, U>, SerializeAble {
   private readonly type: ExtensionType;
   private readonly manifest: IExtensionManifest;
 
@@ -165,4 +166,8 @@ export class ImageExtension<T = string> extends Extension<
   ) {
     super(ExtensionType.Image, manifest, methods);
   }
+}
+
+export interface SerializedExtensionWithId extends SerializedExtension {
+  id: string;
 }

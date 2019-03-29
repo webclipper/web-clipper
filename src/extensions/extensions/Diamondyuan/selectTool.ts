@@ -7,6 +7,12 @@ export default new ToolExtension(
     version: '0.0.1',
   },
   {
+    init: ({ pathname }) => {
+      if (pathname === '/') {
+        return false;
+      }
+      return true;
+    },
     run: async context => {
       const { turndown, Highlighter, toggleClipper } = context;
       toggleClipper();

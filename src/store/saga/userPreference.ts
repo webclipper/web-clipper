@@ -13,6 +13,8 @@ import {
   asyncVerificationAccessToken,
   updateCreateAccountForm,
   asyncSetDefaultPluginId,
+  asyncRunExtension,
+  asyncRunScript,
 } from './../actions/userPreference';
 import {
   call,
@@ -24,8 +26,10 @@ import {
   take,
   takeEvery,
 } from 'redux-saga/effects';
-import { documentServiceFactory } from '../../services/backend';
+import backend, { documentServiceFactory } from '../../services/backend';
 import { message } from 'antd';
+import { ToolContext } from '../../extensions/interface';
+import { loadImage } from '../../services/utils/bolb';
 const md5 = require('blueimp-md5');
 
 export function* asyncVerificationAccessTokenSaga() {
@@ -88,7 +92,7 @@ export function* asyncVerificationAccessTokenSaga() {
 }
 
 export function* watchAsyncVerificationAccessTokenSaga() {
-  yield takeEvery(asyncVerificationAccessToken.started.type, function* () {
+  yield takeEvery(asyncVerificationAccessToken.started.type, function*() {
     yield race({
       task: call(asyncVerificationAccessTokenSaga),
       cancel: take(updateCreateAccountForm.type),
@@ -307,6 +311,66 @@ export function* watchAsyncSetDefaultPluginIdSaga() {
   );
 }
 
+export function* asyncRunExtensionSaga(action: AnyAction) {
+  if (isType(action, asyncRunExtension.started)) {
+    const { extension } = action.payload;
+    let result;
+    const { run, afterRun, destroy } = extension;
+    if (run) {
+      result = yield call(
+        browserService.sendActionToCurrentTab,
+        asyncRunScript.started(run)
+      );
+    }
+    const selector = (state: GlobalStore) => {
+      const pathname = state.router.location.pathname;
+      const data = state.clipper.clipperData[pathname];
+      return {
+        data,
+        pathname,
+      };
+    };
+    const { data, pathname }: ReturnType<typeof selector> = yield select(
+      selector
+    );
+    if (afterRun) {
+      result = yield (async () => {
+        //@ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const context: ToolContext = {
+          result,
+          data,
+          message,
+          imageService: backend.getImageHostingService(),
+          loadImage: loadImage,
+          captureVisibleTab: browserService.captureVisibleTab,
+        };
+        // eslint-disable-next-line
+        return await eval(afterRun);
+      })();
+    }
+    if (destroy) {
+      yield call(
+        browserService.sendActionToCurrentTab,
+        asyncRunScript.started(destroy)
+      );
+    }
+    yield put(
+      asyncRunExtension.done({
+        params: action.payload,
+        result: {
+          result,
+          pathname,
+        },
+      })
+    );
+  }
+}
+
+export function* watchAsyncRunExtensionSaga() {
+  yield takeEvery(asyncRunExtension.started.type, asyncRunExtensionSaga);
+}
+
 export function* userPreferenceSagas() {
   yield fork(watchAsyncDeleteAccountSaga);
   yield fork(watchAsyncVerificationAccessTokenSaga);
@@ -318,4 +382,5 @@ export function* userPreferenceSagas() {
   yield fork(watchAsyncRemoveToolSaga);
   yield fork(watchAsyncSetShowQuickResponseCodeSaga);
   yield fork(watchAsyncSetDefaultPluginIdSaga);
+  yield fork(watchAsyncRunExtensionSaga);
 }

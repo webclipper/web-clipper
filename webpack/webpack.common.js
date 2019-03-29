@@ -111,12 +111,12 @@ const baseConfig = {
   plugins: [
     process.env.NODE_ENV === 'development'
       ? new WebpackChromeReloaderPlugin({
-        reloadPage: false,
-        entries: {
-          contentScript: 'content_script',
-          background: 'background',
-        },
-      })
+          reloadPage: false,
+          entries: {
+            contentScript: 'content_script',
+            background: 'background',
+          },
+        })
       : null,
     new webpack.ProvidePlugin({
       $: 'jquery',

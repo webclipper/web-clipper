@@ -17,6 +17,8 @@ export const USER_PREFERENCE = actionTypeHelper('USER_PREFERENCE', {
   ASYNC_HIDE_TOOL: '隐藏插件',
   ASYNC_REMOVE_TOOL: '移除插件',
   ASYNC_SET_DEFAULT_PLUGIN_ID: '',
+  ASYNC_RUN_EXTENSION: '',
+  ASYNC_RUN_SCRIPT: '',
 });
 
 export const USER_INFO = actionTypeHelper('USER_INFO', {
@@ -39,6 +41,7 @@ export const CLIPPER = actionTypeHelper('CLIPPER', {
   ASYNC_CHANGE_ACCOUNT: '',
   ASYNC_TAKE_SCREENSHOT: '',
   ASYNC_RUN_TOOL_PLUGIN: '',
+  CHANGE_DATA: '',
 });
 
 export const BROWSER = actionTypeHelper('BROWSER', {
