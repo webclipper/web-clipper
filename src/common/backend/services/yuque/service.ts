@@ -1,6 +1,6 @@
-import { DocumentService, CreateDocumentRequest } from './../index';
+import { DocumentService, CreateDocumentRequest } from './../../index';
 import axios, { AxiosInstance } from 'axios';
-import { generateUuid } from '../../../common/uuid';
+import { generateUuid } from '../../../../common/uuid';
 import * as qs from 'qs';
 
 interface YuqueBackendServiceConfig {

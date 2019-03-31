@@ -1,6 +1,8 @@
 import { DocumentService } from './index';
 
-const context = require.context('./', true, /index.ts$/);
+const context = require.context('./services', true, /index.ts$/);
+
+console.log(context.keys());
 
 const services: ServiceMeta[] = context
   .keys()

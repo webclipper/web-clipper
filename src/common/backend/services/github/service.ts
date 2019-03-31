@@ -1,4 +1,8 @@
-import { DocumentService, Repository, CreateDocumentRequest } from '../index';
+import {
+  DocumentService,
+  Repository,
+  CreateDocumentRequest,
+} from '../../index';
 import axios, { AxiosInstance } from 'axios';
 
 interface GithubBackendServiceConfig {
