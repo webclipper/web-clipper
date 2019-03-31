@@ -10,7 +10,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { Button, Form, Modal, Select, Col, Row } from 'antd';
 import { connect } from 'react-redux';
 import { FormComponentProps } from 'antd/lib/form';
-import backendServices from '../../../common/backend/interface';
+import { services } from '../../../common/backend';
 
 const mapStateToProps = ({
   userPreference: { initializeForm },
@@ -69,7 +69,7 @@ class InitializeForm extends React.Component<PageProps> {
 
     const form = this.props.form.getFieldValue('type');
 
-    const service = backendServices.find(o => o.type === form);
+    const service = services.find(o => o.type === form);
 
     return (
       <Modal
@@ -93,7 +93,7 @@ class InitializeForm extends React.Component<PageProps> {
               initialValue: 'yuque',
             })(
               <Select>
-                {backendServices.map(o => (
+                {services.map(o => (
                   <Select.Option key={o.type}>{o.name}</Select.Option>
                 ))}
               </Select>

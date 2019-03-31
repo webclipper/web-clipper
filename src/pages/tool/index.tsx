@@ -13,7 +13,6 @@ import {
 import { Avatar, Button, Icon, Input, Select } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { emptyFunction } from '../../utils';
 import { push } from 'connected-react-router';
 import { ToolContainer } from '../../components/container';
 import { isEqual } from 'lodash';
@@ -30,7 +29,6 @@ const useActions = {
   asyncCreateDocument: asyncCreateDocument.started,
   updateTitle,
   selectRepository: selectRepository,
-  uploadImage: emptyFunction,
   push,
 };
 
@@ -111,10 +109,6 @@ class Page extends React.Component<PageProps> {
 
   onRepositorySelect = (repositoryId: string) => {
     this.props.selectRepository({ repositoryId });
-  };
-
-  onSyncImage = () => {
-    this.props.uploadImage();
   };
 
   onFilterOption = (select: any, option: React.ReactElement<any>) => {

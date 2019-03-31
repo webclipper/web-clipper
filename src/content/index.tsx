@@ -1,6 +1,7 @@
 import * as Readability from 'readability';
 import * as styles from './index.scss';
-import Highlighter from '../services/common/highlight';
+import Highlighter from '../common/highlight';
+import AreaSelector from '../common/areaSelector';
 import TurndownService from 'turndown';
 import { AnyAction, isType } from 'typescript-fsa';
 import {
@@ -8,7 +9,6 @@ import {
   asyncRemoveTool,
   asyncRunScript,
 } from '../store/actions/userPreference';
-import AreaSelector from '../services/common/areaSelector';
 import { clickIcon, doYouAliveNow } from '../store/actions/browser';
 
 const turndownService = TurndownService();

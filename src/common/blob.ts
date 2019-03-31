@@ -1,4 +1,4 @@
-const Base64ImageToBolb = (image: string): Blob => {
+const Base64ImageToBlob = (image: string): Blob => {
   const arr = image.split(',');
   const mime = arr[0].match(/:(.*?);/)![1] || 'image/png';
   const bytes = window.atob(arr[1]);
@@ -22,4 +22,4 @@ function loadImage(date: string): Promise<HTMLImageElement> {
   });
 }
 
-export { Base64ImageToBolb, loadImage };
+export { Base64ImageToBlob, loadImage };

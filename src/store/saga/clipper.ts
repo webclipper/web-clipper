@@ -1,5 +1,5 @@
 import { CreateDocumentRequest } from './../../common/backend/index';
-import backend, { documentServiceFactory } from '../../services/backend';
+import backend, { documentServiceFactory } from '../../common/backend';
 import { AnyAction, isType } from 'typescript-fsa';
 import {
   asyncChangeAccount,
@@ -188,11 +188,8 @@ export function* asyncChangeAccountSaga(action: AnyAction) {
     if (!account) {
       throw new Error('');
     }
-    const documentService = documentServiceFactory({
-      accessToken: account.accessToken,
-      baseURL: account.host,
-      type: account.type,
-    });
+    const { type, ...info } = account;
+    const documentService = documentServiceFactory(type, info);
     const repositories = yield call(documentService.getRepositories);
     backend.setDocumentService(documentService);
     yield delay(1000);

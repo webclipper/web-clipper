@@ -1,57 +1,71 @@
-export interface ImageHostingService {
-  uploadImage(request: UploadImageRequest): Promise<string>;
+import {
+  ServiceMeta,
+  ImageHostingServiceMeta,
+  ImageHostingService,
+  DocumentService,
+} from './interface';
+export * from './interface';
 
-  uploadImageUrl(url: string): Promise<string>;
+const serviceContext = require.context('./services', true, /index.ts$/);
+
+const services: ServiceMeta[] = serviceContext.keys().map(key => {
+  return serviceContext(key).default;
+});
+
+const imageHostingContext = require.context(
+  './imageHosting',
+  true,
+  /index.ts$/
+);
+
+const imageHostingServices: ImageHostingServiceMeta[] = imageHostingContext
+  .keys()
+  .map(key => {
+    return imageHostingContext(key).default;
+  });
+
+export function documentServiceFactory(type: string, info?: any) {
+  const service = services.find(o => o.type === type);
+  if (service) {
+    const Service = service.service;
+    return new Service(info);
+  }
+  throw new Error('unSupport type');
 }
 
-export interface DocumentService {
-  getRepositories(): Promise<Repository[]>;
+export function imageHostingServiceFactory(type: string, info?: any) {
+  const service = imageHostingServices.find(o => o.type === type);
 
-  createDocument(
-    request: CreateDocumentRequest
-  ): Promise<CreateDocumentResponse>;
+  console.log(imageHostingServices);
 
-  getUserInfo(): Promise<UserInfo>;
+  if (service) {
+    const Service = service.service;
+    return new Service(info);
+  }
+  throw new Error('un support image hosting type');
 }
 
-export interface Repository {
-  id: string;
-  name: string;
-  private: boolean;
-  description: string;
-  createdAt: string;
-  owner: string;
-  /**
-   * namespace = owner/name
-   */
-  namespace: string;
+export { imageHostingServices, services };
+
+export class BackendContext {
+  private documentService?: DocumentService;
+  private imageHostingService?: ImageHostingService;
+
+  setDocumentService(documentService: DocumentService) {
+    this.documentService = documentService;
+  }
+
+  getDocumentService() {
+    return this.documentService;
+  }
+
+  setImageHostingService(imageHostingService: ImageHostingService) {
+    this.imageHostingService = imageHostingService;
+  }
+
+  getImageHostingService() {
+    return this.imageHostingService;
+  }
 }
 
-export interface UserInfo {
-  name: string;
-  avatar: string;
-  homePage: string;
-  description?: string;
-}
-
-export interface CreateDocumentRequest {
-  title: string;
-  content: string;
-  private: boolean;
-  repositoryId: string;
-  tags?: string[];
-}
-export interface CreateDocumentResponse {
-  href: string;
-  repositoryId: string;
-  documentId: string;
-}
-
-export interface CreateRepositoryRequest {
-  name: string;
-  private: boolean;
-}
-
-interface UploadImageRequest {
-  data: string;
-}
+export default new BackendContext();

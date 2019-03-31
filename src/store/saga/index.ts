@@ -1,12 +1,11 @@
 import backendService, {
   documentServiceFactory,
   imageHostingServiceFactory,
-} from '../../services/backend';
-import browserService from '../../services/browser';
-import storage from '../../services/common/store';
+} from '../../common/backend';
+import storage from '../../common/storage';
 import { all, call, put, spawn, delay } from 'redux-saga/effects';
 import { asyncFetchRepositorySaga, clipperRootSagas } from './clipper';
-import { BrowserTab } from './../../services/browser/index';
+import browserService, { BrowserTab } from '../../common/browser';
 import { initTabInfo } from '../actions/clipper';
 import { initUserPreference } from '../actions/userPreference';
 import { push } from 'connected-react-router';
@@ -31,9 +30,7 @@ const makeRestartable = (saga: any) => {
 function* initStore() {
   const result: PreferenceStorage = yield call(storage.getPreference);
   const tabInfo: BrowserTab = yield call(browserService.getCurrentTab);
-  backendService.setImageHostingService(
-    imageHostingServiceFactory({ type: 'yuque' })
-  );
+  backendService.setImageHostingService(imageHostingServiceFactory('yuque'));
   yield put(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
   if (result.accounts.length === 0) {
     yield put(push('/preference'));
@@ -47,7 +44,7 @@ function* initStore() {
   const account =
     defaultAccountIndex === -1 ? accounts[0] : accounts[defaultAccountIndex];
   const { type, ...info } = account;
-  const documentService = documentServiceFactory({ type, info });
+  const documentService = documentServiceFactory(type, info);
   backendService.setDocumentService(documentService);
   yield call(asyncFetchRepositorySaga);
   if (result.defaultPluginId) {

@@ -1,4 +1,4 @@
-import browserService from '../services/browser';
+import browserService from '../common/browser';
 import { clickIcon, doYouAliveNow } from '../store/actions/browser';
 
 if (process.env.NODE_ENV === 'development') {

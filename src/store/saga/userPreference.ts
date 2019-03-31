@@ -1,5 +1,5 @@
-import browserService from '../../services/browser';
-import storage from '../../services/common/store';
+import browserService from '../../common/browser';
+import storage from '../../common/storage';
 import { AnyAction, isType } from 'typescript-fsa';
 import {
   asyncAddAccount,
@@ -16,16 +16,17 @@ import {
   asyncRunScript,
 } from './../actions/userPreference';
 import { call, fork, put, select, takeEvery } from 'redux-saga/effects';
-import backend, { documentServiceFactory } from '../../services/backend';
+import backend, { documentServiceFactory } from '../../common/backend';
 import { message } from 'antd';
 import { ToolContext } from '../../extensions/interface';
-import { loadImage } from '../../services/utils/bolb';
+import { loadImage } from '../../common/blob';
 const md5 = require('blueimp-md5');
 
 export function* asyncVerificationAccessTokenSaga(action: AnyAction) {
   if (isType(action, asyncVerificationAccessToken.started)) {
     try {
-      const service = documentServiceFactory(action.payload);
+      const { type, info } = action.payload;
+      const service = documentServiceFactory(type, info);
       const userInfo = yield call(service.getUserInfo);
       const repositories = yield call(service.getRepositories);
       yield put(

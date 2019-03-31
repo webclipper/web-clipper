@@ -1,6 +1,7 @@
-import browserService from '../../../services/browser/index';
-import { Base64ImageToBolb } from '../../utils/bolb';
+import browserService from '../../../browser';
+import { Base64ImageToBlob } from '../../../blob';
 import axios from 'axios';
+import { UploadImageRequest, ImageHostingService } from '../interface';
 
 export interface YuqueImageHostingOption {
   type: 'yuque';
@@ -13,7 +14,7 @@ export default class YuqueImageHostingService implements ImageHostingService {
       name: 'ctoken',
     });
     let formData = new FormData();
-    const blob = Base64ImageToBolb(data);
+    const blob = Base64ImageToBlob(data);
     formData.append('file', blob, 'test.png');
     const result = await axios.post(
       `https://www.yuque.com/api/upload/attach?ctoken=${cookie}&type=image`,
