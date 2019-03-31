@@ -16,7 +16,6 @@ import {
   asyncVerificationAccessToken,
   startCreateAccount,
 } from './../actions/userPreference';
-import { backendServices } from '../../const';
 import { isType } from 'typescript-fsa';
 
 import { extensions } from '../../extensions/index';
@@ -28,17 +27,11 @@ const defaultState: UserPreferenceStore = {
   showLineNumber: true,
   liveRendering: true,
   initializeForm: {
-    show: false,
+    type: 'yuque',
+    repositories: [],
+    visible: false,
     verified: false,
     verifying: false,
-    type: {
-      value: 'yuque',
-    },
-    host: {
-      value: backendServices.yuque.api,
-    },
-    userInfo: { name: '' },
-    repositories: [],
   },
 };
 
@@ -84,7 +77,7 @@ export function userPreference(
   if (isType(action, startCreateAccount)) {
     return update(state, {
       initializeForm: {
-        show: {
+        visible: {
           $set: true,
         },
       },
@@ -152,37 +145,23 @@ export function userPreference(
     });
   }
   if (isType(action, updateCreateAccountForm)) {
-    let type = action.payload.type;
-    if (type && backendServices[type.value as string]) {
-      const { show, verified, verifying } = state.initializeForm;
-      return update(state, {
-        initializeForm: {
-          $set: {
-            show,
-            verified,
-            verifying,
-            type: action.payload.type,
-            userInfo: action.payload.userInfo,
-            host: {
-              value: backendServices[type.value as string].api,
-            },
-            repositories: [],
-          },
-        },
-      });
-    }
     if (action.payload.defaultRepositoryId) {
       return update(state, {
         initializeForm: {
-          $merge: action.payload,
+          defaultRepositoryId: {
+            $set: action.payload.defaultRepositoryId,
+          },
         },
       });
     }
     return update(state, {
       initializeForm: {
-        $merge: action.payload,
-        verified: {
-          $set: false,
+        $set: {
+          ...state.initializeForm,
+          verified: false,
+          verifying: false,
+          repositories: [],
+          ...action.payload,
         },
       },
     });

@@ -9,6 +9,19 @@ interface GlobalStore {
   };
 }
 
+interface Repository {
+  id: string;
+  name: string;
+  private: boolean;
+  description: string;
+  createdAt: string;
+  owner: string;
+  /**
+   * namespace = owner/name
+   */
+  namespace: string;
+}
+
 interface ImageClipperData {
   dataUrl: string;
   width: number;
@@ -59,27 +72,19 @@ interface FormProps {
   value: string;
 }
 interface InitializeForm {
-  type: FormProps;
-  host?: FormProps;
-  accessToken?: FormProps;
-  defaultRepositoryId?: FormProps;
-  verifying: boolean;
-  show: boolean;
-  verified: boolean;
+  type: string;
+  info?: any;
   repositories: Repository[];
-  userInfo: {
-    name: string;
-    avatar?: string;
-    homePage?: string;
-    description?: string;
-  };
+  defaultRepositoryId?: string;
+  visible: boolean;
+  verifying: boolean;
+  verified: boolean;
+  userInfo?: any;
 }
 
 interface AccountPreference {
   type: string;
   id: string;
-  accessToken: string;
-  host: string;
   defaultRepositoryId?: string;
   name: string;
   avatar?: string;

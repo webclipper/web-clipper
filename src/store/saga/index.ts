@@ -46,11 +46,8 @@ function* initStore() {
   );
   const account =
     defaultAccountIndex === -1 ? accounts[0] : accounts[defaultAccountIndex];
-  const documentService = documentServiceFactory({
-    accessToken: account.accessToken,
-    baseURL: account.host,
-    type: account.type,
-  });
+  const { type, ...info } = account;
+  const documentService = documentServiceFactory({ type, info });
   backendService.setDocumentService(documentService);
   yield call(asyncFetchRepositorySaga);
   if (result.defaultPluginId) {

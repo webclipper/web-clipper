@@ -104,7 +104,7 @@ class Page extends React.Component<PageProps, PageState> {
             </Button>
           </List.Item>
           {this.props.accounts.map((account, index) => (
-            <List.Item key={account.accessToken}>
+            <List.Item key={account.id}>
               <Card
                 style={{
                   width: '300px',

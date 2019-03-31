@@ -11,79 +11,39 @@ import {
   asyncSetShowQuickResponseCode,
   asyncUpdateCurrentAccountIndex,
   asyncVerificationAccessToken,
-  updateCreateAccountForm,
   asyncSetDefaultPluginId,
   asyncRunExtension,
   asyncRunScript,
 } from './../actions/userPreference';
-import {
-  call,
-  cancelled,
-  fork,
-  put,
-  race,
-  select,
-  take,
-  takeEvery,
-} from 'redux-saga/effects';
+import { call, fork, put, select, takeEvery } from 'redux-saga/effects';
 import backend, { documentServiceFactory } from '../../services/backend';
 import { message } from 'antd';
 import { ToolContext } from '../../extensions/interface';
 import { loadImage } from '../../services/utils/bolb';
 const md5 = require('blueimp-md5');
 
-export function* asyncVerificationAccessTokenSaga() {
-  try {
-    const selector = ({
-      userPreference: {
-        initializeForm: { accessToken, host, type },
-      },
-    }: GlobalStore) => {
-      return {
-        accessToken,
-        host,
-        type,
-      };
-    };
-    const selectState: ReturnType<typeof selector> = yield select(selector);
-    const { accessToken, host, type } = selectState;
-    if (!accessToken || !accessToken.value) {
-      return;
-    }
-    if (!host || !host.value) {
-      return;
-    }
-
-    const service = documentServiceFactory({
-      type: type.value,
-      accessToken: accessToken.value,
-      baseURL: host.value,
-    });
-    const userInfo = yield call(service.getUserInfo);
-    const repositories = yield call(service.getRepositories);
-    yield put(
-      asyncVerificationAccessToken.done({
-        result: {
-          repositories,
-          userInfo,
-        },
-      })
-    );
-  } catch (error) {
-    message.error('AccessToken 错误');
-    yield put(
-      asyncVerificationAccessToken.failed({
-        error: {
-          error: error,
-        },
-      })
-    );
-  } finally {
-    if (yield cancelled()) {
+export function* asyncVerificationAccessTokenSaga(action: AnyAction) {
+  if (isType(action, asyncVerificationAccessToken.started)) {
+    try {
+      const service = documentServiceFactory(action.payload);
+      const userInfo = yield call(service.getUserInfo);
+      const repositories = yield call(service.getRepositories);
+      yield put(
+        asyncVerificationAccessToken.done({
+          params: action.payload,
+          result: {
+            repositories,
+            userInfo,
+          },
+        })
+      );
+    } catch (error) {
+      message.error('AccessToken 错误');
       yield put(
         asyncVerificationAccessToken.failed({
+          params: action.payload,
           error: {
-            cancel: true,
+            error: error,
           },
         })
       );
@@ -92,48 +52,32 @@ export function* asyncVerificationAccessTokenSaga() {
 }
 
 export function* watchAsyncVerificationAccessTokenSaga() {
-  yield takeEvery(asyncVerificationAccessToken.started.type, function*() {
-    yield race({
-      task: call(asyncVerificationAccessTokenSaga),
-      cancel: take(updateCreateAccountForm.type),
-    });
-  });
+  yield takeEvery(
+    asyncVerificationAccessToken.started.type,
+    asyncVerificationAccessTokenSaga
+  );
 }
 
 export function* asyncAddAccountSaga() {
   const selector = ({
     userPreference: {
-      initializeForm: {
-        accessToken,
-        host,
-        type,
-        userInfo,
-        defaultRepositoryId,
-      },
+      initializeForm: { type, userInfo, defaultRepositoryId, info },
     },
   }: GlobalStore) => {
     return {
-      accessToken,
-      host,
       type,
       userInfo,
       defaultRepositoryId,
+      info,
     };
   };
   const selectState: ReturnType<typeof selector> = yield select(selector);
-  let { accessToken, host, type, defaultRepositoryId, userInfo } = selectState;
-  if (!accessToken || !accessToken.value) {
-    return;
-  }
-  if (!host || !host.value) {
-    return;
-  }
+  let { type, defaultRepositoryId, userInfo, info } = selectState;
   const account: AccountPreference = {
-    id: md5(accessToken.value),
-    type: type.value,
-    accessToken: accessToken.value,
-    host: host.value,
-    defaultRepositoryId: defaultRepositoryId ? defaultRepositoryId.value : '',
+    id: md5(JSON.stringify({ info, type })),
+    type: type,
+    ...info,
+    defaultRepositoryId: defaultRepositoryId,
     ...userInfo,
   };
   try {

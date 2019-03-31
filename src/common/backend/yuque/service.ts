@@ -1,10 +1,11 @@
+import { DocumentService, CreateDocumentRequest } from './../index';
 import axios, { AxiosInstance } from 'axios';
-import { generateUuid } from '../../common/uuid';
+import { generateUuid } from '../../../common/uuid';
 import * as qs from 'qs';
 
 interface YuqueBackendServiceConfig {
   accessToken: string;
-  baseURL: string;
+  host: string;
 }
 
 interface UserInfoResponse {
@@ -30,11 +31,11 @@ export default class YuqueDocumentService implements DocumentService {
   private repositories: Repository[];
 
   constructor(config: YuqueBackendServiceConfig) {
-    const index = config.baseURL.indexOf('/api/v2');
+    const index = config.host.indexOf('/api/v2');
     if (index !== -1) {
-      this.baseURL = config.baseURL.substring(0, index);
+      this.baseURL = config.host.substring(0, index);
     } else {
-      this.baseURL = config.baseURL;
+      this.baseURL = config.host;
     }
     const request = axios.create({
       baseURL: `${this.baseURL}/api/v2/`,
@@ -51,6 +52,7 @@ export default class YuqueDocumentService implements DocumentService {
       withCredentials: true,
     });
     this.request = request;
+    this.repositories = [];
   }
 
   getUserInfo = async () => {

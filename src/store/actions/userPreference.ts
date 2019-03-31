@@ -9,12 +9,15 @@ export const initUserPreference = actionCreator<PreferenceStorage>(
   USER_PREFERENCE.INIT_USER_PREFERENCE
 );
 
-export const updateCreateAccountForm = actionCreator<InitializeForm>(
-  USER_PREFERENCE.UPDATE_CREATE_ACCOUNT_FORM
-);
+export const updateCreateAccountForm = actionCreator<
+  Pick<InitializeForm, 'info' | 'type' | 'defaultRepositoryId'>
+>(USER_PREFERENCE.UPDATE_CREATE_ACCOUNT_FORM);
 
 export const asyncVerificationAccessToken = actionCreator.async<
-  void,
+  {
+    type: string;
+    info: any;
+  },
   { repositories: Repository[]; userInfo: UserInfo },
   {
     cancel?: boolean;

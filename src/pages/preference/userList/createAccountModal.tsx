@@ -5,16 +5,12 @@ import {
   cancelCreateAccount,
   updateCreateAccountForm,
 } from '../../../store/actions/userPreference';
-import { backendServices } from '../../../const';
+
 import { bindActionCreators, Dispatch } from 'redux';
-import { Button, Form, Input, Modal, Select, Col, Row } from 'antd';
+import { Button, Form, Modal, Select, Col, Row } from 'antd';
 import { connect } from 'react-redux';
 import { FormComponentProps } from 'antd/lib/form';
-
-const typeOptions = Object.keys(backendServices).map(key => ({
-  ...backendServices[key],
-  key,
-}));
+import backendServices from '../../../common/backend/interface';
 
 const mapStateToProps = ({
   userPreference: { initializeForm },
@@ -30,9 +26,13 @@ const useActions = {
   asyncVerificationAccessToken: asyncVerificationAccessToken.started,
 };
 
+type PageOwnProps = {};
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
-type PageProps = PageStateProps & PageDispatchProps & FormComponentProps;
+type PageProps = PageOwnProps &
+  PageStateProps &
+  PageDispatchProps &
+  FormComponentProps;
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators<PageDispatchProps, PageDispatchProps>(
     useActions,
@@ -40,7 +40,20 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   );
 class InitializeForm extends React.Component<PageProps> {
   handleVerificationAccount = () => {
-    this.props.asyncVerificationAccessToken();
+    this.props.form.validateFields(error => {
+      if (error) {
+        return;
+      }
+      const {
+        type,
+        defaultRepositoryId,
+        ...info
+      } = this.props.form.getFieldsValue();
+      this.props.asyncVerificationAccessToken({
+        type,
+        info,
+      });
+    });
   };
 
   render() {
@@ -49,14 +62,18 @@ class InitializeForm extends React.Component<PageProps> {
       verified,
       repositories,
       verifying,
-      show,
+      visible,
     } = this.props.initializeForm;
 
     const disableOkButton = verified ? false : true;
 
+    const form = this.props.form.getFieldValue('type');
+
+    const service = backendServices.find(o => o.type === form);
+
     return (
       <Modal
-        visible={show}
+        visible={visible}
         title="绑定新账号"
         okText="绑定"
         okType={disableOkButton ? 'dashed' : 'primary'}
@@ -72,35 +89,26 @@ class InitializeForm extends React.Component<PageProps> {
       >
         <Form labelCol={{ span: 6, offset: 0 }} wrapperCol={{ span: 18 }}>
           <Form.Item label="类型">
-            {getFieldDecorator('type')(
+            {getFieldDecorator('type', {
+              initialValue: 'yuque',
+            })(
               <Select>
-                {typeOptions.map(o => (
-                  <Select.Option key={o.key}>{o.name}</Select.Option>
+                {backendServices.map(o => (
+                  <Select.Option key={o.type}>{o.name}</Select.Option>
                 ))}
               </Select>
             )}
           </Form.Item>
-          <Form.Item label="域名">
-            {getFieldDecorator('host', {
-              rules: [{ required: true, message: 'host is required!' }],
-            })(<Input disabled={verifying} />)}
-          </Form.Item>
-          <Form.Item label="AccessToken">
-            {getFieldDecorator('accessToken', {
-              rules: [
-                {
-                  required: true,
-                  message: 'AccessToken is required!',
-                },
-              ],
-            })(<Input />)}
-          </Form.Item>
+          {service && service.form && <service.form form={this.props.form} />}
           {
             <Form.Item label="默认知识库">
               <Row gutter={16} type="flex">
                 <Col span={18}>
                   {getFieldDecorator('defaultRepositoryId')(
-                    <Select loading={verifying} disabled={verifying}>
+                    <Select
+                      loading={verifying}
+                      disabled={verifying || !verified}
+                    >
                       {repositories.map(o => {
                         return (
                           <Select.Option
@@ -137,38 +145,25 @@ class InitializeForm extends React.Component<PageProps> {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Form.create<PageProps>({
-  onFieldsChange(props, changedFields) {
-    props.updateCreateAccountForm(changedFields as any);
-  },
-  mapPropsToFields(props: PageProps) {
-    const {
-      accessToken,
-      host,
-      type,
-      defaultRepositoryId,
-    } = props.initializeForm;
-    return {
-      defaultRepositoryId: defaultRepositoryId
-        ? Form.createFormField({
-            ...defaultRepositoryId,
-          })
-        : null,
-      type: type
-        ? Form.createFormField({
-            ...type,
-          })
-        : null,
-      accessToken: accessToken
-        ? Form.createFormField({
-            ...accessToken,
-          })
-        : null,
-      host: host
-        ? Form.createFormField({
-            ...host,
-          })
-        : null,
-    };
-  },
-})(InitializeForm) as React.ComponentType);
+)(
+  Form.create<PageProps>({
+    onValuesChange(props, fields: any, allValues) {
+      console.log(props, fields, allValues);
+      if (fields.type) {
+        props.form.resetFields(
+          Object.keys(allValues).filter(o => o !== 'type')
+        );
+        props.updateCreateAccountForm({
+          type: fields.type,
+        });
+        return;
+      }
+      const { type, defaultRepositoryId, ...info } = allValues;
+      props.updateCreateAccountForm({
+        type,
+        defaultRepositoryId,
+        info,
+      });
+    },
+  })(InitializeForm)
+);

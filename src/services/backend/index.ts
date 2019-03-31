@@ -2,16 +2,15 @@ import {
   DocumentService,
   ImageHostingService,
 } from './../../common/backend/index';
-import GithubDocumentService from './github';
-import YuqueDocumentService from './yuque';
+import GithubDocumentService from '../../common/backend/github/service';
+import YuqueDocumentService from '../../common/backend/yuque/service';
 import YuqueImageHostingService, {
   YuqueImageHostingOption,
 } from './imageHosting/yuque';
 
 interface DocumentServiceOption {
   type: string;
-  accessToken: string;
-  baseURL: string;
+  info?: any;
 }
 
 export class BackendContext {
@@ -38,18 +37,12 @@ export class BackendContext {
 export function documentServiceFactory(
   option: DocumentServiceOption
 ): DocumentService {
-  const { type, baseURL, accessToken } = option;
+  const { type, info } = option;
   if (type === 'yuque') {
-    return new YuqueDocumentService({
-      baseURL,
-      accessToken,
-    });
+    return new YuqueDocumentService(info);
   }
   if (type === 'github') {
-    return new GithubDocumentService({
-      baseURL,
-      accessToken,
-    });
+    return new GithubDocumentService(info);
   }
   throw new Error('unSupport type');
 }

@@ -1,13 +1,9 @@
-import {
-  DocumentService,
-  Repository,
-  CreateDocumentRequest,
-} from './../../common/backend/index';
+import { DocumentService, Repository, CreateDocumentRequest } from '../index';
 import axios, { AxiosInstance } from 'axios';
 
 interface GithubBackendServiceConfig {
   accessToken: string;
-  baseURL: string;
+  host: string;
 }
 
 interface UserInfoResponse {
@@ -32,7 +28,7 @@ export default class GithubDocumentService implements DocumentService {
 
   constructor(config: GithubBackendServiceConfig) {
     const request = axios.create({
-      baseURL: config.baseURL,
+      baseURL: config.host,
       headers: {
         Accept: 'application/vnd.github.v3+json',
         Authorization: `token ${config.accessToken}`,
