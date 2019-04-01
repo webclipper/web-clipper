@@ -117,13 +117,11 @@ export default class GithubDocumentService implements DocumentService {
         name,
         full_name: namespace,
         created_at: createdAt,
-        description,
       } = repository;
       return {
         id: id.toString(),
         name,
         namespace,
-        description,
         owner: namespace.split('/')[0],
         private: repository.private,
         createdAt,

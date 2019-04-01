@@ -65,6 +65,7 @@
     "@types/react-redux": "^7.0.5",
     "@types/react-router": "^4.4.3",
     "@types/redux-logger": "^3.0.6",
+    "@types/remote-redux-devtools": "^0.5.3",
     "@types/webpack-env": "^1.13.9",
     "@typescript-eslint/eslint-plugin": "^1.4.2",
     "@typescript-eslint/parser": "^1.4.2",

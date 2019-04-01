@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { ToolContainer } from '../../components/container';
 import * as styles from './complete.scss';
 import { Button } from 'antd';
-import { backendServices } from '../../const/index';
 import { asyncRemoveTool } from '../../store/actions/userPreference';
 import { QuickResponseCode } from './quickResponseCode';
 
@@ -14,16 +13,16 @@ const useActions = {
 
 const mapStateToProps = ({
   clipper: { completeStatus, currentAccountId },
-  userPreference: { accounts, showQuickResponseCode },
+  userPreference: { accounts, showQuickResponseCode, servicesMeta },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   return {
+    servicesMeta,
     currentAccount,
     completeStatus,
     showQuickResponseCode,
   };
 };
-type PageState = {};
 
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
@@ -35,13 +34,15 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     dispatch
   );
 
-class Page extends React.Component<PageProps, PageState> {
+class Page extends React.Component<PageProps> {
   render() {
     const {
       completeStatus,
       currentAccount,
       showQuickResponseCode,
+      servicesMeta,
     } = this.props;
+
     if (!completeStatus || !currentAccount) {
       return (
         <ToolContainer
@@ -58,6 +59,10 @@ class Page extends React.Component<PageProps, PageState> {
         </ToolContainer>
       );
     }
+
+    const currentService = servicesMeta[currentAccount.type];
+    const serviceName = currentService && currentService.name;
+
     return (
       <ToolContainer
         onClickCloseButton={() => {
@@ -72,7 +77,7 @@ class Page extends React.Component<PageProps, PageState> {
             target="_blank"
           >
             <Button style={{ marginTop: 16 }} size="large" type="primary" block>
-              前往 {backendServices[currentAccount.type].name} 查看
+              前往<span>{serviceName}</span> 查看
             </Button>
           </a>
         </section>
@@ -82,7 +87,7 @@ class Page extends React.Component<PageProps, PageState> {
             <QuickResponseCode
               repositoryId={completeStatus.repositoryId}
               documentId={completeStatus.documentId}
-              accessToken={this.props.currentAccount!.accessToken}
+              accessToken={currentAccount.accessToken}
             />
           </section>
         )}

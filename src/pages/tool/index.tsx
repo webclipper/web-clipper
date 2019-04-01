@@ -130,7 +130,12 @@ class Page extends React.Component<PageProps> {
     } = this.props;
 
     let repositoryId;
-    if (currentAccount) {
+    if (
+      currentAccount &&
+      repositories.findIndex(
+        o => o.id === currentAccount.defaultRepositoryId
+      ) !== -1
+    ) {
       repositoryId = currentAccount.defaultRepositoryId;
     }
     if (currentRepository) {

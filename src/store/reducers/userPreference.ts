@@ -17,11 +17,22 @@ import {
   startCreateAccount,
 } from './../actions/userPreference';
 import { isType } from 'typescript-fsa';
-
+import { services } from '../../common/backend/index';
 import { extensions } from '../../extensions/index';
+
+// const servicesMeta = {};
+
+const servicesMeta = services.reduce(
+  (previousValue: UserPreferenceStore['servicesMeta'], { type, name }) => {
+    previousValue[type] = { name };
+    return previousValue;
+  },
+  {}
+);
 
 const defaultState: UserPreferenceStore = {
   accounts: [],
+  servicesMeta: servicesMeta,
   extensions: extensions,
   showQuickResponseCode: true,
   showLineNumber: true,

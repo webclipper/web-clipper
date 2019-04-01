@@ -13,7 +13,6 @@ interface Repository {
   id: string;
   name: string;
   private: boolean;
-  description: string;
   createdAt: string;
   owner: string;
   /**
@@ -65,6 +64,11 @@ interface UserPreferenceStore {
   showLineNumber: boolean;
   liveRendering: boolean;
   initializeForm: InitializeForm;
+  servicesMeta: {
+    [type: string]: {
+      name: string;
+    };
+  };
   extensions: any[];
 }
 
@@ -90,6 +94,7 @@ interface AccountPreference {
   avatar?: string;
   homePage?: string;
   description?: string;
+  [key: string]: any;
 }
 
 interface PreferenceStorage {

@@ -116,19 +116,9 @@ export default class YuqueDocumentService implements DocumentService {
     };
   };
 
-  public async createRepository(info: any) {
-    console.log(info);
-  }
-  public async getAbility() {
-    return {
-      document: {
-        label: false,
-        settingPermissions: false,
-      },
-    };
-  }
-
-  private getYuqueRepositories = async (offset: number) => {
+  private getYuqueRepositories = async (
+    offset: number
+  ): Promise<Repository[]> => {
     if (!this.login) {
       await this.getUserInfo();
     }
@@ -140,18 +130,11 @@ export default class YuqueDocumentService implements DocumentService {
     );
     const repositories = response.data;
     const result = repositories.map(repository => {
-      const {
-        id,
-        name,
-        namespace,
-        created_at: createdAt,
-        description,
-      } = repository;
+      const { id, name, namespace, created_at: createdAt } = repository;
       return {
         id: id.toString(),
         name,
         namespace,
-        description,
         owner: namespace.split('/')[0],
         private: !repository.public,
         createdAt,

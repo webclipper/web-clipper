@@ -39,6 +39,7 @@ export function* asyncVerificationAccessTokenSaga(action: AnyAction) {
         })
       );
     } catch (error) {
+      console.log(error);
       message.error('AccessToken 错误');
       yield put(
         asyncVerificationAccessToken.failed({

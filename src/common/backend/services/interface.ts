@@ -36,7 +36,6 @@ export interface Repository {
   id: string;
   name: string;
   private: boolean;
-  description: string;
   createdAt: string;
   owner: string;
   /**
