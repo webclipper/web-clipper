@@ -1,5 +1,4 @@
 import update from 'immutability-helper';
-import { Action } from 'redux';
 import {
   asyncAddAccount,
   asyncDeleteAccount,
@@ -16,11 +15,9 @@ import {
   asyncVerificationAccessToken,
   startCreateAccount,
 } from './../actions/userPreference';
-import { isType } from 'typescript-fsa';
 import { services } from '../../common/backend/index';
 import { extensions } from '../../extensions/index';
-
-// const servicesMeta = {};
+import { reducerWithInitialState } from 'typescript-fsa-reducers';
 
 const servicesMeta = services.reduce(
   (previousValue: UserPreferenceStore['servicesMeta'], { type, name }) => {
@@ -46,121 +43,96 @@ const defaultState: UserPreferenceStore = {
   },
 };
 
-export function userPreference(
-  state: UserPreferenceStore = defaultState,
-  action: Action
-): UserPreferenceStore {
-  if (isType(action, asyncSetShowLineNumber.done)) {
-    return update(state, {
-      showLineNumber: {
-        $set: action.payload.result.value,
-      },
-    });
-  }
-  if (isType(action, asyncSetEditorLiveRendering.done)) {
-    return update(state, {
-      liveRendering: {
-        $set: action.payload.result.value,
-      },
-    });
-  }
-  if (isType(action, asyncSetShowQuickResponseCode.done)) {
-    return update(state, {
-      showQuickResponseCode: {
-        $set: action.payload.result.value,
-      },
-    });
-  }
-  if (isType(action, asyncSetDefaultPluginId.done)) {
-    return update(state, {
-      defaultPluginId: {
-        $set: action.payload.params.pluginId,
-      },
-    });
-  }
-  if (isType(action, cancelCreateAccount)) {
-    return update(state, {
-      initializeForm: {
-        $set: defaultState.initializeForm,
-      },
-    });
-  }
-  if (isType(action, startCreateAccount)) {
-    return update(state, {
-      initializeForm: {
-        visible: {
-          $set: true,
+const reducer = reducerWithInitialState(defaultState)
+  .case(
+    asyncSetShowLineNumber.done,
+    (state, { result: { value: showLineNumber } }) => ({
+      ...state,
+      showLineNumber,
+    })
+  )
+  .case(
+    asyncSetEditorLiveRendering.done,
+    (state, { result: { value: liveRendering } }) => ({
+      ...state,
+      liveRendering,
+    })
+  )
+  .case(
+    asyncSetShowQuickResponseCode.done,
+    (state, { result: { value: showQuickResponseCode } }) => ({
+      ...state,
+      showQuickResponseCode,
+    })
+  )
+  .case(
+    asyncSetDefaultPluginId.done,
+    (state, { params: { pluginId: defaultPluginId } }) => ({
+      ...state,
+      defaultPluginId,
+    })
+  )
+  .case(
+    asyncDeleteAccount.done,
+    (state, { result: { accounts, defaultAccountId } }) => ({
+      ...state,
+      accounts,
+      defaultAccountId,
+    })
+  )
+  .case(initUserPreference, (state, payload) => ({
+    ...state,
+    ...payload,
+  }))
+  .case(cancelCreateAccount, state => ({
+    ...state,
+    initializeForm: defaultState.initializeForm,
+  }))
+  .case(
+    asyncAddAccount.done,
+    (state, { result: { accounts, defaultAccountId } }) => ({
+      ...state,
+      initializeForm: defaultState.initializeForm,
+      accounts,
+      defaultAccountId,
+    })
+  )
+  .case(
+    asyncUpdateCurrentAccountIndex.done,
+    (state, { result: { id: defaultAccountId } }) => ({
+      ...state,
+      defaultAccountId,
+    })
+  )
+  .case(
+    asyncVerificationAccessToken.done,
+    (state, { result: { repositories, userInfo } }) =>
+      update(state, {
+        initializeForm: {
+          $merge: {
+            verified: true,
+            verifying: false,
+            repositories,
+            userInfo,
+          },
         },
-      },
-    });
-  }
-  if (isType(action, asyncAddAccount.done)) {
-    return update(state, {
-      accounts: {
-        $set: action.payload.result.accounts,
-      },
-      defaultAccountId: {
-        $set: action.payload.result.defaultAccountId,
-      },
-      initializeForm: {
-        $set: {
-          ...defaultState.initializeForm,
-          show: false,
-        },
-      },
-    });
-  }
-  if (isType(action, asyncUpdateCurrentAccountIndex.done)) {
-    return update(state, {
-      defaultAccountId: {
-        $set: action.payload.result.id,
-      },
-    });
-  }
-  if (isType(action, asyncDeleteAccount.done)) {
-    return update(state, {
-      accounts: {
-        $set: action.payload.result.accounts,
-      },
-      defaultAccountId: {
-        $set: action.payload.result.defaultAccountId,
-      },
-    });
-  }
-  if (isType(action, initUserPreference)) {
-    return update(state, {
-      $merge: action.payload,
-    });
-  }
-  if (isType(action, asyncVerificationAccessToken.done)) {
-    return update(state, {
+      })
+  )
+  .case(asyncVerificationAccessToken.failed, state =>
+    update(state, {
       initializeForm: {
         $merge: {
-          verified: true,
           verifying: false,
-          repositories: action.payload.result.repositories,
-          userInfo: action.payload.result.userInfo,
         },
       },
-    });
-  }
-  if (isType(action, asyncVerificationAccessToken.failed)) {
-    return update(state, {
-      initializeForm: {
-        $merge: {
-          verified: state.initializeForm.verified,
-          verifying: false,
-          repositories: state.initializeForm.repositories,
-        },
-      },
-    });
-  }
-  if (isType(action, updateCreateAccountForm)) {
-    if (action.payload.defaultRepositoryId) {
+    })
+  )
+  .case(updateCreateAccountForm, (state, { defaultRepositoryId, ...rest }) => {
+    if (defaultRepositoryId) {
       return update(state, {
         initializeForm: {
           defaultRepositoryId: {
-            $set: action.payload.defaultRepositoryId,
+            $set: defaultRepositoryId,
           },
         },
       });
@@ -172,10 +144,20 @@ export function userPreference(
           verified: false,
           verifying: false,
           repositories: [],
-          ...action.payload,
+          defaultRepositoryId,
+          ...rest,
         },
       },
     });
-  }
-  return state;
-}
+  })
+  .case(startCreateAccount, state =>
+    update(state, {
+      initializeForm: {
+        visible: {
+          $set: true,
+        },
+      },
+    })
+  );
+
+export default reducer;

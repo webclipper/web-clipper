@@ -1,6 +1,3 @@
-/* eslint-disable complexity */
-import { Action } from 'redux';
-import { isType } from 'typescript-fsa';
 import {
   asyncFetchRepository,
   updateTitle,
@@ -15,6 +12,7 @@ import {
   asyncRunExtension,
 } from '../actions/userPreference';
 import update from 'immutability-helper';
+import { reducerWithInitialState } from 'typescript-fsa-reducers';
 
 const defaultState: ClipperStore = {
   title: '',
@@ -25,124 +23,95 @@ const defaultState: ClipperStore = {
   creatingDocument: false,
 };
 
-export default function clipper(
-  state: ClipperStore = defaultState,
-  action: Action
-): ClipperStore {
-  if (isType(action, asyncChangeAccount.started)) {
-    return update(state, {
-      loadingRepositories: {
-        $set: true,
-      },
-    });
-  }
-  if (isType(action, asyncChangeAccount.done)) {
-    return update(state, {
-      loadingRepositories: {
-        $set: false,
-      },
-      currentAccountId: {
-        $set: action.payload.params.id,
-      },
-      repositories: {
-        $set: action.payload.result.repositories,
-      },
-      currentRepository: {
-        // eslint-disable-next-line no-undefined
-        $set: undefined,
-      },
-    });
-  }
-  if (isType(action, initUserPreference)) {
-    const { defaultAccountId } = action.payload;
-    return update(state, {
+const reducer = reducerWithInitialState(defaultState)
+  .case(asyncChangeAccount.started, state => ({
+    ...state,
+    loadingRepositories: true,
+  }))
+  .case(
+    asyncChangeAccount.done,
+    (state, { params: { id }, result: { repositories } }) => {
+      return update(state, {
+        loadingRepositories: {
+          $set: false,
+        },
+        currentAccountId: {
+          $set: id,
+        },
+        repositories: {
+          $set: repositories,
+        },
+        currentRepository: {
+          // eslint-disable-next-line no-undefined
+          $set: undefined,
+        },
+      });
+    }
+  )
+  .case(initUserPreference, (state, { defaultAccountId }) =>
+    update(state, {
       currentAccountId: {
         $set: defaultAccountId || '',
       },
-    });
-  }
-  if (isType(action, asyncFetchRepository.failed)) {
-    return update(state, {
-      loadingRepositories: {
-        $set: false,
-      },
-    });
-  }
-  if (isType(action, asyncFetchRepository.done)) {
-    const { repositories } = action.payload.result;
-    return update(state, {
-      loadingRepositories: {
-        $set: false,
-      },
-      repositories: {
-        $set: repositories,
-      },
-    });
-  } else if (isType(action, updateTitle)) {
-    return update(state, {
-      title: {
-        $set: action.payload.title,
-      },
-    });
-  } else if (isType(action, selectRepository)) {
+    })
+  )
+  .case(asyncFetchRepository.done, (state, { result: { repositories } }) => ({
+    ...state,
+    loadingRepositories: false,
+    repositories,
+  }))
+  .case(asyncFetchRepository.failed, state => ({
+    ...state,
+    loadingRepositories: false,
+  }))
+  .case(updateTitle, (state, { title }) => ({
+    ...state,
+    title,
+  }))
+  .case(selectRepository, (state, { repositoryId }) => {
     const currentRepository = state.repositories.find(
-      o => o.id === action.payload.repositoryId
+      o => o.id === repositoryId
     );
-    return update(state, {
-      currentRepository: {
-        $set: currentRepository,
-      },
-    });
-  } else if (isType(action, initTabInfo)) {
-    return update(state, {
-      url: {
-        $set: action.payload.url,
-      },
-      title: {
-        $set: action.payload.title,
-      },
-    });
-  } else if (isType(action, asyncCreateDocument.started)) {
-    return update(state, {
-      creatingDocument: {
-        $set: true,
-      },
-    });
-  } else if (isType(action, asyncCreateDocument.failed)) {
-    return update(state, {
-      creatingDocument: {
-        $set: false,
-      },
-    });
-  } else if (isType(action, asyncCreateDocument.done)) {
-    return update(state, {
-      creatingDocument: {
-        $set: false,
-      },
-      completeStatus: {
-        $set: action.payload.result,
-      },
-    });
-  }
-  if (isType(action, asyncRunExtension.done)) {
-    const { result } = action.payload;
-    return update(state, {
+    return {
+      ...state,
+      currentRepository,
+    };
+  })
+  .case(initTabInfo, (state, { title, url }) => ({
+    ...state,
+    title,
+    url,
+  }))
+  .case(asyncCreateDocument.started, state => ({
+    ...state,
+    creatingDocument: true,
+  }))
+  .case(asyncCreateDocument.done, (state, { result: completeStatus }) => ({
+    ...state,
+    creatingDocument: false,
+    completeStatus,
+  }))
+  .case(asyncCreateDocument.failed, state => ({
+    ...state,
+    creatingDocument: false,
+  }))
+  .case(asyncRunExtension.done, (state, { result }) =>
+    update(state, {
       clipperData: {
         [result.pathname]: {
           $set: result.result,
         },
       },
-    });
-  }
-  if (isType(action, changeData)) {
-    const { data, pathName } = action.payload;
-    return update(state, {
+    })
+  )
+  .case(changeData, (state, { data, pathName }) =>
+    update(state, {
       clipperData: {
         [pathName]: {
           $set: data,
         },
       },
-    });
-  }
-  return state;
-}
+    })
+  );
+
+export default reducer;
