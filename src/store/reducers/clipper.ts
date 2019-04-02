@@ -6,11 +6,9 @@ import {
   asyncCreateDocument,
   asyncChangeAccount,
   changeData,
-} from '../actions/clipper';
-import {
   initUserPreference,
   asyncRunExtension,
-} from '../actions/userPreference';
+} from '../actions';
 import update from 'immutability-helper';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 

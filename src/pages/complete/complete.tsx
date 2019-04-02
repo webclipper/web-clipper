@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ToolContainer } from '../../components/container';
 import * as styles from './complete.scss';
 import { Button } from 'antd';
-import { asyncRemoveTool } from '../../store/actions/userPreference';
+import { asyncRemoveTool } from '../../store/actions';
 import { QuickResponseCode } from './quickResponseCode';
 
 const useActions = {

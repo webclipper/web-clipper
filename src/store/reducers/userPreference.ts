@@ -10,11 +10,9 @@ import {
   initUserPreference,
   updateCreateAccountForm,
   asyncSetDefaultPluginId,
-} from '../actions/userPreference';
-import {
   asyncVerificationAccessToken,
   startCreateAccount,
-} from './../actions/userPreference';
+} from '../actions';
 import { services } from '../../common/backend/index';
 import { extensions } from '../../extensions/index';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';

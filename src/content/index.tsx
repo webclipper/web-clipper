@@ -8,8 +8,9 @@ import {
   asyncHideTool,
   asyncRemoveTool,
   asyncRunScript,
-} from '../store/actions/userPreference';
-import { clickIcon, doYouAliveNow } from '../store/actions/browser';
+  clickIcon,
+  doYouAliveNow,
+} from '../store/actions';
 
 const turndownService = TurndownService();
 turndownService.addRule('lazyLoadImage', {

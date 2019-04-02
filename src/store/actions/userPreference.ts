@@ -1,17 +1,15 @@
 import { Repository, UserInfo } from './../../common/backend/index';
-import actionCreatorFactory from 'typescript-fsa';
-const actionCreator = actionCreatorFactory();
-
-import { USER_PREFERENCE } from './actionTypes';
 import { SerializedExtensionWithId } from '../../extensions/interface';
+import actionCreatorFactory from 'typescript-fsa';
+const actionCreator = actionCreatorFactory('USER_PREFERENCE');
 
 export const initUserPreference = actionCreator<PreferenceStorage>(
-  USER_PREFERENCE.INIT_USER_PREFERENCE
+  'INIT_USER_PREFERENCE'
 );
 
 export const updateCreateAccountForm = actionCreator<
   Pick<InitializeForm, 'info' | 'type' | 'defaultRepositoryId'>
->(USER_PREFERENCE.UPDATE_CREATE_ACCOUNT_FORM);
+>('UPDATE_CREATE_ACCOUNT_FORM');
 
 export const asyncVerificationAccessToken = actionCreator.async<
   {
@@ -23,14 +21,14 @@ export const asyncVerificationAccessToken = actionCreator.async<
     cancel?: boolean;
     error?: Error;
   }
->(USER_PREFERENCE.ASYNC_VERIFICATION_ACCESS_TOKEN);
+>('ASYNC_VERIFICATION_ACCESS_TOKEN');
 
 export const asyncChangeDefaultRepository = actionCreator.async<
   {
     defaultRepositoryId: string;
   },
   void
->(USER_PREFERENCE.ASYNC_CHANGE_DEFAULT_REPOSITORY);
+>('ASYNC_CHANGE_DEFAULT_REPOSITORY');
 
 export const asyncAddAccount = actionCreator.async<
   void,
@@ -39,15 +37,11 @@ export const asyncAddAccount = actionCreator.async<
     defaultAccountId: string;
   },
   void
->(USER_PREFERENCE.ASYNC_ADD_ACCOUNT);
+>('ASYNC_ADD_ACCOUNT');
 
-export const cancelCreateAccount = actionCreator(
-  USER_PREFERENCE.CANCEL_CREATE_ACCOUNT
-);
+export const cancelCreateAccount = actionCreator('CANCEL_CREATE_ACCOUNT');
 
-export const startCreateAccount = actionCreator(
-  USER_PREFERENCE.START_CREATE_ACCOUNT
-);
+export const startCreateAccount = actionCreator('START_CREATE_ACCOUNT');
 
 export const asyncDeleteAccount = actionCreator.async<
   { id: string },
@@ -56,7 +50,7 @@ export const asyncDeleteAccount = actionCreator.async<
     defaultAccountId: string;
   },
   void
->(USER_PREFERENCE.ASYNC_DELETE_ACCOUNT);
+>('ASYNC_DELETE_ACCOUNT');
 
 export const asyncUpdateCurrentAccountIndex = actionCreator.async<
   { id: string },
@@ -64,7 +58,7 @@ export const asyncUpdateCurrentAccountIndex = actionCreator.async<
     id: string;
   },
   void
->(USER_PREFERENCE.ASYNC_UPDATE_CURRENT_ACCOUNT_INDEX);
+>('ASYNC_UPDATE_CURRENT_ACCOUNT_INDEX');
 
 export const asyncSetEditorLiveRendering = actionCreator.async<
   {
@@ -74,7 +68,7 @@ export const asyncSetEditorLiveRendering = actionCreator.async<
     value: boolean;
   },
   void
->(USER_PREFERENCE.ASYNC_SET_EDITOR_LIVE_RENDERING);
+>('ASYNC_SET_EDITOR_LIVE_RENDERING');
 
 export const asyncSetShowLineNumber = actionCreator.async<
   {
@@ -84,14 +78,14 @@ export const asyncSetShowLineNumber = actionCreator.async<
     value: boolean;
   },
   void
->(USER_PREFERENCE.ASYNC_SET_SHOW_LINE_NUMBER);
+>('ASYNC_SET_SHOW_LINE_NUMBER');
 
 export const asyncHideTool = actionCreator.async<void, void, void>(
-  USER_PREFERENCE.ASYNC_HIDE_TOOL
+  'ASYNC_HIDE_TOOL'
 );
 
 export const asyncRemoveTool = actionCreator.async<void, void, void>(
-  USER_PREFERENCE.ASYNC_REMOVE_TOOL
+  'ASYNC_REMOVE_TOOL'
 );
 
 export const asyncSetShowQuickResponseCode = actionCreator.async<
@@ -102,7 +96,7 @@ export const asyncSetShowQuickResponseCode = actionCreator.async<
     value: boolean;
   },
   void
->(USER_PREFERENCE.ASYNC_SET_SHOW_QUICK_RESPONSE_CODE);
+>('ASYNC_SET_SHOW_QUICK_RESPONSE_CODE');
 
 export const asyncSetDefaultPluginId = actionCreator.async<
   {
@@ -110,7 +104,7 @@ export const asyncSetDefaultPluginId = actionCreator.async<
   },
   void,
   void
->(USER_PREFERENCE.ASYNC_SET_DEFAULT_PLUGIN_ID);
+>('ASYNC_SET_DEFAULT_PLUGIN_ID');
 
 export const asyncRunExtension = actionCreator.async<
   {
@@ -121,8 +115,8 @@ export const asyncRunExtension = actionCreator.async<
     pathname: string;
   },
   void
->(USER_PREFERENCE.ASYNC_RUN_EXTENSION);
+>('ASYNC_RUN_EXTENSION');
 
 export const asyncRunScript = actionCreator.async<string, void, void>(
-  USER_PREFERENCE.ASYNC_RUN_SCRIPT
+  'ASYNC_RUN_SCRIPT'
 );

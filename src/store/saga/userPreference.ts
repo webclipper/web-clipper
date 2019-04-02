@@ -14,7 +14,7 @@ import {
   asyncSetDefaultPluginId,
   asyncRunExtension,
   asyncRunScript,
-} from './../actions/userPreference';
+} from './../actions';
 import { call, fork, put, select, takeEvery } from 'redux-saga/effects';
 import backend, { documentServiceFactory } from '../../common/backend';
 import { message } from 'antd';

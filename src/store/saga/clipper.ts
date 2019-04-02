@@ -5,7 +5,7 @@ import {
   asyncChangeAccount,
   asyncCreateDocument,
   asyncFetchRepository,
-} from '../actions/clipper';
+} from '../actions';
 import {
   call,
   fork,

@@ -4,7 +4,7 @@ import {
   asyncDeleteAccount,
   asyncUpdateCurrentAccountIndex,
   startCreateAccount,
-} from '../../../store/actions/userPreference';
+} from '../../../store/actions';
 import { Avatar, Button, Card, Icon, List, Modal } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';

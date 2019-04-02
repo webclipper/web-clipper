@@ -1,6 +1,5 @@
-import { BROWSER } from './actionTypes';
 import actionCreatorFactory from 'typescript-fsa';
-const actionCreator = actionCreatorFactory();
+const actionCreator = actionCreatorFactory('BROWSER');
 
-export const doYouAliveNow = actionCreator(BROWSER.DO_YOU_ALIVE_NOW);
-export const clickIcon = actionCreator(BROWSER.CLICK_ICON);
+export const doYouAliveNow = actionCreator('DO_YOU_ALIVE_NOW');
+export const clickIcon = actionCreator('CLICK_ICON');

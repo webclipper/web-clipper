@@ -5,11 +5,9 @@ import {
   asyncCreateDocument,
   selectRepository,
   updateTitle,
-} from '../../store/actions/clipper';
-import {
   asyncRunExtension,
   asyncHideTool,
-} from '../../store/actions/userPreference';
+} from '../../store/actions';
 import { Avatar, Button, Icon, Input, Select } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';

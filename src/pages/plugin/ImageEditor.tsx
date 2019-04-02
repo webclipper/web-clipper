@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { asyncRunExtension } from '../../store/actions/userPreference';
+import { asyncRunExtension } from '../../store/actions';
 import { SerializedExtensionWithId } from '../../extensions/interface';
 import { EditorContainer } from '../../components/container';
 import * as styles from './index.scss';

@@ -6,7 +6,7 @@ import {
   asyncSetShowLineNumber,
   asyncSetShowQuickResponseCode,
   asyncSetDefaultPluginId,
-} from '../../store/actions/userPreference';
+} from '../../store/actions';
 import { bindActionCreators, Dispatch } from 'redux';
 import { CenterContainer } from '../../components/container';
 import { connect } from 'react-redux';

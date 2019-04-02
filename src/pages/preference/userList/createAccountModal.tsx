@@ -4,7 +4,7 @@ import {
   asyncVerificationAccessToken,
   cancelCreateAccount,
   updateCreateAccountForm,
-} from '../../../store/actions/userPreference';
+} from '../../../store/actions';
 
 import { bindActionCreators, Dispatch } from 'redux';
 import { Button, Form, Modal, Select, Col, Row } from 'antd';

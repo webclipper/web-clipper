@@ -6,8 +6,7 @@ import storage from '../../common/storage';
 import { all, call, put, spawn, delay } from 'redux-saga/effects';
 import { asyncFetchRepositorySaga, clipperRootSagas } from './clipper';
 import browserService, { BrowserTab } from '../../common/browser';
-import { initTabInfo } from '../actions/clipper';
-import { initUserPreference } from '../actions/userPreference';
+import { initTabInfo, initUserPreference } from '../actions';
 import { push } from 'connected-react-router';
 import { userPreferenceSagas } from './userPreference';
 
