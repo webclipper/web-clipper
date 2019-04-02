@@ -21,6 +21,8 @@ import {
   ExtensionType,
   InitContext,
 } from '../../extensions/interface';
+import ClipExtensions from './clipExtensions';
+import ToolExtensions from './toolExtensions';
 
 const useActions = {
   asyncHideTool: asyncHideTool.started,
@@ -45,14 +47,18 @@ const mapStateToProps = ({
     loadingRepositories,
   },
   userPreference: { accounts, extensions },
-  router,
+  router: {
+    location: { pathname },
+  },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
+  const usePlugin = pathname.startsWith('/plugins');
+  const disableCreateDocument = !usePlugin || creatingDocument;
   return {
     accounts,
     extensions,
     url,
-    router,
+    pathname,
     creatingDocument,
     loadingRepositories,
     currentAccountId,
@@ -60,6 +66,8 @@ const mapStateToProps = ({
     currentRepository,
     currentAccount,
     repositories,
+    usePlugin,
+    disableCreateDocument,
   };
 };
 type PageStateProps = ReturnType<typeof mapStateToProps>;
@@ -81,9 +89,7 @@ class Page extends React.Component<PageProps> {
       currentRepository,
       loadingRepositories,
       title,
-      router: {
-        location: { pathname },
-      },
+      pathname,
     }: PageProps) => {
       return {
         currentRepository,
@@ -116,6 +122,10 @@ class Page extends React.Component<PageProps> {
     return title.indexOf(select) !== -1;
   };
 
+  handleCreateDocument = () => {
+    this.props.asyncCreateDocument();
+  };
+
   render() {
     const {
       creatingDocument,
@@ -126,7 +136,8 @@ class Page extends React.Component<PageProps> {
       loadingRepositories,
       extensions,
       url,
-      router,
+      pathname,
+      disableCreateDocument,
     } = this.props;
 
     let repositoryId;
@@ -152,7 +163,7 @@ class Page extends React.Component<PageProps> {
               type: currentAccount && currentAccount.type,
             },
             url,
-            pathname: router.location.pathname,
+            pathname,
           };
           // eslint-disable-next-line no-eval
           return eval(o.init);
@@ -184,55 +195,22 @@ class Page extends React.Component<PageProps> {
             size="large"
             type="primary"
             loading={creatingDocument}
-            disabled={creatingDocument}
-            onClick={() => {
-              this.props.asyncCreateDocument();
-            }}
+            disabled={disableCreateDocument}
+            onClick={this.handleCreateDocument}
             block
           >
             保存内容
           </Button>
         </section>
-        <section className={`${styles.section} ${styles.sectionLine}`}>
-          <h1 className={styles.sectionTitle}>扩展</h1>
-          {toolExtensions.map(o => (
-            <Button
-              key={o.id}
-              className={styles.menuButton}
-              title={o.manifest.description}
-              onClick={() => {
-                this.props.asyncRunExtension({ extension: o });
-              }}
-            >
-              <Icon type={o.manifest.icon} />
-            </Button>
-          ))}
-        </section>
-        <section className={`${styles.section} ${styles.sectionLine}`}>
-          <h1 className={styles.sectionTitle}>剪藏格式</h1>
-
-          {clipExtensions.map(plugin => (
-            <Button
-              title={plugin.manifest.description}
-              block
-              key={plugin.id}
-              className={styles.menuButton}
-              style={
-                plugin.id === this.props.router.location.pathname
-                  ? { color: '#40a9ff' }
-                  : {}
-              }
-              onClick={() => {
-                if (plugin.id !== this.props.router.location.pathname) {
-                  this.props.push('/plugins/' + plugin.id);
-                }
-              }}
-            >
-              <Icon type={plugin.manifest.icon} />
-              {plugin.manifest.name}
-            </Button>
-          ))}
-        </section>
+        <ToolExtensions
+          extensions={toolExtensions}
+          onClick={extension => this.props.asyncRunExtension({ extension })}
+        />
+        <ClipExtensions
+          extensions={clipExtensions}
+          onClick={router => this.props.push(router)}
+          pathname={pathname}
+        />
         <section className={styles.section}>
           <h1 className={styles.sectionTitle}>保存的知识库</h1>
           <Select
@@ -255,12 +233,11 @@ class Page extends React.Component<PageProps> {
             })}
           </Select>
         </section>
-
         <section className={`${styles.toolbar} ${styles.sectionLine}`}>
           <Button
             className={`${styles.toolbarButton} `}
             onClick={() => {
-              if (this.props.router.location.pathname === '/preference') {
+              if (pathname === '/preference') {
                 this.props.push('/');
               } else {
                 this.props.push('/preference');

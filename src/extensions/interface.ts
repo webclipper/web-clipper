@@ -170,4 +170,5 @@ export class ImageExtension<T = string> extends Extension<
 
 export interface SerializedExtensionWithId extends SerializedExtension {
   id: string;
+  router: string;
 }

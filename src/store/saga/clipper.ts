@@ -67,6 +67,7 @@ export function* asyncCreateDocumentSaga() {
       extensions,
     };
   };
+
   const selectState: ReturnType<typeof selector> = yield select(selector);
   const {
     currentRepository,
@@ -76,7 +77,6 @@ export function* asyncCreateDocumentSaga() {
     clipperData,
     extensions,
   } = selectState;
-
   let repositoryId;
   if (defaultRepositoryId) {
     repositoryId = defaultRepositoryId;
