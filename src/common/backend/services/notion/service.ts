@@ -95,14 +95,16 @@ export default class NotionDocumentService implements DocumentService {
     const spaces = this.userContent.recordMap.space;
     const blocks = this.userContent.recordMap.block;
 
-    const result: Repository[] = Object.values(blocks).map(({ value }) => ({
-      id: value.id,
-      name: value.properties.title.toString(),
-      private: false,
-      owner: spaces[value.parent_id].value.domain,
-      createdAt: dayjs(value.created_time).format('YYYY-MM-DD'),
-      namespace: '',
-    }));
+    const result: Repository[] = Object.values(blocks)
+      .filter(({ value }) => !!value.properties)
+      .map(({ value }) => ({
+        id: value.id,
+        name: value.properties.title.toString(),
+        private: false,
+        owner: spaces[value.parent_id].value.domain,
+        createdAt: dayjs(value.created_time).format('YYYY-MM-DD'),
+        namespace: '',
+      }));
 
     this.repositories = result;
 
