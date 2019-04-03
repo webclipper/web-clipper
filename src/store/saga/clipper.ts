@@ -65,6 +65,7 @@ export function* asyncCreateDocumentSaga() {
       router,
       title: clipper.title,
       extensions,
+      repositories: clipper.repositories,
     };
   };
 
@@ -76,9 +77,13 @@ export function* asyncCreateDocumentSaga() {
     router,
     clipperData,
     extensions,
+    repositories,
   } = selectState;
   let repositoryId;
-  if (defaultRepositoryId) {
+  if (
+    defaultRepositoryId &&
+    repositories.some(o => o.id === defaultRepositoryId)
+  ) {
     repositoryId = defaultRepositoryId;
   }
   if (currentRepository) {
