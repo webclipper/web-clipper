@@ -8,8 +8,11 @@ export default new ToolExtension(
     description: '同步图片到语雀图床',
   },
   {
-    init: ({ pathname }) => {
+    init: ({ pathname, accountInfo: { type } }) => {
       if (pathname === '/') {
+        return false;
+      }
+      if (type !== 'yuque') {
         return false;
       }
       return true;
