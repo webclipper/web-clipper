@@ -1,7 +1,7 @@
 {
   "name": "yuque-web-clipper",
   "version": "1.2.0",
-  "description": "杭州西湖区最优秀的网页剪藏插件",
+  "description": "The best webpage clipping plugin in Xihu District",
   "scripts": {
     "commit": "git-cz",
     "test": "jest --verbose",
