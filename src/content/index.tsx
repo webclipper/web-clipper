@@ -3,6 +3,7 @@ import * as styles from './index.scss';
 import Highlighter from '../common/highlight';
 import AreaSelector from '../common/areaSelector';
 import TurndownService from 'turndown';
+import * as QRCode from 'qrcode';
 import {
   asyncHideTool,
   asyncRemoveTool,
@@ -60,6 +61,7 @@ const listeners = new MessageListenerCombiner()
       Readability,
       document,
       AreaSelector,
+      QRCode,
     };
     if (script) {
       (async () => {

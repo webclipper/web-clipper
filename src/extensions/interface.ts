@@ -18,6 +18,7 @@ export interface ContentScriptContext {
   toggleClipper: any;
   Readability: any;
   document: Document;
+  QRCode: any;
 }
 
 export interface Message {
