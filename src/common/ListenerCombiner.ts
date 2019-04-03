@@ -35,7 +35,7 @@ export class MessageListenerCombiner implements ListenerCombiner {
     if (actionCase) {
       const { actionCreator, handler } = actionCase;
       if (isType(action, actionCreator)) {
-        handler(action.payload, sender, sendResponse);
+        return handler(action.payload, sender, sendResponse);
       }
     }
   };
