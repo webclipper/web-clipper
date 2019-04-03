@@ -3,7 +3,6 @@ import * as styles from './index.scss';
 import Highlighter from '../common/highlight';
 import AreaSelector from '../common/areaSelector';
 import TurndownService from 'turndown';
-import { AnyAction, isType } from 'typescript-fsa';
 import {
   asyncHideTool,
   asyncRemoveTool,
@@ -11,6 +10,7 @@ import {
   clickIcon,
   doYouAliveNow,
 } from '../store/actions';
+import { MessageListenerCombiner } from '../common/ListenerCombiner';
 
 const turndownService = TurndownService();
 turndownService.addRule('lazyLoadImage', {
@@ -24,15 +24,18 @@ turndownService.addRule('lazyLoadImage', {
   },
 });
 
-chrome.runtime.onMessage.addListener((action: AnyAction, _, sendResponse) => {
-  if (isType(action, doYouAliveNow)) {
+const listeners = new MessageListenerCombiner()
+  .case(doYouAliveNow, (_payload, _sender, sendResponse) => {
     sendResponse(true);
     return true;
-  }
-});
-
-chrome.runtime.onMessage.addListener((action: AnyAction, _, __) => {
-  if (isType(action, clickIcon)) {
+  })
+  .case(asyncHideTool.started, () => {
+    $(`.${styles.toolFrame}`).hide();
+  })
+  .case(asyncRemoveTool.started, () => {
+    $(`.${styles.toolFrame}`).remove();
+  })
+  .case(clickIcon, () => {
     if ($(`.${styles.toolFrame}`).length === 0) {
       $('body').append(
         `<iframe src="${chrome.extension.getURL('tool.html')}" class=${
@@ -42,53 +45,35 @@ chrome.runtime.onMessage.addListener((action: AnyAction, _, __) => {
     } else {
       $(`.${styles.toolFrame}`).toggle();
     }
-    return true;
-  }
-});
-
-chrome.runtime.onMessage.addListener((action: AnyAction, _, __) => {
-  if (isType(action, asyncHideTool.started)) {
-    $(`.${styles.toolFrame}`).hide();
-  }
-});
-
-chrome.runtime.onMessage.addListener((action: AnyAction, _, __) => {
-  if (isType(action, asyncRemoveTool.started)) {
-    $(`.${styles.toolFrame}`).remove();
-  }
-});
-
-chrome.runtime.onMessage.addListener((action: AnyAction, _, sendResponse) => {
-  if (isType(action, asyncRunScript.started)) {
+  })
+  .case(asyncRunScript.started, (script, _sender, sendResponse) => {
     const toggleClipper = () => {
       $(`.${styles.toolFrame}`).toggle();
     };
-
-    if (action) {
-      // @ts-ignore
-      // eslint-disable-next-line
-      const context: any = {
-        $,
-        turndown: turndownService,
-        Highlighter,
-        toggleClipper,
-        Readability,
-        document,
-        AreaSelector,
-      };
-      if (action.payload) {
-        (async () => {
-          try {
-            // eslint-disable-next-line
-            const response = await eval(action.payload);
-            sendResponse(response);
-          } catch (_error) {
-            console.log(_error);
-            sendResponse('');
-          }
-        })();
-      }
-      return true;
+    // @ts-ignore
+    // eslint-disable-next-line
+    const context: any = {
+      $,
+      turndown: turndownService,
+      Highlighter,
+      toggleClipper,
+      Readability,
+      document,
+      AreaSelector,
+    };
+    if (script) {
+      (async () => {
+        try {
+          // eslint-disable-next-line
+          const response = await eval(script);
+          sendResponse(response);
+        } catch (_error) {
+          console.log(_error);
+          sendResponse('');
+        }
+      })();
     }
-  }
-});
+    return true;
+  });
+
+chrome.runtime.onMessage.addListener(listeners.handle);
