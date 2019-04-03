@@ -7,4 +7,5 @@ export default {
   type: 'yuque',
   service: Service,
   form: Form,
+  homePage: 'https://www.yuque.com',
 };

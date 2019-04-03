@@ -7,4 +7,5 @@ export default {
   type: 'github',
   service: Service,
   form: Form,
+  homePage: 'https://github.com/',
 };

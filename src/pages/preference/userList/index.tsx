@@ -16,11 +16,12 @@ const useActions = {
 };
 
 const mapStateToProps = ({
-  userPreference: { accounts, defaultAccountId },
+  userPreference: { accounts, defaultAccountId, servicesMeta },
 }: GlobalStore) => {
   return {
     accounts,
     defaultAccountId,
+    servicesMeta,
   };
 };
 type PageState = {};
@@ -36,22 +37,6 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   );
 
 const defaultDescription = '还没有个人资料';
-
-const typeToIcon = (type: string) => {
-  let map = new Map<string, { icon: string; href: string }>();
-  map.set('yuque', { icon: 'yuque', href: 'https://www.yuque.com' });
-  map.set('github', { icon: 'github', href: 'https://github.com/' });
-
-  const data = map.get(type);
-  if (data) {
-    return (
-      <a href={data.href} target="blank">
-        <Icon type={data.icon} />
-      </a>
-    );
-  }
-  return <div>{type}</div>;
-};
 
 const cardMeta = (avatar: string | undefined, name: string) => {
   return (
@@ -79,6 +64,26 @@ class Page extends React.Component<PageProps, PageState> {
     this.props.asyncUpdateCurrentAccountIndex({
       id: account.id,
     });
+  };
+
+  renderExtra = (type: string) => {
+    const { servicesMeta } = this.props;
+    const service = servicesMeta[type];
+    if (!service || !service.icon) {
+      return <div>{type}</div>;
+    }
+    const { icon, homePage } = service;
+    let iconElement;
+    if (icon.startsWith('http')) {
+      iconElement = <img src={icon} style={{ width: 16 }} />;
+    } else {
+      iconElement = <Icon type={icon} style={{ fontSize: '16px' }} />;
+    }
+    return (
+      <a href={homePage} target="blank">
+        {iconElement}
+      </a>
+    );
   };
 
   render() {
@@ -112,7 +117,7 @@ class Page extends React.Component<PageProps, PageState> {
                   margin: '10px',
                 }}
                 title={cardMeta(account.avatar, account.name)}
-                extra={typeToIcon(account.type)}
+                extra={this.renderExtra(account.type)}
                 actions={[
                   <Icon
                     key="heart"

@@ -49,5 +49,6 @@ export interface ServiceMeta {
   icon: string;
   type: string;
   service: DocumentServiceConstructAble;
+  homePage: string;
   form: any;
 }

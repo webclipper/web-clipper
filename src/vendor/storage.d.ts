@@ -67,6 +67,8 @@ interface UserPreferenceStore {
   servicesMeta: {
     [type: string]: {
       name: string;
+      icon: string;
+      homePage: string;
     };
   };
   extensions: any[];

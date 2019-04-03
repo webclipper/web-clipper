@@ -18,8 +18,11 @@ import { extensions } from '../../extensions/index';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 
 const servicesMeta = services.reduce(
-  (previousValue: UserPreferenceStore['servicesMeta'], { type, name }) => {
-    previousValue[type] = { name };
+  (
+    previousValue: UserPreferenceStore['servicesMeta'],
+    { type, name, icon, homePage }
+  ) => {
+    previousValue[type] = { name, icon, homePage };
     return previousValue;
   },
   {}
