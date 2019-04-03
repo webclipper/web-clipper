@@ -99,7 +99,7 @@ export default class NotionDocumentService implements DocumentService {
       return [];
     }
     const result: Repository[] = Object.values(blocks)
-      .filter(({ value }) => !!value.properties)
+      .filter(({ value }) => !!value.properties && !!spaces[value.parent_id])
       .map(({ value }) => ({
         id: value.id,
         name: value.properties.title.toString(),
