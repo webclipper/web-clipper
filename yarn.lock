@@ -1993,10 +1993,10 @@ copy-to-clipboard@^3.0.8:
   dependencies:
     toggle-selection "^1.0.3"
 
-copy-webpack-plugin@^5.0.1:
-  version "5.0.1"
-  resolved "http://registry.npm.taobao.org/copy-webpack-plugin/download/copy-webpack-plugin-5.0.1.tgz#97997989cc5bc69976bf64f660bd19663481f089"
-  integrity sha1-l5l5icxbxpl2v2T2YL0ZZjSB8Ik=
+copy-webpack-plugin@^5.0.2:
+  version "5.0.2"
+  resolved "http://registry.npm.taobao.org/copy-webpack-plugin/download/copy-webpack-plugin-5.0.2.tgz#56186dfddbf9aa1b29c97fa4c796c1be98870da4"
+  integrity sha1-Vhht/dv5qhspyX+kx5bBvpiHDaQ=
   dependencies:
     cacache "^11.3.1"
     find-cache-dir "^2.0.0"
