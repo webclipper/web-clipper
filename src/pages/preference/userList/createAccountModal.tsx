@@ -7,10 +7,11 @@ import {
 } from '../../../store/actions';
 
 import { bindActionCreators, Dispatch } from 'redux';
-import { Button, Form, Modal, Select, Col, Row } from 'antd';
+import { Button, Form, Modal, Select, Col, Row, Icon } from 'antd';
 import { connect } from 'react-redux';
 import { FormComponentProps } from 'antd/lib/form';
 import { services } from '../../../common/backend';
+import * as styles from './index.scss';
 
 const mapStateToProps = ({
   userPreference: { initializeForm },
@@ -74,7 +75,17 @@ class InitializeForm extends React.Component<PageProps> {
     return (
       <Modal
         visible={visible}
-        title="绑定新账号"
+        title={
+          <div className={styles.modalTitle}>
+            绑定新账号
+            <a
+              href={'https://www.yuque.com/yuqueclipper/help_cn/bind_account'}
+              target="_blank"
+            >
+              <Icon type="question-circle" />
+            </a>
+          </div>
+        }
         okText="绑定"
         okType={disableOkButton ? 'dashed' : 'primary'}
         onCancel={() => {
