@@ -13,10 +13,10 @@ after_success:
   - npm i codecov && codecov
 deploy:
   provider: releases
-  on:
-    tags: true
   api_key:
     secure: fGBgvs7he16b2KTpiMl/8ZnT6OqBJLdtmHb5OHvXIAyBRg3vHwfESHT86RjHEqN9ZtIkmHF/wH13AQTetf8lKgJleJ3NFPkYx6up7jjxOh+t0Plidp12TBFZhy2mGLujNAiimtfEcIAov0iM/GQHdDE5aF3dR9ryX/lYSrOJfGa/0+cVQp2ilu1YTZL7gdmsUNyvMkTHTrgvfDWm6u4vOMwMJJUUEQDg8y0GddH+T4cA9hgwIaSSuU1XOzJhyagrX4IggyxHZ0nEBOEKJw2Gn4driF+ksSNms7MAUazJ+7/opvEBBZz9XEU2GJAt2KsjkvtMr2GYda5228Wj1HU07v72aTG/e9Tm613E5DHoecLHbsHm02zvmwGLYZ78YeOHbs8cTTx+lohcQQvapdG8X9jyWs1vz5vP7JlxsvgmB3oZ+WCwoJS/Enp+Lyen92dLPsufn/SE7SslaqP1sY/vlnz56gwEL1n8+yzdnW0SFgzJBO8UfNalnKs1YcdTCYg744n+HbcCJFFQKQihQOHs5dwmrb7ssYxXh7CqWuBGUM5IxSWtprs8o90YYoh1hNTmmpOUS9IerRcVwrMlZK2pziDwiCZ6Xqho+YVDza/CFL8/QQ1HbZ2StT3XFqWpG8wkRsrTiGaq52RbHZHX59+I04PS0S47nu6PVSwFABFe0PQ=
   file: yuquewebclipper.zip
+  skip_cleanup: true
   on:
     repo: yuquewebclipper/yuque-web-clipper
+    tags: true

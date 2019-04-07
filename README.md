@@ -10,7 +10,7 @@
 
 ### Install
 
-[Chrome Store](https://chrome.google.com/webstore/detail/语雀剪藏/pdecnpgmmhjfnoiebndphjggimhjhdog)
+Sorry,this extension was removed from the chrome store.
 
 ### Support Site
 
