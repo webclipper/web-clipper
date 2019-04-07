@@ -8,7 +8,7 @@
     "dev": "NODE_ENV=development webpack --config webpack/webpack.dev.js --watch",
     "build": "webpack --config webpack/webpack.prod.js",
     "lint": "eslint --ext .js,.ts,.tsx --ignore-pattern bad.* .",
-    "release": "zsh shell/release.zsh"
+    "release": "npm run build && node script/release.js"
   },
   "pre-commit": [
     "lint",
@@ -73,6 +73,7 @@
     "babel-eslint": "^10.0.1",
     "clean-webpack-plugin": "^0.1.19",
     "commitizen": "^2.10.1",
+    "compressing": "^1.4.0",
     "copy-webpack-plugin": "^5.0.1",
     "css-loader": "^1.0.0",
     "cz-conventional-changelog": "^2.1.0",

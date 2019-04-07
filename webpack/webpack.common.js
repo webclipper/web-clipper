@@ -11,7 +11,7 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
 
-const baseConfig = {
+module.exports = {
   entry: {
     background: resolve('src/background/index.ts'),
     tool: resolve('src/pages/app.tsx'),
@@ -20,6 +20,9 @@ const baseConfig = {
   output: {
     path: resolve('dist/js'),
     filename: '[name].js',
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', 'scss', 'less'],
   },
   module: {
     rules: [
@@ -105,9 +108,6 @@ const baseConfig = {
       },
     ],
   },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', 'scss', 'less'],
-  },
   plugins: [
     process.env.NODE_ENV === 'development'
       ? new WebpackChromeReloaderPlugin({
@@ -144,5 +144,3 @@ const baseConfig = {
     }),
   ].filter(plugin => !!plugin),
 };
-
-module.exports = baseConfig;
