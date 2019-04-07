@@ -8,7 +8,8 @@
     "dev": "NODE_ENV=development webpack --config webpack/webpack.dev.js --watch",
     "build": "webpack --config webpack/webpack.prod.js",
     "lint": "eslint --ext .js,.ts,.tsx --ignore-pattern bad.* .",
-    "release": "npm run build && node script/release.js"
+    "release": "npm run build && node script/release.js",
+    "travis": "npm run build && node script/travis_release.js"
   },
   "pre-commit": [
     "lint",
