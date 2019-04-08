@@ -9118,10 +9118,10 @@ webidl-conversions@^4.0.2:
   resolved "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
   integrity sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==
 
-webpack-chrome-extension-reloader@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/webpack-chrome-extension-reloader/-/webpack-chrome-extension-reloader-1.2.0.tgz#c1053179baa02bd048046b5c8735cf2bf14e29b4"
-  integrity sha512-nhRb7jm7UUyEqSaSeWjA9e4eQFAqkcmEi66TMoYit6m0cI/ofTp8/rBjsHkutZTCCgzAu05ubaw7alMK95xCvw==
+webpack-chrome-extension-reloader@^1.3.0:
+  version "1.3.0"
+  resolved "http://registry.npm.taobao.org/webpack-chrome-extension-reloader/download/webpack-chrome-extension-reloader-1.3.0.tgz#e94b1d6d3395e0e885e203dea0a47e276e53429b"
+  integrity sha1-6UsdbTOV4OiF4gPeoKR+J25TQps=
   dependencies:
     colors "^1.1.2"
     lodash "^4.17.4"
