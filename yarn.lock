@@ -889,10 +889,10 @@ ant-design-palettes@^1.1.3:
   dependencies:
     tinycolor2 "^1.4.1"
 
-antd@^3.16.1:
-  version "3.16.1"
-  resolved "http://registry.npm.taobao.org/antd/download/antd-3.16.1.tgz#1d253931fc33e960f22025bef2d5c1548116ec6c"
-  integrity sha1-HSU5Mfwz6WDyICW+8tXBVIEW7Gw=
+antd@^3.16.2:
+  version "3.16.2"
+  resolved "http://registry.npm.taobao.org/antd/download/antd-3.16.2.tgz#a3b4a844a6de82e6c87c96f88dda2317f4d89075"
+  integrity sha1-o7SoRKbegubIfJb4jdojF/TYkHU=
   dependencies:
     "@ant-design/icons" "~1.2.0"
     "@ant-design/icons-react" "~1.1.2"
