@@ -8,9 +8,15 @@
     </a>
 </p>
 
+### Important
+
+The extension was removed from the chrome for no reason. Need to install manually
+
+插件无缘无故被 chrome 下架了。需要手动安装。
+
 ### Install
 
-1. Download the yuquewebclipper.zip  from [release page](<https://github.com/yuquewebclipper/yuque-web-clipper/releases>)
+1. Download the yuquewebclipper.zip from [release page](https://github.com/yuquewebclipper/yuque-web-clipper/releases)
 2. Go to **chrome://extensions/** and check the box for **Developer mode** in the top right.
 3. Locate the ZIP file on your computer and unzip it.
 4. Go back to the chrome://extensions/ page and click the **Load unpacked extension **button and select the unzipped folder for your extension to install it.
