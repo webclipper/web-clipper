@@ -8880,10 +8880,10 @@ typescript-compare@^0.0.2:
   dependencies:
     typescript-logic "^0.0.0"
 
-typescript-fsa-reducers@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/typescript-fsa-reducers/-/typescript-fsa-reducers-1.2.0.tgz#015043b22440ce517e696f24564f7233b6a5a67b"
-  integrity sha512-JGIqBDf4SV+pE8CDenTqtr13cts7kwS3/YbYhLoKZZMZWSIhwn+xwwbrg/oEfvftLykyE9PXrySy6A62m6gEaw==
+typescript-fsa-reducers@^1.2.1:
+  version "1.2.1"
+  resolved "http://registry.npm.taobao.org/typescript-fsa-reducers/download/typescript-fsa-reducers-1.2.1.tgz#2af1a85f7b88fb0dfb9fa59d5da51a5d7ac6543f"
+  integrity sha1-KvGoX3uI+w37n6WdXaUaXXrGVD8=
 
 typescript-fsa@^3.0.0-beta-2:
   version "3.0.0-beta-2"
