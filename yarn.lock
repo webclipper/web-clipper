@@ -8831,10 +8831,10 @@ ts-import-plugin@^1.5.5:
   dependencies:
     tslib "^1.9.2"
 
-ts-jest@^24.0.0:
-  version "24.0.0"
-  resolved "http://registry.npm.taobao.org/ts-jest/download/ts-jest-24.0.0.tgz#3f26bf2ec1fa584863a5a9c29bd8717d549efbf6"
-  integrity sha1-Pya/LsH6WEhjpanCm9hxfVSe+/Y=
+ts-jest@^24.0.2:
+  version "24.0.2"
+  resolved "http://registry.npm.taobao.org/ts-jest/download/ts-jest-24.0.2.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2Fts-jest%2Fdownload%2Fts-jest-24.0.2.tgz#8dde6cece97c31c03e80e474c749753ffd27194d"
+  integrity sha1-jd5s7Ol8McA+gOR0x0l1P/0nGU0=
   dependencies:
     bs-logger "0.x"
     buffer-from "1.x"
