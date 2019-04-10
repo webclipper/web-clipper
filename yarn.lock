@@ -513,10 +513,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/qs@^6.5.1":
-  version "6.5.2"
-  resolved "https://registry.npmjs.org/@types/qs/-/qs-6.5.2.tgz#7f347062655056662845ba4bb79dcbfdc382cd61"
-  integrity sha512-47kAAs3yV/hROraCTQYDMh4p/6zI9+gtssjD0kq9OWsGdLcBge59rl49FnCuJ+iWxEKiqFz6KXzeGH5DRVjNJA==
+"@types/qs@^6.5.3":
+  version "6.5.3"
+  resolved "http://registry.npm.taobao.org/@types/qs/download/@types/qs-6.5.3.tgz#1c3b71b091eaeaf5924538006b7f70603ce63d38"
+  integrity sha1-HDtxsJHq6vWSRTgAa39wYDzmPTg=
 
 "@types/react-dom@^16.8.3":
   version "16.8.3"
