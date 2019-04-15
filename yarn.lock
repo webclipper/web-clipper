@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ant-design/icons-react@~1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmjs.org/@ant-design/icons-react/-/icons-react-1.1.2.tgz#df25c4560864f8a3b687b305c3238daff048ed72"
-  integrity sha512-7Fgt9d8ABgxrhZxsFjHk/VpPcxodQJJhbJO8Lsh7u58pGN4NoxxW++92naeGTXCyqZsbDPBReP+SC0bdBtbsGQ==
+"@ant-design/icons-react@~1.1.5":
+  version "1.1.5"
+  resolved "http://registry.npm.taobao.org/@ant-design/icons-react/download/@ant-design/icons-react-1.1.5.tgz#1b03da8dcced2a4bb982ef7b25c1d24014c35a68"
+  integrity sha1-GwPajcztKku5gu97JcHSQBTDWmg=
   dependencies:
     ant-design-palettes "^1.1.3"
     babel-runtime "^6.26.0"
@@ -889,13 +889,13 @@ ant-design-palettes@^1.1.3:
   dependencies:
     tinycolor2 "^1.4.1"
 
-antd@^3.16.1:
-  version "3.16.1"
-  resolved "http://registry.npm.taobao.org/antd/download/antd-3.16.1.tgz#1d253931fc33e960f22025bef2d5c1548116ec6c"
-  integrity sha1-HSU5Mfwz6WDyICW+8tXBVIEW7Gw=
+antd@^3.16.3:
+  version "3.16.3"
+  resolved "http://registry.npm.taobao.org/antd/download/antd-3.16.3.tgz#66ecdbd96a31e2a4d239106a106b17629beaa141"
+  integrity sha1-Zuzb2Wox4qTSORBqEGsXYpvqoUE=
   dependencies:
     "@ant-design/icons" "~1.2.0"
-    "@ant-design/icons-react" "~1.1.2"
+    "@ant-design/icons-react" "~1.1.5"
     "@types/react-slick" "^0.23.3"
     array-tree-filter "^2.1.0"
     babel-runtime "6.x"
