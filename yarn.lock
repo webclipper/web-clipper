@@ -516,10 +516,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-redux@^7.0.5":
-  version "7.0.5"
-  resolved "http://registry.npm.taobao.org/@types/react-redux/download/@types/react-redux-7.0.5.tgz#4d284f8565cd9f7316086cce50e87f3d201d0880"
-  integrity sha1-TShPhWXNn3MWCGzOUOh/PSAdCIA=
+"@types/react-redux@^7.0.7":
+  version "7.0.7"
+  resolved "http://registry.npm.taobao.org/@types/react-redux/download/@types/react-redux-7.0.7.tgz#55492cb022559f1e1e8685b66b2fee1383ff123a"
+  integrity sha1-VUkssCJVnx4ehoW2ay/uE4P/Ejo=
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.0"
     "@types/react" "*"
