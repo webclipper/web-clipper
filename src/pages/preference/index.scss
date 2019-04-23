@@ -6,15 +6,21 @@
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 12px 0px;
   border: 2px solid #dddddd;
+  :global {
+    .ant-tabs-content {
+      height: 100%;
+    }
+  }
 }
 
 .closeIcon {
   position: absolute;
   padding: 10px;
   right: 0;
-  z-index: 100000;
   top: 0;
 }
 .tabPane {
   padding: 20px;
+  height: 100%;
+  overflow-y: scroll;
 }

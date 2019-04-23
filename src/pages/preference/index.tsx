@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as styles from './index.scss';
 import UserList from './userList/index';
+import ImageHosting from './imageHosting';
 import {
   asyncSetEditorLiveRendering,
   asyncSetShowLineNumber,
@@ -16,6 +17,7 @@ import {
   ExtensionType,
   SerializedExtensionWithId,
 } from '../../extensions/interface';
+
 const TabPane = Tabs.TabPane;
 
 const useActions = {
@@ -81,6 +83,13 @@ class Page extends React.Component<PageProps, PageState> {
             >
               <TabPane tab="账户设置" key="base" className={styles.tabPane}>
                 <UserList />
+              </TabPane>
+              <TabPane
+                tab="图床设置"
+                key="imageHost"
+                className={styles.tabPane}
+              >
+                <ImageHosting />
               </TabPane>
               <TabPane tab="工具设置" key="tool" className={styles.tabPane}>
                 <List.Item

@@ -1,15 +1,11 @@
 import { Repository, UserInfo } from './../../common/backend/index';
 import { SerializedExtensionWithId } from '../../extensions/interface';
-import actionCreatorFactory from 'typescript-fsa';
+import actionCreatorFactory from '../../common/typescript-fsa';
 const actionCreator = actionCreatorFactory('USER_PREFERENCE');
 
 export const initUserPreference = actionCreator<PreferenceStorage>(
   'INIT_USER_PREFERENCE'
 );
-
-export const updateCreateAccountForm = actionCreator<
-  Pick<InitializeForm, 'info' | 'type' | 'defaultRepositoryId'>
->('UPDATE_CREATE_ACCOUNT_FORM');
 
 export const asyncVerificationAccessToken = actionCreator.async<
   {
@@ -31,7 +27,13 @@ export const asyncChangeDefaultRepository = actionCreator.async<
 >('ASYNC_CHANGE_DEFAULT_REPOSITORY');
 
 export const asyncAddAccount = actionCreator.async<
-  void,
+  {
+    info: any;
+    imageHosting?: string;
+    defaultRepositoryId?: string;
+    type: string;
+    callback(): void;
+  },
   {
     accounts: AccountPreference[];
     defaultAccountId: string;
@@ -39,9 +41,24 @@ export const asyncAddAccount = actionCreator.async<
   void
 >('ASYNC_ADD_ACCOUNT');
 
-export const cancelCreateAccount = actionCreator('CANCEL_CREATE_ACCOUNT');
+export const asyncUpdateAccount = actionCreator.async<
+  {
+    id: string;
+    account: {
+      info: any;
+      imageHosting?: string;
+      defaultRepositoryId?: string;
+      type: string;
+    };
+    callback(): void;
+  },
+  {
+    accounts: AccountPreference[];
+  },
+  void
+>('ASYNC_UPDATE_ACCOUNT');
 
-export const startCreateAccount = actionCreator('START_CREATE_ACCOUNT');
+export const cancelCreateAccount = actionCreator('CANCEL_CREATE_ACCOUNT');
 
 export const asyncDeleteAccount = actionCreator.async<
   { id: string },
@@ -120,3 +137,23 @@ export const asyncRunExtension = actionCreator.async<
 export const asyncRunScript = actionCreator.async<string, void, void>(
   'ASYNC_RUN_SCRIPT'
 );
+
+export const asyncAddImageHosting = actionCreator.async<
+  { closeModal: () => void } & Omit<ImageHosting, 'id'>,
+  ImageHosting[],
+  void
+>('ASYNC_ADD_IMAGE_HOSTING');
+
+export const asyncDeleteImageHosting = actionCreator.async<
+  { id: string },
+  ImageHosting[],
+  void
+>('ASYNC_DELETE_IMAGE_HOSTING');
+
+export const asyncEditImageHosting = actionCreator.async<
+  { id: string; value: Omit<ImageHosting, 'id'>; closeModal: () => void },
+  ImageHosting[],
+  void
+>('ASYNC_EDIT_IMAGE_HOSTING');
+
+export const resetAccountForm = actionCreator('RESET_ACCOUNT_FORM');

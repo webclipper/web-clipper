@@ -2,6 +2,7 @@ import { DocumentService, CreateDocumentRequest } from './../../index';
 import axios, { AxiosInstance } from 'axios';
 import { generateUuid } from '../../../../common/uuid';
 import * as qs from 'qs';
+import { md5 } from '../../../md5';
 
 interface YuqueBackendServiceConfig {
   accessToken: string;
@@ -29,6 +30,7 @@ export default class YuqueDocumentService implements DocumentService {
   private baseURL: string;
   private login?: string;
   private repositories: Repository[];
+  private accessToken: string;
 
   constructor(config: YuqueBackendServiceConfig) {
     const index = config.host.indexOf('/api/v2');
@@ -53,7 +55,12 @@ export default class YuqueDocumentService implements DocumentService {
     });
     this.request = request;
     this.repositories = [];
+    this.accessToken = config.accessToken;
   }
+
+  getId = () => {
+    return md5(this.accessToken);
+  };
 
   getUserInfo = async () => {
     const res = await this.request.get<UserInfoResponse>('user');

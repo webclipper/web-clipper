@@ -1,6 +1,7 @@
+import { ServiceMeta } from './../../common/backend/services/interface';
 import browserService from '../../common/browser';
 import storage from '../../common/storage';
-import { AnyAction, isType } from 'typescript-fsa';
+import { AnyAction, isType } from '../../common/typescript-fsa';
 import {
   asyncAddAccount,
   asyncDeleteAccount,
@@ -14,13 +15,22 @@ import {
   asyncSetDefaultPluginId,
   asyncRunExtension,
   asyncRunScript,
+  asyncAddImageHosting,
+  asyncDeleteImageHosting,
+  asyncEditImageHosting,
+  resetAccountForm,
+  asyncUpdateAccount,
+  asyncChangeAccount,
 } from './../actions';
 import { call, fork, put, select, takeEvery } from 'redux-saga/effects';
-import backend, { documentServiceFactory } from '../../common/backend';
+import backend, {
+  documentServiceFactory,
+  imageHostingServiceFactory,
+} from '../../common/backend';
 import { message } from 'antd';
 import { ToolContext } from '../../extensions/interface';
 import { loadImage } from '../../common/blob';
-const md5 = require('blueimp-md5');
+import update from 'immutability-helper';
 
 export function* asyncVerificationAccessTokenSaga(action: AnyAction) {
   if (isType(action, asyncVerificationAccessToken.started)) {
@@ -39,16 +49,8 @@ export function* asyncVerificationAccessTokenSaga(action: AnyAction) {
         })
       );
     } catch (error) {
-      console.log(error);
-      message.error('AccessToken 错误');
-      yield put(
-        asyncVerificationAccessToken.failed({
-          params: action.payload,
-          error: {
-            error: error,
-          },
-        })
-      );
+      message.error(error.message);
+      yield put(resetAccountForm());
     }
   }
 }
@@ -60,51 +62,112 @@ export function* watchAsyncVerificationAccessTokenSaga() {
   );
 }
 
-export function* asyncAddAccountSaga() {
-  const selector = ({
-    userPreference: {
-      initializeForm: { type, userInfo, defaultRepositoryId, info },
-    },
-  }: GlobalStore) => {
-    return {
-      type,
-      userInfo,
-      defaultRepositoryId,
-      info,
+export function* asyncAddAccountSaga(action: AnyAction) {
+  if (isType(action, asyncAddAccount.started)) {
+    const selector = ({
+      userPreference: {
+        servicesMeta,
+        initializeForm: { userInfo },
+      },
+    }: GlobalStore) => {
+      return { userInfo, servicesMeta };
     };
-  };
-  const selectState: ReturnType<typeof selector> = yield select(selector);
-  let { type, defaultRepositoryId, userInfo, info } = selectState;
-  const account: AccountPreference = {
-    id: md5(JSON.stringify({ info, type })),
-    type: type,
-    ...info,
-    defaultRepositoryId: defaultRepositoryId,
-    ...userInfo,
-  };
-  try {
-    yield call(storage.addAccount, account);
-  } catch (error) {
-    if (error.message === 'Do not allow duplicate accounts') {
-      message.error('不允许添加重复账户');
-      return;
-    } else {
-      message.error('添加账户失败 未知错误');
-      return;
+    const {
+      servicesMeta,
+      userInfo,
+    }: ReturnType<typeof selector> = yield select(selector);
+    const {
+      info,
+      imageHosting,
+      defaultRepositoryId,
+      type,
+      callback,
+    } = action.payload;
+    const service: ServiceMeta = servicesMeta[type];
+    const { service: Service } = service;
+    const instance = new Service(info);
+
+    const userPreference = {
+      type,
+      id: instance.getId(),
+      ...userInfo,
+      imageHosting,
+      defaultRepositoryId,
+      ...info,
+    };
+    try {
+      yield storage.addAccount(userPreference);
+      const accounts = yield storage.getAccounts();
+      const defaultAccountId = yield storage.getDefaultAccountId();
+      yield put(
+        asyncAddAccount.done({
+          params: action.payload,
+          result: {
+            accounts,
+            defaultAccountId,
+          },
+        })
+      );
+      callback();
+      yield put(resetAccountForm());
+    } catch (error) {
+      message.error(error.message);
     }
   }
-  const accounts = yield call(storage.getAccounts);
-  const defaultAccountId = yield call(storage.getDefaultAccountId);
-
-  yield put(
-    asyncAddAccount.done({
-      result: { accounts, defaultAccountId },
-    })
-  );
 }
 
 export function* watchAsyncAddAccountSaga() {
   yield takeEvery(asyncAddAccount.started.type, asyncAddAccountSaga);
+}
+
+export function* asyncUpdateAccountSaga(action: AnyAction) {
+  if (isType(action, asyncUpdateAccount.started)) {
+    const accounts: CallResult<typeof storage.getAccounts> = yield call(
+      storage.getAccounts
+    );
+    const {
+      id,
+      account: { info, defaultRepositoryId, imageHosting },
+      callback,
+    } = action.payload;
+    const accountIndex = accounts.findIndex(o => o.id === id);
+    if (accountIndex < 0) {
+      message.error('修改失败，账户不存在');
+      return;
+    }
+    const result = update(accounts, {
+      [accountIndex]: {
+        $merge: {
+          defaultRepositoryId,
+          imageHosting,
+          ...info,
+        },
+      },
+    });
+    yield storage.setAccount(result);
+    yield put(
+      asyncUpdateAccount.done({
+        params: action.payload,
+        result: {
+          accounts: result,
+        },
+      })
+    );
+    const selector = ({ clipper: { currentAccountId } }: GlobalStore) => {
+      return { currentAccountId };
+    };
+    const { currentAccountId }: ReturnType<typeof selector> = yield select(
+      selector
+    );
+    if (id === currentAccountId) {
+      yield put(asyncChangeAccount.started({ id }));
+    }
+    callback();
+  }
+}
+
+export function* watchAsyncUpdateAccountSaga() {
+  yield takeEvery(asyncUpdateAccount.started.type, asyncUpdateAccountSaga);
 }
 
 export function* asyncDeleteAccountSaga(action: AnyAction) {
@@ -317,9 +380,96 @@ export function* watchAsyncRunExtensionSaga() {
   yield takeEvery(asyncRunExtension.started.type, asyncRunExtensionSaga);
 }
 
+export function* watchAsyncAddImageHostingSaga() {
+  yield takeEvery(asyncAddImageHosting.started.type, asyncAddImageHostingSaga);
+}
+
+export function* asyncAddImageHostingSaga(action: AnyAction) {
+  if (isType(action, asyncAddImageHosting.started)) {
+    const { info, type, closeModal, remark } = action.payload;
+    const imageHostingService: ReturnType<
+      typeof imageHostingServiceFactory
+    > = yield call(imageHostingServiceFactory, type, info);
+    if (!imageHostingService) {
+      message.error('不支持');
+      return;
+    }
+    const id = imageHostingService.getId();
+    const imageHosting = {
+      id,
+      type,
+      info,
+      remark,
+    };
+    try {
+      const imageHostingList: PromiseType<
+        ReturnType<typeof storage.addImageHosting>
+      > = yield call(storage.addImageHosting, imageHosting);
+      yield put(
+        asyncAddImageHosting.done({
+          params: action.payload,
+          result: imageHostingList,
+        })
+      );
+      closeModal();
+    } catch (error) {
+      message.error(error.message);
+    }
+  }
+}
+
+export function* watchAsyncDeleteImageHostingSaga() {
+  yield takeEvery(
+    asyncDeleteImageHosting.started.type,
+    asyncDeleteImageHostingSaga
+  );
+}
+
+export function* asyncDeleteImageHostingSaga(action: AnyAction) {
+  if (isType(action, asyncDeleteImageHosting.started)) {
+    const imageHostingList: PromiseType<
+      ReturnType<typeof storage.deleteImageHostingById>
+    > = yield call(storage.deleteImageHostingById, action.payload.id);
+    yield put(
+      asyncDeleteImageHosting.done({
+        params: action.payload,
+        result: imageHostingList,
+      })
+    );
+  }
+}
+
+export function* watchAsyncEditImageHostingSaga() {
+  yield takeEvery(
+    asyncEditImageHosting.started.type,
+    asyncEditImageHostingSaga
+  );
+}
+
+export function* asyncEditImageHostingSaga(action: AnyAction) {
+  if (isType(action, asyncEditImageHosting.started)) {
+    const { id, value, closeModal } = action.payload;
+    try {
+      const imageHostingList: PromiseType<
+        ReturnType<typeof storage.editImageHostingById>
+      > = yield call(storage.editImageHostingById, id, { ...value, id });
+      yield put(
+        asyncEditImageHosting.done({
+          params: action.payload,
+          result: imageHostingList,
+        })
+      );
+      closeModal();
+    } catch (error) {
+      message.error(error.message);
+    }
+  }
+}
+
 export function* userPreferenceSagas() {
   yield fork(watchAsyncDeleteAccountSaga);
   yield fork(watchAsyncVerificationAccessTokenSaga);
+  yield fork(watchAsyncAddImageHostingSaga);
   yield fork(watchAsyncAddAccountSaga);
   yield fork(watchAsyncUpdateCurrentAccountIndexSaga);
   yield fork(watchAsyncSetEditorLiveRenderingSaga);
@@ -329,4 +479,7 @@ export function* userPreferenceSagas() {
   yield fork(watchAsyncSetShowQuickResponseCodeSaga);
   yield fork(watchAsyncSetDefaultPluginIdSaga);
   yield fork(watchAsyncRunExtensionSaga);
+  yield fork(watchAsyncDeleteImageHostingSaga);
+  yield fork(watchAsyncEditImageHostingSaga);
+  yield fork(watchAsyncUpdateAccountSaga);
 }

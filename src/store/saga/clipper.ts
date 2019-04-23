@@ -1,11 +1,10 @@
 import { CreateDocumentRequest } from './../../common/backend/index';
-import backend, { documentServiceFactory } from '../../common/backend';
-import { AnyAction, isType } from 'typescript-fsa';
-import {
-  asyncChangeAccount,
-  asyncCreateDocument,
-  asyncFetchRepository,
-} from '../actions';
+import backend, {
+  documentServiceFactory,
+  imageHostingServiceFactory,
+} from '../../common/backend';
+import { AnyAction, isType } from '../../common/typescript-fsa';
+import { asyncChangeAccount, asyncCreateDocument } from '../actions';
 import {
   call,
   fork,
@@ -23,28 +22,8 @@ import {
 import { push } from 'connected-react-router';
 
 export function* clipperRootSagas() {
-  yield fork(watchAsyncFetchRepositorySaga);
   yield fork(watchAsyncCreateDocumentSaga);
   yield fork(watchAsyncChangeAccountSaga);
-}
-
-export function* asyncFetchRepositorySaga() {
-  try {
-    const response = yield call(backend.getDocumentService()!.getRepositories);
-    yield put(
-      asyncFetchRepository.done({
-        result: {
-          repositories: response,
-        },
-      })
-    );
-  } catch (error) {
-    yield put(
-      asyncFetchRepository.failed({
-        error: error,
-      })
-    );
-  }
 }
 
 export function* asyncCreateDocumentSaga() {
@@ -126,13 +105,16 @@ export function* asyncCreateDocumentSaga() {
     };
   }
   if (extension.type === ExtensionType.Image) {
+    const imageHostingService = backend.getImageHostingService();
+    if (!imageHostingService) {
+      message.error('请设定图床');
+      return;
+    }
+
     try {
-      const responseUrl: string = yield call(
-        backend.getImageHostingService()!.uploadImage,
-        {
-          data: (data as ImageClipperData).dataUrl,
-        }
-      );
+      const responseUrl: string = yield call(imageHostingService.uploadImage, {
+        data: (data as ImageClipperData).dataUrl,
+      });
       createDocumentRequest = {
         title: title,
         private: true,
@@ -173,38 +155,56 @@ export function* watchAsyncCreateDocumentSaga() {
   yield takeLatest(asyncCreateDocument.started.type, asyncCreateDocumentSaga);
 }
 
-export function* watchAsyncFetchRepositorySaga() {
-  yield takeEvery(asyncFetchRepository.started.type, asyncFetchRepositorySaga);
-}
-
 export function* asyncChangeAccountSaga(action: AnyAction) {
   if (isType(action, asyncChangeAccount.started)) {
     const id = action.payload.id;
-    const selector = ({ userPreference: { accounts } }: GlobalStore) => {
+    const selector = ({
+      userPreference: { accounts, imageHosting },
+    }: GlobalStore) => {
       return {
         accounts,
+        imageHosting,
       };
     };
     const selectState: ReturnType<typeof selector> = yield select(selector);
-
-    const { accounts } = selectState;
-
+    const { accounts, imageHosting } = selectState;
     const account = accounts.find(o => o.id === id);
     if (!account) {
-      throw new Error('');
+      throw new Error('加载账户失败 账户不存在');
     }
-    const { type, ...info } = account;
+    const {
+      type,
+      defaultRepositoryId,
+      imageHosting: imageHostingId,
+      ...info
+    } = account;
     const documentService = documentServiceFactory(type, info);
     const repositories = yield call(documentService.getRepositories);
     backend.setDocumentService(documentService);
+    let currentImageHostingService: ClipperStore['currentImageHostingService'];
+    if (imageHostingId) {
+      const imageHostingIndex = imageHosting.findIndex(
+        o => o.id === imageHostingId
+      );
+      if (imageHostingIndex !== -1) {
+        const accountImageHosting = imageHosting[imageHostingIndex];
+        const imageHostingService = imageHostingServiceFactory(
+          accountImageHosting.type,
+          accountImageHosting.info
+        );
+        backend.setImageHostingService(imageHostingService);
+        currentImageHostingService = {
+          type: accountImageHosting.type,
+        };
+      }
+    }
     yield delay(1000);
     yield put(
       asyncChangeAccount.done({
-        params: {
-          id,
-        },
+        params: action.payload,
         result: {
           repositories,
+          currentImageHostingService,
         },
       })
     );

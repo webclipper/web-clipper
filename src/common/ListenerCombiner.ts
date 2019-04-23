@@ -1,4 +1,4 @@
-import { ActionCreator, AnyAction, isType } from 'typescript-fsa';
+import { ActionCreator, AnyAction, isType } from './typescript-fsa';
 
 export type Handler<P> = (
   payload: P,

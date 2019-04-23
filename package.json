@@ -46,9 +46,7 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.2",
     "remote-redux-devtools": "^0.5.16",
-    "turndown": "^5.0.1",
-    "typescript-fsa": "^3.0.0-beta-2",
-    "typescript-fsa-reducers": "^1.2.0"
+    "turndown": "^5.0.1"
   },
   "devDependencies": {
     "@diamondyuan/eslint-config-react-typescript": "^4.0.1",

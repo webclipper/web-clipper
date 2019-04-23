@@ -1,5 +1,8 @@
-.modalTitle {
-  a {
-    margin-left: 10px;
-  }
+.accountPanel {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.createButton {
+  height: 300px;
 }

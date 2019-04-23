@@ -1,0 +1,50 @@
+.card {
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 14px;
+  border: 1px solid #e8e8e8;
+  height: 300px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+}
+.star {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+}
+
+.userInfo {
+  flex: 1;
+  .name {
+    margin-bottom: 4px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 20px;
+    color: #262626;
+  }
+  .description {
+    color: #8c8c8c;
+    margin-bottom: 8px;
+    height: 63px;
+    overflow: hidden;
+    word-wrap: break-word;
+  }
+}
+
+.operation {
+  display: flex;
+  .editButton {
+    flex: 1;
+    margin-right: 10px;
+  }
+}

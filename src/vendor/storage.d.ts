@@ -40,6 +40,8 @@ interface ClipperStore {
   loadingRepositories: boolean;
   /** 知识库列表 */
   repositories: Repository[];
+  /** 当前图床 */
+  currentImageHostingService?: { type: string };
   /** 当前选择的知识库 */
   currentRepository?: Repository;
   clipperData: {
@@ -56,20 +58,40 @@ interface CompleteStatus {
   documentId: string;
   repositoryId: string;
 }
+
+interface ImageHosting {
+  id: string;
+  type: string;
+  remark?: string;
+  info?: {
+    [key: string]: string;
+  };
+}
+
 interface UserPreferenceStore {
   accounts: AccountPreference[];
+  imageHosting: ImageHosting[];
   defaultPluginId?: string | null;
   defaultAccountId?: string;
   showQuickResponseCode: boolean;
   showLineNumber: boolean;
   liveRendering: boolean;
-  initializeForm: InitializeForm;
-  servicesMeta: {
-    [type: string]: {
+  initializeForm: {
+    repositories: Repository[];
+    userInfo?: {
       name: string;
-      icon: string;
+      avatar: string;
       homePage: string;
+      description?: string;
     };
+    verifying: boolean;
+    verified: boolean;
+  };
+  servicesMeta: {
+    [type: string]: any;
+  };
+  imageHostingServicesMeta: {
+    [type: string]: any;
   };
   extensions: any[];
 }
@@ -77,30 +99,22 @@ interface UserPreferenceStore {
 interface FormProps {
   value: string;
 }
-interface InitializeForm {
-  type: string;
-  info?: any;
-  repositories: Repository[];
-  defaultRepositoryId?: string;
-  visible: boolean;
-  verifying: boolean;
-  verified: boolean;
-  userInfo?: any;
-}
 
 interface AccountPreference {
-  type: string;
   id: string;
-  defaultRepositoryId?: string;
+  type: string;
   name: string;
-  avatar?: string;
-  homePage?: string;
+  avatar: string;
+  homePage: string;
   description?: string;
-  [key: string]: any;
+  defaultRepositoryId?: string;
+  imageHosting?: string;
+  [key: string]: string | undefined;
 }
 
 interface PreferenceStorage {
   accounts: AccountPreference[];
+  imageHosting: ImageHosting[];
   defaultPluginId?: string | null;
   defaultAccountId?: string;
   showQuickResponseCode: boolean;

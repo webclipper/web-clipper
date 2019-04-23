@@ -6,39 +6,46 @@ import {
   asyncSetShowLineNumber,
   asyncSetShowQuickResponseCode,
   asyncUpdateCurrentAccountIndex,
-  cancelCreateAccount,
   initUserPreference,
-  updateCreateAccountForm,
   asyncSetDefaultPluginId,
   asyncVerificationAccessToken,
-  startCreateAccount,
+  asyncDeleteImageHosting,
+  asyncAddImageHosting,
+  asyncEditImageHosting,
+  resetAccountForm,
+  asyncUpdateAccount,
 } from '../actions';
-import { services } from '../../common/backend/index';
+import { services, imageHostingServices } from '../../common/backend';
 import { extensions } from '../../extensions/index';
-import { reducerWithInitialState } from 'typescript-fsa-reducers';
+import { reducerWithInitialState } from '../../common/typescript-fsa-reducers';
 
 const servicesMeta = services.reduce(
-  (
-    previousValue: UserPreferenceStore['servicesMeta'],
-    { type, name, icon, homePage }
-  ) => {
-    previousValue[type] = { name, icon, homePage };
+  (previousValue, meta) => {
+    previousValue[meta.type] = meta;
     return previousValue;
   },
-  {}
+  {} as UserPreferenceStore['servicesMeta']
+);
+
+const imageHostingServicesMeta = imageHostingServices.reduce(
+  (previousValue, meta) => {
+    previousValue[meta.type] = meta;
+    return previousValue;
+  },
+  {} as UserPreferenceStore['imageHostingServicesMeta']
 );
 
 const defaultState: UserPreferenceStore = {
   accounts: [],
-  servicesMeta: servicesMeta,
+  imageHosting: [],
+  servicesMeta,
+  imageHostingServicesMeta,
   extensions: extensions,
   showQuickResponseCode: true,
   showLineNumber: true,
   liveRendering: true,
   initializeForm: {
-    type: 'yuque',
     repositories: [],
-    visible: false,
     verified: false,
     verifying: false,
   },
@@ -85,15 +92,10 @@ const reducer = reducerWithInitialState(defaultState)
     ...state,
     ...payload,
   }))
-  .case(cancelCreateAccount, state => ({
-    ...state,
-    initializeForm: defaultState.initializeForm,
-  }))
   .case(
     asyncAddAccount.done,
     (state, { result: { accounts, defaultAccountId } }) => ({
       ...state,
-      initializeForm: defaultState.initializeForm,
       accounts,
       defaultAccountId,
     })
@@ -105,12 +107,40 @@ const reducer = reducerWithInitialState(defaultState)
       defaultAccountId,
     })
   )
+  .case(asyncDeleteImageHosting.done, (state, { result }) =>
+    update(state, {
+      imageHosting: {
+        $set: result,
+      },
+    })
+  )
+  .case(asyncAddImageHosting.done, (state, { result }) =>
+    update(state, {
+      imageHosting: {
+        $set: result,
+      },
+    })
+  )
+  .case(asyncEditImageHosting.done, (state, { result }) =>
+    update(state, {
+      imageHosting: {
+        $set: result,
+      },
+    })
+  )
+  .case(asyncUpdateAccount.done, (state, { result: { accounts } }) =>
+    update(state, {
+      accounts: {
+        $set: accounts,
+      },
+    })
+  )
   .case(
     asyncVerificationAccessToken.done,
     (state, { result: { repositories, userInfo } }) =>
       update(state, {
         initializeForm: {
-          $merge: {
+          $set: {
             verified: true,
             verifying: false,
             repositories,
@@ -119,46 +149,11 @@ const reducer = reducerWithInitialState(defaultState)
         },
       })
   )
-  .case(asyncVerificationAccessToken.failed, state =>
+  .case(resetAccountForm, state =>
     update(state, {
       initializeForm: {
-        $merge: {
-          verifying: false,
-        },
-      },
-    })
-  )
-  .case(updateCreateAccountForm, (state, { defaultRepositoryId, ...rest }) => {
-    if (defaultRepositoryId) {
-      return update(state, {
-        initializeForm: {
-          defaultRepositoryId: {
-            $set: defaultRepositoryId,
-          },
-        },
-      });
-    }
-    return update(state, {
-      initializeForm: {
-        $set: {
-          ...state.initializeForm,
-          verified: false,
-          verifying: false,
-          repositories: [],
-          defaultRepositoryId,
-          ...rest,
-        },
-      },
-    });
-  })
-  .case(startCreateAccount, state =>
-    update(state, {
-      initializeForm: {
-        visible: {
-          $set: true,
-        },
+        $set: defaultState.initializeForm,
       },
     })
   );
-
 export default reducer;

@@ -1,10 +1,7 @@
-import backendService, {
-  documentServiceFactory,
-  imageHostingServiceFactory,
-} from '../../common/backend';
+import { asyncChangeAccount } from './../actions/clipper';
 import storage from '../../common/storage';
 import { all, call, put, spawn, delay } from 'redux-saga/effects';
-import { asyncFetchRepositorySaga, clipperRootSagas } from './clipper';
+import { clipperRootSagas } from './clipper';
 import browserService, { BrowserTab } from '../../common/browser';
 import { initTabInfo, initUserPreference } from '../actions';
 import { push } from 'connected-react-router';
@@ -29,23 +26,14 @@ const makeRestartable = (saga: any) => {
 function* initStore() {
   const result: PreferenceStorage = yield call(storage.getPreference);
   const tabInfo: BrowserTab = yield call(browserService.getCurrentTab);
-  backendService.setImageHostingService(imageHostingServiceFactory('yuque'));
   yield put(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
-  if (result.accounts.length === 0) {
+  yield put(initUserPreference(result));
+  const { accounts, defaultAccountId: id } = result;
+  if (accounts.length === 0 || !id || accounts.every(o => o.id !== id)) {
     yield put(push('/preference'));
     return;
   }
-  const { accounts, defaultAccountId } = result;
-  yield put(initUserPreference(result));
-  const defaultAccountIndex = accounts.findIndex(
-    o => o.id === defaultAccountId
-  );
-  const account =
-    defaultAccountIndex === -1 ? accounts[0] : accounts[defaultAccountIndex];
-  const { type, ...info } = account;
-  const documentService = documentServiceFactory(type, info);
-  backendService.setDocumentService(documentService);
-  yield call(asyncFetchRepositorySaga);
+  yield put(asyncChangeAccount.started({ id }));
   if (result.defaultPluginId) {
     yield put(push('/plugins/' + result.defaultPluginId));
   }

@@ -43,6 +43,7 @@ const mapStateToProps = ({
     currentRepository,
     repositories,
     loadingRepositories,
+    currentImageHostingService,
   },
   userPreference: { accounts, extensions },
   router: {
@@ -55,6 +56,7 @@ const mapStateToProps = ({
   return {
     accounts,
     extensions,
+    currentImageHostingService,
     url,
     pathname,
     creatingDocument,
@@ -120,9 +122,7 @@ class Page extends React.Component<PageProps> {
     return title.indexOf(select) !== -1;
   };
 
-  handleCreateDocument = () => {
-    this.props.asyncCreateDocument();
-  };
+  handleCreateDocument = () => this.props.asyncCreateDocument();
 
   render() {
     const {
@@ -136,17 +136,17 @@ class Page extends React.Component<PageProps> {
       url,
       pathname,
       disableCreateDocument,
+      currentImageHostingService,
     } = this.props;
 
     let repositoryId;
     if (
       currentAccount &&
-      repositories.findIndex(
-        o => o.id === currentAccount.defaultRepositoryId
-      ) !== -1
+      repositories.some(o => o.id === currentAccount.defaultRepositoryId)
     ) {
       repositoryId = currentAccount.defaultRepositoryId;
     }
+
     if (currentRepository) {
       repositoryId = currentRepository.id;
     }
@@ -162,6 +162,7 @@ class Page extends React.Component<PageProps> {
             },
             url,
             pathname,
+            currentImageHostingService,
           };
           // eslint-disable-next-line no-eval
           return eval(o.init);

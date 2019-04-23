@@ -8,6 +8,9 @@ export interface InitContext {
   };
   url?: string;
   pathname: string;
+  currentImageHostingService?: {
+    type: string;
+  };
 }
 
 export interface ContentScriptContext {

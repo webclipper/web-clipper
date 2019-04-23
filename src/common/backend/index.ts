@@ -35,9 +35,6 @@ export function documentServiceFactory(type: string, info?: any) {
 
 export function imageHostingServiceFactory(type: string, info?: any) {
   const service = imageHostingServices.find(o => o.type === type);
-
-  console.log(imageHostingServices);
-
   if (service) {
     const Service = service.service;
     return new Service(info);

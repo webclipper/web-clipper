@@ -3,6 +3,8 @@ export interface DocumentServiceConstructAble {
 }
 
 export interface DocumentService {
+  getId(): string;
+
   getRepositories(): Promise<Repository[]>;
 
   createDocument(

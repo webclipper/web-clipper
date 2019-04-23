@@ -4,6 +4,7 @@ import {
   CreateDocumentRequest,
 } from '../../index';
 import axios, { AxiosInstance } from 'axios';
+import { md5 } from '../../../md5';
 
 interface GithubBackendServiceConfig {
   accessToken: string;
@@ -29,6 +30,7 @@ export default class GithubDocumentService implements DocumentService {
   private request: AxiosInstance;
   private repositories: Repository[];
   private pageLimit = 100;
+  private accessToken: string;
 
   constructor(config: GithubBackendServiceConfig) {
     const request = axios.create({
@@ -48,7 +50,12 @@ export default class GithubDocumentService implements DocumentService {
     });
     this.request = request;
     this.repositories = [];
+    this.accessToken = config.accessToken;
   }
+
+  getId = () => {
+    return md5(this.accessToken);
+  };
 
   getUserInfo = async () => {
     const data = await this.request.get<UserInfoResponse>('user');

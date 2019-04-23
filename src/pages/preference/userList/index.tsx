@@ -1,156 +1,238 @@
 import * as React from 'react';
-import CreateAccountModal from './createAccountModal';
 import {
+  asyncAddAccount,
+  resetAccountForm,
   asyncDeleteAccount,
   asyncUpdateCurrentAccountIndex,
-  startCreateAccount,
+  asyncVerificationAccessToken,
+  asyncUpdateAccount,
 } from '../../../store/actions';
-import { Avatar, Button, Card, Icon, List, Modal } from 'antd';
+import { Icon, Button, Form, Row, Col } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import AccountItem from '../../../components/accountItem';
+import * as styles from './index.scss';
+import EditAccountModal from './modal/editAccountModal';
+import { FormComponentProps } from 'antd/lib/form';
+import CreateAccountModal from './modal/createAccountModal';
 
 const useActions = {
-  startCreateAccount,
+  resetAccountForm,
+  asyncAddAccount: asyncAddAccount.started,
   asyncDeleteAccount: asyncDeleteAccount.started,
+  asyncUpdateAccount: asyncUpdateAccount.started,
   asyncUpdateCurrentAccountIndex: asyncUpdateCurrentAccountIndex.started,
+  asyncVerificationAccessToken: asyncVerificationAccessToken.started,
 };
 
 const mapStateToProps = ({
-  userPreference: { accounts, defaultAccountId, servicesMeta },
-}: GlobalStore) => {
-  return {
+  userPreference: {
     accounts,
     defaultAccountId,
     servicesMeta,
+    initializeForm,
+    imageHostingServicesMeta,
+    imageHosting,
+  },
+}: GlobalStore) => {
+  return {
+    imageHostingServicesMeta,
+    accounts,
+    defaultAccountId,
+    servicesMeta,
+    initializeForm,
+    imageHosting,
   };
 };
-type PageState = {};
+type PageState = {
+  showAccountModal: boolean;
+  currentAccount: null | AccountPreference;
+};
 
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
 type PageOwnProps = {};
-type PageProps = PageStateProps & PageDispatchProps & PageOwnProps;
+type PageProps = PageStateProps &
+  PageDispatchProps &
+  PageOwnProps &
+  FormComponentProps;
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators<PageDispatchProps, PageDispatchProps>(
     useActions,
     dispatch
   );
 
-const defaultDescription = '还没有个人资料';
-
-const cardMeta = (avatar: string | undefined, name: string) => {
-  return (
-    <Card.Meta
-      avatar={avatar ? <Avatar src={avatar} /> : <Avatar icon="user" />}
-      title={name}
-    />
-  );
-};
-
 class Page extends React.Component<PageProps, PageState> {
-  onDeleteAccount = (index: number) => {
-    let that = this;
-    Modal.confirm({
-      title: '你确定要删除这个账户吗？',
-      onOk() {
-        let account = that.props.accounts[index];
-        that.props.asyncDeleteAccount({ id: account.id });
-      },
+  constructor(props: PageProps) {
+    super(props);
+    this.state = {
+      showAccountModal: false,
+      currentAccount: null,
+    };
+  }
+
+  handleVerifiedAccount = () => {
+    const { form } = this.props;
+    form.validateFields((error, values) => {
+      if (error) {
+        return;
+      }
+      const { type, defaultRepositoryId, ...info } = values;
+      this.props.asyncVerificationAccessToken({
+        type,
+        info,
+      });
     });
   };
 
-  onSetDefaultAccount = (index: number) => {
-    let account = this.props.accounts[index];
-    this.props.asyncUpdateCurrentAccountIndex({
-      id: account.id,
-    });
+  handleSetDefaultId = (id: string) => {
+    this.props.asyncUpdateCurrentAccountIndex({ id });
   };
 
-  renderExtra = (type: string) => {
-    const { servicesMeta } = this.props;
-    const service = servicesMeta[type];
-    if (!service || !service.icon) {
-      return <div>{type}</div>;
+  handleEdit = (accountId: string) => {
+    const currentAccount = this.props.accounts.find(o => o.id === accountId);
+    if (!currentAccount) {
+      return;
     }
-    const { icon, homePage } = service;
-    let iconElement;
-    if (icon.startsWith('http')) {
-      iconElement = <img src={icon} style={{ width: 16 }} />;
-    } else {
-      iconElement = <Icon type={icon} style={{ fontSize: '16px' }} />;
+    const { type, defaultRepositoryId, imageHosting, ...info } = currentAccount;
+    this.props.asyncVerificationAccessToken({
+      type,
+      info,
+    });
+    this.toggleAccountModal(currentAccount);
+  };
+
+  handleAdd = () => {
+    const { form } = this.props;
+    form.validateFields((error, values) => {
+      if (error) {
+        return;
+      }
+      const { type, defaultRepositoryId, imageHosting, ...info } = values;
+      this.props.asyncAddAccount({
+        type,
+        defaultRepositoryId,
+        imageHosting,
+        info,
+        callback: this.handleCancel,
+      });
+    });
+  };
+
+  handleCancel = () => {
+    const { form, resetAccountForm } = this.props;
+    form.resetFields();
+    this.toggleAccountModal();
+    resetAccountForm();
+  };
+
+  toggleAccountModal = (currentAccount?: AccountPreference) => {
+    const { showAccountModal } = this.state;
+    this.setState(
+      {
+        showAccountModal: !showAccountModal,
+      },
+      () => {
+        this.setState({
+          currentAccount: currentAccount || null,
+        });
+      }
+    );
+  };
+
+  handleEditAccount = (id: string) => {
+    const { form, asyncUpdateAccount } = this.props;
+    form.validateFields((error, values) => {
+      if (error) {
+        return;
+      }
+      const { type, defaultRepositoryId, imageHosting, ...info } = values;
+      asyncUpdateAccount({
+        account: { type, defaultRepositoryId, imageHosting, info },
+        id,
+        callback: this.handleCancel,
+      });
+    });
+  };
+
+  getAccountModal = () => {
+    const { showAccountModal, currentAccount } = this.state;
+    const {
+      servicesMeta,
+      form,
+      imageHostingServicesMeta,
+      imageHosting,
+      initializeForm: { repositories, verified, verifying },
+    } = this.props;
+    if (!showAccountModal) {
+      return;
+    }
+    if (currentAccount) {
+      return (
+        <EditAccountModal
+          visible
+          form={form}
+          imageHosting={imageHosting}
+          imageHostingServicesMeta={imageHostingServicesMeta}
+          repositories={repositories}
+          verified={verified}
+          verifying={verifying}
+          servicesMeta={servicesMeta}
+          currentAccount={currentAccount}
+          onCancel={this.handleCancel}
+          onEdit={this.handleEditAccount}
+        />
+      );
     }
     return (
-      <a href={homePage} target="blank">
-        {iconElement}
-      </a>
+      <CreateAccountModal
+        visible
+        form={form}
+        imageHosting={imageHosting}
+        imageHostingServicesMeta={imageHostingServicesMeta}
+        servicesMeta={servicesMeta}
+        verified={verified}
+        repositories={repositories}
+        onVerifiedAccount={this.handleVerifiedAccount}
+        onAdd={this.handleAdd}
+        onCancel={this.handleCancel}
+      />
     );
   };
 
   render() {
+    const { defaultAccountId } = this.props;
     return (
       <React.Fragment>
-        <CreateAccountModal />
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            overflow: 'hidden',
-          }}
-        >
-          <List.Item>
-            <Button
-              type="dashed"
-              onClick={() => {
-                this.props.startCreateAccount();
-              }}
-              style={{ width: '300px', height: '200px', margin: '10px' }}
-            >
-              <Icon type="plus" /> 绑定账户
-            </Button>
-          </List.Item>
-          {this.props.accounts.map((account, index) => (
-            <List.Item key={account.id}>
-              <Card
-                style={{
-                  width: '300px',
-                  height: '200px',
-                  margin: '10px',
-                }}
-                title={cardMeta(account.avatar, account.name)}
-                extra={this.renderExtra(account.type)}
-                actions={[
-                  <Icon
-                    key="heart"
-                    type="heart"
-                    title={
-                      this.props.accounts[index].id ===
-                      this.props.defaultAccountId
-                        ? '默认账户'
-                        : '设置为默认账户'
-                    }
-                    theme={
-                      this.props.accounts[index].id ===
-                      this.props.defaultAccountId
-                        ? 'filled'
-                        : 'outlined'
-                    }
-                    onClick={this.onSetDefaultAccount.bind(this, index)}
-                  />,
-                  <Icon
-                    key="delete"
-                    type="delete"
-                    title="删除"
-                    onClick={this.onDeleteAccount.bind(this, index)}
-                  />,
-                ]}
-              >
-                <div style={{ height: '46px', overflow: 'hidden' }}>
-                  {account.description || defaultDescription}
-                </div>
-              </Card>
-            </List.Item>
+        {this.getAccountModal()}
+        <Row gutter={8}>
+          {this.props.accounts.map(account => (
+            <Col span={8} key={account.id}>
+              <AccountItem
+                isDefault={defaultAccountId === account.id}
+                id={account.id}
+                name={account.name}
+                description={account.description}
+                avatar={account.avatar}
+                onDelete={id => this.props.asyncDeleteAccount({ id })}
+                onEdit={id => this.handleEdit(id)}
+                onSetDefaultAccount={id => this.handleSetDefaultId(id)}
+              />
+            </Col>
           ))}
-        </div>
+          <Col span={8}>
+            <div>
+              <Button
+                className={styles.createButton}
+                type="dashed"
+                onClick={() => this.toggleAccountModal()}
+                block
+              >
+                <Icon type="plus" /> 绑定账户
+              </Button>
+            </div>
+          </Col>
+        </Row>
       </React.Fragment>
     );
   }
@@ -159,4 +241,4 @@ class Page extends React.Component<PageProps, PageState> {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Page as React.ComponentType<PageProps>);
+)(Form.create<PageProps>()(Page));

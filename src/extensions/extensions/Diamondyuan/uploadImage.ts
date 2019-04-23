@@ -8,15 +8,8 @@ export default new ToolExtension(
     description: '同步图片到语雀图床',
   },
   {
-    init: ({ pathname, accountInfo: { type } }) => {
-      if (pathname === '/') {
-        return false;
-      }
-      if (type !== 'yuque') {
-        return false;
-      }
-      return true;
-    },
+    init: ({ pathname, currentImageHostingService }) =>
+      pathname.startsWith('/plugins') && !!currentImageHostingService,
     afterRun: async context => {
       const { data, imageService, message } = context;
       let foo = data;

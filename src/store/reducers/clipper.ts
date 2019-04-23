@@ -1,5 +1,4 @@
 import {
-  asyncFetchRepository,
   updateTitle,
   selectRepository,
   initTabInfo,
@@ -10,7 +9,7 @@ import {
   asyncRunExtension,
 } from '../actions';
 import update from 'immutability-helper';
-import { reducerWithInitialState } from 'typescript-fsa-reducers';
+import { reducerWithInitialState } from '../../common/typescript-fsa-reducers';
 
 const defaultState: ClipperStore = {
   title: '',
@@ -28,7 +27,10 @@ const reducer = reducerWithInitialState(defaultState)
   }))
   .case(
     asyncChangeAccount.done,
-    (state, { params: { id }, result: { repositories } }) => {
+    (
+      state,
+      { params: { id }, result: { repositories, currentImageHostingService } }
+    ) => {
       return update(state, {
         loadingRepositories: {
           $set: false,
@@ -43,6 +45,9 @@ const reducer = reducerWithInitialState(defaultState)
           // eslint-disable-next-line no-undefined
           $set: undefined,
         },
+        currentImageHostingService: {
+          $set: currentImageHostingService,
+        },
       });
     }
   )
@@ -53,15 +58,6 @@ const reducer = reducerWithInitialState(defaultState)
       },
     })
   )
-  .case(asyncFetchRepository.done, (state, { result: { repositories } }) => ({
-    ...state,
-    loadingRepositories: false,
-    repositories,
-  }))
-  .case(asyncFetchRepository.failed, state => ({
-    ...state,
-    loadingRepositories: false,
-  }))
   .case(updateTitle, (state, { title }) => ({
     ...state,
     title,

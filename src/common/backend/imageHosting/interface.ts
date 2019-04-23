@@ -3,6 +3,8 @@ export interface ImageHostingServiceConstructAble {
 }
 
 export interface ImageHostingService {
+  getId(): string;
+
   uploadImage(request: UploadImageRequest): Promise<string>;
 
   uploadImageUrl(url: string): Promise<string>;
@@ -17,4 +19,5 @@ export interface ImageHostingServiceMeta {
   icon: string;
   type: string;
   service: ImageHostingServiceConstructAble;
+  form: any;
 }

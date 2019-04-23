@@ -2,12 +2,17 @@ import browserService from '../../../browser';
 import { Base64ImageToBlob } from '../../../blob';
 import axios from 'axios';
 import { UploadImageRequest, ImageHostingService } from '../interface';
+import { md5 } from '../../../md5';
 
 export interface YuqueImageHostingOption {
-  type: 'yuque';
+  host: string;
 }
 
 export default class YuqueImageHostingService implements ImageHostingService {
+  getId = () => {
+    return md5('yuque');
+  };
+
   uploadImage = async ({ data }: UploadImageRequest) => {
     const cookie = await browserService.getCookie({
       url: 'https://yuque.com',

@@ -1,15 +1,7 @@
 import { Repository } from './../../common/backend/index';
-import actionCreatorFactory from 'typescript-fsa';
+import actionCreatorFactory from '../../common/typescript-fsa';
 
 const actionCreator = actionCreatorFactory('CLIPPER');
-
-export const asyncFetchRepository = actionCreator.async<
-  void,
-  {
-    repositories: Repository[];
-  },
-  void
->('ASYNC_FETCH_REPOSITORY');
 
 export const updateTitle = actionCreator<{ title: string }>('UPDATE_TITLE');
 
@@ -41,6 +33,7 @@ export const asyncChangeAccount = actionCreator.async<
   },
   {
     repositories: Repository[];
+    currentImageHostingService?: { type: string };
   },
   any
 >('ASYNC_CHANGE_ACCOUNT');

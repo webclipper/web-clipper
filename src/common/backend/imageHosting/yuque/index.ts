@@ -1,8 +1,13 @@
+import { ImageHostingServiceMeta } from './../interface';
 import Service from './service';
+import Form from './form';
 
-export default {
+const meta: ImageHostingServiceMeta = {
   name: '语雀',
   icon: 'yuque',
   type: 'yuque',
   service: Service,
+  form: Form,
 };
+
+export default meta;

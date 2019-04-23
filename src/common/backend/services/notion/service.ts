@@ -72,6 +72,10 @@ export default class NotionDocumentService implements DocumentService {
     this.repositories = [];
   }
 
+  getId = () => {
+    return 'notion';
+  };
+
   getUserInfo = async () => {
     if (!this.userContent) {
       this.userContent = await this.getUserContent();

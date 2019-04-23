@@ -8,12 +8,7 @@ export default new ImageExtension<SelectAreaPosition>(
     version: '0.0.1',
   },
   {
-    init: ({ accountInfo: { type } }) => {
-      if (type !== 'yuque') {
-        return false;
-      }
-      return true;
-    },
+    init: ({ currentImageHostingService }) => !!currentImageHostingService,
     run: async context => {
       const { AreaSelector, toggleClipper } = context;
       toggleClipper();

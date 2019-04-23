@@ -8,12 +8,7 @@ export default new ImageExtension<string>(
     description: '把当前页面的 URL 转换成二维码',
   },
   {
-    init: ({ accountInfo: { type } }) => {
-      if (type !== 'yuque') {
-        return false;
-      }
-      return true;
-    },
+    init: ({ currentImageHostingService }) => !!currentImageHostingService,
     run: async context => {
       const { QRCode, document } = context;
       const dataUrl = await QRCode.toDataURL(document.URL);

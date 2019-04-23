@@ -26,6 +26,7 @@ describe('test storage', () => {
   let storage: TypedCommonStorageInterface;
   const defaultPreference: PreferenceStorage = {
     accounts: [],
+    imageHosting: [],
     defaultAccountId: undefined,
     defaultPluginId: undefined,
     showQuickResponseCode: false,
@@ -58,28 +59,33 @@ describe('test storage', () => {
   });
 
   describe('config account should work correctly', () => {
-    const mockGithubAccount = {
-      type: 'github',
-      accessToken: 'github',
+    const mockGithubAccount: AccountPreference = {
       id: 'github',
+      type: 'github',
       name: 'DiamondYuan',
+      avatar: 'avatar',
+      homePage: 'homePage',
       host: 'https://github.com',
     };
 
-    const mockYuqueAccount = {
+    const mockYuqueAccount: AccountPreference = {
       type: 'yuque',
       accessToken: 'yuque',
       id: 'yuque',
       name: 'DiamondYuan',
       host: 'https://yuque.com',
+      avatar: 'avatar',
+      homePage: 'homePage',
     };
 
-    const mockGitlabAccount = {
+    const mockGitlabAccount: AccountPreference = {
       type: 'gitlab',
       accessToken: 'gitlab',
       id: 'gitlab',
       name: 'DiamondYuan',
       host: 'https://gitlab.com',
+      avatar: 'avatar',
+      homePage: 'homePage',
     };
 
     it('test add account should change defaultAccountId when defaultAccountId is undefined', async () => {
