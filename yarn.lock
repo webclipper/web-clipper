@@ -2,10 +2,18 @@
 # yarn lockfile v1
 
 
-"@ant-design/icons-react@~1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmjs.org/@ant-design/icons-react/-/icons-react-1.1.2.tgz#df25c4560864f8a3b687b305c3238daff048ed72"
-  integrity sha512-7Fgt9d8ABgxrhZxsFjHk/VpPcxodQJJhbJO8Lsh7u58pGN4NoxxW++92naeGTXCyqZsbDPBReP+SC0bdBtbsGQ==
+"@ant-design/create-react-context@^0.2.4":
+  version "0.2.4"
+  resolved "http://registry.npm.taobao.org/@ant-design/create-react-context/download/@ant-design/create-react-context-0.2.4.tgz#0fe9adad030350c0c9bb296dd6dcf5a8a36bd425"
+  integrity sha1-D+mtrQMDUMDJuylt1tz1qKNr1CU=
+  dependencies:
+    gud "^1.0.0"
+    warning "^4.0.3"
+
+"@ant-design/icons-react@~1.1.5":
+  version "1.1.5"
+  resolved "http://registry.npm.taobao.org/@ant-design/icons-react/download/@ant-design/icons-react-1.1.5.tgz#1b03da8dcced2a4bb982ef7b25c1d24014c35a68"
+  integrity sha1-GwPajcztKku5gu97JcHSQBTDWmg=
   dependencies:
     ant-design-palettes "^1.1.3"
     babel-runtime "^6.26.0"
@@ -451,12 +459,13 @@
   resolved "https://registry.npmjs.org/@types/history/-/history-4.7.2.tgz#0e670ea254d559241b6eeb3894f8754991e73220"
   integrity sha512-ui3WwXmjTaY73fOQ3/m3nnajU/Orhi6cEu5rzX+BrAAJxa3eITXZ5ch9suPqtM03OWhAHhPSyBGCN4UKoxO20Q==
 
-"@types/hoist-non-react-statics@^3.3.0":
-  version "3.3.0"
-  resolved "http://registry.npm.taobao.org/@types/hoist-non-react-statics/download/@types/hoist-non-react-statics-3.3.0.tgz#a59c0c995cc885bef1b8ec2241b114f9b35b517b"
-  integrity sha1-pZwMmVzIhb7xuOwiQbEU+bNbUXs=
+"@types/hoist-non-react-statics@^3.3.0", "@types/hoist-non-react-statics@^3.3.1":
+  version "3.3.1"
+  resolved "http://registry.npm.taobao.org/@types/hoist-non-react-statics/download/@types/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
+  integrity sha1-ESSq/lEYy1kZd66xzqrtEHDrA58=
   dependencies:
     "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
 
 "@types/istanbul-lib-coverage@^1.1.0":
   version "1.1.0"
@@ -889,20 +898,21 @@ ant-design-palettes@^1.1.3:
   dependencies:
     tinycolor2 "^1.4.1"
 
-antd@^3.16.1:
-  version "3.16.1"
-  resolved "http://registry.npm.taobao.org/antd/download/antd-3.16.1.tgz#1d253931fc33e960f22025bef2d5c1548116ec6c"
-  integrity sha1-HSU5Mfwz6WDyICW+8tXBVIEW7Gw=
+antd@^3.16.5:
+  version "3.16.5"
+  resolved "http://registry.npm.taobao.org/antd/download/antd-3.16.5.tgz#9a187521020c297ef209c40f4f0e856b967a875d"
+  integrity sha1-mhh1IQIMKX7yCcQPTw6Fa5Z6h10=
   dependencies:
+    "@ant-design/create-react-context" "^0.2.4"
     "@ant-design/icons" "~1.2.0"
-    "@ant-design/icons-react" "~1.1.2"
+    "@ant-design/icons-react" "~1.1.5"
+    "@types/hoist-non-react-statics" "^3.3.1"
     "@types/react-slick" "^0.23.3"
     array-tree-filter "^2.1.0"
     babel-runtime "6.x"
     classnames "~2.2.6"
     copy-to-clipboard "^3.0.8"
     create-react-class "^15.6.3"
-    create-react-context "0.2.2"
     css-animation "^1.5.0"
     dom-closest "^0.2.0"
     enquire.js "^2.1.6"
@@ -931,7 +941,7 @@ antd@^3.16.1:
     rc-slider "~8.6.5"
     rc-steps "~3.3.0"
     rc-switch "~1.9.0"
-    rc-table "~6.4.0"
+    rc-table "~6.5.0"
     rc-tabs "~9.6.0"
     rc-time-picker "~3.6.1"
     rc-tooltip "~3.7.3"
@@ -7182,10 +7192,10 @@ rc-switch@~1.9.0:
     prop-types "^15.5.6"
     react-lifecycles-compat "^3.0.4"
 
-rc-table@~6.4.0:
-  version "6.4.3"
-  resolved "https://registry.npmjs.org/rc-table/-/rc-table-6.4.3.tgz#c84bdf3f45c123f40790e93a2a241b62f6b1e59f"
-  integrity sha512-4/f7mS87EtNxM2vhIaA7I1J8hPZ5OiOQwmjac7RJTmGOFVA8PJDGwEipeyU/eC9RM7f3v4Lc+a05KCfIbRU4tg==
+rc-table@~6.5.0:
+  version "6.5.0"
+  resolved "http://registry.npm.taobao.org/rc-table/download/rc-table-6.5.0.tgz#0887240342f8f3a764c954638cc46dea45921a14"
+  integrity sha1-CIckA0L486dkyVRjjMRt6kWSGhQ=
   dependencies:
     babel-runtime "6.x"
     classnames "^2.2.5"
