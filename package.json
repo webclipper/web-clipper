@@ -32,7 +32,7 @@
     "history": "^4.7.2",
     "hypermd": "^0.3.11",
     "immutability-helper": "^2.9.0",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.0",
     "lodash": "^4.17.11",
     "qrcode": "^1.3.0",
     "qs": "^6.7.0",
