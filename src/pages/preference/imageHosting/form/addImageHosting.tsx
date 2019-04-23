@@ -29,7 +29,7 @@ export default class AddImageHostingModal extends React.Component<PageProps> {
     const type = getFieldValue('type');
     if (type) {
       const service = imageHostingServicesMeta[type];
-      if (service) {
+      if (service && service.form) {
         return <service.form form={form} info={info} />;
       }
     }

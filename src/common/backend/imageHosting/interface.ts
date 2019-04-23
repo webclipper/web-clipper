@@ -19,5 +19,5 @@ export interface ImageHostingServiceMeta {
   icon: string;
   type: string;
   service: ImageHostingServiceConstructAble;
-  form: any;
+  form?: any;
 }
