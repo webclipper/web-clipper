@@ -26,7 +26,7 @@
     "antd": "^3.16.5",
     "axios": "^0.18.0",
     "blueimp-md5": "^2.10.0",
-    "codemirror": "^5.45.0",
+    "codemirror": "^5.46.0",
     "connected-react-router": "^6.2.1",
     "dayjs": "^1.8.12",
     "history": "^4.7.2",
