@@ -111,7 +111,7 @@ export default class extends React.Component<PageProps> {
               <Select allowClear className={styles.imageHostingSelect}>
                 {imageHosting.map(({ id, type, remark }) => {
                   const meta = imageHostingServicesMeta[type];
-                  if (meta.support && meta.support(currentAccount.type)) {
+                  if (meta.support && !meta.support(currentAccount.type)) {
                     return null;
                   }
                   return (
