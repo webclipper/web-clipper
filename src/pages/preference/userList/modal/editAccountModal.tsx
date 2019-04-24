@@ -21,20 +21,7 @@ type PageOwnProps = {
 };
 type PageProps = PageOwnProps & FormComponentProps;
 
-type PageState = {
-  type: string;
-};
-
-const DEFAULT_TYPE = 'yuque';
-
-export default class extends React.Component<PageProps, PageState> {
-  constructor(props: PageProps) {
-    super(props);
-    this.state = {
-      type: DEFAULT_TYPE,
-    };
-  }
-
+export default class extends React.Component<PageProps> {
   handleCancel = () => {
     this.props.onCancel();
   };
@@ -124,6 +111,9 @@ export default class extends React.Component<PageProps, PageState> {
               <Select allowClear className={styles.imageHostingSelect}>
                 {imageHosting.map(({ id, type, remark }) => {
                   const meta = imageHostingServicesMeta[type];
+                  if (meta.support && meta.support(currentAccount.type)) {
+                    return null;
+                  }
                   return (
                     <Select.Option key={id} value={id}>
                       <ImageHostingSelectOption

@@ -8,6 +8,9 @@ const meta: ImageHostingServiceMeta = {
   type: 'yuque',
   service: Service,
   form: Form,
+  support: (type: string) => {
+    return type === 'yuque';
+  },
 };
 
 export default meta;

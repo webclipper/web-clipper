@@ -20,4 +20,5 @@ export interface ImageHostingServiceMeta {
   type: string;
   service: ImageHostingServiceConstructAble;
   form?: any;
+  support?: (type: string) => boolean;
 }

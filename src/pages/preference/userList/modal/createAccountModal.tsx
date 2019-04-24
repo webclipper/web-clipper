@@ -147,6 +147,9 @@ export default class extends React.Component<PageProps, PageState> {
               >
                 {imageHosting.map(({ id, type, remark }) => {
                   const meta = imageHostingServicesMeta[type];
+                  if (meta.support && !meta.support(this.state.type)) {
+                    return null;
+                  }
                   return (
                     <Select.Option key={id} value={id}>
                       <ImageHostingSelectOption
