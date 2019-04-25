@@ -21,6 +21,7 @@ import {
 } from '../../extensions/interface';
 import ClipExtensions from './clipExtensions';
 import ToolExtensions from './toolExtensions';
+import { GlobalStore } from '../../store/reducers/interface';
 
 const useActions = {
   asyncHideTool: asyncHideTool.started,

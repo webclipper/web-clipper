@@ -1,3 +1,4 @@
+import { PreferenceStorage } from './../../common/storage/interface';
 import { asyncChangeAccount } from './../actions/clipper';
 import storage from '../../common/storage';
 import { all, call, put, spawn, delay } from 'redux-saga/effects';

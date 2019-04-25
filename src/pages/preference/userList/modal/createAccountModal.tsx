@@ -3,8 +3,15 @@ import { Form, Modal, Select, Icon, Divider } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import * as styles from './index.scss';
 import { omit } from 'lodash';
-import { ImageHostingServiceMeta } from '../../../../common/backend';
+import {
+  ImageHostingServiceMeta,
+  Repository,
+} from '../../../../common/backend';
 import ImageHostingSelectOption from '../../../../components/imageHostingSelectOption';
+import {
+  UserPreferenceStore,
+  ImageHosting,
+} from '../../../../store/reducers/userPreference/interface';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {

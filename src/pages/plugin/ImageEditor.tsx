@@ -6,6 +6,8 @@ import { SerializedExtensionWithId } from '../../extensions/interface';
 import { EditorContainer } from '../../components/container';
 import * as styles from './index.scss';
 import { isUndefined } from '../../common/object';
+import { GlobalStore } from '../../store/reducers/interface';
+import { ImageClipperData } from '../../store/reducers/userPreference/interface';
 
 const useActions = {
   asyncRunExtension: asyncRunExtension.started,

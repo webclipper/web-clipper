@@ -1,12 +1,10 @@
 import React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import {
-  SerializedExtensionWithId,
-  ExtensionType,
-} from '../../extensions/interface';
+import { ExtensionType } from '../../extensions/interface';
 import TextEditor from './TextEditor';
 import ImageEditor from './ImageEditor';
+import { GlobalStore } from '../../store/reducers/interface';
 
 const useActions = {};
 
@@ -24,7 +22,7 @@ type PageProps = ReturnType<typeof mapStateToProps> &
 
 class ClipperPluginPage extends React.Component<PageProps, PageState> {
   render() {
-    const extension: SerializedExtensionWithId = this.props.extensions.find(
+    const extension = this.props.extensions.find(
       o => `/plugins/${o.id}` === this.props.router.location.pathname
     );
     if (!extension) {

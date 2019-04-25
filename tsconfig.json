@@ -1,9 +1,7 @@
 {
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "lib", "__tests__/**/*"],
   "compilerOptions": {
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "ES6",
     "module": "ESNext",
     "declaration": false,
     "noImplicitAny": true,
@@ -21,5 +19,7 @@
     "inlineSources": true,
     "esModuleInterop": true,
     "jsx": "react"
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["./node_modules/*", "lib", "es"]
 }

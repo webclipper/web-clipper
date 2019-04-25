@@ -434,6 +434,13 @@
   dependencies:
     "@types/filesystem" "*"
 
+"@types/codemirror@^0.0.74":
+  version "0.0.74"
+  resolved "https://registry.npmjs.org/@types/codemirror/-/codemirror-0.0.74.tgz#7ca146f7f3414166e7501000d691b2f18d978d10"
+  integrity sha512-pjc14HE6KCCk3SYoC49k/gJJHkredJy4GdSK+lGRMIBfG+Uq6vT8oZiKToFH2J7pZ5pUd69UGD6CgmFG1V17wA==
+  dependencies:
+    "@types/tern" "*"
+
 "@types/enzyme-adapter-react-16@^1.0.3":
   version "1.0.5"
   resolved "https://registry.npmjs.org/@types/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.0.5.tgz#1bf30a166f49be69eeda4b81e3f24113c8b4e9d5"
@@ -448,6 +455,11 @@
   dependencies:
     "@types/cheerio" "*"
     "@types/react" "*"
+
+"@types/estree@*":
+  version "0.0.39"
+  resolved "https://registry.npmjs.org/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
+  integrity sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
 
 "@types/filesystem@*":
   version "0.0.29"
@@ -587,6 +599,18 @@
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/@types/stack-utils/download/@types/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha1-CoUdO9lkmPolwzq3J47TvWXwbD4=
+
+"@types/tern@*":
+  version "0.23.2"
+  resolved "https://registry.npmjs.org/@types/tern/-/tern-0.23.2.tgz#4f2657832e4e69345ae2afb1f7d72ebb9bbd25d2"
+  integrity sha512-OtEnzdjKJqQ5URz4DKvVkHDiPcjXKXc+NbqXsFb3rughaN4R7JVtoSRAvuoiDIA4Ev4mxX3u56WvPBpEac5ULA==
+  dependencies:
+    "@types/estree" "*"
+
+"@types/turndown@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/@types/turndown/-/turndown-5.0.0.tgz#2b763b36f783e4e237cea62cdc8f8592b72b9285"
+  integrity sha512-Y7KZn6SfSv1vzjByJGijrM9w99HoUbLiAgYwe+sGH6RYi5diIGLYOcr4Z1YqR2biFs9K5PnxKv/Fbkmh57pvzg==
 
 "@types/webpack-env@^1.13.9":
   version "1.13.9"
@@ -1831,10 +1855,10 @@ code-point-at@^1.0.0:
   resolved "https://registry.npmjs.org/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-codemirror@^5.45.0:
-  version "5.45.0"
-  resolved "https://registry.npmjs.org/codemirror/-/codemirror-5.45.0.tgz#db5ebbb3bf44028c684053f3954d011efcec27ad"
-  integrity sha512-c19j644usCE8gQaXa0jqn2B/HN9MnB2u6qPIrrhrMkB+QAP42y8G4QnTwuwbVSoUS1jEl7JU9HZMGhCDL0nsAw==
+codemirror@^5.46.0:
+  version "5.46.0"
+  resolved "https://registry.npmjs.org/codemirror/-/codemirror-5.46.0.tgz#be3591572f88911e0105a007c324856a9ece0fb7"
+  integrity sha512-3QpMge0vg4QEhHW3hBAtCipJEWjTJrqLLXdIaWptJOblf1vHFeXLNtFhPai/uX2lnFCehWNk4yOdaMR853Z02w==
 
 collection-visit@^1.0.0:
   version "1.0.0"

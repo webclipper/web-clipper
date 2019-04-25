@@ -1,3 +1,8 @@
+import { PreferenceStorage } from './interface';
+import {
+  ImageHosting,
+  AccountPreference,
+} from './../../store/reducers/userPreference/interface';
 export interface CommonStorage {
   set(key: string, value: any): void | Promise<void>;
   get<T>(key: string): Promise<T | undefined>;

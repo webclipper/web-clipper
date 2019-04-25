@@ -15,6 +15,8 @@ import * as styles from './index.scss';
 import EditAccountModal from './modal/editAccountModal';
 import { FormComponentProps } from 'antd/lib/form';
 import CreateAccountModal from './modal/createAccountModal';
+import { GlobalStore } from '../../../store/reducers/interface';
+import { AccountPreference } from '../../../store/reducers/userPreference/interface';
 
 const useActions = {
   resetAccountForm,
@@ -241,4 +243,5 @@ class Page extends React.Component<PageProps, PageState> {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
+  //@ts-ignore
 )(Form.create<PageProps>()(Page));

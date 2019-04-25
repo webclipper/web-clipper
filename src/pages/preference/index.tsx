@@ -17,6 +17,7 @@ import {
   ExtensionType,
   SerializedExtensionWithId,
 } from '../../extensions/interface';
+import { GlobalStore } from '../../store/reducers/interface';
 
 const TabPane = Tabs.TabPane;
 

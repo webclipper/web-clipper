@@ -13,7 +13,7 @@ import {
 } from '../store/actions';
 import { MessageListenerCombiner } from '../common/ListenerCombiner';
 
-const turndownService = TurndownService();
+const turndownService = new TurndownService();
 turndownService.addRule('lazyLoadImage', {
   filter: ['img'],
   replacement: function(_: any, node: any) {

@@ -4,6 +4,12 @@ import { FormComponentProps } from 'antd/lib/form';
 import * as styles from './index.scss';
 import { ImageHostingServiceMeta } from '../../../../common/backend';
 import ImageHostingSelectOption from '../../../../components/imageHostingSelectOption';
+import {
+  AccountPreference,
+  UserPreferenceStore,
+  ImageHosting,
+} from '../../../../store/reducers/userPreference/interface';
+import { Repository } from '../../../../common/backend/services/interface';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {

@@ -1,6 +1,7 @@
 import { SerializedExtension } from './interface';
 import { ImageHostingService } from '../common/backend/index';
 import { codeCallWithContext } from './utils';
+import TurndownService from 'turndown';
 
 export interface InitContext {
   accountInfo: {
@@ -15,7 +16,7 @@ export interface InitContext {
 
 export interface ContentScriptContext {
   $: JQueryStatic;
-  turndown: any;
+  turndown: TurndownService;
   Highlighter: any;
   AreaSelector: any;
   toggleClipper: any;

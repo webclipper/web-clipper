@@ -6,6 +6,7 @@ import * as styles from './complete.scss';
 import { Button } from 'antd';
 import { asyncRemoveTool } from '../../store/actions';
 import { QuickResponseCode } from './quickResponseCode';
+import { GlobalStore } from '../../store/reducers/interface';
 
 const useActions = {
   asyncRemoveTool: asyncRemoveTool.started,
@@ -87,6 +88,7 @@ class Page extends React.Component<PageProps> {
             <QuickResponseCode
               repositoryId={completeStatus.repositoryId}
               documentId={completeStatus.documentId}
+              //@ts-ignore
               accessToken={currentAccount.accessToken}
             />
           </section>

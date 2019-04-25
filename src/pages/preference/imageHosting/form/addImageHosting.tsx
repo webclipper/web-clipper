@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Form, Modal, Select, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import { ImageHostingServiceMeta } from '../../../../common/backend';
+import { ImageHosting } from '../../../../store/reducers/userPreference/interface';
 
 type PageOwnProps = {
   currentImageHosting?: ImageHosting | null;

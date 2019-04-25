@@ -14,10 +14,11 @@ import {
   asyncEditImageHosting,
   resetAccountForm,
   asyncUpdateAccount,
-} from '../actions';
-import { services, imageHostingServices } from '../../common/backend';
-import { extensions } from '../../extensions/index';
-import { reducerWithInitialState } from '../../common/typescript-fsa-reducers';
+} from '../../actions';
+import { services, imageHostingServices } from '../../../common/backend';
+import { extensions } from '../../../extensions';
+import { reducerWithInitialState } from '../../../common/typescript-fsa-reducers';
+import { UserPreferenceStore } from './interface';
 
 const servicesMeta = services.reduce(
   (previousValue, meta) => {

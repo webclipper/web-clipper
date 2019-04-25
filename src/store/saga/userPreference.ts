@@ -1,3 +1,4 @@
+import { GlobalStore } from './../reducers/interface';
 import { ServiceMeta } from './../../common/backend/services/interface';
 import browserService from '../../common/browser';
 import storage from '../../common/storage';

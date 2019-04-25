@@ -1,10 +1,6 @@
 declare module '*.scss';
 declare module '*.png';
 declare module 'readability';
-declare module 'turndown' {
-  let TurndownService: any;
-  export default TurndownService;
-}
 
 type Omit<T, K extends keyof T> = Pick<
   T,

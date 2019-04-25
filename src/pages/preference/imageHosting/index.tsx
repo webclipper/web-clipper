@@ -13,6 +13,8 @@ import AddImageHosting from './form/addImageHosting';
 import { FormComponentProps } from 'antd/lib/form';
 import ImageHostingListItem from '../../../components/imagehostingListItem';
 import { Form, Button, Icon } from 'antd';
+import { GlobalStore } from '../../../store/reducers/interface';
+import { ImageHosting } from '../../../store/reducers/userPreference/interface';
 
 const useActions = {
   asyncAddImageHosting: asyncAddImageHosting.started,
@@ -170,4 +172,5 @@ class Page extends React.Component<PageProps, PageState> {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
+  //@ts-ignore
 )(Form.create<PageProps>()(Page));

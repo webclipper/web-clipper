@@ -1,3 +1,4 @@
+import { Repository } from './../interface';
 import { DocumentService, CreateDocumentRequest } from './../../index';
 import axios, { AxiosInstance } from 'axios';
 import { generateUuid } from '../../../../common/uuid';

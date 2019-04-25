@@ -1,3 +1,8 @@
+import {
+  AccountPreference,
+  ImageHosting,
+} from './../reducers/userPreference/interface';
+import { PreferenceStorage } from './../../common/storage/interface';
 import { Repository, UserInfo } from './../../common/backend/index';
 import { SerializedExtensionWithId } from '../../extensions/interface';
 import actionCreatorFactory from '../../common/typescript-fsa';

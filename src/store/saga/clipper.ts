@@ -1,3 +1,6 @@
+import { ClipperStore } from './../reducers/clipper/interface';
+import { GlobalStore } from './../reducers/interface';
+import { ImageClipperData } from './../reducers/userPreference/interface';
 import { CreateDocumentRequest } from './../../common/backend/index';
 import backend, {
   documentServiceFactory,
@@ -15,10 +18,7 @@ import {
   delay,
 } from 'redux-saga/effects';
 import { message } from 'antd';
-import {
-  SerializedExtensionWithId,
-  ExtensionType,
-} from '../../extensions/interface';
+import { ExtensionType } from '../../extensions/interface';
 import { push } from 'connected-react-router';
 
 export function* clipperRootSagas() {
@@ -88,7 +88,7 @@ export function* asyncCreateDocumentSaga() {
   }
   const data = clipperData[router.location.pathname];
 
-  const extension: SerializedExtensionWithId = extensions.find(
+  const extension = extensions.find(
     o => `/plugins/${o.id}` === router.location.pathname
   );
   if (!extension) {
