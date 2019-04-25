@@ -632,7 +632,7 @@
     requireindex "^1.2.0"
     tsutils "^3.7.0"
 
-"@typescript-eslint/parser@1.6.0", "@typescript-eslint/parser@^1.6.0":
+"@typescript-eslint/parser@1.6.0":
   version "1.6.0"
   resolved "http://registry.npm.taobao.org/@typescript-eslint/parser/download/@typescript-eslint/parser-1.6.0.tgz#f01189c8b90848e3b8e45a6cdad27870529d1804"
   integrity sha1-8BGJyLkISOO45Fps2tJ4cFKdGAQ=
@@ -641,10 +641,27 @@
     eslint-scope "^4.0.0"
     eslint-visitor-keys "^1.0.0"
 
+"@typescript-eslint/parser@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npm.taobao.org/@typescript-eslint/parser/download/@typescript-eslint/parser-1.7.0.tgz#c3ea0d158349ceefbb6da95b5b09924b75357851"
+  integrity sha1-w+oNFYNJzu+7balbWwmSS3U1eFE=
+  dependencies:
+    "@typescript-eslint/typescript-estree" "1.7.0"
+    eslint-scope "^4.0.0"
+    eslint-visitor-keys "^1.0.0"
+
 "@typescript-eslint/typescript-estree@1.6.0":
   version "1.6.0"
   resolved "http://registry.npm.taobao.org/@typescript-eslint/typescript-estree/download/@typescript-eslint/typescript-estree-1.6.0.tgz#6cf43a07fee08b8eb52e4513b428c8cdc9751ef0"
   integrity sha1-bPQ6B/7gi461LkUTtCjIzcl1HvA=
+  dependencies:
+    lodash.unescape "4.0.1"
+    semver "5.5.0"
+
+"@typescript-eslint/typescript-estree@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npm.taobao.org/@typescript-eslint/typescript-estree/download/@typescript-eslint/typescript-estree-1.7.0.tgz#59ec02f5371964da1cc679dba7b878a417bc8c60"
+  integrity sha1-WewC9TcZZNocxnnbp7h4pBe8jGA=
   dependencies:
     lodash.unescape "4.0.1"
     semver "5.5.0"
