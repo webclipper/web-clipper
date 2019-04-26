@@ -92,6 +92,7 @@
     "less-loader": "^4.1.0",
     "node-sass": "^4.9.3",
     "pre-commit": "^1.2.2",
+    "prettier": "^1.17.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "ts-import-plugin": "^1.5.5",
