@@ -1,153 +1,167 @@
-import { Repository } from './../interface';
 import { DocumentService, CreateDocumentRequest } from './../../index';
 import axios, { AxiosInstance } from 'axios';
 import { generateUuid } from '../../../../common/uuid';
 import * as qs from 'qs';
 import { md5 } from '../../../md5';
+import {
+  YuqueBackendServiceConfig,
+  YuqueUserInfoResponse,
+  RepositoryType,
+  YuqueRepositoryResponse,
+  YuqueGroupResponse,
+  YuqueCreateDocumentResponse,
+  YuqueRepository,
+} from './interface';
 
-interface YuqueBackendServiceConfig {
-  accessToken: string;
-  host: string;
-}
-
-interface UserInfoResponse {
-  id: number;
-  avatar_url: string;
-  name: string;
-  login: string;
-  description: string;
-}
-interface RepositoryResponse {
-  id: number;
-  name: string;
-  description: string;
-  public: 0 | 1;
-  namespace: string;
-  created_at: string;
-}
+const HOST = 'https://www.yuque.com';
+const BASE_URL = `${HOST}/api/v2/`;
 
 export default class YuqueDocumentService implements DocumentService {
   private request: AxiosInstance;
-  private baseURL: string;
-  private login?: string;
-  private repositories: Repository[];
-  private accessToken: string;
+  private userInfo?: YuqueUserInfoResponse;
+  private config: YuqueBackendServiceConfig;
+  private repositories: YuqueRepository[];
 
-  constructor(config: YuqueBackendServiceConfig) {
-    const index = config.host.indexOf('/api/v2');
-    if (index !== -1) {
-      this.baseURL = config.host.substring(0, index);
-    } else {
-      this.baseURL = config.host;
-    }
-    const request = axios.create({
-      baseURL: `${this.baseURL}/api/v2/`,
-      headers: {
-        'X-Auth-Token': config.accessToken,
-      },
-      timeout: 10000,
-      transformResponse: [
-        (data): any => {
-          // 做任何你想要的数据转换
-          return JSON.parse(data).data;
-        },
-      ],
+  constructor({
+    accessToken,
+    repositoryType = RepositoryType.all,
+  }: YuqueBackendServiceConfig) {
+    this.config = { accessToken, repositoryType };
+    this.request = axios.create({
+      baseURL: BASE_URL,
+      headers: { 'X-Auth-Token': accessToken },
+      timeout: 5000,
+      transformResponse: [data => JSON.parse(data).data],
       withCredentials: true,
     });
-    this.request = request;
     this.repositories = [];
-    this.accessToken = config.accessToken;
   }
 
-  getId = () => {
-    return md5(this.accessToken);
-  };
+  getId = () => md5(this.config.accessToken);
 
   getUserInfo = async () => {
-    const res = await this.request.get<UserInfoResponse>('user');
-    const apiResponse = res.data;
-    const { avatar_url: avatar, name, login, description } = apiResponse;
-    this.login = login;
+    if (!this.userInfo) {
+      this.userInfo = await this.getYuqueUserInfo();
+    }
+    const { avatar_url: avatar, name, login, description } = this.userInfo;
+    const homePage = `${HOST}/${login}`;
     return {
       avatar,
-      name: name,
-      homePage: `${this.baseURL}/${login}`,
+      name,
+      homePage,
       description,
+      login,
     };
   };
 
   getRepositories = async () => {
-    let offset = 0;
-    let foo = await this.getYuqueRepositories(offset);
-    let result: Repository[] = [];
-    result = result.concat(foo);
-    while (foo.length === 20) {
-      offset = offset + 20;
-      foo = await this.getYuqueRepositories(offset);
-      result = result.concat(foo);
+    let response: YuqueRepository[] = [];
+    if (this.config.repositoryType !== RepositoryType.group) {
+      if (!this.userInfo) {
+        this.userInfo = await this.getYuqueUserInfo();
+      }
+      const repos = await this.getAllRepositories(
+        false,
+        this.userInfo.id,
+        this.userInfo.name
+      );
+      response = response.concat(repos);
     }
-    this.repositories = result;
-    return result;
+    if (this.config.repositoryType !== RepositoryType.self) {
+      const groups = await this.getUserGroups();
+      for (const group of groups) {
+        const repos = await this.getAllRepositories(
+          false,
+          group.id,
+          group.name
+        );
+        response = response.concat(repos);
+      }
+    }
+    this.repositories = response;
+    return response.map(({ namespace, ...rest }) => ({ ...rest }));
   };
 
   createDocument = async (info: CreateDocumentRequest) => {
-    if (!this.login) {
-      await this.getUserInfo();
+    if (!this.userInfo) {
+      this.userInfo = await this.getYuqueUserInfo();
     }
-    let slug = generateUuid();
-    const { private: privateInfo, content: body, title, repositoryId } = info;
-    let privateStatus = !privateInfo ? 1 : 0;
-    const request = {
-      title,
-      slug,
-      body,
-      private: privateStatus,
-    };
-    const repository = this.repositories.find(
-      (o: Repository) => o.id === repositoryId
-    );
+    const { content: body, title, repositoryId } = info;
+    const repository = this.repositories.find(o => o.id === repositoryId);
     if (!repository) {
       throw new Error('illegal repositoryId');
     }
-    const response = await this.request.post<{
-      id: number;
-      slug: string;
-      title: string;
-      created_at: string;
-      updated_at: string;
-    }>(`/repos/${repositoryId}/docs`, qs.stringify(request));
+    const request = {
+      title,
+      slug: generateUuid(),
+      body,
+      private: true,
+    };
+    const response = await this.request.post<YuqueCreateDocumentResponse>(
+      `/repos/${repositoryId}/docs`,
+      qs.stringify(request)
+    );
     const data = response.data;
     return {
-      href: `${this.baseURL}/${repository.namespace}/${data.slug}`,
+      href: `${HOST}/${repository.namespace}/${data.slug}`,
       repositoryId,
       documentId: data.id.toString(),
     };
   };
 
-  private getYuqueRepositories = async (
-    offset: number
-  ): Promise<Repository[]> => {
-    if (!this.login) {
-      await this.getUserInfo();
+  private getUserGroups = async () => {
+    if (!this.userInfo) {
+      this.userInfo = await this.getYuqueUserInfo();
     }
+    return (await this.request.get<YuqueGroupResponse[]>(
+      `users/${this.userInfo.login}/groups`
+    )).data;
+  };
+
+  private getYuqueUserInfo = async () => {
+    const response = await this.request.get<YuqueUserInfoResponse>('user');
+    return response.data;
+  };
+
+  private getAllRepositories = async (
+    isGroup: boolean,
+    groupId: number,
+    groupName: string
+  ) => {
+    let offset = 0;
+    let result = await this.getYuqueRepositories(
+      offset,
+      isGroup,
+      String(groupId)
+    );
+    while (result.length - offset === 20) {
+      offset = offset + 20;
+      result = result.concat(
+        await this.getYuqueRepositories(offset, isGroup, String(groupId))
+      );
+    }
+    return result.map(
+      ({ id, name, namespace }): YuqueRepository => ({
+        id: String(id),
+        name,
+        groupId: String(groupId),
+        groupName: groupName,
+        namespace,
+      })
+    );
+  };
+
+  private getYuqueRepositories = async (
+    offset: number,
+    isGroup: boolean,
+    slug: string
+  ) => {
     const query = {
       offset: offset,
     };
-    const response = await this.request.get<RepositoryResponse[]>(
-      `users/${this.login}/repos?${qs.stringify(query)}`
+    const response = await this.request.get<YuqueRepositoryResponse[]>(
+      `${isGroup ? 'group' : 'users'}/${slug}/repos?${qs.stringify(query)}`
     );
-    const repositories = response.data;
-    const result = repositories.map(repository => {
-      const { id, name, namespace, created_at: createdAt } = repository;
-      return {
-        id: id.toString(),
-        name,
-        namespace,
-        owner: namespace.split('/')[0],
-        private: !repository.public,
-        createdAt,
-      };
-    });
-    return result;
+    return response.data;
   };
 }

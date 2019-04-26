@@ -1,15 +1,27 @@
-import { Form, Input } from 'antd';
+import { Form, Input, Select } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React, { Component, Fragment } from 'react';
+import { YuqueBackendServiceConfig, RepositoryType } from './interface';
 
 interface YuqueFormProps {
   verified?: boolean;
-  info?: {
-    host: string;
-    accessToken: string;
-  };
+  info?: YuqueBackendServiceConfig;
 }
 
+const RepositoryTypeOptions = [
+  {
+    key: RepositoryType.all,
+    label: '显示全部的知识库',
+  },
+  {
+    key: RepositoryType.self,
+    label: '只显示自己的知识库',
+  },
+  {
+    key: RepositoryType.group,
+    label: '只显示团队的知识库',
+  },
+];
 export default class extends Component<YuqueFormProps & FormComponentProps> {
   render() {
     const {
@@ -18,30 +30,15 @@ export default class extends Component<YuqueFormProps & FormComponentProps> {
       verified,
     } = this.props;
 
-    let initData: Partial<{
-      host: string;
-      accessToken: string;
-    }> = {
-      host: 'https://www.yuque.com/api/v2/',
+    let initData: Partial<YuqueBackendServiceConfig> = {
+      repositoryType: RepositoryType.self,
     };
-
     if (info) {
-      initData = {
-        host: info.host,
-        accessToken: info.accessToken,
-      };
+      initData = info;
     }
-
     let editMode = info ? true : false;
-
     return (
       <Fragment>
-        <Form.Item label="域名">
-          {getFieldDecorator('host', {
-            initialValue: initData.host,
-            rules: [{ required: true, message: 'baseURL is required!' }],
-          })(<Input disabled={editMode || verified} />)}
-        </Form.Item>
         <Form.Item label="AccessToken">
           {getFieldDecorator('accessToken', {
             initialValue: initData.accessToken,
@@ -52,6 +49,18 @@ export default class extends Component<YuqueFormProps & FormComponentProps> {
               },
             ],
           })(<Input disabled={editMode || verified} />)}
+        </Form.Item>
+        <Form.Item label="知识库类型">
+          {getFieldDecorator('repositoryType', {
+            initialValue: initData.repositoryType,
+            rules: [{ required: true, message: 'repositoryType is required!' }],
+          })(
+            <Select disabled={editMode || verified}>
+              {RepositoryTypeOptions.map(o => (
+                <Select.Option key={o.key}>{o.label}</Select.Option>
+              ))}
+            </Select>
+          )}
         </Form.Item>
       </Fragment>
     );

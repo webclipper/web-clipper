@@ -88,6 +88,9 @@ class Page extends React.Component<PageProps, PageState> {
   };
 
   handleSetDefaultId = (id: string) => {
+    if (this.props.defaultAccountId === id) {
+      return;
+    }
     this.props.asyncUpdateCurrentAccountIndex({ id });
   };
 

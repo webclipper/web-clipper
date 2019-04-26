@@ -10,6 +10,7 @@ import {
   ImageHosting,
 } from '../../../../store/reducers/userPreference/interface';
 import { Repository } from '../../../../common/backend/services/interface';
+import repositorySelectOptions from '../../../../components/repositorySelectOptions';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {
@@ -97,16 +98,7 @@ export default class extends React.Component<PageProps> {
               initialValue: currentAccount.defaultRepositoryId,
             })(
               <Select allowClear disabled={!verified}>
-                {repositories.map((o: any) => {
-                  return (
-                    <Select.Option
-                      key={o.id.toString()}
-                      value={o.id.toString()}
-                    >
-                      {o.name}
-                    </Select.Option>
-                  );
-                })}
+                {repositorySelectOptions(repositories)}
               </Select>
             )}
           </Form.Item>

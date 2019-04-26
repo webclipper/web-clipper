@@ -4,7 +4,6 @@ import {
   CreateDocumentRequest,
 } from '../../index';
 import axios, { AxiosInstance } from 'axios';
-import dayjs from 'dayjs';
 import { generateUuid } from '../../../../common/uuid';
 
 interface NotionUserContent {
@@ -102,16 +101,16 @@ export default class NotionDocumentService implements DocumentService {
       this.repositories = [];
       return [];
     }
-    const result: Repository[] = Object.values(blocks)
+    const result = Object.values(blocks)
       .filter(({ value }) => !!value.properties && !!spaces[value.parent_id])
-      .map(({ value }) => ({
-        id: value.id,
-        name: value.properties.title.toString(),
-        private: false,
-        owner: spaces[value.parent_id].value.domain,
-        createdAt: dayjs(value.created_time).format('YYYY-MM-DD'),
-        namespace: '',
-      }));
+      .map(
+        ({ value }): Repository => ({
+          id: value.id,
+          name: value.properties.title.toString(),
+          groupId: spaces[value.parent_id].value.domain,
+          groupName: spaces[value.parent_id].value.name,
+        })
+      );
 
     this.repositories = result;
 
@@ -131,7 +130,6 @@ export default class NotionDocumentService implements DocumentService {
         'Content-Type': 'text/markdown',
       },
     });
-
     await this.request.post('api/v3/enqueueTask', {
       task: {
         eventName: 'importFile',
@@ -143,16 +141,15 @@ export default class NotionDocumentService implements DocumentService {
         },
       },
     });
-
-    const repo = this.repositories.find(o => o.id === repositoryId);
-
-    let spaceId = '';
-    if (repo) {
-      spaceId = repo.owner;
+    const repository = this.repositories.find(o => o.id === repositoryId);
+    if (!repository) {
+      throw new Error('仓库非法');
     }
-
     return {
-      href: `https://www.notion.so/${spaceId}/${documentId.replace(/-/g, '')}`,
+      href: `https://www.notion.so/${repository.groupId}/${documentId.replace(
+        /-/g,
+        ''
+      )}`,
       repositoryId: repositoryId,
       documentId,
     };

@@ -22,6 +22,7 @@ import {
 import ClipExtensions from './clipExtensions';
 import ToolExtensions from './toolExtensions';
 import { GlobalStore } from '../../store/reducers/interface';
+import repositorySelectOptions from '../../components/repositorySelectOptions';
 
 const useActions = {
   asyncHideTool: asyncHideTool.started,
@@ -32,8 +33,6 @@ const useActions = {
   selectRepository: selectRepository,
   push,
 };
-
-const Option = Select.Option;
 
 const mapStateToProps = ({
   clipper: {
@@ -73,8 +72,7 @@ const mapStateToProps = ({
 };
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
-type PageOwnProps = {};
-type PageProps = PageStateProps & PageDispatchProps & PageOwnProps;
+type PageProps = PageStateProps & PageDispatchProps;
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators<PageDispatchProps, PageDispatchProps>(
     useActions,
@@ -153,7 +151,7 @@ class Page extends React.Component<PageProps> {
     }
 
     const enableExtensions: SerializedExtensionWithId[] = extensions.filter(
-      (o: SerializedExtensionWithId) => {
+      o => {
         if (o.init) {
           // @ts-ignore
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -224,13 +222,7 @@ class Page extends React.Component<PageProps> {
             dropdownMatchSelectWidth={true}
             value={repositoryId}
           >
-            {repositories.map(o => {
-              return (
-                <Option key={o.id.toString()} value={o.id}>
-                  {o.name}
-                </Option>
-              );
-            })}
+            {repositorySelectOptions(repositories)}
           </Select>
         </section>
         <section className={`${styles.toolbar} ${styles.sectionLine}`}>

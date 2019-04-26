@@ -11,7 +11,7 @@ import {
 import { bindActionCreators, Dispatch } from 'redux';
 import { CenterContainer } from '../../components/container';
 import { connect } from 'react-redux';
-import { List, Select, Switch, Tabs } from 'antd';
+import { List, Select, Switch, Tabs, Icon } from 'antd';
 import { push } from 'connected-react-router';
 import {
   ExtensionType,
@@ -63,18 +63,17 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   );
 
 class Page extends React.Component<PageProps, PageState> {
+  handleClose = () => {
+    this.props.push('/');
+  };
+
   render() {
     const { defaultPluginId, extensions } = this.props;
     return (
       <CenterContainer>
         <div className={styles.mainContent}>
-          <div
-            onClick={() => {
-              this.props.push('/');
-            }}
-            className={styles.closeIcon}
-          >
-            关闭
+          <div onClick={this.handleClose} className={styles.closeIcon}>
+            <Icon type="close" />
           </div>
           <div style={{ background: 'white', height: '100%' }}>
             <Tabs

@@ -2,25 +2,12 @@ export interface DocumentServiceConstructAble {
   new (info: any): DocumentService;
 }
 
-export interface DocumentService {
-  getId(): string;
-
-  getRepositories(): Promise<Repository[]>;
-
-  createDocument(
-    request: CreateDocumentRequest
-  ): Promise<CreateDocumentResponse>;
-
-  getUserInfo(): Promise<UserInfo>;
-}
-
 export interface CreateDocumentRequest {
   title: string;
   content: string;
-  private: boolean;
   repositoryId: string;
-  tags?: string[];
 }
+
 export interface CreateDocumentResponse {
   href: string;
   repositoryId: string;
@@ -35,22 +22,59 @@ export interface UserInfo {
 }
 
 export interface Repository {
-  id: string;
-  name: string;
-  private: boolean;
-  createdAt: string;
-  owner: string;
   /**
-   * namespace = owner/name
+   * 仓库 ID
    */
-  namespace: string;
+  id: string;
+  /**
+   * 仓库名
+   */
+  name: string;
+  /**
+   * 团队 ID
+   */
+  groupId: string;
+  /**
+   * 团队 名称
+   */
+  groupName: string;
 }
 
 export interface ServiceMeta {
+  /**
+   * 后端服务名称
+   */
   name: string;
+  /**
+   * 图标
+   */
   icon: string;
+  /**
+   * 类型
+   */
   type: string;
+  /**
+   * 后端接口实现
+   */
   service: DocumentServiceConstructAble;
+  /**
+   * 主页
+   */
   homePage: string;
-  form: any;
+  /**
+   * 配置表单
+   */
+  form?: any;
+}
+
+export interface DocumentService {
+  getId(): string;
+
+  getRepositories(): Promise<Repository[]>;
+
+  createDocument(
+    request: CreateDocumentRequest
+  ): Promise<CreateDocumentResponse>;
+
+  getUserInfo(): Promise<UserInfo>;
 }

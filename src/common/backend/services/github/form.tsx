@@ -1,12 +1,11 @@
 import { Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React, { Component, Fragment } from 'react';
+import { GithubBackendServiceConfig } from './interface';
 
 interface GithubFormProps {
   verified?: boolean;
-  info?: {
-    accessToken: string;
-  };
+  info?: GithubBackendServiceConfig;
 }
 
 export default class extends Component<GithubFormProps & FormComponentProps> {

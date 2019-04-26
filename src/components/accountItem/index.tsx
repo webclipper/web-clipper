@@ -36,7 +36,7 @@ export default class Page extends React.Component<PageProps> {
       <div className={styles.card}>
         <div className={styles.star}>
           <Icon
-            type="tag"
+            type="star"
             style={tagStyle}
             onClick={this.handleSetDefaultAccount}
           />

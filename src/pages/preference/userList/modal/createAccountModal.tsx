@@ -12,6 +12,7 @@ import {
   UserPreferenceStore,
   ImageHosting,
 } from '../../../../store/reducers/userPreference/interface';
+import repositorySelectOptions from '../../../../components/repositorySelectOptions';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {
@@ -133,16 +134,7 @@ export default class extends React.Component<PageProps, PageState> {
           <Form.Item label="默认知识库">
             {getFieldDecorator('defaultRepositoryId')(
               <Select disabled={!verified}>
-                {repositories.map((o: any) => {
-                  return (
-                    <Select.Option
-                      key={o.id.toString()}
-                      value={o.id.toString()}
-                    >
-                      {o.name}
-                    </Select.Option>
-                  );
-                })}
+                {repositorySelectOptions(repositories)}
               </Select>
             )}
           </Form.Item>

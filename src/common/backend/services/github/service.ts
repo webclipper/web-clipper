@@ -1,4 +1,10 @@
 import {
+  GithubBackendServiceConfig,
+  GithubUserInfoResponse,
+  GithubRepositoryResponse,
+  GithubRepository,
+} from './interface';
+import {
   DocumentService,
   Repository,
   CreateDocumentRequest,
@@ -6,43 +12,23 @@ import {
 import axios, { AxiosInstance } from 'axios';
 import { md5 } from '../../../md5';
 
-interface GithubBackendServiceConfig {
-  accessToken: string;
-  host: string;
-}
-
-interface UserInfoResponse {
-  avatar_url: string;
-  name: string;
-  bio: string;
-  html_url: string;
-}
-interface RepositoryResponse {
-  id: number;
-  name: string;
-  full_name: string;
-  created_at: string;
-  description: string;
-  private: boolean;
-}
+const PAGE_LIMIT = 100;
 
 export default class GithubDocumentService implements DocumentService {
   private request: AxiosInstance;
-  private repositories: Repository[];
-  private pageLimit = 100;
-  private accessToken: string;
+  private repositories: GithubRepository[];
+  private config: GithubBackendServiceConfig;
 
   constructor(config: GithubBackendServiceConfig) {
     const request = axios.create({
-      baseURL: config.host,
+      baseURL: 'https://api.github.com',
       headers: {
         Accept: 'application/vnd.github.v3+json',
         Authorization: `token ${config.accessToken}`,
       },
       timeout: 10000,
       transformResponse: [
-        (data): any => {
-          // 做任何你想要的数据转换
+        (data): string => {
           return JSON.parse(data);
         },
       ],
@@ -50,15 +36,15 @@ export default class GithubDocumentService implements DocumentService {
     });
     this.request = request;
     this.repositories = [];
-    this.accessToken = config.accessToken;
+    this.config = config;
   }
 
   getId = () => {
-    return md5(this.accessToken);
+    return md5(this.config.accessToken);
   };
 
   getUserInfo = async () => {
-    const data = await this.request.get<UserInfoResponse>('user');
+    const data = await this.request.get<GithubUserInfoResponse>('user');
     const {
       name,
       avatar_url: avatar,
@@ -76,16 +62,22 @@ export default class GithubDocumentService implements DocumentService {
   getRepositories = async () => {
     let page = 1;
     let foo = await this.getGithubRepositories(page);
-    let result: Repository[] = [];
+    let result: GithubRepository[] = [];
     result = result.concat(foo);
-
-    while (foo.length === this.pageLimit) {
+    while (foo.length === PAGE_LIMIT) {
       page++;
       foo = await this.getGithubRepositories(page);
       result = result.concat(foo);
     }
     this.repositories = result;
-    return result;
+    return result.map(
+      ({ id, name, groupId, groupName }): Repository => ({
+        id,
+        name,
+        groupId,
+        groupName,
+      })
+    );
   };
 
   createDocument = async (info: CreateDocumentRequest) => {
@@ -111,28 +103,22 @@ export default class GithubDocumentService implements DocumentService {
     };
   };
 
-  private getGithubRepositories = async (
-    page: number
-  ): Promise<Repository[]> => {
-    const response = await this.request.get<RepositoryResponse[]>(
-      `user/repos?per_page=${this.pageLimit}&page=${page}`
+  private getGithubRepositories = async (page: number) => {
+    const response = await this.request.get<GithubRepositoryResponse[]>(
+      `user/repos?per_page=${PAGE_LIMIT}&page=${page}`
     );
     const repositories = response.data;
-    return repositories.map(repository => {
-      const {
-        id,
-        name,
-        full_name: namespace,
-        created_at: createdAt,
-      } = repository;
-      return {
-        id: id.toString(),
-        name,
-        namespace,
-        owner: namespace.split('/')[0],
-        private: repository.private,
-        createdAt,
-      };
-    });
+    return repositories.map(
+      (repository): GithubRepository => {
+        const { id, name, full_name: namespace } = repository;
+        return {
+          id: id.toString(),
+          name,
+          namespace,
+          groupId: namespace.split('/')[0],
+          groupName: namespace.split('/')[0],
+        };
+      }
+    );
   };
 }
