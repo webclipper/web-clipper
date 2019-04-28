@@ -3,9 +3,9 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { asyncRunExtension } from '../../store/actions';
 import { SerializedExtensionWithId } from '../../extensions/interface';
-import { EditorContainer } from '../../components/container';
+import { EditorContainer } from 'components/container';
 import * as styles from './index.scss';
-import { isUndefined } from '../../common/object';
+import { isUndefined } from 'common/object';
 import { GlobalStore } from '../../store/reducers/interface';
 import { ImageClipperData } from '../../store/reducers/userPreference/interface';
 

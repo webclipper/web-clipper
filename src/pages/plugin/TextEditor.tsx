@@ -1,11 +1,11 @@
 import React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { asyncRunExtension, changeData } from '../../store/actions';
+import { asyncRunExtension, changeData } from 'actions';
 import { SerializedExtensionWithId } from '../../extensions/interface';
 import * as HyperMD from 'hypermd';
-import { EditorContainer } from '../../components/container';
-import { isUndefined } from '../../common/object';
+import { EditorContainer } from 'components/container';
+import { isUndefined } from 'common/object';
 import { GlobalStore } from '../../store/reducers/interface';
 
 const useActions = {

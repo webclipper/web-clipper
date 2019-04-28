@@ -1,13 +1,13 @@
 import { ClipperStore } from './../reducers/clipper/interface';
 import { GlobalStore } from './../reducers/interface';
 import { ImageClipperData } from './../reducers/userPreference/interface';
-import { CreateDocumentRequest } from './../../common/backend/index';
 import backend, {
   documentServiceFactory,
   imageHostingServiceFactory,
-} from '../../common/backend';
-import { AnyAction, isType } from '../../common/typescript-fsa';
-import { asyncChangeAccount, asyncCreateDocument } from '../actions';
+  CreateDocumentRequest,
+} from 'common/backend';
+import { AnyAction, isType } from 'common/typescript-fsa';
+import { asyncChangeAccount, asyncCreateDocument } from 'actions';
 import {
   call,
   fork,
@@ -99,7 +99,6 @@ export function* asyncCreateDocumentSaga() {
   if (extension.type === ExtensionType.Text) {
     createDocumentRequest = {
       title: title,
-      private: true,
       repositoryId,
       content: data as string,
     };
@@ -117,7 +116,6 @@ export function* asyncCreateDocumentSaga() {
       });
       createDocumentRequest = {
         title: title,
-        private: true,
         repositoryId,
         content: `![](${responseUrl})`,
       };

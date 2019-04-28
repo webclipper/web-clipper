@@ -2,10 +2,10 @@ import {
   AccountPreference,
   ImageHosting,
 } from './../reducers/userPreference/interface';
-import { PreferenceStorage } from './../../common/storage/interface';
-import { Repository, UserInfo } from './../../common/backend/index';
+import { PreferenceStorage } from 'common/storage/interface';
+import { Repository, UserInfo } from 'common/backend/index';
 import { SerializedExtensionWithId } from '../../extensions/interface';
-import actionCreatorFactory from '../../common/typescript-fsa';
+import actionCreatorFactory from 'common/typescript-fsa';
 const actionCreator = actionCreatorFactory('USER_PREFERENCE');
 
 export const initUserPreference = actionCreator<PreferenceStorage>(

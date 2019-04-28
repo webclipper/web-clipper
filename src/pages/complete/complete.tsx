@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { ToolContainer } from '../../components/container';
+import { ToolContainer } from 'components/container';
 import * as styles from './complete.scss';
 import { Button } from 'antd';
-import { asyncRemoveTool } from '../../store/actions';
+import { asyncRemoveTool } from 'actions';
 import { QuickResponseCode } from './quickResponseCode';
 import { GlobalStore } from '../../store/reducers/interface';
 

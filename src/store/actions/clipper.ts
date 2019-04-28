@@ -1,5 +1,5 @@
-import { Repository } from './../../common/backend/index';
-import actionCreatorFactory from '../../common/typescript-fsa';
+import { Repository } from 'common/backend/index';
+import actionCreatorFactory from 'common/typescript-fsa';
 
 const actionCreator = actionCreatorFactory('CLIPPER');
 

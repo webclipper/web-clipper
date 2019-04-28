@@ -1,5 +1,15 @@
 import * as React from 'react';
 import * as styles from './index.scss';
+import ClipExtensions from './clipExtensions';
+import repositorySelectOptions from 'components/repositorySelectOptions';
+import ToolExtensions from './toolExtensions';
+import { Avatar, Button, Icon, Input, Select } from 'antd';
+import { bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import { GlobalStore } from '../../store/reducers/interface';
+import { isEqual } from 'lodash';
+import { push } from 'connected-react-router';
+import { ToolContainer } from 'components/container';
 import {
   asyncChangeAccount,
   asyncCreateDocument,
@@ -7,22 +17,12 @@ import {
   updateTitle,
   asyncRunExtension,
   asyncHideTool,
-} from '../../store/actions';
-import { Avatar, Button, Icon, Input, Select } from 'antd';
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
-import { ToolContainer } from '../../components/container';
-import { isEqual } from 'lodash';
+} from 'actions';
 import {
   SerializedExtensionWithId,
   ExtensionType,
   InitContext,
 } from '../../extensions/interface';
-import ClipExtensions from './clipExtensions';
-import ToolExtensions from './toolExtensions';
-import { GlobalStore } from '../../store/reducers/interface';
-import repositorySelectOptions from '../../components/repositorySelectOptions';
 
 const useActions = {
   asyncHideTool: asyncHideTool.started,

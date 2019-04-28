@@ -4,7 +4,7 @@ import {
   CreateDocumentRequest,
 } from '../../index';
 import axios, { AxiosInstance } from 'axios';
-import { generateUuid } from '../../../../common/uuid';
+import { generateUuid } from '../../../uuid';
 
 interface NotionUserContent {
   recordMap: {

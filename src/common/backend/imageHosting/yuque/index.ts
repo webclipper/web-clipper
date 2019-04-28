@@ -1,4 +1,4 @@
-import { ImageHostingServiceMeta } from './../interface';
+import { ImageHostingServiceMeta } from '../interface';
 import Service from './service';
 import Form from './form';
 

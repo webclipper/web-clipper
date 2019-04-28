@@ -22,6 +22,12 @@ module.exports = {
     filename: '[name].js',
   },
   resolve: {
+    alias: {
+      common: resolve('src/common/'),
+      components: resolve('src/components/'),
+      actions: resolve('src/store/actions'),
+      extensions: resolve('src/extensions/'),
+    },
     extensions: ['.ts', '.tsx', '.js', 'scss', 'less'],
   },
   module: {

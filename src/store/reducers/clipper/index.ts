@@ -8,9 +8,9 @@ import {
   changeData,
   initUserPreference,
   asyncRunExtension,
-} from '../../actions';
+} from 'actions';
 import update from 'immutability-helper';
-import { reducerWithInitialState } from '../../../common/typescript-fsa-reducers';
+import { reducerWithInitialState } from 'common/typescript-fsa-reducers';
 
 const defaultState: ClipperStore = {
   title: '',

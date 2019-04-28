@@ -9,4 +9,11 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
   },
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: './webpack/webpack.common.js',
+      },
+    },
+  },
 };

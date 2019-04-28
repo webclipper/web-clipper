@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Select } from 'antd';
-import { Repository } from '../../common/backend';
+import { Repository } from 'common/backend';
 
 interface RepositoryInGroup {
   [groupId: string]: {

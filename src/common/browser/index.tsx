@@ -1,4 +1,4 @@
-import { AnyAction } from '../typescript-fsa';
+import { AnyAction } from 'common/typescript-fsa';
 
 export interface BrowserTab {
   title: string;

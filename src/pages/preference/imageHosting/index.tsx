@@ -5,13 +5,13 @@ import {
   asyncAddImageHosting,
   asyncDeleteImageHosting,
   asyncEditImageHosting,
-} from '../../../store/actions';
+} from 'actions';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import * as styles from './index.scss';
 import AddImageHosting from './form/addImageHosting';
 import { FormComponentProps } from 'antd/lib/form';
-import ImageHostingListItem from '../../../components/imagehostingListItem';
+import ImageHostingListItem from 'components/imagehostingListItem';
 import { Form, Button, Icon } from 'antd';
 import { GlobalStore } from '../../../store/reducers/interface';
 import { ImageHosting } from '../../../store/reducers/userPreference/interface';

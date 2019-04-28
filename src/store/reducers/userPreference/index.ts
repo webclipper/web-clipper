@@ -14,7 +14,7 @@ import {
   asyncEditImageHosting,
   resetAccountForm,
   asyncUpdateAccount,
-} from '../../actions';
+} from 'actions';
 import { services, imageHostingServices } from '../../../common/backend';
 import { extensions } from '../../../extensions';
 import { reducerWithInitialState } from '../../../common/typescript-fsa-reducers';

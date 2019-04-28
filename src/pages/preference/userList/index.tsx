@@ -6,7 +6,7 @@ import {
   asyncUpdateCurrentAccountIndex,
   asyncVerificationAccessToken,
   asyncUpdateAccount,
-} from '../../../store/actions';
+} from 'actions';
 import { Icon, Button, Form, Row, Col } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';

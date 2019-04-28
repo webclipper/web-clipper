@@ -7,16 +7,13 @@ import {
   asyncSetShowLineNumber,
   asyncSetShowQuickResponseCode,
   asyncSetDefaultPluginId,
-} from '../../store/actions';
+} from 'actions';
 import { bindActionCreators, Dispatch } from 'redux';
-import { CenterContainer } from '../../components/container';
+import { CenterContainer } from 'components/container';
 import { connect } from 'react-redux';
 import { List, Select, Switch, Tabs, Icon } from 'antd';
 import { push } from 'connected-react-router';
-import {
-  ExtensionType,
-  SerializedExtensionWithId,
-} from '../../extensions/interface';
+import { ExtensionType, SerializedExtensionWithId } from 'extensions/interface';
 import { GlobalStore } from '../../store/reducers/interface';
 
 const TabPane = Tabs.TabPane;

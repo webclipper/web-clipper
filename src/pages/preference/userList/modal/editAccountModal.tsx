@@ -2,15 +2,15 @@ import * as React from 'react';
 import { Form, Modal, Select, Icon, Divider } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import * as styles from './index.scss';
-import { ImageHostingServiceMeta } from '../../../../common/backend';
-import ImageHostingSelectOption from '../../../../components/imageHostingSelectOption';
+import { ImageHostingServiceMeta } from 'common/backend';
+import ImageHostingSelectOption from 'components/imageHostingSelectOption';
+import { Repository } from 'common/backend/services/interface';
+import repositorySelectOptions from 'components/repositorySelectOptions';
 import {
   AccountPreference,
   UserPreferenceStore,
   ImageHosting,
 } from '../../../../store/reducers/userPreference/interface';
-import { Repository } from '../../../../common/backend/services/interface';
-import repositorySelectOptions from '../../../../components/repositorySelectOptions';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {

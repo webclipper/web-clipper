@@ -1,8 +1,13 @@
+import browserService from 'common/browser';
+import storage from 'common/storage';
+import update from 'immutability-helper';
+import { AnyAction, isType } from 'common/typescript-fsa';
+import { call, fork, put, select, takeEvery } from 'redux-saga/effects';
 import { GlobalStore } from './../reducers/interface';
-import { ServiceMeta } from './../../common/backend/services/interface';
-import browserService from '../../common/browser';
-import storage from '../../common/storage';
-import { AnyAction, isType } from '../../common/typescript-fsa';
+import { loadImage } from 'common/blob';
+import { message } from 'antd';
+import { ServiceMeta } from 'common/backend/services/interface';
+import { ToolContext } from '../../extensions/interface';
 import {
   asyncAddAccount,
   asyncDeleteAccount,
@@ -22,16 +27,11 @@ import {
   resetAccountForm,
   asyncUpdateAccount,
   asyncChangeAccount,
-} from './../actions';
-import { call, fork, put, select, takeEvery } from 'redux-saga/effects';
+} from 'actions';
 import backend, {
   documentServiceFactory,
   imageHostingServiceFactory,
-} from '../../common/backend';
-import { message } from 'antd';
-import { ToolContext } from '../../extensions/interface';
-import { loadImage } from '../../common/blob';
-import update from 'immutability-helper';
+} from 'common/backend';
 
 export function* asyncVerificationAccessTokenSaga(action: AnyAction) {
   if (isType(action, asyncVerificationAccessToken.started)) {

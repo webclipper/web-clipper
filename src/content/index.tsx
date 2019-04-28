@@ -1,17 +1,17 @@
+import * as QRCode from 'qrcode';
 import * as Readability from 'readability';
 import * as styles from './index.scss';
-import Highlighter from '../common/highlight';
-import AreaSelector from '../common/areaSelector';
+import AreaSelector from 'common/areaSelector';
+import Highlighter from 'common/highlight';
 import TurndownService from 'turndown';
-import * as QRCode from 'qrcode';
+import { MessageListenerCombiner } from 'common/ListenerCombiner';
 import {
   asyncHideTool,
   asyncRemoveTool,
   asyncRunScript,
   clickIcon,
   doYouAliveNow,
-} from '../store/actions';
-import { MessageListenerCombiner } from '../common/ListenerCombiner';
+} from 'actions';
 
 const turndownService = new TurndownService();
 turndownService.addRule('lazyLoadImage', {
