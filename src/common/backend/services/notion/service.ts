@@ -1,3 +1,4 @@
+import { CompleteStatus } from './../interface';
 import {
   DocumentService,
   Repository,
@@ -121,7 +122,7 @@ export default class NotionDocumentService implements DocumentService {
     repositoryId,
     title,
     content,
-  }: CreateDocumentRequest) => {
+  }: CreateDocumentRequest): Promise<CompleteStatus> => {
     let fileName = `${title}.md`;
     const documentId = await this.createEmptyFile(repositoryId, content);
     const fileUrl = await this.getFileUrl(fileName);
@@ -150,8 +151,6 @@ export default class NotionDocumentService implements DocumentService {
         /-/g,
         ''
       )}`,
-      repositoryId: repositoryId,
-      documentId,
     };
   };
 

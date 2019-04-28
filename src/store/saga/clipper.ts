@@ -1,3 +1,4 @@
+import { CompleteStatus } from './../../common/backend/services/interface';
 import { ClipperStore } from './../reducers/clipper/interface';
 import { GlobalStore } from './../reducers/interface';
 import { ImageClipperData } from './../reducers/userPreference/interface';
@@ -109,7 +110,6 @@ export function* asyncCreateDocumentSaga() {
       message.error('请设定图床');
       return;
     }
-
     try {
       const responseUrl: string = yield call(imageHostingService.uploadImage, {
         data: (data as ImageClipperData).dataUrl,
@@ -132,18 +132,13 @@ export function* asyncCreateDocumentSaga() {
   if (!createDocumentRequest) {
     return;
   }
-  const response = yield call(
+  const response: CompleteStatus = yield call(
     backend.getDocumentService()!.createDocument,
     createDocumentRequest
   );
-  const { href: documentHref, documentId } = response;
   yield put(
     asyncCreateDocument.done({
-      result: {
-        documentHref,
-        repositoryId: response.repositoryId,
-        documentId,
-      },
+      result: response,
     })
   );
   yield put(push('/complete'));

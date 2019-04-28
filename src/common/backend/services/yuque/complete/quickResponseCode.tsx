@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as QRCode from 'qrcode';
 import { Switch } from 'antd';
 import * as styles from './index.scss';
+import Section from 'components/section';
 
 interface PageState {
   includeToken: boolean;
@@ -15,7 +16,10 @@ interface PageProps {
 }
 const quickResponseCodeHost = 'https://yuquewebclipper.diamondyuan.com/pro/';
 
-export class QuickResponseCode extends React.Component<PageProps, PageState> {
+export default class QuickResponseCode extends React.Component<
+  PageProps,
+  PageState
+> {
   constructor(props: PageProps) {
     super(props);
     this.state = {
@@ -61,7 +65,7 @@ export class QuickResponseCode extends React.Component<PageProps, PageState> {
 
   render() {
     return (
-      <div>
+      <Section title="小程序二维码" line>
         <div>
           <span style={{ marginRight: '20px' }}>包含 AccessToken</span>
           <Switch onChange={this.handleChange} />
@@ -71,7 +75,7 @@ export class QuickResponseCode extends React.Component<PageProps, PageState> {
             <img src={this.state.quickResponseCodeData} />
           )}
         </div>
-      </div>
+      </Section>
     );
   }
 }

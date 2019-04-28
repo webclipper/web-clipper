@@ -7,7 +7,6 @@ export interface PreferenceStorage {
   imageHosting: ImageHosting[];
   defaultPluginId?: string | null;
   defaultAccountId?: string;
-  showQuickResponseCode: boolean;
   showLineNumber: boolean;
   liveRendering: boolean;
 }

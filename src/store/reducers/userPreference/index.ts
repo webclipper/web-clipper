@@ -4,7 +4,6 @@ import {
   asyncDeleteAccount,
   asyncSetEditorLiveRendering,
   asyncSetShowLineNumber,
-  asyncSetShowQuickResponseCode,
   asyncUpdateCurrentAccountIndex,
   initUserPreference,
   asyncSetDefaultPluginId,
@@ -42,7 +41,6 @@ const defaultState: UserPreferenceStore = {
   servicesMeta,
   imageHostingServicesMeta,
   extensions: extensions,
-  showQuickResponseCode: true,
   showLineNumber: true,
   liveRendering: true,
   initializeForm: {
@@ -65,13 +63,6 @@ const reducer = reducerWithInitialState(defaultState)
     (state, { result: { value: liveRendering } }) => ({
       ...state,
       liveRendering,
-    })
-  )
-  .case(
-    asyncSetShowQuickResponseCode.done,
-    (state, { result: { value: showQuickResponseCode } }) => ({
-      ...state,
-      showQuickResponseCode,
     })
   )
   .case(

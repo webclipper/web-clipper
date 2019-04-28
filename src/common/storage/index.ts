@@ -63,12 +63,6 @@ export interface TypedCommonStorageInterface {
 
   getDefaultPluginId(): Promise<string | undefined | null>;
 
-  /** --------显示二维码--------- */
-
-  setShowQuickResponseCode(value: boolean): Promise<void>;
-
-  getShowQuickResponseCode(): Promise<boolean>;
-
   /** --------编辑器显示行号--------- */
 
   setShowLineNumber(value: boolean): Promise<void>;
@@ -115,7 +109,7 @@ export class TypedCommonStorage implements TypedCommonStorageInterface {
     const accounts = await this.getAccounts();
     const defaultPluginId = await this.getDefaultPluginId();
     const defaultAccountId = await this.getDefaultAccountId();
-    const showQuickResponseCode = await this.getShowQuickResponseCode();
+
     const showLineNumber = await this.getShowLineNumber();
     const liveRendering = await this.getLiveRendering();
     const imageHosting = await this.getImageHosting();
@@ -124,7 +118,6 @@ export class TypedCommonStorage implements TypedCommonStorageInterface {
       accounts,
       defaultPluginId,
       defaultAccountId,
-      showQuickResponseCode,
       showLineNumber,
       liveRendering,
       imageHosting,
@@ -185,16 +178,6 @@ export class TypedCommonStorage implements TypedCommonStorageInterface {
   };
   getDefaultPluginId = async () => {
     return this.store.get<string>(keysOfStorage.defaultPluginId);
-  };
-
-  setShowQuickResponseCode = async (value: boolean) => {
-    await this.store.set(keysOfStorage.showQuickResponseCode, value);
-  };
-  getShowQuickResponseCode = async () => {
-    const value = await this.store.get<boolean>(
-      keysOfStorage.showQuickResponseCode
-    );
-    return value === true;
   };
 
   setShowLineNumber = async (value: boolean) => {

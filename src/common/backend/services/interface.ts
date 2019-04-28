@@ -8,10 +8,8 @@ export interface CreateDocumentRequest {
   repositoryId: string;
 }
 
-export interface CreateDocumentResponse {
+export interface CompleteStatus {
   href: string;
-  repositoryId: string;
-  documentId: string;
 }
 
 export interface UserInfo {
@@ -65,6 +63,7 @@ export interface ServiceMeta {
    * 配置表单
    */
   form?: any;
+  complete?: any;
 }
 
 export interface DocumentService {
@@ -72,9 +71,7 @@ export interface DocumentService {
 
   getRepositories(): Promise<Repository[]>;
 
-  createDocument(
-    request: CreateDocumentRequest
-  ): Promise<CreateDocumentResponse>;
+  createDocument(request: CreateDocumentRequest): Promise<CompleteStatus>;
 
   getUserInfo(): Promise<UserInfo>;
 }

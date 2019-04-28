@@ -15,7 +15,6 @@ import {
   asyncRemoveTool,
   asyncSetEditorLiveRendering,
   asyncSetShowLineNumber,
-  asyncSetShowQuickResponseCode,
   asyncUpdateCurrentAccountIndex,
   asyncVerificationAccessToken,
   asyncSetDefaultPluginId,
@@ -252,30 +251,6 @@ export function* asyncSetEditorLiveRenderingSaga(action: AnyAction) {
   }
 }
 
-export function* asyncSetShowQuickResponseCodeSaga(action: AnyAction) {
-  if (isType(action, asyncSetShowQuickResponseCode.started)) {
-    const value = action.payload.value;
-    yield call(storage.setShowQuickResponseCode, !value);
-    yield put(
-      asyncSetShowQuickResponseCode.done({
-        params: {
-          value,
-        },
-        result: {
-          value: !value,
-        },
-      })
-    );
-  }
-}
-
-export function* watchAsyncSetShowQuickResponseCodeSaga() {
-  yield takeEvery(
-    asyncSetShowQuickResponseCode.started.type,
-    asyncSetShowQuickResponseCodeSaga
-  );
-}
-
 export function* watchAsyncSetEditorLiveRenderingSaga() {
   yield takeEvery(
     asyncSetEditorLiveRendering.started.type,
@@ -477,7 +452,6 @@ export function* userPreferenceSagas() {
   yield fork(watchAsyncSetShowLineNumberSaga);
   yield fork(watchAsyncHideToolSaga);
   yield fork(watchAsyncRemoveToolSaga);
-  yield fork(watchAsyncSetShowQuickResponseCodeSaga);
   yield fork(watchAsyncSetDefaultPluginIdSaga);
   yield fork(watchAsyncRunExtensionSaga);
   yield fork(watchAsyncDeleteImageHostingSaga);

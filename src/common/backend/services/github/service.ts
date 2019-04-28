@@ -1,3 +1,4 @@
+import { CompleteStatus } from 'common/backend/interface';
 import {
   GithubBackendServiceConfig,
   GithubUserInfoResponse,
@@ -80,7 +81,9 @@ export default class GithubDocumentService implements DocumentService {
     );
   };
 
-  createDocument = async (info: CreateDocumentRequest) => {
+  createDocument = async (
+    info: CreateDocumentRequest
+  ): Promise<CompleteStatus> => {
     if (!this.repositories) {
       this.getRepositories();
     }
@@ -98,8 +101,6 @@ export default class GithubDocumentService implements DocumentService {
     });
     return {
       href: response.data.html_url,
-      repositoryId,
-      documentId: response.data.id.toString(),
     };
   };
 

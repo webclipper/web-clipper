@@ -35,28 +35,34 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   );
 
 class Page extends React.Component<PageProps> {
+  renderComplete = () => {};
+
+  renderError = () => (
+    <ToolContainer
+      onClickCloseButton={() => {
+        this.props.asyncRemoveTool();
+      }}
+    >
+      <a
+        target="_blank"
+        href="https://github.com/yuquewebclipper/yuque-web-clipper/issues"
+      >
+        发生错误
+      </a>
+    </ToolContainer>
+  );
+
   render() {
     const { completeStatus, currentAccount, servicesMeta } = this.props;
 
     if (!completeStatus || !currentAccount) {
-      return (
-        <ToolContainer
-          onClickCloseButton={() => {
-            this.props.asyncRemoveTool();
-          }}
-        >
-          <a
-            target="_blank"
-            href="https://github.com/yuquewebclipper/yuque-web-clipper/issues"
-          >
-            发生错误
-          </a>
-        </ToolContainer>
-      );
+      return this.renderError();
     }
-
     const currentService = servicesMeta[currentAccount.type];
-    const serviceName = currentService && currentService.name;
+    if (!currentService) {
+      return this.renderError();
+    }
+    const { name, complete: Complete } = currentService;
 
     return (
       <ToolContainer
@@ -67,14 +73,15 @@ class Page extends React.Component<PageProps> {
         <Section title="保存成功">
           <a
             className={styles.menuButton}
-            href={completeStatus.documentHref}
+            href={completeStatus.href}
             target="_blank"
           >
             <Button style={{ marginTop: 16 }} size="large" type="primary" block>
-              前往<span>{serviceName}</span> 查看
+              前往<span>{name}</span> 查看
             </Button>
           </a>
         </Section>
+        {Complete && <Complete status={completeStatus}> </Complete>}
       </ToolContainer>
     );
   }

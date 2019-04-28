@@ -11,6 +11,7 @@ import {
   YuqueGroupResponse,
   YuqueCreateDocumentResponse,
   YuqueRepository,
+  YuqueCompleteStatus,
 } from './interface';
 
 const HOST = 'https://www.yuque.com';
@@ -25,8 +26,9 @@ export default class YuqueDocumentService implements DocumentService {
   constructor({
     accessToken,
     repositoryType = RepositoryType.all,
+    showQuickResponseCode = false,
   }: YuqueBackendServiceConfig) {
-    this.config = { accessToken, repositoryType };
+    this.config = { accessToken, repositoryType, showQuickResponseCode };
     this.request = axios.create({
       baseURL: BASE_URL,
       headers: { 'X-Auth-Token': accessToken },
@@ -82,7 +84,9 @@ export default class YuqueDocumentService implements DocumentService {
     return response.map(({ namespace, ...rest }) => ({ ...rest }));
   };
 
-  createDocument = async (info: CreateDocumentRequest) => {
+  createDocument = async (
+    info: CreateDocumentRequest
+  ): Promise<YuqueCompleteStatus> => {
     if (!this.userInfo) {
       this.userInfo = await this.getYuqueUserInfo();
     }
@@ -106,6 +110,8 @@ export default class YuqueDocumentService implements DocumentService {
       href: `${HOST}/${repository.namespace}/${data.slug}`,
       repositoryId,
       documentId: data.id.toString(),
+      accessToken: this.config.accessToken,
+      showQuickResponseCode: this.config.showQuickResponseCode,
     };
   };
 

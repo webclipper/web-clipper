@@ -10,7 +10,6 @@ export interface UserPreferenceStore {
   imageHosting: ImageHosting[];
   defaultPluginId?: string | null;
   defaultAccountId?: string;
-  showQuickResponseCode: boolean;
   showLineNumber: boolean;
   liveRendering: boolean;
   initializeForm: {
@@ -64,10 +63,3 @@ export interface ImageClipperData {
 }
 
 export type ClipperDataType = string | ImageClipperData;
-
-export interface CompleteStatus {
-  /** 裁剪成功后的文章地址 */
-  documentHref: string;
-  documentId: string;
-  repositoryId: string;
-}

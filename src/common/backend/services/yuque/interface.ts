@@ -1,3 +1,4 @@
+import { CompleteStatus } from './../interface';
 import { Repository } from '../interface';
 
 export enum RepositoryType {
@@ -9,6 +10,7 @@ export enum RepositoryType {
 export interface YuqueBackendServiceConfig {
   accessToken: string;
   repositoryType: RepositoryType;
+  showQuickResponseCode: boolean;
 }
 
 export interface YuqueUserInfoResponse {
@@ -41,4 +43,11 @@ export interface YuqueCreateDocumentResponse {
   title: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface YuqueCompleteStatus extends CompleteStatus {
+  documentId: string;
+  repositoryId: string;
+  accessToken: string;
+  showQuickResponseCode: boolean;
 }

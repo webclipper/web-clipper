@@ -110,16 +110,6 @@ export const asyncRemoveTool = actionCreator.async<void, void, void>(
   'ASYNC_REMOVE_TOOL'
 );
 
-export const asyncSetShowQuickResponseCode = actionCreator.async<
-  {
-    value: boolean;
-  },
-  {
-    value: boolean;
-  },
-  void
->('ASYNC_SET_SHOW_QUICK_RESPONSE_CODE');
-
 export const asyncSetDefaultPluginId = actionCreator.async<
   {
     pluginId: string | null;

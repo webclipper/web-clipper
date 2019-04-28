@@ -1,4 +1,4 @@
-import { Repository } from 'common/backend/index';
+import { Repository, CompleteStatus } from 'common/backend/index';
 import actionCreatorFactory from 'common/typescript-fsa';
 
 const actionCreator = actionCreatorFactory('CLIPPER');
@@ -7,11 +7,7 @@ export const updateTitle = actionCreator<{ title: string }>('UPDATE_TITLE');
 
 export const asyncCreateDocument = actionCreator.async<
   void,
-  {
-    documentHref: string;
-    repositoryId: string;
-    documentId: string;
-  },
+  CompleteStatus,
   null
 >('ASYNC_CREATE_DOCUMENT');
 

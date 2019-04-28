@@ -180,11 +180,7 @@ class Page extends React.Component<PageProps> {
     );
 
     return (
-      <ToolContainer
-        onClickCloseButton={() => {
-          this.props.asyncHideTool();
-        }}
-      >
+      <ToolContainer onClickCloseButton={() => this.props.asyncHideTool()}>
         <Section title="笔记标题">
           <Input value={title} onChange={this.onTitleChange} />
           <Button

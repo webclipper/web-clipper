@@ -31,7 +31,6 @@ describe('test storage', () => {
     imageHosting: [],
     defaultAccountId: undefined,
     defaultPluginId: undefined,
-    showQuickResponseCode: false,
     showLineNumber: true,
     liveRendering: true,
   };
@@ -48,9 +47,6 @@ describe('test storage', () => {
     );
     expect(await storage.getDefaultPluginId()).toEqual(
       defaultPreference.defaultPluginId
-    );
-    expect(await storage.getShowQuickResponseCode()).toEqual(
-      defaultPreference.showQuickResponseCode
     );
     expect(await storage.getShowLineNumber()).toEqual(
       defaultPreference.showLineNumber
@@ -135,20 +131,6 @@ describe('test storage', () => {
       expect(await storage.getPreference()).toEqual(
         update(defaultPreference, {
           defaultPluginId: {
-            $set: value,
-          },
-        })
-      );
-    }
-  });
-
-  it('setShowQuickResponseCode should work correctly', async () => {
-    for (const value of [true, false, true]) {
-      await storage.setShowQuickResponseCode(value);
-      expect(await storage.getShowQuickResponseCode()).toBe(value);
-      expect(await storage.getPreference()).toEqual(
-        update(defaultPreference, {
-          showQuickResponseCode: {
             $set: value,
           },
         })

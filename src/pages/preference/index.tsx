@@ -5,7 +5,6 @@ import ImageHosting from './imageHosting';
 import {
   asyncSetEditorLiveRendering,
   asyncSetShowLineNumber,
-  asyncSetShowQuickResponseCode,
   asyncSetDefaultPluginId,
 } from 'actions';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -22,7 +21,6 @@ const useActions = {
   push: push,
   asyncSetEditorLiveRendering: asyncSetEditorLiveRendering.started,
   asyncSetShowLineNumber: asyncSetShowLineNumber.started,
-  asyncSetShowQuickResponseCode: asyncSetShowQuickResponseCode.started,
   asyncSetDefaultPluginId: asyncSetDefaultPluginId.started,
 };
 
@@ -31,14 +29,12 @@ const mapStateToProps = ({
     accounts,
     liveRendering,
     showLineNumber,
-    showQuickResponseCode,
     defaultPluginId,
     extensions,
   },
 }: GlobalStore) => {
   return {
     showLineNumber,
-    showQuickResponseCode,
     defaultPluginId,
     closeQRCode: true,
     containToken: true,
@@ -89,23 +85,6 @@ class Page extends React.Component<PageProps, PageState> {
                 <ImageHosting />
               </TabPane>
               <TabPane tab="工具设置" key="tool" className={styles.tabPane}>
-                <List.Item
-                  actions={[
-                    <Switch
-                      key="qrcode"
-                      onChange={() => {
-                        this.props.asyncSetShowQuickResponseCode({
-                          value: this.props.showQuickResponseCode,
-                        });
-                      }}
-                    />,
-                  ]}
-                >
-                  <List.Item.Meta
-                    title="小程序二维码"
-                    description="剪藏完成后是否显示小程序二维码"
-                  />
-                </List.Item>
                 <List.Item
                   actions={[
                     <Select
