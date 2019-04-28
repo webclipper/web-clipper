@@ -23,6 +23,7 @@ import {
   ExtensionType,
   InitContext,
 } from '../../extensions/interface';
+import Section from 'components/section';
 
 const useActions = {
   asyncHideTool: asyncHideTool.started,
@@ -184,8 +185,7 @@ class Page extends React.Component<PageProps> {
           this.props.asyncHideTool();
         }}
       >
-        <section className={styles.section}>
-          <h1 className={styles.sectionTitle}>笔记标题</h1>
+        <Section title="笔记标题">
           <Input value={title} onChange={this.onTitleChange} />
           <Button
             className={styles.saveButton}
@@ -199,7 +199,7 @@ class Page extends React.Component<PageProps> {
           >
             保存内容
           </Button>
-        </section>
+        </Section>
         <ToolExtensions
           extensions={toolExtensions}
           onClick={extension => this.props.asyncRunExtension({ extension })}
@@ -209,8 +209,7 @@ class Page extends React.Component<PageProps> {
           onClick={router => this.props.push(router)}
           pathname={pathname}
         />
-        <section className={styles.section}>
-          <h1 className={styles.sectionTitle}>保存的知识库</h1>
+        <Section title="保存的知识库">
           <Select
             loading={loadingRepositories}
             disabled={loadingRepositories}
@@ -224,34 +223,36 @@ class Page extends React.Component<PageProps> {
           >
             {repositorySelectOptions(repositories)}
           </Select>
-        </section>
-        <section className={`${styles.toolbar} ${styles.sectionLine}`}>
-          <Button
-            className={`${styles.toolbarButton} `}
-            onClick={() => {
-              if (pathname === '/preference') {
-                this.props.push('/');
-              } else {
-                this.props.push('/preference');
-              }
-            }}
-          >
-            <Icon type="setting" />
-          </Button>
-          <Select
-            value={this.props.currentAccountId}
-            style={{ width: '75px' }}
-            onSelect={value => {
-              this.props.asyncChangeAccount({ id: value });
-            }}
-          >
-            {this.props.accounts.map(o => (
-              <Select.Option key={o.id || '1'}>
-                <Avatar size="small" src={o.avatar} />
-              </Select.Option>
-            ))}
-          </Select>
-        </section>
+        </Section>
+        <Section line>
+          <div className={styles.toolbar}>
+            <Button
+              className={`${styles.toolbarButton} `}
+              onClick={() => {
+                if (pathname === '/preference') {
+                  this.props.push('/');
+                } else {
+                  this.props.push('/preference');
+                }
+              }}
+            >
+              <Icon type="setting" />
+            </Button>
+            <Select
+              value={this.props.currentAccountId}
+              style={{ width: '75px' }}
+              onSelect={value => {
+                this.props.asyncChangeAccount({ id: value });
+              }}
+            >
+              {this.props.accounts.map(o => (
+                <Select.Option key={o.id || '1'}>
+                  <Avatar size="small" src={o.avatar} />
+                </Select.Option>
+              ))}
+            </Select>
+          </div>
+        </Section>
       </ToolContainer>
     );
   }

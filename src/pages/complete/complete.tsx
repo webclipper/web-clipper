@@ -5,8 +5,8 @@ import { ToolContainer } from 'components/container';
 import * as styles from './complete.scss';
 import { Button } from 'antd';
 import { asyncRemoveTool } from 'actions';
-import { QuickResponseCode } from './quickResponseCode';
 import { GlobalStore } from '../../store/reducers/interface';
+import Section from 'components/section';
 
 const useActions = {
   asyncRemoveTool: asyncRemoveTool.started,
@@ -14,14 +14,13 @@ const useActions = {
 
 const mapStateToProps = ({
   clipper: { completeStatus, currentAccountId },
-  userPreference: { accounts, showQuickResponseCode, servicesMeta },
+  userPreference: { accounts, servicesMeta },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   return {
     servicesMeta,
     currentAccount,
     completeStatus,
-    showQuickResponseCode,
   };
 };
 
@@ -37,12 +36,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 
 class Page extends React.Component<PageProps> {
   render() {
-    const {
-      completeStatus,
-      currentAccount,
-      showQuickResponseCode,
-      servicesMeta,
-    } = this.props;
+    const { completeStatus, currentAccount, servicesMeta } = this.props;
 
     if (!completeStatus || !currentAccount) {
       return (
@@ -70,8 +64,7 @@ class Page extends React.Component<PageProps> {
           this.props.asyncRemoveTool();
         }}
       >
-        <section className={styles.section}>
-          <h1 className={styles.sectionTitle}>保存成功</h1>
+        <Section title="保存成功">
           <a
             className={styles.menuButton}
             href={completeStatus.documentHref}
@@ -81,18 +74,7 @@ class Page extends React.Component<PageProps> {
               前往<span>{serviceName}</span> 查看
             </Button>
           </a>
-        </section>
-        {showQuickResponseCode && currentAccount.type === 'yuque' && (
-          <section className={styles.section}>
-            <h1 className={styles.sectionTitle}>小程序二维码</h1>
-            <QuickResponseCode
-              repositoryId={completeStatus.repositoryId}
-              documentId={completeStatus.documentId}
-              //@ts-ignore
-              accessToken={currentAccount.accessToken}
-            />
-          </section>
-        )}
+        </Section>
       </ToolContainer>
     );
   }
