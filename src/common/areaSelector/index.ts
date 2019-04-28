@@ -65,15 +65,14 @@ export default class AreaSelector {
   }
 
   private getOrCreate(id: string) {
-    const element = document.querySelector(`#${id}`);
+    let element = document.querySelector(`#${id}`);
     if (element) {
       return element;
-    } else {
-      const element = document.createElement('div');
-      element.setAttribute('id', id);
-      document.body.appendChild(element);
-      return element;
     }
+    element = document.createElement('div');
+    element.setAttribute('id', id);
+    document.body.appendChild(element);
+    return element;
   }
 
   private mousemoveEvent = (event: any) => {

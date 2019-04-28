@@ -167,32 +167,32 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@diamondyuan/eslint-config-javascript@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-javascript/-/eslint-config-javascript-4.0.0.tgz#e2bc7d4fd55c0c602e8bf7078fa0482c51af1e90"
-  integrity sha512-wxq7ziwOLAhPIGNyy8DKtLxNXi0Ysaik+E4iirg1ytd+dEBBHkNGd9lVj2mjEY3TIjvae2GylKY49XHIgrAUAQ==
+"@diamondyuan/eslint-config-javascript@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-javascript/-/eslint-config-javascript-6.0.0.tgz#38b7167a240df5758db1806901fd3f11b4f6fc6c"
+  integrity sha512-EpSdStufjOsMyzg9dgCCeAj0BKKAZh292Q29b4YrVNKgnoLEnrnH5e4Hb/00fy1X1gsuzKS8N1DZmMb23w2Pmg==
 
-"@diamondyuan/eslint-config-react-typescript@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-react-typescript/-/eslint-config-react-typescript-4.0.1.tgz#fe8e7f78d7f7ce7b4a88b8f9e82669fde105a674"
-  integrity sha512-ZvmdeeyNj6/QCSVDuAnFYugmeV7xzTebc8AaKeDPx5XlWMf+Wl7YD0g8epyNHCUmqkdvV4scka1jI5pU89j1nQ==
+"@diamondyuan/eslint-config-react-typescript@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-react-typescript/-/eslint-config-react-typescript-6.0.0.tgz#4140cf65580df7f5fe71c59fc297e2a5e4c9216b"
+  integrity sha512-J0TS5GbPRS/B+uenJFDmvMrUJ/9OcyYiGH/ANp8AnNot89dfc+vPVkNR4xRH2R5pwbPcDIBAPJ3oip37G45wew==
   dependencies:
-    "@diamondyuan/eslint-config-react" "^4.0.0"
-    "@diamondyuan/eslint-config-typescript" "^4.0.1"
+    "@diamondyuan/eslint-config-react" "^6.0.0"
+    "@diamondyuan/eslint-config-typescript" "^6.0.0"
 
-"@diamondyuan/eslint-config-react@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-react/-/eslint-config-react-4.0.0.tgz#ed42c9be113f5d36e53cd8cc0353f3e37f9509c4"
-  integrity sha512-isEGKQ3rgabe9pd9p/LNS3kCTf0imkpClXncZ4Cy6fJT3iiqOtCRNyNHjz5CPldn6gjD4epDQ5PpMVvjMSAvYg==
+"@diamondyuan/eslint-config-react@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-react/-/eslint-config-react-6.0.0.tgz#bf6c45b69e2c1dcedc970c6424744549e84a4b49"
+  integrity sha512-N4SnIdYfhWq8RTzMM9InzllN0VKB0OQ0UbYkz6WR4s3/0xzosBPM/zwehvA93sKvFDyWNAKbbJuGeRjbiN7zBg==
   dependencies:
-    "@diamondyuan/eslint-config-javascript" "^4.0.0"
+    "@diamondyuan/eslint-config-javascript" "^6.0.0"
 
-"@diamondyuan/eslint-config-typescript@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-typescript/-/eslint-config-typescript-4.0.1.tgz#5519f9e0f8d55b5c4622343ba6d4b5eb66373dd1"
-  integrity sha512-KwYFNo3xH93wsCN3VhYQgCVtdTLuMyoGrrp1l24VUFhq+zr5mv3LuOj309fBZB5UAq0PAW5G42YknLyU90STkQ==
+"@diamondyuan/eslint-config-typescript@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.npmjs.org/@diamondyuan/eslint-config-typescript/-/eslint-config-typescript-6.0.0.tgz#d48ca9e48c1fbfa102a5e44cce98b61e4d8251ca"
+  integrity sha512-25XvoOZgwwoJQmmMgTtNh8P+ZkgzRoTPKRmIhBRYBx33Io8nTO+ik+B6VLkxckJc98pVp5ax6Cn5/W0alcGwKQ==
   dependencies:
-    "@diamondyuan/eslint-config-javascript" "^4.0.0"
+    "@diamondyuan/eslint-config-javascript" "^6.0.0"
 
 "@jest/console@^24.7.1":
   version "24.7.1"

@@ -50,7 +50,7 @@
     "turndown": "^5.0.1"
   },
   "devDependencies": {
-    "@diamondyuan/eslint-config-react-typescript": "^4.0.1",
+    "@diamondyuan/eslint-config-react-typescript": "^6.0.0",
     "@types/blueimp-md5": "^2.7.0",
     "@types/chrome": "^0.0.72",
     "@types/codemirror": "^0.0.74",

@@ -45,6 +45,9 @@ export interface AccountPreference {
   [key: string]: string | undefined;
 }
 
+/**
+ * 图床配置的数据结构
+ */
 export interface ImageHosting {
   id: string;
   type: string;

@@ -7,7 +7,7 @@ export const extensions: SerializedExtensionWithId[] = context
   .map(key => ({
     ...context(key).default.serialize(),
     id: key.slice(2, key.length - 3),
-    router: '/plugins/' + key.slice(2, key.length - 3),
+    router: `/plugins/${key.slice(2, key.length - 3)}`,
   }));
 
 export default context;

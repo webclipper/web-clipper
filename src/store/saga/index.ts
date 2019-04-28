@@ -36,7 +36,7 @@ function* initStore() {
   }
   yield put(asyncChangeAccount.started({ id }));
   if (result.defaultPluginId) {
-    yield put(push('/plugins/' + result.defaultPluginId));
+    yield put(push(`/plugins/${result.defaultPluginId}`));
   }
 }
 
