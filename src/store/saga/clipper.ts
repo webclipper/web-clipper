@@ -7,149 +7,15 @@ import backend, {
   imageHostingServiceFactory,
   CreateDocumentRequest,
 } from 'common/backend';
-import { AnyAction, isType } from 'common/typescript-fsa';
 import { asyncChangeAccount, asyncCreateDocument } from 'actions';
-import {
-  call,
-  fork,
-  put,
-  select,
-  takeEvery,
-  takeLatest,
-  delay,
-} from 'redux-saga/effects';
+import { call, put, select, delay } from 'redux-saga/effects';
 import { message } from 'antd';
 import { ExtensionType } from '../../extensions/interface';
 import { push } from 'connected-react-router';
+import SagaHelper from 'common/sagaHelper';
 
-export function* clipperRootSagas() {
-  yield fork(watchAsyncCreateDocumentSaga);
-  yield fork(watchAsyncChangeAccountSaga);
-}
-
-export function* asyncCreateDocumentSaga() {
-  const selector = ({
-    clipper,
-    router,
-    userPreference: { accounts, extensions },
-  }: GlobalStore) => {
-    const currentAccount = accounts.find(
-      o => o.id === clipper.currentAccountId
-    );
-    return {
-      currentRepository: clipper.currentRepository,
-      defaultRepositoryId: currentAccount
-        ? currentAccount.defaultRepositoryId
-        : '',
-      clipperData: clipper.clipperData,
-      router,
-      title: clipper.title,
-      extensions,
-      repositories: clipper.repositories,
-    };
-  };
-
-  const selectState: ReturnType<typeof selector> = yield select(selector);
-  const {
-    currentRepository,
-    defaultRepositoryId,
-    title,
-    router,
-    clipperData,
-    extensions,
-    repositories,
-  } = selectState;
-  let repositoryId;
-  if (
-    defaultRepositoryId &&
-    repositories.some(o => o.id === defaultRepositoryId)
-  ) {
-    repositoryId = defaultRepositoryId;
-  }
-  if (currentRepository) {
-    repositoryId = currentRepository.id;
-  }
-  if (!repositoryId) {
-    yield put(
-      asyncCreateDocument.failed({
-        error: null,
-      })
-    );
-    message.error('必须选择一个知识库');
-    return;
-  }
-  if (!title) {
-    yield put(
-      asyncCreateDocument.failed({
-        error: null,
-      })
-    );
-    message.error('标题不允许为空');
-    return;
-  }
-  const data = clipperData[router.location.pathname];
-
-  const extension = extensions.find(
-    o => `/plugins/${o.id}` === router.location.pathname
-  );
-  if (!extension) {
-    console.log(router.location.pathname);
-    return;
-  }
-  let createDocumentRequest: CreateDocumentRequest | null = null;
-  if (extension.type === ExtensionType.Text) {
-    createDocumentRequest = {
-      title: title,
-      repositoryId,
-      content: data as string,
-    };
-  }
-  if (extension.type === ExtensionType.Image) {
-    const imageHostingService = backend.getImageHostingService();
-    if (!imageHostingService) {
-      message.error('请设定图床');
-      return;
-    }
-    try {
-      const responseUrl: string = yield call(imageHostingService.uploadImage, {
-        data: (data as ImageClipperData).dataUrl,
-      });
-      createDocumentRequest = {
-        title: title,
-        repositoryId,
-        content: `![](${responseUrl})`,
-      };
-    } catch (_error) {
-      message.error('上传图片到图床失败');
-      yield put(
-        asyncCreateDocument.failed({
-          error: null,
-        })
-      );
-      return;
-    }
-  }
-  if (!createDocumentRequest) {
-    return;
-  }
-  const response: CompleteStatus = yield call(
-    backend.getDocumentService()!.createDocument,
-    createDocumentRequest
-  );
-  yield put(
-    asyncCreateDocument.done({
-      result: response,
-    })
-  );
-  yield put(push('/complete'));
-}
-
-export function* watchAsyncCreateDocumentSaga() {
-  yield takeLatest(asyncCreateDocument.started.type, asyncCreateDocumentSaga);
-}
-
-export function* asyncChangeAccountSaga(action: AnyAction) {
-  if (isType(action, asyncChangeAccount.started)) {
+export const clipperRootSagas = new SagaHelper()
+  .takeEvery(asyncChangeAccount, function*(action) {
     const id = action.payload.id;
     const selector = ({
       userPreference: { accounts, imageHosting },
@@ -201,9 +67,123 @@ export function* asyncChangeAccountSaga(action: AnyAction) {
         },
       })
     );
-  }
-}
+  })
+  .takeLatest(asyncCreateDocument, function*() {
+    const selector = ({
+      clipper,
+      router,
+      userPreference: { accounts, extensions },
+    }: GlobalStore) => {
+      const currentAccount = accounts.find(
+        o => o.id === clipper.currentAccountId
+      );
+      return {
+        currentRepository: clipper.currentRepository,
+        defaultRepositoryId: currentAccount
+          ? currentAccount.defaultRepositoryId
+          : '',
+        clipperData: clipper.clipperData,
+        router,
+        title: clipper.title,
+        extensions,
+        repositories: clipper.repositories,
+      };
+    };
+    const selectState: ReturnType<typeof selector> = yield select(selector);
+    const {
+      currentRepository,
+      defaultRepositoryId,
+      title,
+      router,
+      clipperData,
+      extensions,
+      repositories,
+    } = selectState;
+    let repositoryId;
+    if (
+      defaultRepositoryId &&
+      repositories.some(o => o.id === defaultRepositoryId)
+    ) {
+      repositoryId = defaultRepositoryId;
+    }
+    if (currentRepository) {
+      repositoryId = currentRepository.id;
+    }
+    if (!repositoryId) {
+      yield put(
+        asyncCreateDocument.failed({
+          error: null,
+        })
+      );
+      message.error('必须选择一个知识库');
+      return;
+    }
+    if (!title) {
+      yield put(
+        asyncCreateDocument.failed({
+          error: null,
+        })
+      );
+      message.error('标题不允许为空');
+      return;
+    }
+    const data = clipperData[router.location.pathname];
 
-export function* watchAsyncChangeAccountSaga() {
-  yield takeEvery(asyncChangeAccount.started.type, asyncChangeAccountSaga);
-}
+    const extension = extensions.find(
+      o => `/plugins/${o.id}` === router.location.pathname
+    );
+    if (!extension) {
+      console.log(router.location.pathname);
+      return;
+    }
+    let createDocumentRequest: CreateDocumentRequest | null = null;
+    if (extension.type === ExtensionType.Text) {
+      createDocumentRequest = {
+        title: title,
+        repositoryId,
+        content: data as string,
+      };
+    }
+    if (extension.type === ExtensionType.Image) {
+      const imageHostingService = backend.getImageHostingService();
+      if (!imageHostingService) {
+        message.error('请设定图床');
+        return;
+      }
+      try {
+        const responseUrl: string = yield call(
+          imageHostingService.uploadImage,
+          {
+            data: (data as ImageClipperData).dataUrl,
+          }
+        );
+        createDocumentRequest = {
+          title: title,
+          repositoryId,
+          content: `![](${responseUrl})`,
+        };
+      } catch (_error) {
+        message.error('上传图片到图床失败');
+        yield put(
+          asyncCreateDocument.failed({
+            error: null,
+          })
+        );
+        return;
+      }
+    }
+    if (!createDocumentRequest) {
+      return;
+    }
+    const response: CompleteStatus = yield call(
+      backend.getDocumentService()!.createDocument,
+      createDocumentRequest
+    );
+    yield put(
+      asyncCreateDocument.done({
+        result: response,
+      })
+    );
+    yield put(push('/complete'));
+  })
+  .combine();

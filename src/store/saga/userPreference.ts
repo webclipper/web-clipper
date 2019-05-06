@@ -1,8 +1,8 @@
+import SagaHelper from 'common/sagaHelper';
 import browserService from 'common/browser';
 import storage from 'common/storage';
 import update from 'immutability-helper';
-import { AnyAction, isType } from 'common/typescript-fsa';
-import { call, fork, put, select, takeEvery } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import { GlobalStore } from './../reducers/interface';
 import { loadImage } from 'common/blob';
 import { message } from 'antd';
@@ -32,8 +32,8 @@ import backend, {
   imageHostingServiceFactory,
 } from 'common/backend';
 
-export function* asyncVerificationAccessTokenSaga(action: AnyAction) {
-  if (isType(action, asyncVerificationAccessToken.started)) {
+export const userPreferenceSagas = new SagaHelper()
+  .takeEvery(asyncVerificationAccessToken, function*(action) {
     try {
       const { type, info } = action.payload;
       const service = documentServiceFactory(type, info);
@@ -52,18 +52,8 @@ export function* asyncVerificationAccessTokenSaga(action: AnyAction) {
       message.error(error.message);
       yield put(resetAccountForm());
     }
-  }
-}
-
-export function* watchAsyncVerificationAccessTokenSaga() {
-  yield takeEvery(
-    asyncVerificationAccessToken.started.type,
-    asyncVerificationAccessTokenSaga
-  );
-}
-
-export function* asyncAddAccountSaga(action: AnyAction) {
-  if (isType(action, asyncAddAccount.started)) {
+  })
+  .takeEvery(asyncAddAccount, function*(action) {
     const selector = ({
       userPreference: {
         servicesMeta,
@@ -113,15 +103,8 @@ export function* asyncAddAccountSaga(action: AnyAction) {
     } catch (error) {
       message.error(error.message);
     }
-  }
-}
-
-export function* watchAsyncAddAccountSaga() {
-  yield takeEvery(asyncAddAccount.started.type, asyncAddAccountSaga);
-}
-
-export function* asyncUpdateAccountSaga(action: AnyAction) {
-  if (isType(action, asyncUpdateAccount.started)) {
+  })
+  .takeEvery(asyncUpdateAccount, function*(action) {
     const accounts: CallResult<typeof storage.getAccounts> = yield call(
       storage.getAccounts
     );
@@ -163,15 +146,8 @@ export function* asyncUpdateAccountSaga(action: AnyAction) {
       yield put(asyncChangeAccount.started({ id }));
     }
     callback();
-  }
-}
-
-export function* watchAsyncUpdateAccountSaga() {
-  yield takeEvery(asyncUpdateAccount.started.type, asyncUpdateAccountSaga);
-}
-
-export function* asyncDeleteAccountSaga(action: AnyAction) {
-  if (isType(action, asyncDeleteAccount.started)) {
+  })
+  .takeEvery(asyncDeleteAccount, function*(action) {
     yield call(storage.deleteAccountById, action.payload.id);
     const accounts = yield call(storage.getAccounts);
     const defaultAccountId = yield call(storage.getDefaultAccountId);
@@ -184,15 +160,8 @@ export function* asyncDeleteAccountSaga(action: AnyAction) {
         },
       })
     );
-  }
-}
-
-export function* watchAsyncDeleteAccountSaga() {
-  yield takeEvery(asyncDeleteAccount.started.type, asyncDeleteAccountSaga);
-}
-
-export function* asyncUpdateCurrentAccountIndexSaga(action: AnyAction) {
-  if (isType(action, asyncUpdateCurrentAccountIndex.started)) {
+  })
+  .takeEvery(asyncUpdateCurrentAccountIndex, function*(action) {
     yield call(storage.setDefaultAccountId, action.payload.id);
     yield put(
       asyncUpdateCurrentAccountIndex.done({
@@ -200,18 +169,8 @@ export function* asyncUpdateCurrentAccountIndexSaga(action: AnyAction) {
         result: action.payload,
       })
     );
-  }
-}
-
-export function* watchAsyncUpdateCurrentAccountIndexSaga() {
-  yield takeEvery(
-    asyncUpdateCurrentAccountIndex.started.type,
-    asyncUpdateCurrentAccountIndexSaga
-  );
-}
-
-export function* asyncSetShowLineNumberSaga(action: AnyAction) {
-  if (isType(action, asyncSetShowLineNumber.started)) {
+  })
+  .takeEvery(asyncSetShowLineNumber, function*(action) {
     const value = action.payload.value;
     yield call(storage.setShowLineNumber, !value);
     yield put(
@@ -224,18 +183,8 @@ export function* asyncSetShowLineNumberSaga(action: AnyAction) {
         },
       })
     );
-  }
-}
-
-export function* watchAsyncSetShowLineNumberSaga() {
-  yield takeEvery(
-    asyncSetShowLineNumber.started.type,
-    asyncSetShowLineNumberSaga
-  );
-}
-
-export function* asyncSetEditorLiveRenderingSaga(action: AnyAction) {
-  if (isType(action, asyncSetEditorLiveRendering.started)) {
+  })
+  .takeEvery(asyncSetEditorLiveRendering, function*(action) {
     const value = action.payload.value;
     yield call(storage.setLiveRendering, !value);
     yield put(
@@ -248,56 +197,81 @@ export function* asyncSetEditorLiveRenderingSaga(action: AnyAction) {
         },
       })
     );
-  }
-}
-
-export function* watchAsyncSetEditorLiveRenderingSaga() {
-  yield takeEvery(
-    asyncSetEditorLiveRendering.started.type,
-    asyncSetEditorLiveRenderingSaga
-  );
-}
-
-export function* asyncHideToolSaga(action: AnyAction) {
-  if (isType(action, asyncHideTool.started)) {
+  })
+  .takeEvery(asyncHideTool, function*(action) {
     yield call(browserService.sendActionToCurrentTab, action);
-  }
-}
-
-export function* watchAsyncHideToolSaga() {
-  yield takeEvery(asyncHideTool.started.type, asyncHideToolSaga);
-}
-
-export function* asyncRemoveToolSaga(action: AnyAction) {
-  if (isType(action, asyncRemoveTool.started)) {
+  })
+  .takeEvery(asyncRemoveTool, function*(action) {
     yield call(browserService.sendActionToCurrentTab, action);
-  }
-}
-
-export function* watchAsyncRemoveToolSaga() {
-  yield takeEvery(asyncRemoveTool.started.type, asyncRemoveToolSaga);
-}
-
-export function* asyncSetDefaultPluginIdSaga(action: AnyAction) {
-  if (isType(action, asyncSetDefaultPluginId.started)) {
+  })
+  .takeEvery(asyncSetDefaultPluginId, function*(action) {
     yield call(storage.setDefaultPluginId, action.payload.pluginId);
     yield put(
       asyncSetDefaultPluginId.done({
         params: action.payload,
       })
     );
-  }
-}
-
-export function* watchAsyncSetDefaultPluginIdSaga() {
-  yield takeEvery(
-    asyncSetDefaultPluginId.started.type,
-    asyncSetDefaultPluginIdSaga
-  );
-}
-
-export function* asyncRunExtensionSaga(action: AnyAction) {
-  if (isType(action, asyncRunExtension.started)) {
+  })
+  .takeEvery(asyncEditImageHosting, function*(action) {
+    const { id, value, closeModal } = action.payload;
+    try {
+      const imageHostingList: PromiseType<
+        ReturnType<typeof storage.editImageHostingById>
+      > = yield call(storage.editImageHostingById, id, { ...value, id });
+      yield put(
+        asyncEditImageHosting.done({
+          params: action.payload,
+          result: imageHostingList,
+        })
+      );
+      closeModal();
+    } catch (error) {
+      message.error(error.message);
+    }
+  })
+  .takeEvery(asyncDeleteImageHosting, function*(action) {
+    const imageHostingList: PromiseType<
+      ReturnType<typeof storage.deleteImageHostingById>
+    > = yield call(storage.deleteImageHostingById, action.payload.id);
+    yield put(
+      asyncDeleteImageHosting.done({
+        params: action.payload,
+        result: imageHostingList,
+      })
+    );
+  })
+  .takeEvery(asyncAddImageHosting, function*(action) {
+    const { info, type, closeModal, remark } = action.payload;
+    const imageHostingService: ReturnType<
+      typeof imageHostingServiceFactory
+    > = yield call(imageHostingServiceFactory, type, info);
+    if (!imageHostingService) {
+      message.error('不支持');
+      return;
+    }
+    const id = imageHostingService.getId();
+    const imageHosting = {
+      id,
+      type,
+      info,
+      remark,
+    };
+    try {
+      const imageHostingList: PromiseType<
+        ReturnType<typeof storage.addImageHosting>
+      > = yield call(storage.addImageHosting, imageHosting);
+      yield put(
+        asyncAddImageHosting.done({
+          params: action.payload,
+          result: imageHostingList,
+        })
+      );
+      closeModal();
+    } catch (error) {
+      message.error(error.message);
+    }
+  })
+  .takeEvery(asyncRunExtension, function*(action) {
     const { extension } = action.payload;
     let result;
     const { run, afterRun, destroy } = extension;
@@ -349,112 +323,5 @@ export function* asyncRunExtensionSaga(action: AnyAction) {
         },
       })
     );
-  }
-}
-
-export function* watchAsyncRunExtensionSaga() {
-  yield takeEvery(asyncRunExtension.started.type, asyncRunExtensionSaga);
-}
-
-export function* watchAsyncAddImageHostingSaga() {
-  yield takeEvery(asyncAddImageHosting.started.type, asyncAddImageHostingSaga);
-}
-
-export function* asyncAddImageHostingSaga(action: AnyAction) {
-  if (isType(action, asyncAddImageHosting.started)) {
-    const { info, type, closeModal, remark } = action.payload;
-    const imageHostingService: ReturnType<
-      typeof imageHostingServiceFactory
-    > = yield call(imageHostingServiceFactory, type, info);
-    if (!imageHostingService) {
-      message.error('不支持');
-      return;
-    }
-    const id = imageHostingService.getId();
-    const imageHosting = {
-      id,
-      type,
-      info,
-      remark,
-    };
-    try {
-      const imageHostingList: PromiseType<
-        ReturnType<typeof storage.addImageHosting>
-      > = yield call(storage.addImageHosting, imageHosting);
-      yield put(
-        asyncAddImageHosting.done({
-          params: action.payload,
-          result: imageHostingList,
-        })
-      );
-      closeModal();
-    } catch (error) {
-      message.error(error.message);
-    }
-  }
-}
-
-export function* watchAsyncDeleteImageHostingSaga() {
-  yield takeEvery(
-    asyncDeleteImageHosting.started.type,
-    asyncDeleteImageHostingSaga
-  );
-}
-
-export function* asyncDeleteImageHostingSaga(action: AnyAction) {
-  if (isType(action, asyncDeleteImageHosting.started)) {
-    const imageHostingList: PromiseType<
-      ReturnType<typeof storage.deleteImageHostingById>
-    > = yield call(storage.deleteImageHostingById, action.payload.id);
-    yield put(
-      asyncDeleteImageHosting.done({
-        params: action.payload,
-        result: imageHostingList,
-      })
-    );
-  }
-}
-
-export function* watchAsyncEditImageHostingSaga() {
-  yield takeEvery(
-    asyncEditImageHosting.started.type,
-    asyncEditImageHostingSaga
-  );
-}
-
-export function* asyncEditImageHostingSaga(action: AnyAction) {
-  if (isType(action, asyncEditImageHosting.started)) {
-    const { id, value, closeModal } = action.payload;
-    try {
-      const imageHostingList: PromiseType<
-        ReturnType<typeof storage.editImageHostingById>
-      > = yield call(storage.editImageHostingById, id, { ...value, id });
-      yield put(
-        asyncEditImageHosting.done({
-          params: action.payload,
-          result: imageHostingList,
-        })
-      );
-      closeModal();
-    } catch (error) {
-      message.error(error.message);
-    }
-  }
-}
-
-export function* userPreferenceSagas() {
-  yield fork(watchAsyncDeleteAccountSaga);
-  yield fork(watchAsyncVerificationAccessTokenSaga);
-  yield fork(watchAsyncAddImageHostingSaga);
-  yield fork(watchAsyncAddAccountSaga);
-  yield fork(watchAsyncUpdateCurrentAccountIndexSaga);
-  yield fork(watchAsyncSetEditorLiveRenderingSaga);
-  yield fork(watchAsyncSetShowLineNumberSaga);
-  yield fork(watchAsyncHideToolSaga);
-  yield fork(watchAsyncRemoveToolSaga);
-  yield fork(watchAsyncSetDefaultPluginIdSaga);
-  yield fork(watchAsyncRunExtensionSaga);
-  yield fork(watchAsyncDeleteImageHostingSaga);
-  yield fork(watchAsyncEditImageHostingSaga);
-  yield fork(watchAsyncUpdateAccountSaga);
-}
+  })
+  .combine();
