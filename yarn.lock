@@ -9183,10 +9183,10 @@ webpack-chrome-extension-reloader@^1.3.0:
     webpack-sources "^1.0.1"
     ws "^6.1.2"
 
-webpack-cli@^3.3.0:
-  version "3.3.0"
-  resolved "http://registry.npm.taobao.org/webpack-cli/download/webpack-cli-3.3.0.tgz#55c8a74cae1e88117f9dda3a801c7272e93ca318"
-  integrity sha1-VcinTK4eiBF/ndo6gBxycuk8oxg=
+webpack-cli@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.npm.taobao.org/webpack-cli/download/webpack-cli-3.3.2.tgz#aed2437b0db0a7faa2ad28484e166a5360014a91"
+  integrity sha1-rtJDew2wp/qirShIThZqU2ABSpE=
   dependencies:
     chalk "^2.4.1"
     cross-spawn "^6.0.5"
