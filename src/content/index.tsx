@@ -4,6 +4,7 @@ import * as styles from './index.scss';
 import AreaSelector from 'common/areaSelector';
 import Highlighter from 'common/highlight';
 import TurndownService from 'turndown';
+import * as turndownPluginGfm from 'turndown-plugin-gfm';
 import { MessageListenerCombiner } from 'common/ListenerCombiner';
 import {
   asyncHideTool,
@@ -17,13 +18,20 @@ const turndownService = new TurndownService();
 turndownService.addRule('lazyLoadImage', {
   filter: ['img'],
   replacement: function(_: any, node: any) {
-    const dataSrc = node.getAttribute('data-src');
-    if (dataSrc) {
-      return `![](${dataSrc})`;
+    const attributes = ['data-src', 'data-original-src'];
+    for (const attribute of attributes) {
+      let dataSrc: string = node.getAttribute(attribute);
+      if (dataSrc) {
+        if (dataSrc.startsWith('//')) {
+          dataSrc = `${window.location.protocol}${dataSrc}`;
+        }
+        return `![](${dataSrc})`;
+      }
     }
     return `![](${node.getAttribute('src')})`;
   },
 });
+turndownService.use(turndownPluginGfm.gfm);
 
 const listeners = new MessageListenerCombiner()
   .case(doYouAliveNow, (_payload, _sender, sendResponse) => {
