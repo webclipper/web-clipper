@@ -26,8 +26,7 @@ const mapStateToProps = ({
 
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
-type PageOwnProps = {};
-type PageProps = PageStateProps & PageDispatchProps & PageOwnProps;
+type PageProps = PageStateProps & PageDispatchProps;
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators<PageDispatchProps, PageDispatchProps>(
     useActions,
@@ -35,8 +34,6 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   );
 
 class Page extends React.Component<PageProps> {
-  renderComplete = () => {};
-
   renderError = () => (
     <ToolContainer
       onClickCloseButton={() => {
@@ -54,7 +51,6 @@ class Page extends React.Component<PageProps> {
 
   render() {
     const { completeStatus, currentAccount, servicesMeta } = this.props;
-
     if (!completeStatus || !currentAccount) {
       return this.renderError();
     }
