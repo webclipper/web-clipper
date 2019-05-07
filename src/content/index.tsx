@@ -13,6 +13,7 @@ import {
   clickIcon,
   doYouAliveNow,
 } from 'actions';
+import { ContentScriptContext } from 'extensions/interface';
 
 const turndownService = new TurndownService();
 
@@ -62,7 +63,7 @@ const listeners = new MessageListenerCombiner()
     };
     // @ts-ignore
     // eslint-disable-next-line
-    const context: any = {
+    const context: ContentScriptContext = {
       $,
       turndown: turndownService,
       Highlighter,
