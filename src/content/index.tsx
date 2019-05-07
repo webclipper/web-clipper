@@ -15,6 +15,7 @@ import {
 } from 'actions';
 
 const turndownService = new TurndownService();
+
 turndownService.addRule('lazyLoadImage', {
   filter: ['img'],
   replacement: function(_: any, node: any) {

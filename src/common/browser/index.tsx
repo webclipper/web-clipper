@@ -1,4 +1,6 @@
 import { AnyAction } from 'common/typescript-fsa';
+import ChromeBrowserAction, { IBrowserAction } from './browserAction';
+import ChromeTabs, { ITabs } from './tabs';
 
 export interface BrowserTab {
   title: string;
@@ -6,6 +8,10 @@ export interface BrowserTab {
 }
 
 interface BrowserService {
+  browserAction: IBrowserAction;
+
+  tabs: ITabs;
+
   getCurrentTab(): Promise<BrowserTab>;
 
   sendActionByTabId<T>(tabId: number, action: AnyAction): Promise<T>;
@@ -18,6 +24,14 @@ interface BrowserService {
 }
 
 class ChromeBrowserService implements BrowserService {
+  public readonly browserAction: IBrowserAction;
+  public readonly tabs: ITabs;
+
+  constructor() {
+    this.browserAction = ChromeBrowserAction;
+    this.tabs = ChromeTabs;
+  }
+
   getCurrentTab = async () => {
     return new Promise<BrowserTab>(resolve => {
       chrome.tabs.getCurrent((tab: any) => {
@@ -30,7 +44,7 @@ class ChromeBrowserService implements BrowserService {
     tabId: number,
     action: AnyAction
   ): Promise<T> {
-    return new Promise<T>((resolve, _) => {
+    return new Promise<T>(resolve => {
       chrome.tabs.sendMessage(tabId, action, (re: T) => {
         resolve(re);
       });
@@ -38,7 +52,7 @@ class ChromeBrowserService implements BrowserService {
   };
 
   getCookie = async (option: { url: string; name: string }) => {
-    return new Promise<string>((resolve, _) => {
+    return new Promise<string>(resolve => {
       chrome.cookies.get(
         {
           url: option.url,
@@ -54,7 +68,7 @@ class ChromeBrowserService implements BrowserService {
   };
 
   sendActionToCurrentTab = function<T>(action: AnyAction): Promise<T> {
-    return new Promise<T>((resolve, _) => {
+    return new Promise<T>(resolve => {
       chrome.tabs.getCurrent((tab?: chrome.tabs.Tab) => {
         if (tab) {
           chrome.tabs.sendMessage(tab.id!, action, (re: T) => {
@@ -66,7 +80,7 @@ class ChromeBrowserService implements BrowserService {
   };
 
   captureVisibleTab = async () => {
-    return new Promise<string>((resolve, _) => {
+    return new Promise<string>(resolve => {
       chrome.tabs.captureVisibleTab(image => {
         resolve(image);
       });
