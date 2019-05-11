@@ -1,4 +1,4 @@
-<h1 align="center">yuque-web-clipper</h1>
+<h1 align="center">Web clipper</h1>
 <p align="center">
     <a href="https://travis-ci.org/yuquewebclipper/yuque-web-clipper">
       <img src="https://img.shields.io/travis/yuquewebclipper/yuque-web-clipper/master.svg?style=flat-square" alt="Build Status">
@@ -7,6 +7,10 @@
       <img src="https://img.shields.io/codecov/c/github/yuquewebclipper/yuque-web-clipper/master.svg?style=flat-square" alt="Codecov">
     </a>
 </p>
+
+## 改名
+
+为避免侵权，先把名字改了，最终名字未确定。
 
 ### Important
 
