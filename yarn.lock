@@ -568,10 +568,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.8.14":
-  version "16.8.14"
-  resolved "http://registry.npm.taobao.org/@types/react/download/@types/react-16.8.14.tgz#b561bfabeb8f60d12e6d4766367e7a9ae927aa18"
-  integrity sha1-tWG/q+uPYNEubUdmNn56muknqhg=
+"@types/react@*", "@types/react@^16.8.18":
+  version "16.8.18"
+  resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-16.8.18.tgz#fe66fb748b0b6ca9709d38b87b2d1356d960a511"
+  integrity sha1-/mb7dIsLbKlwnTi4ey0TVtlgpRE=
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
