@@ -434,10 +434,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/chrome@^0.0.72":
-  version "0.0.72"
-  resolved "https://registry.npmjs.org/@types/chrome/-/chrome-0.0.72.tgz#ab34692f69c806e6f02c0189e4cdb4d4722572c7"
-  integrity sha512-x4I7h7QBoq25Vh6LYxzawj+N+2GTW1MZZX9hawk6yo0TCJpKt8rHEHKa1x7dpHlKzlAl1F1we0P8jbFaEDowlw==
+"@types/chrome@^0.0.86":
+  version "0.0.86"
+  resolved "https://registry.npm.taobao.org/@types/chrome/download/@types/chrome-0.0.86.tgz#1026ef8e76db4fde1859cae858d73236fe670d69"
+  integrity sha1-ECbvjnbbT94YWcroWNcyNv5nDWk=
   dependencies:
     "@types/filesystem" "*"
 

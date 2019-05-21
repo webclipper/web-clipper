@@ -51,7 +51,7 @@
   "devDependencies": {
     "@diamondyuan/eslint-config-react-typescript": "^6.0.0",
     "@types/blueimp-md5": "^2.7.0",
-    "@types/chrome": "^0.0.72",
+    "@types/chrome": "^0.0.86",
     "@types/codemirror": "^0.0.74",
     "@types/enzyme": "^3.9.1",
     "@types/enzyme-adapter-react-16": "^1.0.3",
