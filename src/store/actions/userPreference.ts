@@ -152,3 +152,5 @@ export const asyncEditImageHosting = actionCreator.async<
 >('ASYNC_EDIT_IMAGE_HOSTING');
 
 export const resetAccountForm = actionCreator('RESET_ACCOUNT_FORM');
+
+export const setRemoteVersion = actionCreator<string>('SET_REMOTE_VERSION');

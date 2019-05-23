@@ -26,6 +26,7 @@ const useActions = {
 
 const mapStateToProps = ({
   userPreference: {
+    remoteVersion,
     accounts,
     liveRendering,
     showLineNumber,
@@ -34,6 +35,7 @@ const mapStateToProps = ({
   },
 }: GlobalStore) => {
   return {
+    remoteVersion,
     showLineNumber,
     defaultPluginId,
     closeQRCode: true,

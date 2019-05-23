@@ -13,6 +13,7 @@ import {
   asyncEditImageHosting,
   resetAccountForm,
   asyncUpdateAccount,
+  setRemoteVersion,
 } from 'actions';
 import { services, imageHostingServices } from '../../../common/backend';
 import { extensions } from '../../../extensions';
@@ -147,5 +148,9 @@ const reducer = reducerWithInitialState(defaultState)
         $set: defaultState.initializeForm,
       },
     })
-  );
+  )
+  .case(setRemoteVersion, (state, remoteVersion) => ({
+    ...state,
+    remoteVersion,
+  }));
 export default reducer;

@@ -1,10 +1,16 @@
 import browserService, { BrowserTab } from 'common/browser';
 import storage, { PreferenceStorage } from 'common/storage';
-import { all, call, put, spawn, delay } from 'redux-saga/effects';
+import { all, call, put, spawn, delay, fork } from 'redux-saga/effects';
 import { clipperRootSagas } from './clipper';
-import { initTabInfo, initUserPreference, asyncChangeAccount } from 'actions';
+import {
+  initTabInfo,
+  initUserPreference,
+  asyncChangeAccount,
+  setRemoteVersion,
+} from 'actions';
 import { push } from 'connected-react-router';
 import { userPreferenceSagas } from './userPreference';
+import { getRemoteVersion } from 'common/version';
 
 const makeRestartable = (saga: any) => {
   return function*() {
@@ -38,11 +44,22 @@ function* initStore() {
   }
 }
 
+function* loadVersion() {
+  try {
+    const version = yield call(getRemoteVersion);
+    yield put(setRemoteVersion(version));
+    console.log('remote version', version);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const rootSagas = [clipperRootSagas, userPreferenceSagas].map(
   makeRestartable
 );
 
 export default function* root() {
   yield all(rootSagas.map(saga => call(saga)));
+  yield fork(loadVersion);
   yield call(initStore);
 }

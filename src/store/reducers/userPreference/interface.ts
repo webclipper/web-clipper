@@ -6,6 +6,7 @@ import {
 import { SerializedExtensionWithId } from '../../../extensions/interface';
 
 export interface UserPreferenceStore {
+  remoteVersion?: string;
   accounts: AccountPreference[];
   imageHosting: ImageHosting[];
   defaultPluginId?: string | null;
