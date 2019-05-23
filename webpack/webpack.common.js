@@ -13,9 +13,9 @@ function resolve(dir) {
 
 module.exports = {
   entry: {
-    background: resolve('src/background/index.ts'),
+    background: resolve('src/browser/background/index.ts'),
     tool: resolve('src/pages/app.tsx'),
-    content_script: resolve('src/content/index.tsx'),
+    content_script: resolve('src/browser/content/index.tsx'),
   },
   output: {
     path: resolve('dist/js'),
@@ -26,6 +26,7 @@ module.exports = {
       common: resolve('src/common/'),
       components: resolve('src/components/'),
       actions: resolve('src/store/actions'),
+      browserActions: resolve('src/browser/actions/'),
       extensions: resolve('src/extensions/'),
     },
     extensions: ['.ts', '.tsx', '.js', 'scss', 'less'],

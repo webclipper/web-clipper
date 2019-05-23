@@ -6,13 +6,8 @@ import Highlighter from 'common/highlight';
 import TurndownService from 'turndown';
 import * as turndownPluginGfm from 'turndown-plugin-gfm';
 import { MessageListenerCombiner } from 'common/ListenerCombiner';
-import {
-  asyncHideTool,
-  asyncRemoveTool,
-  asyncRunScript,
-  clickIcon,
-  doYouAliveNow,
-} from 'actions';
+import { clickIcon, doYouAliveNow } from 'browserActions/browser';
+import { removeTool, runScript, hideTool } from 'browserActions/message';
 import { ContentScriptContext } from 'extensions/interface';
 
 const turndownService = new TurndownService();
@@ -40,10 +35,10 @@ const listeners = new MessageListenerCombiner()
     sendResponse(true);
     return true;
   })
-  .case(asyncHideTool.started, () => {
+  .case(hideTool, () => {
     $(`.${styles.toolFrame}`).hide();
   })
-  .case(asyncRemoveTool.started, () => {
+  .case(removeTool, () => {
     $(`.${styles.toolFrame}`).remove();
   })
   .case(clickIcon, () => {
@@ -57,7 +52,7 @@ const listeners = new MessageListenerCombiner()
       $(`.${styles.toolFrame}`).toggle();
     }
   })
-  .case(asyncRunScript.started, (script, _sender, sendResponse) => {
+  .case(runScript, (script, _sender, sendResponse) => {
     const toggleClipper = () => {
       $(`.${styles.toolFrame}`).toggle();
     };

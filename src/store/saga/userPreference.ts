@@ -19,7 +19,6 @@ import {
   asyncVerificationAccessToken,
   asyncSetDefaultPluginId,
   asyncRunExtension,
-  asyncRunScript,
   asyncAddImageHosting,
   asyncDeleteImageHosting,
   asyncEditImageHosting,
@@ -31,6 +30,7 @@ import backend, {
   documentServiceFactory,
   imageHostingServiceFactory,
 } from 'common/backend';
+import { hideTool, runScript, removeTool } from 'browserActions/message';
 
 export const userPreferenceSagas = new SagaHelper()
   .takeEvery(asyncVerificationAccessToken, function*(action) {
@@ -198,11 +198,11 @@ export const userPreferenceSagas = new SagaHelper()
       })
     );
   })
-  .takeEvery(asyncHideTool, function*(action) {
-    yield call(browserService.sendActionToCurrentTab, action);
+  .takeEvery(asyncHideTool, function*() {
+    yield call(browserService.sendActionToCurrentTab, hideTool());
   })
-  .takeEvery(asyncRemoveTool, function*(action) {
-    yield call(browserService.sendActionToCurrentTab, action);
+  .takeEvery(asyncRemoveTool, function*() {
+    yield call(browserService.sendActionToCurrentTab, removeTool());
   })
   .takeEvery(asyncSetDefaultPluginId, function*(action) {
     yield call(storage.setDefaultPluginId, action.payload.pluginId);
@@ -278,7 +278,7 @@ export const userPreferenceSagas = new SagaHelper()
     if (run) {
       result = yield call(
         browserService.sendActionToCurrentTab,
-        asyncRunScript.started(run)
+        runScript(run)
       );
     }
     const selector = (state: GlobalStore) => {
@@ -309,10 +309,7 @@ export const userPreferenceSagas = new SagaHelper()
       })();
     }
     if (destroy) {
-      yield call(
-        browserService.sendActionToCurrentTab,
-        asyncRunScript.started(destroy)
-      );
+      yield call(browserService.sendActionToCurrentTab, runScript(destroy));
     }
     yield put(
       asyncRunExtension.done({

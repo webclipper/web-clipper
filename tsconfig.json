@@ -24,7 +24,8 @@
       "common/*": ["src/common/*"],
       "components/*": ["src/components/*"],
       "actions": ["src/store/actions/index"],
-      "extensions/*": ["src/extensions/*"]
+      "extensions/*": ["src/extensions/*"],
+      "browserActions/*": ["src/browser/actions/*"]
     }
   },
   "include": ["src/**/*"],

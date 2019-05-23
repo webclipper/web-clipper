@@ -1,5 +1,5 @@
 import browser from 'common/browser';
-import { clickIcon, doYouAliveNow } from 'actions';
+import { clickIcon, doYouAliveNow } from 'browserActions/browser';
 
 if (process.env.NODE_ENV === 'development') {
   browser.browserAction.setIcon({ path: 'icons/yuque-dev.png' });
