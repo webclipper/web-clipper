@@ -544,10 +544,10 @@
   resolved "http://registry.npm.taobao.org/@types/qs/download/@types/qs-6.5.3.tgz#1c3b71b091eaeaf5924538006b7f70603ce63d38"
   integrity sha1-HDtxsJHq6vWSRTgAa39wYDzmPTg=
 
-"@types/react-dom@^16.8.3":
-  version "16.8.3"
-  resolved "http://registry.npm.taobao.org/@types/react-dom/download/@types/react-dom-16.8.3.tgz#6131b7b6158bc7ed1925a3374b88b7c00481f0cb"
-  integrity sha1-YTG3thWLx+0ZJaM3S4i3wASB8Ms=
+"@types/react-dom@^16.8.4":
+  version "16.8.4"
+  resolved "https://registry.npm.taobao.org/@types/react-dom/download/@types/react-dom-16.8.4.tgz#7fb7ba368857c7aa0f4e4511c4710ca2c5a12a88"
+  integrity sha1-f7e6NohXx6oPTkURxHEMosWhKog=
   dependencies:
     "@types/react" "*"
 
