@@ -64,7 +64,7 @@
     "@types/react": "^16.8.18",
     "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.0.8",
-    "@types/react-router": "^4.4.3",
+    "@types/react-router": "^5.0.1",
     "@types/redux-logger": "^3.0.6",
     "@types/remote-redux-devtools": "^0.5.3",
     "@types/turndown": "^5.0.0",
