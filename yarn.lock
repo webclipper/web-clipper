@@ -8963,10 +8963,10 @@ typescript-tuple@^2.1.0:
   dependencies:
     typescript-compare "^0.0.2"
 
-typescript@^3.4.4:
-  version "3.4.4"
-  resolved "http://registry.npm.taobao.org/typescript/download/typescript-3.4.4.tgz#aac4a08abecab8091a75f10842ffa0631818f785"
-  integrity sha1-qsSgir7KuAkadfEIQv+gYxgY94U=
+typescript@^3.4.5:
+  version "3.4.5"
+  resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.4.5.tgz#2d2618d10bb566572b8d7aad5180d84257d70a99"
+  integrity sha1-LSYY0Qu1ZlcrjXqtUYDYQlfXCpk=
 
 ua-parser-js@^0.7.18:
   version "0.7.19"
