@@ -517,10 +517,10 @@
   dependencies:
     "@types/sizzle" "*"
 
-"@types/lodash@^4.14.116":
-  version "4.14.123"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.123.tgz#39be5d211478c8dd3bdae98ee75bb7efe4abfe4d"
-  integrity sha512-pQvPkc4Nltyx7G1Ww45OjVqUsJP4UsZm+GWJpigXgkikZqJgRm4c48g027o6tdgubWHwFRF15iFd+Y4Pmqv6+Q==
+"@types/lodash@^4.14.130":
+  version "4.14.130"
+  resolved "https://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.130.tgz#04b3a690d5f4fc34579963c99adae067b8c8eb5a"
+  integrity sha1-BLOmkNX0/DRXmWPJmtrgZ7jI61o=
 
 "@types/node@*":
   version "11.11.3"
