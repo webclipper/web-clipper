@@ -28,7 +28,7 @@
     "axios": "^0.18.0",
     "blueimp-md5": "^2.10.0",
     "codemirror": "^5.47.0",
-    "connected-react-router": "^6.2.1",
+    "connected-react-router": "^6.4.0",
     "dayjs": "^1.8.12",
     "history": "^4.7.2",
     "hypermd": "^0.3.11",
