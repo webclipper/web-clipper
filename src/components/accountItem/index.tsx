@@ -35,11 +35,7 @@ export default class Page extends React.Component<PageProps> {
     return (
       <div className={styles.card}>
         <div className={styles.star}>
-          <Icon
-            type="star"
-            style={tagStyle}
-            onClick={this.handleSetDefaultAccount}
-          />
+          <Icon type="star" style={tagStyle} onClick={this.handleSetDefaultAccount} />
         </div>
         <div className={styles.userInfo}>
           <img className={styles.avatar} src={avatar} />
@@ -47,11 +43,7 @@ export default class Page extends React.Component<PageProps> {
           <div className={styles.description}>{description}</div>
         </div>
         <div className={styles.operation}>
-          <Button
-            className={styles.editButton}
-            type="primary"
-            onClick={this.handleEdit}
-          >
+          <Button className={styles.editButton} type="primary" onClick={this.handleEdit}>
             编辑
           </Button>
           <Button type="danger" onClick={this.handleDelete}>

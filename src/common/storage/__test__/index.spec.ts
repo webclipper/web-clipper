@@ -3,11 +3,7 @@ import { AccountPreference } from './../../../store/reducers/userPreference/inte
 /* eslint-disable max-nested-callbacks */
 /* eslint-disable no-undefined */
 import update from 'immutability-helper';
-import {
-  TypedCommonStorage,
-  CommonStorage,
-  TypedCommonStorageInterface,
-} from '../index';
+import { TypedCommonStorage, CommonStorage, TypedCommonStorageInterface } from '../index';
 
 class MockStorage implements CommonStorage {
   private data: any;
@@ -42,18 +38,10 @@ describe('test storage', () => {
   it('The default value should be correct', async () => {
     expect(await storage.getPreference()).toEqual(defaultPreference);
     expect(await storage.getAccounts()).toEqual(defaultPreference.accounts);
-    expect(await storage.getDefaultAccountId()).toEqual(
-      defaultPreference.defaultAccountId
-    );
-    expect(await storage.getDefaultPluginId()).toEqual(
-      defaultPreference.defaultPluginId
-    );
-    expect(await storage.getShowLineNumber()).toEqual(
-      defaultPreference.showLineNumber
-    );
-    expect(await storage.getLiveRendering()).toEqual(
-      defaultPreference.liveRendering
-    );
+    expect(await storage.getDefaultAccountId()).toEqual(defaultPreference.defaultAccountId);
+    expect(await storage.getDefaultPluginId()).toEqual(defaultPreference.defaultPluginId);
+    expect(await storage.getShowLineNumber()).toEqual(defaultPreference.showLineNumber);
+    expect(await storage.getLiveRendering()).toEqual(defaultPreference.liveRendering);
   });
 
   describe('config account should work correctly', () => {

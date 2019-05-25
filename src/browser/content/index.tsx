@@ -44,9 +44,7 @@ const listeners = new MessageListenerCombiner()
   .case(clickIcon, () => {
     if ($(`.${styles.toolFrame}`).length === 0) {
       $('body').append(
-        `<iframe src="${chrome.extension.getURL('tool.html')}" class=${
-          styles.toolFrame
-        }></iframe>`
+        `<iframe src="${chrome.extension.getURL('tool.html')}" class=${styles.toolFrame}></iframe>`
       );
     } else {
       $(`.${styles.toolFrame}`).toggle();

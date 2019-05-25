@@ -1,16 +1,11 @@
-import {
-  AccountPreference,
-  ImageHosting,
-} from './../reducers/userPreference/interface';
+import { AccountPreference, ImageHosting } from './../reducers/userPreference/interface';
 import { PreferenceStorage } from 'common/storage/interface';
 import { Repository, UserInfo } from 'common/backend/index';
 import { SerializedExtensionWithId } from '../../extensions/interface';
 import actionCreatorFactory from 'common/typescript-fsa';
 const actionCreator = actionCreatorFactory('USER_PREFERENCE');
 
-export const initUserPreference = actionCreator<PreferenceStorage>(
-  'INIT_USER_PREFERENCE'
-);
+export const initUserPreference = actionCreator<PreferenceStorage>('INIT_USER_PREFERENCE');
 
 export const asyncVerificationAccessToken = actionCreator.async<
   {
@@ -102,13 +97,9 @@ export const asyncSetShowLineNumber = actionCreator.async<
   void
 >('ASYNC_SET_SHOW_LINE_NUMBER');
 
-export const asyncHideTool = actionCreator.async<void, void, void>(
-  'ASYNC_HIDE_TOOL'
-);
+export const asyncHideTool = actionCreator.async<void, void, void>('ASYNC_HIDE_TOOL');
 
-export const asyncRemoveTool = actionCreator.async<void, void, void>(
-  'ASYNC_REMOVE_TOOL'
-);
+export const asyncRemoveTool = actionCreator.async<void, void, void>('ASYNC_REMOVE_TOOL');
 
 export const asyncSetDefaultPluginId = actionCreator.async<
   {
@@ -129,9 +120,7 @@ export const asyncRunExtension = actionCreator.async<
   void
 >('ASYNC_RUN_EXTENSION');
 
-export const asyncRunScript = actionCreator.async<string, void, void>(
-  'ASYNC_RUN_SCRIPT'
-);
+export const asyncRunScript = actionCreator.async<string, void, void>('ASYNC_RUN_SCRIPT');
 
 export const asyncAddImageHosting = actionCreator.async<
   { closeModal: () => void } & Omit<ImageHosting, 'id'>,
@@ -139,11 +128,9 @@ export const asyncAddImageHosting = actionCreator.async<
   void
 >('ASYNC_ADD_IMAGE_HOSTING');
 
-export const asyncDeleteImageHosting = actionCreator.async<
-  { id: string },
-  ImageHosting[],
-  void
->('ASYNC_DELETE_IMAGE_HOSTING');
+export const asyncDeleteImageHosting = actionCreator.async<{ id: string }, ImageHosting[], void>(
+  'ASYNC_DELETE_IMAGE_HOSTING'
+);
 
 export const asyncEditImageHosting = actionCreator.async<
   { id: string; value: Omit<ImageHosting, 'id'>; closeModal: () => void },

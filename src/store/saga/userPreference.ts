@@ -26,10 +26,7 @@ import {
   asyncUpdateAccount,
   asyncChangeAccount,
 } from 'actions';
-import backend, {
-  documentServiceFactory,
-  imageHostingServiceFactory,
-} from 'common/backend';
+import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
 import { hideTool, runScript, removeTool } from 'browserActions/message';
 
 export const userPreferenceSagas = new SagaHelper()
@@ -62,17 +59,8 @@ export const userPreferenceSagas = new SagaHelper()
     }: GlobalStore) => {
       return { userInfo, servicesMeta };
     };
-    const {
-      servicesMeta,
-      userInfo,
-    }: ReturnType<typeof selector> = yield select(selector);
-    const {
-      info,
-      imageHosting,
-      defaultRepositoryId,
-      type,
-      callback,
-    } = action.payload;
+    const { servicesMeta, userInfo }: ReturnType<typeof selector> = yield select(selector);
+    const { info, imageHosting, defaultRepositoryId, type, callback } = action.payload;
     const service: ServiceMeta = servicesMeta[type];
     const { service: Service } = service;
     const instance = new Service(info);
@@ -105,9 +93,7 @@ export const userPreferenceSagas = new SagaHelper()
     }
   })
   .takeEvery(asyncUpdateAccount, function*(action) {
-    const accounts: CallResult<typeof storage.getAccounts> = yield call(
-      storage.getAccounts
-    );
+    const accounts: CallResult<typeof storage.getAccounts> = yield call(storage.getAccounts);
     const {
       id,
       account: { info, defaultRepositoryId, imageHosting },
@@ -139,9 +125,7 @@ export const userPreferenceSagas = new SagaHelper()
     const selector = ({ clipper: { currentAccountId } }: GlobalStore) => {
       return { currentAccountId };
     };
-    const { currentAccountId }: ReturnType<typeof selector> = yield select(
-      selector
-    );
+    const { currentAccountId }: ReturnType<typeof selector> = yield select(selector);
     if (id === currentAccountId) {
       yield put(asyncChangeAccount.started({ id }));
     }
@@ -242,9 +226,11 @@ export const userPreferenceSagas = new SagaHelper()
   })
   .takeEvery(asyncAddImageHosting, function*(action) {
     const { info, type, closeModal, remark } = action.payload;
-    const imageHostingService: ReturnType<
-      typeof imageHostingServiceFactory
-    > = yield call(imageHostingServiceFactory, type, info);
+    const imageHostingService: ReturnType<typeof imageHostingServiceFactory> = yield call(
+      imageHostingServiceFactory,
+      type,
+      info
+    );
     if (!imageHostingService) {
       message.error('不支持');
       return;
@@ -257,9 +243,10 @@ export const userPreferenceSagas = new SagaHelper()
       remark,
     };
     try {
-      const imageHostingList: PromiseType<
-        ReturnType<typeof storage.addImageHosting>
-      > = yield call(storage.addImageHosting, imageHosting);
+      const imageHostingList: PromiseType<ReturnType<typeof storage.addImageHosting>> = yield call(
+        storage.addImageHosting,
+        imageHosting
+      );
       yield put(
         asyncAddImageHosting.done({
           params: action.payload,
@@ -276,10 +263,7 @@ export const userPreferenceSagas = new SagaHelper()
     let result;
     const { run, afterRun, destroy } = extension;
     if (run) {
-      result = yield call(
-        browserService.sendActionToCurrentTab,
-        runScript(run)
-      );
+      result = yield call(browserService.sendActionToCurrentTab, runScript(run));
     }
     const selector = (state: GlobalStore) => {
       const pathname = state.router.location.pathname;
@@ -289,9 +273,7 @@ export const userPreferenceSagas = new SagaHelper()
         pathname,
       };
     };
-    const { data, pathname }: ReturnType<typeof selector> = yield select(
-      selector
-    );
+    const { data, pathname }: ReturnType<typeof selector> = yield select(selector);
     if (afterRun) {
       result = yield (async () => {
         //@ts-ignore

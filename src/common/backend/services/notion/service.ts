@@ -1,9 +1,5 @@
 import { CompleteStatus } from './../interface';
-import {
-  DocumentService,
-  Repository,
-  CreateDocumentRequest,
-} from '../../index';
+import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
 import axios, { AxiosInstance } from 'axios';
 import { generateUuid } from '../../../uuid';
 
@@ -147,10 +143,7 @@ export default class NotionDocumentService implements DocumentService {
       throw new Error('仓库非法');
     }
     return {
-      href: `https://www.notion.so/${repository.groupId}/${documentId.replace(
-        /-/g,
-        ''
-      )}`,
+      href: `https://www.notion.so/${repository.groupId}/${documentId.replace(/-/g, '')}`,
     };
   };
 
@@ -159,8 +152,7 @@ export default class NotionDocumentService implements DocumentService {
       this.userContent = await this.getUserContent();
     }
     const documentId = generateUuid();
-    const userId = Object.values(this.userContent.recordMap.notion_user)[0]
-      .value.id;
+    const userId = Object.values(this.userContent.recordMap.notion_user)[0].value.id;
     const time = new Date().getDate();
     await this.request.post('api/v3/submitTransaction', {
       operations: [
@@ -244,9 +236,7 @@ export default class NotionDocumentService implements DocumentService {
   };
 
   private getUserContent = async () => {
-    const response = await this.request.post<NotionUserContent>(
-      'api/v3/loadUserContent'
-    );
+    const response = await this.request.post<NotionUserContent>('api/v3/loadUserContent');
     return response.data;
   };
 }

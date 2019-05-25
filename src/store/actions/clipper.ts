@@ -5,23 +5,15 @@ const actionCreator = actionCreatorFactory('CLIPPER');
 
 export const updateTitle = actionCreator<{ title: string }>('UPDATE_TITLE');
 
-export const asyncCreateDocument = actionCreator.async<
-  void,
-  CompleteStatus,
-  null
->('ASYNC_CREATE_DOCUMENT');
-
-export const asyncUploadImage = actionCreator.async<void, void, void>(
-  'ASYNC_UPLOAD_IMAGE'
+export const asyncCreateDocument = actionCreator.async<void, CompleteStatus, null>(
+  'ASYNC_CREATE_DOCUMENT'
 );
 
-export const selectRepository = actionCreator<{ repositoryId: string }>(
-  'SELECT_REPOSITORY'
-);
+export const asyncUploadImage = actionCreator.async<void, void, void>('ASYNC_UPLOAD_IMAGE');
 
-export const initTabInfo = actionCreator<{ title: string; url: string }>(
-  'INIT_TAB_INFO'
-);
+export const selectRepository = actionCreator<{ repositoryId: string }>('SELECT_REPOSITORY');
+
+export const initTabInfo = actionCreator<{ title: string; url: string }>('INIT_TAB_INFO');
 
 export const asyncChangeAccount = actionCreator.async<
   {
@@ -34,6 +26,4 @@ export const asyncChangeAccount = actionCreator.async<
   any
 >('ASYNC_CHANGE_ACCOUNT');
 
-export const changeData = actionCreator<{ data: any; pathName: string }>(
-  'CHANGE_DATA'
-);
+export const changeData = actionCreator<{ data: any; pathName: string }>('CHANGE_DATA');

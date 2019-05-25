@@ -28,10 +28,7 @@ const reducer = reducerWithInitialState(defaultState)
   }))
   .case(
     asyncChangeAccount.done,
-    (
-      state,
-      { params: { id }, result: { repositories, currentImageHostingService } }
-    ) => {
+    (state, { params: { id }, result: { repositories, currentImageHostingService } }) => {
       return update(state, {
         loadingRepositories: {
           $set: false,
@@ -64,9 +61,7 @@ const reducer = reducerWithInitialState(defaultState)
     title,
   }))
   .case(selectRepository, (state, { repositoryId }) => {
-    const currentRepository = state.repositories.find(
-      o => o.id === repositoryId
-    );
+    const currentRepository = state.repositories.find(o => o.id === repositoryId);
     return {
       ...state,
       currentRepository,

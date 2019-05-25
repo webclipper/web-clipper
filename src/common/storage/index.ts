@@ -1,8 +1,5 @@
 import { PreferenceStorage } from './interface';
-import {
-  ImageHosting,
-  AccountPreference,
-} from './../../store/reducers/userPreference/interface';
+import { ImageHosting, AccountPreference } from './../../store/reducers/userPreference/interface';
 export * from './interface';
 export interface CommonStorage {
   set(key: string, value: any): void | Promise<void>;
@@ -82,10 +79,7 @@ export interface TypedCommonStorageInterface {
 
   deleteImageHostingById(id: string): Promise<ImageHosting[]>;
 
-  editImageHostingById(
-    id: string,
-    value: ImageHosting
-  ): Promise<ImageHosting[]>;
+  editImageHostingById(id: string, value: ImageHosting): Promise<ImageHosting[]>;
 }
 
 const keysOfStorage = {
@@ -156,9 +150,7 @@ export class TypedCommonStorage implements TypedCommonStorageInterface {
   };
 
   getAccounts = async () => {
-    const value = await this.store.get<AccountPreference[]>(
-      keysOfStorage.accounts
-    );
+    const value = await this.store.get<AccountPreference[]>(keysOfStorage.accounts);
     if (!value) {
       return [];
     }
@@ -216,18 +208,14 @@ export class TypedCommonStorage implements TypedCommonStorageInterface {
 
   deleteImageHostingById = async (id: string) => {
     const imageHostingList = await this.getImageHosting();
-    const newImageHostingList = imageHostingList.filter(
-      imageHosting => imageHosting.id !== id
-    );
+    const newImageHostingList = imageHostingList.filter(imageHosting => imageHosting.id !== id);
     await this.store.set(keysOfStorage.imageHosting, newImageHostingList);
     return newImageHostingList;
   };
 
   editImageHostingById = async (id: string, value: ImageHosting) => {
     const imageHostingList = await this.getImageHosting();
-    const index = imageHostingList.findIndex(
-      imageHosting => imageHosting.id === id
-    );
+    const index = imageHostingList.findIndex(imageHosting => imageHosting.id === id);
     if (index < 0) {
       throw new Error('图床不存在');
     }
@@ -237,6 +225,4 @@ export class TypedCommonStorage implements TypedCommonStorageInterface {
   };
 }
 
-export default new TypedCommonStorage(
-  new ChromeSyncStorageImpl()
-) as TypedCommonStorageInterface;
+export default new TypedCommonStorage(new ChromeSyncStorageImpl()) as TypedCommonStorageInterface;

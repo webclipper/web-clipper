@@ -28,10 +28,7 @@ type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
 type PageProps = PageStateProps & PageDispatchProps;
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators<PageDispatchProps, PageDispatchProps>(
-    useActions,
-    dispatch
-  );
+  bindActionCreators<PageDispatchProps, PageDispatchProps>(useActions, dispatch);
 
 class Page extends React.Component<PageProps> {
   renderError = () => (
@@ -40,10 +37,7 @@ class Page extends React.Component<PageProps> {
         this.props.asyncRemoveTool();
       }}
     >
-      <a
-        target="_blank"
-        href="https://github.com/yuquewebclipper/yuque-web-clipper/issues"
-      >
+      <a target="_blank" href="https://github.com/yuquewebclipper/yuque-web-clipper/issues">
         发生错误
       </a>
     </ToolContainer>
@@ -67,11 +61,7 @@ class Page extends React.Component<PageProps> {
         }}
       >
         <Section title="保存成功">
-          <a
-            className={styles.menuButton}
-            href={completeStatus.href}
-            target="_blank"
-          >
+          <a className={styles.menuButton} href={completeStatus.href} target="_blank">
             <Button style={{ marginTop: 16 }} size="large" type="primary" block>
               前往<span>{name}</span> 查看
             </Button>

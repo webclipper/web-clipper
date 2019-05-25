@@ -25,12 +25,7 @@ const useActions = {
 };
 
 const mapStateToProps = ({
-  userPreference: {
-    accounts,
-    defaultAccountId,
-    imageHostingServicesMeta,
-    imageHosting,
-  },
+  userPreference: { accounts, defaultAccountId, imageHostingServicesMeta, imageHosting },
 }: GlobalStore) => {
   return {
     accounts,
@@ -47,15 +42,9 @@ type PageState = {
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
 type PageOwnProps = {};
-type PageProps = PageStateProps &
-  PageDispatchProps &
-  PageOwnProps &
-  FormComponentProps;
+type PageProps = PageStateProps & PageDispatchProps & PageOwnProps & FormComponentProps;
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators<PageDispatchProps, PageDispatchProps>(
-    useActions,
-    dispatch
-  );
+  bindActionCreators<PageDispatchProps, PageDispatchProps>(useActions, dispatch);
 
 class Page extends React.Component<PageProps, PageState> {
   constructor(props: PageProps) {

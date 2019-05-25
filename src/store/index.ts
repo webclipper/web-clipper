@@ -18,11 +18,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 function configStore() {
-  const store = createStore(
-    createRootReducer(history),
-    {},
-    applyMiddleware(...middleware)
-  );
+  const store = createStore(createRootReducer(history), {}, applyMiddleware(...middleware));
   sagaMiddleware.run(rootSaga);
   return store;
 }

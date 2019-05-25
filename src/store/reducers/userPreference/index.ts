@@ -52,54 +52,36 @@ const defaultState: UserPreferenceStore = {
 };
 
 const reducer = reducerWithInitialState(defaultState)
-  .case(
-    asyncSetShowLineNumber.done,
-    (state, { result: { value: showLineNumber } }) => ({
-      ...state,
-      showLineNumber,
-    })
-  )
-  .case(
-    asyncSetEditorLiveRendering.done,
-    (state, { result: { value: liveRendering } }) => ({
-      ...state,
-      liveRendering,
-    })
-  )
-  .case(
-    asyncSetDefaultPluginId.done,
-    (state, { params: { pluginId: defaultPluginId } }) => ({
-      ...state,
-      defaultPluginId,
-    })
-  )
-  .case(
-    asyncDeleteAccount.done,
-    (state, { result: { accounts, defaultAccountId } }) => ({
-      ...state,
-      accounts,
-      defaultAccountId,
-    })
-  )
+  .case(asyncSetShowLineNumber.done, (state, { result: { value: showLineNumber } }) => ({
+    ...state,
+    showLineNumber,
+  }))
+  .case(asyncSetEditorLiveRendering.done, (state, { result: { value: liveRendering } }) => ({
+    ...state,
+    liveRendering,
+  }))
+  .case(asyncSetDefaultPluginId.done, (state, { params: { pluginId: defaultPluginId } }) => ({
+    ...state,
+    defaultPluginId,
+  }))
+  .case(asyncDeleteAccount.done, (state, { result: { accounts, defaultAccountId } }) => ({
+    ...state,
+    accounts,
+    defaultAccountId,
+  }))
   .case(initUserPreference, (state, payload) => ({
     ...state,
     ...payload,
   }))
-  .case(
-    asyncAddAccount.done,
-    (state, { result: { accounts, defaultAccountId } }) => ({
-      ...state,
-      accounts,
-      defaultAccountId,
-    })
-  )
-  .case(
-    asyncUpdateCurrentAccountIndex.done,
-    (state, { result: { id: defaultAccountId } }) => ({
-      ...state,
-      defaultAccountId,
-    })
-  )
+  .case(asyncAddAccount.done, (state, { result: { accounts, defaultAccountId } }) => ({
+    ...state,
+    accounts,
+    defaultAccountId,
+  }))
+  .case(asyncUpdateCurrentAccountIndex.done, (state, { result: { id: defaultAccountId } }) => ({
+    ...state,
+    defaultAccountId,
+  }))
   .case(asyncDeleteImageHosting.done, (state, { result }) =>
     update(state, {
       imageHosting: {
@@ -128,19 +110,17 @@ const reducer = reducerWithInitialState(defaultState)
       },
     })
   )
-  .case(
-    asyncVerificationAccessToken.done,
-    (state, { result: { repositories, userInfo } }) =>
-      update(state, {
-        initializeForm: {
-          $set: {
-            verified: true,
-            verifying: false,
-            repositories,
-            userInfo,
-          },
+  .case(asyncVerificationAccessToken.done, (state, { result: { repositories, userInfo } }) =>
+    update(state, {
+      initializeForm: {
+        $set: {
+          verified: true,
+          verifying: false,
+          repositories,
+          userInfo,
         },
-      })
+      },
+    })
   )
   .case(resetAccountForm, state =>
     update(state, {

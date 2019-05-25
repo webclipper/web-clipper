@@ -24,12 +24,7 @@ export interface ReducerBuilder<InS extends OutS, OutS = InS> {
     handler: Handler<InS, OutS, P1 | P2 | P3>
   ): ReducerBuilder<InS, OutS>;
   cases<P1, P2, P3, P4>(
-    actionCreators: [
-      ActionCreator<P1>,
-      ActionCreator<P2>,
-      ActionCreator<P3>,
-      ActionCreator<P4>
-    ],
+    actionCreators: [ActionCreator<P1>, ActionCreator<P2>, ActionCreator<P3>, ActionCreator<P4>],
     handler: Handler<InS, OutS, P1 | P2 | P3 | P4>
   ): ReducerBuilder<InS, OutS>;
   cases<P>(
@@ -51,12 +46,7 @@ export interface ReducerBuilder<InS extends OutS, OutS = InS> {
     handler: Handler<InS, OutS, Action<P1 | P2 | P3>>
   ): ReducerBuilder<InS, OutS>;
   casesWithAction<P1, P2, P3, P4>(
-    actionCreators: [
-      ActionCreator<P1>,
-      ActionCreator<P2>,
-      ActionCreator<P3>,
-      ActionCreator<P4>
-    ],
+    actionCreators: [ActionCreator<P1>, ActionCreator<P2>, ActionCreator<P3>, ActionCreator<P4>],
     handler: Handler<InS, OutS, Action<P1 | P2 | P3 | P4>>
   ): ReducerBuilder<InS, OutS>;
   casesWithAction<P>(
@@ -65,9 +55,7 @@ export interface ReducerBuilder<InS extends OutS, OutS = InS> {
   ): ReducerBuilder<InS, OutS>;
 
   withHandling(
-    updateBuilder: (
-      builder: ReducerBuilder<InS, OutS>
-    ) => ReducerBuilder<InS, OutS>
+    updateBuilder: (builder: ReducerBuilder<InS, OutS>) => ReducerBuilder<InS, OutS>
   ): ReducerBuilder<InS, OutS>;
 
   // Intentionally avoid AnyAction in return type so packages can export reducers
@@ -79,10 +67,7 @@ export interface ReducerBuilder<InS extends OutS, OutS = InS> {
   (state: InS | undefined, action: AnyAction): OutS;
 }
 
-export type Handler<InS extends OutS, OutS, P> = (
-  state: InS,
-  payload: P
-) => OutS;
+export type Handler<InS extends OutS, OutS, P> = (state: InS, payload: P) => OutS;
 
 export function reducerWithInitialState<S>(initialState: S): ReducerBuilder<S> {
   return makeReducer<S, S>(initialState);
@@ -92,23 +77,18 @@ export function reducerWithoutInitialState<S>(): ReducerBuilder<S> {
   return makeReducer<S, S>();
 }
 
-export function upcastingReducer<InS extends OutS, OutS>(): ReducerBuilder<
-  InS,
-  OutS
-> {
+export function upcastingReducer<InS extends OutS, OutS>(): ReducerBuilder<InS, OutS> {
   return makeReducer<InS, OutS>();
 }
 
-function makeReducer<InS extends OutS, OutS>(
-  initialState?: InS
-): ReducerBuilder<InS, OutS> {
+function makeReducer<InS extends OutS, OutS>(initialState?: InS): ReducerBuilder<InS, OutS> {
   const handlersByActionType: {
     [actionType: string]: Handler<InS, OutS, any>;
   } = {};
-  const reducer = getReducerFunction(
-    initialState,
-    handlersByActionType
-  ) as ReducerBuilder<InS, OutS>;
+  const reducer = getReducerFunction(initialState, handlersByActionType) as ReducerBuilder<
+    InS,
+    OutS
+  >;
 
   reducer.caseWithAction = <P>(
     actionCreator: ActionCreator<P>,
@@ -118,13 +98,8 @@ function makeReducer<InS extends OutS, OutS>(
     return reducer;
   };
 
-  reducer.case = <P>(
-    actionCreator: ActionCreator<P>,
-    handler: Handler<InS, OutS, P>
-  ) =>
-    reducer.caseWithAction(actionCreator, (state, action) =>
-      handler(state, action.payload)
-    );
+  reducer.case = <P>(actionCreator: ActionCreator<P>, handler: Handler<InS, OutS, P>) =>
+    reducer.caseWithAction(actionCreator, (state, action) => handler(state, action.payload));
 
   reducer.casesWithAction = <P>(
     actionCreators: Array<ActionCreator<P>>,
@@ -136,29 +111,17 @@ function makeReducer<InS extends OutS, OutS>(
     return reducer;
   };
 
-  reducer.cases = <P>(
-    actionCreators: Array<ActionCreator<P>>,
-    handler: Handler<InS, OutS, P>
-  ) =>
-    reducer.casesWithAction(actionCreators, (state, action) =>
-      handler(state, action.payload)
-    );
+  reducer.cases = <P>(actionCreators: Array<ActionCreator<P>>, handler: Handler<InS, OutS, P>) =>
+    reducer.casesWithAction(actionCreators, (state, action) => handler(state, action.payload));
 
   reducer.withHandling = (
-    updateBuilder: (
-      builder: ReducerBuilder<InS, OutS>
-    ) => ReducerBuilder<InS, OutS>
+    updateBuilder: (builder: ReducerBuilder<InS, OutS>) => ReducerBuilder<InS, OutS>
   ) => updateBuilder(reducer);
 
   reducer.default = (defaultHandler: Handler<InS, OutS, AnyAction>) =>
-    getReducerFunction(
-      initialState,
-      { ...handlersByActionType },
-      defaultHandler
-    );
+    getReducerFunction(initialState, { ...handlersByActionType }, defaultHandler);
 
-  reducer.build = () =>
-    getReducerFunction(initialState, { ...handlersByActionType });
+  reducer.build = () => getReducerFunction(initialState, { ...handlersByActionType });
 
   return reducer;
 }

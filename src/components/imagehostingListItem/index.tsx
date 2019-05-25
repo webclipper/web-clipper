@@ -53,11 +53,7 @@ export default class Page extends React.Component<PageProps> {
 
     return (
       <List.Item actions={actions}>
-        <List.Item.Meta
-          avatar={avatar}
-          title={<div>{name}</div>}
-          description={remark}
-        />
+        <List.Item.Meta avatar={avatar} title={<div>{name}</div>} description={remark} />
       </List.Item>
     );
   }

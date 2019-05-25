@@ -62,21 +62,13 @@ export default class YuqueDocumentService implements DocumentService {
       if (!this.userInfo) {
         this.userInfo = await this.getYuqueUserInfo();
       }
-      const repos = await this.getAllRepositories(
-        false,
-        this.userInfo.id,
-        this.userInfo.name
-      );
+      const repos = await this.getAllRepositories(false, this.userInfo.id, this.userInfo.name);
       response = response.concat(repos);
     }
     if (this.config.repositoryType !== RepositoryType.self) {
       const groups = await this.getUserGroups();
       for (const group of groups) {
-        const repos = await this.getAllRepositories(
-          false,
-          group.id,
-          group.name
-        );
+        const repos = await this.getAllRepositories(false, group.id, group.name);
         response = response.concat(repos);
       }
     }
@@ -84,9 +76,7 @@ export default class YuqueDocumentService implements DocumentService {
     return response.map(({ namespace, ...rest }) => ({ ...rest }));
   };
 
-  createDocument = async (
-    info: CreateDocumentRequest
-  ): Promise<YuqueCompleteStatus> => {
+  createDocument = async (info: CreateDocumentRequest): Promise<YuqueCompleteStatus> => {
     if (!this.userInfo) {
       this.userInfo = await this.getYuqueUserInfo();
     }
@@ -119,9 +109,8 @@ export default class YuqueDocumentService implements DocumentService {
     if (!this.userInfo) {
       this.userInfo = await this.getYuqueUserInfo();
     }
-    return (await this.request.get<YuqueGroupResponse[]>(
-      `users/${this.userInfo.login}/groups`
-    )).data;
+    return (await this.request.get<YuqueGroupResponse[]>(`users/${this.userInfo.login}/groups`))
+      .data;
   };
 
   private getYuqueUserInfo = async () => {
@@ -129,22 +118,12 @@ export default class YuqueDocumentService implements DocumentService {
     return response.data;
   };
 
-  private getAllRepositories = async (
-    isGroup: boolean,
-    groupId: number,
-    groupName: string
-  ) => {
+  private getAllRepositories = async (isGroup: boolean, groupId: number, groupName: string) => {
     let offset = 0;
-    let result = await this.getYuqueRepositories(
-      offset,
-      isGroup,
-      String(groupId)
-    );
+    let result = await this.getYuqueRepositories(offset, isGroup, String(groupId));
     while (result.length - offset === 20) {
       offset = offset + 20;
-      result = result.concat(
-        await this.getYuqueRepositories(offset, isGroup, String(groupId))
-      );
+      result = result.concat(await this.getYuqueRepositories(offset, isGroup, String(groupId)));
     }
     return result.map(
       ({ id, name, namespace }): YuqueRepository => ({
@@ -157,11 +136,7 @@ export default class YuqueDocumentService implements DocumentService {
     );
   };
 
-  private getYuqueRepositories = async (
-    offset: number,
-    isGroup: boolean,
-    slug: string
-  ) => {
+  private getYuqueRepositories = async (offset: number, isGroup: boolean, slug: string) => {
     const query = {
       offset: offset,
     };

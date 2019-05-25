@@ -40,10 +40,7 @@ class ChromeBrowserService implements BrowserService {
     });
   };
 
-  sendActionByTabId = function<T>(
-    tabId: number,
-    action: AnyAction
-  ): Promise<T> {
+  sendActionByTabId = function<T>(tabId: number, action: AnyAction): Promise<T> {
     return new Promise<T>(resolve => {
       chrome.tabs.sendMessage(tabId, action, (re: T) => {
         resolve(re);

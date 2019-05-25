@@ -59,8 +59,7 @@ type OptionalResult<Result> = Result extends void
       result: Result;
     };
 
-export type Success<Params, Result> = OptionalResult<Result> &
-  OptionalParams<Params>;
+export type Success<Params, Result> = OptionalResult<Result> & OptionalParams<Params>;
 
 export type Failure<Params, Error> = {
   error: Error;
@@ -74,11 +73,7 @@ export interface AsyncActionCreators<Params, Result, Error = {}> {
 }
 
 export interface ActionCreatorFactory {
-  <Payload = void>(
-    type: string,
-    commonMeta?: Meta,
-    isError?: boolean
-  ): ActionCreator<Payload>;
+  <Payload = void>(type: string, commonMeta?: Meta, isError?: boolean): ActionCreator<Payload>;
 
   <Payload = void>(
     type: string,
@@ -114,8 +109,7 @@ export function actionCreatorFactory(
     const fullType = base + type;
 
     if (process.env.NODE_ENV !== 'production') {
-      if (actionTypes[fullType])
-        throw new Error(`Duplicate action type: ${fullType}`);
+      if (actionTypes[fullType]) throw new Error(`Duplicate action type: ${fullType}`);
 
       actionTypes[fullType] = true;
     }
@@ -140,8 +134,7 @@ export function actionCreatorFactory(
       {
         type: fullType,
         toString: () => fullType,
-        match: (action: AnyAction): action is Action<Payload> =>
-          action.type === fullType,
+        match: (action: AnyAction): action is Action<Payload> => action.type === fullType,
       }
     ) as ActionCreator<Payload>;
   }
@@ -153,16 +146,8 @@ export function actionCreatorFactory(
     return {
       type: base + type,
       started: actionCreator<Params>(`${type}_STARTED`, commonMeta, false),
-      done: actionCreator<Success<Params, Result>>(
-        `${type}_DONE`,
-        commonMeta,
-        false
-      ),
-      failed: actionCreator<Failure<Params, Error>>(
-        `${type}_FAILED`,
-        commonMeta,
-        true
-      ),
+      done: actionCreator<Success<Params, Result>>(`${type}_DONE`, commonMeta, false),
+      failed: actionCreator<Failure<Params, Error>>(`${type}_FAILED`, commonMeta, true),
     };
   }
 

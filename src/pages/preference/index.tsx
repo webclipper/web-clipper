@@ -52,10 +52,7 @@ type PageDispatchProps = typeof useActions;
 type PageOwnProps = {};
 type PageProps = PageStateProps & PageDispatchProps & PageOwnProps;
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators<PageDispatchProps, PageDispatchProps>(
-    useActions,
-    dispatch
-  );
+  bindActionCreators<PageDispatchProps, PageDispatchProps>(useActions, dispatch);
 
 class Page extends React.Component<PageProps, PageState> {
   handleClose = () => {
@@ -71,19 +68,11 @@ class Page extends React.Component<PageProps, PageState> {
             <Icon type="close" />
           </div>
           <div style={{ background: 'white', height: '100%' }}>
-            <Tabs
-              defaultActiveKey="base"
-              tabPosition="left"
-              style={{ height: '100%' }}
-            >
+            <Tabs defaultActiveKey="base" tabPosition="left" style={{ height: '100%' }}>
               <TabPane tab="账户设置" key="base" className={styles.tabPane}>
                 <UserList />
               </TabPane>
-              <TabPane
-                tab="图床设置"
-                key="imageHost"
-                className={styles.tabPane}
-              >
+              <TabPane tab="图床设置" key="imageHost" className={styles.tabPane}>
                 <ImageHosting />
               </TabPane>
               <TabPane tab="工具设置" key="tool" className={styles.tabPane}>
@@ -106,17 +95,12 @@ class Page extends React.Component<PageProps, PageState> {
                     >
                       <Select.Option value={-1}>无</Select.Option>
                       {(extensions as SerializedExtensionWithId[]).map(o => (
-                        <Select.Option key={o.id}>
-                          {o.manifest.name}
-                        </Select.Option>
+                        <Select.Option key={o.id}>{o.manifest.name}</Select.Option>
                       ))}
                     </Select>,
                   ]}
                 >
-                  <List.Item.Meta
-                    title="默认插件"
-                    description="开启剪藏后使用的默认插件"
-                  />
+                  <List.Item.Meta title="默认插件" description="开启剪藏后使用的默认插件" />
                 </List.Item>
               </TabPane>
               <TabPane tab="编辑器设置" key="editor" className={styles.tabPane}>
@@ -133,10 +117,7 @@ class Page extends React.Component<PageProps, PageState> {
                     />,
                   ]}
                 >
-                  <List.Item.Meta
-                    title="显示行号"
-                    description="显示编辑器右侧的行号"
-                  />
+                  <List.Item.Meta title="显示行号" description="显示编辑器右侧的行号" />
                 </List.Item>
                 <List.Item
                   actions={[
@@ -151,10 +132,7 @@ class Page extends React.Component<PageProps, PageState> {
                     />,
                   ]}
                 >
-                  <List.Item.Meta
-                    title="实时预览"
-                    description="是否开启实时预览"
-                  />
+                  <List.Item.Meta title="实时预览" description="是否开启实时预览" />
                 </List.Item>
               </TabPane>
             </Tabs>

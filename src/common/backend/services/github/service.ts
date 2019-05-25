@@ -5,11 +5,7 @@ import {
   GithubRepositoryResponse,
   GithubRepository,
 } from './interface';
-import {
-  DocumentService,
-  Repository,
-  CreateDocumentRequest,
-} from '../../index';
+import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
 import axios, { AxiosInstance } from 'axios';
 import { md5 } from '../../../md5';
 
@@ -46,12 +42,7 @@ export default class GithubDocumentService implements DocumentService {
 
   getUserInfo = async () => {
     const data = await this.request.get<GithubUserInfoResponse>('user');
-    const {
-      name,
-      avatar_url: avatar,
-      html_url: homePage,
-      bio: description,
-    } = data.data;
+    const { name, avatar_url: avatar, html_url: homePage, bio: description } = data.data;
     return {
       name,
       avatar,
@@ -81,9 +72,7 @@ export default class GithubDocumentService implements DocumentService {
     );
   };
 
-  createDocument = async (
-    info: CreateDocumentRequest
-  ): Promise<CompleteStatus> => {
+  createDocument = async (info: CreateDocumentRequest): Promise<CompleteStatus> => {
     if (!this.repositories) {
       this.getRepositories();
     }

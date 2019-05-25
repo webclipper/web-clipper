@@ -98,14 +98,8 @@ export default class AreaSelector {
       });
       $(element).css('top', area.leftTop!.clientY);
       $(element).css('left', area.leftTop!.clientX);
-      $(element).css(
-        'height',
-        area.rightBottom!.clientY - area.leftTop!.clientY
-      );
-      $(element).css(
-        'width',
-        area.rightBottom!.clientX - area.leftTop!.clientX
-      );
+      $(element).css('height', area.rightBottom!.clientY - area.leftTop!.clientY);
+      $(element).css('width', area.rightBottom!.clientX - area.leftTop!.clientX);
     }
   };
 }

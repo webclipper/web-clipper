@@ -40,10 +40,7 @@ export default class extends React.Component<PageProps> {
   getTitle = () => (
     <div className={styles.modalTitle}>
       编辑账号
-      <a
-        href={'https://www.yuque.com/yuqueclipper/help_cn/bind_account'}
-        target="_blank"
-      >
+      <a href={'https://www.yuque.com/yuqueclipper/help_cn/bind_account'} target="_blank">
         <Icon type="question-circle" />
       </a>
     </div>

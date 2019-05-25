@@ -12,10 +12,7 @@ interface Case<P> {
 }
 
 interface ListenerCombiner {
-  case<P>(
-    actionCreator: ActionCreator<P>,
-    handler: Handler<P>
-  ): ListenerCombiner;
+  case<P>(actionCreator: ActionCreator<P>, handler: Handler<P>): ListenerCombiner;
 }
 
 export class MessageListenerCombiner implements ListenerCombiner {

@@ -69,12 +69,7 @@ export default class AddImageHostingModal extends React.Component<PageProps> {
       };
     }
     return (
-      <Modal
-        title={title}
-        visible={visible}
-        onOk={this.handleOk}
-        onCancel={this.handleCancel}
-      >
+      <Modal title={title} visible={visible} onOk={this.handleOk} onCancel={this.handleCancel}>
         <Form {...formItemLayout}>
           <Form.Item label="类型">
             {getFieldDecorator('type', {
@@ -83,9 +78,7 @@ export default class AddImageHostingModal extends React.Component<PageProps> {
             })(
               <Select>
                 {services.map(service => (
-                  <Select.Option key={service.type}>
-                    {service.name}
-                  </Select.Option>
+                  <Select.Option key={service.type}>{service.name}</Select.Option>
                 ))}
               </Select>
             )}

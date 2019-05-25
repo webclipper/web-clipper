@@ -1,8 +1,4 @@
-import {
-  Repository,
-  ServiceMeta,
-  ImageHostingServiceMeta,
-} from '../../../common/backend';
+import { Repository, ServiceMeta, ImageHostingServiceMeta } from '../../../common/backend';
 import { SerializedExtensionWithId } from '../../../extensions/interface';
 
 export interface UserPreferenceStore {

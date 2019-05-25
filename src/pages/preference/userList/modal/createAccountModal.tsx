@@ -66,10 +66,7 @@ export default class extends React.Component<PageProps, PageState> {
     return (
       <div className={styles.modalTitle}>
         绑定新账号
-        <a
-          href={'https://www.yuque.com/yuqueclipper/help_cn/bind_account'}
-          target="_blank"
-        >
+        <a href={'https://www.yuque.com/yuqueclipper/help_cn/bind_account'} target="_blank">
           <Icon type="question-circle" />
         </a>
       </div>
@@ -130,17 +127,12 @@ export default class extends React.Component<PageProps, PageState> {
           {<Divider />}
           <Form.Item label="默认知识库">
             {getFieldDecorator('defaultRepositoryId')(
-              <Select disabled={!verified}>
-                {repositorySelectOptions(repositories)}
-              </Select>
+              <Select disabled={!verified}>{repositorySelectOptions(repositories)}</Select>
             )}
           </Form.Item>
           <Form.Item label="图床">
             {getFieldDecorator('imageHosting')(
-              <Select
-                className={styles.imageHostingSelect}
-                disabled={!verified}
-              >
+              <Select className={styles.imageHostingSelect} disabled={!verified}>
                 {imageHosting.map(({ id, type, remark }) => {
                   const meta = imageHostingServicesMeta[type];
                   if (meta.support && !meta.support(this.state.type)) {

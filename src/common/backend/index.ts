@@ -12,17 +12,11 @@ const services: ServiceMeta[] = serviceContext.keys().map(key => {
   return serviceContext(key).default;
 });
 
-const imageHostingContext = require.context(
-  './imageHosting',
-  true,
-  /index.ts$/
-);
+const imageHostingContext = require.context('./imageHosting', true, /index.ts$/);
 
-const imageHostingServices: ImageHostingServiceMeta[] = imageHostingContext
-  .keys()
-  .map(key => {
-    return imageHostingContext(key).default;
-  });
+const imageHostingServices: ImageHostingServiceMeta[] = imageHostingContext.keys().map(key => {
+  return imageHostingContext(key).default;
+});
 
 export function documentServiceFactory(type: string, info?: any) {
   const service = services.find(o => o.type === type);

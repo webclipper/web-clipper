@@ -138,19 +138,13 @@ export class Extension<T, U> implements Extension<T, U>, SerializeAble {
 }
 
 export class TextExtension<T = string> extends Extension<T, string> {
-  constructor(
-    manifest: IExtensionManifest,
-    methods: IExtensionLifeCycle<T, string>
-  ) {
+  constructor(manifest: IExtensionManifest, methods: IExtensionLifeCycle<T, string>) {
     super(ExtensionType.Text, manifest, methods);
   }
 }
 
 export class ToolExtension<T = string> extends Extension<T, string> {
-  constructor(
-    manifest: IExtensionManifest,
-    methods: IExtensionLifeCycle<T, string>
-  ) {
+  constructor(manifest: IExtensionManifest, methods: IExtensionLifeCycle<T, string>) {
     super(ExtensionType.Tool, manifest, methods);
   }
 }
@@ -161,14 +155,8 @@ export interface ImageExtensionData {
   height: number;
 }
 
-export class ImageExtension<T = string> extends Extension<
-  T,
-  ImageExtensionData
-> {
-  constructor(
-    manifest: IExtensionManifest,
-    methods: IExtensionLifeCycle<T, ImageExtensionData>
-  ) {
+export class ImageExtension<T = string> extends Extension<T, ImageExtensionData> {
+  constructor(manifest: IExtensionManifest, methods: IExtensionLifeCycle<T, ImageExtensionData>) {
     super(ExtensionType.Image, manifest, methods);
   }
 }

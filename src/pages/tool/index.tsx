@@ -18,11 +18,7 @@ import {
   asyncRunExtension,
   asyncHideTool,
 } from 'actions';
-import {
-  SerializedExtensionWithId,
-  ExtensionType,
-  InitContext,
-} from '../../extensions/interface';
+import { SerializedExtensionWithId, ExtensionType, InitContext } from '../../extensions/interface';
 import Section from 'components/section';
 
 const useActions = {
@@ -75,10 +71,7 @@ type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
 type PageProps = PageStateProps & PageDispatchProps;
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators<PageDispatchProps, PageDispatchProps>(
-    useActions,
-    dispatch
-  );
+  bindActionCreators<PageDispatchProps, PageDispatchProps>(useActions, dispatch);
 
 class Page extends React.Component<PageProps> {
   shouldComponentUpdate = (nextProps: PageProps) => {
@@ -140,10 +133,7 @@ class Page extends React.Component<PageProps> {
     } = this.props;
 
     let repositoryId;
-    if (
-      currentAccount &&
-      repositories.some(o => o.id === currentAccount.defaultRepositoryId)
-    ) {
+    if (currentAccount && repositories.some(o => o.id === currentAccount.defaultRepositoryId)) {
       repositoryId = currentAccount.defaultRepositoryId;
     }
 
@@ -151,25 +141,23 @@ class Page extends React.Component<PageProps> {
       repositoryId = currentRepository.id;
     }
 
-    const enableExtensions: SerializedExtensionWithId[] = extensions.filter(
-      o => {
-        if (o.init) {
-          // @ts-ignore
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const context: InitContext = {
-            accountInfo: {
-              type: currentAccount && currentAccount.type,
-            },
-            url,
-            pathname,
-            currentImageHostingService,
-          };
-          // eslint-disable-next-line no-eval
-          return eval(o.init);
-        }
-        return true;
+    const enableExtensions: SerializedExtensionWithId[] = extensions.filter(o => {
+      if (o.init) {
+        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const context: InitContext = {
+          accountInfo: {
+            type: currentAccount && currentAccount.type,
+          },
+          url,
+          pathname,
+          currentImageHostingService,
+        };
+        // eslint-disable-next-line no-eval
+        return eval(o.init);
       }
-    );
+      return true;
+    });
 
     const toolExtensions: SerializedExtensionWithId[] = enableExtensions.filter(
       o => o.type === ExtensionType.Tool

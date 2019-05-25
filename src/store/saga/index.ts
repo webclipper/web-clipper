@@ -2,12 +2,7 @@ import browserService, { BrowserTab } from 'common/browser';
 import storage, { PreferenceStorage } from 'common/storage';
 import { all, call, put, spawn, delay, fork } from 'redux-saga/effects';
 import { clipperRootSagas } from './clipper';
-import {
-  initTabInfo,
-  initUserPreference,
-  asyncChangeAccount,
-  setRemoteVersion,
-} from 'actions';
+import { initTabInfo, initUserPreference, asyncChangeAccount, setRemoteVersion } from 'actions';
 import { push } from 'connected-react-router';
 import { userPreferenceSagas } from './userPreference';
 import { getRemoteVersion } from 'common/version';
@@ -54,9 +49,7 @@ function* loadVersion() {
   }
 }
 
-export const rootSagas = [clipperRootSagas, userPreferenceSagas].map(
-  makeRestartable
-);
+export const rootSagas = [clipperRootSagas, userPreferenceSagas].map(makeRestartable);
 
 export default function* root() {
   yield all(rootSagas.map(saga => call(saga)));

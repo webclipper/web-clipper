@@ -16,9 +16,7 @@ import SagaHelper from 'common/sagaHelper';
 
 export const clipperRootSagas = new SagaHelper()
   .takeEvery(asyncChangeAccount, function*({ payload, payload: { id } }) {
-    const selector = ({
-      userPreference: { accounts, imageHosting },
-    }: GlobalStore) => {
+    const selector = ({ userPreference: { accounts, imageHosting } }: GlobalStore) => {
       return {
         accounts,
         imageHosting,
@@ -30,20 +28,13 @@ export const clipperRootSagas = new SagaHelper()
     if (!account) {
       throw new Error('加载账户失败 账户不存在');
     }
-    const {
-      type,
-      defaultRepositoryId,
-      imageHosting: imageHostingId,
-      ...info
-    } = account;
+    const { type, defaultRepositoryId, imageHosting: imageHostingId, ...info } = account;
     const documentService = documentServiceFactory(type, info);
     const repositories = yield call(documentService.getRepositories);
     backend.setDocumentService(documentService);
     let currentImageHostingService: ClipperStore['currentImageHostingService'];
     if (imageHostingId) {
-      const imageHostingIndex = imageHosting.findIndex(
-        o => o.id === imageHostingId
-      );
+      const imageHostingIndex = imageHosting.findIndex(o => o.id === imageHostingId);
       if (imageHostingIndex !== -1) {
         const accountImageHosting = imageHosting[imageHostingIndex];
         const imageHostingService = imageHostingServiceFactory(
@@ -69,13 +60,7 @@ export const clipperRootSagas = new SagaHelper()
   })
   .takeLatest(asyncCreateDocument, function*() {
     const selector = ({
-      clipper: {
-        currentRepository,
-        clipperData,
-        title,
-        repositories,
-        currentAccountId,
-      },
+      clipper: { currentRepository, clipperData, title, repositories, currentAccountId },
       router,
       userPreference: { accounts, extensions },
     }: GlobalStore) => {
@@ -90,9 +75,7 @@ export const clipperRootSagas = new SagaHelper()
       if (currentRepository) {
         repositoryId = currentRepository.id;
       }
-      const extension = extensions.find(
-        o => `/plugins/${o.id}` === router.location.pathname
-      );
+      const extension = extensions.find(o => `/plugins/${o.id}` === router.location.pathname);
       const data = clipperData[router.location.pathname];
       return {
         repositoryId,
@@ -132,12 +115,9 @@ export const clipperRootSagas = new SagaHelper()
         return;
       }
       try {
-        const responseUrl: string = yield call(
-          imageHostingService.uploadImage,
-          {
-            data: (data as ImageClipperData).dataUrl,
-          }
-        );
+        const responseUrl: string = yield call(imageHostingService.uploadImage, {
+          data: (data as ImageClipperData).dataUrl,
+        });
         createDocumentRequest = {
           title: title,
           repositoryId,

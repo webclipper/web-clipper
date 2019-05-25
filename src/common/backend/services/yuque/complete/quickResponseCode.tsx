@@ -16,10 +16,7 @@ interface PageProps {
 }
 const quickResponseCodeHost = 'https://yuquewebclipper.diamondyuan.com/pro/';
 
-export default class QuickResponseCode extends React.Component<
-  PageProps,
-  PageState
-> {
+export default class QuickResponseCode extends React.Component<PageProps, PageState> {
   constructor(props: PageProps) {
     super(props);
     this.state = {
@@ -71,9 +68,7 @@ export default class QuickResponseCode extends React.Component<
           <Switch onChange={this.handleChange} />
         </div>
         <div className={styles.quickResponseCodeContainer}>
-          {this.state.quickResponseCodeData && (
-            <img src={this.state.quickResponseCodeData} />
-          )}
+          {this.state.quickResponseCodeData && <img src={this.state.quickResponseCodeData} />}
         </div>
       </Section>
     );

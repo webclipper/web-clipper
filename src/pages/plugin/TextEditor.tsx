@@ -31,9 +31,7 @@ type PageState = {};
 type PageOwnProps = {
   extension: SerializedExtensionWithId;
 };
-type PageProps = ReturnType<typeof mapStateToProps> &
-  typeof useActions &
-  PageOwnProps;
+type PageProps = ReturnType<typeof mapStateToProps> & typeof useActions & PageOwnProps;
 
 const editorId = 'DiamondYuan_Love_LJ';
 
@@ -103,8 +101,5 @@ class ClipperPluginPage extends React.Component<PageProps, PageState> {
 export default connect(
   mapStateToProps,
   (dispatch: Dispatch) =>
-    bindActionCreators<typeof useActions, typeof useActions>(
-      useActions,
-      dispatch
-    )
+    bindActionCreators<typeof useActions, typeof useActions>(useActions, dispatch)
 )(ClipperPluginPage as React.ComponentType<PageProps>);
