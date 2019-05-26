@@ -1,16 +1,12 @@
 <h1 align="center">Web clipper</h1>
 <p align="center">
-    <a href="https://travis-ci.org/yuquewebclipper/yuque-web-clipper">
-      <img src="https://img.shields.io/travis/yuquewebclipper/yuque-web-clipper/master.svg?style=flat-square" alt="Build Status">
+    <a href="https://travis-ci.org/webclipper/web-clipper">
+      <img src="https://img.shields.io/travis/webclipper/web-clipper/master.svg?style=flat-square" alt="Build Status">
     </a>
-    <a href="https://codecov.io/gh/yuquewebclipper/yuque-web-clipper">
-      <img src="https://img.shields.io/codecov/c/github/yuquewebclipper/yuque-web-clipper/master.svg?style=flat-square" alt="Codecov">
+    <a href="https://codecov.io/gh/webclipper/web-clipper">
+      <img src="https://img.shields.io/codecov/c/github/webclipper/web-clipper/master.svg?style=flat-square" alt="Codecov">
     </a>
 </p>
-
-## 改名
-
-为避免侵权，先把名字改了，最终名字未确定。
 
 ### Important
 
@@ -20,7 +16,7 @@ The extension was removed from the chrome for no reason. Need to install manuall
 
 ### Install
 
-1. Download the yuquewebclipper.zip from [release page](https://github.com/yuquewebclipper/yuque-web-clipper/releases)
+1. Download the webclipper.zip from [release page](https://github.com/webclipper/web-clipper/releases)
 2. Go to **chrome://extensions/** and check the box for **Developer mode** in the top right.
 3. Locate the ZIP file on your computer and unzip it.
 4. Go back to the chrome://extensions/ page and click the **Load unpacked extension **button and select the unzipped folder for your extension to install it.
@@ -34,8 +30,8 @@ The extension was removed from the chrome for no reason. Need to install manuall
 ### Develop
 
 ```bash
-$ git clone https://github.com/yuquewebclipper/yuque-web-clipper.git
-$ cd yuque-web-clipper
+$ git clone https://github.com/webclipper/web-clipper.git
+$ cd web-clipper
 $ yarn
 $ yarn dev
 ```
@@ -48,4 +44,4 @@ $ yarn test
 
 ### DingTalk
 
-![](https://raw.githubusercontent.com/yuquewebclipper/yuque-web-clipper/master/DingTalk.jpeg)
+![](https://raw.githubusercontent.com/webclipper/web-clipper/master/DingTalk.jpeg)
