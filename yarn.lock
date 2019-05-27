@@ -468,6 +468,11 @@
   resolved "https://registry.npmjs.org/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
   integrity sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
 
+"@types/events@*":
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/@types/events/download/@types/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
+  integrity sha1-KGLz9Yqaf3w+eNefEw3U1xwlwqc=
+
 "@types/filesystem@*":
   version "0.0.29"
   resolved "https://registry.npmjs.org/@types/filesystem/-/filesystem-0.0.29.tgz#ee3748eb5be140dcf980c3bd35f11aec5f7a3748"
@@ -479,6 +484,15 @@
   version "0.0.28"
   resolved "https://registry.npmjs.org/@types/filewriter/-/filewriter-0.0.28.tgz#c054e8af4d9dd75db4e63abc76f885168714d4b3"
   integrity sha1-wFTor02d11205jq8dviFFocU1LM=
+
+"@types/glob@^7.1.1":
+  version "7.1.1"
+  resolved "https://registry.npm.taobao.org/@types/glob/download/@types/glob-7.1.1.tgz#aa59a1c6e3fbc421e07ccd31a944c30eba521575"
+  integrity sha1-qlmhxuP7xCHgfM0xqUTDDrpSFXU=
+  dependencies:
+    "@types/events" "*"
+    "@types/minimatch" "*"
+    "@types/node" "*"
 
 "@types/history@*", "@types/history@^4.7.2":
   version "4.7.2"
@@ -521,6 +535,11 @@
   version "4.14.132"
   resolved "https://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.132.tgz#8ce45ca8745ff2e004fac0de0ab46f61e390ffa0"
   integrity sha1-jORcqHRf8uAE+sDeCrRvYeOQ/6A=
+
+"@types/minimatch@*":
+  version "3.0.3"
+  resolved "https://registry.npm.taobao.org/@types/minimatch/download/@types/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
+  integrity sha1-PcoOPzOyAPx9ETnAzZbBJoyt/Z0=
 
 "@types/node@*":
   version "11.11.3"
@@ -1743,12 +1762,12 @@ clean-css@4.2.x:
   dependencies:
     source-map "~0.6.0"
 
-clean-webpack-plugin@^0.1.19:
-  version "0.1.19"
-  resolved "https://registry.npmjs.org/clean-webpack-plugin/-/clean-webpack-plugin-0.1.19.tgz#ceda8bb96b00fe168e9b080272960d20fdcadd6d"
-  integrity sha512-M1Li5yLHECcN2MahoreuODul5LkjohJGFxLPTjl3j1ttKrF5rgjZET1SJduuqxLAuT1gAPOdkhg03qcaaU1KeA==
+clean-webpack-plugin@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npm.taobao.org/clean-webpack-plugin/download/clean-webpack-plugin-2.0.2.tgz#805a19ff20d46a06125298a25eb31142ecad2166"
+  integrity sha1-gFoZ/yDUagYSUpiiXrMRQuytIWY=
   dependencies:
-    rimraf "^2.6.1"
+    del "^4.0.0"
 
 cli-cursor@^2.1.0:
   version "2.1.0"
@@ -2596,6 +2615,19 @@ define-property@^2.0.2:
   dependencies:
     is-descriptor "^1.0.2"
     isobject "^3.0.1"
+
+del@^4.0.0:
+  version "4.1.1"
+  resolved "https://registry.npm.taobao.org/del/download/del-4.1.1.tgz#9e8f117222ea44a31ff3a156c049b99052a9f0b4"
+  integrity sha1-no8RciLqRKMf86FWwEm5kFKp8LQ=
+  dependencies:
+    "@types/glob" "^7.1.1"
+    globby "^6.1.0"
+    is-path-cwd "^2.0.0"
+    is-path-in-cwd "^2.0.0"
+    p-map "^2.0.0"
+    pify "^4.0.1"
+    rimraf "^2.6.3"
 
 delayed-stream@~1.0.0:
   version "1.0.0"
@@ -3678,6 +3710,17 @@ globals@^11.1.0, globals@^11.7.0:
   resolved "https://registry.npmjs.org/globals/-/globals-11.11.0.tgz#dcf93757fa2de5486fbeed7118538adf789e9c2e"
   integrity sha512-WHq43gS+6ufNOEqlrDBxVEbb8ntfXrfAUU2ZOpCxrBdGKW3gyv8mCxAfIBD0DroPKGrJ2eSsXsLtY9MPntsyTw==
 
+globby@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.npm.taobao.org/globby/download/globby-6.1.0.tgz#f5a6d70e8395e21c858fb0489d64df02424d506c"
+  integrity sha1-9abXDoOV4hyFj7BInWTfAkJNUGw=
+  dependencies:
+    array-union "^1.0.1"
+    glob "^7.0.3"
+    object-assign "^4.0.1"
+    pify "^2.0.0"
+    pinkie-promise "^2.0.0"
+
 globby@^7.1.1:
   version "7.1.1"
   resolved "https://registry.npmjs.org/globby/-/globby-7.1.1.tgz#fb2ccff9401f8600945dfada97440cca972b8680"
@@ -4319,6 +4362,25 @@ is-number@^7.0.0:
   version "7.0.0"
   resolved "https://registry.npm.taobao.org/is-number/download/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
   integrity sha1-dTU0W4lnNNX4DE0GxQlVUnoU8Ss=
+
+is-path-cwd@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.npm.taobao.org/is-path-cwd/download/is-path-cwd-2.1.0.tgz#2e0c7e463ff5b7a0eb60852d851a6809347a124c"
+  integrity sha1-Lgx+Rj/1t6DrYIUthRpoCTR6Ekw=
+
+is-path-in-cwd@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.npm.taobao.org/is-path-in-cwd/download/is-path-in-cwd-2.1.0.tgz#bfe2dca26c69f397265a4009963602935a053acb"
+  integrity sha1-v+Lcomxp85cmWkAJljYCk1oFOss=
+  dependencies:
+    is-path-inside "^2.1.0"
+
+is-path-inside@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npm.taobao.org/is-path-inside/download/is-path-inside-2.1.0.tgz#7c9810587d659a40d27bcdb4d5616eab059494b2"
+  integrity sha1-fJgQWH1lmkDSe8201WFuqwWUlLI=
+  dependencies:
+    path-is-inside "^1.0.2"
 
 is-plain-object@^2.0.1, is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   version "2.0.4"
@@ -6107,6 +6169,11 @@ p-locate@^3.0.0:
   dependencies:
     p-limit "^2.0.0"
 
+p-map@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.npm.taobao.org/p-map/download/p-map-2.1.0.tgz#310928feef9c9ecc65b68b17693018a665cea175"
+  integrity sha1-MQko/u+cnsxltosXaTAYpmXOoXU=
+
 p-reduce@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/p-reduce/download/p-reduce-1.0.0.tgz#18c2b0dd936a4690a529f8231f58a0fdb6a47dfa"
@@ -7488,7 +7555,7 @@ right-pad@^1.0.1:
   resolved "https://registry.npmjs.org/right-pad/-/right-pad-1.0.1.tgz#8ca08c2cbb5b55e74dafa96bf7fd1a27d568c8d0"
   integrity sha1-jKCMLLtbVedNr6lr9/0aJ9VoyNA=
 
-rimraf@2, rimraf@2.6.3, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.2:
+rimraf@2, rimraf@2.6.3, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.2, rimraf@^2.6.3:
   version "2.6.3"
   resolved "https://registry.npmjs.org/rimraf/-/rimraf-2.6.3.tgz#b2d104fe0d8fb27cf9e0a1cda8262dd3833c6cab"
   integrity sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==

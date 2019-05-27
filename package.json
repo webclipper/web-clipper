@@ -72,7 +72,7 @@
     "@typescript-eslint/eslint-plugin": "^1.7.0",
     "@typescript-eslint/parser": "^1.6.0",
     "babel-eslint": "^10.0.1",
-    "clean-webpack-plugin": "^0.1.19",
+    "clean-webpack-plugin": "^2.0.2",
     "commitizen": "^3.1.1",
     "compressing": "^1.4.0",
     "copy-webpack-plugin": "^5.0.3",
