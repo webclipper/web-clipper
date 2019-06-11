@@ -1,4 +1,4 @@
-import { Form, Input, Select, Switch } from 'antd';
+import { Form, Input, Select } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React, { Component, Fragment } from 'react';
 import { YuqueBackendServiceConfig, RepositoryType } from './interface';
@@ -32,7 +32,6 @@ export default class extends Component<YuqueFormProps & FormComponentProps> {
 
     let initData: Partial<YuqueBackendServiceConfig> = {
       repositoryType: RepositoryType.self,
-      showQuickResponseCode: false,
     };
     if (info) {
       initData = info;
@@ -62,12 +61,6 @@ export default class extends Component<YuqueFormProps & FormComponentProps> {
               ))}
             </Select>
           )}
-        </Form.Item>
-        <Form.Item label="小程序二维码">
-          {getFieldDecorator('showQuickResponseCode', {
-            initialValue: initData.showQuickResponseCode,
-            valuePropName: 'checked',
-          })(<Switch />)}
         </Form.Item>
       </Fragment>
     );

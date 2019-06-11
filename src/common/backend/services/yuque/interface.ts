@@ -10,7 +10,6 @@ export enum RepositoryType {
 export interface YuqueBackendServiceConfig {
   accessToken: string;
   repositoryType: RepositoryType;
-  showQuickResponseCode: boolean;
 }
 
 export interface YuqueUserInfoResponse {
@@ -49,5 +48,4 @@ export interface YuqueCompleteStatus extends CompleteStatus {
   documentId: string;
   repositoryId: string;
   accessToken: string;
-  showQuickResponseCode: boolean;
 }

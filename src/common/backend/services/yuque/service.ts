@@ -23,12 +23,8 @@ export default class YuqueDocumentService implements DocumentService {
   private config: YuqueBackendServiceConfig;
   private repositories: YuqueRepository[];
 
-  constructor({
-    accessToken,
-    repositoryType = RepositoryType.all,
-    showQuickResponseCode = false,
-  }: YuqueBackendServiceConfig) {
-    this.config = { accessToken, repositoryType, showQuickResponseCode };
+  constructor({ accessToken, repositoryType = RepositoryType.all }: YuqueBackendServiceConfig) {
+    this.config = { accessToken, repositoryType };
     this.request = axios.create({
       baseURL: BASE_URL,
       headers: { 'X-Auth-Token': accessToken },
@@ -101,7 +97,6 @@ export default class YuqueDocumentService implements DocumentService {
       repositoryId,
       documentId: data.id.toString(),
       accessToken: this.config.accessToken,
-      showQuickResponseCode: this.config.showQuickResponseCode,
     };
   };
 
