@@ -8,12 +8,6 @@
     </a>
 </p>
 
-### Important
-
-The extension was removed from the chrome for no reason. Need to install manually
-
-插件无缘无故被 chrome 下架了。需要手动安装。
-
 ### Install
 
 1. Download the webclipper.zip from [release page](https://github.com/webclipper/web-clipper/releases)
