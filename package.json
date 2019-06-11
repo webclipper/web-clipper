@@ -29,7 +29,7 @@
     "blueimp-md5": "^2.10.0",
     "codemirror": "^5.47.0",
     "connected-react-router": "^6.4.0",
-    "dayjs": "^1.8.12",
+    "dayjs": "^1.8.14",
     "history": "^4.7.2",
     "hypermd": "^0.3.11",
     "immutability-helper": "^2.9.0",
