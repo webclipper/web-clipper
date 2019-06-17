@@ -24,7 +24,7 @@
   "author": "Diamondyuan",
   "license": "MIT",
   "dependencies": {
-    "antd": "^3.18.2",
+    "antd": "^3.19.5",
     "axios": "^0.19.0",
     "blueimp-md5": "^2.10.0",
     "codemirror": "^5.47.0",
