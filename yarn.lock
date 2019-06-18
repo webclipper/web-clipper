@@ -582,10 +582,10 @@
     "@types/react" "*"
     redux "^4.0.0"
 
-"@types/react-router@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npm.taobao.org/@types/react-router/download/@types/react-router-5.0.1.tgz#9f4548c75755c55b0cffdd743080e5afa87da6dd"
-  integrity sha1-n0VIx1dVxVsM/910MIDlr6h9pt0=
+"@types/react-router@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npm.taobao.org/@types/react-router/download/@types/react-router-5.0.2.tgz#619850cf28245d97bfa205f1fa7136451ba384bc"
+  integrity sha1-YZhQzygkXZe/ogXx+nE2RRujhLw=
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
