@@ -1,4 +1,5 @@
 import { ClipperStore } from './interface';
+import { initUserPreference, asyncRunExtension } from 'pageActions/userPreference';
 import {
   updateTitle,
   selectRepository,
@@ -6,9 +7,7 @@ import {
   asyncCreateDocument,
   asyncChangeAccount,
   changeData,
-  initUserPreference,
-  asyncRunExtension,
-} from 'actions';
+} from 'pageActions/clipper';
 import update from 'immutability-helper';
 import { reducerWithInitialState } from 'common/typescript-fsa-reducers';
 

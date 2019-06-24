@@ -7,7 +7,7 @@ import backend, {
   imageHostingServiceFactory,
   CreateDocumentRequest,
 } from 'common/backend';
-import { asyncChangeAccount, asyncCreateDocument } from 'actions';
+import { asyncChangeAccount, asyncCreateDocument } from 'pageActions/clipper';
 import { call, put, select, delay } from 'redux-saga/effects';
 import { message } from 'antd';
 import { ExtensionType } from '../../extensions/interface';

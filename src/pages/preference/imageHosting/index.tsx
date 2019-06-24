@@ -5,7 +5,7 @@ import {
   asyncAddImageHosting,
   asyncDeleteImageHosting,
   asyncEditImageHosting,
-} from 'actions';
+} from 'pageActions/userPreference';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import * as styles from './index.scss';

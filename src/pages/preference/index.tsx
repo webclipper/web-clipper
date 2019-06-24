@@ -6,7 +6,7 @@ import {
   asyncSetEditorLiveRendering,
   asyncSetShowLineNumber,
   asyncSetDefaultPluginId,
-} from 'actions';
+} from 'pageActions/userPreference';
 import { bindActionCreators, Dispatch } from 'redux';
 import { CenterContainer } from 'components/container';
 import { connect } from 'react-redux';
@@ -83,7 +83,7 @@ class Page extends React.Component<PageProps, PageState> {
                       allowClear
                       value={defaultPluginId ? defaultPluginId : -1}
                       style={{ width: '100px' }}
-                      onSelect={(value: string | -1) => {
+                      onSelect={(value: any) => {
                         let selectValue = null;
                         if (value !== -1) {
                           selectValue = value;

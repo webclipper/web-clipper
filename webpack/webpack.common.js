@@ -27,6 +27,7 @@ module.exports = {
       components: resolve('src/components/'),
       actions: resolve('src/store/actions'),
       browserActions: resolve('src/browser/actions/'),
+      pageActions: resolve('src/store/actions'),
       extensions: resolve('src/extensions/'),
     },
     extensions: ['.ts', '.tsx', '.js', 'scss', 'less'],

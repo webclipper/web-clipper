@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ToolContainer } from 'components/container';
 import * as styles from './complete.scss';
 import { Button } from 'antd';
-import { asyncRemoveTool } from 'actions';
+import { asyncRemoveTool } from 'pageActions/userPreference';
 import { GlobalStore } from '../../store/reducers/interface';
 import Section from 'components/section';
 

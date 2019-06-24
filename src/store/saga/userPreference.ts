@@ -24,8 +24,8 @@ import {
   asyncEditImageHosting,
   resetAccountForm,
   asyncUpdateAccount,
-  asyncChangeAccount,
-} from 'actions';
+} from 'pageActions/userPreference';
+import { asyncChangeAccount } from 'pageActions/clipper';
 import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
 import { hideTool, runScript, removeTool } from 'browserActions/message';
 

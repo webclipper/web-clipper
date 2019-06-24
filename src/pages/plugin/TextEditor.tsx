@@ -1,7 +1,8 @@
 import React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { asyncRunExtension, changeData } from 'actions';
+import { changeData } from 'pageActions/clipper';
+import { asyncRunExtension } from 'pageActions/userPreference';
 import { SerializedExtensionWithId } from '../../extensions/interface';
 import * as HyperMD from 'hypermd';
 import { EditorContainer } from 'components/container';

@@ -11,13 +11,12 @@ import { isEqual } from 'lodash';
 import { push } from 'connected-react-router';
 import { ToolContainer } from 'components/container';
 import {
-  asyncChangeAccount,
   asyncCreateDocument,
-  selectRepository,
   updateTitle,
-  asyncRunExtension,
-  asyncHideTool,
-} from 'actions';
+  selectRepository,
+  asyncChangeAccount,
+} from 'pageActions/clipper';
+import { asyncHideTool, asyncRunExtension } from 'pageActions/userPreference';
 import { SerializedExtensionWithId, ExtensionType, InitContext } from '../../extensions/interface';
 import Section from 'components/section';
 
@@ -225,7 +224,7 @@ class Page extends React.Component<PageProps> {
             <Select
               value={this.props.currentAccountId}
               style={{ width: '75px' }}
-              onSelect={value => {
+              onSelect={(value: string) => {
                 this.props.asyncChangeAccount({ id: value });
               }}
             >

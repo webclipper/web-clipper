@@ -14,7 +14,7 @@ import {
   resetAccountForm,
   asyncUpdateAccount,
   setRemoteVersion,
-} from 'actions';
+} from 'pageActions/userPreference';
 import { services, imageHostingServices } from '../../../common/backend';
 import { extensions } from '../../../extensions';
 import { reducerWithInitialState } from '../../../common/typescript-fsa-reducers';
