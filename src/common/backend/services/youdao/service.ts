@@ -49,7 +49,6 @@ export default class YoudaoDocumentService implements DocumentService {
       })}`,
       formData
     );
-    console.log(response);
     return response.data.map(
       ({ fileEntry: { parentId, name, id } }): Repository => ({
         id,
