@@ -35,7 +35,7 @@ export default new ImageExtension<SelectAreaPosition>(
         swidth = img.width;
         sheight = img.height;
       } else {
-        const dpi = img.width / document.body.clientWidth;
+        const dpi = window.devicePixelRatio;
         sx = leftTopX * dpi;
         sy = leftTopY * dpi;
         swidth = (rightBottomX - leftTopX) * dpi;
