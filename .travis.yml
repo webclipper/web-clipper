@@ -13,6 +13,8 @@ after_success:
   - npm i codecov && codecov
 deploy:
   provider: releases
+  api_key:
+    secure: nB3gDP8IO6wYo3DON5fbVCDJYg3hndbKf7xU54LR2wd7+lN5TslULXCAgCGaATs+x3/XQiYWsSP1+a8uCrA/DLaDIcLdmrWFHfgjWUKozgS3U/hNrTgppuBvLpCOu6w3EOE+PicO34TFW9Eq179gcGb4JZC7/yhTjm92eULG4BdULyQ5QufHRk+8c19x6UwNLYu5C1A+1HST6wD7m2pXv3e75PTKuWdzUpin4Qr1kJOT1Y/BQPBVncq8A8Yd5xnkkJgCf4NLenzhb6095+Cqmgep+u25NZ+ki4zsjqBzfWYn1krCKws5Bz1puYZMZ/LoKpenYlpFhdWQbuvGXzLrMHNnBIDWHGsubTTZHWXRT+bQlVtxSQ5Tw3zJaJWmbfsEO+McIz9MkDcilKGru+DP1d/ELeD2SmoFaGG1aVJuURGJZ6kALxiNHI5Ftwn0EaBx2VJ+WyiaDo1RQZT0DIzWPzSMjhVAPnCbmxlQ/lbwOyr/qBZaOXf4cUXMaIUlC05+TRSgeIVOnaXk07Rm3bcF2OaODHesxCQUrRJcg+FteqSFvN63mBAk3yxbMo8+o9TJsV2Vzzk8HDd8DvjkGjo4JlCDqrCLxrbtlkLokoEFGSjsjZQhUaVxFoUR+n6oCAikXjx1gPZ1IJEsDIzfD0FVIb44iNAKXb3OmahHb4hVIcs=
   file: webclipper.zip
   skip_cleanup: true
   on:
