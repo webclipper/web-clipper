@@ -111,14 +111,11 @@
   "manifest": {
     "manifest_version": 2,
     "icons": {
-      "16": "icons/yuque-16.png",
-      "48": "icons/yuque-48.png",
-      "128": "icons/yuque-128.png"
+      "128": "icons/icon.png"
     },
     "browser_action": {
       "default_icon": {
-        "19": "icons/yuque-19.png",
-        "38": "icons/yuque-38.png"
+        "128": "icons/icon.png"
       }
     },
     "content_scripts": [

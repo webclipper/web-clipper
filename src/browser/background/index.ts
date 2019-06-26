@@ -2,7 +2,7 @@ import browser from 'common/browser';
 import { clickIcon, doYouAliveNow } from 'browserActions/browser';
 
 if (process.env.NODE_ENV === 'development') {
-  browser.browserAction.setIcon({ path: 'icons/yuque-dev.png' });
+  browser.browserAction.setIcon({ path: 'icons/icon-dev.png' });
 }
 
 chrome.browserAction.onClicked.addListener(async tab => {
