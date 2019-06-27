@@ -143,10 +143,10 @@ module.exports = {
     ]),
     new WebpackCreateExtensionManifestPlugin({
       output: resolve('dist/manifest.json'),
-      extra: { name: '语雀剪藏' },
+      extra: { name: '剪藏' },
     }),
     new HtmlWebpackPlugin({
-      title: '语雀剪藏插件',
+      title: '剪藏插件',
       filename: '../tool.html',
       chunks: ['tool'],
     }),
