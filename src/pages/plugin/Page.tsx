@@ -8,16 +8,18 @@ import { GlobalStore } from '../../store/reducers/interface';
 
 const useActions = {};
 
-const mapStateToProps = ({ userPreference: { extensions }, routing }: GlobalStore) => {
-  return { extensions, routing };
+const mapStateToProps = ({
+  userPreference: { extensions },
+  routing: {
+    location: { pathname },
+  },
+}: GlobalStore) => {
+  return { extensions, pathname };
 };
 type PageProps = ReturnType<typeof mapStateToProps> & typeof useActions;
 
-const ClipperPluginPage: React.FC<PageProps> = props => {
-  const { pathname } = props.routing.location;
-
-  const extension = props.extensions.find(o => `/plugins/${o.id}` === pathname);
-
+const ClipperPluginPage: React.FC<PageProps> = ({ pathname, extensions }) => {
+  const extension = extensions.find(o => `/plugins/${o.id}` === pathname);
   if (!extension) {
     return <div />;
   }

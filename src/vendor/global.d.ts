@@ -4,11 +4,6 @@ declare module 'readability';
 declare module 'turndown-plugin-gfm';
 declare module 'dva-logger';
 
-type Omit<T, K extends keyof T> = Pick<
-  T,
-  ({ [P in keyof T]: P } & { [P in K]: never } & { [x: string]: never })[keyof T]
->;
-
 type PromiseType<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
 
 type Unpack<T> = T extends Promise<infer U> ? U : T;
