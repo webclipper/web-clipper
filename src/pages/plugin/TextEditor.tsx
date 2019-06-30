@@ -24,7 +24,6 @@ const mapStateToProps = ({
     clipperData,
   };
 };
-type PageState = {};
 type PageOwnProps = {
   pathname: string;
   extension: SerializedExtensionWithId;
@@ -33,7 +32,7 @@ type PageProps = ReturnType<typeof mapStateToProps> & typeof useActions & PageOw
 
 const editorId = 'DiamondYuan_Love_LJ';
 
-class ClipperPluginPage extends React.Component<PageProps, PageState> {
+class ClipperPluginPage extends React.Component<PageProps> {
   private myCodeMirror: any;
 
   checkExtension = () => {

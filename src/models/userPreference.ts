@@ -38,7 +38,7 @@ import {
 import backend from 'common/backend/index';
 import { loadImage } from 'common/blob';
 import { getRemoteVersion } from 'common/version';
-import { push } from 'connected-react-router';
+import { routerRedux } from 'dva/router';
 
 const servicesMeta = services.reduce(
   (previousValue, meta) => {
@@ -445,7 +445,7 @@ builder.subscript(async function initStore({ dispatch }) {
   dispatch(initUserPreference(result));
   const { accounts, defaultAccountId: id } = result;
   if (accounts.length === 0 || !id || accounts.every(o => o.id !== id)) {
-    dispatch(push('/preference'));
+    dispatch(routerRedux.push('/preference'));
     return;
   }
   dispatch(asyncChangeAccount.started({ id }));

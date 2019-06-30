@@ -8,7 +8,6 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'dva';
 import { GlobalStore } from '../../store/reducers/interface';
 import { isEqual } from 'lodash';
-import { push } from 'connected-react-router';
 import { ToolContainer } from 'components/container';
 import {
   asyncCreateDocument,
@@ -19,6 +18,7 @@ import {
 import { asyncHideTool, asyncRunExtension } from 'pageActions/userPreference';
 import { SerializedExtensionWithId, ExtensionType, InitContext } from '../../extensions/interface';
 import Section from 'components/section';
+import { routerRedux } from 'dva/router';
 
 const useActions = {
   asyncHideTool: asyncHideTool.started,
@@ -27,7 +27,7 @@ const useActions = {
   asyncCreateDocument: asyncCreateDocument.started,
   updateTitle,
   selectRepository: selectRepository,
-  push,
+  push: routerRedux.push,
 };
 
 const mapStateToProps = ({

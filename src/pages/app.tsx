@@ -5,13 +5,12 @@ import PluginPage from './plugin/Page';
 import clipper from '../models/clipper';
 import userPreference from '../models/userPreference';
 import Tool from './tool';
-import dva from 'dva';
+import dva, { router, routerRedux } from 'dva';
 import { createMemoryHistory } from 'history';
-import { routerRedux, Route, Switch } from 'dva/router';
 import createLogger from 'dva-logger';
 import { Action } from 'dva-model-creator';
 import preference from './preference';
-
+const { Route, Switch } = router;
 const { ConnectedRouter } = routerRedux;
 
 if (document.getElementById(styles.app) == null) {
@@ -22,6 +21,7 @@ if (document.getElementById(styles.app) == null) {
 }
 
 const app = dva({
+  namespacePrefixWarning: false,
   history: createMemoryHistory(),
 });
 
@@ -32,15 +32,16 @@ app.use(
     },
   })
 );
+
 app.model(clipper);
 app.model(userPreference);
 
 function withTool(WrappedComponent: any) {
-  return ({ history }: any) => {
+  return () => {
     return (
       <React.Fragment>
-        <Tool history={history} />
-        <WrappedComponent history={history} />
+        <Tool />
+        <WrappedComponent />
       </React.Fragment>
     );
   };
@@ -51,9 +52,9 @@ app.router(router => {
     <ConnectedRouter history={router!.history}>
       <Switch>
         <Route exact path="/" component={Tool} />
-        <Route path="/plugins/:id" component={withTool(PluginPage)} />
         <Route exact path="/complete" component={Complete} />
         <Route exact path="/preference" component={withTool(preference)} />
+        <Route path="/plugins/:id" component={withTool(PluginPage)} />
       </Switch>
     </ConnectedRouter>
   );

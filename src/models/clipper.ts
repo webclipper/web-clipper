@@ -17,7 +17,7 @@ import {
 import { initUserPreference, asyncRunExtension } from 'pageActions/userPreference';
 import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
 import { message } from 'antd';
-import { push } from 'react-router-redux';
+import { routerRedux } from 'dva/router';
 
 const defaultState: ClipperStore = {
   title: '',
@@ -76,7 +76,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
   .takeLatest(asyncCreateDocument.started, function*(_, { put, call, select }) {
     const selector = ({
       clipper: { currentRepository, clipperData, title, repositories, currentAccountId },
-      router,
+      routing,
       userPreference: { accounts, extensions },
     }: GlobalStore) => {
       const currentAccount = accounts.find(({ id }) => id === currentAccountId);
@@ -90,8 +90,8 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
       if (currentRepository) {
         repositoryId = currentRepository.id;
       }
-      const extension = extensions.find(o => `/plugins/${o.id}` === router.location.pathname);
-      const data = clipperData[router.location.pathname];
+      const extension = extensions.find(o => `/plugins/${o.id}` === routing.location.pathname);
+      const data = clipperData[routing.location.pathname];
       return {
         repositoryId,
         data,
@@ -156,7 +156,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
         result: response,
       })
     );
-    yield put(push('/complete'));
+    yield put(routerRedux.push('/complete'));
   })
   .case(asyncChangeAccount.started, state => ({
     ...state,
