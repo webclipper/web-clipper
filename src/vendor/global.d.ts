@@ -2,6 +2,7 @@ declare module '*.scss';
 declare module '*.png';
 declare module 'readability';
 declare module 'turndown-plugin-gfm';
+declare module 'dva-logger';
 
 type Omit<T, K extends keyof T> = Pick<
   T,

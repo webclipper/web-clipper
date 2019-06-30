@@ -1,14 +1,18 @@
 import React from 'react';
-import * as ReactDOM from 'react-dom';
 import * as styles from './app.scss';
 import Complete from './complete/complete';
 import PluginPage from './plugin/Page';
-import Preference from './preference';
+import clipper from '../models/clipper';
+import userPreference from '../models/userPreference';
 import Tool from './tool';
-import { configStore, history } from '../store/index';
-import { ConnectedRouter } from 'connected-react-router';
-import { Provider } from 'react-redux';
-import { Route, Switch } from 'react-router';
+import dva from 'dva';
+import { createMemoryHistory } from 'history';
+import { routerRedux, Route, Switch } from 'dva/router';
+import createLogger from 'dva-logger';
+import { Action } from 'dva-model-creator';
+import preference from './preference';
+
+const { ConnectedRouter } = routerRedux;
 
 if (document.getElementById(styles.app) == null) {
   const element = document.createElement('div');
@@ -17,27 +21,42 @@ if (document.getElementById(styles.app) == null) {
   element.className = styles.app;
 }
 
-const store = configStore();
+const app = dva({
+  history: createMemoryHistory(),
+});
+
+app.use(
+  createLogger({
+    predicate: (_: Function, { type }: Action<any>) => {
+      return !type.endsWith('@@end') && !type.endsWith('@@start');
+    },
+  })
+);
+app.model(clipper);
+app.model(userPreference);
 
 function withTool(WrappedComponent: any) {
-  return () => (
-    <React.Fragment>
-      <Tool />
-      <WrappedComponent />
-    </React.Fragment>
-  );
+  return ({ history }: any) => {
+    return (
+      <React.Fragment>
+        <Tool history={history} />
+        <WrappedComponent history={history} />
+      </React.Fragment>
+    );
+  };
 }
 
-ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
+app.router(router => {
+  return (
+    <ConnectedRouter history={router!.history}>
       <Switch>
         <Route exact path="/" component={Tool} />
         <Route path="/plugins/:id" component={withTool(PluginPage)} />
         <Route exact path="/complete" component={Complete} />
-        <Route exact path="/preference" component={withTool(Preference)} />
+        <Route exact path="/preference" component={withTool(preference)} />
       </Switch>
     </ConnectedRouter>
-  </Provider>,
-  document.getElementById(styles.app)
-);
+  );
+});
+
+app.start(document.getElementById(styles.app)!);

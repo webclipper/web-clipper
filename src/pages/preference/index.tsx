@@ -9,7 +9,7 @@ import {
 } from 'pageActions/userPreference';
 import { bindActionCreators, Dispatch } from 'redux';
 import { CenterContainer } from 'components/container';
-import { connect } from 'react-redux';
+import { connect } from 'dva';
 import { List, Select, Switch, Tabs, Icon } from 'antd';
 import { push } from 'connected-react-router';
 import { ExtensionType, SerializedExtensionWithId } from 'extensions/interface';
@@ -146,4 +146,4 @@ class Page extends React.Component<PageProps, PageState> {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Page as React.ComponentType<PageProps>);
+)(Page);

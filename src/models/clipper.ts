@@ -1,21 +1,37 @@
-import { CompleteStatus } from './../../common/backend/services/interface';
-import { ClipperStore } from './../reducers/clipper/interface';
-import { GlobalStore } from './../reducers/interface';
-import { ImageClipperData } from './../reducers/userPreference/interface';
-import backend, {
-  documentServiceFactory,
-  imageHostingServiceFactory,
-  CreateDocumentRequest,
-} from 'common/backend';
-import { asyncChangeAccount, asyncCreateDocument } from 'pageActions/clipper';
-import { call, put, select, delay } from 'redux-saga/effects';
+import { ImageClipperData } from './../store/reducers/userPreference/interface';
+import { CompleteStatus } from 'common/backend/interface';
+import { ExtensionType } from 'extensions/interface';
+import { CreateDocumentRequest } from './../common/backend/services/interface';
+import { GlobalStore } from './../store/reducers/interface';
+import { ClipperStore } from './../store/reducers/clipper/interface';
+import { DvaModelBuilder } from 'dva-model-creator';
+import update from 'immutability-helper';
+import {
+  updateTitle,
+  selectRepository,
+  initTabInfo,
+  asyncCreateDocument,
+  asyncChangeAccount,
+  changeData,
+} from 'pageActions/clipper';
+import { initUserPreference, asyncRunExtension } from 'pageActions/userPreference';
+import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
 import { message } from 'antd';
-import { ExtensionType } from '../../extensions/interface';
-import { push } from 'connected-react-router';
-import SagaHelper from 'common/sagaHelper';
+import { push } from 'react-router-redux';
 
-export const clipperRootSagas = new SagaHelper()
-  .takeEvery(asyncChangeAccount, function*({ payload, payload: { id } }) {
+const defaultState: ClipperStore = {
+  title: '',
+  currentAccountId: '',
+  repositories: [],
+  clipperData: {},
+  loadingRepositories: true,
+  creatingDocument: false,
+};
+const model = new DvaModelBuilder(defaultState, 'clipper')
+  .takeEveryWithAction(asyncChangeAccount.started, function*(
+    { payload, payload: { id } },
+    { call, select, put }
+  ) {
     const selector = ({ userPreference: { accounts, imageHosting } }: GlobalStore) => {
       return {
         accounts,
@@ -47,7 +63,6 @@ export const clipperRootSagas = new SagaHelper()
         };
       }
     }
-    yield delay(1000);
     yield put(
       asyncChangeAccount.done({
         params: payload,
@@ -58,7 +73,7 @@ export const clipperRootSagas = new SagaHelper()
       })
     );
   })
-  .takeLatest(asyncCreateDocument, function*() {
+  .takeLatest(asyncCreateDocument.started, function*(_, { put, call, select }) {
     const selector = ({
       clipper: { currentRepository, clipperData, title, repositories, currentAccountId },
       router,
@@ -143,4 +158,86 @@ export const clipperRootSagas = new SagaHelper()
     );
     yield put(push('/complete'));
   })
-  .combine();
+  .case(asyncChangeAccount.started, state => ({
+    ...state,
+    loadingRepositories: true,
+  }))
+  .case(
+    asyncChangeAccount.done,
+    (state, { params: { id }, result: { repositories, currentImageHostingService } }) => {
+      return update(state, {
+        loadingRepositories: {
+          $set: false,
+        },
+        currentAccountId: {
+          $set: id,
+        },
+        repositories: {
+          $set: repositories,
+        },
+        currentRepository: {
+          // eslint-disable-next-line no-undefined
+          $set: undefined,
+        },
+        currentImageHostingService: {
+          $set: currentImageHostingService,
+        },
+      });
+    }
+  )
+  .case(initUserPreference, (state, { defaultAccountId }) =>
+    update(state, {
+      currentAccountId: {
+        $set: defaultAccountId || '',
+      },
+    })
+  )
+  .case(updateTitle, (state, { title }) => ({
+    ...state,
+    title,
+  }))
+  .case(selectRepository, (state, { repositoryId }) => {
+    const currentRepository = state.repositories.find(o => o.id === repositoryId);
+    return {
+      ...state,
+      currentRepository,
+    };
+  })
+  .case(initTabInfo, (state, { title, url }) => ({
+    ...state,
+    title,
+    url,
+  }))
+  .case(asyncCreateDocument.started, state => ({
+    ...state,
+    creatingDocument: true,
+  }))
+  .case(asyncCreateDocument.done, (state, { result: completeStatus }) => ({
+    ...state,
+    creatingDocument: false,
+    completeStatus,
+  }))
+  .case(asyncCreateDocument.failed, state => ({
+    ...state,
+    creatingDocument: false,
+  }))
+  .case(asyncRunExtension.done, (state, { result }) =>
+    update(state, {
+      clipperData: {
+        [result.pathname]: {
+          $set: result.result,
+        },
+      },
+    })
+  )
+  .case(changeData, (state, { data, pathName }) =>
+    update(state, {
+      clipperData: {
+        [pathName]: {
+          $set: data,
+        },
+      },
+    })
+  );
+
+export default model.build();

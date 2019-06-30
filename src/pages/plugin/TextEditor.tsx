@@ -1,6 +1,6 @@
 import React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
+import { connect } from 'dva';
 import { changeData } from 'pageActions/clipper';
 import { asyncRunExtension } from 'pageActions/userPreference';
 import { SerializedExtensionWithId } from '../../extensions/interface';
@@ -15,9 +15,6 @@ const useActions = {
 };
 
 const mapStateToProps = ({
-  router: {
-    location: { pathname },
-  },
   clipper: { clipperData },
   userPreference: { liveRendering, showLineNumber },
 }: GlobalStore) => {
@@ -25,11 +22,11 @@ const mapStateToProps = ({
     liveRendering,
     showLineNumber,
     clipperData,
-    pathname,
   };
 };
 type PageState = {};
 type PageOwnProps = {
+  pathname: string;
   extension: SerializedExtensionWithId;
 };
 type PageProps = ReturnType<typeof mapStateToProps> & typeof useActions & PageOwnProps;

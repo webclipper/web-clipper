@@ -4,10 +4,9 @@ import { UserPreferenceStore } from './userPreference/interface';
 export interface GlobalStore {
   clipper: ClipperStore;
   userPreference: UserPreferenceStore;
-  router: {
+  routing: {
     location: {
       pathname: string;
-      search: string;
     };
   };
 }

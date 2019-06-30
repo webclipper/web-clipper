@@ -1,36 +1,161 @@
-import SagaHelper from 'common/sagaHelper';
-import browserService from 'common/browser';
+import { ServiceMeta } from './../common/backend/services/interface';
+import { runScript } from './../browser/actions/message';
 import storage from 'common/storage';
-import update from 'immutability-helper';
-import { call, put, select } from 'redux-saga/effects';
-import { GlobalStore } from './../reducers/interface';
-import { loadImage } from 'common/blob';
 import { message } from 'antd';
-import { ServiceMeta } from 'common/backend/services/interface';
-import { ToolContext } from '../../extensions/interface';
+import { GlobalStore } from './../store/reducers/interface';
+import browserService from 'common/browser';
+import { hideTool, removeTool } from 'browserActions/message';
+import update from 'immutability-helper';
 import {
   asyncAddAccount,
   asyncDeleteAccount,
-  asyncHideTool,
-  asyncRemoveTool,
   asyncSetEditorLiveRendering,
   asyncSetShowLineNumber,
   asyncUpdateCurrentAccountIndex,
-  asyncVerificationAccessToken,
+  initUserPreference,
   asyncSetDefaultPluginId,
-  asyncRunExtension,
-  asyncAddImageHosting,
+  asyncVerificationAccessToken,
   asyncDeleteImageHosting,
+  asyncAddImageHosting,
   asyncEditImageHosting,
   resetAccountForm,
   asyncUpdateAccount,
+  setRemoteVersion,
+  asyncHideTool,
+  asyncRemoveTool,
+  asyncRunExtension,
 } from 'pageActions/userPreference';
-import { asyncChangeAccount } from 'pageActions/clipper';
-import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
-import { hideTool, runScript, removeTool } from 'browserActions/message';
+import { asyncChangeAccount, initTabInfo } from 'pageActions/clipper';
+import { DvaModelBuilder } from 'dva-model-creator';
+import { UserPreferenceStore } from 'src/store/reducers/userPreference/interface';
+import { extensions } from 'extensions/index';
+import {
+  services,
+  imageHostingServices,
+  documentServiceFactory,
+  imageHostingServiceFactory,
+} from 'common/backend';
+import backend from 'common/backend/index';
+import { loadImage } from 'common/blob';
+import { getRemoteVersion } from 'common/version';
+import { push } from 'connected-react-router';
 
-export const userPreferenceSagas = new SagaHelper()
-  .takeEvery(asyncVerificationAccessToken, function*(action) {
+const servicesMeta = services.reduce(
+  (previousValue, meta) => {
+    previousValue[meta.type] = meta;
+    return previousValue;
+  },
+  {} as UserPreferenceStore['servicesMeta']
+);
+
+const imageHostingServicesMeta = imageHostingServices.reduce(
+  (previousValue, meta) => {
+    previousValue[meta.type] = meta;
+    return previousValue;
+  },
+  {} as UserPreferenceStore['imageHostingServicesMeta']
+);
+
+const defaultState: UserPreferenceStore = {
+  accounts: [],
+  imageHosting: [],
+  servicesMeta,
+  imageHostingServicesMeta,
+  extensions: extensions,
+  showLineNumber: true,
+  liveRendering: true,
+  initializeForm: {
+    repositories: [],
+    verified: false,
+    verifying: false,
+  },
+};
+
+const builder = new DvaModelBuilder(defaultState, 'userPreference')
+  .case(asyncSetShowLineNumber.done, (state, { result: { value: showLineNumber } }) => ({
+    ...state,
+    showLineNumber,
+  }))
+  .case(asyncSetEditorLiveRendering.done, (state, { result: { value: liveRendering } }) => ({
+    ...state,
+    liveRendering,
+  }))
+  .case(asyncSetDefaultPluginId.done, (state, { params: { pluginId: defaultPluginId } }) => ({
+    ...state,
+    defaultPluginId,
+  }))
+  .case(asyncDeleteAccount.done, (state, { result: { accounts, defaultAccountId } }) => ({
+    ...state,
+    accounts,
+    defaultAccountId,
+  }))
+  .case(initUserPreference, (state, payload) => ({
+    ...state,
+    ...payload,
+  }))
+  .case(asyncAddAccount.done, (state, { result: { accounts, defaultAccountId } }) => ({
+    ...state,
+    accounts,
+    defaultAccountId,
+  }))
+  .case(asyncUpdateCurrentAccountIndex.done, (state, { result: { id: defaultAccountId } }) => ({
+    ...state,
+    defaultAccountId,
+  }))
+  .case(asyncDeleteImageHosting.done, (state, { result }) =>
+    update(state, {
+      imageHosting: {
+        $set: result,
+      },
+    })
+  )
+  .case(asyncAddImageHosting.done, (state, { result }) =>
+    update(state, {
+      imageHosting: {
+        $set: result,
+      },
+    })
+  )
+  .case(asyncEditImageHosting.done, (state, { result }) =>
+    update(state, {
+      imageHosting: {
+        $set: result,
+      },
+    })
+  )
+  .case(asyncUpdateAccount.done, (state, { result: { accounts } }) =>
+    update(state, {
+      accounts: {
+        $set: accounts,
+      },
+    })
+  )
+  .case(asyncVerificationAccessToken.done, (state, { result: { repositories, userInfo } }) =>
+    update(state, {
+      initializeForm: {
+        $set: {
+          verified: true,
+          verifying: false,
+          repositories,
+          userInfo,
+        },
+      },
+    })
+  )
+  .case(resetAccountForm, state =>
+    update(state, {
+      initializeForm: {
+        $set: defaultState.initializeForm,
+      },
+    })
+  )
+  .case(setRemoteVersion, (state, remoteVersion) => ({
+    ...state,
+    remoteVersion,
+  }));
+
+builder
+  .takeEveryWithAction(asyncVerificationAccessToken.started, function*(action, { call, put }) {
     try {
       const { type, info } = action.payload;
       const service = documentServiceFactory(type, info);
@@ -50,7 +175,7 @@ export const userPreferenceSagas = new SagaHelper()
       yield put(resetAccountForm());
     }
   })
-  .takeEvery(asyncAddAccount, function*(action) {
+  .takeEveryWithAction(asyncAddAccount.started, function*(action, { select, put }) {
     const selector = ({
       userPreference: {
         servicesMeta,
@@ -92,7 +217,7 @@ export const userPreferenceSagas = new SagaHelper()
       message.error(error.message);
     }
   })
-  .takeEvery(asyncUpdateAccount, function*(action) {
+  .takeEveryWithAction(asyncUpdateAccount.started, function*(action, { select, call, put }) {
     const accounts: CallResult<typeof storage.getAccounts> = yield call(storage.getAccounts);
     const {
       id,
@@ -131,7 +256,7 @@ export const userPreferenceSagas = new SagaHelper()
     }
     callback();
   })
-  .takeEvery(asyncDeleteAccount, function*(action) {
+  .takeEveryWithAction(asyncDeleteAccount.started, function*(action, { call, put }) {
     yield call(storage.deleteAccountById, action.payload.id);
     const accounts = yield call(storage.getAccounts);
     const defaultAccountId = yield call(storage.getDefaultAccountId);
@@ -145,7 +270,7 @@ export const userPreferenceSagas = new SagaHelper()
       })
     );
   })
-  .takeEvery(asyncUpdateCurrentAccountIndex, function*(action) {
+  .takeEveryWithAction(asyncUpdateCurrentAccountIndex.started, function*(action, { call, put }) {
     yield call(storage.setDefaultAccountId, action.payload.id);
     yield put(
       asyncUpdateCurrentAccountIndex.done({
@@ -154,7 +279,7 @@ export const userPreferenceSagas = new SagaHelper()
       })
     );
   })
-  .takeEvery(asyncSetShowLineNumber, function*(action) {
+  .takeEveryWithAction(asyncSetShowLineNumber.started, function*(action, { call, put }) {
     const value = action.payload.value;
     yield call(storage.setShowLineNumber, !value);
     yield put(
@@ -168,7 +293,7 @@ export const userPreferenceSagas = new SagaHelper()
       })
     );
   })
-  .takeEvery(asyncSetEditorLiveRendering, function*(action) {
+  .takeEveryWithAction(asyncSetEditorLiveRendering.started, function*(action, { call, put }) {
     const value = action.payload.value;
     yield call(storage.setLiveRendering, !value);
     yield put(
@@ -182,13 +307,13 @@ export const userPreferenceSagas = new SagaHelper()
       })
     );
   })
-  .takeEvery(asyncHideTool, function*() {
+  .takeEveryWithAction(asyncHideTool.started, function*(_, { call }) {
     yield call(browserService.sendActionToCurrentTab, hideTool());
   })
-  .takeEvery(asyncRemoveTool, function*() {
+  .takeEveryWithAction(asyncRemoveTool.started, function*(_, { call }) {
     yield call(browserService.sendActionToCurrentTab, removeTool());
   })
-  .takeEvery(asyncSetDefaultPluginId, function*(action) {
+  .takeEveryWithAction(asyncSetDefaultPluginId.started, function*(action, { call, put }) {
     yield call(storage.setDefaultPluginId, action.payload.pluginId);
     yield put(
       asyncSetDefaultPluginId.done({
@@ -196,7 +321,7 @@ export const userPreferenceSagas = new SagaHelper()
       })
     );
   })
-  .takeEvery(asyncEditImageHosting, function*(action) {
+  .takeEveryWithAction(asyncEditImageHosting.started, function*(action, { call, put }) {
     const { id, value, closeModal } = action.payload;
     try {
       const imageHostingList: PromiseType<
@@ -213,7 +338,7 @@ export const userPreferenceSagas = new SagaHelper()
       message.error(error.message);
     }
   })
-  .takeEvery(asyncDeleteImageHosting, function*(action) {
+  .takeEveryWithAction(asyncDeleteImageHosting.started, function*(action, { call, put }) {
     const imageHostingList: PromiseType<
       ReturnType<typeof storage.deleteImageHostingById>
     > = yield call(storage.deleteImageHostingById, action.payload.id);
@@ -224,7 +349,7 @@ export const userPreferenceSagas = new SagaHelper()
       })
     );
   })
-  .takeEvery(asyncAddImageHosting, function*(action) {
+  .takeEveryWithAction(asyncAddImageHosting.started, function*(action, { call, put }) {
     const { info, type, closeModal, remark } = action.payload;
     const imageHostingService: ReturnType<typeof imageHostingServiceFactory> = yield call(
       imageHostingServiceFactory,
@@ -258,7 +383,7 @@ export const userPreferenceSagas = new SagaHelper()
       message.error(error.message);
     }
   })
-  .takeEvery(asyncRunExtension, function*(action) {
+  .takeEveryWithAction(asyncRunExtension.started, function*(action, { call, put, select }) {
     const { extension } = action.payload;
     let result;
     const { run, afterRun, destroy } = extension;
@@ -266,7 +391,7 @@ export const userPreferenceSagas = new SagaHelper()
       result = yield call(browserService.sendActionToCurrentTab, runScript(run));
     }
     const selector = (state: GlobalStore) => {
-      const pathname = state.router.location.pathname;
+      const pathname = state.routing.location.pathname;
       const data = state.clipper.clipperData[pathname];
       return {
         data,
@@ -302,5 +427,31 @@ export const userPreferenceSagas = new SagaHelper()
         },
       })
     );
-  })
-  .combine();
+  });
+
+builder.subscript(async function loadVersion({ dispatch }) {
+  try {
+    const version = await getRemoteVersion();
+    dispatch(setRemoteVersion(version));
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+builder.subscript(async function initStore({ dispatch }) {
+  const result = await storage.getPreference();
+  const tabInfo = await browserService.getCurrentTab();
+  dispatch(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
+  dispatch(initUserPreference(result));
+  const { accounts, defaultAccountId: id } = result;
+  if (accounts.length === 0 || !id || accounts.every(o => o.id !== id)) {
+    dispatch(push('/preference'));
+    return;
+  }
+  dispatch(asyncChangeAccount.started({ id }));
+  // if (result.defaultPluginId) {
+  //   dispatch(push(`/plugins/${result.defaultPluginId}`));
+  // }
+});
+
+export default builder.build();

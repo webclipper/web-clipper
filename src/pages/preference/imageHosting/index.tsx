@@ -7,7 +7,7 @@ import {
   asyncEditImageHosting,
 } from 'pageActions/userPreference';
 import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
+import { connect } from 'dva';
 import * as styles from './index.scss';
 import AddImageHosting from './form/addImageHosting';
 import { FormComponentProps } from 'antd/lib/form';

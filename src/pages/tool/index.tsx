@@ -5,7 +5,7 @@ import repositorySelectOptions from 'components/repositorySelectOptions';
 import ToolExtensions from './toolExtensions';
 import { Avatar, Button, Icon, Input, Select } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
+import { connect } from 'dva';
 import { GlobalStore } from '../../store/reducers/interface';
 import { isEqual } from 'lodash';
 import { push } from 'connected-react-router';
@@ -42,19 +42,16 @@ const mapStateToProps = ({
     currentImageHostingService,
   },
   userPreference: { accounts, extensions },
-  router: {
-    location: { pathname },
-  },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
-  const usePlugin = pathname.startsWith('/plugins');
+  const usePlugin = true;
   const disableCreateDocument = !usePlugin || creatingDocument;
   return {
     accounts,
     extensions,
     currentImageHostingService,
     url,
-    pathname,
+    pathname: '',
     creatingDocument,
     loadingRepositories,
     currentAccountId,
@@ -244,4 +241,4 @@ class Page extends React.Component<PageProps> {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Page as React.ComponentType<PageProps>);
+)(Page);

@@ -2,8 +2,9 @@ import { AccountPreference, ImageHosting } from './../reducers/userPreference/in
 import { PreferenceStorage } from 'common/storage/interface';
 import { Repository, UserInfo } from 'common/backend/index';
 import { SerializedExtensionWithId } from '../../extensions/interface';
-import actionCreatorFactory from 'common/typescript-fsa';
-const actionCreator = actionCreatorFactory('USER_PREFERENCE');
+import { actionCreatorFactory } from 'dva-model-creator';
+
+const actionCreator = actionCreatorFactory('userPreference');
 
 export const initUserPreference = actionCreator<PreferenceStorage>('INIT_USER_PREFERENCE');
 

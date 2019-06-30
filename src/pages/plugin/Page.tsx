@@ -8,32 +8,30 @@ import { GlobalStore } from '../../store/reducers/interface';
 
 const useActions = {};
 
-const mapStateToProps = ({ router, userPreference: { extensions } }: GlobalStore) => {
-  return { router, extensions };
+const mapStateToProps = ({ userPreference: { extensions }, routing }: GlobalStore) => {
+  return { extensions, routing };
 };
-type PageState = {};
-type PageOwnProps = {};
-type PageProps = ReturnType<typeof mapStateToProps> & typeof useActions & PageOwnProps;
+type PageProps = ReturnType<typeof mapStateToProps> & typeof useActions;
 
-class ClipperPluginPage extends React.Component<PageProps, PageState> {
-  render() {
-    const extension = this.props.extensions.find(
-      o => `/plugins/${o.id}` === this.props.router.location.pathname
-    );
-    if (!extension) {
-      return <div />;
-    }
-    if (extension.type === ExtensionType.Text) {
-      return <TextEditor extension={extension} />;
-    }
-    if (extension.type === ExtensionType.Image) {
-      return <ImageEditor extension={extension} />;
-    }
+const ClipperPluginPage: React.FC<PageProps> = props => {
+  const { pathname } = props.routing.location;
+
+  const extension = props.extensions.find(o => `/plugins/${o.id}` === pathname);
+
+  if (!extension) {
+    return <div />;
   }
-}
+  if (extension.type === ExtensionType.Text) {
+    return <TextEditor extension={extension} pathname={pathname} />;
+  }
+  if (extension.type === ExtensionType.Image) {
+    return <ImageEditor extension={extension} pathname={pathname} />;
+  }
+  return <div />;
+};
 
 export default connect(
   mapStateToProps,
   (dispatch: Dispatch) =>
     bindActionCreators<typeof useActions, typeof useActions>(useActions, dispatch)
-)(ClipperPluginPage as React.ComponentType<PageProps>);
+)(ClipperPluginPage);

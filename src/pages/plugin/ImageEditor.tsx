@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { asyncRunExtension } from '../../store/actions';
+import { connect } from 'dva';
+import { asyncRunExtension } from 'pageActions/userPreference';
 import { SerializedExtensionWithId } from '../../extensions/interface';
 import { EditorContainer } from 'components/container';
 import * as styles from './index.scss';
@@ -13,19 +13,14 @@ const useActions = {
   asyncRunExtension: asyncRunExtension.started,
 };
 
-const mapStateToProps = ({
-  router: {
-    location: { pathname },
-  },
-  clipper: { clipperData },
-}: GlobalStore) => {
+const mapStateToProps = ({ clipper: { clipperData } }: GlobalStore) => {
   return {
     clipperData,
-    pathname,
   };
 };
 type PageState = {};
 type PageOwnProps = {
+  pathname: string;
   extension: SerializedExtensionWithId;
 };
 type PageProps = ReturnType<typeof mapStateToProps> & typeof useActions & PageOwnProps;

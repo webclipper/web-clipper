@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
+import { connect } from 'dva';
 import { ToolContainer } from 'components/container';
 import * as styles from './complete.scss';
 import { Button } from 'antd';

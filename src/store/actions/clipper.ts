@@ -1,7 +1,7 @@
 import { Repository, CompleteStatus } from 'common/backend/index';
-import actionCreatorFactory from 'common/typescript-fsa';
+import { actionCreatorFactory } from 'dva-model-creator';
 
-const actionCreator = actionCreatorFactory('CLIPPER');
+const actionCreator = actionCreatorFactory('clipper');
 
 export const updateTitle = actionCreator<{ title: string }>('UPDATE_TITLE');
 
