@@ -23,55 +23,45 @@ const mapStateToProps = ({
     completeStatus,
   };
 };
-
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
 type PageProps = PageStateProps & PageDispatchProps;
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators<PageDispatchProps, PageDispatchProps>(useActions, dispatch);
 
-class Page extends React.Component<PageProps> {
-  renderError = () => (
-    <ToolContainer
-      onClickCloseButton={() => {
-        this.props.asyncRemoveTool();
-      }}
-    >
-      <a target="_blank" href="https://github.com/yuquewebclipper/yuque-web-clipper/issues">
+const Page: React.FC<PageProps> = props => {
+  function closeTool() {
+    props.asyncRemoveTool();
+  }
+  const renderError = (
+    <ToolContainer onClickCloseButton={closeTool}>
+      <a target="_blank" href="https://github.com/webclipper/web-clipper/issues">
         发生错误
       </a>
     </ToolContainer>
   );
-
-  render() {
-    const { completeStatus, currentAccount, servicesMeta } = this.props;
-    if (!completeStatus || !currentAccount) {
-      return this.renderError();
-    }
-    const currentService = servicesMeta[currentAccount.type];
-    if (!currentService) {
-      return this.renderError();
-    }
-    const { name, complete: Complete } = currentService;
-
-    return (
-      <ToolContainer
-        onClickCloseButton={() => {
-          this.props.asyncRemoveTool();
-        }}
-      >
-        <Section title="保存成功">
-          <a className={styles.menuButton} href={completeStatus.href} target="_blank">
-            <Button style={{ marginTop: 16 }} size="large" type="primary" block>
-              前往<span>{name}</span> 查看
-            </Button>
-          </a>
-        </Section>
-        {Complete && <Complete status={completeStatus}> </Complete>}
-      </ToolContainer>
-    );
+  const { completeStatus, currentAccount, servicesMeta } = props;
+  if (!completeStatus || !currentAccount) {
+    return renderError;
   }
-}
+  const currentService = servicesMeta[currentAccount.type];
+  if (!currentService) {
+    return renderError;
+  }
+  const { name, complete: Complete } = currentService;
+  return (
+    <ToolContainer onClickCloseButton={closeTool}>
+      <Section title="保存成功">
+        <a className={styles.menuButton} href={completeStatus.href} target="_blank">
+          <Button style={{ marginTop: 16 }} size="large" type="primary" block>
+            前往<span>{name}</span> 查看
+          </Button>
+        </a>
+      </Section>
+      {Complete && <Complete status={completeStatus}> </Complete>}
+    </ToolContainer>
+  );
+};
 
 export default connect(
   mapStateToProps,
