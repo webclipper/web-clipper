@@ -51,7 +51,6 @@ const mapStateToProps = ({
     extensions,
     currentImageHostingService,
     url,
-    pathname: '',
     creatingDocument,
     loadingRepositories,
     currentAccountId,
@@ -69,52 +68,26 @@ type PageProps = PageStateProps & PageDispatchProps & DvaRouterProps;
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators<PageDispatchProps, PageDispatchProps>(useActions, dispatch);
 
-class Page extends React.Component<PageProps> {
-  shouldComponentUpdate = (nextProps: PageProps) => {
-    const selector = ({
-      creatingDocument,
-      repositories,
-      currentAccount,
-      currentRepository,
-      loadingRepositories,
-      title,
-      pathname,
-    }: PageProps) => {
-      return {
-        currentRepository,
-        creatingDocument,
-        loadingRepositories,
-        repositories,
-        currentAccount,
-        title,
-        pathname,
-      };
+const Page = React.memo<PageProps>(
+  props => {
+    const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      props.updateTitle({
+        title: e.target.value,
+      });
     };
-    if (!isEqual(selector(nextProps), selector(this.props))) {
-      return true;
-    }
-    return false;
-  };
 
-  onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.updateTitle({
-      title: e.target.value,
-    });
-  };
+    const onRepositorySelect = (repositoryId: string) => {
+      props.selectRepository({ repositoryId });
+    };
 
-  onRepositorySelect = (repositoryId: string) => {
-    this.props.selectRepository({ repositoryId });
-  };
+    const onFilterOption = (select: any, option: React.ReactElement<any>) => {
+      const title: string = option.props.children;
+      return title.indexOf(select) !== -1;
+    };
 
-  onFilterOption = (select: any, option: React.ReactElement<any>) => {
-    const title: string = option.props.children;
-    return title.indexOf(select) !== -1;
-  };
+    const handleCreateDocument = () =>
+      props.asyncCreateDocument({ pathname: props.history.location.pathname });
 
-  handleCreateDocument = () =>
-    this.props.asyncCreateDocument({ pathname: this.props.history.location.pathname });
-
-  render() {
     const {
       creatingDocument,
       title,
@@ -124,10 +97,11 @@ class Page extends React.Component<PageProps> {
       loadingRepositories,
       extensions,
       url,
-      pathname,
       disableCreateDocument,
       currentImageHostingService,
-    } = this.props;
+    } = props;
+
+    const { pathname } = props.history.location;
 
     let repositoryId;
     if (currentAccount && repositories.some(o => o.id === currentAccount.defaultRepositoryId)) {
@@ -165,9 +139,9 @@ class Page extends React.Component<PageProps> {
     );
 
     return (
-      <ToolContainer onClickCloseButton={() => this.props.asyncHideTool()}>
+      <ToolContainer onClickCloseButton={() => props.asyncHideTool()}>
         <Section title="笔记标题">
-          <Input value={title} onChange={this.onTitleChange} />
+          <Input value={title} onChange={onTitleChange} />
           <Button
             className={styles.saveButton}
             style={{ marginTop: 16 }}
@@ -175,7 +149,7 @@ class Page extends React.Component<PageProps> {
             type="primary"
             loading={creatingDocument}
             disabled={disableCreateDocument}
-            onClick={this.handleCreateDocument}
+            onClick={handleCreateDocument}
             block
           >
             保存内容
@@ -184,8 +158,8 @@ class Page extends React.Component<PageProps> {
         <ToolExtensions
           extensions={toolExtensions}
           onClick={extension =>
-            this.props.asyncRunExtension({
-              pathname: this.props.history.location.pathname,
+            props.asyncRunExtension({
+              pathname,
               extension,
             })
           }
@@ -193,7 +167,7 @@ class Page extends React.Component<PageProps> {
         <ClipExtensions
           extensions={clipExtensions}
           onClick={router => {
-            this.props.push(router);
+            props.push(router);
           }}
           pathname={pathname}
         />
@@ -201,11 +175,11 @@ class Page extends React.Component<PageProps> {
           <Select
             loading={loadingRepositories}
             disabled={loadingRepositories}
-            onSelect={this.onRepositorySelect}
+            onSelect={onRepositorySelect}
             style={{ width: '100%' }}
             showSearch
             optionFilterProp="children"
-            filterOption={this.onFilterOption}
+            filterOption={onFilterOption}
             dropdownMatchSelectWidth={true}
             value={repositoryId}
           >
@@ -218,22 +192,22 @@ class Page extends React.Component<PageProps> {
               className={`${styles.toolbarButton} `}
               onClick={() => {
                 if (pathname === '/preference') {
-                  this.props.push('/');
+                  props.push('/');
                 } else {
-                  this.props.push('/preference');
+                  props.push('/preference');
                 }
               }}
             >
               <Icon type="setting" />
             </Button>
             <Select
-              value={this.props.currentAccountId}
+              value={props.currentAccountId}
               style={{ width: '75px' }}
               onSelect={(value: string) => {
-                this.props.asyncChangeAccount({ id: value });
+                props.asyncChangeAccount({ id: value });
               }}
             >
-              {this.props.accounts.map(o => (
+              {props.accounts.map(o => (
                 <Select.Option key={o.id || '1'}>
                   <Avatar size="small" src={o.avatar} />
                 </Select.Option>
@@ -243,8 +217,30 @@ class Page extends React.Component<PageProps> {
         </Section>
       </ToolContainer>
     );
+  },
+  (prevProps: PageProps, nextProps: PageProps) => {
+    const selector = ({
+      creatingDocument,
+      repositories,
+      currentAccount,
+      currentRepository,
+      loadingRepositories,
+      title,
+      history,
+    }: PageProps) => {
+      return {
+        currentRepository,
+        creatingDocument,
+        loadingRepositories,
+        repositories,
+        currentAccount,
+        title,
+        pathname: history.location.pathname,
+      };
+    };
+    return isEqual(selector(prevProps), selector(nextProps));
   }
-}
+);
 
 export default connect(
   mapStateToProps,

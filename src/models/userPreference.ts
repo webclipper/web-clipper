@@ -438,9 +438,9 @@ builder.subscript(async function initStore({ dispatch }) {
     return;
   }
   dispatch(asyncChangeAccount.started({ id }));
-  // if (result.defaultPluginId) {
-  //   dispatch(push(`/plugins/${result.defaultPluginId}`));
-  // }
+  if (result.defaultPluginId) {
+    dispatch(routerRedux.push(`/plugins/${result.defaultPluginId}`));
+  }
 });
 
 export default builder.build();
