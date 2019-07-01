@@ -34,6 +34,7 @@ const ImageEditor: React.FC<PageProps> = ({
     const data = clipperData[pathname];
     if (isUndefined(data)) {
       asyncRunExtension({
+        pathname,
         extension,
       });
     }

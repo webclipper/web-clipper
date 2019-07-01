@@ -41,6 +41,7 @@ class ClipperPluginPage extends React.Component<PageProps> {
     // eslint-disable-next-line no-undefined
     if (isUndefined(data)) {
       this.props.asyncRunExtension({
+        pathname,
         extension,
       });
     }

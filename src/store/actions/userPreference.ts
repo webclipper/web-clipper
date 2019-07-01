@@ -112,6 +112,7 @@ export const asyncSetDefaultPluginId = actionCreator.async<
 
 export const asyncRunExtension = actionCreator.async<
   {
+    pathname: string;
     extension: SerializedExtensionWithId;
   },
   {

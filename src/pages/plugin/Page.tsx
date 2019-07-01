@@ -1,22 +1,24 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect } from 'dva';
 import { ExtensionType } from '../../extensions/interface';
 import TextEditor from './TextEditor';
 import ImageEditor from './ImageEditor';
 import { GlobalStore } from '../../store/reducers/interface';
+import { DvaRouterProps } from 'common/types';
 
-const mapStateToProps = ({
-  userPreference: { extensions },
-  routing: {
-    location: { pathname },
-  },
-}: GlobalStore) => {
-  return { extensions, pathname };
+const mapStateToProps = ({ userPreference: { extensions } }: GlobalStore) => {
+  return { extensions };
 };
 
 type PageProps = ReturnType<typeof mapStateToProps>;
 
-const ClipperPluginPage: React.FC<PageProps> = ({ pathname, extensions }) => {
+const ClipperPluginPage: React.FC<PageProps & DvaRouterProps> = props => {
+  const {
+    history: {
+      location: { pathname },
+    },
+    extensions,
+  } = props;
   const extension = extensions.find(o => `/plugins/${o.id}` === pathname);
   if (!extension) {
     return <div />;

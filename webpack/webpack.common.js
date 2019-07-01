@@ -36,17 +36,6 @@ module.exports = {
     rules: [
       {
         test: /\.(jsx|tsx|js|ts)$/,
-        exclude: /(node_modules)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/env', '@babel/react', '@babel/typescript'],
-            plugins: ['@babel/plugin-transform-runtime'],
-          },
-        },
-      },
-      {
-        test: /\.(jsx|tsx|js|ts)$/,
         loader: 'ts-loader',
         options: {
           transpileOnly: true,

@@ -14,10 +14,10 @@ import {
   asyncChangeAccount,
   changeData,
 } from 'pageActions/clipper';
-import { initUserPreference, asyncRunExtension } from 'pageActions/userPreference';
+import { initUserPreference } from 'pageActions/userPreference';
 import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
 import { message } from 'antd';
-import { routerRedux } from 'dva/router';
+import { routerRedux } from 'dva';
 
 const defaultState: ClipperStore = {
   title: '',
@@ -73,10 +73,9 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
       })
     );
   })
-  .takeLatest(asyncCreateDocument.started, function*(_, { put, call, select }) {
+  .takeLatest(asyncCreateDocument.started, function*({ pathname }, { put, call, select }) {
     const selector = ({
       clipper: { currentRepository, clipperData, title, repositories, currentAccountId },
-      routing,
       userPreference: { accounts, extensions },
     }: GlobalStore) => {
       const currentAccount = accounts.find(({ id }) => id === currentAccountId);
@@ -90,8 +89,8 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
       if (currentRepository) {
         repositoryId = currentRepository.id;
       }
-      const extension = extensions.find(o => `/plugins/${o.id}` === routing.location.pathname);
-      const data = clipperData[routing.location.pathname];
+      const extension = extensions.find(o => `/plugins/${o.id}` === pathname);
+      const data = clipperData[pathname];
       return {
         repositoryId,
         data,
@@ -103,12 +102,17 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     const selectState: ReturnType<typeof selector> = yield select(selector);
     const { repositoryId, title, data, extension } = selectState;
     if (!repositoryId) {
-      yield put(asyncCreateDocument.failed({ error: null }));
+      yield put(
+        asyncCreateDocument.failed({
+          params: { pathname },
+          error: null,
+        })
+      );
       message.error('必须选择一个知识库');
       return;
     }
     if (!title) {
-      yield put(asyncCreateDocument.failed({ error: null }));
+      yield put(asyncCreateDocument.failed({ params: { pathname }, error: null }));
       message.error('标题不允许为空');
       return;
     }
@@ -140,7 +144,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
         };
       } catch (_error) {
         message.error('上传图片到图床失败');
-        yield put(asyncCreateDocument.failed({ error: null }));
+        yield put(asyncCreateDocument.failed({ params: { pathname }, error: null }));
         return;
       }
     }
@@ -153,6 +157,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     );
     yield put(
       asyncCreateDocument.done({
+        params: { pathname },
         result: response,
       })
     );
@@ -221,15 +226,6 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     ...state,
     creatingDocument: false,
   }))
-  .case(asyncRunExtension.done, (state, { result }) =>
-    update(state, {
-      clipperData: {
-        [result.pathname]: {
-          $set: result.result,
-        },
-      },
-    })
-  )
   .case(changeData, (state, { data, pathName }) =>
     update(state, {
       clipperData: {

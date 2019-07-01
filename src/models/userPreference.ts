@@ -25,7 +25,7 @@ import {
   asyncRemoveTool,
   asyncRunExtension,
 } from 'pageActions/userPreference';
-import { asyncChangeAccount, initTabInfo } from 'pageActions/clipper';
+import { asyncChangeAccount, initTabInfo, changeData } from 'pageActions/clipper';
 import { DvaModelBuilder } from 'dva-model-creator';
 import { UserPreferenceStore } from 'src/store/reducers/userPreference/interface';
 import { extensions } from 'extensions/index';
@@ -38,7 +38,7 @@ import {
 import backend from 'common/backend/index';
 import { loadImage } from 'common/blob';
 import { getRemoteVersion } from 'common/version';
-import { routerRedux } from 'dva/router';
+import { routerRedux } from 'dva';
 
 const servicesMeta = services.reduce(
   (previousValue, meta) => {
@@ -383,22 +383,14 @@ builder
       message.error(error.message);
     }
   })
-  .takeEveryWithAction(asyncRunExtension.started, function*(action, { call, put, select }) {
-    const { extension } = action.payload;
+  .takeEvery(asyncRunExtension.started, function*({ extension, pathname }, { call, put, select }) {
     let result;
     const { run, afterRun, destroy } = extension;
     if (run) {
       result = yield call(browserService.sendActionToCurrentTab, runScript(run));
     }
-    const selector = (state: GlobalStore) => {
-      const pathname = state.routing.location.pathname;
-      const data = state.clipper.clipperData[pathname];
-      return {
-        data,
-        pathname,
-      };
-    };
-    const { data, pathname }: ReturnType<typeof selector> = yield select(selector);
+    const state: GlobalStore = yield select(state => state);
+    const data = state.clipper.clipperData[pathname];
     if (afterRun) {
       result = yield (async () => {
         //@ts-ignore
@@ -419,12 +411,9 @@ builder
       yield call(browserService.sendActionToCurrentTab, runScript(destroy));
     }
     yield put(
-      asyncRunExtension.done({
-        params: action.payload,
-        result: {
-          result,
-          pathname,
-        },
+      changeData({
+        data: result,
+        pathName: pathname,
       })
     );
   });

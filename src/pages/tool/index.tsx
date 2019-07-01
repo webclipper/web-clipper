@@ -5,7 +5,7 @@ import repositorySelectOptions from 'components/repositorySelectOptions';
 import ToolExtensions from './toolExtensions';
 import { Avatar, Button, Icon, Input, Select } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'dva';
+import { connect, routerRedux } from 'dva';
 import { GlobalStore } from '../../store/reducers/interface';
 import { isEqual } from 'lodash';
 import { ToolContainer } from 'components/container';
@@ -18,7 +18,7 @@ import {
 import { asyncHideTool, asyncRunExtension } from 'pageActions/userPreference';
 import { SerializedExtensionWithId, ExtensionType, InitContext } from '../../extensions/interface';
 import Section from 'components/section';
-import { routerRedux } from 'dva/router';
+import { DvaRouterProps } from 'common/types';
 
 const useActions = {
   asyncHideTool: asyncHideTool.started,
@@ -65,7 +65,7 @@ const mapStateToProps = ({
 };
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
-type PageProps = PageStateProps & PageDispatchProps;
+type PageProps = PageStateProps & PageDispatchProps & DvaRouterProps;
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators<PageDispatchProps, PageDispatchProps>(useActions, dispatch);
 
@@ -111,7 +111,8 @@ class Page extends React.Component<PageProps> {
     return title.indexOf(select) !== -1;
   };
 
-  handleCreateDocument = () => this.props.asyncCreateDocument();
+  handleCreateDocument = () =>
+    this.props.asyncCreateDocument({ pathname: this.props.history.location.pathname });
 
   render() {
     const {
@@ -182,11 +183,18 @@ class Page extends React.Component<PageProps> {
         </Section>
         <ToolExtensions
           extensions={toolExtensions}
-          onClick={extension => this.props.asyncRunExtension({ extension })}
+          onClick={extension =>
+            this.props.asyncRunExtension({
+              pathname: this.props.history.location.pathname,
+              extension,
+            })
+          }
         />
         <ClipExtensions
           extensions={clipExtensions}
-          onClick={router => this.props.push(router)}
+          onClick={router => {
+            this.props.push(router);
+          }}
           pathname={pathname}
         />
         <Section title="保存的知识库">

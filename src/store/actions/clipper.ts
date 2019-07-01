@@ -5,7 +5,7 @@ const actionCreator = actionCreatorFactory('clipper');
 
 export const updateTitle = actionCreator<{ title: string }>('UPDATE_TITLE');
 
-export const asyncCreateDocument = actionCreator.async<void, CompleteStatus, null>(
+export const asyncCreateDocument = actionCreator.async<{ pathname: string }, CompleteStatus, null>(
   'ASYNC_CREATE_DOCUMENT'
 );
 
