@@ -4062,10 +4062,10 @@ dva-logger@^1.0.0:
   dependencies:
     redux-logger "^3.0.6"
 
-dva-model-creator@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/dva-model-creator/-/dva-model-creator-0.2.0.tgz#f12073891b145c66d0fadce3e0d14396935ce58b"
-  integrity sha512-rOrvyZNuSQItYttvIH5fvxvXw7E9NwIYSWzxg9U58pb/5gzXTwUfJleMhr5Vh9XEUmqzRz8a3GPwTzDlvp937A==
+dva-model-creator@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.npmjs.org/dva-model-creator/-/dva-model-creator-0.3.0.tgz#28ccd7de31cbfa4a9a3c111d8837dbdabf8662b0"
+  integrity sha512-BcvDqWkgDIoIADWmlgpgzrJFmYV8fidkYrpE9yugpy3rX0kgxe/gtwpJZg5qB7HEXlFcW/NkvJGGeh6UgcrGiA==
   dependencies:
     warning "^4.0.3"
 

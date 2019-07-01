@@ -14,7 +14,6 @@ import {
   asyncChangeAccount,
   changeData,
 } from 'pageActions/clipper';
-import { initUserPreference } from 'pageActions/userPreference';
 import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
 import { message } from 'antd';
 import { routerRedux } from 'dva';
@@ -189,13 +188,6 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
         },
       });
     }
-  )
-  .case(initUserPreference, (state, { defaultAccountId }) =>
-    update(state, {
-      currentAccountId: {
-        $set: defaultAccountId || '',
-      },
-    })
   )
   .case(updateTitle, (state, { title }) => ({
     ...state,

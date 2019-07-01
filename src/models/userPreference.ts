@@ -26,7 +26,7 @@ import {
   asyncRunExtension,
 } from 'pageActions/userPreference';
 import { asyncChangeAccount, initTabInfo, changeData } from 'pageActions/clipper';
-import { DvaModelBuilder } from 'dva-model-creator';
+import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
 import { UserPreferenceStore } from 'src/store/reducers/userPreference/interface';
 import { extensions } from 'extensions/index';
 import {
@@ -421,7 +421,7 @@ builder
 builder.subscript(async function loadVersion({ dispatch }) {
   try {
     const version = await getRemoteVersion();
-    dispatch(setRemoteVersion(version));
+    dispatch(removeActionNamespace(setRemoteVersion(version)));
   } catch (error) {
     console.log(error);
   }
@@ -431,7 +431,7 @@ builder.subscript(async function initStore({ dispatch }) {
   const result = await storage.getPreference();
   const tabInfo = await browserService.getCurrentTab();
   dispatch(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
-  dispatch(initUserPreference(result));
+  dispatch(removeActionNamespace(initUserPreference(result)));
   const { accounts, defaultAccountId: id } = result;
   if (accounts.length === 0 || !id || accounts.every(o => o.id !== id)) {
     dispatch(routerRedux.push('/preference'));
