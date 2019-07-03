@@ -6,7 +6,7 @@ import ToolExtensions from './toolExtensions';
 import { Avatar, Button, Icon, Input, Select } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect, routerRedux } from 'dva';
-import { GlobalStore } from '../../store/reducers/interface';
+import { GlobalStore } from '@/store/reducers/interface';
 import { isEqual } from 'lodash';
 import { ToolContainer } from 'components/container';
 import {
@@ -16,7 +16,7 @@ import {
   asyncChangeAccount,
 } from 'pageActions/clipper';
 import { asyncHideTool, asyncRunExtension } from 'pageActions/userPreference';
-import { SerializedExtensionWithId, ExtensionType, InitContext } from '../../extensions/interface';
+import { SerializedExtensionWithId, ExtensionType, InitContext } from 'extensions/interface';
 import Section from 'components/section';
 import { DvaRouterProps } from 'common/types';
 
