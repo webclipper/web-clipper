@@ -23,6 +23,7 @@ module.exports = {
   },
   resolve: {
     alias: {
+      '@': resolve('src/'),
       common: resolve('src/common/'),
       components: resolve('src/components/'),
       actions: resolve('src/store/actions'),

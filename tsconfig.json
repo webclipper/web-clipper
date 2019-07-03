@@ -21,6 +21,7 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
+      "@/*": ["src/*"],
       "common/*": ["src/common/*"],
       "components/*": ["src/components/*"],
       "actions": ["src/store/actions/index"],
