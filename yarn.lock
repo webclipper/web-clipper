@@ -1274,18 +1274,10 @@
     "@types/react" "*"
     "@types/react-router" "*"
 
-"@types/react-router@*":
-  version "5.0.2"
-  resolved "https://registry.npmjs.org/@types/react-router/-/react-router-5.0.2.tgz#619850cf28245d97bfa205f1fa7136451ba384bc"
-  integrity sha512-sdMN284GEOcqDEMS/hE/XD06Abw2fws30+xkZf3C9cSRcWopiv/HDTmunYI7DKLYKVRaWFkq1lkuJ6qeYu0E7A==
-  dependencies:
-    "@types/history" "*"
-    "@types/react" "*"
-
-"@types/react-router@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npm.taobao.org/@types/react-router/download/@types/react-router-5.0.1.tgz#9f4548c75755c55b0cffdd743080e5afa87da6dd"
-  integrity sha1-n0VIx1dVxVsM/910MIDlr6h9pt0=
+"@types/react-router@*", "@types/react-router@^5.0.3":
+  version "5.0.3"
+  resolved "https://registry.npm.taobao.org/@types/react-router/download/@types/react-router-5.0.3.tgz#855a1606e62de3f4d69ea34fb3c0e50e98e964d5"
+  integrity sha1-hVoWBuYt4/TWnqNPs8DlDpjpZNU=
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
