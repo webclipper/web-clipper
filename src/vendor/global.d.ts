@@ -1,6 +1,6 @@
 declare module '*.scss';
 declare module '*.png';
-declare module 'readability';
+declare module '@diamondyuan/readability';
 declare module 'turndown-plugin-gfm';
 declare module 'dva-logger';
 

@@ -4,7 +4,6 @@ import ClipExtensions from './clipExtensions';
 import repositorySelectOptions from 'components/repositorySelectOptions';
 import ToolExtensions from './toolExtensions';
 import { Avatar, Button, Icon, Input, Select } from 'antd';
-import { bindActionCreators, Dispatch } from 'redux';
 import { connect, routerRedux } from 'dva';
 import { GlobalStore } from '@/store/reducers/interface';
 import { isEqual } from 'lodash';
@@ -19,16 +18,6 @@ import { asyncHideTool, asyncRunExtension } from 'pageActions/userPreference';
 import { SerializedExtensionWithId, ExtensionType, InitContext } from 'extensions/interface';
 import Section from 'components/section';
 import { DvaRouterProps } from 'common/types';
-
-const useActions = {
-  asyncHideTool: asyncHideTool.started,
-  asyncRunExtension: asyncRunExtension.started,
-  asyncChangeAccount: asyncChangeAccount.started,
-  asyncCreateDocument: asyncCreateDocument.started,
-  updateTitle,
-  selectRepository: selectRepository,
-  push: routerRedux.push,
-};
 
 const mapStateToProps = ({
   clipper: {
@@ -63,31 +52,10 @@ const mapStateToProps = ({
   };
 };
 type PageStateProps = ReturnType<typeof mapStateToProps>;
-type PageDispatchProps = typeof useActions;
-type PageProps = PageStateProps & PageDispatchProps & DvaRouterProps;
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators<PageDispatchProps, PageDispatchProps>(useActions, dispatch);
+type PageProps = PageStateProps & DvaRouterProps;
 
 const Page = React.memo<PageProps>(
   props => {
-    const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      props.updateTitle({
-        title: e.target.value,
-      });
-    };
-
-    const onRepositorySelect = (repositoryId: string) => {
-      props.selectRepository({ repositoryId });
-    };
-
-    const onFilterOption = (select: any, option: React.ReactElement<any>) => {
-      const title: string = option.props.children;
-      return title.indexOf(select) !== -1;
-    };
-
-    const handleCreateDocument = () =>
-      props.asyncCreateDocument({ pathname: props.history.location.pathname });
-
     const {
       creatingDocument,
       title,
@@ -99,9 +67,33 @@ const Page = React.memo<PageProps>(
       url,
       disableCreateDocument,
       currentImageHostingService,
+      history: {
+        location: { pathname },
+      },
+      dispatch,
     } = props;
 
-    const { pathname } = props.history.location;
+    const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(
+        updateTitle({
+          title: e.target.value,
+        })
+      );
+    };
+
+    const onRepositorySelect = (repositoryId: string) => {
+      dispatch(selectRepository({ repositoryId }));
+    };
+
+    const onFilterOption = (select: any, option: React.ReactElement<any>) => {
+      const title: string = option.props.children;
+      return title.indexOf(select) !== -1;
+    };
+
+    const handleCreateDocument = () =>
+      dispatch(asyncCreateDocument.started({ pathname: props.history.location.pathname }));
+
+    const push = (path: string) => dispatch(routerRedux.push(path));
 
     let repositoryId;
     if (currentAccount && repositories.some(o => o.id === currentAccount.defaultRepositoryId)) {
@@ -139,7 +131,7 @@ const Page = React.memo<PageProps>(
     );
 
     return (
-      <ToolContainer onClickCloseButton={() => props.asyncHideTool()}>
+      <ToolContainer onClickCloseButton={() => dispatch(asyncHideTool.started())}>
         <Section title="笔记标题">
           <Input value={title} onChange={onTitleChange} />
           <Button
@@ -158,16 +150,18 @@ const Page = React.memo<PageProps>(
         <ToolExtensions
           extensions={toolExtensions}
           onClick={extension =>
-            props.asyncRunExtension({
-              pathname,
-              extension,
-            })
+            dispatch(
+              asyncRunExtension.started({
+                pathname,
+                extension,
+              })
+            )
           }
         />
         <ClipExtensions
           extensions={clipExtensions}
           onClick={router => {
-            props.push(router);
+            push(router);
           }}
           pathname={pathname}
         />
@@ -192,9 +186,9 @@ const Page = React.memo<PageProps>(
               className={`${styles.toolbarButton} `}
               onClick={() => {
                 if (pathname === '/preference') {
-                  props.push('/');
+                  push('/');
                 } else {
-                  props.push('/preference');
+                  push('/preference');
                 }
               }}
             >
@@ -204,7 +198,7 @@ const Page = React.memo<PageProps>(
               value={props.currentAccountId}
               style={{ width: '75px' }}
               onSelect={(value: string) => {
-                props.asyncChangeAccount({ id: value });
+                dispatch(asyncChangeAccount.started({ id: value }));
               }}
             >
               {props.accounts.map(o => (
@@ -242,7 +236,4 @@ const Page = React.memo<PageProps>(
   }
 );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Page);
+export default connect(mapStateToProps)(Page as React.FC<PageProps>);

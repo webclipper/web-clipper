@@ -9,16 +9,15 @@ import {
 } from 'pageActions/userPreference';
 import { bindActionCreators, Dispatch } from 'redux';
 import { CenterContainer } from 'components/container';
-import { connect } from 'dva';
+import { connect, routerRedux } from 'dva';
 import { List, Select, Switch, Tabs, Icon } from 'antd';
-import { push } from 'connected-react-router';
 import { ExtensionType, SerializedExtensionWithId } from 'extensions/interface';
 import { GlobalStore } from '../../store/reducers/interface';
 
 const TabPane = Tabs.TabPane;
 
 const useActions = {
-  push: push,
+  push: routerRedux.push,
   asyncSetEditorLiveRendering: asyncSetEditorLiveRendering.started,
   asyncSetShowLineNumber: asyncSetShowLineNumber.started,
   asyncSetDefaultPluginId: asyncSetDefaultPluginId.started,

@@ -1,5 +1,5 @@
 import * as QRCode from 'qrcode';
-import * as Readability from 'readability';
+import * as Readability from '@diamondyuan/readability';
 import * as styles from './index.scss';
 import AreaSelector from 'common/areaSelector';
 import Highlighter from 'common/highlight';
