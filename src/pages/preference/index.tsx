@@ -45,15 +45,13 @@ const mapStateToProps = ({
     extensions: extensions.filter(o => o.type !== ExtensionType.Tool),
   };
 };
-type PageState = {};
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
-type PageOwnProps = {};
-type PageProps = PageStateProps & PageDispatchProps & PageOwnProps;
+type PageProps = PageStateProps & PageDispatchProps;
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators<PageDispatchProps, PageDispatchProps>(useActions, dispatch);
 
-class Page extends React.Component<PageProps, PageState> {
+class Page extends React.Component<PageProps> {
   handleClose = () => {
     this.props.push('/');
   };
