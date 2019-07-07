@@ -1,7 +1,7 @@
-import { AccountPreference, ImageHosting } from './../reducers/userPreference/interface';
+import { AccountPreference, ImageHosting } from '@/store/reducers/userPreference/interface';
 import { PreferenceStorage } from 'common/storage/interface';
 import { Repository, UserInfo } from 'common/backend/index';
-import { SerializedExtensionWithId } from '../../extensions/interface';
+import { SerializedExtensionWithId } from '@/extensions/interface';
 import { actionCreatorFactory } from 'dva-model-creator';
 
 const actionCreator = actionCreatorFactory('userPreference');

@@ -323,9 +323,10 @@ builder
   .takeEvery(asyncEditImageHosting.started, function*(payload, { call, put }) {
     const { id, value, closeModal } = payload;
     try {
-      const imageHostingList: PromiseType<
-        ReturnType<typeof storage.editImageHostingById>
-      > = yield call(storage.editImageHostingById, id, { ...value, id });
+      const imageHostingList = yield call(storage.editImageHostingById, id, {
+        ...value,
+        id,
+      });
       yield put(
         asyncEditImageHosting.done({
           params: payload,

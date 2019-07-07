@@ -24,8 +24,7 @@
       "@/*": ["src/*"],
       "common/*": ["src/common/*"],
       "components/*": ["src/components/*"],
-      "actions": ["src/store/actions/index"],
-      "pageActions/*": ["src/store/actions/*"],
+      "pageActions/*": ["src/actions/*"],
       "extensions/*": ["src/extensions/*"],
       "browserActions/*": ["src/browser/actions/*"]
     }
