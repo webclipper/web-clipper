@@ -155,15 +155,14 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
   }));
 
 builder
-  .takeEveryWithAction(asyncVerificationAccessToken.started, function*(action, { call, put }) {
+  .takeEvery(asyncVerificationAccessToken.started, function*({ type, info }, { call, put }) {
     try {
-      const { type, info } = action.payload;
       const service = documentServiceFactory(type, info);
       const userInfo = yield call(service.getUserInfo);
       const repositories = yield call(service.getRepositories);
       yield put(
         asyncVerificationAccessToken.done({
-          params: action.payload,
+          params: { type, info },
           result: {
             repositories,
             userInfo,
@@ -175,7 +174,7 @@ builder
       yield put(resetAccountForm());
     }
   })
-  .takeEveryWithAction(asyncAddAccount.started, function*(action, { select, put }) {
+  .takeEvery(asyncAddAccount.started, function*(payload, { select, put }) {
     const selector = ({
       userPreference: {
         servicesMeta,
@@ -185,7 +184,7 @@ builder
       return { userInfo, servicesMeta };
     };
     const { servicesMeta, userInfo }: ReturnType<typeof selector> = yield select(selector);
-    const { info, imageHosting, defaultRepositoryId, type, callback } = action.payload;
+    const { info, imageHosting, defaultRepositoryId, type, callback } = payload;
     const service: ServiceMeta = servicesMeta[type];
     const { service: Service } = service;
     const instance = new Service(info);
@@ -204,7 +203,7 @@ builder
       const defaultAccountId = yield storage.getDefaultAccountId();
       yield put(
         asyncAddAccount.done({
-          params: action.payload,
+          params: payload,
           result: {
             accounts,
             defaultAccountId,
@@ -217,13 +216,13 @@ builder
       message.error(error.message);
     }
   })
-  .takeEveryWithAction(asyncUpdateAccount.started, function*(action, { select, call, put }) {
+  .takeEvery(asyncUpdateAccount.started, function*(payload, { select, call, put }) {
     const accounts: CallResult<typeof storage.getAccounts> = yield call(storage.getAccounts);
     const {
       id,
       account: { info, defaultRepositoryId, imageHosting },
       callback,
-    } = action.payload;
+    } = payload;
     const accountIndex = accounts.findIndex(o => o.id === id);
     if (accountIndex < 0) {
       message.error('修改失败，账户不存在');
@@ -241,7 +240,7 @@ builder
     yield storage.setAccount(result);
     yield put(
       asyncUpdateAccount.done({
-        params: action.payload,
+        params: payload,
         result: {
           accounts: result,
         },
@@ -256,13 +255,13 @@ builder
     }
     callback();
   })
-  .takeEveryWithAction(asyncDeleteAccount.started, function*(action, { call, put }) {
-    yield call(storage.deleteAccountById, action.payload.id);
+  .takeEvery(asyncDeleteAccount.started, function*(payload, { call, put }) {
+    yield call(storage.deleteAccountById, payload.id);
     const accounts = yield call(storage.getAccounts);
     const defaultAccountId = yield call(storage.getDefaultAccountId);
     yield put(
       asyncDeleteAccount.done({
-        params: action.payload,
+        params: payload,
         result: {
           accounts: accounts,
           defaultAccountId: defaultAccountId,
@@ -270,17 +269,17 @@ builder
       })
     );
   })
-  .takeEveryWithAction(asyncUpdateCurrentAccountIndex.started, function*(action, { call, put }) {
-    yield call(storage.setDefaultAccountId, action.payload.id);
+  .takeEvery(asyncUpdateCurrentAccountIndex.started, function*(payload, { call, put }) {
+    yield call(storage.setDefaultAccountId, payload.id);
     yield put(
       asyncUpdateCurrentAccountIndex.done({
-        params: action.payload,
-        result: action.payload,
+        params: payload,
+        result: payload,
       })
     );
   })
-  .takeEveryWithAction(asyncSetShowLineNumber.started, function*(action, { call, put }) {
-    const value = action.payload.value;
+  .takeEvery(asyncSetShowLineNumber.started, function*(payload, { call, put }) {
+    const { value } = payload;
     yield call(storage.setShowLineNumber, !value);
     yield put(
       asyncSetShowLineNumber.done({
@@ -307,29 +306,29 @@ builder
       })
     );
   })
-  .takeEveryWithAction(asyncHideTool.started, function*(_, { call }) {
+  .takeEvery(asyncHideTool.started, function*(_, { call }) {
     yield call(browserService.sendActionToCurrentTab, hideTool());
   })
-  .takeEveryWithAction(asyncRemoveTool.started, function*(_, { call }) {
+  .takeEvery(asyncRemoveTool.started, function*(_, { call }) {
     yield call(browserService.sendActionToCurrentTab, removeTool());
   })
-  .takeEveryWithAction(asyncSetDefaultPluginId.started, function*(action, { call, put }) {
-    yield call(storage.setDefaultPluginId, action.payload.pluginId);
+  .takeEvery(asyncSetDefaultPluginId.started, function*(payload, { call, put }) {
+    yield call(storage.setDefaultPluginId, payload.pluginId);
     yield put(
       asyncSetDefaultPluginId.done({
-        params: action.payload,
+        params: payload,
       })
     );
   })
-  .takeEveryWithAction(asyncEditImageHosting.started, function*(action, { call, put }) {
-    const { id, value, closeModal } = action.payload;
+  .takeEvery(asyncEditImageHosting.started, function*(payload, { call, put }) {
+    const { id, value, closeModal } = payload;
     try {
       const imageHostingList: PromiseType<
         ReturnType<typeof storage.editImageHostingById>
       > = yield call(storage.editImageHostingById, id, { ...value, id });
       yield put(
         asyncEditImageHosting.done({
-          params: action.payload,
+          params: payload,
           result: imageHostingList,
         })
       );
@@ -338,19 +337,19 @@ builder
       message.error(error.message);
     }
   })
-  .takeEveryWithAction(asyncDeleteImageHosting.started, function*(action, { call, put }) {
+  .takeEvery(asyncDeleteImageHosting.started, function*(payload, { call, put }) {
     const imageHostingList: PromiseType<
       ReturnType<typeof storage.deleteImageHostingById>
-    > = yield call(storage.deleteImageHostingById, action.payload.id);
+    > = yield call(storage.deleteImageHostingById, payload.id);
     yield put(
       asyncDeleteImageHosting.done({
-        params: action.payload,
+        params: payload,
         result: imageHostingList,
       })
     );
   })
-  .takeEveryWithAction(asyncAddImageHosting.started, function*(action, { call, put }) {
-    const { info, type, closeModal, remark } = action.payload;
+  .takeEvery(asyncAddImageHosting.started, function*(payload, { call, put }) {
+    const { info, type, closeModal, remark } = payload;
     const imageHostingService: ReturnType<typeof imageHostingServiceFactory> = yield call(
       imageHostingServiceFactory,
       type,
@@ -374,7 +373,7 @@ builder
       );
       yield put(
         asyncAddImageHosting.done({
-          params: action.payload,
+          params: payload,
           result: imageHostingList,
         })
       );
