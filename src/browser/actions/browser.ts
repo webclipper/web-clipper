@@ -1,4 +1,4 @@
-import actionCreatorFactory from 'common/typescript-fsa';
+import { actionCreatorFactory } from 'dva-model-creator';
 const actionCreator = actionCreatorFactory('BROWSER');
 
 export const doYouAliveNow = actionCreator('DO_YOU_ALIVE_NOW');

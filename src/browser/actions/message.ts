@@ -1,4 +1,5 @@
-import actionCreatorFactory from 'common/typescript-fsa';
+import { actionCreatorFactory } from 'dva-model-creator';
+
 const actionCreator = actionCreatorFactory('message');
 
 export const removeTool = actionCreator('REMOVE_TOOL');

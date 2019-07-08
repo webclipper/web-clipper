@@ -1,4 +1,4 @@
-import { AccountPreference, ImageHosting } from '@/store/reducers/userPreference/interface';
+import { AccountPreference, ImageHosting } from '@/common/types';
 import { PreferenceStorage } from 'common/storage/interface';
 import { Repository, UserInfo } from 'common/backend/index';
 import { SerializedExtensionWithId } from '@/extensions/interface';

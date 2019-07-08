@@ -3,6 +3,7 @@ declare module '*.png';
 declare module '@diamondyuan/readability';
 declare module 'turndown-plugin-gfm';
 declare module 'dva-logger';
+declare module 'dva-loading';
 
 type PromiseType<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
 

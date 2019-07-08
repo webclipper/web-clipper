@@ -27,21 +27,24 @@ const mapStateToProps = ({
     creatingDocument,
     currentRepository,
     repositories,
-    loadingRepositories,
     currentImageHostingService,
   },
+  loading,
   userPreference: { accounts, extensions },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   const usePlugin = true;
   const disableCreateDocument = !usePlugin || creatingDocument;
+
+  const loadingAccount = loading.effects[asyncChangeAccount.started.type];
+
   return {
+    loadingAccount,
     accounts,
     extensions,
     currentImageHostingService,
     url,
     creatingDocument,
-    loadingRepositories,
     currentAccountId,
     title,
     currentRepository,
@@ -62,7 +65,7 @@ const Page = React.memo<PageProps>(
       repositories,
       currentAccount,
       currentRepository,
-      loadingRepositories,
+      loadingAccount,
       extensions,
       url,
       disableCreateDocument,
@@ -167,8 +170,8 @@ const Page = React.memo<PageProps>(
         />
         <Section title="保存的知识库">
           <Select
-            loading={loadingRepositories}
-            disabled={loadingRepositories}
+            loading={loadingAccount}
+            disabled={loadingAccount}
             onSelect={onRepositorySelect}
             style={{ width: '100%' }}
             showSearch
@@ -218,14 +221,14 @@ const Page = React.memo<PageProps>(
       repositories,
       currentAccount,
       currentRepository,
-      loadingRepositories,
       title,
       history,
+      loadingAccount,
     }: PageProps) => {
       return {
+        loadingAccount,
         currentRepository,
         creatingDocument,
-        loadingRepositories,
         repositories,
         currentAccount,
         title,

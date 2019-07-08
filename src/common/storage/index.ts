@@ -1,5 +1,5 @@
 import { PreferenceStorage } from './interface';
-import { ImageHosting, AccountPreference } from './../../store/reducers/userPreference/interface';
+import { ImageHosting, AccountPreference } from '@/common/types';
 export * from './interface';
 export interface CommonStorage {
   set(key: string, value: any): void | Promise<void>;

@@ -2,6 +2,7 @@ import { History } from 'history';
 import { Dispatch } from 'react';
 import { UserPreferenceStore } from '@/common/modelTypes/userPreference';
 import { ClipperStore } from '@/common/modelTypes/clipper';
+import { DvaLoadingState } from 'dva-loading';
 
 export * from '@/common/modelTypes/userPreference';
 export * from '@/common/modelTypes/clipper';
@@ -11,7 +12,14 @@ export interface DvaRouterProps {
   dispatch: Dispatch<any>;
 }
 
+interface DvaLoadingState {
+  global: boolean;
+  models: { [type: string]: boolean | undefined };
+  effects: { [type: string]: boolean | undefined };
+}
+
 export interface GlobalStore {
   clipper: ClipperStore;
   userPreference: UserPreferenceStore;
+  loading: DvaLoadingState;
 }

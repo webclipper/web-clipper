@@ -27,7 +27,7 @@ import {
 } from 'pageActions/userPreference';
 import { asyncChangeAccount, initTabInfo, changeData } from 'pageActions/clipper';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
-import { UserPreferenceStore } from 'src/store/reducers/userPreference/interface';
+import { UserPreferenceStore } from 'common/types';
 import { extensions } from 'extensions/index';
 import {
   services,

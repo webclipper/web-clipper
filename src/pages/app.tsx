@@ -11,6 +11,7 @@ import PluginPage from '@/pages/plugin/Page';
 import Tool from '@/pages/tool';
 import clipper from '@/models/clipper';
 import userPreference from '@/models/userPreference';
+import createLoading from 'dva-loading';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -40,6 +41,8 @@ const app = dva({
   namespacePrefixWarning: false,
   history: createMemoryHistory(),
 });
+
+app.use(createLoading());
 
 app.use(
   createLogger({

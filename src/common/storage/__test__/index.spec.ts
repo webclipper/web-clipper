@@ -1,5 +1,5 @@
 import { PreferenceStorage } from './../interface';
-import { AccountPreference } from './../../../store/reducers/userPreference/interface';
+import { AccountPreference } from '@/common/types';
 /* eslint-disable max-nested-callbacks */
 /* eslint-disable no-undefined */
 import update from 'immutability-helper';
