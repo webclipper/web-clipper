@@ -21,7 +21,6 @@ const defaultState: ClipperStore = {
   currentAccountId: '',
   repositories: [],
   clipperData: {},
-  creatingDocument: false,
 };
 const model = new DvaModelBuilder(defaultState, 'clipper')
   .takeEveryWithAction(asyncChangeAccount.started, function*(
@@ -197,16 +196,10 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
   }))
   .case(asyncCreateDocument.started, state => ({
     ...state,
-    creatingDocument: true,
   }))
   .case(asyncCreateDocument.done, (state, { result: completeStatus }) => ({
     ...state,
-    creatingDocument: false,
     completeStatus,
-  }))
-  .case(asyncCreateDocument.failed, state => ({
-    ...state,
-    creatingDocument: false,
   }))
   .case(changeData, (state, { data, pathName }) =>
     update(state, {

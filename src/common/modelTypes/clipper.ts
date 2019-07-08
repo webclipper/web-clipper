@@ -17,7 +17,5 @@ export interface ClipperStore {
   clipperData: {
     [key: string]: ClipperDataType;
   };
-  /** 是否正在创建文档 */
-  creatingDocument: boolean;
   completeStatus?: CompleteStatus;
 }

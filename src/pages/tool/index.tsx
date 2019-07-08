@@ -24,7 +24,6 @@ const mapStateToProps = ({
     currentAccountId,
     title,
     url,
-    creatingDocument,
     currentRepository,
     repositories,
     currentImageHostingService,
@@ -34,10 +33,9 @@ const mapStateToProps = ({
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   const usePlugin = true;
+  const creatingDocument = loading.effects[asyncCreateDocument.started.type];
   const disableCreateDocument = !usePlugin || creatingDocument;
-
   const loadingAccount = loading.effects[asyncChangeAccount.started.type];
-
   return {
     loadingAccount,
     accounts,
