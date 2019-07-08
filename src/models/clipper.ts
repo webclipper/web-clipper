@@ -1,9 +1,7 @@
-import { ImageClipperData } from './../store/reducers/userPreference/interface';
 import { CompleteStatus } from 'common/backend/interface';
 import { ExtensionType } from 'extensions/interface';
 import { CreateDocumentRequest } from './../common/backend/services/interface';
-import { GlobalStore } from '@/common/types';
-import { ClipperStore } from './../store/reducers/clipper/interface';
+import { GlobalStore, ImageClipperData, ClipperStore } from '@/common/types';
 import { DvaModelBuilder } from 'dva-model-creator';
 import update from 'immutability-helper';
 import {
@@ -23,7 +21,6 @@ const defaultState: ClipperStore = {
   currentAccountId: '',
   repositories: [],
   clipperData: {},
-  loadingRepositories: true,
   creatingDocument: false,
 };
 const model = new DvaModelBuilder(defaultState, 'clipper')
@@ -162,17 +159,10 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     );
     yield put(routerRedux.push('/complete'));
   })
-  .case(asyncChangeAccount.started, state => ({
-    ...state,
-    loadingRepositories: true,
-  }))
   .case(
     asyncChangeAccount.done,
     (state, { params: { id }, result: { repositories, currentImageHostingService } }) => {
       return update(state, {
-        loadingRepositories: {
-          $set: false,
-        },
         currentAccountId: {
           $set: id,
         },
