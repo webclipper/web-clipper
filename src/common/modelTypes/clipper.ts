@@ -1,5 +1,6 @@
-import { ClipperDataType } from './../userPreference/interface';
-import { Repository, CompleteStatus } from './../../../common/backend/services/interface';
+import { ClipperDataType } from '@/common/modelTypes/userPreference';
+import { Repository, CompleteStatus } from '@/common/backend/services/interface';
+
 export interface ClipperStore {
   /** 网页标题 */
   title?: string;

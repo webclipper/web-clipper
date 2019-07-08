@@ -12,7 +12,7 @@ import { CenterContainer } from 'components/container';
 import { connect, routerRedux } from 'dva';
 import { List, Select, Switch, Tabs, Icon } from 'antd';
 import { ExtensionType, SerializedExtensionWithId } from 'extensions/interface';
-import { GlobalStore } from '../../store/reducers/interface';
+import { GlobalStore } from '@/common/types';
 
 const TabPane = Tabs.TabPane;
 

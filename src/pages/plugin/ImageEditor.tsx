@@ -4,10 +4,8 @@ import { asyncRunExtension } from 'pageActions/userPreference';
 import { SerializedExtensionWithId } from '../../extensions/interface';
 import { EditorContainer } from 'components/container';
 import { isUndefined } from 'common/object';
-import { GlobalStore } from '../../store/reducers/interface';
-import { ImageClipperData } from '../../store/reducers/userPreference/interface';
+import { GlobalStore, ImageClipperData } from '@/common/types';
 import * as styles from './index.scss';
-import { DvaRouterProps } from '@/common/types';
 
 const mapStateToProps = ({ clipper: { clipperData } }: GlobalStore) => {
   return {
@@ -18,7 +16,7 @@ type PageOwnProps = {
   pathname: string;
   extension: SerializedExtensionWithId;
 };
-type PageProps = ReturnType<typeof mapStateToProps> & PageOwnProps & DvaRouterProps;
+type PageProps = ReturnType<typeof mapStateToProps> & PageOwnProps & { dispatch: any };
 
 const ImageEditor: React.FC<PageProps> = ({ extension, clipperData, pathname, dispatch }) => {
   useEffect(() => {

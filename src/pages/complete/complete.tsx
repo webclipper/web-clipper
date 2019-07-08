@@ -5,7 +5,7 @@ import { ToolContainer } from 'components/container';
 import * as styles from './complete.scss';
 import { Button } from 'antd';
 import { asyncRemoveTool } from 'pageActions/userPreference';
-import { GlobalStore } from '../../store/reducers/interface';
+import { GlobalStore } from '@/common/types';
 import Section from 'components/section';
 
 const useActions = {

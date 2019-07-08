@@ -3,8 +3,7 @@ import { connect } from 'dva';
 import { ExtensionType } from '../../extensions/interface';
 import TextEditor from './TextEditor';
 import ImageEditor from './ImageEditor';
-import { GlobalStore } from '../../store/reducers/interface';
-import { DvaRouterProps } from 'common/types';
+import { GlobalStore, DvaRouterProps } from '@/common/types';
 
 const mapStateToProps = ({ userPreference: { extensions } }: GlobalStore) => {
   return { extensions };

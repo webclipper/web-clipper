@@ -5,7 +5,7 @@ import repositorySelectOptions from 'components/repositorySelectOptions';
 import ToolExtensions from './toolExtensions';
 import { Avatar, Button, Icon, Input, Select } from 'antd';
 import { connect, routerRedux } from 'dva';
-import { GlobalStore } from '@/store/reducers/interface';
+import { GlobalStore } from '@/common/types';
 import { isEqual } from 'lodash';
 import { ToolContainer } from 'components/container';
 import {

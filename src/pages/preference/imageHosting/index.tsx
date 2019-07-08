@@ -13,8 +13,7 @@ import AddImageHosting from './form/addImageHosting';
 import { FormComponentProps } from 'antd/lib/form';
 import ImageHostingListItem from 'components/imagehostingListItem';
 import { Form, Button, Icon } from 'antd';
-import { GlobalStore } from '../../../store/reducers/interface';
-import { ImageHosting } from '../../../store/reducers/userPreference/interface';
+import { GlobalStore, ImageHosting } from 'common/types';
 
 const useActions = {
   asyncAddImageHosting: asyncAddImageHosting.started,

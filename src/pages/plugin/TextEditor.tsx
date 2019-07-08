@@ -7,7 +7,7 @@ import { SerializedExtensionWithId } from '../../extensions/interface';
 import * as HyperMD from 'hypermd';
 import { EditorContainer } from 'components/container';
 import { isUndefined } from 'common/object';
-import { GlobalStore } from '../../store/reducers/interface';
+import { GlobalStore } from 'common/types';
 
 const useActions = {
   asyncRunExtension: asyncRunExtension.started,

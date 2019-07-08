@@ -1,5 +1,5 @@
-import { Repository, ServiceMeta, ImageHostingServiceMeta } from '../../../common/backend';
-import { SerializedExtensionWithId } from '../../../extensions/interface';
+import { Repository, ServiceMeta, ImageHostingServiceMeta } from '@/common/backend';
+import { SerializedExtensionWithId } from '@/extensions/interface';
 
 export interface UserPreferenceStore {
   remoteVersion?: string;

@@ -2,7 +2,7 @@ import { ImageClipperData } from './../store/reducers/userPreference/interface';
 import { CompleteStatus } from 'common/backend/interface';
 import { ExtensionType } from 'extensions/interface';
 import { CreateDocumentRequest } from './../common/backend/services/interface';
-import { GlobalStore } from './../store/reducers/interface';
+import { GlobalStore } from '@/common/types';
 import { ClipperStore } from './../store/reducers/clipper/interface';
 import { DvaModelBuilder } from 'dva-model-creator';
 import update from 'immutability-helper';

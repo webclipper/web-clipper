@@ -15,8 +15,7 @@ import * as styles from './index.scss';
 import EditAccountModal from './modal/editAccountModal';
 import { FormComponentProps } from 'antd/lib/form';
 import CreateAccountModal from './modal/createAccountModal';
-import { GlobalStore } from '../../../store/reducers/interface';
-import { AccountPreference } from '../../../store/reducers/userPreference/interface';
+import { GlobalStore, AccountPreference } from 'common/types';
 
 const useActions = {
   resetAccountForm,

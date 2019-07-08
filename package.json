@@ -139,7 +139,7 @@
       "webRequest",
       "webRequestBlocking",
       "cookies",
-      "tabs",
+      "activeTab",
       "storage",
       "contextMenus",
       "<all_urls>"

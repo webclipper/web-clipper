@@ -2,7 +2,7 @@ import { ServiceMeta } from './../common/backend/services/interface';
 import { runScript } from './../browser/actions/message';
 import storage from 'common/storage';
 import { message } from 'antd';
-import { GlobalStore } from './../store/reducers/interface';
+import { GlobalStore } from '@/common/types';
 import browserService from 'common/browser';
 import { hideTool, removeTool } from 'browserActions/message';
 import update from 'immutability-helper';
