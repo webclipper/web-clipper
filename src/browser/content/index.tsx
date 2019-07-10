@@ -2,7 +2,7 @@ import * as QRCode from 'qrcode';
 import * as Readability from '@diamondyuan/readability';
 import * as styles from './index.scss';
 import AreaSelector from 'common/areaSelector';
-import Highlighter from 'common/highlight';
+import Highlighter from '@web-clipper/highlight';
 import TurndownService from 'turndown';
 import * as turndownPluginGfm from 'turndown-plugin-gfm';
 import { MessageListenerCombiner } from 'common/ListenerCombiner';

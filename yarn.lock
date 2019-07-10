@@ -672,6 +672,13 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
+"@web-clipper/highlight@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.npm.taobao.org/@web-clipper/highlight/download/@web-clipper/highlight-0.0.2.tgz#a7e7197c4262802ee990c87277a228ca5e6c359f"
+  integrity sha1-p+cZfEJigC7pkMhyd6Ioyl5sNZ8=
+  dependencies:
+    jquery "^3.4.1"
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.npm.taobao.org/@webassemblyjs/ast/download/@webassemblyjs/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
@@ -4914,7 +4921,7 @@ jest@^24.8.0:
     import-local "^2.0.0"
     jest-cli "^24.8.0"
 
-jquery@^3.4.0:
+jquery@^3.4.0, jquery@^3.4.1:
   version "3.4.1"
   resolved "https://registry.npm.taobao.org/jquery/download/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
   integrity sha1-cU8fjZ3eS9+lV2S6N+8hRjDYDvI=
