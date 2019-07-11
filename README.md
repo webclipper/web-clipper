@@ -20,6 +20,7 @@
 - [Yuque](https://www.yuque.com)
 - [Github](https://github.com)
 - [Notion](https://www.notion.so/)
+- [有道](https://note.youdao.com/)
 
 ### Develop
 
