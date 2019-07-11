@@ -16,9 +16,14 @@ export default new ToolExtension(
     run: async context => {
       const { turndown, Highlighter, toggleClipper } = context;
       toggleClipper();
-      const data = await new Highlighter().start();
-      toggleClipper();
-      return turndown.turndown(data);
+      try {
+        const data = await new Highlighter().start();
+        return turndown.turndown(data);
+      } catch (error) {
+        throw error;
+      } finally {
+        toggleClipper();
+      }
     },
     afterRun: context => {
       const { result, data } = context;

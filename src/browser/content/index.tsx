@@ -69,6 +69,7 @@ const listeners = new MessageListenerCombiner()
     if (script) {
       (async () => {
         try {
+          $(`.${styles.toolFrame}`).blur();
           // eslint-disable-next-line
           const response = await eval(script);
           sendResponse(response);

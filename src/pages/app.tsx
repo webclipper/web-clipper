@@ -47,7 +47,9 @@ app.use(createLoading());
 app.use(
   createLogger({
     predicate: (_: Function, { type }: Action<any>) => {
-      return !type.endsWith('@@end') && !type.endsWith('@@start');
+      return (
+        !type.endsWith('@@end') && !type.endsWith('@@start') && !type.startsWith('@@DVA_LOADING')
+      );
     },
   })
 );
