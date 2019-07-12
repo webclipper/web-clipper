@@ -1,7 +1,7 @@
 import * as QRCode from 'qrcode';
 import * as Readability from '@diamondyuan/readability';
 import * as styles from './index.scss';
-import AreaSelector from 'common/areaSelector';
+import AreaSelector from '@web-clipper/area-selector';
 import Highlighter from '@web-clipper/highlight';
 import TurndownService from 'turndown';
 import * as turndownPluginGfm from 'turndown-plugin-gfm';
@@ -59,7 +59,7 @@ const listeners = new MessageListenerCombiner()
     const context: ContentScriptContext = {
       $,
       turndown: turndownService,
-      Highlighter,
+      Highlighter: Highlighter,
       toggleClipper,
       Readability,
       document,

@@ -672,6 +672,13 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
+"@web-clipper/area-selector@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.npmjs.org/@web-clipper/area-selector/-/area-selector-0.0.3.tgz#4be9290a240744a3a874529dd9f47a6ac190aad1"
+  integrity sha512-sVi5Q/AdNmO/upQqMms0jfnKzZstiqmnFfDd+KZ2UpcVnCoooXdTlz5MtZrExUkCbSi4fuajvgM5mkGUmvFv9w==
+  dependencies:
+    jquery "^3.4.1"
+
 "@web-clipper/highlight@^0.0.2":
   version "0.0.2"
   resolved "https://registry.npm.taobao.org/@web-clipper/highlight/download/@web-clipper/highlight-0.0.2.tgz#a7e7197c4262802ee990c87277a228ca5e6c359f"

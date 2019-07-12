@@ -2,6 +2,7 @@ import { SerializedExtension } from './interface';
 import { ImageHostingService } from '../common/backend/index';
 import { codeCallWithContext } from './utils';
 import TurndownService from 'turndown';
+import { IHighlighter } from '@web-clipper/highlight';
 
 export interface InitContext {
   accountInfo: {
@@ -17,7 +18,7 @@ export interface InitContext {
 export interface ContentScriptContext {
   $: JQueryStatic;
   turndown: TurndownService;
-  Highlighter: any;
+  Highlighter: Type<IHighlighter>;
   AreaSelector: any;
   toggleClipper: any;
   Readability: any;
