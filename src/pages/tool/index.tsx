@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as styles from './index.scss';
-import ClipExtensions from './clipExtensions';
+import ClipExtension from './ClipExtension';
 import repositorySelectOptions from 'components/repositorySelectOptions';
 import ToolExtensions from './toolExtensions';
 import { Avatar, Button, Icon, Input, Select } from 'antd';
@@ -159,11 +159,9 @@ const Page = React.memo<PageProps>(
             )
           }
         />
-        <ClipExtensions
+        <ClipExtension
           extensions={clipExtensions}
-          onClick={router => {
-            push(router);
-          }}
+          onClick={router => push(router)}
           pathname={pathname}
         />
         <Section title="保存的知识库">
