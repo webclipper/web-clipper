@@ -3,6 +3,7 @@ import { Dispatch } from 'react';
 import { UserPreferenceStore } from '@/common/modelTypes/userPreference';
 import { ClipperStore } from '@/common/modelTypes/clipper';
 import { DvaLoadingState } from 'dva-loading';
+import { VersionStore } from './modelTypes/version';
 
 export * from '@/common/modelTypes/userPreference';
 export * from '@/common/modelTypes/clipper';
@@ -21,5 +22,6 @@ interface DvaLoadingState {
 export interface GlobalStore {
   clipper: ClipperStore;
   userPreference: UserPreferenceStore;
+  version: VersionStore;
   loading: DvaLoadingState;
 }
