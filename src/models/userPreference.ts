@@ -20,7 +20,6 @@ import {
   asyncEditImageHosting,
   resetAccountForm,
   asyncUpdateAccount,
-  setRemoteVersion,
   asyncHideTool,
   asyncRemoveTool,
   asyncRunExtension,
@@ -37,7 +36,6 @@ import {
 } from 'common/backend';
 import backend from 'common/backend/index';
 import { loadImage } from 'common/blob';
-import { getRemoteVersion } from 'common/version';
 import { routerRedux } from 'dva';
 
 const servicesMeta = services.reduce(
@@ -148,11 +146,7 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
         $set: defaultState.initializeForm,
       },
     })
-  )
-  .case(setRemoteVersion, (state, remoteVersion) => ({
-    ...state,
-    remoteVersion,
-  }));
+  );
 
 builder
   .takeEvery(asyncVerificationAccessToken.started, function*({ type, info }, { call, put }) {
@@ -417,15 +411,6 @@ builder
       })
     );
   });
-
-builder.subscript(async function loadVersion({ dispatch }) {
-  try {
-    const version = await getRemoteVersion();
-    dispatch(removeActionNamespace(setRemoteVersion(version)));
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 builder.subscript(async function initStore({ dispatch }) {
   const result = await storage.getPreference();
