@@ -1,4 +1,4 @@
-import { AnyAction } from 'common/typescript-fsa';
+import { AnyAction } from 'dva-model-creator';
 import ChromeBrowserAction, { IBrowserAction } from './browserAction';
 import ChromeTabs, { ITabs } from './tabs';
 

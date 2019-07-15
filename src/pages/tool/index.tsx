@@ -196,9 +196,7 @@ const Page = React.memo<PageProps>(
             <Select
               value={props.currentAccountId}
               style={{ width: '75px' }}
-              onSelect={(value: string) => {
-                dispatch(asyncChangeAccount.started({ id: value }));
-              }}
+              onSelect={(value: string) => dispatch(asyncChangeAccount.started({ id: value }))}
             >
               {props.accounts.map(o => (
                 <Select.Option key={o.id || '1'}>
