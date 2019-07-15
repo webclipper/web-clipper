@@ -10,6 +10,12 @@
 
 ### Install
 
+#### From chrome stroe
+
+[Link](https://chrome.google.com/webstore/detail/剪藏/icidaiapcopkcgepepcncehhodfafidg)
+
+#### From Github
+
 1. Download the webclipper.zip from [release page](https://github.com/webclipper/web-clipper/releases)
 2. Go to **chrome://extensions/** and check the box for **Developer mode** in the top right.
 3. Locate the ZIP file on your computer and unzip it.
