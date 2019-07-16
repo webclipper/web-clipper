@@ -1,7 +1,7 @@
 import { Base64ImageToBlob } from '../../../blob';
 import axios from 'axios';
 import { UploadImageRequest, ImageHostingService } from '../interface';
-import { md5 } from '../../../md5';
+import { md5 } from '@web-clipper/shared';
 
 export interface YuqueImageHostingOption {
   host: string;

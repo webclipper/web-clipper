@@ -7,7 +7,7 @@ import {
 } from './interface';
 import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
 import axios, { AxiosInstance } from 'axios';
-import { md5 } from '../../../md5';
+import { md5 } from '@web-clipper/shared';
 
 const PAGE_LIMIT = 100;
 

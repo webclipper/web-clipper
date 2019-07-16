@@ -29,9 +29,9 @@
     "@web-clipper/area-selector": "^0.0.3",
     "@web-clipper/highlight": "^0.0.2",
     "@web-clipper/message-listener-combiner": "^0.0.5",
+    "@web-clipper/shared": "^0.0.6",
     "antd": "^3.20.0",
     "axios": "^0.19.0",
-    "blueimp-md5": "^2.10.0",
     "codemirror": "^5.47.0",
     "dayjs": "^1.8.14",
     "dva": "2.6.0-beta.9",
@@ -50,7 +50,6 @@
   },
   "devDependencies": {
     "@diamondyuan/eslint-config-react-typescript": "^6.0.0",
-    "@types/blueimp-md5": "^2.7.0",
     "@types/chrome": "^0.0.86",
     "@types/codemirror": "^0.0.74",
     "@types/enzyme": "^3.9.3",

@@ -393,11 +393,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/blueimp-md5@^2.7.0":
-  version "2.7.0"
-  resolved "https://registry.npm.taobao.org/@types/blueimp-md5/download/@types/blueimp-md5-2.7.0.tgz#404222806800478ca2782e8ad46590aba7f14627"
-  integrity sha1-QEIigGgAR4yieC6K1GWQq6fxRic=
-
 "@types/cheerio@*":
   version "0.22.12"
   resolved "https://registry.npm.taobao.org/@types/cheerio/download/@types/cheerio-0.22.12.tgz#93c050401d4935a5376e8b352965f7458bed5340"
@@ -692,6 +687,13 @@
   integrity sha512-6J/7v3e+fOuv8ryhp2FD8gzHad7psqkxC222SHW7dDTobUaH2jvU7yEdddRHDj522DvCDxAIdjyZ6dcOvs/RWg==
   dependencies:
     dva-model-creator "^0.3.0"
+
+"@web-clipper/shared@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.npmjs.org/@web-clipper/shared/-/shared-0.0.6.tgz#911d7a6f153cdd7da16269b51000dfb1cbcd6014"
+  integrity sha512-+PCyi+9pWLfeVBaZoLbIAdOr90FYcB4qscBXoelTnUK8v9MKeGfMQPxhsmKKZMPV6ksbQzxiD+VDnGdVFsl1XQ==
+  dependencies:
+    blueimp-md5 "^2.11.0"
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
@@ -1370,10 +1372,10 @@ bluebird@^3.5.5:
   resolved "https://registry.npm.taobao.org/bluebird/download/bluebird-3.5.5.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fbluebird%2Fdownload%2Fbluebird-3.5.5.tgz#a8d0afd73251effbbd5fe384a77d73003c17a71f"
   integrity sha1-qNCv1zJR7/u9X+OEp31zADwXpx8=
 
-blueimp-md5@^2.10.0:
-  version "2.10.0"
-  resolved "https://registry.npm.taobao.org/blueimp-md5/download/blueimp-md5-2.10.0.tgz#02f0843921f90dca14f5b8920a38593201d6964d"
-  integrity sha1-AvCEOSH5DcoU9biSCjhZMgHWlk0=
+blueimp-md5@^2.11.0:
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/blueimp-md5/-/blueimp-md5-2.11.0.tgz#eff55d30fe3daddd7e801072e2c4483e5fcfc87c"
+  integrity sha512-xvA4mdnIevstCvNKTRLMOKi7L76U/X/CTs9Yz+PLWmWAC/7SuYi5Xv2J7bAhJnE2+LcLv+x4+0vusvKgM9LnZQ==
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"

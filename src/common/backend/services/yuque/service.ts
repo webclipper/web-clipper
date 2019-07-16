@@ -2,7 +2,7 @@ import { DocumentService, CreateDocumentRequest } from './../../index';
 import axios, { AxiosInstance } from 'axios';
 import { generateUuid } from '../../../../common/uuid';
 import * as qs from 'qs';
-import { md5 } from '../../../md5';
+import { md5 } from '@web-clipper/shared';
 import {
   YuqueBackendServiceConfig,
   YuqueUserInfoResponse,
