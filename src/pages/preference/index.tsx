@@ -37,10 +37,7 @@ const mapStateToProps = ({
     remoteVersion,
     showLineNumber,
     defaultPluginId,
-    closeQRCode: true,
-    containToken: true,
     liveRendering,
-    QRCodeContent: '',
     accounts,
     extensions: extensions.filter(o => o.type !== ExtensionType.Tool),
   };
