@@ -10,10 +10,6 @@
 
 ### Install
 
-#### From chrome stroe
-
-[Link](https://chrome.google.com/webstore/detail/剪藏/icidaiapcopkcgepepcncehhodfafidg)
-
 #### From Github
 
 1. Download the webclipper.zip from [release page](https://github.com/webclipper/web-clipper/releases)
