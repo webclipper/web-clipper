@@ -5,7 +5,7 @@ import AreaSelector from '@web-clipper/area-selector';
 import Highlighter from '@web-clipper/highlight';
 import TurndownService from 'turndown';
 import * as turndownPluginGfm from 'turndown-plugin-gfm';
-import { MessageListenerCombiner } from 'common/ListenerCombiner';
+import { MessageListenerCombiner } from '@web-clipper/message-listener-combiner';
 import { clickIcon, doYouAliveNow } from 'browserActions/browser';
 import { removeTool, runScript, hideTool } from 'browserActions/message';
 import { ContentScriptContext } from 'extensions/interface';

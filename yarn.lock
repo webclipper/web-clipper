@@ -686,6 +686,13 @@
   dependencies:
     jquery "^3.4.1"
 
+"@web-clipper/message-listener-combiner@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.npmjs.org/@web-clipper/message-listener-combiner/-/message-listener-combiner-0.0.5.tgz#41a031f49a40ee88d149db70bc73ec04fb39a513"
+  integrity sha512-6J/7v3e+fOuv8ryhp2FD8gzHad7psqkxC222SHW7dDTobUaH2jvU7yEdddRHDj522DvCDxAIdjyZ6dcOvs/RWg==
+  dependencies:
+    dva-model-creator "^0.3.0"
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.npm.taobao.org/@webassemblyjs/ast/download/@webassemblyjs/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
