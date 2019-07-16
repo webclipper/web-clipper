@@ -1,7 +1,7 @@
 import { CompleteStatus } from './../interface';
 import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
 import axios, { AxiosInstance } from 'axios';
-import { generateUuid } from '@web-clipper/shared';
+import { generateUuid } from '@web-clipper/shared/lib/uuid';
 
 interface NotionUserContent {
   recordMap: {

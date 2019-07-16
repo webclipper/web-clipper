@@ -688,10 +688,10 @@
   dependencies:
     dva-model-creator "^0.3.0"
 
-"@web-clipper/shared@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.npmjs.org/@web-clipper/shared/-/shared-0.0.6.tgz#911d7a6f153cdd7da16269b51000dfb1cbcd6014"
-  integrity sha512-+PCyi+9pWLfeVBaZoLbIAdOr90FYcB4qscBXoelTnUK8v9MKeGfMQPxhsmKKZMPV6ksbQzxiD+VDnGdVFsl1XQ==
+"@web-clipper/shared@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.npmjs.org/@web-clipper/shared/-/shared-0.0.7.tgz#ee15919c8bac86ed6beac9eb246c5f210f144217"
+  integrity sha512-JdaP4LpzkhG5B9zCrw/l24oF9KIOhTWVmmSihBRTqkrvyok+RmsOS5kqAWWx0eM4rKuW06R1zNB40Xr6xNeoEA==
   dependencies:
     blueimp-md5 "^2.11.0"
 

@@ -3,7 +3,7 @@ import { CompleteStatus } from './../interface';
 import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
 import axios, { AxiosInstance } from 'axios';
 import { stringify } from 'qs';
-import { generateUuid } from 'common/uuid';
+import { generateUuid } from '@web-clipper/shared/lib/uuid';
 
 interface YouDaoRepository {
   fileEntry: {

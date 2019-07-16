@@ -29,7 +29,7 @@
     "@web-clipper/area-selector": "^0.0.3",
     "@web-clipper/highlight": "^0.0.2",
     "@web-clipper/message-listener-combiner": "^0.0.5",
-    "@web-clipper/shared": "^0.0.6",
+    "@web-clipper/shared": "^0.0.7",
     "antd": "^3.20.0",
     "axios": "^0.19.0",
     "codemirror": "^5.47.0",
