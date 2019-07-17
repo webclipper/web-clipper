@@ -10,7 +10,7 @@ import { clickIcon, doYouAliveNow } from 'browserActions/browser';
 import { removeTool, runScript, hideTool } from 'browserActions/message';
 import { ContentScriptContext } from 'extensions/interface';
 
-const turndownService = new TurndownService();
+const turndownService = new TurndownService({ codeBlockStyle: 'fenced' });
 
 turndownService.addRule('lazyLoadImage', {
   filter: ['img'],
@@ -28,6 +28,7 @@ turndownService.addRule('lazyLoadImage', {
     return `![](${node.getAttribute('src')})`;
   },
 });
+
 turndownService.use(turndownPluginGfm.gfm);
 
 const listeners = new MessageListenerCombiner()
