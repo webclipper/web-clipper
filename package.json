@@ -1,6 +1,6 @@
 {
   "name": "web-clipper",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "The best webpage clipping plugin in Xihu District",
   "scripts": {
     "commit": "git-cz",
