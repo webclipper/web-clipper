@@ -702,10 +702,10 @@
   dependencies:
     blueimp-md5 "^2.11.0"
 
-"@web-clipper/turndown@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.npmjs.org/@web-clipper/turndown/-/turndown-0.0.9.tgz#adabd61143cb9fb65bd033beb71a948cc6c221b8"
-  integrity sha512-AxUbX+ccI2LbNCK77qwrCmOpu8EscBjm87ydWQMYkLQs6xv6ft8efgJV+V9ls46uyTtTJ4+KLs9k4hALjlP3rQ==
+"@web-clipper/turndown@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.npmjs.org/@web-clipper/turndown/-/turndown-0.0.11.tgz#2b9e04155148742aec63f70c23787804ccca497b"
+  integrity sha512-ntdLUvC601TJavqzjJILT7GYdmP8VmRVKhnE3MC49auX0oeIhBSKFnVcYFWnFMLVc8qlZjdNgDx/Tiftzw/yRQ==
   dependencies:
     "@types/mz" "^0.0.32"
     "@types/turndown" "^5.0.0"
