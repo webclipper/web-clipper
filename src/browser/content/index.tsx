@@ -3,33 +3,15 @@ import * as Readability from '@diamondyuan/readability';
 import * as styles from './index.scss';
 import AreaSelector from '@web-clipper/area-selector';
 import Highlighter from '@web-clipper/highlight';
+import plugins from '@web-clipper/turndown';
 import TurndownService from 'turndown';
-import * as turndownPluginGfm from 'turndown-plugin-gfm';
 import { MessageListenerCombiner } from '@web-clipper/message-listener-combiner';
 import { clickIcon, doYouAliveNow } from 'browserActions/browser';
 import { removeTool, runScript, hideTool } from 'browserActions/message';
 import { ContentScriptContext } from 'extensions/interface';
 
 const turndownService = new TurndownService({ codeBlockStyle: 'fenced' });
-
-turndownService.addRule('lazyLoadImage', {
-  filter: ['img'],
-  replacement: function(_: any, node: any) {
-    const attributes = ['data-src', 'data-original-src'];
-    for (const attribute of attributes) {
-      let dataSrc: string = node.getAttribute(attribute);
-      if (dataSrc) {
-        if (dataSrc.startsWith('//')) {
-          dataSrc = `${window.location.protocol}${dataSrc}`;
-        }
-        return `![](${dataSrc})`;
-      }
-    }
-    return `![](${node.getAttribute('src')})`;
-  },
-});
-
-turndownService.use(turndownPluginGfm.gfm);
+turndownService.use(plugins);
 
 const listeners = new MessageListenerCombiner()
   .case(doYouAliveNow, (_payload, _sender, sendResponse) => {
