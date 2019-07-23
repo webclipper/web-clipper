@@ -86,16 +86,21 @@ export interface IExtensionManifest {
    * 关键字
    */
   readonly keywords?: string[];
+
+  readonly i18nManifest?: {
+    [key: string]: {
+      readonly name?: string;
+      readonly description?: string;
+      readonly icon?: string;
+      readonly keywords?: string;
+    };
+  };
 }
 
 export const enum ExtensionType {
   Text = 'Text',
   Image = 'Image',
   Tool = 'tool',
-}
-
-export interface SerializeAble {
-  serialize: () => SerializedExtension;
 }
 
 export interface SerializedExtension {
@@ -107,21 +112,19 @@ export interface SerializedExtension {
   destroy?: string;
 }
 
-export interface Extension<T, U> extends IExtensionLifeCycle<T, U> {}
+export interface SerializeAble {
+  serialize: () => SerializedExtension;
+}
 
-export class Extension<T, U> implements Extension<T, U>, SerializeAble {
+class AbstractExtension<T, U> implements SerializeAble {
   private readonly type: ExtensionType;
   private readonly manifest: IExtensionManifest;
 
   constructor(
     type: ExtensionType,
     manifest: IExtensionManifest,
-    { init, run, afterRun, destroy }: IExtensionLifeCycle<T, U>
+    private extensionLifeCycle: IExtensionLifeCycle<T, U>
   ) {
-    this.init = init;
-    this.run = run;
-    this.afterRun = afterRun;
-    this.destroy = destroy;
     this.type = type;
     this.manifest = manifest;
   }
@@ -130,21 +133,21 @@ export class Extension<T, U> implements Extension<T, U>, SerializeAble {
     return {
       type: this.type,
       manifest: this.manifest,
-      init: codeCallWithContext(this.init),
-      run: codeCallWithContext(this.run),
-      afterRun: codeCallWithContext(this.afterRun),
-      destroy: codeCallWithContext(this.destroy),
-    } as SerializedExtension;
+      init: codeCallWithContext(this.extensionLifeCycle.init),
+      run: codeCallWithContext(this.extensionLifeCycle.run),
+      afterRun: codeCallWithContext(this.extensionLifeCycle.afterRun),
+      destroy: codeCallWithContext(this.extensionLifeCycle.destroy),
+    };
   }
 }
 
-export class TextExtension<T = string> extends Extension<T, string> {
+export class TextExtension<T = string> extends AbstractExtension<T, string> {
   constructor(manifest: IExtensionManifest, methods: IExtensionLifeCycle<T, string>) {
     super(ExtensionType.Text, manifest, methods);
   }
 }
 
-export class ToolExtension<T = string> extends Extension<T, string> {
+export class ToolExtension<T = string> extends AbstractExtension<T, string> {
   constructor(manifest: IExtensionManifest, methods: IExtensionLifeCycle<T, string>) {
     super(ExtensionType.Tool, manifest, methods);
   }
@@ -156,7 +159,7 @@ export interface ImageExtensionData {
   height: number;
 }
 
-export class ImageExtension<T = string> extends Extension<T, ImageExtensionData> {
+export class ImageExtension<T = string> extends AbstractExtension<T, ImageExtensionData> {
   constructor(manifest: IExtensionManifest, methods: IExtensionLifeCycle<T, ImageExtensionData>) {
     super(ExtensionType.Image, manifest, methods);
   }
