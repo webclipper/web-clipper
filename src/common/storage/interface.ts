@@ -1,4 +1,4 @@
-import { AccountPreference, ImageHosting } from '../../store/reducers/userPreference/interface';
+import { AccountPreference, ImageHosting } from 'common/types';
 export interface PreferenceStorage {
   accounts: AccountPreference[];
   imageHosting: ImageHosting[];
