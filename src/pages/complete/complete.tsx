@@ -1,16 +1,11 @@
 import * as React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'dva';
 import { ToolContainer } from 'components/container';
 import * as styles from './complete.scss';
 import { Button } from 'antd';
-import { asyncRemoveTool } from 'pageActions/userPreference';
-import { GlobalStore } from '@/common/types';
+import { GlobalStore, DvaRouterProps } from '@/common/types';
 import Section from 'components/section';
-
-const useActions = {
-  asyncRemoveTool: asyncRemoveTool.started,
-};
+import { asyncRemoveTool } from '@/actions/userPreference';
 
 const mapStateToProps = ({
   clipper: { completeStatus, currentAccountId },
@@ -23,15 +18,13 @@ const mapStateToProps = ({
     completeStatus,
   };
 };
-type PageStateProps = ReturnType<typeof mapStateToProps>;
-type PageDispatchProps = typeof useActions;
-type PageProps = PageStateProps & PageDispatchProps;
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators<PageDispatchProps, PageDispatchProps>(useActions, dispatch);
 
-const Page: React.FC<PageProps> = props => {
+type PageStateProps = ReturnType<typeof mapStateToProps>;
+type PageProps = PageStateProps & DvaRouterProps;
+
+const Page: React.FC<PageProps> = ({ dispatch, completeStatus, currentAccount, servicesMeta }) => {
   function closeTool() {
-    props.asyncRemoveTool();
+    dispatch(asyncRemoveTool.started());
   }
   const renderError = (
     <ToolContainer onClickCloseButton={closeTool}>
@@ -40,7 +33,6 @@ const Page: React.FC<PageProps> = props => {
       </a>
     </ToolContainer>
   );
-  const { completeStatus, currentAccount, servicesMeta } = props;
   if (!completeStatus || !currentAccount) {
     return renderError;
   }
@@ -63,7 +55,4 @@ const Page: React.FC<PageProps> = props => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Page as React.ComponentType<PageProps>);
+export default connect(mapStateToProps)(Page);
