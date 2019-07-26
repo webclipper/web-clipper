@@ -6,6 +6,7 @@ module.exports = {
     '^extensions/(.*)': '<rootDir>/src/extensions/$1',
     '^actions/(.*)': '<rootDir>/src/store/actions/$1',
   },
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
