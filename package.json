@@ -75,7 +75,7 @@
     "commitizen": "^3.1.1",
     "compressing": "^1.4.0",
     "copy-webpack-plugin": "^5.0.3",
-    "css-loader": "^1.0.0",
+    "css-loader": "^3.1.0",
     "cz-conventional-changelog": "^2.1.0",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.14.0",
