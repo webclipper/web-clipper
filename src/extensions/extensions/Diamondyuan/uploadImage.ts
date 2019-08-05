@@ -1,4 +1,4 @@
-import { ToolExtension } from '../../interface';
+import { ToolExtension } from '@web-clipper/extensions';
 
 export default new ToolExtension(
   {

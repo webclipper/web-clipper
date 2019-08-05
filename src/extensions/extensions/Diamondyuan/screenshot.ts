@@ -1,5 +1,5 @@
-import { ImageExtension } from '../../interface';
-import { SelectAreaPosition } from '../../../common/areaSelector/index';
+import { ImageExtension } from '@web-clipper/extensions';
+import { SelectAreaPosition } from '@web-clipper/area-selector';
 
 export default new ImageExtension<SelectAreaPosition>(
   {

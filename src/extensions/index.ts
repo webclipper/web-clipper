@@ -1,4 +1,4 @@
-import { SerializedExtensionWithId } from './interface';
+import { SerializedExtensionWithId } from '@web-clipper/extensions';
 
 const context = require.context('./extensions', true, /\.[t|j]s$/);
 

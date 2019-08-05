@@ -15,7 +15,7 @@ import {
   asyncChangeAccount,
 } from 'pageActions/clipper';
 import { asyncHideTool, asyncRunExtension } from 'pageActions/userPreference';
-import { SerializedExtensionWithId, ExtensionType, InitContext } from 'extensions/interface';
+import { SerializedExtensionWithId, ExtensionType, InitContext } from '@web-clipper/extensions';
 import Section from 'components/section';
 import { DvaRouterProps } from 'common/types';
 

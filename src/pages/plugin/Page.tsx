@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { ExtensionType } from '../../extensions/interface';
+import { ExtensionType } from '@web-clipper/extensions';
 import TextEditor from './TextEditor';
 import ImageEditor from './ImageEditor';
 import { GlobalStore, DvaRouterProps } from '@/common/types';

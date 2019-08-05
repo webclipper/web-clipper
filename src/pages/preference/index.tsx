@@ -11,7 +11,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { CenterContainer } from 'components/container';
 import { connect, routerRedux } from 'dva';
 import { List, Select, Switch, Tabs, Icon } from 'antd';
-import { ExtensionType, SerializedExtensionWithId } from 'extensions/interface';
+import { ExtensionType, SerializedExtensionWithId } from '@web-clipper/extensions';
 import { GlobalStore } from '@/common/types';
 
 const TabPane = Tabs.TabPane;

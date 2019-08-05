@@ -1,4 +1,4 @@
-import { ImageExtension } from '../../interface';
+import { ImageExtension } from '@web-clipper/extensions';
 
 export default new ImageExtension<string>(
   {
