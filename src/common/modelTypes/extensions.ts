@@ -1,4 +1,4 @@
-import { SerializedExtensionWithId, IExtensionManifest } from '@/extensions/interface';
+import { SerializedExtensionWithId, IExtensionManifest } from '@web-clipper/extensions';
 
 export interface ExtensionRegistry {
   readonly name: string;
@@ -16,5 +16,4 @@ export interface ExtensionRegistry {
 
 export interface ExtensionStore {
   extensions: SerializedExtensionWithId[];
-  registry: ExtensionRegistry[];
 }

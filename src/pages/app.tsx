@@ -11,6 +11,7 @@ import PluginPage from '@/pages/plugin/Page';
 import Tool from '@/pages/tool';
 import clipper from '@/models/clipper';
 import version from '@/models/version';
+import extension from '@/models/extension';
 import userPreference from '@/models/userPreference';
 import createLoading from 'dva-loading';
 
@@ -71,5 +72,6 @@ app.router(router => {
 app.model(clipper);
 app.model(userPreference);
 app.model(version);
+app.model(extension);
 
 app.start(element);
