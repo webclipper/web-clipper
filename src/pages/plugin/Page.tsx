@@ -30,7 +30,7 @@ const ClipperPluginPage: React.FC<PageProps & DvaRouterProps> = props => {
   if (extension.type === ExtensionType.Image) {
     return <ImageEditor extension={extension} pathname={pathname} />;
   }
-  return <div>un support plugin</div>;
+  return <Redirect to="/"></Redirect>;
 };
 
 export default connect(mapStateToProps)(ClipperPluginPage);
