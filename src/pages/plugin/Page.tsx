@@ -20,7 +20,7 @@ const ClipperPluginPage: React.FC<PageProps & DvaRouterProps> = props => {
     },
     extensions,
   } = props;
-  const extension = extensions.find(o => `/plugins/${o.id}` === pathname);
+  const extension = extensions.find(o => o.router === pathname);
   if (!extension) {
     return <Redirect to="/"></Redirect>;
   }

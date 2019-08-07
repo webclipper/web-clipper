@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import { asyncRunExtension } from 'pageActions/userPreference';
-import { SerializedExtensionWithId } from '../../extensions/interface';
+import { SerializedExtensionWithId } from '@web-clipper/extensions';
 import { EditorContainer } from 'components/container';
 import { isUndefined } from 'common/object';
 import { GlobalStore, ImageClipperData } from '@/common/types';

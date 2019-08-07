@@ -3,7 +3,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'dva';
 import { changeData } from 'pageActions/clipper';
 import { asyncRunExtension } from 'pageActions/userPreference';
-import { SerializedExtensionWithId } from '../../extensions/interface';
+import { SerializedExtensionWithId } from '@web-clipper/extensions';
 import * as HyperMD from 'hypermd';
 import { EditorContainer } from 'components/container';
 import { isUndefined } from 'common/object';
