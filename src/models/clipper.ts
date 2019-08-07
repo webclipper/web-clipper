@@ -85,7 +85,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
       if (currentRepository) {
         repositoryId = currentRepository.id;
       }
-      const extension = extensions.find(o => `/plugins/${o.id}` === pathname);
+      const extension = extensions.find(o => o.router === pathname);
       const data = clipperData[pathname];
       return {
         repositoryId,
