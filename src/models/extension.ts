@@ -1,6 +1,6 @@
 import { GlobalStore } from '@/common/types';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
-import { loadInternalExtensions } from '@/actions/extension';
+import { loadExtensions } from '@/actions/extension';
 import { extensions } from 'extensions/index';
 
 const initStore: GlobalStore['extension'] = {
@@ -8,7 +8,7 @@ const initStore: GlobalStore['extension'] = {
 };
 
 const builder = new DvaModelBuilder(initStore, 'extension').case(
-  loadInternalExtensions,
+  loadExtensions,
   (state, extensions) => ({
     ...state,
     extensions,
@@ -16,7 +16,7 @@ const builder = new DvaModelBuilder(initStore, 'extension').case(
 );
 
 builder.subscript(({ dispatch }) => {
-  dispatch(removeActionNamespace(loadInternalExtensions(extensions)));
+  dispatch(removeActionNamespace(loadExtensions(extensions)));
 });
 
 export default builder.build();
