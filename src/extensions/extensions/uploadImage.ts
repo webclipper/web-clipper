@@ -5,7 +5,7 @@ export default new ToolExtension(
     name: '上传图片',
     icon: 'sync',
     version: '0.0.1',
-    description: '同步图片到语雀图床',
+    description: '同步图片到图床',
   },
   {
     init: ({ pathname, currentImageHostingService }) =>
@@ -28,7 +28,9 @@ export default new ToolExtension(
           try {
             const url = await imageService.uploadImageUrl(image);
             foo = foo.replace(image, url);
-          } catch (_error) {}
+          } catch (_error) {
+            message.info('上传图片失败');
+          }
         }
       }
       message.info('上传图片成功');

@@ -5,6 +5,7 @@ export default new TextExtension(
     name: '手动选取',
     icon: 'select',
     version: '0.0.1',
+    description: '手动选取页面元素',
   },
   {
     run: async context => {

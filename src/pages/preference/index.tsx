@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as styles from './index.scss';
-import UserList from './userList/index';
+import UserList from './userList';
 import ImageHosting from './imageHosting';
+import Extensions from './extensions';
 import {
   asyncSetEditorLiveRendering,
   asyncSetShowLineNumber,
@@ -9,10 +10,13 @@ import {
 } from 'pageActions/userPreference';
 import { bindActionCreators, Dispatch } from 'redux';
 import { CenterContainer } from 'components/container';
-import { connect, routerRedux } from 'dva';
+import { connect, routerRedux, router } from 'dva';
 import { List, Select, Switch, Tabs, Icon } from 'antd';
 import { ExtensionType, SerializedExtensionWithId } from '@web-clipper/extensions';
 import { GlobalStore } from '@/common/types';
+
+const { withRouter } = router;
+const ExtensionsWithRouter = withRouter(Extensions);
 
 const TabPane = Tabs.TabPane;
 
@@ -56,8 +60,11 @@ class Page extends React.Component<PageProps> {
             <Icon type="close" />
           </div>
           <div style={{ background: 'white', height: '100%' }}>
-            <Tabs defaultActiveKey="base" tabPosition="left" style={{ height: '100%' }}>
-              <TabPane tab="账户设置" key="base" className={styles.tabPane}>
+            <Tabs defaultActiveKey="userList" tabPosition="left" style={{ height: '100%' }}>
+              <TabPane tab="插件设置" key="extensions" className={styles.tabPane}>
+                <ExtensionsWithRouter />
+              </TabPane>
+              <TabPane tab="账户设置" key="userList" className={styles.tabPane}>
                 <UserList />
               </TabPane>
               <TabPane tab="图床设置" key="imageHost" className={styles.tabPane}>

@@ -1,4 +1,4 @@
-import { History } from 'history';
+import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'react';
 import { UserPreferenceStore } from '@/common/modelTypes/userPreference';
 import { ClipperStore } from '@/common/modelTypes/clipper';
@@ -9,10 +9,9 @@ import { ExtensionStore } from './modelTypes/extensions';
 export * from '@/common/modelTypes/userPreference';
 export * from '@/common/modelTypes/clipper';
 
-export interface DvaRouterProps {
-  history: History;
+export type DvaRouterProps = {
   dispatch: Dispatch<any>;
-}
+} & RouteComponentProps;
 
 interface DvaLoadingState {
   global: boolean;
