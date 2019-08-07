@@ -1,7 +1,7 @@
 import { AccountPreference, ImageHosting } from '@/common/types';
 import { PreferenceStorage } from 'common/storage/interface';
 import { Repository, UserInfo } from 'common/backend/index';
-import { SerializedExtensionWithId } from '@/extensions/interface';
+import { SerializedExtensionWithId } from '@web-clipper/extensions';
 import { actionCreatorFactory } from 'dva-model-creator';
 
 const actionCreator = actionCreatorFactory('userPreference');
