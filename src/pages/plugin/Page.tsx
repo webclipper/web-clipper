@@ -1,9 +1,11 @@
 import React from 'react';
-import { connect } from 'dva';
+import { connect, router } from 'dva';
 import { ExtensionType } from '@web-clipper/extensions';
 import TextEditor from './TextEditor';
 import ImageEditor from './ImageEditor';
 import { GlobalStore, DvaRouterProps } from '@/common/types';
+
+const { Redirect } = router;
 
 const mapStateToProps = ({ extension: { extensions } }: GlobalStore) => {
   return { extensions };
@@ -20,7 +22,7 @@ const ClipperPluginPage: React.FC<PageProps & DvaRouterProps> = props => {
   } = props;
   const extension = extensions.find(o => `/plugins/${o.id}` === pathname);
   if (!extension) {
-    return <div />;
+    return <Redirect to="/"></Redirect>;
   }
   if (extension.type === ExtensionType.Text) {
     return <TextEditor extension={extension} pathname={pathname} />;
