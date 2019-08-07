@@ -5,7 +5,7 @@ import TextEditor from './TextEditor';
 import ImageEditor from './ImageEditor';
 import { GlobalStore, DvaRouterProps } from '@/common/types';
 
-const mapStateToProps = ({ userPreference: { extensions } }: GlobalStore) => {
+const mapStateToProps = ({ extension: { extensions } }: GlobalStore) => {
   return { extensions };
 };
 

@@ -29,7 +29,8 @@ const mapStateToProps = ({
     currentImageHostingService,
   },
   loading,
-  userPreference: { accounts, extensions },
+  userPreference: { accounts },
+  extension: { extensions },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   const usePlugin = true;

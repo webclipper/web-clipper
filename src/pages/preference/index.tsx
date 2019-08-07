@@ -24,14 +24,8 @@ const useActions = {
 };
 
 const mapStateToProps = ({
-  userPreference: {
-    remoteVersion,
-    accounts,
-    liveRendering,
-    showLineNumber,
-    defaultPluginId,
-    extensions,
-  },
+  userPreference: { remoteVersion, accounts, liveRendering, showLineNumber, defaultPluginId },
+  extension: { extensions },
 }: GlobalStore) => {
   return {
     remoteVersion,

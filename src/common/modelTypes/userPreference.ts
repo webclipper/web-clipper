@@ -1,5 +1,4 @@
 import { Repository, ServiceMeta, ImageHostingServiceMeta } from '@/common/backend';
-import { SerializedExtensionWithId } from '@web-clipper/extensions';
 
 export interface UserPreferenceStore {
   remoteVersion?: string;
@@ -26,7 +25,6 @@ export interface UserPreferenceStore {
   imageHostingServicesMeta: {
     [type: string]: ImageHostingServiceMeta;
   };
-  extensions: SerializedExtensionWithId[];
 }
 
 export interface AccountPreference {

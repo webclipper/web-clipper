@@ -27,7 +27,6 @@ import {
 import { asyncChangeAccount, initTabInfo, changeData } from 'pageActions/clipper';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
 import { UserPreferenceStore } from 'common/types';
-import { extensions } from 'extensions/index';
 import {
   services,
   imageHostingServices,
@@ -59,7 +58,6 @@ const defaultState: UserPreferenceStore = {
   imageHosting: [],
   servicesMeta,
   imageHostingServicesMeta,
-  extensions: extensions,
   showLineNumber: true,
   liveRendering: true,
   initializeForm: {
