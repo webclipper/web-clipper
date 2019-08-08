@@ -3,16 +3,11 @@ import * as styles from './index.scss';
 import UserList from './userList';
 import ImageHosting from './imageHosting';
 import Extensions from './extensions';
-import {
-  asyncSetEditorLiveRendering,
-  asyncSetShowLineNumber,
-  asyncSetDefaultPluginId,
-} from 'pageActions/userPreference';
+import { asyncSetEditorLiveRendering, asyncSetShowLineNumber } from 'pageActions/userPreference';
 import { bindActionCreators, Dispatch } from 'redux';
 import { CenterContainer } from 'components/container';
 import { connect, routerRedux, router } from 'dva';
-import { List, Select, Switch, Tabs, Icon } from 'antd';
-import { ExtensionType, SerializedExtensionWithId } from '@web-clipper/extensions';
+import { List, Switch, Tabs, Icon } from 'antd';
 import { GlobalStore } from '@/common/types';
 
 const { withRouter } = router;
@@ -24,20 +19,15 @@ const useActions = {
   push: routerRedux.push,
   asyncSetEditorLiveRendering: asyncSetEditorLiveRendering.started,
   asyncSetShowLineNumber: asyncSetShowLineNumber.started,
-  asyncSetDefaultPluginId: asyncSetDefaultPluginId.started,
 };
 
 const mapStateToProps = ({
-  userPreference: { remoteVersion, accounts, liveRendering, showLineNumber, defaultPluginId },
-  extension: { extensions },
+  userPreference: { accounts, liveRendering, showLineNumber },
 }: GlobalStore) => {
   return {
-    remoteVersion,
     showLineNumber,
-    defaultPluginId,
     liveRendering,
     accounts,
-    extensions: extensions.filter(o => o.type !== ExtensionType.Tool),
   };
 };
 type PageStateProps = ReturnType<typeof mapStateToProps>;
@@ -52,7 +42,6 @@ class Page extends React.Component<PageProps> {
   };
 
   render() {
-    const { defaultPluginId, extensions } = this.props;
     return (
       <CenterContainer>
         <div className={styles.mainContent}>
@@ -69,34 +58,6 @@ class Page extends React.Component<PageProps> {
               </TabPane>
               <TabPane tab="图床设置" key="imageHost" className={styles.tabPane}>
                 <ImageHosting />
-              </TabPane>
-              <TabPane tab="工具设置" key="tool" className={styles.tabPane}>
-                <List.Item
-                  actions={[
-                    <Select
-                      key="selectDefaultPlugin"
-                      allowClear
-                      value={defaultPluginId ? defaultPluginId : -1}
-                      style={{ width: '100px' }}
-                      onSelect={(value: any) => {
-                        let selectValue = null;
-                        if (value !== -1) {
-                          selectValue = value;
-                        }
-                        this.props.asyncSetDefaultPluginId({
-                          pluginId: selectValue,
-                        });
-                      }}
-                    >
-                      <Select.Option value={-1}>无</Select.Option>
-                      {(extensions as SerializedExtensionWithId[]).map(o => (
-                        <Select.Option key={o.id}>{o.manifest.name}</Select.Option>
-                      ))}
-                    </Select>,
-                  ]}
-                >
-                  <List.Item.Meta title="默认插件" description="开启剪藏后使用的默认插件" />
-                </List.Item>
               </TabPane>
               <TabPane tab="编辑器设置" key="editor" className={styles.tabPane}>
                 <List.Item
