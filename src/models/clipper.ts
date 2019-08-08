@@ -41,7 +41,12 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     }
     const { type, defaultRepositoryId, imageHosting: imageHostingId, ...info } = account;
     const documentService = documentServiceFactory(type, info);
-    const repositories = yield call(documentService.getRepositories);
+    let repositories = [];
+    try {
+      repositories = yield call(documentService.getRepositories);
+    } catch (error) {
+      message.error(error.message);
+    }
     backend.setDocumentService(documentService);
     let currentImageHostingService: ClipperStore['currentImageHostingService'];
     if (imageHostingId) {
