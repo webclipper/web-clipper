@@ -34,9 +34,8 @@ const mapStateToProps = ({
   extension: { extensions },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
-  const usePlugin = true;
   const creatingDocument = loading.effects[asyncCreateDocument.started.type];
-  const disableCreateDocument = !usePlugin || creatingDocument;
+  const disableCreateDocument = creatingDocument;
   const loadingAccount = loading.effects[asyncChangeAccount.started.type];
   return {
     loadingAccount,
@@ -50,7 +49,6 @@ const mapStateToProps = ({
     currentRepository,
     currentAccount,
     repositories,
-    usePlugin,
     disableCreateDocument,
   };
 };
