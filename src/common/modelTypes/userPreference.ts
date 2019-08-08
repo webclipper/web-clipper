@@ -4,7 +4,6 @@ export interface UserPreferenceStore {
   remoteVersion?: string;
   accounts: AccountPreference[];
   imageHosting: ImageHosting[];
-  defaultPluginId?: string | null;
   defaultAccountId?: string;
   showLineNumber: boolean;
   liveRendering: boolean;

@@ -102,14 +102,6 @@ export const asyncHideTool = actionCreator.async<void, void, void>('ASYNC_HIDE_T
 
 export const asyncRemoveTool = actionCreator.async<void, void, void>('ASYNC_REMOVE_TOOL');
 
-export const asyncSetDefaultPluginId = actionCreator.async<
-  {
-    pluginId: string | null;
-  },
-  void,
-  void
->('ASYNC_SET_DEFAULT_PLUGIN_ID');
-
 export const asyncRunExtension = actionCreator.async<
   {
     pathname: string;

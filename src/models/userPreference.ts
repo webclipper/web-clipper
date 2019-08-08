@@ -13,7 +13,6 @@ import {
   asyncSetShowLineNumber,
   asyncUpdateCurrentAccountIndex,
   initUserPreference,
-  asyncSetDefaultPluginId,
   asyncVerificationAccessToken,
   asyncDeleteImageHosting,
   asyncAddImageHosting,
@@ -75,10 +74,6 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
   .case(asyncSetEditorLiveRendering.done, (state, { result: { value: liveRendering } }) => ({
     ...state,
     liveRendering,
-  }))
-  .case(asyncSetDefaultPluginId.done, (state, { params: { pluginId: defaultPluginId } }) => ({
-    ...state,
-    defaultPluginId,
   }))
   .case(asyncDeleteAccount.done, (state, { result: { accounts, defaultAccountId } }) => ({
     ...state,
@@ -303,14 +298,6 @@ builder
   })
   .takeEvery(asyncRemoveTool.started, function*(_, { call }) {
     yield call(browserService.sendActionToCurrentTab, removeTool());
-  })
-  .takeEvery(asyncSetDefaultPluginId.started, function*(payload, { call, put }) {
-    yield call(storage.setDefaultPluginId, payload.pluginId);
-    yield put(
-      asyncSetDefaultPluginId.done({
-        params: payload,
-      })
-    );
   })
   .takeEvery(asyncEditImageHosting.started, function*(payload, { call, put }) {
     const { id, value, closeModal } = payload;
