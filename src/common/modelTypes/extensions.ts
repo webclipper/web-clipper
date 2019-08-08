@@ -16,4 +16,5 @@ export interface ExtensionRegistry {
 
 export interface ExtensionStore {
   extensions: SerializedExtensionWithId[];
+  defaultExtensionId?: string | null;
 }
