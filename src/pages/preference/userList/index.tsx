@@ -203,9 +203,9 @@ class Page extends React.Component<PageProps, PageState> {
     return (
       <React.Fragment>
         {this.getAccountModal()}
-        <Row gutter={8}>
+        <Row gutter={10}>
           {this.props.accounts.map(account => (
-            <Col span={8} key={account.id}>
+            <Col span={8} key={account.id} style={{ marginBottom: 10 }}>
               <AccountItem
                 isDefault={defaultAccountId === account.id}
                 id={account.id}
