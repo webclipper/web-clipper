@@ -439,6 +439,13 @@
   dependencies:
     "@types/filesystem" "*"
 
+"@types/chrome@^0.0.88":
+  version "0.0.88"
+  resolved "https://registry.npmjs.org/@types/chrome/-/chrome-0.0.88.tgz#0041a101d69f78008910927c5b3299a00d8660db"
+  integrity sha512-JBsIrBZ2adJhlXvJ+1j0xLbcfOfwee/WAg7Lp2NE+Wf3m0vXMJFWv/PPjqNk5ZUXDeY/qDxPHe+PUjxnl8HWFg==
+  dependencies:
+    "@types/filesystem" "*"
+
 "@types/codemirror@^0.0.74":
   version "0.0.74"
   resolved "https://registry.npm.taobao.org/@types/codemirror/download/@types/codemirror-0.0.74.tgz#7ca146f7f3414166e7501000d691b2f18d978d10"
@@ -768,6 +775,13 @@
   integrity sha512-sVi5Q/AdNmO/upQqMms0jfnKzZstiqmnFfDd+KZ2UpcVnCoooXdTlz5MtZrExUkCbSi4fuajvgM5mkGUmvFv9w==
   dependencies:
     jquery "^3.4.1"
+
+"@web-clipper/chrome-promise@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.npmjs.org/@web-clipper/chrome-promise/-/chrome-promise-0.0.14.tgz#ae2c4d6c2f9ac2d08dc62be64c09ed88751316da"
+  integrity sha512-PoLJ+Igo0NrWGaRNR3vNGFAkCKg1mCWL44XYicMDCl4SyIwta7A+QItsY0Rvct93iS0HYau5OniOA9GB/5L+2g==
+  dependencies:
+    "@types/chrome" "^0.0.88"
 
 "@web-clipper/extensions@^0.0.3":
   version "0.0.3"
