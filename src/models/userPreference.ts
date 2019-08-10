@@ -4,6 +4,7 @@ import storage from 'common/storage';
 import { message } from 'antd';
 import { GlobalStore } from '@/common/types';
 import browserService from 'common/browser';
+import * as browser from '@web-clipper/chrome-promise';
 import { hideTool, removeTool } from 'browserActions/message';
 import update from 'immutability-helper';
 import {
@@ -399,8 +400,10 @@ builder
 
 builder.subscript(async function initStore({ dispatch }) {
   const result = await storage.getPreference();
-  const tabInfo = await browserService.getCurrentTab();
-  dispatch(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
+  const tabInfo = await browser.tabs.getCurrent();
+  if (tabInfo.title && tabInfo.url) {
+    dispatch(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
+  }
   dispatch(removeActionNamespace(initUserPreference(result)));
   const { accounts, defaultAccountId: id } = result;
   if (accounts.length === 0 || !id || accounts.every(o => o.id !== id)) {

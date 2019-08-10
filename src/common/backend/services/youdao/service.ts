@@ -1,4 +1,4 @@
-import browserService from 'common/browser';
+import * as browser from '@web-clipper/chrome-promise';
 import { CompleteStatus } from './../interface';
 import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
 import axios, { AxiosInstance } from 'axios';
@@ -130,9 +130,13 @@ export default class YoudaoDocumentService implements DocumentService {
   };
 
   private getCSTK = async () => {
-    return browserService.getCookie({
+    const cookie = await browser.cookies.get({
       url: 'https://note.youdao.com',
       name: 'YNOTE_CSTK',
     });
+    if (!cookie) {
+      throw new Error('Need Login');
+    }
+    return cookie.value;
   };
 }
