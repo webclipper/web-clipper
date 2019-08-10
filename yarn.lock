@@ -776,12 +776,13 @@
   dependencies:
     jquery "^3.4.1"
 
-"@web-clipper/chrome-promise@^0.0.14":
-  version "0.0.14"
-  resolved "https://registry.npmjs.org/@web-clipper/chrome-promise/-/chrome-promise-0.0.14.tgz#ae2c4d6c2f9ac2d08dc62be64c09ed88751316da"
-  integrity sha512-PoLJ+Igo0NrWGaRNR3vNGFAkCKg1mCWL44XYicMDCl4SyIwta7A+QItsY0Rvct93iS0HYau5OniOA9GB/5L+2g==
+"@web-clipper/chrome-promise@^0.0.15":
+  version "0.0.15"
+  resolved "https://registry.npmjs.org/@web-clipper/chrome-promise/-/chrome-promise-0.0.15.tgz#1ffa645bba79354f485d2840a123b2aa32826c5b"
+  integrity sha512-F6J2gHP+b9NkHgHN/cKXaIfXkR1CPvzIKtKp+5/KbfH5Eqj+9HPIazJIaXBBY1/DMmSTimX/cYiHhd2X1eBm7Q==
   dependencies:
     "@types/chrome" "^0.0.88"
+    "@web-clipper/shared" "^0.0.15"
 
 "@web-clipper/extensions@^0.0.3":
   version "0.0.3"
@@ -810,6 +811,13 @@
   integrity sha512-6J/7v3e+fOuv8ryhp2FD8gzHad7psqkxC222SHW7dDTobUaH2jvU7yEdddRHDj522DvCDxAIdjyZ6dcOvs/RWg==
   dependencies:
     dva-model-creator "^0.3.0"
+
+"@web-clipper/shared@^0.0.15":
+  version "0.0.15"
+  resolved "https://registry.npmjs.org/@web-clipper/shared/-/shared-0.0.15.tgz#51a621dfca6954e21374b7e169e1a2c700d34f9a"
+  integrity sha512-mUOD7MUfxuwm/O7w+6AADafF109tmO1sSu7BJaBQevphVfnkFLbea1khhE/VwOqU9TdEGgFZiB6MDc2VNSVecA==
+  dependencies:
+    blueimp-md5 "^2.11.0"
 
 "@web-clipper/shared@^0.0.7":
   version "0.0.7"

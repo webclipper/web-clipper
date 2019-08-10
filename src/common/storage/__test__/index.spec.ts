@@ -1,9 +1,9 @@
-import { PreferenceStorage } from './../interface';
+import { PreferenceStorage, TypedCommonStorageInterface, CommonStorage } from './../interface';
 import { AccountPreference } from '@/common/types';
 /* eslint-disable max-nested-callbacks */
 /* eslint-disable no-undefined */
 import update from 'immutability-helper';
-import { TypedCommonStorage, CommonStorage, TypedCommonStorageInterface } from '../index';
+import { TypedCommonStorage } from '../typedCommonStorage';
 
 class MockStorage implements CommonStorage {
   private data: any;

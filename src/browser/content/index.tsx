@@ -8,7 +8,8 @@ import TurndownService from 'turndown';
 import { MessageListenerCombiner } from '@web-clipper/message-listener-combiner';
 import { clickIcon, doYouAliveNow } from 'browserActions/browser';
 import { removeTool, runScript, hideTool } from 'browserActions/message';
-import { ContentScriptContext } from 'extensions/interface';
+import { ContentScriptContext } from '@web-clipper/extensions';
+import * as browser from '@web-clipper/chrome-promise';
 
 const turndownService = new TurndownService({ codeBlockStyle: 'fenced' });
 turndownService.use(plugins);
@@ -27,7 +28,7 @@ const listeners = new MessageListenerCombiner()
   .case(clickIcon, () => {
     if ($(`.${styles.toolFrame}`).length === 0) {
       $('body').append(
-        `<iframe src="${chrome.extension.getURL('tool.html')}" class=${styles.toolFrame}></iframe>`
+        `<iframe src="${browser.extension.getURL('tool.html')}" class=${styles.toolFrame}></iframe>`
       );
     } else {
       $(`.${styles.toolFrame}`).toggle();
@@ -65,4 +66,4 @@ const listeners = new MessageListenerCombiner()
     return true;
   });
 
-chrome.runtime.onMessage.addListener(listeners.handle);
+browser.runtime.onMessage.addListener(listeners.handle);
