@@ -2,10 +2,10 @@ import { TextExtension } from '@web-clipper/extensions';
 
 export default new TextExtension(
   {
-    name: '智能提取',
+    name: 'Readability',
     icon: 'copy',
     version: '0.0.1',
-    description: '智能分析出页面的主要部分',
+    description: 'Intelligent extraction of webpage main content.',
   },
   {
     run: async context => {

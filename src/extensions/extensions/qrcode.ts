@@ -2,10 +2,10 @@ import { ImageExtension } from '@web-clipper/extensions';
 
 export default new ImageExtension<string>(
   {
-    name: '二维码',
+    name: 'QR code',
     icon: 'qrcode',
     version: '0.0.1',
-    description: '把当前页面的 URL 转换成二维码',
+    description: 'Convert the URL of the current page to a QR code.',
   },
   {
     init: ({ currentImageHostingService }) => !!currentImageHostingService,

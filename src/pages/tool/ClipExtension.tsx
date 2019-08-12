@@ -3,6 +3,7 @@ import * as styles from './index.scss';
 import { Button, Icon } from 'antd';
 import Section from 'components/section';
 import { SerializedExtensionWithId } from '@web-clipper/extensions';
+import { FormattedMessage } from 'react-intl';
 
 type PageProps = {
   extensions: SerializedExtensionWithId[];
@@ -17,7 +18,10 @@ const ClipExtensions: React.FC<PageProps> = ({ extensions, pathname, onClick }) 
     }
   };
   return (
-    <Section title="剪藏格式" line>
+    <Section
+      title={<FormattedMessage id="tool.clipExtensions" defaultMessage="Clip Extensions" />}
+      line
+    >
       {extensions.map(plugin => {
         const useThisPlugin = plugin.router === pathname;
         const buttonStyle = useThisPlugin ? { color: '#40a9ff' } : {};

@@ -3,7 +3,7 @@ import * as styles from './index.scss';
 import ClipExtension from './ClipExtension';
 import repositorySelectOptions from 'components/repositorySelectOptions';
 import ToolExtensions from './toolExtensions';
-import { Avatar, Button, Icon, Input, Select } from 'antd';
+import { Avatar, Button, Icon, Input, Select, Badge } from 'antd';
 import { connect, routerRedux } from 'dva';
 import { GlobalStore } from '@/common/types';
 import { isEqual } from 'lodash';
@@ -19,6 +19,7 @@ import { SerializedExtensionWithId, InitContext } from '@web-clipper/extensions'
 import Section from 'components/section';
 import { DvaRouterProps } from 'common/types';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
+import { FormattedMessage } from 'react-intl';
 
 const mapStateToProps = ({
   clipper: {
@@ -127,7 +128,7 @@ const Page = React.memo<PageProps>(
 
     return (
       <ToolContainer onClickCloseButton={() => dispatch(asyncHideTool.started())}>
-        <Section title="笔记标题">
+        <Section title={<FormattedMessage id="tool.title"></FormattedMessage>}>
           <Input value={title} onChange={onTitleChange} />
           <Button
             className={styles.saveButton}
@@ -139,7 +140,7 @@ const Page = React.memo<PageProps>(
             onClick={handleCreateDocument}
             block
           >
-            保存内容
+            {<FormattedMessage id="tool.save"></FormattedMessage>}
           </Button>
         </Section>
         <ToolExtensions
@@ -158,7 +159,7 @@ const Page = React.memo<PageProps>(
           onClick={router => push(router)}
           pathname={pathname}
         />
-        <Section title="保存的知识库">
+        <Section title={<FormattedMessage id="tool.repository"></FormattedMessage>}>
           <Select
             loading={loadingAccount}
             disabled={loadingAccount}
@@ -185,7 +186,9 @@ const Page = React.memo<PageProps>(
                 }
               }}
             >
-              <Icon type="setting" />
+              <Badge>
+                <Icon type="setting" style={{ fontSize: 18 }} />
+              </Badge>
             </Button>
             <Select
               value={props.currentAccountId}

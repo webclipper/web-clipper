@@ -2,9 +2,9 @@ import { TextExtension } from '@web-clipper/extensions';
 
 export default new TextExtension(
   {
-    name: '整个页面',
+    name: 'Full Page',
     version: '0.0.1',
-    description: '保存整个页面',
+    description: 'Save Full Page and turn ro Markdown.',
     icon: 'copy',
   },
   {

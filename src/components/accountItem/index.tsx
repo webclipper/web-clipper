@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Button, Icon } from 'antd';
 import * as styles from './index.scss';
+import { FormattedMessage } from 'react-intl';
 
 interface PageProps {
   isDefault: boolean;
@@ -44,10 +45,16 @@ export default class Page extends React.Component<PageProps> {
         </div>
         <div className={styles.operation}>
           <Button className={styles.editButton} type="primary" onClick={this.handleEdit}>
-            编辑
+            <FormattedMessage
+              id="component.accountItem.edit"
+              defaultMessage="Edit"
+            ></FormattedMessage>
           </Button>
           <Button type="danger" onClick={this.handleDelete}>
-            删除
+            <FormattedMessage
+              id="component.accountItem.delete"
+              defaultMessage="Delete"
+            ></FormattedMessage>
           </Button>
         </div>
       </div>

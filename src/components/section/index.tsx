@@ -3,7 +3,7 @@ import { Divider } from 'antd';
 import styles from './index.scss';
 
 interface Props {
-  title?: string;
+  title?: string | React.ReactNode;
   line?: boolean;
 }
 

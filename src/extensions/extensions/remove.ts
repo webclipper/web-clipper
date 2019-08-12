@@ -2,10 +2,10 @@ import { ToolExtension } from '@web-clipper/extensions';
 
 export default new ToolExtension(
   {
-    name: '删除元素',
+    name: 'Delete Element',
     icon: 'delete',
     version: '0.0.1',
-    description: '删除页面元素',
+    description: 'Delete selected page elements.',
   },
   {
     run: async context => {

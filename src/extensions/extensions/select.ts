@@ -2,10 +2,10 @@ import { TextExtension } from '@web-clipper/extensions';
 
 export default new TextExtension(
   {
-    name: '手动选取',
+    name: 'Manual selection',
     icon: 'select',
     version: '0.0.1',
-    description: '手动选取页面元素',
+    description: 'Manual selection page element.',
   },
   {
     run: async context => {

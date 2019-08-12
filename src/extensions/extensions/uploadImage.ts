@@ -2,10 +2,10 @@ import { ToolExtension } from '@web-clipper/extensions';
 
 export default new ToolExtension(
   {
-    name: '上传图片',
+    name: 'Upload Image',
     icon: 'sync',
     version: '0.0.1',
-    description: '同步图片到图床',
+    description: 'Upload images to image host.',
   },
   {
     init: ({ pathname, currentImageHostingService }) =>

@@ -14,6 +14,7 @@ import version from '@/models/version';
 import extension from '@/models/extension';
 import userPreference from '@/models/userPreference';
 import createLoading from 'dva-loading';
+import LocalWrapper from './locale';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -58,14 +59,16 @@ app.use(
 
 app.router(router => {
   return (
-    <Router history={router!.history}>
-      <Switch>
-        <Route exact path="/" component={Tool} />
-        <Route exact path="/complete" component={Complete} />
-        <Route exact path="/preference" component={withTool(preference)} />
-        <Route path="/plugins/:id" component={withTool(PluginPage)} />
-      </Switch>
-    </Router>
+    <LocalWrapper>
+      <Router history={router!.history}>
+        <Switch>
+          <Route exact path="/" component={Tool} />
+          <Route exact path="/complete" component={Complete} />
+          <Route exact path="/preference" component={withTool(preference)} />
+          <Route path="/plugins/:id" component={withTool(PluginPage)} />
+        </Switch>
+      </Router>
+    </LocalWrapper>
   );
 });
 

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { List, Icon, Avatar, Popconfirm } from 'antd';
 import * as styles from './index.scss';
+import { FormattedMessage } from 'react-intl';
 
 interface PageProps {
   icon: string;
@@ -27,7 +28,16 @@ export default class Page extends React.Component<PageProps> {
   };
 
   render() {
-    const { name, remark = '暂无描述', icon } = this.props;
+    const {
+      name,
+      remark = (
+        <FormattedMessage
+          id="component.imagehostingListItem.noDescription"
+          defaultMessage="No Description"
+        ></FormattedMessage>
+      ),
+      icon,
+    } = this.props;
     let avatar;
 
     if (icon.startsWith('http')) {
@@ -38,7 +48,10 @@ export default class Page extends React.Component<PageProps> {
 
     const actions = [
       <a key="edit" onClick={this.handleEditAccount}>
-        编辑
+        <FormattedMessage
+          id="component.imagehostingListItem.edit"
+          defaultMessage="Edit"
+        ></FormattedMessage>
       </a>,
       <Popconfirm
         key="delete"
@@ -47,7 +60,12 @@ export default class Page extends React.Component<PageProps> {
         cancelText="No"
         onConfirm={this.handleDeleteAccount}
       >
-        <a>删除</a>
+        <a>
+          <FormattedMessage
+            id="component.imagehostingListItem.delete"
+            defaultMessage="Delete"
+          ></FormattedMessage>
+        </a>
       </Popconfirm>,
     ];
 
