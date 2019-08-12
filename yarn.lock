@@ -241,10 +241,10 @@
   resolved "https://registry.npm.taobao.org/@diamondyuan/readability/download/@diamondyuan/readability-0.1.0.tgz#d2a6c9354d57c67886dea4fcae29ec681be8f153"
   integrity sha1-0qbJNU1XxniG3qT8rinsaBvo8VM=
 
-"@formatjs/intl-relativetimeformat@^2.5.2":
-  version "2.5.2"
-  resolved "https://registry.npmjs.org/@formatjs/intl-relativetimeformat/-/intl-relativetimeformat-2.5.2.tgz#4d00198b411688a2ee128a7df92ddb3b741779d6"
-  integrity sha512-n/t9Si2pvCgoYnYzRsb6DgjIC09wrOM2t+E+r79WAvur/ESdU/cSse6w26gfiQUijFoU8x8AyTZ8rArBXLiDtA==
+"@formatjs/intl-relativetimeformat@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.npmjs.org/@formatjs/intl-relativetimeformat/-/intl-relativetimeformat-2.6.2.tgz#0429e9b3bdaef8907223b1f01cee78f07b229ac9"
+  integrity sha512-JD6O2yCF2NuefU3+R7va6WmeetvajWO/ab0s4xjGpxnIMu6p9dtjTQfAhW2+NG+4Dc8MYKYo1wbJ8j02mZ1stw==
 
 "@jest/console@^24.7.1":
   version "24.7.1"
@@ -4503,28 +4503,28 @@ interpret@1.2.0, interpret@^1.0.0:
   resolved "https://registry.npm.taobao.org/interpret/download/interpret-1.2.0.tgz#d5061a6224be58e8083985f5014d844359576296"
   integrity sha1-1QYaYiS+WOgIOYX1AU2EQ1lXYpY=
 
-intl-format-cache@^4.1.6:
-  version "4.1.6"
-  resolved "https://registry.npmjs.org/intl-format-cache/-/intl-format-cache-4.1.6.tgz#a1f7101f435fa06cc2fe3a968f4b393663ca92a4"
-  integrity sha512-A9iI5F9NgWINJ4gKZs0trME5UV/EBWq4DwSSUUijcHN6KdYDznr9pLzpuAk00orXbJi/e9SWHkKBEwEAVGNMGg==
+intl-format-cache@^4.1.9:
+  version "4.1.9"
+  resolved "https://registry.npmjs.org/intl-format-cache/-/intl-format-cache-4.1.9.tgz#16108dbde7c13013f02411bf7bdeb82c3dc17991"
+  integrity sha512-DoXRZJ7JtQsgGQDlaRkqn6KfW8B/ivBsQ17JB1kt78qHfojRIpnpbA66Ahgaj/kS5v/+gl83rLlnwdXrFY2LCw==
 
-intl-locales-supported@^1.4.3:
-  version "1.4.3"
-  resolved "https://registry.npmjs.org/intl-locales-supported/-/intl-locales-supported-1.4.3.tgz#2cbfebe94e3954350622b518b7e1d42324ff69c9"
-  integrity sha512-vkjv1mbUHy9N0gATGQ6P/ZxkxCeJfD6fBDEdwdYG3MfQfwGC5rjAFBZglH58UtGUhA22Pr/ZDxwkhr/34V8VPw==
+intl-locales-supported@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.npmjs.org/intl-locales-supported/-/intl-locales-supported-1.4.4.tgz#0f2320f295de1a217de4037ede5a5f3a3ebc2320"
+  integrity sha512-dm8tjMFfy6Y+MStEBqzslnV0LTmoEAOGSnZchlKcuyOd9LlxKT8MKLOhq0KqGSRPvWfDRTs94UYTvESw5d+YYA==
 
-intl-messageformat-parser@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.npmjs.org/intl-messageformat-parser/-/intl-messageformat-parser-3.0.4.tgz#ec400f6815d9f171855db8146c910f244b673b4e"
-  integrity sha512-cKRtFWTxcgY582PwqfxCX+T7vF3SROxeNkhAVp+qRjFkGmS9UzBjSihyTQDZboaDl263uTdwGyNNRDrQX4mJYw==
+intl-messageformat-parser@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.npmjs.org/intl-messageformat-parser/-/intl-messageformat-parser-3.0.6.tgz#668ffb4ff19a6bde073244c66c202fe70047aa97"
+  integrity sha512-2giAavgG1JSJooXyB0wTotuKBqk8lVz7y8ZdtR+WPlfVZv88TyIuZ85ES89cuF30H68UFqkSswpDXmwCh8X+ig==
 
-intl-messageformat@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/intl-messageformat/-/intl-messageformat-6.1.0.tgz#64577ea11a7379e372f4bb0c5c76fdfd6be6f834"
-  integrity sha512-IxqWJmZSz6STBhMm2a7ACq40XfL9aZBWQXYWSK4Kawb5Wm2AFAdFvxNGf0M8szWKbrUpl3r0UWm4vGJuzAqK2Q==
+intl-messageformat@^6.1.3:
+  version "6.1.3"
+  resolved "https://registry.npmjs.org/intl-messageformat/-/intl-messageformat-6.1.3.tgz#7ff13cfcf3a7919db6d95f4d58de8f717df0e214"
+  integrity sha512-zz2OqVRVaAjdxm1eB+YPZrlejEFxYkZXU89phvlTijKZzceAF5FtosSXgi1mMUvfFbqe2EsTI3oNW2tnoKVtcQ==
   dependencies:
-    intl-format-cache "^4.1.6"
-    intl-messageformat-parser "^3.0.4"
+    intl-format-cache "^4.1.9"
+    intl-messageformat-parser "^3.0.6"
 
 invariant@^2.1.1, invariant@^2.2.1, invariant@^2.2.4:
   version "2.2.4"
@@ -7465,20 +7465,20 @@ react-dom@^16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
-react-intl@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.npmjs.org/react-intl/-/react-intl-3.1.2.tgz#e350bff8dfdca0391809dbbfcbcd07c59e7bbd9e"
-  integrity sha512-sMo17lvYIiTIOSBf26Si06i3q3H+9HlXiMXfRPjnQCEIAa2vUXI9U698zTwmsfnTs9gEx0jgoXvKKSH7owZ53g==
+react-intl@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.npmjs.org/react-intl/-/react-intl-3.1.5.tgz#36e5d23a15fd498cf73e2acd1735150ad96ba75d"
+  integrity sha512-o6DJeoUb3UwXAdi6JWPv75IOOJ8lemfQopD6D/oSVM1jscpHJb2BxtgHJ5Au936FekR7jv+w0EzJB4dLAPYG2A==
   dependencies:
-    "@formatjs/intl-relativetimeformat" "^2.5.2"
+    "@formatjs/intl-relativetimeformat" "^2.6.2"
     "@types/hoist-non-react-statics" "^3.3.1"
     "@types/invariant" "^2.2.30"
     "@types/react" "^16.0.0"
     hoist-non-react-statics "^3.3.0"
-    intl-format-cache "^4.1.6"
-    intl-locales-supported "^1.4.3"
-    intl-messageformat "^6.1.0"
-    intl-messageformat-parser "^3.0.4"
+    intl-format-cache "^4.1.9"
+    intl-locales-supported "^1.4.4"
+    intl-messageformat "^6.1.3"
+    intl-messageformat-parser "^3.0.6"
     invariant "^2.1.1"
     react "^16.3.0"
     shallow-equal "^1.1.0"

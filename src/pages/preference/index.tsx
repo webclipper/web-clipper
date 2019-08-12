@@ -9,6 +9,7 @@ import { CenterContainer } from 'components/container';
 import { connect, routerRedux, router } from 'dva';
 import { List, Switch, Tabs, Icon } from 'antd';
 import { GlobalStore } from '@/common/types';
+import { FormattedMessage } from 'react-intl';
 
 const { withRouter } = router;
 const ExtensionsWithRouter = withRouter(Extensions);
@@ -49,17 +50,53 @@ class Page extends React.Component<PageProps> {
             <Icon type="close" />
           </div>
           <div style={{ background: 'white', height: '100%' }}>
-            <Tabs defaultActiveKey="userList" tabPosition="left" style={{ height: '100%' }}>
-              <TabPane tab="插件设置" key="extensions" className={styles.tabPane}>
-                <ExtensionsWithRouter />
-              </TabPane>
-              <TabPane tab="账户设置" key="userList" className={styles.tabPane}>
+            <Tabs defaultActiveKey="account" tabPosition="left" style={{ height: '100%' }}>
+              <TabPane
+                tab={
+                  <FormattedMessage
+                    id="preference.tab.account"
+                    defaultMessage="Account"
+                  ></FormattedMessage>
+                }
+                key="account"
+                className={styles.tabPane}
+              >
                 <UserList />
               </TabPane>
-              <TabPane tab="图床设置" key="imageHost" className={styles.tabPane}>
+              <TabPane
+                tab={
+                  <FormattedMessage
+                    id="preference.tab.extensions"
+                    defaultMessage="Extension"
+                  ></FormattedMessage>
+                }
+                key="extensions"
+                className={styles.tabPane}
+              >
+                <ExtensionsWithRouter />
+              </TabPane>
+              <TabPane
+                tab={
+                  <FormattedMessage
+                    id="preference.tab.imageHost"
+                    defaultMessage="ImageHost"
+                  ></FormattedMessage>
+                }
+                key="imageHost"
+                className={styles.tabPane}
+              >
                 <ImageHosting />
               </TabPane>
-              <TabPane tab="编辑器设置" key="editor" className={styles.tabPane}>
+              <TabPane
+                tab={
+                  <FormattedMessage
+                    id="preference.tab.basic"
+                    defaultMessage="Basic"
+                  ></FormattedMessage>
+                }
+                key="basic"
+                className={styles.tabPane}
+              >
                 <List.Item
                   actions={[
                     <Switch
@@ -73,7 +110,20 @@ class Page extends React.Component<PageProps> {
                     />,
                   ]}
                 >
-                  <List.Item.Meta title="显示行号" description="显示编辑器右侧的行号" />
+                  <List.Item.Meta
+                    title={
+                      <FormattedMessage
+                        id="preference.basic.showLineNumber.title"
+                        defaultMessage="Show LineNumber"
+                      ></FormattedMessage>
+                    }
+                    description={
+                      <FormattedMessage
+                        id="preference.basic.showLineNumber.description"
+                        defaultMessage="Enable Show LineNumber"
+                      ></FormattedMessage>
+                    }
+                  />
                 </List.Item>
                 <List.Item
                   actions={[
@@ -88,7 +138,20 @@ class Page extends React.Component<PageProps> {
                     />,
                   ]}
                 >
-                  <List.Item.Meta title="实时预览" description="是否开启实时预览" />
+                  <List.Item.Meta
+                    title={
+                      <FormattedMessage
+                        id="preference.basic.liveRendering.title"
+                        defaultMessage="LiveRendering"
+                      ></FormattedMessage>
+                    }
+                    description={
+                      <FormattedMessage
+                        id="preference.basic.liveRendering.description"
+                        defaultMessage="Enable LiveRendering"
+                      ></FormattedMessage>
+                    }
+                  />
                 </List.Item>
               </TabPane>
             </Tabs>

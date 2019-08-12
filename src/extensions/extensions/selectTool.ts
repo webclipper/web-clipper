@@ -2,9 +2,10 @@ import { ToolExtension } from '@web-clipper/extensions';
 
 export default new ToolExtension(
   {
-    name: '手动选取',
+    name: 'Manual selection',
     icon: 'select',
     version: '0.0.1',
+    description: 'Manual selection page element.',
   },
   {
     init: ({ pathname }) => {

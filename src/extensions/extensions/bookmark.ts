@@ -2,15 +2,15 @@ import { TextExtension } from '@web-clipper/extensions';
 
 export default new TextExtension(
   {
-    name: '书签',
+    name: 'Bookmark',
     version: '0.0.1',
-    description: '保存网页链接和增加备注',
+    description: 'Add bookmark.',
     icon: 'link',
   },
   {
     run: async context => {
       const { document } = context;
-      return `## 链接 \n ${document.URL} \n ## 备注:`;
+      return `## Link \n ${document.URL} \n ## Comment:`;
     },
   }
 );

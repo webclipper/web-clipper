@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { List, Icon, Avatar } from 'antd';
 import * as styles from './index.scss';
+import { FormattedMessage } from 'react-intl';
 
 interface PageProps {
   icon: string;
@@ -11,7 +12,16 @@ interface PageProps {
 
 export default class Page extends React.Component<PageProps> {
   render() {
-    const { name, remark = '暂无描述', icon } = this.props;
+    const {
+      name,
+      remark = (
+        <FormattedMessage
+          id="component.imageHostingSelectOption.noDescription"
+          defaultMessage="No Description"
+        ></FormattedMessage>
+      ),
+      icon,
+    } = this.props;
     let avatar;
 
     if (icon.startsWith('http')) {

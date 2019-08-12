@@ -3,7 +3,8 @@ import * as styles from './index.scss';
 import { Button, Icon } from 'antd';
 import Section from 'components/section';
 
-import { SerializedExtensionWithId } from '../../extensions/interface';
+import { SerializedExtensionWithId } from '@web-clipper/extensions';
+import { FormattedMessage } from 'react-intl';
 
 type ToolExtensionsProps = {
   extensions: SerializedExtensionWithId[];
@@ -12,7 +13,15 @@ type ToolExtensionsProps = {
 
 const ToolExtensions: React.FC<ToolExtensionsProps> = ({ extensions, onClick }) => {
   return (
-    <Section line title="扩展">
+    <Section
+      line
+      title={
+        <FormattedMessage
+          id="tool.toolExtensions"
+          defaultMessage="Tool Extensions"
+        ></FormattedMessage>
+      }
+    >
       {extensions.map(o => (
         <Button
           key={o.id}

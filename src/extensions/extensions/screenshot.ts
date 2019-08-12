@@ -3,7 +3,7 @@ import { SelectAreaPosition } from '@web-clipper/area-selector';
 
 export default new ImageExtension<SelectAreaPosition>(
   {
-    name: '屏幕截图',
+    name: 'Screenshots',
     icon: 'picture',
     version: '0.0.1',
   },
