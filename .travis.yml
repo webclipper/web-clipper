@@ -11,6 +11,9 @@ script:
   - npm run travis
 after_success:
   - npm i codecov && codecov
+after_failure:
+  - cat /home/travis/.npm/_logs/*.log
+
 deploy:
   provider: releases
   api_key:
