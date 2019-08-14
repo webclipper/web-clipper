@@ -6,6 +6,8 @@ import zhCN from '@/locales/zh-CN';
 import { LocaleProvider } from 'antd';
 import zh from 'antd/lib/locale-provider/zh_CN';
 import en from 'antd/lib/locale-provider/en_US';
+import { connect } from 'dva';
+import { GlobalStore } from '@/common/types';
 
 const localData: {
   [local: string]: {
@@ -23,14 +25,21 @@ const localData: {
   },
 };
 
-const LocalWrapper: React.FC = ({ children }) => {
-  const language = 'en-US';
+const mapStateToProps = ({ userPreference: { locale } }: GlobalStore) => {
+  return {
+    locale,
+  };
+};
+type PageStateProps = ReturnType<typeof mapStateToProps>;
+
+const LocalWrapper: React.FC<PageStateProps> = ({ children, locale }) => {
+  const language = locale;
   const { intl, antdIntl } = localData[language] || localData['en-US'];
   return (
-    <IntlProvider locale={language} messages={intl}>
+    <IntlProvider key={locale} locale={language} messages={intl}>
       <LocaleProvider locale={antdIntl}>{children}</LocaleProvider>
     </IntlProvider>
   );
 };
 
-export default LocalWrapper;
+export default connect(mapStateToProps)(LocalWrapper);

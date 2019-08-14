@@ -1,3 +1,4 @@
+import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from './../common/modelTypes/userPreference';
 import { ServiceMeta } from './../common/backend/services/interface';
 import { runScript } from './../browser/actions/message';
 import storage from 'common/storage';
@@ -23,6 +24,8 @@ import {
   asyncHideTool,
   asyncRemoveTool,
   asyncRunExtension,
+  setLocale,
+  asyncSetLocaleToStorage,
 } from 'pageActions/userPreference';
 import { asyncChangeAccount, initTabInfo, changeData } from 'pageActions/clipper';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
@@ -36,6 +39,7 @@ import {
 import backend from 'common/backend/index';
 import { loadImage } from 'common/blob';
 import { routerRedux } from 'dva';
+import { localStorageService } from '@/common/chrome/storage';
 
 const servicesMeta = services.reduce(
   (previousValue, meta) => {
@@ -54,6 +58,7 @@ const imageHostingServicesMeta = imageHostingServices.reduce(
 );
 
 const defaultState: UserPreferenceStore = {
+  locale: navigator.language,
   accounts: [],
   imageHosting: [],
   servicesMeta,
@@ -415,5 +420,24 @@ builder.subscript(async function initStore({ dispatch }) {
     dispatch(routerRedux.push(`/plugins/${result.defaultPluginId}`));
   }
 });
+
+builder
+  .takeEvery(asyncSetLocaleToStorage, function*(locale, { call }) {
+    yield call(localStorageService.set, LOCAL_USER_PREFERENCE_LOCALE_KEY, locale);
+  })
+  .subscript(async function initLocal({ dispatch }) {
+    const locale = localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, navigator.language);
+    dispatch(removeActionNamespace(setLocale(locale)));
+    localStorageService.onDidChangeStorage(key => {
+      if (key === LOCAL_USER_PREFERENCE_LOCALE_KEY) {
+        dispatch(
+          removeActionNamespace(
+            setLocale(localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, navigator.language))
+          )
+        );
+      }
+    });
+  })
+  .case(setLocale, (state, locale) => ({ ...state, locale }));
 
 export default builder.build();
