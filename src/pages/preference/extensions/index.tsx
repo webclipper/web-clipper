@@ -4,6 +4,7 @@ import { DvaRouterProps, GlobalStore } from '@/common/types';
 import { Card, Icon, Row, Col, Typography } from 'antd';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import { setDefaultExtensionId } from '@/actions/extension';
+import { FormattedMessage } from 'react-intl';
 
 const mapStateToProps = ({ extension: { extensions, defaultExtensionId } }: GlobalStore) => {
   return {
@@ -24,7 +25,12 @@ const Page: React.FC<PageProps> = ({ extensions, defaultExtensionId, dispatch })
 
   return (
     <div>
-      <Typography.Title level={3}>扩展插件</Typography.Title>
+      <Typography.Title level={3}>
+        <FormattedMessage
+          id="preference.extensions.toolExtensions"
+          defaultMessage="Tool Extensions"
+        />
+      </Typography.Title>
       <Row gutter={10}>
         {toolExtensions.map(({ manifest, id }) => {
           const title = manifest.name;
@@ -41,7 +47,12 @@ const Page: React.FC<PageProps> = ({ extensions, defaultExtensionId, dispatch })
           );
         })}
       </Row>
-      <Typography.Title level={3}>剪藏插件</Typography.Title>
+      <Typography.Title level={3}>
+        <FormattedMessage
+          id="preference.extensions.clipExtensions"
+          defaultMessage="Clip Extensions"
+        />
+      </Typography.Title>
       <Row gutter={10}>
         {clipExtensions.map(({ manifest, id }) => {
           const title = manifest.name;

@@ -108,7 +108,7 @@ export const asyncRunExtension = actionCreator.async<
     extension: SerializedExtensionWithId;
   },
   {
-    result: any;
+    result: unknown;
     pathname: string;
   },
   void

@@ -3,6 +3,7 @@ import { Form, Modal, Select, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import { ImageHostingServiceMeta } from '../../../../common/backend';
 import { ImageHosting } from '@/common/types';
+import { FormattedMessage } from 'react-intl';
 
 type PageOwnProps = {
   currentImageHosting?: ImageHosting | null;
@@ -60,18 +61,20 @@ export default class AddImageHostingModal extends React.Component<PageProps> {
     let title;
     let initImageHosting: Omit<ImageHosting, 'id'>;
     if (currentImageHosting) {
-      title = '编辑';
+      title = <FormattedMessage id="preference.imageHosting.edit" defaultMessage="Edit" />;
       initImageHosting = currentImageHosting;
     } else {
-      title = '添加';
+      title = <FormattedMessage id="preference.imageHosting.add" defaultMessage="Add" />;
       initImageHosting = {
-        type: 'yuque',
+        type: services[0].type,
       };
     }
     return (
       <Modal title={title} visible={visible} onOk={this.handleOk} onCancel={this.handleCancel}>
         <Form {...formItemLayout}>
-          <Form.Item label="类型">
+          <Form.Item
+            label={<FormattedMessage id="preference.imageHosting.type" defaultMessage="Type" />}
+          >
             {getFieldDecorator('type', {
               initialValue: initImageHosting.type,
               rules: [{ required: true }],
@@ -84,7 +87,9 @@ export default class AddImageHostingModal extends React.Component<PageProps> {
             )}
           </Form.Item>
           {this.getImageHostingForm(initImageHosting.info)}
-          <Form.Item label="备注">
+          <Form.Item
+            label={<FormattedMessage id="preference.imageHosting.remark" defaultMessage="Remark" />}
+          >
             {getFieldDecorator('remark', {
               initialValue: initImageHosting.remark,
             })(<Input />)}

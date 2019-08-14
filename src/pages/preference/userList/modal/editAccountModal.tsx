@@ -6,11 +6,8 @@ import { ImageHostingServiceMeta } from 'common/backend';
 import ImageHostingSelectOption from 'components/imageHostingSelectOption';
 import { Repository } from 'common/backend/services/interface';
 import repositorySelectOptions from 'components/repositorySelectOptions';
-import {
-  AccountPreference,
-  UserPreferenceStore,
-  ImageHosting,
-} from '../../../../store/reducers/userPreference/interface';
+import { AccountPreference, UserPreferenceStore, ImageHosting } from '@/common/types';
+import { FormattedMessage } from 'react-intl';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {
@@ -39,7 +36,7 @@ export default class extends React.Component<PageProps> {
 
   getTitle = () => (
     <div className={styles.modalTitle}>
-      编辑账号
+      <FormattedMessage id="preference.accountList.editAccount" defaultMessage="Edit Account" />
       <a href={'https://www.yuque.com/yuqueclipper/help_cn/bind_account'} target="_blank">
         <Icon type="question-circle" />
       </a>
@@ -71,13 +68,15 @@ export default class extends React.Component<PageProps> {
       <Modal
         visible={visible}
         title={this.getTitle()}
-        okText={'确认'}
+        okText={<FormattedMessage id="preference.accountList.confirm" defaultMessage="Confirm" />}
         okType="primary"
         onCancel={this.handleCancel}
         onOk={this.handleOk}
       >
-        <Form labelCol={{ span: 6, offset: 0 }} wrapperCol={{ span: 18 }}>
-          <Form.Item label="类型">
+        <Form labelCol={{ span: 7, offset: 0 }} wrapperCol={{ span: 17 }}>
+          <Form.Item
+            label={<FormattedMessage id="preference.accountList.type" defaultMessage="Type" />}
+          >
             {getFieldDecorator('type', {
               initialValue: currentAccount.type,
             })(
@@ -90,7 +89,14 @@ export default class extends React.Component<PageProps> {
           </Form.Item>
           {this.getServicesForm(currentAccount)}
           {<Divider />}
-          <Form.Item label="默认知识库">
+          <Form.Item
+            label={
+              <FormattedMessage
+                id="preference.accountList.defaultRepository"
+                defaultMessage="Default Repository"
+              />
+            }
+          >
             {getFieldDecorator('defaultRepositoryId', {
               initialValue: currentAccount.defaultRepositoryId,
             })(
@@ -99,7 +105,11 @@ export default class extends React.Component<PageProps> {
               </Select>
             )}
           </Form.Item>
-          <Form.Item label="图床">
+          <Form.Item
+            label={
+              <FormattedMessage id="preference.accountList.imageHost" defaultMessage="Image Host" />
+            }
+          >
             {getFieldDecorator('imageHosting', {
               initialValue: currentAccount.imageHosting,
             })(
