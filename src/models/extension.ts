@@ -32,7 +32,7 @@ builder
     defaultExtensionId: params,
   }));
 
-builder.subscript(async ({ dispatch }) => {
+builder.subscript(async function loadExtension({ dispatch }) {
   const defaultExtensionId = await storage.getDefaultPluginId();
   if (defaultExtensionId) {
     dispatch(removeActionNamespace(setDefaultExtensionId.done({ params: defaultExtensionId })));

@@ -133,3 +133,6 @@ export const asyncEditImageHosting = actionCreator.async<
 >('ASYNC_EDIT_IMAGE_HOSTING');
 
 export const resetAccountForm = actionCreator('RESET_ACCOUNT_FORM');
+
+export const setLocale = actionCreator<string>('setLocale');
+export const asyncSetLocaleToStorage = actionCreator<string>('asyncSetLocaleToStorage');

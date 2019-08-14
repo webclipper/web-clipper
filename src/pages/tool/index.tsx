@@ -31,7 +31,7 @@ const mapStateToProps = ({
     currentImageHostingService,
   },
   loading,
-  userPreference: { accounts },
+  userPreference: { accounts, locale },
   extension: { extensions },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
@@ -51,6 +51,7 @@ const mapStateToProps = ({
     currentAccount,
     repositories,
     disableCreateDocument,
+    locale,
   };
 };
 type PageStateProps = ReturnType<typeof mapStateToProps>;
@@ -215,6 +216,7 @@ const Page = React.memo<PageProps>(
       title,
       history,
       loadingAccount,
+      locale,
     }: PageProps) => {
       return {
         loadingAccount,
@@ -224,6 +226,7 @@ const Page = React.memo<PageProps>(
         currentAccount,
         title,
         pathname: history.location.pathname,
+        locale,
       };
     };
     return isEqual(selector(prevProps), selector(nextProps));

@@ -1,6 +1,7 @@
 import { Repository, ServiceMeta, ImageHostingServiceMeta } from '@/common/backend';
 
 export interface UserPreferenceStore {
+  locale: string;
   remoteVersion?: string;
   accounts: AccountPreference[];
   imageHosting: ImageHosting[];
@@ -57,3 +58,5 @@ export interface ImageClipperData {
 }
 
 export type ClipperDataType = string | ImageClipperData;
+
+export const LOCAL_USER_PREFERENCE_LOCALE_KEY = 'local.userPreference.locale';

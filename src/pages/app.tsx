@@ -15,6 +15,7 @@ import extension from '@/models/extension';
 import userPreference from '@/models/userPreference';
 import createLoading from 'dva-loading';
 import LocalWrapper from './locale';
+import { localStorageService } from '@/common/chrome/storage';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -40,41 +41,43 @@ if (!element) {
   element.className = styles.app;
 }
 
-const app = dva({
-  namespacePrefixWarning: false,
-  history: createMemoryHistory(),
-});
+(async () => {
+  await localStorageService.init();
+  const app = dva({
+    namespacePrefixWarning: false,
+    history: createMemoryHistory(),
+  });
+  app.use(createLoading());
 
-app.use(createLoading());
-
-app.use(
-  createLogger({
-    predicate: (_: Function, { type }: Action<any>) => {
-      return (
-        !type.endsWith('@@end') && !type.endsWith('@@start') && !type.startsWith('@@DVA_LOADING')
-      );
-    },
-  })
-);
-
-app.router(router => {
-  return (
-    <LocalWrapper>
-      <Router history={router!.history}>
-        <Switch>
-          <Route exact path="/" component={Tool} />
-          <Route exact path="/complete" component={Complete} />
-          <Route exact path="/preference" component={withTool(preference)} />
-          <Route path="/plugins/:id" component={withTool(PluginPage)} />
-        </Switch>
-      </Router>
-    </LocalWrapper>
+  app.use(
+    createLogger({
+      predicate: (_: Function, { type }: Action<any>) => {
+        return (
+          !type.endsWith('@@end') && !type.endsWith('@@start') && !type.startsWith('@@DVA_LOADING')
+        );
+      },
+    })
   );
-});
 
-app.model(clipper);
-app.model(userPreference);
-app.model(version);
-app.model(extension);
+  app.router(router => {
+    return (
+      <LocalWrapper>
+        <Router history={router!.history}>
+          <Switch>
+            <Route exact path="/" component={Tool} />
+            <Route exact path="/complete" component={Complete} />
+            <Route exact path="/preference" component={withTool(preference)} />
+            <Route path="/plugins/:id" component={withTool(PluginPage)} />
+          </Switch>
+        </Router>
+      </LocalWrapper>
+    );
+  });
 
-app.start(element);
+  app.model(clipper);
+  app.model(userPreference);
+  app.model(version);
+  app.model(extension);
+
+  app.start(element);
+})();

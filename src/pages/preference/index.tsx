@@ -3,11 +3,16 @@ import * as styles from './index.scss';
 import UserList from './userList';
 import ImageHosting from './imageHosting';
 import Extensions from './extensions';
-import { asyncSetEditorLiveRendering, asyncSetShowLineNumber } from 'pageActions/userPreference';
+import {
+  asyncSetEditorLiveRendering,
+  asyncSetShowLineNumber,
+  setLocale,
+  asyncSetLocaleToStorage,
+} from 'pageActions/userPreference';
 import { bindActionCreators, Dispatch } from 'redux';
 import { CenterContainer } from 'components/container';
 import { connect, routerRedux, router } from 'dva';
-import { List, Switch, Tabs, Icon } from 'antd';
+import { List, Switch, Tabs, Icon, Select } from 'antd';
 import { GlobalStore } from '@/common/types';
 import { FormattedMessage } from 'react-intl';
 
@@ -20,15 +25,18 @@ const useActions = {
   push: routerRedux.push,
   asyncSetEditorLiveRendering: asyncSetEditorLiveRendering.started,
   asyncSetShowLineNumber: asyncSetShowLineNumber.started,
+  asyncSetLocaleToStorage: asyncSetLocaleToStorage,
+  setLocale: setLocale,
 };
 
 const mapStateToProps = ({
-  userPreference: { accounts, liveRendering, showLineNumber },
+  userPreference: { accounts, liveRendering, showLineNumber, locale },
 }: GlobalStore) => {
   return {
     showLineNumber,
     liveRendering,
     accounts,
+    locale,
   };
 };
 type PageStateProps = ReturnType<typeof mapStateToProps>;
@@ -97,6 +105,33 @@ class Page extends React.Component<PageProps> {
                 key="basic"
                 className={styles.tabPane}
               >
+                <List.Item
+                  actions={[
+                    <Select
+                      key="configLanguage"
+                      value={this.props.locale}
+                      onChange={(e: string) => this.props.asyncSetLocaleToStorage(e)}
+                    >
+                      <Select.Option key="zh-CN">中文</Select.Option>
+                      <Select.Option key="en-US">English</Select.Option>
+                    </Select>,
+                  ]}
+                >
+                  <List.Item.Meta
+                    title={
+                      <FormattedMessage
+                        id="preference.basic.configLanguage.title"
+                        defaultMessage="Language"
+                      ></FormattedMessage>
+                    }
+                    description={
+                      <FormattedMessage
+                        id="preference.basic.configLanguage.description"
+                        defaultMessage="Config Language"
+                      ></FormattedMessage>
+                    }
+                  />
+                </List.Item>
                 <List.Item
                   actions={[
                     <Switch
