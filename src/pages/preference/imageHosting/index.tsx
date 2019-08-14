@@ -14,6 +14,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import ImageHostingListItem from 'components/imagehostingListItem';
 import { Form, Button, Icon } from 'antd';
 import { GlobalStore, ImageHosting } from 'common/types';
+import { FormattedMessage } from 'react-intl';
 
 const useActions = {
   asyncAddImageHosting: asyncAddImageHosting.started,
@@ -149,7 +150,8 @@ class Page extends React.Component<PageProps, PageState> {
           onClick={this.handleStartAddAccount}
           style={{ height: 30, marginBottom: 10, width: '100%' }}
         >
-          <Icon type="plus" /> 添加图床
+          <Icon type="plus" />
+          <FormattedMessage id="preference.imageHosting.add" defaultMessage="Add" />
         </Button>
         {this.renderImageHosting()}
       </div>

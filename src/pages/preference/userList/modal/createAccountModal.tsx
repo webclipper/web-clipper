@@ -5,11 +5,9 @@ import * as styles from './index.scss';
 import { omit } from 'lodash';
 import { ImageHostingServiceMeta, Repository } from 'common/backend';
 import ImageHostingSelectOption from 'components/imageHostingSelectOption';
-import {
-  UserPreferenceStore,
-  ImageHosting,
-} from '../../../../store/reducers/userPreference/interface';
+import { UserPreferenceStore, ImageHosting } from '@/common/types';
 import repositorySelectOptions from 'components/repositorySelectOptions';
+import { FormattedMessage } from 'react-intl';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {
@@ -65,7 +63,7 @@ export default class extends React.Component<PageProps, PageState> {
   getTitle = () => {
     return (
       <div className={styles.modalTitle}>
-        绑定新账号
+        <FormattedMessage id="preference.accountList.addAccount" defaultMessage="Add Account" />
         <a href={'https://www.yuque.com/yuqueclipper/help_cn/bind_account'} target="_blank">
           <Icon type="question-circle" />
         </a>
@@ -111,8 +109,10 @@ export default class extends React.Component<PageProps, PageState> {
         onCancel={this.handleCancel}
         onOk={this.handleOk}
       >
-        <Form labelCol={{ span: 6, offset: 0 }} wrapperCol={{ span: 18 }}>
-          <Form.Item label="类型">
+        <Form labelCol={{ span: 7, offset: 0 }} wrapperCol={{ span: 17 }}>
+          <Form.Item
+            label={<FormattedMessage id="preference.accountList.type" defaultMessage="Type" />}
+          >
             {getFieldDecorator('type', {
               initialValue: DEFAULT_TYPE,
             })(
@@ -125,12 +125,23 @@ export default class extends React.Component<PageProps, PageState> {
           </Form.Item>
           {this.getServicesForm()}
           {<Divider />}
-          <Form.Item label="默认知识库">
+          <Form.Item
+            label={
+              <FormattedMessage
+                id="preference.accountList.defaultRepository"
+                defaultMessage="Default Repository"
+              />
+            }
+          >
             {getFieldDecorator('defaultRepositoryId')(
               <Select disabled={!verified}>{repositorySelectOptions(repositories)}</Select>
             )}
           </Form.Item>
-          <Form.Item label="图床">
+          <Form.Item
+            label={
+              <FormattedMessage id="preference.accountList.imageHost" defaultMessage="Image Host" />
+            }
+          >
             {getFieldDecorator('imageHosting')(
               <Select className={styles.imageHostingSelect} disabled={!verified}>
                 {imageHosting.map(({ id, type, remark }) => {
