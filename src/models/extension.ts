@@ -1,20 +1,18 @@
+import update from 'immutability-helper';
 import storage from 'common/storage';
 import { GlobalStore } from '@/common/types';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
 import { loadExtensions, setDefaultExtensionId } from '@/actions/extension';
 import { extensions } from 'extensions/index';
+import { localStorageService } from '@/common/chrome/storage';
+import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/modelTypes/userPreference';
+import { SerializedExtensionWithId } from '@web-clipper/extensions';
 
 const initStore: GlobalStore['extension'] = {
   extensions: [],
 };
 
-const builder = new DvaModelBuilder(initStore, 'extension').case(
-  loadExtensions,
-  (state, extensions) => ({
-    ...state,
-    extensions,
-  })
-);
+const builder = new DvaModelBuilder(initStore, 'extension');
 
 builder
   .takeEvery(setDefaultExtensionId.started, function*(id, { call, put }) {
@@ -32,12 +30,39 @@ builder
     defaultExtensionId: params,
   }));
 
-builder.subscript(async function loadExtension({ dispatch }) {
-  const defaultExtensionId = await storage.getDefaultPluginId();
-  if (defaultExtensionId) {
-    dispatch(removeActionNamespace(setDefaultExtensionId.done({ params: defaultExtensionId })));
-  }
-  dispatch(removeActionNamespace(loadExtensions(extensions)));
-});
+builder
+  .subscript(async function loadExtension({ dispatch }) {
+    const defaultExtensionId = await storage.getDefaultPluginId();
+    if (defaultExtensionId) {
+      dispatch(removeActionNamespace(setDefaultExtensionId.done({ params: defaultExtensionId })));
+    }
+    dispatch(removeActionNamespace(loadExtensions.started()));
+  })
+  .takeEvery(loadExtensions.started, function*(_, { put }) {
+    const locale = localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, navigator.language);
+    const internalExtensions = extensions.map(
+      (e): SerializedExtensionWithId => {
+        const { i18nManifest } = e.manifest;
+        let localeManifest: Partial<SerializedExtensionWithId['manifest']> = {};
+        if (i18nManifest && typeof i18nManifest === 'object') {
+          localeManifest = i18nManifest[locale];
+        }
+        return update(e, {
+          manifest: {
+            $merge: localeManifest || {},
+          },
+        });
+      }
+    );
+    yield put(
+      loadExtensions.done({
+        result: internalExtensions,
+      })
+    );
+  })
+  .case(loadExtensions.done, (state, { result: extensions }) => ({
+    ...state,
+    extensions,
+  }));
 
 export default builder.build();

@@ -6,6 +6,9 @@ export default new TextExtension(
     version: '0.0.1',
     description: 'Add bookmark.',
     icon: 'link',
+    i18nManifest: {
+      'zh-CN': { name: '书签', description: '添加书签' },
+    },
   },
   {
     run: async context => {
