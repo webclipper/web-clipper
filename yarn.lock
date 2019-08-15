@@ -784,10 +784,10 @@
     "@types/chrome" "^0.0.88"
     "@web-clipper/shared" "^0.0.15"
 
-"@web-clipper/extensions@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.npmjs.org/@web-clipper/extensions/-/extensions-0.0.3.tgz#5f0b8215c60fe7b7f3b671d7385b6c2970757465"
-  integrity sha512-ZNHqomEHahlrcht8yVGpSkErEzWmtc1oz/0lUgvGF0VBykE+UMZXfBTjTStnDegjR6l/v7zy6f0QttDMFTIR9g==
+"@web-clipper/extensions@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.npmjs.org/@web-clipper/extensions/-/extensions-0.0.4.tgz#bf413c26fab729fcf0faeaeb385857981745c657"
+  integrity sha512-DJctbznvreGK7KxqvRILYDbEE9hs30rKbGohy1tlq5cLWjGvv0ZiHG7vDvSXTseyEFX8rBPejWFe87naus83GQ==
   dependencies:
     "@diamondyuan/eslint-config-react-typescript" "^7.0.0"
     "@typescript-eslint/eslint-plugin" "^1.13.0"

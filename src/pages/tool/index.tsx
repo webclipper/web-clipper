@@ -112,6 +112,7 @@ const Page = React.memo<PageProps>(
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const context: InitContext = {
+          locale: props.locale,
           accountInfo: {
             type: currentAccount && currentAccount.type,
           },

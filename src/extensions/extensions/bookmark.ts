@@ -12,8 +12,14 @@ export default new TextExtension(
   },
   {
     run: async context => {
-      const { document } = context;
-      return `## Link \n ${document.URL} \n ## Comment:`;
+      const { document, locale } = context;
+      switch (locale) {
+        case 'zh-CN': {
+          return `## 链接 \n ${document.URL} \n ## 备注:`;
+        }
+        default:
+          return `## Link \n ${document.URL} \n ## Comment:`;
+      }
     },
   }
 );

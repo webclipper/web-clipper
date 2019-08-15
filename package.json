@@ -28,7 +28,7 @@
     "@diamondyuan/readability": "^0.1.0",
     "@web-clipper/area-selector": "^0.0.3",
     "@web-clipper/chrome-promise": "^0.0.15",
-    "@web-clipper/extensions": "^0.0.3",
+    "@web-clipper/extensions": "^0.0.4",
     "@web-clipper/highlight": "^0.0.2",
     "@web-clipper/message-listener-combiner": "^0.0.5",
     "@web-clipper/shared": "^0.0.7",
