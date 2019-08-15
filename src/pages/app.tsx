@@ -16,6 +16,7 @@ import userPreference from '@/models/userPreference';
 import createLoading from 'dva-loading';
 import LocalWrapper from './locale';
 import { localStorageService } from '@/common/chrome/storage';
+import localeService from '@/common/locales';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -43,6 +44,7 @@ if (!element) {
 
 (async () => {
   await localStorageService.init();
+  await localeService.init();
   const app = dva({
     namespacePrefixWarning: false,
     history: createMemoryHistory(),

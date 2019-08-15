@@ -2,6 +2,7 @@ import { Form, Input, Select } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React, { Component, Fragment } from 'react';
 import { YuqueBackendServiceConfig, RepositoryType } from './interface';
+import { FormattedMessage } from 'react-intl';
 
 interface YuqueFormProps {
   verified?: boolean;
@@ -11,17 +12,33 @@ interface YuqueFormProps {
 const RepositoryTypeOptions = [
   {
     key: RepositoryType.all,
-    label: '显示全部的知识库',
+    label: (
+      <FormattedMessage
+        id="backend.services.yuque.form.showAllRepository"
+        defaultMessage="Show All Repository"
+      />
+    ),
   },
   {
     key: RepositoryType.self,
-    label: '只显示自己的知识库',
+    label: (
+      <FormattedMessage
+        id="backend.services.yuque.form.showSelfRepository"
+        defaultMessage="Show Self Repository"
+      />
+    ),
   },
   {
     key: RepositoryType.group,
-    label: '只显示团队的知识库',
+    label: (
+      <FormattedMessage
+        id="backend.services.yuque.form.showGroupRepository"
+        defaultMessage="Show Group Repository"
+      />
+    ),
   },
 ];
+
 export default class extends Component<YuqueFormProps & FormComponentProps> {
   render() {
     const {
@@ -50,7 +67,14 @@ export default class extends Component<YuqueFormProps & FormComponentProps> {
             ],
           })(<Input disabled={editMode || verified} />)}
         </Form.Item>
-        <Form.Item label="知识库类型">
+        <Form.Item
+          label={
+            <FormattedMessage
+              id="backend.services.yuque.form.repositoryType"
+              defaultMessage="Repository Type"
+            ></FormattedMessage>
+          }
+        >
           {getFieldDecorator('repositoryType', {
             initialValue: initData.repositoryType,
             rules: [{ required: true, message: 'repositoryType is required!' }],

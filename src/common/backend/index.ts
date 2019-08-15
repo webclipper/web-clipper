@@ -8,18 +8,21 @@ export * from './interface';
 
 const serviceContext = require.context('./services', true, /index.ts$/);
 
-const services: ServiceMeta[] = serviceContext.keys().map(key => {
-  return serviceContext(key).default;
-});
-
+const getServices = (): ServiceMeta[] => {
+  return serviceContext.keys().map(key => {
+    return serviceContext(key).default() as ServiceMeta;
+  });
+};
 const imageHostingContext = require.context('./imageHosting', true, /index.ts$/);
 
-const imageHostingServices: ImageHostingServiceMeta[] = imageHostingContext.keys().map(key => {
-  return imageHostingContext(key).default;
-});
+const getImageHostingServices = (): ImageHostingServiceMeta[] => {
+  return imageHostingContext.keys().map(key => {
+    return imageHostingContext(key).default;
+  });
+};
 
 export function documentServiceFactory(type: string, info?: any) {
-  const service = services.find(o => o.type === type);
+  const service = getServices().find(o => o.type === type);
   if (service) {
     const Service = service.service;
     return new Service(info);
@@ -28,7 +31,7 @@ export function documentServiceFactory(type: string, info?: any) {
 }
 
 export function imageHostingServiceFactory(type: string, info?: any) {
-  const service = imageHostingServices.find(o => o.type === type);
+  const service = getImageHostingServices().find(o => o.type === type);
   if (service) {
     const Service = service.service;
     return new Service(info);
@@ -36,7 +39,7 @@ export function imageHostingServiceFactory(type: string, info?: any) {
   throw new Error('un support image hosting type');
 }
 
-export { imageHostingServices, services };
+export { getServices, getImageHostingServices };
 
 export class BackendContext {
   private documentService?: DocumentService;

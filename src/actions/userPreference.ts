@@ -1,4 +1,4 @@
-import { AccountPreference, ImageHosting } from '@/common/types';
+import { AccountPreference, ImageHosting, GlobalStore } from '@/common/types';
 import { PreferenceStorage } from 'common/storage/interface';
 import { Repository, UserInfo } from 'common/backend/index';
 import { SerializedExtensionWithId } from '@web-clipper/extensions';
@@ -136,3 +136,7 @@ export const resetAccountForm = actionCreator('RESET_ACCOUNT_FORM');
 
 export const setLocale = actionCreator<string>('setLocale');
 export const asyncSetLocaleToStorage = actionCreator<string>('asyncSetLocaleToStorage');
+
+export const initServices = actionCreator<
+  Pick<GlobalStore['userPreference'], 'servicesMeta' | 'imageHostingServicesMeta'>
+>('initServices');

@@ -2,6 +2,7 @@ import { Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React, { Component, Fragment } from 'react';
 import { GithubBackendServiceConfig } from './interface';
+import { FormattedMessage } from 'react-intl';
 
 interface GithubFormProps {
   verified?: boolean;
@@ -28,7 +29,12 @@ export default class extends Component<GithubFormProps & FormComponentProps> {
             rules: [
               {
                 required: true,
-                message: '请填写 AccessToken',
+                message: (
+                  <FormattedMessage
+                    id="backend.services.github.accessToken.message"
+                    defaultMessage="AccessToken is required"
+                  ></FormattedMessage>
+                ),
               },
             ],
           })(<Input disabled={disabled} />)}
