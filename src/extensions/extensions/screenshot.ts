@@ -6,6 +6,9 @@ export default new ImageExtension<SelectAreaPosition>(
     name: 'Screenshots',
     icon: 'picture',
     version: '0.0.1',
+    i18nManifest: {
+      'zh-CN': { name: '截图' },
+    },
   },
   {
     init: ({ currentImageHostingService }) => !!currentImageHostingService,

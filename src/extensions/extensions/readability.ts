@@ -6,6 +6,9 @@ export default new TextExtension(
     icon: 'copy',
     version: '0.0.1',
     description: 'Intelligent extraction of webpage main content.',
+    i18nManifest: {
+      'zh-CN': { name: '智能提取', description: '智能提取当前页面元素' },
+    },
   },
   {
     run: async context => {

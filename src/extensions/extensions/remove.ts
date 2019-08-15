@@ -6,6 +6,9 @@ export default new ToolExtension(
     icon: 'delete',
     version: '0.0.1',
     description: 'Delete selected page elements.',
+    i18nManifest: {
+      'zh-CN': { name: '删除元素', description: '删除选择的页面元素。' },
+    },
   },
   {
     run: async context => {

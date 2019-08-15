@@ -6,6 +6,9 @@ export default new ToolExtension(
     icon: 'select',
     version: '0.0.1',
     description: 'Manual selection page element.',
+    i18nManifest: {
+      'zh-CN': { name: '手动选取' },
+    },
   },
   {
     init: ({ pathname }) => {
