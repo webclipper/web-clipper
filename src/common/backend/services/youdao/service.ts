@@ -4,6 +4,7 @@ import { DocumentService, Repository, CreateDocumentRequest } from '../../index'
 import axios, { AxiosInstance } from 'axios';
 import { stringify } from 'qs';
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
+import localeService from '@/common/locales';
 
 interface YouDaoRepository {
   fileEntry: {
@@ -54,7 +55,10 @@ export default class YoudaoDocumentService implements DocumentService {
         id,
         name,
         groupId: parentId,
-        groupName: '我的文件夹',
+        groupName: localeService.format({
+          id: 'backend.services.youdao.myFolders',
+          defaultMessage: 'My Folders',
+        }),
       })
     );
   };
