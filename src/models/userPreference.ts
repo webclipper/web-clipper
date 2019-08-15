@@ -42,6 +42,7 @@ import backend from 'common/backend/index';
 import { loadImage } from 'common/blob';
 import { routerRedux } from 'dva';
 import { localStorageService } from '@/common/chrome/storage';
+import { loadExtensions } from '@/actions/extension';
 
 const defaultState: UserPreferenceStore = {
   locale: navigator.language,
@@ -421,6 +422,7 @@ builder
             setLocale(localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, navigator.language))
           )
         );
+        dispatch(loadExtensions.started());
       }
     });
   })
@@ -462,7 +464,6 @@ builder
           },
           {} as UserPreferenceStore['servicesMeta']
         );
-
         const imageHostingServicesMeta = getImageHostingServices().reduce(
           (previousValue, meta) => {
             previousValue[meta.type] = meta;

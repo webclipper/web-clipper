@@ -217,6 +217,7 @@ const Page = React.memo<PageProps>(
       history,
       loadingAccount,
       locale,
+      extensions,
     }: PageProps) => {
       return {
         loadingAccount,
@@ -227,6 +228,7 @@ const Page = React.memo<PageProps>(
         title,
         pathname: history.location.pathname,
         locale,
+        extensions,
       };
     };
     return isEqual(selector(prevProps), selector(nextProps));

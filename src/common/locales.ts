@@ -37,13 +37,6 @@ class LocaleService {
     if (!this.intl) {
       throw Error('Should init intl before use');
     }
-    console.log(
-      this.intl,
-      this.intl.formatMessage({
-        id: 'backend.services.yuque.name',
-        defaultMessage: 'Yuque',
-      })
-    );
     return this.intl.formatMessage(descriptor);
   }
 }
