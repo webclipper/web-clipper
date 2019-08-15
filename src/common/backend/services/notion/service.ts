@@ -58,7 +58,6 @@ export default class NotionDocumentService implements DocumentService {
       timeout: 10000,
       transformResponse: [
         (data): any => {
-          // 做任何你想要的数据转换
           return JSON.parse(data);
         },
       ],
@@ -140,7 +139,7 @@ export default class NotionDocumentService implements DocumentService {
     });
     const repository = this.repositories.find(o => o.id === repositoryId);
     if (!repository) {
-      throw new Error('仓库非法');
+      throw new Error('Illegal repository');
     }
     return {
       href: `https://www.notion.so/${repository.groupId}/${documentId.replace(/-/g, '')}`,
