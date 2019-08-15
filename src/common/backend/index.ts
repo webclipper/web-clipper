@@ -17,7 +17,7 @@ const imageHostingContext = require.context('./imageHosting', true, /index.ts$/)
 
 const getImageHostingServices = (): ImageHostingServiceMeta[] => {
   return imageHostingContext.keys().map(key => {
-    return imageHostingContext(key).default;
+    return imageHostingContext(key).default() as ImageHostingServiceMeta;
   });
 };
 

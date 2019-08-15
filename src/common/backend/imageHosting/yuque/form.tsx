@@ -1,6 +1,8 @@
 import React from 'react';
 import { FormComponentProps } from 'antd/lib/form';
 import { Form, Checkbox } from 'antd';
+import { FormattedMessage } from 'react-intl';
+import localeService from '@/common/locales';
 
 export default ({ form: { getFieldDecorator } }: FormComponentProps) => (
   <Form.Item wrapperCol={{ span: 17, offset: 6 }}>
@@ -11,12 +13,24 @@ export default ({ form: { getFieldDecorator } }: FormComponentProps) => (
         {
           validator: (_rule, value, callback) => {
             if (!value) {
-              callback('需要同意');
+              callback(
+                localeService.format({
+                  id: 'backend.imageHosting.yuque.agreement.message',
+                  defaultMessage: 'Need Checked',
+                })
+              );
             }
             callback();
           },
         },
       ],
-    })(<Checkbox>允许插件使用语雀的 cookie 上传图片</Checkbox>)}
+    })(
+      <Checkbox>
+        <FormattedMessage
+          id="backend.imageHosting.yuque.check"
+          defaultMessage="Allow Webclipper use my Cookies of Yuque"
+        ></FormattedMessage>
+      </Checkbox>
+    )}
   </Form.Item>
 );
