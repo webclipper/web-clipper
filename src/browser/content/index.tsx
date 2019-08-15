@@ -10,6 +10,8 @@ import { clickIcon, doYouAliveNow } from 'browserActions/browser';
 import { removeTool, runScript, hideTool } from 'browserActions/message';
 import { ContentScriptContext } from '@web-clipper/extensions';
 import * as browser from '@web-clipper/chrome-promise';
+import { localStorageService } from '@/common/chrome/storage';
+import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/types';
 
 const turndownService = new TurndownService({ codeBlockStyle: 'fenced' });
 turndownService.use(plugins);
@@ -41,7 +43,7 @@ const listeners = new MessageListenerCombiner()
     // @ts-ignore
     // eslint-disable-next-line
     const context: ContentScriptContext = {
-      $,
+      locale: localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, navigator.language),
       turndown: turndownService,
       Highlighter: Highlighter,
       toggleClipper,
@@ -66,4 +68,7 @@ const listeners = new MessageListenerCombiner()
     return true;
   });
 
-browser.runtime.onMessage.addListener(listeners.handle);
+(async () => {
+  await localStorageService.init();
+  browser.runtime.onMessage.addListener(listeners.handle);
+})();

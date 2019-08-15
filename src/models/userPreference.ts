@@ -38,6 +38,7 @@ import {
   documentServiceFactory,
   imageHostingServiceFactory,
 } from 'common/backend';
+import { ToolContext } from '@web-clipper/extensions';
 import backend from 'common/backend/index';
 import { loadImage } from 'common/blob';
 import { routerRedux } from 'dva';
@@ -365,9 +366,10 @@ builder
     const data = state.clipper.clipperData[pathname];
     if (afterRun) {
       result = yield (async () => {
-        //@ts-ignore
+        // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const context: ToolContext = {
+        const context: ToolContext<any, any> = {
+          locale: state.userPreference.locale,
           result,
           data,
           message,
