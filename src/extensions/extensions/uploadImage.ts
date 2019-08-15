@@ -17,6 +17,8 @@ export default new ToolExtension(
       const { data, imageService, message } = context;
       let foo = data;
       const result = data.match(/!\[.*?\]\(http(.*?)\)/g);
+      let successCount = 0;
+      let failedCount = 0;
       if (result) {
         const images: string[] = result
           .map(o => {
@@ -27,16 +29,18 @@ export default new ToolExtension(
             return '';
           })
           .filter(o => o && !o.startsWith('https://cdn-pri.nlark.com'));
+
         for (let image of images) {
           try {
-            const url = await imageService.uploadImageUrl(image);
+            const url = await imageService!.uploadImageUrl(image);
             foo = foo.replace(image, url);
+            successCount++;
           } catch (_error) {
-            message.info('上传图片失败');
+            failedCount++;
           }
         }
       }
-      message.info('上传图片成功');
+      message.info(`${successCount} success,${failedCount} failed.`);
       return foo;
     },
   }
