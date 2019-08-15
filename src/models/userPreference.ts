@@ -1,3 +1,4 @@
+import localeService from '@/common/locales';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from './../common/modelTypes/userPreference';
 import { ServiceMeta } from './../common/backend/services/interface';
 import { runScript } from './../browser/actions/message';
@@ -26,13 +27,14 @@ import {
   asyncRunExtension,
   setLocale,
   asyncSetLocaleToStorage,
+  initServices,
 } from 'pageActions/userPreference';
 import { asyncChangeAccount, initTabInfo, changeData } from 'pageActions/clipper';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
 import { UserPreferenceStore } from 'common/types';
 import {
-  services,
-  imageHostingServices,
+  getServices,
+  getImageHostingServices,
   documentServiceFactory,
   imageHostingServiceFactory,
 } from 'common/backend';
@@ -41,28 +43,12 @@ import { loadImage } from 'common/blob';
 import { routerRedux } from 'dva';
 import { localStorageService } from '@/common/chrome/storage';
 
-const servicesMeta = services.reduce(
-  (previousValue, meta) => {
-    previousValue[meta.type] = meta;
-    return previousValue;
-  },
-  {} as UserPreferenceStore['servicesMeta']
-);
-
-const imageHostingServicesMeta = imageHostingServices.reduce(
-  (previousValue, meta) => {
-    previousValue[meta.type] = meta;
-    return previousValue;
-  },
-  {} as UserPreferenceStore['imageHostingServicesMeta']
-);
-
 const defaultState: UserPreferenceStore = {
   locale: navigator.language,
   accounts: [],
   imageHosting: [],
-  servicesMeta,
-  imageHostingServicesMeta,
+  servicesMeta: {},
+  imageHostingServicesMeta: {},
   showLineNumber: true,
   liveRendering: true,
   initializeForm: {
@@ -439,5 +425,68 @@ builder
     });
   })
   .case(setLocale, (state, locale) => ({ ...state, locale }));
+
+builder
+  .subscript(async function xx({ dispatch }) {
+    const servicesMeta = getServices().reduce(
+      (previousValue, meta) => {
+        previousValue[meta.type] = meta;
+        return previousValue;
+      },
+      {} as UserPreferenceStore['servicesMeta']
+    );
+
+    const imageHostingServicesMeta = getImageHostingServices().reduce(
+      (previousValue, meta) => {
+        previousValue[meta.type] = meta;
+        return previousValue;
+      },
+      {} as UserPreferenceStore['imageHostingServicesMeta']
+    );
+    dispatch(
+      removeActionNamespace(
+        initServices({
+          imageHostingServicesMeta,
+          servicesMeta,
+        })
+      )
+    );
+
+    localStorageService.onDidChangeStorage(async key => {
+      if (key === LOCAL_USER_PREFERENCE_LOCALE_KEY) {
+        await localeService.init();
+        const servicesMeta = getServices().reduce(
+          (previousValue, meta) => {
+            previousValue[meta.type] = meta;
+            return previousValue;
+          },
+          {} as UserPreferenceStore['servicesMeta']
+        );
+
+        const imageHostingServicesMeta = getImageHostingServices().reduce(
+          (previousValue, meta) => {
+            previousValue[meta.type] = meta;
+            return previousValue;
+          },
+          {} as UserPreferenceStore['imageHostingServicesMeta']
+        );
+        dispatch(
+          removeActionNamespace(
+            initServices({
+              imageHostingServicesMeta,
+              servicesMeta,
+            })
+          )
+        );
+      }
+    });
+  })
+  .case(initServices, (state, { imageHostingServicesMeta, servicesMeta }) => {
+    return {
+      ...state,
+      imageHostingServicesMeta,
+      servicesMeta,
+    };
+  });
 
 export default builder.build();
