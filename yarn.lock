@@ -6940,10 +6940,10 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.npm.taobao.org/punycode/download/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha1-tYsBCsQMIsVldhbI0sLALHv0eew=
 
-qrcode@^1.3.0:
-  version "1.3.4"
-  resolved "https://registry.npm.taobao.org/qrcode/download/qrcode-1.3.4.tgz#1e5358050a5184cca3d0b7ed7f76769a8d3557d1"
-  integrity sha1-HlNYBQpRhMyj0Lftf3Z2mo01V9E=
+qrcode@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.4.1.tgz#2126814985d0dbbd9aee050fc523d319c6a7dc3b"
+  integrity sha512-3JhHQJkKqJL4PfoM6t+B40f0GWv9eNJAJmuNx2X/sHEOLvMyvEPN8GfbdN1qmr19O8N2nLraOzeWjXocHz1S4w==
   dependencies:
     dijkstrajs "^1.0.1"
     isarray "^2.0.1"
