@@ -20,7 +20,6 @@ import Section from 'components/section';
 import { DvaRouterProps } from 'common/types';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import { FormattedMessage } from 'react-intl';
-import { hasUpdate } from '@/common/version';
 import { trackEvent } from '@/common/gs';
 
 const mapStateToProps = ({
@@ -35,14 +34,14 @@ const mapStateToProps = ({
   loading,
   userPreference: { accounts, locale },
   extension: { extensions },
-  version: { removeVersion, localVersion },
+  version: { hasUpdate },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   const creatingDocument = loading.effects[asyncCreateDocument.started.type];
   const disableCreateDocument = creatingDocument;
   const loadingAccount = loading.effects[asyncChangeAccount.started.type];
   return {
-    hasUpdate: hasUpdate(removeVersion, localVersion),
+    hasUpdate,
     loadingAccount,
     accounts,
     extensions,

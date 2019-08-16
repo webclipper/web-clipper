@@ -8,16 +8,15 @@ import {
   asyncSetEditorLiveRendering,
 } from '@/actions/userPreference';
 import { FormattedMessage } from 'react-intl';
-import { hasUpdate } from '@/common/version';
 
 const mapStateToProps = ({
   userPreference: { locale, showLineNumber, liveRendering },
-  version: { localVersion, removeVersion },
+  version: { localVersion, remoteVersion, hasUpdate },
 }: GlobalStore) => {
   return {
     localVersion,
-    removeVersion,
-    hasUpdate: hasUpdate(removeVersion, localVersion),
+    remoteVersion,
+    hasUpdate,
     locale,
     showLineNumber,
     liveRendering,

@@ -1,4 +1,5 @@
 export interface VersionStore {
   localVersion: string;
-  removeVersion: string;
+  remoteVersion: string;
+  hasUpdate: boolean;
 }

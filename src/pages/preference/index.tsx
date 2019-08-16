@@ -9,16 +9,14 @@ import { Tabs, Icon, Badge } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import Base from './base';
 import { DvaRouterProps, GlobalStore } from '@/common/types';
-import { hasUpdate } from '@/common/version';
 
 const { Route } = router;
 
 const TabPane = Tabs.TabPane;
 
-const mapStateToProps = ({ version: { localVersion, removeVersion } }: GlobalStore) => {
+const mapStateToProps = ({ version: { hasUpdate } }: GlobalStore) => {
   return {
-    localVersion,
-    removeVersion,
+    hasUpdate,
   };
 };
 type PageStateProps = ReturnType<typeof mapStateToProps>;
@@ -51,8 +49,7 @@ type PageProps = DvaRouterProps & PageStateProps;
 const Preference: React.FC<PageProps> = ({
   location: { pathname },
   history: { push },
-  removeVersion,
-  localVersion,
+  hasUpdate,
 }) => {
   const goHome = () => push('/');
 
@@ -67,7 +64,7 @@ const Preference: React.FC<PageProps> = ({
             {tabs.map(tab => {
               const path = `/preference/${tab.path}`;
               let tabTitle = tab.title;
-              if (removeVersion && hasUpdate(removeVersion, localVersion) && tab.path === 'base') {
+              if (hasUpdate && tab.path === 'base') {
                 tabTitle = <Badge dot>{tabTitle}</Badge>;
               }
               return (
