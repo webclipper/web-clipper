@@ -137,7 +137,7 @@
     "web_accessible_resources": [
       "tool.html"
     ],
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
     "permissions": [
       "webRequest",
       "webRequestBlocking",

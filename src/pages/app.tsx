@@ -17,6 +17,7 @@ import createLoading from 'dva-loading';
 import LocalWrapper from './locale';
 import { localStorageService } from '@/common/chrome/storage';
 import localeService from '@/common/locales';
+import { initGa } from '@/common/gs';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -43,6 +44,7 @@ if (!element) {
 }
 
 (async () => {
+  initGa();
   await localStorageService.init();
   await localeService.init();
   const app = dva({

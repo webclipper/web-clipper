@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import * as styles from './index.scss';
 import ClipExtension from './ClipExtension';
 import repositorySelectOptions from 'components/repositorySelectOptions';
@@ -21,6 +21,7 @@ import { DvaRouterProps } from 'common/types';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import { FormattedMessage } from 'react-intl';
 import { hasUpdate } from '@/common/version';
+import { trackEvent } from '@/common/gs';
 
 const mapStateToProps = ({
   clipper: {
@@ -79,6 +80,10 @@ const Page = React.memo<PageProps>(
       dispatch,
       hasUpdate,
     } = props;
+
+    useEffect(() => {
+      trackEvent('LoadPage', pathname);
+    }, [pathname]);
 
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(
