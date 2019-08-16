@@ -1,7 +1,7 @@
 {
   "name": "web-clipper",
   "version": "1.7.0",
-  "description": "The best webpage clipping plugin in Xihu District",
+  "description": "Clip anything to anywhere.g",
   "scripts": {
     "commit": "git-cz",
     "dist": "tsc",

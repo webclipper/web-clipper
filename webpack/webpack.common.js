@@ -143,7 +143,7 @@ module.exports = {
     ]),
     new WebpackCreateExtensionManifestPlugin({
       output: resolve('dist/manifest.json'),
-      extra: { name: '剪藏' },
+      extra: { name: 'Web Clipper' },
     }),
     new HtmlWebpackPlugin({
       title: '剪藏插件',
