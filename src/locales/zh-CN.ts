@@ -39,4 +39,7 @@ export default {
   'preference.imageHosting.type': '类型',
   'preference.imageHosting.remark': '备注',
   'preference.imageHosting.edit': '编辑',
+  'preference.account.add': '绑定账户',
+  'preference.basic.update.title': '有更新',
+  'preference.basic.update.button': '安装更新',
 };
