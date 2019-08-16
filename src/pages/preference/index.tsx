@@ -5,14 +5,23 @@ import ImageHosting from './imageHosting';
 import Extensions from './extensions';
 import { CenterContainer } from 'components/container';
 import { router, connect } from 'dva';
-import { Tabs, Icon } from 'antd';
+import { Tabs, Icon, Badge } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import Base from './base';
-import { DvaRouterProps } from '@/common/types';
+import { DvaRouterProps, GlobalStore } from '@/common/types';
+import { hasUpdate } from '@/common/version';
 
 const { Route } = router;
 
 const TabPane = Tabs.TabPane;
+
+const mapStateToProps = ({ version: { localVersion, removeVersion } }: GlobalStore) => {
+  return {
+    localVersion,
+    removeVersion,
+  };
+};
+type PageStateProps = ReturnType<typeof mapStateToProps>;
 
 const tabs = [
   {
@@ -37,8 +46,16 @@ const tabs = [
   },
 ];
 
-const Preference: React.FC<DvaRouterProps> = ({ location: { pathname }, history: { push } }) => {
+type PageProps = DvaRouterProps & PageStateProps;
+
+const Preference: React.FC<PageProps> = ({
+  location: { pathname },
+  history: { push },
+  removeVersion,
+  localVersion,
+}) => {
   const goHome = () => push('/');
+
   return (
     <CenterContainer>
       <div className={styles.mainContent}>
@@ -49,8 +66,12 @@ const Preference: React.FC<DvaRouterProps> = ({ location: { pathname }, history:
           <Tabs activeKey={pathname} tabPosition="left" style={{ height: '100%' }} onChange={push}>
             {tabs.map(tab => {
               const path = `/preference/${tab.path}`;
+              let tabTitle = tab.title;
+              if (removeVersion && hasUpdate(removeVersion, localVersion) && tab.path === 'base') {
+                tabTitle = <Badge dot>{tabTitle}</Badge>;
+              }
               return (
-                <TabPane tab={tab.title} key={path} className={styles.tabPane}>
+                <TabPane tab={tabTitle} key={path} className={styles.tabPane}>
                   <Route exact path={path} component={tab.component} />
                 </TabPane>
               );
@@ -62,4 +83,4 @@ const Preference: React.FC<DvaRouterProps> = ({ location: { pathname }, history:
   );
 };
 
-export default connect()(Preference);
+export default connect(mapStateToProps)(Preference);

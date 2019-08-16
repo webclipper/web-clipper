@@ -8,11 +8,16 @@ import {
   asyncSetEditorLiveRendering,
 } from '@/actions/userPreference';
 import { FormattedMessage } from 'react-intl';
+import { hasUpdate } from '@/common/version';
 
 const mapStateToProps = ({
   userPreference: { locale, showLineNumber, liveRendering },
+  version: { localVersion, removeVersion },
 }: GlobalStore) => {
   return {
+    localVersion,
+    removeVersion,
+    hasUpdate: hasUpdate(removeVersion, localVersion),
     locale,
     showLineNumber,
     liveRendering,
@@ -113,6 +118,27 @@ const Base: React.FC<PageProps> = props => {
           }
         />
       </List.Item>
+      {props.hasUpdate && (
+        <List.Item
+          actions={[
+            <a key="w" href="https://github.com/webclipper/web-clipper/releases" target="_blank">
+              <FormattedMessage
+                id="preference.basic.update.button"
+                defaultMessage="Install Update"
+              />
+            </a>,
+          ]}
+        >
+          <List.Item.Meta
+            title={
+              <FormattedMessage
+                id="preference.basic.update.title"
+                defaultMessage="Has Update"
+              ></FormattedMessage>
+            }
+          />
+        </List.Item>
+      )}
     </React.Fragment>
   );
 };

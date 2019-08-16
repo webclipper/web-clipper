@@ -5,6 +5,7 @@ import packageJson from '../../package.json';
 import axios from 'axios';
 
 const defaultState: GlobalStore['version'] = {
+  removeVersion: '0.0.0',
   localVersion: packageJson.version,
 };
 const model = new DvaModelBuilder(defaultState, 'version')
@@ -14,7 +15,9 @@ const model = new DvaModelBuilder(defaultState, 'version')
       const response = yield call(axios.get, url);
       const removeVersion = response.data.tag_name.slice(1);
       yield put(asyncFetchLatestVersion.done({ result: removeVersion }));
-    } catch (_error) {}
+    } catch (_error) {
+      console.log(_error);
+    }
   })
   .case(asyncFetchLatestVersion.done, (state, { result: removeVersion }) => ({
     ...state,

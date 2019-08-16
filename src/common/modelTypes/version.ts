@@ -1,4 +1,4 @@
 export interface VersionStore {
   localVersion: string;
-  removeVersion?: string;
+  removeVersion: string;
 }
