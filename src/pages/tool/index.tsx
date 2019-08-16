@@ -181,10 +181,10 @@ const Page = React.memo<PageProps>(
             <Button
               className={`${styles.toolbarButton} `}
               onClick={() => {
-                if (pathname === '/preference') {
+                if (pathname.startsWith('/preference')) {
                   push('/');
                 } else {
-                  push('/preference');
+                  push('/preference/account');
                 }
               }}
             >

@@ -68,7 +68,7 @@ if (!element) {
           <Switch>
             <Route exact path="/" component={Tool} />
             <Route exact path="/complete" component={Complete} />
-            <Route exact path="/preference" component={withTool(preference)} />
+            <Route path="/preference/:id" component={withTool(preference)} />
             <Route path="/plugins/:id" component={withTool(PluginPage)} />
           </Switch>
         </Router>

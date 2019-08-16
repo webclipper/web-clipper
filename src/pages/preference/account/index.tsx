@@ -16,6 +16,7 @@ import EditAccountModal from './modal/editAccountModal';
 import { FormComponentProps } from 'antd/lib/form';
 import CreateAccountModal from './modal/createAccountModal';
 import { GlobalStore, AccountPreference } from 'common/types';
+import { FormattedMessage } from 'react-intl';
 
 const useActions = {
   resetAccountForm,
@@ -226,7 +227,11 @@ class Page extends React.Component<PageProps, PageState> {
                 onClick={() => this.toggleAccountModal()}
                 block
               >
-                <Icon type="plus" /> 绑定账户
+                <Icon type="plus" />
+                <FormattedMessage
+                  id="preference.account.add"
+                  defaultMessage="Bind Account"
+                ></FormattedMessage>
               </Button>
             </div>
           </Col>

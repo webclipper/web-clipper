@@ -401,7 +401,7 @@ builder.subscript(async function initStore({ dispatch }) {
   dispatch(removeActionNamespace(initUserPreference(result)));
   const { accounts, defaultAccountId: id } = result;
   if (accounts.length === 0 || !id || accounts.every(o => o.id !== id)) {
-    dispatch(routerRedux.push('/preference'));
+    dispatch(routerRedux.push('/preference/account'));
     return;
   }
   dispatch(asyncChangeAccount.started({ id }));
