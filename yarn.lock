@@ -819,11 +819,12 @@
   dependencies:
     blueimp-md5 "^2.11.0"
 
-"@web-clipper/shared@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.npmjs.org/@web-clipper/shared/-/shared-0.0.7.tgz#ee15919c8bac86ed6beac9eb246c5f210f144217"
-  integrity sha512-JdaP4LpzkhG5B9zCrw/l24oF9KIOhTWVmmSihBRTqkrvyok+RmsOS5kqAWWx0eM4rKuW06R1zNB40Xr6xNeoEA==
+"@web-clipper/shared@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.npm.taobao.org/@web-clipper/shared/download/@web-clipper/shared-0.0.20.tgz#b7f93b8623ad786c2db0fc67e9a8882c9586a97e"
+  integrity sha1-t/k7hiOteGwtsPxn6aiILJWGqX4=
   dependencies:
+    "@types/chrome" "^0.0.88"
     blueimp-md5 "^2.11.0"
 
 "@web-clipper/turndown@^0.0.11":
