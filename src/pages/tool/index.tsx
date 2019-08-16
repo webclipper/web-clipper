@@ -82,7 +82,9 @@ const Page = React.memo<PageProps>(
     } = props;
 
     useEffect(() => {
-      trackEvent('LoadPage', pathname);
+      if (pathname === '/') {
+        trackEvent('LoadPage', pathname);
+      }
     }, [pathname]);
 
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

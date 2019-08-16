@@ -12,6 +12,5 @@ export function initGa() {
 }
 
 export function trackEvent(...args: string[]) {
-  console.log(['_trackEvent', ...args]);
   window._gaq.push(['_trackEvent', ...args]);
 }
