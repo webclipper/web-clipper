@@ -16,3 +16,7 @@ interface Type<T> extends Function {
 }
 
 /// <reference path="../../node_modules/@types/chrome/index.d.ts"/>
+
+interface Window {
+  _gaq: string[][];
+}
