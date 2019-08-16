@@ -20,6 +20,7 @@ import Section from 'components/section';
 import { DvaRouterProps } from 'common/types';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import { FormattedMessage } from 'react-intl';
+import { hasUpdate } from '@/common/version';
 
 const mapStateToProps = ({
   clipper: {
@@ -33,12 +34,14 @@ const mapStateToProps = ({
   loading,
   userPreference: { accounts, locale },
   extension: { extensions },
+  version: { removeVersion, localVersion },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   const creatingDocument = loading.effects[asyncCreateDocument.started.type];
   const disableCreateDocument = creatingDocument;
   const loadingAccount = loading.effects[asyncChangeAccount.started.type];
   return {
+    hasUpdate: hasUpdate(removeVersion, localVersion),
     loadingAccount,
     accounts,
     extensions,
@@ -74,6 +77,7 @@ const Page = React.memo<PageProps>(
         location: { pathname },
       },
       dispatch,
+      hasUpdate,
     } = props;
 
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -188,7 +192,7 @@ const Page = React.memo<PageProps>(
                 }
               }}
             >
-              <Badge>
+              <Badge dot={hasUpdate}>
                 <Icon type="setting" style={{ fontSize: 18 }} />
               </Badge>
             </Button>
@@ -219,6 +223,7 @@ const Page = React.memo<PageProps>(
       loadingAccount,
       locale,
       extensions,
+      hasUpdate,
     }: PageProps) => {
       return {
         loadingAccount,
@@ -230,6 +235,7 @@ const Page = React.memo<PageProps>(
         pathname: history.location.pathname,
         locale,
         extensions,
+        hasUpdate,
       };
     };
     return isEqual(selector(prevProps), selector(nextProps));
