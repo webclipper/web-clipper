@@ -1,6 +1,6 @@
 export function initGa() {
   window._gaq = window._gaq || [];
-  window._gaq.push(['_setAccount', `UA-145404263-2`]);
+  window._gaq.push(['_setAccount', `UA-145404263-3`]);
   let ga = document.createElement('script');
   ga.type = 'text/javascript';
   ga.async = true;
