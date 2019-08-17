@@ -24,22 +24,42 @@ type PageStateProps = ReturnType<typeof mapStateToProps>;
 const tabs = [
   {
     path: 'account',
-    title: <FormattedMessage id="preference.tab.account" defaultMessage="Account" />,
+    title: (
+      <React.Fragment>
+        <Icon type="user"></Icon>
+        <FormattedMessage id="preference.tab.account" defaultMessage="Account" />
+      </React.Fragment>
+    ),
     component: Account,
   },
   {
     path: 'extensions',
-    title: <FormattedMessage id="preference.tab.extensions" defaultMessage="Extension" />,
+    title: (
+      <React.Fragment>
+        <Icon type="tool" />
+        <FormattedMessage id="preference.tab.extensions" defaultMessage="Extension" />
+      </React.Fragment>
+    ),
     component: Extensions,
   },
   {
     path: 'imageHost',
-    title: <FormattedMessage id="preference.tab.imageHost" defaultMessage="ImageHost" />,
+    title: (
+      <React.Fragment>
+        <Icon type="picture" />
+        <FormattedMessage id="preference.tab.imageHost" defaultMessage="ImageHost" />
+      </React.Fragment>
+    ),
     component: ImageHosting,
   },
   {
     path: 'base',
-    title: <FormattedMessage id="preference.tab.basic" defaultMessage="Basic"></FormattedMessage>,
+    title: (
+      <React.Fragment>
+        <Icon type="setting" />
+        <FormattedMessage id="preference.tab.basic" defaultMessage="Basic"></FormattedMessage>
+      </React.Fragment>
+    ),
     component: Base,
   },
 ];
