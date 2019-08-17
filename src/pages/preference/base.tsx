@@ -24,120 +24,111 @@ const mapStateToProps = ({
 };
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 
-interface BaseProps {}
-
-type PageProps = BaseProps & PageStateProps & DvaRouterProps;
+type PageProps = PageStateProps & DvaRouterProps;
 
 const Base: React.FC<PageProps> = props => {
   const { dispatch } = props;
-  return (
-    <React.Fragment>
-      <List.Item
-        actions={[
-          <Select
-            key="configLanguage"
-            value={props.locale}
-            onChange={(e: string) => dispatch(asyncSetLocaleToStorage(e))}
-          >
-            <Select.Option key="zh-CN">中文</Select.Option>
-            <Select.Option key="en-US">English</Select.Option>
-          </Select>,
-        ]}
-      >
-        <List.Item.Meta
-          title={
-            <FormattedMessage
-              id="preference.basic.configLanguage.title"
-              defaultMessage="Language"
-            ></FormattedMessage>
-          }
-          description={
-            <FormattedMessage
-              id="preference.basic.configLanguage.description"
-              defaultMessage="Config Language"
-            ></FormattedMessage>
-          }
+
+  const configs = [
+    {
+      key: 'configLanguage',
+      action: (
+        <Select
+          key="configLanguage"
+          value={props.locale}
+          onChange={(e: string) => dispatch(asyncSetLocaleToStorage(e))}
+        >
+          <Select.Option key="zh-CN">中文</Select.Option>
+          <Select.Option key="en-US">English</Select.Option>
+        </Select>
+      ),
+      title: (
+        <FormattedMessage id="preference.basic.configLanguage.title" defaultMessage="Language" />
+      ),
+    },
+    {
+      key: 'showLineNumber',
+      action: (
+        <Switch
+          checked={props.showLineNumber}
+          onChange={() => {
+            dispatch(
+              asyncSetShowLineNumber.started({
+                value: props.showLineNumber,
+              })
+            );
+          }}
+          key="showLineNumber"
         />
-      </List.Item>
-      <List.Item
-        actions={[
-          <Switch
-            checked={props.showLineNumber}
-            onChange={() => {
-              dispatch(
-                asyncSetShowLineNumber.started({
-                  value: props.showLineNumber,
-                })
-              );
-            }}
-            key="showLineNumber"
-          />,
-        ]}
-      >
-        <List.Item.Meta
-          title={
-            <FormattedMessage
-              id="preference.basic.showLineNumber.title"
-              defaultMessage="Show LineNumber"
-            ></FormattedMessage>
-          }
-          description={
-            <FormattedMessage
-              id="preference.basic.showLineNumber.description"
-              defaultMessage="Enable Show LineNumber"
-            ></FormattedMessage>
-          }
+      ),
+      title: (
+        <FormattedMessage
+          id="preference.basic.showLineNumber.title"
+          defaultMessage="Show LineNumber"
         />
-      </List.Item>
-      <List.Item
-        actions={[
-          <Switch
-            key="liveRendering"
-            checked={props.liveRendering}
-            onChange={() => {
+      ),
+      description: (
+        <FormattedMessage
+          id="preference.basic.showLineNumber.description"
+          defaultMessage="Enable Show LineNumber"
+        />
+      ),
+    },
+    {
+      key: 'liveRendering',
+      action: (
+        <Switch
+          key="liveRendering"
+          checked={props.liveRendering}
+          onChange={() => {
+            dispatch(
               asyncSetEditorLiveRendering.started({
                 value: props.liveRendering,
-              });
-            }}
-          />,
-        ]}
-      >
-        <List.Item.Meta
-          title={
-            <FormattedMessage
-              id="preference.basic.liveRendering.title"
-              defaultMessage="LiveRendering"
-            ></FormattedMessage>
-          }
-          description={
-            <FormattedMessage
-              id="preference.basic.liveRendering.description"
-              defaultMessage="Enable LiveRendering"
-            ></FormattedMessage>
-          }
+              })
+            );
+          }}
         />
-      </List.Item>
-      {props.hasUpdate && (
-        <List.Item
-          actions={[
-            <a key="w" href="https://github.com/webclipper/web-clipper/releases" target="_blank">
-              <FormattedMessage
-                id="preference.basic.update.button"
-                defaultMessage="Install Update"
-              />
-            </a>,
-          ]}
-        >
-          <List.Item.Meta
-            title={
-              <FormattedMessage
-                id="preference.basic.update.title"
-                defaultMessage="Has Update"
-              ></FormattedMessage>
-            }
-          />
+      ),
+      title: (
+        <FormattedMessage
+          id="preference.basic.liveRendering.title"
+          defaultMessage="LiveRendering"
+        />
+      ),
+      description: (
+        <FormattedMessage
+          id="preference.basic.liveRendering.description"
+          defaultMessage="Enable LiveRendering"
+        />
+      ),
+    },
+  ];
+
+  if (props.hasUpdate) {
+    configs.push({
+      key: 'update',
+      action: (
+        <a href="https://github.com/webclipper/web-clipper/releases" target="_blank">
+          <FormattedMessage id="preference.basic.update.button" defaultMessage="Install Update" />
+        </a>
+      ),
+      title: <FormattedMessage id="preference.basic.update.title" defaultMessage="Has Update" />,
+      description: (
+        <FormattedMessage
+          id="preference.basic.liveRendering.description"
+          defaultMessage="Enable LiveRendering"
+        />
+      ),
+    });
+  }
+
+  return (
+    <React.Fragment>
+      {configs.map(({ key, action, title, description }) => (
+        <List.Item key={key} actions={[action]}>
+          <List.Item.Meta title={title} description={description} />
         </List.Item>
-      )}
+      ))}
     </React.Fragment>
   );
 };

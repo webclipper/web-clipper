@@ -273,8 +273,7 @@ builder
       })
     );
   })
-  .takeEveryWithAction(asyncSetEditorLiveRendering.started, function*(action, { call, put }) {
-    const value = action.payload.value;
+  .takeEvery(asyncSetEditorLiveRendering.started, function*({ value }, { call, put }) {
     yield call(storage.setLiveRendering, !value);
     yield put(
       asyncSetEditorLiveRendering.done({
