@@ -113,12 +113,6 @@ const Base: React.FC<PageProps> = props => {
         </a>
       ),
       title: <FormattedMessage id="preference.basic.update.title" defaultMessage="Has Update" />,
-      description: (
-        <FormattedMessage
-          id="preference.basic.liveRendering.description"
-          defaultMessage="Enable LiveRendering"
-        />
-      ),
     });
   }
 
