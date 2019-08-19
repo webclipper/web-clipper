@@ -8,3 +8,5 @@ tmp/
 *.scss.d.ts
 .idea
 yarn-error.log
+dll/
+webclipper.zip

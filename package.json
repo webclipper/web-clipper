@@ -94,6 +94,7 @@
     "node-sass": "^4.12.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.17.0",
+    "pump": "^3.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "ts-import-plugin": "^1.5.5",
@@ -110,11 +111,11 @@
   "manifest": {
     "manifest_version": 2,
     "icons": {
-      "128": "icons/icon.png"
+      "128": "icon.png"
     },
     "browser_action": {
       "default_icon": {
-        "128": "icons/icon.png"
+        "128": "icon.png"
       }
     },
     "content_scripts": [
@@ -123,7 +124,7 @@
           "<all_urls>"
         ],
         "js": [
-          "js/content_script.js"
+          "content_script.js"
         ],
         "run_at": "document_end",
         "all_frames": false
@@ -131,7 +132,7 @@
     ],
     "background": {
       "scripts": [
-        "js/background.js"
+        "background.js"
       ]
     },
     "web_accessible_resources": [
