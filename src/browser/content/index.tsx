@@ -51,6 +51,7 @@ const listeners = new MessageListenerCombiner()
       document,
       AreaSelector,
       QRCode,
+      $,
     };
     if (script) {
       (async () => {
