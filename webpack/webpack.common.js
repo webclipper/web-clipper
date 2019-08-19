@@ -18,8 +18,19 @@ module.exports = {
     content_script: resolve('src/browser/content/index.tsx'),
   },
   output: {
-    path: resolve('dist/js'),
+    path: resolve('dist'),
     filename: '[name].js',
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/](react|react-dom|antd)[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
+    },
   },
   resolve: {
     alias: {
@@ -136,9 +147,14 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: resolve('chrome'),
+        from: resolve('chrome/icons'),
         to: resolve('dist'),
         ignore: ['.*'],
+      },
+      {
+        from: resolve('dll'),
+        to: resolve('dist'),
+        ignore: ['react.manifest.json'],
       },
     ]),
     new WebpackCreateExtensionManifestPlugin({
@@ -146,9 +162,10 @@ module.exports = {
       extra: { name: 'Web Clipper' },
     }),
     new HtmlWebpackPlugin({
-      title: '剪藏插件',
-      filename: '../tool.html',
+      title: 'Web Clipper',
+      filename: resolve('dist/tool.html'),
       chunks: ['tool'],
+      template: 'src/index.html',
     }),
   ].filter(plugin => !!plugin),
 };

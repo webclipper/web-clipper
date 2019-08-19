@@ -2,7 +2,7 @@ import * as browser from '@web-clipper/chrome-promise';
 import { clickIcon, doYouAliveNow } from 'browserActions/browser';
 
 if (process.env.NODE_ENV === 'development') {
-  browser.browserAction.setIcon({ path: 'icons/icon-dev.png' });
+  browser.browserAction.setIcon({ path: 'icon-dev.png' });
 }
 
 browser.browserAction.onClicked.addListener(async tab => {
@@ -15,7 +15,7 @@ browser.browserAction.onClicked.addListener(async tab => {
   if (!status) {
     await browser.tabs.executeScript(
       {
-        file: 'js/content_script.js',
+        file: 'content_script.js',
       },
       tabId
     );
