@@ -1,9 +1,8 @@
 import * as browser from '@web-clipper/chrome-promise';
 import { clickIcon, doYouAliveNow } from 'browserActions/browser';
+import config from '@/config';
 
-if (process.env.NODE_ENV === 'development') {
-  browser.browserAction.setIcon({ path: 'icon-dev.png' });
-}
+browser.browserAction.setIcon({ path: config.icon });
 
 browser.browserAction.onClicked.addListener(async tab => {
   const tabId = tab.id;

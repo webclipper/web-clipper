@@ -2,7 +2,7 @@ import '@babel/polyfill';
 import React from 'react';
 import * as styles from './app.scss';
 import dva, { router } from 'dva';
-import { createMemoryHistory } from 'history';
+import { createHashHistory } from 'history';
 import createLogger from 'dva-logger';
 import { Action } from 'dva-model-creator';
 import preference from '@/pages/preference';
@@ -18,6 +18,7 @@ import LocalWrapper from './locale';
 import { localStorageService } from '@/common/chrome/storage';
 import localeService from '@/common/locales';
 import { initGa } from '@/common/gs';
+import AuthPage from '@/pages/auth';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -49,7 +50,7 @@ if (!element) {
   await localeService.init();
   const app = dva({
     namespacePrefixWarning: false,
-    history: createMemoryHistory(),
+    history: createHashHistory(),
   });
   app.use(createLoading());
 
@@ -69,6 +70,7 @@ if (!element) {
         <Router history={router!.history}>
           <Switch>
             <Route exact path="/" component={Tool} />
+            <Route exact path="/auth" component={AuthPage} />
             <Route exact path="/complete" component={Complete} />
             <Route path="/preference/:id" component={withTool(preference)} />
             <Route path="/plugins/:id" component={withTool(PluginPage)} />
