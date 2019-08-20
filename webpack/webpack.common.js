@@ -151,11 +151,6 @@ module.exports = {
         to: resolve('dist'),
         ignore: ['.*'],
       },
-      {
-        from: resolve('dll'),
-        to: resolve('dist'),
-        ignore: ['react.manifest.json'],
-      },
     ]),
     new WebpackCreateExtensionManifestPlugin({
       output: resolve('dist/manifest.json'),
