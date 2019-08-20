@@ -1,7 +1,3 @@
-export interface DocumentServiceConstructAble {
-  new (info: any): DocumentService;
-}
-
 export interface CreateDocumentRequest {
   title: string;
   content: string;
@@ -40,30 +36,31 @@ export interface Repository {
 
 export interface ServiceMeta {
   /**
-   * 后端服务名称
+   * Name of Backend Service
    */
   name: string;
   /**
-   * 图标
+   * icon
    */
   icon: string;
   /**
-   * 类型
+   * Type of Backend Service
    */
   type: string;
   /**
-   * 后端接口实现
+   * Backend Service
    */
-  service: DocumentServiceConstructAble;
+  service: Type<DocumentService>;
   /**
    * 主页
    */
-  homePage: string;
+  homePage?: string;
   /**
    * 配置表单
    */
   form?: any;
   complete?: any;
+  oauthUrl?: string;
 }
 
 export interface DocumentService {

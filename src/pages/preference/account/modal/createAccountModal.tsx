@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Form, Modal, Select, Icon, Divider } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import * as styles from './index.scss';
@@ -24,147 +24,139 @@ type PageOwnProps = {
 };
 type PageProps = PageOwnProps & FormComponentProps;
 
-type PageState = {
-  type: string;
-};
+const ModalTitle = () => (
+  <div className={styles.modalTitle}>
+    <FormattedMessage id="preference.accountList.addAccount" defaultMessage="Add Account" />
+    <a href={'https://www.yuque.com/yuqueclipper/help_cn/bind_account'} target="_blank">
+      <Icon type="question-circle" />
+    </a>
+  </div>
+);
 
-const DEFAULT_TYPE = 'yuque';
-
-export default class extends React.Component<PageProps, PageState> {
-  constructor(props: PageProps) {
-    super(props);
-    this.state = {
-      type: DEFAULT_TYPE,
-    };
-  }
-
-  handleCancel = () => {
-    this.props.onCancel();
-  };
-
-  handleOk = () => {
-    const { verified } = this.props;
-    if (!verified) {
-      this.props.onVerifiedAccount();
+const Page: React.FC<PageProps> = ({
+  imageHosting,
+  repositories,
+  imageHostingServicesMeta,
+  servicesMeta,
+  onCancel,
+  verified,
+  onVerifiedAccount,
+  onAdd,
+  form,
+  form: { getFieldDecorator },
+  visible,
+}) => {
+  const [type, setType] = useState<string>(Object.values(servicesMeta)[0].type);
+  const handleCancel = () => onCancel();
+  const handleOk = () => {
+    if (service.oauthUrl) {
+      onCancel();
       return;
     }
-    this.props.onAdd();
+    if (!verified) {
+      onVerifiedAccount();
+      return;
+    }
+    onAdd();
   };
-
-  handleTypeChange = (type: string) => {
-    this.setState({
-      type,
-    });
-    const { form } = this.props;
+  const handleTypeChange = (type: string) => {
+    setType(type);
     const values = form.getFieldsValue();
     form.resetFields(Object.keys(omit(values, ['type'])));
   };
 
-  getTitle = () => {
+  const service = servicesMeta[type];
+
+  const getBaseForm = () => {
     return (
-      <div className={styles.modalTitle}>
-        <FormattedMessage id="preference.accountList.addAccount" defaultMessage="Add Account" />
-        <a href={'https://www.yuque.com/yuqueclipper/help_cn/bind_account'} target="_blank">
-          <Icon type="question-circle" />
-        </a>
-      </div>
+      <React.Fragment>
+        <Divider />
+        <Form.Item
+          label={
+            <FormattedMessage
+              id="preference.accountList.defaultRepository"
+              defaultMessage="Default Repository"
+            />
+          }
+        >
+          {getFieldDecorator('defaultRepositoryId')(
+            <Select disabled={!verified}>{repositorySelectOptions(repositories)}</Select>
+          )}
+        </Form.Item>
+        <Form.Item
+          label={
+            <FormattedMessage id="preference.accountList.imageHost" defaultMessage="Image Host" />
+          }
+        >
+          {getFieldDecorator('imageHosting')(
+            <Select className={styles.imageHostingSelect} disabled={!verified}>
+              {imageHosting.map(({ id, type, remark }) => {
+                const meta = imageHostingServicesMeta[type];
+                if (meta.support && !meta.support(type)) {
+                  return null;
+                }
+                return (
+                  <Select.Option key={id} value={id}>
+                    <ImageHostingSelectOption
+                      id={id}
+                      icon={meta.icon}
+                      name={meta.name}
+                      remark={remark}
+                    />
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          )}
+        </Form.Item>
+      </React.Fragment>
     );
   };
 
-  getServicesForm = () => {
-    const { servicesMeta, form, verified } = this.props;
-    const { type } = this.state;
-    if (type) {
-      const service = servicesMeta[type];
-      if (service && service.form) {
-        return <service.form form={form} verified={verified} />;
-      }
-    }
-  };
-
-  render() {
-    const {
-      verified,
-      visible,
-      servicesMeta,
-      imageHosting,
-      repositories,
-      imageHostingServicesMeta,
-      form: { getFieldDecorator },
-    } = this.props;
-
+  const ModalProps = () => {
     let okText;
     if (verified) {
-      okText = '绑定';
+      okText = <FormattedMessage id="preference.accountList.bind" defaultMessage="Bind" />;
     } else {
-      okText = '确认';
+      okText = <FormattedMessage id="preference.accountList.ok" defaultMessage="Ok" />;
     }
+    if (service.oauthUrl) {
+      okText = (
+        <a href={service.oauthUrl} target="_blank">
+          Bind
+        </a>
+      );
+    }
+    return { okText, title: <ModalTitle /> };
+  };
 
-    return (
-      <Modal
-        visible={visible}
-        title={this.getTitle()}
-        okText={okText}
-        okType="primary"
-        onCancel={this.handleCancel}
-        onOk={this.handleOk}
-      >
-        <Form labelCol={{ span: 7, offset: 0 }} wrapperCol={{ span: 17 }}>
-          <Form.Item
-            label={<FormattedMessage id="preference.accountList.type" defaultMessage="Type" />}
-          >
-            {getFieldDecorator('type', {
-              initialValue: DEFAULT_TYPE,
-            })(
-              <Select disabled={verified} onChange={this.handleTypeChange}>
-                {Object.values(servicesMeta).map(o => (
-                  <Select.Option key={o.type}>{o.name}</Select.Option>
-                ))}
-              </Select>
-            )}
-          </Form.Item>
-          {this.getServicesForm()}
-          {<Divider />}
-          <Form.Item
-            label={
-              <FormattedMessage
-                id="preference.accountList.defaultRepository"
-                defaultMessage="Default Repository"
-              />
-            }
-          >
-            {getFieldDecorator('defaultRepositoryId')(
-              <Select disabled={!verified}>{repositorySelectOptions(repositories)}</Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label={
-              <FormattedMessage id="preference.accountList.imageHost" defaultMessage="Image Host" />
-            }
-          >
-            {getFieldDecorator('imageHosting')(
-              <Select className={styles.imageHostingSelect} disabled={!verified}>
-                {imageHosting.map(({ id, type, remark }) => {
-                  const meta = imageHostingServicesMeta[type];
-                  if (meta.support && !meta.support(this.state.type)) {
-                    return null;
-                  }
-                  return (
-                    <Select.Option key={id} value={id}>
-                      <ImageHostingSelectOption
-                        id={id}
-                        icon={meta.icon}
-                        name={meta.name}
-                        remark={remark}
-                      />
-                    </Select.Option>
-                  );
-                })}
-              </Select>
-            )}
-          </Form.Item>
-        </Form>
-      </Modal>
-    );
-  }
-}
+  return (
+    <Modal
+      visible={visible}
+      okType="primary"
+      onCancel={handleCancel}
+      onOk={handleOk}
+      {...ModalProps()}
+    >
+      <Form labelCol={{ span: 7, offset: 0 }} wrapperCol={{ span: 17 }}>
+        <Form.Item
+          label={<FormattedMessage id="preference.accountList.type" defaultMessage="Type" />}
+        >
+          {getFieldDecorator('type', {
+            initialValue: type,
+          })(
+            <Select disabled={verified} onChange={handleTypeChange}>
+              {Object.values(servicesMeta).map(o => (
+                <Select.Option key={o.type}>{o.name}</Select.Option>
+              ))}
+            </Select>
+          )}
+        </Form.Item>
+        {!!service.form && <service.form form={form} verified={verified} />}
+        {!service.oauthUrl && getBaseForm()}
+      </Form>
+    </Modal>
+  );
+};
+
+export default Page;
