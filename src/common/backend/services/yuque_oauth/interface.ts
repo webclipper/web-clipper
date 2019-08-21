@@ -8,7 +8,7 @@ export enum RepositoryType {
 }
 
 export interface YuqueBackendServiceConfig {
-  accessToken: string;
+  access_token: string;
   repositoryType: RepositoryType;
 }
 
@@ -47,5 +47,4 @@ export interface YuqueCreateDocumentResponse {
 export interface YuqueCompleteStatus extends CompleteStatus {
   documentId: string;
   repositoryId: string;
-  accessToken: string;
 }

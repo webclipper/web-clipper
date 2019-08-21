@@ -1,4 +1,4 @@
-import { Repository, ServiceMeta, ImageHostingServiceMeta } from '@/common/backend';
+import { ServiceMeta, ImageHostingServiceMeta } from '@/common/backend';
 
 export interface UserPreferenceStore {
   locale: string;
@@ -8,17 +8,6 @@ export interface UserPreferenceStore {
   defaultAccountId?: string;
   showLineNumber: boolean;
   liveRendering: boolean;
-  initializeForm: {
-    repositories: Repository[];
-    userInfo?: {
-      name: string;
-      avatar: string;
-      homePage: string;
-      description?: string;
-    };
-    verifying: boolean;
-    verified: boolean;
-  };
   servicesMeta: {
     [type: string]: ServiceMeta;
   };

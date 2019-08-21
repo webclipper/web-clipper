@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Modal, Select, Icon, Divider } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import * as styles from './index.scss';
-import { omit } from 'lodash';
-import { ImageHostingServiceMeta, Repository } from 'common/backend';
+import { ImageHostingServiceMeta } from 'common/backend';
 import ImageHostingSelectOption from 'components/imageHostingSelectOption';
 import { UserPreferenceStore, ImageHosting } from '@/common/types';
 import repositorySelectOptions from 'components/repositorySelectOptions';
 import { FormattedMessage } from 'react-intl';
+import userVerifiedAccount from '@/common/hooks/userVerifiedAccount';
+import useFilterImageHostingServices, {
+  ImageHostingWithMeta,
+} from '@/common/hooks/useFilterImageHostingServices';
+import { SelectProps } from 'antd/lib/select';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {
@@ -16,11 +20,8 @@ type PageOwnProps = {
   servicesMeta: UserPreferenceStore['servicesMeta'];
   imageHosting: ImageHosting[];
   visible: boolean;
-  repositories: Repository[];
-  verified: boolean;
   onCancel(): void;
-  onAdd(): void;
-  onVerifiedAccount(): void;
+  onAdd(userInfo: any): void;
 };
 type PageProps = PageOwnProps & FormComponentProps;
 
@@ -33,110 +34,66 @@ const ModalTitle = () => (
   </div>
 );
 
+export const ImageHostingSelect: React.FC<
+  {
+    supportedImageHostingServices: ImageHostingWithMeta[];
+  } & SelectProps
+> = ({ supportedImageHostingServices, ...props }) => (
+  <Select className={styles.imageHostingSelect} {...props}>
+    {supportedImageHostingServices.map(({ imageHostingServices: { id, remark }, meta }) => {
+      return (
+        <Select.Option key={id} value={id}>
+          <ImageHostingSelectOption id={id} icon={meta.icon} name={meta.name} remark={remark} />
+        </Select.Option>
+      );
+    })}
+  </Select>
+);
+
 const Page: React.FC<PageProps> = ({
   imageHosting,
-  repositories,
   imageHostingServicesMeta,
   servicesMeta,
   onCancel,
-  verified,
-  onVerifiedAccount,
-  onAdd,
   form,
   form: { getFieldDecorator },
+  onAdd,
   visible,
 }) => {
-  const [type, setType] = useState<string>(Object.values(servicesMeta)[0].type);
-  const handleCancel = () => onCancel();
+  const {
+    type,
+    accountStatus: { verified, repositories, userInfo },
+    verifyAccount,
+    changeType,
+    serviceForm,
+    okText,
+    oauthLink,
+  } = userVerifiedAccount({ form, services: servicesMeta });
+
+  const supportedImageHostingServices = useFilterImageHostingServices({
+    backendServiceType: type,
+    imageHostingServices: imageHosting,
+    imageHostingServicesMap: imageHostingServicesMeta,
+  });
+
   const handleOk = () => {
-    if (service.oauthUrl) {
+    if (oauthLink) {
       onCancel();
-      return;
-    }
-    if (!verified) {
-      onVerifiedAccount();
-      return;
-    }
-    onAdd();
-  };
-  const handleTypeChange = (type: string) => {
-    setType(type);
-    const values = form.getFieldsValue();
-    form.resetFields(Object.keys(omit(values, ['type'])));
-  };
-
-  const service = servicesMeta[type];
-
-  const getBaseForm = () => {
-    return (
-      <React.Fragment>
-        <Divider />
-        <Form.Item
-          label={
-            <FormattedMessage
-              id="preference.accountList.defaultRepository"
-              defaultMessage="Default Repository"
-            />
-          }
-        >
-          {getFieldDecorator('defaultRepositoryId')(
-            <Select disabled={!verified}>{repositorySelectOptions(repositories)}</Select>
-          )}
-        </Form.Item>
-        <Form.Item
-          label={
-            <FormattedMessage id="preference.accountList.imageHost" defaultMessage="Image Host" />
-          }
-        >
-          {getFieldDecorator('imageHosting')(
-            <Select className={styles.imageHostingSelect} disabled={!verified}>
-              {imageHosting.map(({ id, type, remark }) => {
-                const meta = imageHostingServicesMeta[type];
-                if (meta.support && !meta.support(type)) {
-                  return null;
-                }
-                return (
-                  <Select.Option key={id} value={id}>
-                    <ImageHostingSelectOption
-                      id={id}
-                      icon={meta.icon}
-                      name={meta.name}
-                      remark={remark}
-                    />
-                  </Select.Option>
-                );
-              })}
-            </Select>
-          )}
-        </Form.Item>
-      </React.Fragment>
-    );
-  };
-
-  const ModalProps = () => {
-    let okText;
-    if (verified) {
-      okText = <FormattedMessage id="preference.accountList.bind" defaultMessage="Bind" />;
+    } else if (verified) {
+      onAdd(userInfo);
     } else {
-      okText = <FormattedMessage id="preference.accountList.ok" defaultMessage="Ok" />;
+      verifyAccount();
     }
-    if (service.oauthUrl) {
-      okText = (
-        <a href={service.oauthUrl} target="_blank">
-          Bind
-        </a>
-      );
-    }
-    return { okText, title: <ModalTitle /> };
   };
 
   return (
     <Modal
       visible={visible}
       okType="primary"
-      onCancel={handleCancel}
+      onCancel={onCancel}
+      okText={oauthLink ? oauthLink : okText}
       onOk={handleOk}
-      {...ModalProps()}
+      title={<ModalTitle />}
     >
       <Form labelCol={{ span: 7, offset: 0 }} wrapperCol={{ span: 17 }}>
         <Form.Item
@@ -145,15 +102,46 @@ const Page: React.FC<PageProps> = ({
           {getFieldDecorator('type', {
             initialValue: type,
           })(
-            <Select disabled={verified} onChange={handleTypeChange}>
+            <Select disabled={verified} onChange={changeType}>
               {Object.values(servicesMeta).map(o => (
                 <Select.Option key={o.type}>{o.name}</Select.Option>
               ))}
             </Select>
           )}
         </Form.Item>
-        {!!service.form && <service.form form={form} verified={verified} />}
-        {!service.oauthUrl && getBaseForm()}
+        {!oauthLink && serviceForm}
+        {!oauthLink && (
+          <React.Fragment>
+            <Divider />
+            <Form.Item
+              label={
+                <FormattedMessage
+                  id="preference.accountList.defaultRepository"
+                  defaultMessage="Default Repository"
+                />
+              }
+            >
+              {getFieldDecorator('defaultRepositoryId')(
+                <Select disabled={!verified}>{repositorySelectOptions(repositories)}</Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label={
+                <FormattedMessage
+                  id="preference.accountList.imageHost"
+                  defaultMessage="Image Host"
+                />
+              }
+            >
+              {getFieldDecorator('imageHosting')(
+                <ImageHostingSelect
+                  disabled={!verified}
+                  supportedImageHostingServices={supportedImageHostingServices}
+                ></ImageHostingSelect>
+              )}
+            </Form.Item>
+          </React.Fragment>
+        )}
       </Form>
     </Modal>
   );

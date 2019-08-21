@@ -1,10 +1,8 @@
 import * as React from 'react';
 import {
   asyncAddAccount,
-  resetAccountForm,
   asyncDeleteAccount,
   asyncUpdateCurrentAccountIndex,
-  asyncVerificationAccessToken,
   asyncUpdateAccount,
 } from 'pageActions/userPreference';
 import { Icon, Button, Form, Row, Col } from 'antd';
@@ -19,12 +17,10 @@ import { GlobalStore, AccountPreference } from 'common/types';
 import { FormattedMessage } from 'react-intl';
 
 const useActions = {
-  resetAccountForm,
   asyncAddAccount: asyncAddAccount.started,
   asyncDeleteAccount: asyncDeleteAccount.started,
   asyncUpdateAccount: asyncUpdateAccount.started,
   asyncUpdateCurrentAccountIndex: asyncUpdateCurrentAccountIndex.started,
-  asyncVerificationAccessToken: asyncVerificationAccessToken.started,
 };
 
 const mapStateToProps = ({
@@ -32,7 +28,6 @@ const mapStateToProps = ({
     accounts,
     defaultAccountId,
     servicesMeta,
-    initializeForm,
     imageHostingServicesMeta,
     imageHosting,
   },
@@ -42,7 +37,6 @@ const mapStateToProps = ({
     accounts,
     defaultAccountId,
     servicesMeta,
-    initializeForm,
     imageHosting,
   };
 };
@@ -53,8 +47,7 @@ type PageState = {
 
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageDispatchProps = typeof useActions;
-type PageOwnProps = {};
-type PageProps = PageStateProps & PageDispatchProps & PageOwnProps & FormComponentProps;
+type PageProps = PageStateProps & PageDispatchProps & FormComponentProps;
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators<PageDispatchProps, PageDispatchProps>(useActions, dispatch);
 
@@ -66,20 +59,6 @@ class Page extends React.Component<PageProps, PageState> {
       currentAccount: null,
     };
   }
-
-  handleVerifiedAccount = () => {
-    const { form } = this.props;
-    form.validateFields((error, values) => {
-      if (error) {
-        return;
-      }
-      const { type, defaultRepositoryId, ...info } = values;
-      this.props.asyncVerificationAccessToken({
-        type,
-        info,
-      });
-    });
-  };
 
   handleSetDefaultId = (id: string) => {
     if (this.props.defaultAccountId === id) {
@@ -93,15 +72,10 @@ class Page extends React.Component<PageProps, PageState> {
     if (!currentAccount) {
       return;
     }
-    const { type, defaultRepositoryId, imageHosting, ...info } = currentAccount;
-    this.props.asyncVerificationAccessToken({
-      type,
-      info,
-    });
     this.toggleAccountModal(currentAccount);
   };
 
-  handleAdd = () => {
+  handleAdd = (userInfo: any) => {
     const { form } = this.props;
     form.validateFields((error, values) => {
       if (error) {
@@ -113,16 +87,16 @@ class Page extends React.Component<PageProps, PageState> {
         defaultRepositoryId,
         imageHosting,
         info,
+        userInfo,
         callback: this.handleCancel,
       });
     });
   };
 
   handleCancel = () => {
-    const { form, resetAccountForm } = this.props;
+    const { form } = this.props;
     form.resetFields();
     this.toggleAccountModal();
-    resetAccountForm();
   };
 
   toggleAccountModal = (currentAccount?: AccountPreference) => {
@@ -156,13 +130,8 @@ class Page extends React.Component<PageProps, PageState> {
 
   getAccountModal = () => {
     const { showAccountModal, currentAccount } = this.state;
-    const {
-      servicesMeta,
-      form,
-      imageHostingServicesMeta,
-      imageHosting,
-      initializeForm: { repositories, verified, verifying },
-    } = this.props;
+    const { servicesMeta, form, imageHostingServicesMeta, imageHosting } = this.props;
+    const { handleAdd, handleCancel } = this;
     if (!showAccountModal) {
       return;
     }
@@ -173,9 +142,6 @@ class Page extends React.Component<PageProps, PageState> {
           form={form}
           imageHosting={imageHosting}
           imageHostingServicesMeta={imageHostingServicesMeta}
-          repositories={repositories}
-          verified={verified}
-          verifying={verifying}
           servicesMeta={servicesMeta}
           currentAccount={currentAccount}
           onCancel={this.handleCancel}
@@ -190,22 +156,20 @@ class Page extends React.Component<PageProps, PageState> {
         imageHosting={imageHosting}
         imageHostingServicesMeta={imageHostingServicesMeta}
         servicesMeta={servicesMeta}
-        verified={verified}
-        repositories={repositories}
-        onVerifiedAccount={this.handleVerifiedAccount}
-        onAdd={this.handleAdd}
-        onCancel={this.handleCancel}
+        onAdd={handleAdd}
+        onCancel={handleCancel}
       />
     );
   };
 
   render() {
-    const { defaultAccountId } = this.props;
+    const { defaultAccountId, accounts, asyncDeleteAccount } = this.props;
+    const { handleEdit, handleSetDefaultId, toggleAccountModal } = this;
     return (
       <React.Fragment>
         {this.getAccountModal()}
         <Row gutter={10}>
-          {this.props.accounts.map(account => (
+          {accounts.map(account => (
             <Col span={8} key={account.id} style={{ marginBottom: 10 }}>
               <AccountItem
                 isDefault={defaultAccountId === account.id}
@@ -213,9 +177,9 @@ class Page extends React.Component<PageProps, PageState> {
                 name={account.name}
                 description={account.description}
                 avatar={account.avatar}
-                onDelete={id => this.props.asyncDeleteAccount({ id })}
-                onEdit={id => this.handleEdit(id)}
-                onSetDefaultAccount={id => this.handleSetDefaultId(id)}
+                onDelete={id => asyncDeleteAccount({ id })}
+                onEdit={id => handleEdit(id)}
+                onSetDefaultAccount={id => handleSetDefaultId(id)}
               />
             </Col>
           ))}
@@ -224,7 +188,7 @@ class Page extends React.Component<PageProps, PageState> {
               <Button
                 className={styles.createButton}
                 type="dashed"
-                onClick={() => this.toggleAccountModal()}
+                onClick={() => toggleAccountModal()}
                 block
               >
                 <Icon type="plus" />
@@ -244,5 +208,4 @@ class Page extends React.Component<PageProps, PageState> {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-  //@ts-ignore
 )(Form.create<PageProps>()(Page));

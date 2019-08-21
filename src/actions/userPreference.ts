@@ -1,24 +1,11 @@
 import { AccountPreference, ImageHosting, GlobalStore } from '@/common/types';
 import { PreferenceStorage } from 'common/storage/interface';
-import { Repository, UserInfo } from 'common/backend/index';
 import { SerializedExtensionWithId } from '@web-clipper/extensions';
 import { actionCreatorFactory } from 'dva-model-creator';
 
 const actionCreator = actionCreatorFactory('userPreference');
 
 export const initUserPreference = actionCreator<PreferenceStorage>('INIT_USER_PREFERENCE');
-
-export const asyncVerificationAccessToken = actionCreator.async<
-  {
-    type: string;
-    info: any;
-  },
-  { repositories: Repository[]; userInfo: UserInfo },
-  {
-    cancel?: boolean;
-    error?: Error;
-  }
->('ASYNC_VERIFICATION_ACCESS_TOKEN');
 
 export const asyncChangeDefaultRepository = actionCreator.async<
   {
@@ -32,6 +19,7 @@ export const asyncAddAccount = actionCreator.async<
     info: any;
     imageHosting?: string;
     defaultRepositoryId?: string;
+    userInfo: any;
     type: string;
     callback(): void;
   },
@@ -131,8 +119,6 @@ export const asyncEditImageHosting = actionCreator.async<
   ImageHosting[],
   void
 >('ASYNC_EDIT_IMAGE_HOSTING');
-
-export const resetAccountForm = actionCreator('RESET_ACCOUNT_FORM');
 
 export const setLocale = actionCreator<string>('setLocale');
 export const asyncSetLocaleToStorage = actionCreator<string>('asyncSetLocaleToStorage');
