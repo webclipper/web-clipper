@@ -1,4 +1,4 @@
-import '@babel/polyfill';
+import 'regenerator-runtime/runtime';
 import React from 'react';
 import * as styles from './app.scss';
 import dva, { router } from 'dva';

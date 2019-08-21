@@ -24,7 +24,6 @@
   "author": "Diamondyuan",
   "license": "MIT",
   "dependencies": {
-    "@babel/polyfill": "^7.4.4",
     "@diamondyuan/readability": "^0.1.0",
     "@web-clipper/area-selector": "^0.0.3",
     "@web-clipper/chrome-promise": "^0.0.15",
@@ -49,7 +48,8 @@
     "qs": "^6.7.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-intl": "^3.1.5"
+    "react-intl": "^3.1.5",
+    "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
     "@diamondyuan/eslint-config-react-typescript": "^6.0.0",

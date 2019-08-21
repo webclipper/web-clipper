@@ -10,6 +10,7 @@ initialize {
       Object {
         "attribs": Object {
           "class": "ant-divider ant-divider-horizontal",
+          "role": "separator",
           "style": "margin-bottom:16px",
         },
         "children": Array [],
@@ -65,10 +66,12 @@ initialize {
         "type": "tag",
         "x-attribsNamespace": Object {
           "class": undefined,
+          "role": undefined,
           "style": undefined,
         },
         "x-attribsPrefix": Object {
           "class": undefined,
+          "role": undefined,
           "style": undefined,
         },
       },
@@ -111,6 +114,7 @@ initialize {
         "prev": Object {
           "attribs": Object {
             "class": "ant-divider ant-divider-horizontal",
+            "role": "separator",
             "style": "margin-bottom:16px",
           },
           "children": Array [],
@@ -122,10 +126,12 @@ initialize {
           "type": "tag",
           "x-attribsNamespace": Object {
             "class": undefined,
+            "role": undefined,
             "style": undefined,
           },
           "x-attribsPrefix": Object {
             "class": undefined,
+            "role": undefined,
             "style": undefined,
           },
         },
@@ -172,6 +178,7 @@ initialize {
           "prev": Object {
             "attribs": Object {
               "class": "ant-divider ant-divider-horizontal",
+              "role": "separator",
               "style": "margin-bottom:16px",
             },
             "children": Array [],
@@ -183,10 +190,12 @@ initialize {
             "type": "tag",
             "x-attribsNamespace": Object {
               "class": undefined,
+              "role": undefined,
               "style": undefined,
             },
             "x-attribsPrefix": Object {
               "class": undefined,
+              "role": undefined,
               "style": undefined,
             },
           },
