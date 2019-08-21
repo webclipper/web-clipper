@@ -7,7 +7,7 @@ import ImageHostingSelectOption from 'components/imageHostingSelectOption';
 import { UserPreferenceStore, ImageHosting } from '@/common/types';
 import repositorySelectOptions from 'components/repositorySelectOptions';
 import { FormattedMessage } from 'react-intl';
-import userVerifiedAccount from '@/common/hooks/userVerifiedAccount';
+import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
 import useFilterImageHostingServices, {
   ImageHostingWithMeta,
 } from '@/common/hooks/useFilterImageHostingServices';
@@ -68,7 +68,7 @@ const Page: React.FC<PageProps> = ({
     serviceForm,
     okText,
     oauthLink,
-  } = userVerifiedAccount({ form, services: servicesMeta });
+  } = useVerifiedAccount({ form, services: servicesMeta });
 
   const supportedImageHostingServices = useFilterImageHostingServices({
     backendServiceType: type,

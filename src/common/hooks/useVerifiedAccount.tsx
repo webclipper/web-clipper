@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { omit } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-const userVerifiedAccount = ({
+const useVerifiedAccount = ({
   form,
   services,
   initAccount,
@@ -92,4 +92,4 @@ const userVerifiedAccount = ({
     oauthLink,
   };
 };
-export default userVerifiedAccount;
+export default useVerifiedAccount;

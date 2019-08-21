@@ -986,23 +986,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@diamondyuan/eslint-config-javascript@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.npm.taobao.org/@diamondyuan/eslint-config-javascript/download/@diamondyuan/eslint-config-javascript-6.0.0.tgz#38b7167a240df5758db1806901fd3f11b4f6fc6c"
-  integrity sha1-OLcWeiQN9XWNsYBpAf0/EbT2/Gw=
-
 "@diamondyuan/eslint-config-javascript@^7.0.0":
   version "7.0.0"
   resolved "https://registry.npm.taobao.org/@diamondyuan/eslint-config-javascript/download/@diamondyuan/eslint-config-javascript-7.0.0.tgz#083aeddc91131c97c4f3ecd1d55775f13e8442bd"
   integrity sha1-CDrt3JETHJfE8+zR1Vd18T6EQr0=
-
-"@diamondyuan/eslint-config-react-typescript@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.npm.taobao.org/@diamondyuan/eslint-config-react-typescript/download/@diamondyuan/eslint-config-react-typescript-6.0.0.tgz#4140cf65580df7f5fe71c59fc297e2a5e4c9216b"
-  integrity sha1-QUDPZVgN9/X+ccWfwpfipeTJIWs=
-  dependencies:
-    "@diamondyuan/eslint-config-react" "^6.0.0"
-    "@diamondyuan/eslint-config-typescript" "^6.0.0"
 
 "@diamondyuan/eslint-config-react-typescript@^7.0.0":
   version "7.0.0"
@@ -1012,26 +999,12 @@
     "@diamondyuan/eslint-config-react" "^7.0.0"
     "@diamondyuan/eslint-config-typescript" "^7.0.0"
 
-"@diamondyuan/eslint-config-react@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.npm.taobao.org/@diamondyuan/eslint-config-react/download/@diamondyuan/eslint-config-react-6.0.0.tgz#bf6c45b69e2c1dcedc970c6424744549e84a4b49"
-  integrity sha1-v2xFtp4sHc7clwxkJHRFSehKS0k=
-  dependencies:
-    "@diamondyuan/eslint-config-javascript" "^6.0.0"
-
 "@diamondyuan/eslint-config-react@^7.0.0":
   version "7.0.0"
   resolved "https://registry.npm.taobao.org/@diamondyuan/eslint-config-react/download/@diamondyuan/eslint-config-react-7.0.0.tgz#fc0d5841592af6dfe74aa082bafa37bedd7bd8a5"
   integrity sha1-/A1YQVkq9t/nSqCCuvo3vt172KU=
   dependencies:
     "@diamondyuan/eslint-config-javascript" "^7.0.0"
-
-"@diamondyuan/eslint-config-typescript@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.npm.taobao.org/@diamondyuan/eslint-config-typescript/download/@diamondyuan/eslint-config-typescript-6.0.0.tgz#d48ca9e48c1fbfa102a5e44cce98b61e4d8251ca"
-  integrity sha1-1Iyp5Iwfv6ECpeRMzpi2Hk2CUco=
-  dependencies:
-    "@diamondyuan/eslint-config-javascript" "^6.0.0"
 
 "@diamondyuan/eslint-config-typescript@^7.0.0":
   version "7.0.0"
@@ -4356,7 +4329,7 @@ eslint-plugin-prettier@^3.1.0:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-react-hooks@^1.6.1:
+eslint-plugin-react-hooks@^1.6.1, eslint-plugin-react-hooks@^1.7.0:
   version "1.7.0"
   resolved "https://registry.npm.taobao.org/eslint-plugin-react-hooks/download/eslint-plugin-react-hooks-1.7.0.tgz#6210b6d5a37205f0b92858f895a4e827020a7d04"
   integrity sha1-YhC21aNyBfC5KFj4laToJwIKfQQ=

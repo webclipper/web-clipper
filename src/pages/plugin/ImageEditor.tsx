@@ -29,7 +29,7 @@ const ImageEditor: React.FC<PageProps> = ({ extension, clipperData, pathname, di
         })
       );
     }
-  }, [pathname, extension.id]);
+  }, [pathname, extension.id, clipperData, dispatch, extension]);
 
   const data = clipperData[pathname] as ImageClipperData;
   if (!data) {

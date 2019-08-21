@@ -8,7 +8,7 @@ import { AccountPreference, UserPreferenceStore, ImageHosting } from '@/common/t
 import { FormattedMessage } from 'react-intl';
 import { ImageHostingSelect } from './createAccountModal';
 import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
-import userVerifiedAccount from '@/common/hooks/userVerifiedAccount';
+import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {
@@ -47,7 +47,7 @@ const Page: React.FC<PageProps> = ({
     accountStatus: { verified, repositories },
     verifyAccount,
     serviceForm,
-  } = userVerifiedAccount({
+  } = useVerifiedAccount({
     form,
     services: servicesMeta,
     initAccount: currentAccount,
@@ -55,7 +55,7 @@ const Page: React.FC<PageProps> = ({
 
   useEffect(() => {
     verifyAccount();
-  }, []);
+  }, [verifyAccount]);
 
   const supportedImageHostingServices = useFilterImageHostingServices({
     backendServiceType: currentAccount.type,

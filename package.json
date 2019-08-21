@@ -52,7 +52,7 @@
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
-    "@diamondyuan/eslint-config-react-typescript": "^6.0.0",
+    "@diamondyuan/eslint-config-react-typescript": "^7.0.0",
     "@types/chrome": "^0.0.86",
     "@types/codemirror": "^0.0.76",
     "@types/enzyme": "^3.9.3",
@@ -86,6 +86,7 @@
     "eslint-import-resolver-webpack": "^0.11.1",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",

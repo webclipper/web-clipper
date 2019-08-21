@@ -6,7 +6,7 @@ import { Modal, Form, Select } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { FormComponentProps } from 'antd/lib/form';
 import * as browser from '@web-clipper/chrome-promise';
-import userVerifiedAccount from '@/common/hooks/userVerifiedAccount';
+import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
 import { ImageHostingSelect } from './preference/account/modal/createAccountModal';
 import repositorySelectOptions from 'components/repositorySelectOptions';
 import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
@@ -29,7 +29,7 @@ const mapStateToProps = ({
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageProps = PageStateProps & DvaRouterProps & FormComponentProps;
 
-const page: React.FC<PageProps> = props => {
+const Page: React.FC<PageProps> = props => {
   const query = parse(props.location.search.slice(1)) as PageQuery;
   const service = props.servicesMeta[query.type];
   const {
@@ -44,7 +44,7 @@ const page: React.FC<PageProps> = props => {
     verifyAccount,
     accountStatus: { repositories, verified, userInfo },
     serviceForm,
-  } = userVerifiedAccount({
+  } = useVerifiedAccount({
     form: props.form,
     services: props.servicesMeta,
     initAccount: query,
@@ -58,7 +58,7 @@ const page: React.FC<PageProps> = props => {
 
   useEffect(() => {
     verifyAccount();
-  }, []);
+  }, [verifyAccount]);
 
   return (
     <Modal
@@ -127,4 +127,4 @@ const page: React.FC<PageProps> = props => {
   );
 };
 
-export default connect(mapStateToProps)(Form.create<PageProps>()(page));
+export default connect(mapStateToProps)(Form.create<PageProps>()(Page));
