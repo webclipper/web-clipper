@@ -16,11 +16,9 @@ import {
   asyncSetShowLineNumber,
   asyncUpdateCurrentAccountIndex,
   initUserPreference,
-  asyncVerificationAccessToken,
   asyncDeleteImageHosting,
   asyncAddImageHosting,
   asyncEditImageHosting,
-  resetAccountForm,
   asyncUpdateAccount,
   asyncHideTool,
   asyncRemoveTool,
@@ -32,12 +30,7 @@ import {
 import { asyncChangeAccount, initTabInfo, changeData } from 'pageActions/clipper';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
 import { UserPreferenceStore } from 'common/types';
-import {
-  getServices,
-  getImageHostingServices,
-  documentServiceFactory,
-  imageHostingServiceFactory,
-} from 'common/backend';
+import { getServices, getImageHostingServices, imageHostingServiceFactory } from 'common/backend';
 import { ToolContext } from '@web-clipper/extensions';
 import backend from 'common/backend/index';
 import { loadImage } from 'common/blob';
@@ -53,11 +46,6 @@ const defaultState: UserPreferenceStore = {
   imageHostingServicesMeta: {},
   showLineNumber: true,
   liveRendering: true,
-  initializeForm: {
-    repositories: [],
-    verified: false,
-    verifying: false,
-  },
 };
 
 const builder = new DvaModelBuilder(defaultState, 'userPreference')
@@ -114,62 +102,18 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
         $set: accounts,
       },
     })
-  )
-  .case(asyncVerificationAccessToken.done, (state, { result: { repositories, userInfo } }) =>
-    update(state, {
-      initializeForm: {
-        $set: {
-          verified: true,
-          verifying: false,
-          repositories,
-          userInfo,
-        },
-      },
-    })
-  )
-  .case(resetAccountForm, state =>
-    update(state, {
-      initializeForm: {
-        $set: defaultState.initializeForm,
-      },
-    })
   );
 
 builder
-  .takeEvery(asyncVerificationAccessToken.started, function*({ type, info }, { call, put }) {
-    try {
-      const service = documentServiceFactory(type, info);
-      const userInfo = yield call(service.getUserInfo);
-      const repositories = yield call(service.getRepositories);
-      yield put(
-        asyncVerificationAccessToken.done({
-          params: { type, info },
-          result: {
-            repositories,
-            userInfo,
-          },
-        })
-      );
-    } catch (error) {
-      message.error(error.message);
-      yield put(resetAccountForm());
-    }
-  })
   .takeEvery(asyncAddAccount.started, function*(payload, { select, put }) {
-    const selector = ({
-      userPreference: {
-        servicesMeta,
-        initializeForm: { userInfo },
-      },
-    }: GlobalStore) => {
-      return { userInfo, servicesMeta };
+    const selector = ({ userPreference: { servicesMeta } }: GlobalStore) => {
+      return { servicesMeta };
     };
-    const { servicesMeta, userInfo }: ReturnType<typeof selector> = yield select(selector);
-    const { info, imageHosting, defaultRepositoryId, type, callback } = payload;
+    const { servicesMeta }: ReturnType<typeof selector> = yield select(selector);
+    const { info, imageHosting, defaultRepositoryId, type, callback, userInfo } = payload;
     const service: ServiceMeta = servicesMeta[type];
     const { service: Service } = service;
     const instance = new Service(info);
-
     const userPreference = {
       type,
       id: instance.getId(),
@@ -192,7 +136,6 @@ builder
         })
       );
       callback();
-      yield put(resetAccountForm());
     } catch (error) {
       message.error(error.message);
     }
@@ -391,7 +334,10 @@ builder
     );
   });
 
-builder.subscript(async function initStore({ dispatch }) {
+builder.subscript(async function initStore({ dispatch, history }) {
+  if (history.location.pathname !== '/') {
+    return;
+  }
   const result = await storage.getPreference();
   const tabInfo = await browser.tabs.getCurrent();
   if (tabInfo.title && tabInfo.url) {

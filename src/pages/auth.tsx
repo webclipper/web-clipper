@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import { parse } from 'qs';
 import { DvaRouterProps, GlobalStore } from '@/common/types';
-import { Modal, Form } from 'antd';
+import { Modal, Form, Select } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { FormComponentProps } from 'antd/lib/form';
 import * as browser from '@web-clipper/chrome-promise';
+import userVerifiedAccount from '@/common/hooks/userVerifiedAccount';
+import { ImageHostingSelect } from './preference/account/modal/createAccountModal';
+import repositorySelectOptions from 'components/repositorySelectOptions';
+import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
 import { asyncAddAccount } from '@/actions/userPreference';
 
 interface PageQuery {
@@ -13,9 +17,13 @@ interface PageQuery {
   type: string;
 }
 
-const mapStateToProps = ({ userPreference: { servicesMeta } }: GlobalStore) => {
+const mapStateToProps = ({
+  userPreference: { servicesMeta, imageHosting, imageHostingServicesMeta },
+}: GlobalStore) => {
   return {
     servicesMeta,
+    imageHosting,
+    imageHostingServicesMeta,
   };
 };
 type PageStateProps = ReturnType<typeof mapStateToProps>;
@@ -24,38 +32,95 @@ type PageProps = PageStateProps & DvaRouterProps & FormComponentProps;
 const page: React.FC<PageProps> = props => {
   const query = parse(props.location.search.slice(1)) as PageQuery;
   const service = props.servicesMeta[query.type];
+  const {
+    form: { getFieldDecorator },
+    form,
+    imageHosting,
+    imageHostingServicesMeta,
+  } = props;
+
+  const {
+    type,
+    verifyAccount,
+    accountStatus: { repositories, verified, userInfo },
+    serviceForm,
+  } = userVerifiedAccount({
+    form: props.form,
+    services: props.servicesMeta,
+    initAccount: query,
+  });
+
+  const supportedImageHostingServices = useFilterImageHostingServices({
+    backendServiceType: type,
+    imageHostingServices: imageHosting,
+    imageHostingServicesMap: imageHostingServicesMeta,
+  });
+
+  useEffect(() => {
+    verifyAccount();
+  }, []);
 
   return (
     <Modal
+      visible
       onCancel={async () => {
         const tahId = (await browser.tabs.getCurrent()).id;
         chrome.tabs.remove(tahId!);
       }}
-      onOk={async () => {
-        props.dispatch(
-          asyncAddAccount.started({
-            type: query.type,
-            info: {
-              accessToken: query.access_token,
-            },
-            callback: async () => {
-              const tahId = (await browser.tabs.getCurrent()).id;
-              chrome.tabs.remove(tahId!);
-            },
-          })
-        );
-      }}
-      visible
       title={<FormattedMessage id="auth.modal.title" defaultMessage="Account Config" />}
+      onOk={() => {
+        form.validateFields((error, values) => {
+          if (error) {
+            return;
+          }
+          const { defaultRepositoryId, imageHosting, ...info } = values;
+          console.log(info);
+          props.dispatch(
+            asyncAddAccount.started({
+              type,
+              defaultRepositoryId,
+              imageHosting,
+              info,
+              userInfo,
+              callback: async () => {
+                const tahId = (await browser.tabs.getCurrent()).id;
+                chrome.tabs.remove(tahId!);
+              },
+            })
+          );
+        });
+      }}
     >
       <Form labelCol={{ span: 7, offset: 0 }} wrapperCol={{ span: 17 }}>
         <Form.Item label={<FormattedMessage id="auth.form.type" defaultMessage="Type" />}>
           {service.name}
         </Form.Item>
-      </Form>
-      <Form labelCol={{ span: 7, offset: 0 }} wrapperCol={{ span: 17 }}>
-        <Form.Item label={<FormattedMessage id="auth.form.token" defaultMessage="Token" />}>
-          {query.access_token}
+        {serviceForm}
+        <Form.Item
+          label={
+            <FormattedMessage
+              id="preference.accountList.defaultRepository"
+              defaultMessage="Default Repository"
+            />
+          }
+        >
+          {getFieldDecorator('defaultRepositoryId')(
+            <Select allowClear disabled={!verified}>
+              {repositorySelectOptions(repositories)}
+            </Select>
+          )}
+        </Form.Item>
+        <Form.Item
+          label={
+            <FormattedMessage id="preference.accountList.imageHost" defaultMessage="Image Host" />
+          }
+        >
+          {getFieldDecorator('imageHosting')(
+            <ImageHostingSelect
+              disabled={!verified}
+              supportedImageHostingServices={supportedImageHostingServices}
+            ></ImageHostingSelect>
+          )}
         </Form.Item>
       </Form>
     </Modal>
