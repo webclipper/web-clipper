@@ -4057,10 +4057,10 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     readable-stream "^2.0.0"
     stream-shift "^1.0.0"
 
-dva-core@1.6.0-beta.5:
-  version "1.6.0-beta.5"
-  resolved "https://registry.npm.taobao.org/dva-core/download/dva-core-1.6.0-beta.5.tgz#368d2d291740934f27bc19f984c8b67d5e7911e4"
-  integrity sha1-No0tKRdAk08nvBn5hMi2fV55EeQ=
+dva-core@1.6.0-beta.6:
+  version "1.6.0-beta.6"
+  resolved "https://registry.yarnpkg.com/dva-core/-/dva-core-1.6.0-beta.6.tgz#4875fced90ef1a1f2f7e410df9061956219d09c6"
+  integrity sha512-1+95rZE+4s5SxmzAxQyy06UhQ8DdpmGM+GmC0x0K4Ikh7HnuRReZUaqfB/UBSSlF+2orjwRwfYpOyouzJA76Qw==
   dependencies:
     "@babel/runtime" "^7.0.0"
     flatten "^1.0.2"
@@ -4091,17 +4091,17 @@ dva-model-creator@^0.3.0:
   dependencies:
     warning "^4.0.3"
 
-dva@2.6.0-beta.9:
-  version "2.6.0-beta.9"
-  resolved "https://registry.npm.taobao.org/dva/download/dva-2.6.0-beta.9.tgz#a78ede10d6d429143a11d07de3cb5a1eb64e2562"
-  integrity sha1-p47eENbUKRQ6EdB948taHrZOJWI=
+dva@2.6.0-beta.12:
+  version "2.6.0-beta.12"
+  resolved "https://registry.yarnpkg.com/dva/-/dva-2.6.0-beta.12.tgz#a64b11781fa7b096e41dcf002dd06629a3910218"
+  integrity sha512-O+XMeQWjhFxOIYyL4EGFUQ0zC3hBzACWN5y/U2ZAUxT0E5X8Zx+LZ23/cqgVGhFzZUfjjhYlOA2gPOaPvzeJlg==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@types/isomorphic-fetch" "^0.0.35"
     "@types/react-redux" "^7.1.0"
     "@types/react-router-dom" "^4.3.1"
     connected-react-router "^6.3.2"
-    dva-core "1.6.0-beta.5"
+    dva-core "1.6.0-beta.6"
     global "^4.3.2"
     history "^4.7.2"
     invariant "^2.2.4"
