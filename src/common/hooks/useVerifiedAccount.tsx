@@ -67,16 +67,16 @@ const useVerifiedAccount = ({
   }
 
   const okText = accountStatus.verified ? (
-    <FormattedMessage id="preference.accountList.bind" defaultMessage="Bind" />
+    <FormattedMessage id="preference.accountList.verified" defaultMessage="Verified" />
   ) : (
-    <FormattedMessage id="preference.accountList.ok" defaultMessage="Ok" />
+    <FormattedMessage id="preference.accountList.add" defaultMessage="Add" />
   );
 
   let oauthLink;
   if (service.oauthUrl) {
     oauthLink = (
       <a href={service.oauthUrl} target="_blank">
-        Bind
+        <FormattedMessage id="preference.accountList.login" defaultMessage="Login" />
       </a>
     );
   }

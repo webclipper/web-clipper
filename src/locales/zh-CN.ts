@@ -42,4 +42,5 @@ export default {
   'preference.account.add': '绑定账户',
   'preference.basic.update.title': '有更新',
   'preference.basic.update.button': '安装更新',
+  'preference.accountList.login': '授权登录',
 };
