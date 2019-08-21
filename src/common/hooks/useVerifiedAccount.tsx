@@ -67,9 +67,9 @@ const useVerifiedAccount = ({
   }
 
   const okText = accountStatus.verified ? (
-    <FormattedMessage id="preference.accountList.verified" defaultMessage="Verified" />
-  ) : (
     <FormattedMessage id="preference.accountList.add" defaultMessage="Add" />
+  ) : (
+    <FormattedMessage id="preference.accountList.verify" defaultMessage="Verify" />
   );
 
   let oauthLink;
