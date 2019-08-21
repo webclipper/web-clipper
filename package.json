@@ -52,7 +52,7 @@
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
-    "@diamondyuan/eslint-config-react-typescript": "^6.0.0",
+    "@diamondyuan/eslint-config-react-typescript": "^7.0.0",
     "@types/chrome": "^0.0.86",
     "@types/codemirror": "^0.0.76",
     "@types/enzyme": "^3.9.3",
