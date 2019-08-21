@@ -3,7 +3,7 @@ import Service from './service';
 
 export default (): ServiceMeta => {
   return {
-    name: 'notion',
+    name: 'Notion',
     icon: 'https://www.notion.so/images/favicon.ico',
     type: 'notion',
     homePage: 'https://www.notion.so/',
