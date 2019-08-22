@@ -1531,13 +1531,13 @@
   dependencies:
     jquery "^3.4.1"
 
-"@web-clipper/chrome-promise@^0.0.15":
-  version "0.0.15"
-  resolved "https://registry.npm.taobao.org/@web-clipper/chrome-promise/download/@web-clipper/chrome-promise-0.0.15.tgz#1ffa645bba79354f485d2840a123b2aa32826c5b"
-  integrity sha1-H/pkW7p5NU9IXShAoSOyqjKCbFs=
+"@web-clipper/chrome-promise@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/@web-clipper/chrome-promise/-/chrome-promise-0.0.20.tgz#69e087fd11842693589a226402c33c48634694af"
+  integrity sha512-9g6i45PKkkaIFHt9C7CNVG6VKuuyTXx59RAPblXn9h56m0i9cXT25z6yxt8eiLkCIGNJvAlTNiYqZkaeNCW5rg==
   dependencies:
     "@types/chrome" "^0.0.88"
-    "@web-clipper/shared" "^0.0.15"
+    "@web-clipper/shared" "^0.0.20"
 
 "@web-clipper/extensions@^0.0.4":
   version "0.0.4"
@@ -1566,13 +1566,6 @@
   integrity sha1-QaAx9JpA7ojRSdtwvHPsBPs5pRM=
   dependencies:
     dva-model-creator "^0.3.0"
-
-"@web-clipper/shared@^0.0.15":
-  version "0.0.15"
-  resolved "https://registry.npm.taobao.org/@web-clipper/shared/download/@web-clipper/shared-0.0.15.tgz#51a621dfca6954e21374b7e169e1a2c700d34f9a"
-  integrity sha1-UaYh38ppVOITdLfhaeGixwDTT5o=
-  dependencies:
-    blueimp-md5 "^2.11.0"
 
 "@web-clipper/shared@^0.0.20":
   version "0.0.20"
