@@ -1553,10 +1553,10 @@
     eslint-plugin-react-hooks "^1.6.1"
     typescript "^3.5.3"
 
-"@web-clipper/highlight@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.npm.taobao.org/@web-clipper/highlight/download/@web-clipper/highlight-0.0.2.tgz#a7e7197c4262802ee990c87277a228ca5e6c359f"
-  integrity sha1-p+cZfEJigC7pkMhyd6Ioyl5sNZ8=
+"@web-clipper/highlight@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/@web-clipper/highlight/-/highlight-0.0.20.tgz#b0eb71b80e20d0efc57062e6d974a928b63063dc"
+  integrity sha512-3XSPRna0HovQK1I+hFkNR7aBGveKAY0RhZZXrimNDdIb7a+nu22sm+wtalefnCmehySsMGYIl/fw+HL8dA9MQA==
   dependencies:
     jquery "^3.4.1"
 
