@@ -4,6 +4,16 @@ import enUS from '@/locales/en-US';
 import zhCN from '@/locales/zh-CN';
 import { localStorageService } from './chrome/storage';
 
+export const getLanguage = () => {
+  const languageMap: {
+    [key: string]: string;
+  } = {
+    zh: 'zh-CN',
+  };
+
+  return languageMap[navigator.language] || navigator.language;
+};
+
 const localData: {
   [local: string]: {
     intl: any;
@@ -20,8 +30,8 @@ const localData: {
 class LocaleService {
   private intl?: IntlShape;
   async init() {
-    const locale = localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, navigator.language);
-    const messages = localData[locale].intl || localData['en-US'].intl;
+    const locale = localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, getLanguage());
+    const messages = (localData[locale] || localData['en-US']).intl;
     const cache = createIntlCache();
     const intl = createIntl(
       {

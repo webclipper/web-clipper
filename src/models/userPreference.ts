@@ -1,3 +1,4 @@
+import { getLanguage } from './../common/locales';
 import localeService from '@/common/locales';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from './../common/modelTypes/userPreference';
 import { ServiceMeta } from './../common/backend/services/interface';
@@ -39,7 +40,7 @@ import { localStorageService } from '@/common/chrome/storage';
 import { loadExtensions } from '@/actions/extension';
 
 const defaultState: UserPreferenceStore = {
-  locale: navigator.language,
+  locale: getLanguage(),
   accounts: [],
   imageHosting: [],
   servicesMeta: {},
