@@ -4,11 +4,11 @@ node_js:
   - '8'
   - '10'
 install:
-  - npm install
+  - yarn
 script:
-  - npm run lint
-  - npm run test
-  - npm run travis
+  - yarn lint
+  - yarn test
+  - yarn travis
 after_success:
   - npm i codecov && codecov
 after_failure:

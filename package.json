@@ -32,7 +32,7 @@
     "@web-clipper/message-listener-combiner": "^0.0.5",
     "@web-clipper/shared": "^0.0.20",
     "@web-clipper/turndown": "^0.0.11",
-    "antd": "^3.20.0",
+    "antd": "^3.22.0",
     "axios": "^0.19.0",
     "codemirror": "^5.47.0",
     "dayjs": "^1.8.14",
