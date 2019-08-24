@@ -1,6 +1,6 @@
 {
   "name": "web-clipper",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "description": "Clip anything to anywhere.",
   "scripts": {
     "commit": "git-cz",
