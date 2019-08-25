@@ -14,22 +14,6 @@ export const asyncChangeDefaultRepository = actionCreator.async<
   void
 >('ASYNC_CHANGE_DEFAULT_REPOSITORY');
 
-export const asyncAddAccount = actionCreator.async<
-  {
-    info: any;
-    imageHosting?: string;
-    defaultRepositoryId?: string;
-    userInfo: any;
-    type: string;
-    callback(): void;
-  },
-  {
-    accounts: AccountPreference[];
-    defaultAccountId: string;
-  },
-  void
->('ASYNC_ADD_ACCOUNT');
-
 export const asyncUpdateAccount = actionCreator.async<
   {
     id: string;
@@ -48,23 +32,6 @@ export const asyncUpdateAccount = actionCreator.async<
 >('ASYNC_UPDATE_ACCOUNT');
 
 export const cancelCreateAccount = actionCreator('CANCEL_CREATE_ACCOUNT');
-
-export const asyncDeleteAccount = actionCreator.async<
-  { id: string },
-  {
-    accounts: AccountPreference[];
-    defaultAccountId: string;
-  },
-  void
->('ASYNC_DELETE_ACCOUNT');
-
-export const asyncUpdateCurrentAccountIndex = actionCreator.async<
-  { id: string },
-  {
-    id: string;
-  },
-  void
->('ASYNC_UPDATE_CURRENT_ACCOUNT_INDEX');
 
 export const asyncSetEditorLiveRendering = actionCreator.async<
   {

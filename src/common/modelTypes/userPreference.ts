@@ -1,3 +1,4 @@
+import { AccountPreference } from './account';
 import { ServiceMeta, ImageHostingServiceMeta } from '@/common/backend';
 
 export interface UserPreferenceStore {
@@ -14,18 +15,6 @@ export interface UserPreferenceStore {
   imageHostingServicesMeta: {
     [type: string]: ImageHostingServiceMeta;
   };
-}
-
-export interface AccountPreference {
-  id: string;
-  type: string;
-  name: string;
-  avatar: string;
-  homePage: string;
-  description?: string;
-  defaultRepositoryId?: string;
-  imageHosting?: string;
-  [key: string]: string | undefined;
 }
 
 /**

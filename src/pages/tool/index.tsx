@@ -32,7 +32,8 @@ const mapStateToProps = ({
     currentImageHostingService,
   },
   loading,
-  userPreference: { accounts, locale },
+  account: { accounts },
+  userPreference: { locale },
   extension: { extensions },
   version: { hasUpdate },
 }: GlobalStore) => {

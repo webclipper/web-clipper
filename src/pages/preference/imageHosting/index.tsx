@@ -1,7 +1,5 @@
 import * as React from 'react';
 import {
-  asyncDeleteAccount,
-  asyncUpdateCurrentAccountIndex,
   asyncAddImageHosting,
   asyncDeleteImageHosting,
   asyncEditImageHosting,
@@ -15,11 +13,11 @@ import ImageHostingListItem from 'components/imagehostingListItem';
 import { Form, Button, Icon } from 'antd';
 import { GlobalStore, ImageHosting } from 'common/types';
 import { FormattedMessage } from 'react-intl';
+import { asyncDeleteAccount } from '@/actions/account';
 
 const useActions = {
   asyncAddImageHosting: asyncAddImageHosting.started,
   asyncDeleteAccount: asyncDeleteAccount.started,
-  asyncUpdateCurrentAccountIndex: asyncUpdateCurrentAccountIndex.started,
   asyncDeleteImageHosting: asyncDeleteImageHosting.started,
   asyncEditImageHosting: asyncEditImageHosting.started,
 };

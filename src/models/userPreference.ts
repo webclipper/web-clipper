@@ -1,7 +1,6 @@
 import { getLanguage } from './../common/locales';
 import localeService from '@/common/locales';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from './../common/modelTypes/userPreference';
-import { ServiceMeta } from './../common/backend/services/interface';
 import { runScript } from './../browser/actions/message';
 import storage from 'common/storage';
 import { message } from 'antd';
@@ -11,11 +10,8 @@ import * as browser from '@web-clipper/chrome-promise';
 import { hideTool, removeTool } from 'browserActions/message';
 import update from 'immutability-helper';
 import {
-  asyncAddAccount,
-  asyncDeleteAccount,
   asyncSetEditorLiveRendering,
   asyncSetShowLineNumber,
-  asyncUpdateCurrentAccountIndex,
   initUserPreference,
   asyncDeleteImageHosting,
   asyncAddImageHosting,
@@ -58,23 +54,9 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
     ...state,
     liveRendering,
   }))
-  .case(asyncDeleteAccount.done, (state, { result: { accounts, defaultAccountId } }) => ({
-    ...state,
-    accounts,
-    defaultAccountId,
-  }))
   .case(initUserPreference, (state, payload) => ({
     ...state,
     ...payload,
-  }))
-  .case(asyncAddAccount.done, (state, { result: { accounts, defaultAccountId } }) => ({
-    ...state,
-    accounts,
-    defaultAccountId,
-  }))
-  .case(asyncUpdateCurrentAccountIndex.done, (state, { result: { id: defaultAccountId } }) => ({
-    ...state,
-    defaultAccountId,
   }))
   .case(asyncDeleteImageHosting.done, (state, { result }) =>
     update(state, {
@@ -106,41 +88,6 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
   );
 
 builder
-  .takeEvery(asyncAddAccount.started, function*(payload, { select, put }) {
-    const selector = ({ userPreference: { servicesMeta } }: GlobalStore) => {
-      return { servicesMeta };
-    };
-    const { servicesMeta }: ReturnType<typeof selector> = yield select(selector);
-    const { info, imageHosting, defaultRepositoryId, type, callback, userInfo } = payload;
-    const service: ServiceMeta = servicesMeta[type];
-    const { service: Service } = service;
-    const instance = new Service(info);
-    const userPreference = {
-      type,
-      id: instance.getId(),
-      ...userInfo,
-      imageHosting,
-      defaultRepositoryId,
-      ...info,
-    };
-    try {
-      yield storage.addAccount(userPreference);
-      const accounts = yield storage.getAccounts();
-      const defaultAccountId = yield storage.getDefaultAccountId();
-      yield put(
-        asyncAddAccount.done({
-          params: payload,
-          result: {
-            accounts,
-            defaultAccountId,
-          },
-        })
-      );
-      callback();
-    } catch (error) {
-      message.error(error.message);
-    }
-  })
   .takeEvery(asyncUpdateAccount.started, function*(payload, { select, call, put }) {
     const accounts: CallResult<typeof storage.getAccounts> = yield call(storage.getAccounts);
     const {
@@ -179,29 +126,6 @@ builder
       yield put(asyncChangeAccount.started({ id }));
     }
     callback();
-  })
-  .takeEvery(asyncDeleteAccount.started, function*(payload, { call, put }) {
-    yield call(storage.deleteAccountById, payload.id);
-    const accounts = yield call(storage.getAccounts);
-    const defaultAccountId = yield call(storage.getDefaultAccountId);
-    yield put(
-      asyncDeleteAccount.done({
-        params: payload,
-        result: {
-          accounts: accounts,
-          defaultAccountId: defaultAccountId,
-        },
-      })
-    );
-  })
-  .takeEvery(asyncUpdateCurrentAccountIndex.started, function*(payload, { call, put }) {
-    yield call(storage.setDefaultAccountId, payload.id);
-    yield put(
-      asyncUpdateCurrentAccountIndex.done({
-        params: payload,
-        result: payload,
-      })
-    );
   })
   .takeEvery(asyncSetShowLineNumber.started, function*(payload, { call, put }) {
     const { value } = payload;
@@ -345,12 +269,6 @@ builder.subscript(async function initStore({ dispatch, history }) {
     dispatch(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
   }
   dispatch(removeActionNamespace(initUserPreference(result)));
-  const { accounts, defaultAccountId: id } = result;
-  if (accounts.length === 0 || !id || accounts.every(o => o.id !== id)) {
-    dispatch(routerRedux.push('/preference/account'));
-    return;
-  }
-  dispatch(asyncChangeAccount.started({ id }));
   if (result.defaultPluginId) {
     dispatch(routerRedux.push(`/plugins/${result.defaultPluginId}`));
   }
