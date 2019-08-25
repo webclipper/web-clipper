@@ -16,7 +16,6 @@ import {
   asyncDeleteImageHosting,
   asyncAddImageHosting,
   asyncEditImageHosting,
-  asyncUpdateAccount,
   asyncHideTool,
   asyncRemoveTool,
   asyncRunExtension,
@@ -24,7 +23,7 @@ import {
   asyncSetLocaleToStorage,
   initServices,
 } from 'pageActions/userPreference';
-import { asyncChangeAccount, initTabInfo, changeData } from 'pageActions/clipper';
+import { initTabInfo, changeData } from 'pageActions/clipper';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
 import { UserPreferenceStore } from 'common/types';
 import { getServices, getImageHostingServices, imageHostingServiceFactory } from 'common/backend';
@@ -78,55 +77,9 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
         $set: result,
       },
     })
-  )
-  .case(asyncUpdateAccount.done, (state, { result: { accounts } }) =>
-    update(state, {
-      accounts: {
-        $set: accounts,
-      },
-    })
   );
 
 builder
-  .takeEvery(asyncUpdateAccount.started, function*(payload, { select, call, put }) {
-    const accounts: CallResult<typeof storage.getAccounts> = yield call(storage.getAccounts);
-    const {
-      id,
-      account: { info, defaultRepositoryId, imageHosting },
-      callback,
-    } = payload;
-    const accountIndex = accounts.findIndex(o => o.id === id);
-    if (accountIndex < 0) {
-      message.error('修改失败，账户不存在');
-      return;
-    }
-    const result = update(accounts, {
-      [accountIndex]: {
-        $merge: {
-          defaultRepositoryId,
-          imageHosting,
-          ...info,
-        },
-      },
-    });
-    yield storage.setAccount(result);
-    yield put(
-      asyncUpdateAccount.done({
-        params: payload,
-        result: {
-          accounts: result,
-        },
-      })
-    );
-    const selector = ({ clipper: { currentAccountId } }: GlobalStore) => {
-      return { currentAccountId };
-    };
-    const { currentAccountId }: ReturnType<typeof selector> = yield select(selector);
-    if (id === currentAccountId) {
-      yield put(asyncChangeAccount.started({ id }));
-    }
-    callback();
-  })
   .takeEvery(asyncSetShowLineNumber.started, function*(payload, { call, put }) {
     const { value } = payload;
     yield call(storage.setShowLineNumber, !value);
