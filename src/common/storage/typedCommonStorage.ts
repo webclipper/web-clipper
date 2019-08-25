@@ -1,4 +1,4 @@
-import { AccountPreference, ImageHosting } from '@/common/types';
+import { ImageHosting } from '@/common/types';
 import { TypedCommonStorageInterface, CommonStorage, PreferenceStorage } from './interface';
 
 const keysOfStorage = {
@@ -19,69 +19,17 @@ export class TypedCommonStorage implements TypedCommonStorageInterface {
   }
 
   getPreference = async (): Promise<PreferenceStorage> => {
-    const accounts = await this.getAccounts();
     const defaultPluginId = await this.getDefaultPluginId();
-    const defaultAccountId = await this.getDefaultAccountId();
-
     const showLineNumber = await this.getShowLineNumber();
     const liveRendering = await this.getLiveRendering();
     const imageHosting = await this.getImageHosting();
 
     return {
-      accounts,
       defaultPluginId,
-      defaultAccountId,
       showLineNumber,
       liveRendering,
       imageHosting,
     };
-  };
-
-  deleteAccountById = async (id: string) => {
-    const accounts = await this.getAccounts();
-    const newAccounts = accounts.filter(account => account.id !== id);
-    const defaultAccountId = await this.getDefaultAccountId();
-    if (defaultAccountId === id) {
-      if (newAccounts.length > 0) {
-        await this.setDefaultAccountId(newAccounts[0].id);
-      } else {
-        // eslint-disable-next-line no-undefined
-        await this.store.set(keysOfStorage.defaultAccountId, undefined);
-      }
-    }
-    await this.store.set(keysOfStorage.accounts, newAccounts);
-  };
-
-  setAccount = async (accounts: AccountPreference[]) => {
-    await this.store.set(keysOfStorage.accounts, accounts);
-  };
-
-  addAccount = async (account: AccountPreference) => {
-    const accounts = await this.getAccounts();
-    if (accounts.some(o => o.id === account.id)) {
-      throw new Error('Do not allow duplicate accounts');
-    }
-    accounts.push(account);
-    if (accounts.length === 1) {
-      await this.setDefaultAccountId(account.id);
-    }
-    await this.store.set(keysOfStorage.accounts, accounts);
-  };
-
-  getAccounts = async () => {
-    const value = await this.store.get<AccountPreference[]>(keysOfStorage.accounts);
-    if (!value) {
-      return [];
-    }
-    return value;
-  };
-
-  setDefaultAccountId = async (value: string) => {
-    await this.store.set(keysOfStorage.defaultAccountId, value);
-  };
-
-  getDefaultAccountId = async () => {
-    return this.store.get<string>(keysOfStorage.defaultAccountId);
   };
 
   setDefaultPluginId = async (value: string | null) => {

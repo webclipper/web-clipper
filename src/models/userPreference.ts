@@ -36,7 +36,6 @@ import { loadExtensions } from '@/actions/extension';
 
 const defaultState: UserPreferenceStore = {
   locale: getLanguage(),
-  accounts: [],
   imageHosting: [],
   servicesMeta: {},
   imageHostingServicesMeta: {},

@@ -1,9 +1,7 @@
-import { AccountPreference, ImageHosting } from 'common/types';
+import { ImageHosting } from 'common/types';
 export interface PreferenceStorage {
-  accounts: AccountPreference[];
   imageHosting: ImageHosting[];
   defaultPluginId?: string | null;
-  defaultAccountId?: string;
   showLineNumber: boolean;
   liveRendering: boolean;
 }
@@ -15,20 +13,6 @@ export interface CommonStorage {
 
 export interface TypedCommonStorageInterface {
   getPreference(): Promise<PreferenceStorage>;
-
-  /** --------账户相关--------- */
-
-  setAccount(accounts: AccountPreference[]): Promise<void>;
-
-  addAccount(account: AccountPreference): Promise<void>;
-
-  deleteAccountById(accessToken: string): Promise<void>;
-
-  getAccounts(): Promise<AccountPreference[]>;
-
-  setDefaultAccountId(accountId: string): Promise<void>;
-
-  getDefaultAccountId(): Promise<string | undefined>;
 
   /** --------默认插件--------- */
 

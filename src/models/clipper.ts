@@ -77,7 +77,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
   .takeLatest(asyncCreateDocument.started, function*({ pathname }, { put, call, select }) {
     const selector = ({
       clipper: { currentRepository, clipperData, title, repositories, currentAccountId },
-      userPreference: { accounts },
+      account: { accounts },
       extension: { extensions },
     }: GlobalStore) => {
       const currentAccount = accounts.find(({ id }) => id === currentAccountId);

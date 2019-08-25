@@ -1,12 +1,9 @@
-import { AccountPreference } from './account';
 import { ServiceMeta, ImageHostingServiceMeta } from '@/common/backend';
 
 export interface UserPreferenceStore {
   locale: string;
   remoteVersion?: string;
-  accounts: AccountPreference[];
   imageHosting: ImageHosting[];
-  defaultAccountId?: string;
   showLineNumber: boolean;
   liveRendering: boolean;
   servicesMeta: {
