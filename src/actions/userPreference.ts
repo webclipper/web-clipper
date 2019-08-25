@@ -31,8 +31,6 @@ export const asyncUpdateAccount = actionCreator.async<
   void
 >('ASYNC_UPDATE_ACCOUNT');
 
-export const cancelCreateAccount = actionCreator('CANCEL_CREATE_ACCOUNT');
-
 export const asyncSetEditorLiveRendering = actionCreator.async<
   {
     value: boolean;
