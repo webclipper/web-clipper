@@ -9,7 +9,6 @@ import {
   asyncUpdateCurrentAccountId,
   asyncUpdateAccount,
 } from '@/actions/account';
-import { routerRedux } from 'dva';
 import { asyncChangeAccount } from '@/actions/clipper';
 import { ServiceMeta } from '@/common/backend';
 import { message } from 'antd';
@@ -46,14 +45,7 @@ model
     const currentAccountId: string | undefined = yield select(
       (g: GlobalStore) => g.account.currentAccountId
     );
-    if (accounts.length === 0) {
-      yield put(routerRedux.push('/preference/account'));
-      return;
-    }
-    if (currentAccountId) {
-      return;
-    }
-    if (defaultAccountId) {
+    if (!currentAccountId && defaultAccountId) {
       yield put(asyncChangeAccount.started({ id: defaultAccountId }));
     }
   })
