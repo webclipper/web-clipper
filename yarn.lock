@@ -1531,13 +1531,13 @@
   dependencies:
     jquery "^3.4.1"
 
-"@web-clipper/chrome-promise@^0.0.15":
-  version "0.0.15"
-  resolved "https://registry.npm.taobao.org/@web-clipper/chrome-promise/download/@web-clipper/chrome-promise-0.0.15.tgz#1ffa645bba79354f485d2840a123b2aa32826c5b"
-  integrity sha1-H/pkW7p5NU9IXShAoSOyqjKCbFs=
+"@web-clipper/chrome-promise@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.npm.taobao.org/@web-clipper/chrome-promise/download/@web-clipper/chrome-promise-0.0.20.tgz#69e087fd11842693589a226402c33c48634694af"
+  integrity sha1-aeCH/RGEJpNYmiJkAsM8SGNGlK8=
   dependencies:
     "@types/chrome" "^0.0.88"
-    "@web-clipper/shared" "^0.0.15"
+    "@web-clipper/shared" "^0.0.20"
 
 "@web-clipper/extensions@^0.0.4":
   version "0.0.4"
@@ -1553,10 +1553,10 @@
     eslint-plugin-react-hooks "^1.6.1"
     typescript "^3.5.3"
 
-"@web-clipper/highlight@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.npm.taobao.org/@web-clipper/highlight/download/@web-clipper/highlight-0.0.2.tgz#a7e7197c4262802ee990c87277a228ca5e6c359f"
-  integrity sha1-p+cZfEJigC7pkMhyd6Ioyl5sNZ8=
+"@web-clipper/highlight@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.npm.taobao.org/@web-clipper/highlight/download/@web-clipper/highlight-0.0.20.tgz#b0eb71b80e20d0efc57062e6d974a928b63063dc"
+  integrity sha1-sOtxuA4g0O/FcGLm2XSpKLYwY9w=
   dependencies:
     jquery "^3.4.1"
 
@@ -1566,13 +1566,6 @@
   integrity sha1-QaAx9JpA7ojRSdtwvHPsBPs5pRM=
   dependencies:
     dva-model-creator "^0.3.0"
-
-"@web-clipper/shared@^0.0.15":
-  version "0.0.15"
-  resolved "https://registry.npm.taobao.org/@web-clipper/shared/download/@web-clipper/shared-0.0.15.tgz#51a621dfca6954e21374b7e169e1a2c700d34f9a"
-  integrity sha1-UaYh38ppVOITdLfhaeGixwDTT5o=
-  dependencies:
-    blueimp-md5 "^2.11.0"
 
 "@web-clipper/shared@^0.0.20":
   version "0.0.20"
@@ -4030,10 +4023,10 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     readable-stream "^2.0.0"
     stream-shift "^1.0.0"
 
-dva-core@1.6.0-beta.5:
-  version "1.6.0-beta.5"
-  resolved "https://registry.npm.taobao.org/dva-core/download/dva-core-1.6.0-beta.5.tgz#368d2d291740934f27bc19f984c8b67d5e7911e4"
-  integrity sha1-No0tKRdAk08nvBn5hMi2fV55EeQ=
+dva-core@1.6.0-beta.6:
+  version "1.6.0-beta.6"
+  resolved "https://registry.npm.taobao.org/dva-core/download/dva-core-1.6.0-beta.6.tgz#4875fced90ef1a1f2f7e410df9061956219d09c6"
+  integrity sha1-SHX87ZDvGh8vfkEN+QYZViGdCcY=
   dependencies:
     "@babel/runtime" "^7.0.0"
     flatten "^1.0.2"
@@ -4064,17 +4057,17 @@ dva-model-creator@^0.3.0:
   dependencies:
     warning "^4.0.3"
 
-dva@2.6.0-beta.9:
-  version "2.6.0-beta.9"
-  resolved "https://registry.npm.taobao.org/dva/download/dva-2.6.0-beta.9.tgz#a78ede10d6d429143a11d07de3cb5a1eb64e2562"
-  integrity sha1-p47eENbUKRQ6EdB948taHrZOJWI=
+dva@2.6.0-beta.12:
+  version "2.6.0-beta.12"
+  resolved "https://registry.npm.taobao.org/dva/download/dva-2.6.0-beta.12.tgz#a64b11781fa7b096e41dcf002dd06629a3910218"
+  integrity sha1-pksReB+nsJbkHc8ALdBmKaORAhg=
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@types/isomorphic-fetch" "^0.0.35"
     "@types/react-redux" "^7.1.0"
     "@types/react-router-dom" "^4.3.1"
     connected-react-router "^6.3.2"
-    dva-core "1.6.0-beta.5"
+    dva-core "1.6.0-beta.6"
     global "^4.3.2"
     history "^4.7.2"
     invariant "^2.2.4"
