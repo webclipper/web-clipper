@@ -46,4 +46,5 @@ export default {
   'page.complete.error': '发生错误',
   'page.complete.success': '保存成功',
   'page.complete.message': '前往 {name} 查看',
+  'backend.services.yuque_oauth.name': '语雀(一键授权)',
 };

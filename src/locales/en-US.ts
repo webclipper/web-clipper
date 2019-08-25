@@ -9,4 +9,6 @@ export default {
   'page.complete.error': 'Some Error',
   'page.complete.success': 'Success',
   'page.complete.message': 'Go to {name}',
+  'backend.imageHosting.yuque.name': 'Yuque',
+  'preference.tab.account': 'Account',
 };
