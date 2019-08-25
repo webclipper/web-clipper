@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { FormComponentProps } from 'antd/lib/form';
 import * as browser from '@web-clipper/chrome-promise';
 import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
-import { ImageHostingSelect } from './preference/account/modal/createAccountModal';
+import ImageHostingSelect from '@/components/ImageHostingSelect';
 import repositorySelectOptions from 'components/repositorySelectOptions';
 import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
 import { asyncAddAccount } from '@/actions/account';
