@@ -20,6 +20,7 @@ import localeService from '@/common/locales';
 import { initGa } from '@/common/gs';
 import AuthPage from '@/pages/auth';
 import account from '@/models/account';
+import { message } from 'antd';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -53,6 +54,9 @@ if (!element) {
   const app = dva({
     namespacePrefixWarning: false,
     history: createHashHistory(),
+    onError: e => {
+      message.error(e.message);
+    },
   });
   app.use(createLoading());
 

@@ -23,10 +23,8 @@ const defaultState: ClipperStore = {
   clipperData: {},
 };
 const model = new DvaModelBuilder(defaultState, 'clipper')
-  .takeEveryWithAction(asyncChangeAccount.started, function*(
-    { payload, payload: { id } },
-    { call, select, put }
-  ) {
+  .takeEvery(asyncChangeAccount.started, function*(payload, { call, select, put }) {
+    const { id } = payload;
     const selector = ({ userPreference: { imageHosting }, account: { accounts } }: GlobalStore) => {
       return {
         accounts,
@@ -37,16 +35,12 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     const { accounts, imageHosting } = selectState;
     const account = accounts.find(o => o.id === id);
     if (!account) {
-      throw new Error('加载账户失败 账户不存在');
+      throw new Error('Load Account Error,Account not exist.');
     }
     const { type, defaultRepositoryId, imageHosting: imageHostingId, ...info } = account;
     const documentService = documentServiceFactory(type, info);
     let repositories = [];
-    try {
-      repositories = yield call(documentService.getRepositories);
-    } catch (error) {
-      message.error(error.message);
-    }
+    repositories = yield call(documentService.getRepositories);
     backend.setDocumentService(documentService);
     let currentImageHostingService: ClipperStore['currentImageHostingService'];
     if (imageHostingId) {
@@ -109,13 +103,11 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
           error: null,
         })
       );
-      message.error('必须选择一个知识库');
-      return;
+      throw new Error('Must select repository.');
     }
     if (!title) {
       yield put(asyncCreateDocument.failed({ params: { pathname }, error: null }));
-      message.error('标题不允许为空');
-      return;
+      throw new Error('Title is Required.');
     }
     if (!extension) {
       return;
