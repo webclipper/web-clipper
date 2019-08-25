@@ -1,4 +1,4 @@
-import { AccountPreference, ImageHosting, GlobalStore } from '@/common/types';
+import { ImageHosting, GlobalStore } from '@/common/types';
 import { PreferenceStorage } from 'common/storage/interface';
 import { SerializedExtensionWithId } from '@web-clipper/extensions';
 import { actionCreatorFactory } from 'dva-model-creator';
@@ -13,23 +13,6 @@ export const asyncChangeDefaultRepository = actionCreator.async<
   },
   void
 >('ASYNC_CHANGE_DEFAULT_REPOSITORY');
-
-export const asyncUpdateAccount = actionCreator.async<
-  {
-    id: string;
-    account: {
-      info: any;
-      imageHosting?: string;
-      defaultRepositoryId?: string;
-      type: string;
-    };
-    callback(): void;
-  },
-  {
-    accounts: AccountPreference[];
-  },
-  void
->('ASYNC_UPDATE_ACCOUNT');
 
 export const asyncSetEditorLiveRendering = actionCreator.async<
   {
