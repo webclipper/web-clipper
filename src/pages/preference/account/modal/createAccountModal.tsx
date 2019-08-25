@@ -3,15 +3,12 @@ import { Form, Modal, Select, Icon, Divider } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import * as styles from './index.scss';
 import { ImageHostingServiceMeta } from 'common/backend';
-import ImageHostingSelectOption from 'components/imageHostingSelectOption';
 import { UserPreferenceStore, ImageHosting } from '@/common/types';
 import repositorySelectOptions from 'components/repositorySelectOptions';
 import { FormattedMessage } from 'react-intl';
 import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
-import useFilterImageHostingServices, {
-  ImageHostingWithMeta,
-} from '@/common/hooks/useFilterImageHostingServices';
-import { SelectProps } from 'antd/lib/select';
+import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
+import ImageHostingSelect from '@/components/ImageHostingSelect';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {
@@ -32,22 +29,6 @@ const ModalTitle = () => (
       <Icon type="question-circle" />
     </a>
   </div>
-);
-
-export const ImageHostingSelect: React.FC<
-  {
-    supportedImageHostingServices: ImageHostingWithMeta[];
-  } & SelectProps
-> = ({ supportedImageHostingServices, ...props }) => (
-  <Select className={styles.imageHostingSelect} {...props}>
-    {supportedImageHostingServices.map(({ imageHostingServices: { id, remark }, meta }) => {
-      return (
-        <Select.Option key={id} value={id}>
-          <ImageHostingSelectOption id={id} icon={meta.icon} name={meta.name} remark={remark} />
-        </Select.Option>
-      );
-    })}
-  </Select>
 );
 
 const Page: React.FC<PageProps> = ({

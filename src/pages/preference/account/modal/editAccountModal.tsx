@@ -6,7 +6,7 @@ import { ImageHostingServiceMeta } from 'common/backend';
 import repositorySelectOptions from 'components/repositorySelectOptions';
 import { AccountPreference, UserPreferenceStore, ImageHosting } from '@/common/types';
 import { FormattedMessage } from 'react-intl';
-import { ImageHostingSelect } from './createAccountModal';
+import ImageHostingSelect from '@/components/ImageHostingSelect';
 import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
 import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
 

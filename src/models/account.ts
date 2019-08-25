@@ -7,6 +7,7 @@ import {
   asyncAddAccount,
   asyncDeleteAccount,
   asyncUpdateCurrentAccountId,
+  asyncUpdateAccount,
 } from '@/actions/account';
 import { routerRedux } from 'dva';
 import { asyncChangeAccount } from '@/actions/clipper';
@@ -116,5 +117,35 @@ model
     ...s,
     defaultAccountId,
   }));
+
+model.takeEvery(asyncUpdateAccount, function*(payload, { select, put, call }) {
+  const accounts: AccountPreference[] = yield select((g: GlobalStore) => g.account.accounts);
+  const {
+    id,
+    account: { info, defaultRepositoryId, imageHosting },
+    callback,
+  } = payload;
+  const accountIndex = accounts.findIndex(o => o.id === id);
+  if (accountIndex < 0) {
+    message.error('Account Not Exist');
+    callback();
+    return;
+  }
+  const result = update(accounts, {
+    [accountIndex]: {
+      $merge: {
+        defaultRepositoryId,
+        imageHosting,
+        ...info,
+      },
+    },
+  });
+  yield call(syncStorageService.set, 'accounts', JSON.stringify(result));
+  const currentAccountId: string = yield select((g: GlobalStore) => g.clipper.currentAccountId);
+  if (id === currentAccountId) {
+    yield put(asyncChangeAccount.started({ id }));
+  }
+  callback();
+});
 
 export default model.build();
