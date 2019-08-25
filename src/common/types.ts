@@ -1,3 +1,4 @@
+import { AccountStore } from './modelTypes/account';
 import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'react';
 import { UserPreferenceStore } from '@/common/modelTypes/userPreference';
@@ -8,6 +9,7 @@ import { ExtensionStore } from './modelTypes/extensions';
 
 export * from '@/common/modelTypes/userPreference';
 export * from '@/common/modelTypes/clipper';
+export * from '@/common/modelTypes/account';
 
 export type DvaRouterProps = {
   dispatch: Dispatch<any>;
@@ -20,6 +22,7 @@ interface DvaLoadingState {
 }
 
 export interface GlobalStore {
+  account: AccountStore;
   clipper: ClipperStore;
   userPreference: UserPreferenceStore;
   version: VersionStore;

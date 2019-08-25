@@ -10,7 +10,7 @@ import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
 import { ImageHostingSelect } from './preference/account/modal/createAccountModal';
 import repositorySelectOptions from 'components/repositorySelectOptions';
 import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
-import { asyncAddAccount } from '@/actions/userPreference';
+import { asyncAddAccount } from '@/actions/account';
 
 interface PageQuery {
   access_token: string;

@@ -27,7 +27,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     { payload, payload: { id } },
     { call, select, put }
   ) {
-    const selector = ({ userPreference: { accounts, imageHosting } }: GlobalStore) => {
+    const selector = ({ userPreference: { imageHosting }, account: { accounts } }: GlobalStore) => {
       return {
         accounts,
         imageHosting,
@@ -35,6 +35,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     };
     const selectState: ReturnType<typeof selector> = yield select(selector);
     const { accounts, imageHosting } = selectState;
+    console.log(accounts, id);
     const account = accounts.find(o => o.id === id);
     if (!account) {
       throw new Error('加载账户失败 账户不存在');

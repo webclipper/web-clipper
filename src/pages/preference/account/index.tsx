@@ -1,10 +1,10 @@
 import * as React from 'react';
+import { asyncUpdateAccount } from 'pageActions/userPreference';
 import {
   asyncAddAccount,
   asyncDeleteAccount,
-  asyncUpdateCurrentAccountIndex,
-  asyncUpdateAccount,
-} from 'pageActions/userPreference';
+  asyncUpdateCurrentAccountId,
+} from 'pageActions/account';
 import { Icon, Button, Form, Row, Col } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'dva';
@@ -20,17 +20,12 @@ const useActions = {
   asyncAddAccount: asyncAddAccount.started,
   asyncDeleteAccount: asyncDeleteAccount.started,
   asyncUpdateAccount: asyncUpdateAccount.started,
-  asyncUpdateCurrentAccountIndex: asyncUpdateCurrentAccountIndex.started,
+  asyncUpdateCurrentAccountId: asyncUpdateCurrentAccountId.started,
 };
 
 const mapStateToProps = ({
-  userPreference: {
-    accounts,
-    defaultAccountId,
-    servicesMeta,
-    imageHostingServicesMeta,
-    imageHosting,
-  },
+  account: { accounts, defaultAccountId },
+  userPreference: { servicesMeta, imageHostingServicesMeta, imageHosting },
 }: GlobalStore) => {
   return {
     imageHostingServicesMeta,
@@ -64,7 +59,7 @@ class Page extends React.Component<PageProps, PageState> {
     if (this.props.defaultAccountId === id) {
       return;
     }
-    this.props.asyncUpdateCurrentAccountIndex({ id });
+    this.props.asyncUpdateCurrentAccountId({ id });
   };
 
   handleEdit = (accountId: string) => {

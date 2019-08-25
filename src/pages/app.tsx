@@ -15,10 +15,11 @@ import extension from '@/models/extension';
 import userPreference from '@/models/userPreference';
 import createLoading from 'dva-loading';
 import LocalWrapper from './locale';
-import { localStorageService } from '@/common/chrome/storage';
+import { localStorageService, syncStorageService } from '@/common/chrome/storage';
 import localeService from '@/common/locales';
 import { initGa } from '@/common/gs';
 import AuthPage from '@/pages/auth';
+import account from '@/models/account';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -46,6 +47,7 @@ if (!element) {
 
 (async () => {
   initGa();
+  await syncStorageService.init();
   await localStorageService.init();
   await localeService.init();
   const app = dva({
@@ -80,10 +82,10 @@ if (!element) {
     );
   });
 
+  app.model(account);
   app.model(clipper);
   app.model(userPreference);
   app.model(version);
   app.model(extension);
-
   app.start(element);
 })();
