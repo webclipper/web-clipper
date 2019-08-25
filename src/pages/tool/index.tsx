@@ -79,13 +79,18 @@ const Page = React.memo<PageProps>(
       },
       dispatch,
       hasUpdate,
+      accounts,
     } = props;
 
     useEffect(() => {
       if (pathname === '/') {
         trackEvent('LoadPage', pathname);
+        if (accounts.length === 0) {
+          dispatch(routerRedux.push('/preference/account'));
+          return;
+        }
       }
-    }, [pathname]);
+    }, [accounts.length, dispatch, pathname]);
 
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(
