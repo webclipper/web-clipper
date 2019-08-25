@@ -7,7 +7,7 @@ interface WebClipperConfig {
 
 let config: WebClipperConfig = {
   icon: 'icon.png',
-  yuqueClientId: 'fylbi7lzfNjhkfyi0hJp',
+  yuqueClientId: 'D1AwzCeDPLFWGfcGv7ze',
   yuqueCallback: 'http://webclipper-oauth.yfd.im/yuque_oauth',
   yuequeScope: 'doc,group,repo',
 };
