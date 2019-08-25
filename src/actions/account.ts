@@ -36,3 +36,14 @@ export const asyncDeleteAccount = actionCreator.async<
 export const asyncUpdateCurrentAccountId = actionCreator.async<{ id?: string }, void>(
   'asyncUpdateCurrentAccountId'
 );
+
+export const asyncUpdateAccount = actionCreator<{
+  id: string;
+  account: {
+    info: any;
+    imageHosting?: string;
+    defaultRepositoryId?: string;
+    type: string;
+  };
+  callback(): void;
+}>('asyncUpdateAccount');

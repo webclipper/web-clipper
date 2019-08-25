@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { asyncUpdateAccount } from 'pageActions/userPreference';
 import {
   asyncAddAccount,
   asyncDeleteAccount,
   asyncUpdateCurrentAccountId,
+  asyncUpdateAccount,
 } from 'pageActions/account';
 import { Icon, Button, Form, Row, Col } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -19,7 +19,7 @@ import { FormattedMessage } from 'react-intl';
 const useActions = {
   asyncAddAccount: asyncAddAccount.started,
   asyncDeleteAccount: asyncDeleteAccount.started,
-  asyncUpdateAccount: asyncUpdateAccount.started,
+  asyncUpdateAccount: asyncUpdateAccount,
   asyncUpdateCurrentAccountId: asyncUpdateCurrentAccountId.started,
 };
 
