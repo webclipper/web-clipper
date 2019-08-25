@@ -43,4 +43,7 @@ export default {
   'preference.basic.update.title': '有更新',
   'preference.basic.update.button': '安装更新',
   'preference.accountList.login': '授权登录',
+  'page.complete.error': '发生错误',
+  'page.complete.success': '保存成功',
+  'page.complete.message': '前往 {name} 查看',
 };

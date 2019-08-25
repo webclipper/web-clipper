@@ -6,10 +6,12 @@ import { Button } from 'antd';
 import { GlobalStore, DvaRouterProps } from '@/common/types';
 import Section from 'components/section';
 import { asyncRemoveTool } from '@/actions/userPreference';
+import { FormattedMessage } from 'react-intl';
 
 const mapStateToProps = ({
   clipper: { completeStatus, currentAccountId },
-  userPreference: { accounts, servicesMeta },
+  userPreference: { servicesMeta },
+  account: { accounts },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   return {
@@ -29,7 +31,7 @@ const Page: React.FC<PageProps> = ({ dispatch, completeStatus, currentAccount, s
   const renderError = (
     <ToolContainer onClickCloseButton={closeTool}>
       <a target="_blank" href="https://github.com/webclipper/web-clipper/issues">
-        发生错误
+        <FormattedMessage id="page.complete.error" defaultMessage="Some Error" />
       </a>
     </ToolContainer>
   );
@@ -43,10 +45,14 @@ const Page: React.FC<PageProps> = ({ dispatch, completeStatus, currentAccount, s
   const { name, complete: Complete } = currentService;
   return (
     <ToolContainer onClickCloseButton={closeTool}>
-      <Section title="保存成功">
+      <Section title={<FormattedMessage id="page.complete.success" defaultMessage="Success" />}>
         <a className={styles.menuButton} href={completeStatus.href} target="_blank">
           <Button style={{ marginTop: 16 }} size="large" type="primary" block>
-            前往<span>{name}</span> 查看
+            <FormattedMessage
+              id="page.complete.message"
+              defaultMessage="Go to {name}"
+              values={{ name: <span>{name}</span> }}
+            />
           </Button>
         </a>
       </Section>

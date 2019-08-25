@@ -6,4 +6,7 @@ export default {
   'tool.clipExtensions': 'Clip Extension',
   'backend.services.youdao.name': 'Youdao',
   'backend.services.yuque.name': 'Yuque',
+  'page.complete.error': 'Some Error',
+  'page.complete.success': 'Success',
+  'page.complete.message': 'Go to {name}',
 };
