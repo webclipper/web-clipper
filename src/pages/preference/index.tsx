@@ -9,6 +9,7 @@ import { Tabs, Icon, Badge } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import Base from './base';
 import { DvaRouterProps, GlobalStore } from '@/common/types';
+import Changelog from './changelog';
 
 const { Route } = router;
 
@@ -57,10 +58,20 @@ const tabs = [
     title: (
       <React.Fragment>
         <Icon type="setting" />
-        <FormattedMessage id="preference.tab.basic" defaultMessage="Basic"></FormattedMessage>
+        <FormattedMessage id="preference.tab.basic" defaultMessage="Basic" />
       </React.Fragment>
     ),
     component: Base,
+  },
+  {
+    path: 'changelog',
+    title: (
+      <React.Fragment>
+        <Icon type="sound" />
+        <FormattedMessage id="preference.tab.changelog" defaultMessage="Changelog" />
+      </React.Fragment>
+    ),
+    component: Changelog,
   },
 ];
 
