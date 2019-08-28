@@ -19,10 +19,10 @@
 
 ### Support Site
 
-- [Yuque](https://www.yuque.com)
 - [Github](https://github.com)
+- [Yuque](https://www.yuque.com)
 - [Notion](https://www.notion.so/)
-- [有道](https://note.youdao.com/)
+- [Youdao](https://note.youdao.com/)
 
 ### Develop
 
