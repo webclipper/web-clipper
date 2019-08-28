@@ -7,7 +7,7 @@ import form from './form';
 
 const oauthUrl = `https://www.yuque.com/oauth2/authorize?${stringify({
   client_id: config.yuqueClientId,
-  scope: config.yuequeScope,
+  scope: config.yuqueScope,
   redirect_uri: config.yuqueCallback,
   state: chrome.runtime.id,
   response_type: 'code',

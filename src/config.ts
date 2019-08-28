@@ -2,14 +2,14 @@ interface WebClipperConfig {
   icon: string;
   yuqueClientId: string;
   yuqueCallback: string;
-  yuequeScope: string;
+  yuqueScope: string;
 }
 
 let config: WebClipperConfig = {
   icon: 'icon.png',
   yuqueClientId: 'D1AwzCeDPLFWGfcGv7ze',
   yuqueCallback: 'http://webclipper-oauth.yfd.im/yuque_oauth',
-  yuequeScope: 'doc,group,repo',
+  yuqueScope: 'doc,group,repo',
 };
 
 if (process.env.NODE_ENV === 'development') {
