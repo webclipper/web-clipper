@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import { DvaRouterProps, GlobalStore } from '@/common/types';
-import { Card, Icon, Row, Col, Typography } from 'antd';
+import { Card, Icon, Row, Col, Typography, Tooltip } from 'antd';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import { setDefaultExtensionId } from '@/actions/extension';
 import { FormattedMessage } from 'react-intl';
@@ -62,6 +62,16 @@ const Page: React.FC<PageProps> = ({
           id="preference.extensions.clipExtensions"
           defaultMessage="Clip Extensions"
         />
+        <Tooltip
+          title={
+            <FormattedMessage
+              id="preference.extensions.clipExtensions.tooltip"
+              defaultMessage="Click on the 🌟 to choose the default extension."
+            />
+          }
+        >
+          <Icon type="question-circle" style={{ fontSize: 14, marginLeft: 5 }} />
+        </Tooltip>
       </Typography.Title>
       <Row gutter={10}>
         {clipExtensions.map(({ manifest, id }) => {

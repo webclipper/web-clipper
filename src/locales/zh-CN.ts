@@ -48,4 +48,5 @@ export default {
   'page.complete.message': '前往 {name} 查看',
   'backend.services.yuque_oauth.name': '语雀(一键授权)',
   'preference.tab.changelog': '更新日志',
+  'preference.extensions.clipExtensions.tooltip': '点击 🌟选择默认插件',
 };

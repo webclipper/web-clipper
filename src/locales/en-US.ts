@@ -12,4 +12,6 @@ export default {
   'backend.imageHosting.yuque.name': 'Yuque',
   'preference.tab.account': 'Account',
   'preference.tab.changelog': 'Changelog',
+  'preference.extensions.clipExtensions.tooltip':
+    'Click on the 🌟 to choose the default extension.',
 };
