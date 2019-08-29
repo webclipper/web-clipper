@@ -25,6 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "@diamondyuan/readability": "^0.1.0",
+    "@types/showdown": "^1.9.3",
     "@web-clipper/area-selector": "^0.0.3",
     "@web-clipper/chrome-promise": "^0.0.20",
     "@web-clipper/extensions": "^0.0.4",
@@ -50,7 +51,8 @@
     "react-dom": "^16.8.6",
     "react-intl": "^3.1.5",
     "react-markdown": "^4.1.0",
-    "regenerator-runtime": "^0.13.3"
+    "regenerator-runtime": "^0.13.3",
+    "showdown": "^1.9.0"
   },
   "devDependencies": {
     "@diamondyuan/eslint-config-react-typescript": "^7.0.0",
