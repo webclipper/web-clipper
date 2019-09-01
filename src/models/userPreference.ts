@@ -213,9 +213,6 @@ builder
   });
 
 builder.subscript(async function initStore({ dispatch, history }) {
-  if (history.location.pathname !== '/') {
-    return;
-  }
   await dispatch(initAccounts.started());
   const result = await storage.getPreference();
   const tabInfo = await browser.tabs.getCurrent();
@@ -225,6 +222,9 @@ builder.subscript(async function initStore({ dispatch, history }) {
   dispatch(removeActionNamespace(initUserPreference(result)));
   if (result.defaultPluginId) {
     dispatch(routerRedux.push(`/plugins/${result.defaultPluginId}`));
+  }
+  if (history.location.pathname !== '/') {
+    return;
   }
   const defaultAccountId = syncStorageService.get('defaultAccountId');
   if (defaultAccountId) {
