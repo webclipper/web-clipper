@@ -15,19 +15,23 @@ import { FormComponentProps } from 'antd/lib/form';
 import CreateAccountModal from './modal/createAccountModal';
 import { GlobalStore, AccountPreference } from 'common/types';
 import { FormattedMessage } from 'react-intl';
+import { asyncChangeAccount } from '@/actions/clipper';
 
 const useActions = {
   asyncAddAccount: asyncAddAccount.started,
   asyncDeleteAccount: asyncDeleteAccount.started,
   asyncUpdateAccount: asyncUpdateAccount,
   asyncUpdateCurrentAccountId: asyncUpdateCurrentAccountId.started,
+  asyncChangeAccount: asyncChangeAccount.started,
 };
 
 const mapStateToProps = ({
+  clipper: { currentAccountId },
   account: { accounts, defaultAccountId },
   userPreference: { servicesMeta, imageHostingServicesMeta, imageHosting },
 }: GlobalStore) => {
   return {
+    currentAccountId,
     imageHostingServicesMeta,
     accounts,
     defaultAccountId,
@@ -109,7 +113,7 @@ class Page extends React.Component<PageProps, PageState> {
   };
 
   handleEditAccount = (id: string) => {
-    const { form, asyncUpdateAccount } = this.props;
+    const { form, asyncUpdateAccount, currentAccountId } = this.props;
     form.validateFields((error, values) => {
       if (error) {
         return;
@@ -118,7 +122,12 @@ class Page extends React.Component<PageProps, PageState> {
       asyncUpdateAccount({
         account: { type, defaultRepositoryId, imageHosting, info },
         id,
-        callback: this.handleCancel,
+        callback: () => {
+          this.handleCancel();
+          if (currentAccountId === id) {
+            this.props.asyncChangeAccount({ id });
+          }
+        },
       });
     });
   };
