@@ -36,7 +36,7 @@ export default class extends Component<OneNoteProps & FormComponentProps> {
         </Form.Item>
         <Form.Item label="RefreshToken">
           {getFieldDecorator('refresh_token', {
-            initialValue: initData.access_token,
+            initialValue: initData.refresh_token,
             rules: [
               {
                 required: true,

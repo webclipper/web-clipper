@@ -21,6 +21,7 @@ import { initGa } from '@/common/gs';
 import AuthPage from '@/pages/auth';
 import account from '@/models/account';
 import { message } from 'antd';
+import config from '@/config';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -55,20 +56,25 @@ if (!element) {
     namespacePrefixWarning: false,
     history: createHashHistory(),
     onError: e => {
+      (e as any).preventDefault();
       message.error(e.message);
     },
   });
   app.use(createLoading());
 
-  app.use(
-    createLogger({
-      predicate: (_: Function, { type }: Action<any>) => {
-        return (
-          !type.endsWith('@@end') && !type.endsWith('@@start') && !type.startsWith('@@DVA_LOADING')
-        );
-      },
-    })
-  );
+  if (config.createLogger) {
+    app.use(
+      createLogger({
+        predicate: (_: Function, { type }: Action<any>) => {
+          return (
+            !type.endsWith('@@end') &&
+            !type.endsWith('@@start') &&
+            !type.startsWith('@@DVA_LOADING')
+          );
+        },
+      })
+    );
+  }
 
   app.router(router => {
     return (

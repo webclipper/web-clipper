@@ -1,6 +1,6 @@
 import { CompleteStatus } from 'common/backend/interface';
 import { ExtensionType } from '@web-clipper/extensions';
-import { CreateDocumentRequest } from './../common/backend/services/interface';
+import { CreateDocumentRequest, UnauthorizedError } from './../common/backend/services/interface';
 import { GlobalStore, ImageClipperData, ClipperStore } from '@/common/types';
 import { DvaModelBuilder } from 'dva-model-creator';
 import update from 'immutability-helper';
@@ -15,6 +15,7 @@ import {
 import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
 import { message } from 'antd';
 import { routerRedux } from 'dva';
+import { asyncUpdateAccount } from '@/actions/account';
 
 const defaultState: ClipperStore = {
   title: '',
@@ -37,10 +38,34 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     if (!account) {
       throw new Error('Load Account Error,Account not exist.');
     }
-    const { type, defaultRepositoryId, imageHosting: imageHostingId, ...info } = account;
+    let { type, defaultRepositoryId, imageHosting: imageHostingId, ...info } = account;
     const documentService = documentServiceFactory(type, info);
     let repositories = [];
-    repositories = yield call(documentService.getRepositories);
+    try {
+      repositories = yield call(documentService.getRepositories);
+    } catch (error) {
+      if (error instanceof UnauthorizedError) {
+        if (documentService.refreshToken) {
+          info = yield call(documentService.refreshToken, info);
+          yield put(
+            asyncUpdateAccount({
+              id: account.id,
+              account: {
+                info: info,
+                type,
+                defaultRepositoryId,
+                imageHosting: imageHostingId,
+              },
+              callback: () => {},
+            })
+          );
+          return;
+        }
+        throw new Error('Filed to load Repositories,Unauthorized.');
+      } else {
+        throw error;
+      }
+    }
     backend.setDocumentService(documentService);
     let currentImageHostingService: ClipperStore['currentImageHostingService'];
     if (imageHostingId) {
