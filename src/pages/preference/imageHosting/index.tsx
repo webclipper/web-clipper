@@ -23,11 +23,9 @@ const useActions = {
 };
 
 const mapStateToProps = ({
-  userPreference: { accounts, defaultAccountId, imageHostingServicesMeta, imageHosting },
+  userPreference: { imageHostingServicesMeta, imageHosting },
 }: GlobalStore) => {
   return {
-    accounts,
-    defaultAccountId,
     imageHostingServicesMeta,
     imageHosting,
   };
