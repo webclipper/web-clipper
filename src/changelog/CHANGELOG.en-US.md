@@ -1,3 +1,13 @@
+## 1.8.0
+
+`2019-09-01`
+
+- ✨ Support OneNote.
+- ✨ Support display changelog.
+- 🐛 fix yuque oauth error.
+- 🐛 fix load imageHosting failed.
+- 📝 add tooltip for set default clip extension
+
 ## 1.7.3 & 1.7.2
 
 `2019-08-24`
