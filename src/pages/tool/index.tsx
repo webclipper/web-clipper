@@ -81,7 +81,6 @@ const Page = React.memo<PageProps>(
       dispatch,
       hasUpdate,
       accounts,
-      defaultAccountId,
     } = props;
 
     useEffect(() => {
@@ -93,12 +92,6 @@ const Page = React.memo<PageProps>(
         }
       }
     }, [accounts.length, dispatch, pathname]);
-
-    useEffect(() => {
-      if (!currentAccount && defaultAccountId) {
-        dispatch(asyncChangeAccount.started({ id: defaultAccountId }));
-      }
-    }, [currentAccount, defaultAccountId, dispatch]);
 
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(

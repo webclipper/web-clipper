@@ -21,7 +21,6 @@ const model = new DvaModelBuilder(initState, 'account');
 
 model
   .subscript(async function loadAccounts({ dispatch }) {
-    dispatch(removeActionNamespace(initAccounts.started()));
     syncStorageService.onDidChangeStorage(key => {
       if (key === 'accounts') {
         dispatch(removeActionNamespace(initAccounts.started()));

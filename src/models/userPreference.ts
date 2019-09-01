@@ -23,7 +23,7 @@ import {
   asyncSetLocaleToStorage,
   initServices,
 } from 'pageActions/userPreference';
-import { initTabInfo, changeData } from 'pageActions/clipper';
+import { initTabInfo, changeData, asyncChangeAccount } from 'pageActions/clipper';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
 import { UserPreferenceStore } from 'common/types';
 import { getServices, getImageHostingServices, imageHostingServiceFactory } from 'common/backend';
@@ -31,8 +31,9 @@ import { ToolContext } from '@web-clipper/extensions';
 import backend from 'common/backend/index';
 import { loadImage } from 'common/blob';
 import { routerRedux } from 'dva';
-import { localStorageService } from '@/common/chrome/storage';
+import { localStorageService, syncStorageService } from '@/common/chrome/storage';
 import { loadExtensions } from '@/actions/extension';
+import { initAccounts } from '@/actions/account';
 
 const defaultState: UserPreferenceStore = {
   locale: getLanguage(),
@@ -215,6 +216,7 @@ builder.subscript(async function initStore({ dispatch, history }) {
   if (history.location.pathname !== '/') {
     return;
   }
+  await dispatch(initAccounts.started());
   const result = await storage.getPreference();
   const tabInfo = await browser.tabs.getCurrent();
   if (tabInfo.title && tabInfo.url) {
@@ -223,6 +225,10 @@ builder.subscript(async function initStore({ dispatch, history }) {
   dispatch(removeActionNamespace(initUserPreference(result)));
   if (result.defaultPluginId) {
     dispatch(routerRedux.push(`/plugins/${result.defaultPluginId}`));
+  }
+  const defaultAccountId = syncStorageService.get('defaultAccountId');
+  if (defaultAccountId) {
+    dispatch(asyncChangeAccount.started({ id: defaultAccountId }));
   }
 });
 
