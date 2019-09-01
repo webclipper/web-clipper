@@ -6,16 +6,19 @@ import {
   OneNoteUserInfoResponse,
   OneNoteCreateDocumentResponse,
   OneNoteBackendServiceConfig,
+  OneNoteRefreshTokenResponse,
 } from './interface';
 import _ from 'lodash';
-import { Repository, UserInfo } from '../interface';
+import { Repository, UserInfo, UnauthorizedError } from '../interface';
 import showdown from 'showdown';
+import config from '@/config';
+import { stringify } from 'qs';
 
 const converter = new showdown.Converter();
 
 const BASE_URL = `https://graph.microsoft.com/`;
 
-export default class YuqueDocumentService implements DocumentService {
+export default class YuqueDocumentService implements DocumentService<OneNoteBackendServiceConfig> {
   private request: AxiosInstance;
   private config: OneNoteBackendServiceConfig;
   private repositories: Repository[];
@@ -25,10 +28,20 @@ export default class YuqueDocumentService implements DocumentService {
     this.request = axios.create({
       baseURL: BASE_URL,
       headers: { Authorization: `bearer ${access_token}` },
-      timeout: 5000,
+      timeout: 100000,
       transformResponse: [data => JSON.parse(data)],
       withCredentials: true,
     });
+    this.request.interceptors.response.use(
+      r => r,
+      error => {
+        if (error.response && error.response.status === 401) {
+          const ere = new UnauthorizedError();
+          return Promise.reject(ere);
+        }
+        return Promise.reject(error);
+      }
+    );
     this.repositories = [];
   }
 
@@ -88,6 +101,24 @@ export default class YuqueDocumentService implements DocumentService {
     );
     return {
       href: result.data.links.oneNoteWebUrl.href,
+    };
+  };
+
+  refreshToken = async ({ access_token, refresh_token, ...rest }: OneNoteBackendServiceConfig) => {
+    const response = await this.request.post<OneNoteRefreshTokenResponse>(
+      'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+      stringify({
+        scope: 'Notes.Create User.Read offline_access',
+        redirect_uri: config.oneNoteCallBack,
+        grant_type: 'refresh_token',
+        client_id: config.oneNoteClientId,
+        refresh_token,
+      })
+    );
+    return {
+      ...rest,
+      access_token: response.data.access_token,
+      refresh_token: response.data.refresh_token,
     };
   };
 }

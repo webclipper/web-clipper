@@ -1544,10 +1544,10 @@
     "@types/chrome" "^0.0.88"
     "@web-clipper/shared" "^0.0.20"
 
-"@web-clipper/extensions@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.npm.taobao.org/@web-clipper/extensions/download/@web-clipper/extensions-0.0.4.tgz#bf413c26fab729fcf0faeaeb385857981745c657"
-  integrity sha1-v0E8Jvq3Kfzw+urrOFhXmBdFxlc=
+"@web-clipper/extensions@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.npmjs.org/@web-clipper/extensions/-/extensions-0.0.5.tgz#00c5065862e68979e39a45084bbe9dbd95755f67"
+  integrity sha512-aTWfDqLeKkjaA2VQJCdhKV6qJQ29I3cBvEQ9Zymyv1ASPJP002E6brtlC4MXoi1Mc4hmrPQQhBvjGOmCdREAhw==
   dependencies:
     "@diamondyuan/eslint-config-react-typescript" "^7.0.0"
     "@typescript-eslint/eslint-plugin" "^1.13.0"

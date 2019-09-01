@@ -31,3 +31,8 @@ export interface OneNoteCreateDocumentResponse {
     };
   };
 }
+
+export interface OneNoteRefreshTokenResponse {
+  access_token: string;
+  refresh_token: string;
+}

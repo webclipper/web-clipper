@@ -2,7 +2,7 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "experimentalDecorators": true,
-    "target": "ES5",
+    "target": "esnext",
     "module": "ESNext",
     "declaration": false,
     "noImplicitAny": true,
