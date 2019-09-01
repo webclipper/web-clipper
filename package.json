@@ -30,7 +30,7 @@
     "@web-clipper/chrome-promise": "^0.0.20",
     "@web-clipper/extensions": "^0.0.5",
     "@web-clipper/highlight": "^0.0.20",
-    "@web-clipper/message-listener-combiner": "^0.0.5",
+    "@web-clipper/message-listener-combiner": "^0.0.20",
     "@web-clipper/shared": "^0.0.20",
     "@web-clipper/turndown": "^0.0.11",
     "antd": "^3.22.0",
