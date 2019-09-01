@@ -1,4 +1,4 @@
-<h1 align="center">Web clipper</h1>
+<h1 align="center">Web Clipper</h1>
 <p align="center">
     <a href="https://travis-ci.org/webclipper/web-clipper">
       <img src="https://img.shields.io/travis/webclipper/web-clipper/master.svg?style=flat-square" alt="Build Status">
@@ -8,6 +8,16 @@
     </a>
 </p>
 
+You can use Web Clipper to save anything on the web to anywhere.
+
+### Support Site
+
+- [Github](https://github.com)
+- [Yuque](https://www.yuque.com)
+- [Notion](https://www.notion.so/)
+- [Youdao](https://note.youdao.com/)
+- [OneNote](https://www.onenote.com/)
+
 ### Install
 
 #### From Github
@@ -16,13 +26,6 @@
 2. Go to **chrome://extensions/** and check the box for **Developer mode** in the top right.
 3. Locate the ZIP file on your computer and unzip it.
 4. Go back to the chrome://extensions/ page and click the **Load unpacked extension **button and select the unzipped folder for your extension to install it.
-
-### Support Site
-
-- [Github](https://github.com)
-- [Yuque](https://www.yuque.com)
-- [Notion](https://www.notion.so/)
-- [Youdao](https://note.youdao.com/)
 
 ### Develop
 
