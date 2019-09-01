@@ -27,3 +27,5 @@ export const asyncChangeAccount = actionCreator.async<
 >('ASYNC_CHANGE_ACCOUNT');
 
 export const changeData = actionCreator<{ data: any; pathName: string }>('CHANGE_DATA');
+
+export const watchActionChannel = actionCreator('watchActionChannel');

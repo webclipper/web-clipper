@@ -11,11 +11,13 @@ import {
   asyncCreateDocument,
   asyncChangeAccount,
   changeData,
+  watchActionChannel,
 } from 'pageActions/clipper';
 import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
 import { message } from 'antd';
 import { routerRedux } from 'dva';
 import { asyncUpdateAccount } from '@/actions/account';
+import { channel } from 'redux-saga';
 
 const defaultState: ClipperStore = {
   title: '',
@@ -23,7 +25,19 @@ const defaultState: ClipperStore = {
   repositories: [],
   clipperData: {},
 };
+
+const actionChannel = channel();
+
 const model = new DvaModelBuilder(defaultState, 'clipper')
+  .subscript(function startWatchActionChannel({ dispatch }) {
+    dispatch(watchActionChannel());
+  })
+  .takeEvery(watchActionChannel, function*(_, { put, take }) {
+    while (true) {
+      const action = yield take(actionChannel);
+      yield put(action);
+    }
+  })
   .takeEvery(asyncChangeAccount.started, function*(payload, { call, select, put }) {
     const { id } = payload;
     const selector = ({ userPreference: { imageHosting }, account: { accounts } }: GlobalStore) => {
@@ -56,7 +70,9 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
                 defaultRepositoryId,
                 imageHosting: imageHostingId,
               },
-              callback: () => {},
+              callback: () => {
+                actionChannel.put(asyncChangeAccount.started({ id: account.id }));
+              },
             })
           );
           return;

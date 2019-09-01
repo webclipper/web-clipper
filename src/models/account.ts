@@ -34,7 +34,7 @@ model
       }
     });
   })
-  .takeEvery(initAccounts.started, function*(_, { call, put, select }) {
+  .takeEvery(initAccounts.started, function*(_, { call, put }) {
     let accountsString = yield call(syncStorageService.get, 'accounts', '[]');
     const defaultAccountId: string = yield call(syncStorageService.get, 'defaultAccountId');
     if (typeof accountsString !== 'string') {
@@ -42,12 +42,6 @@ model
     }
     const accounts = <AccountPreference[]>JSON.parse(accountsString);
     yield put(initAccounts.done({ result: { accounts, defaultAccountId } }));
-    const currentAccountId: string | undefined = yield select(
-      (g: GlobalStore) => g.account.currentAccountId
-    );
-    if (!currentAccountId && defaultAccountId) {
-      yield put(asyncChangeAccount.started({ id: defaultAccountId }));
-    }
   })
   .case(initAccounts.done, (s, { result: { accounts, defaultAccountId } }) => ({
     ...s,
