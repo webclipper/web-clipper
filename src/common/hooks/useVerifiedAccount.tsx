@@ -4,6 +4,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import React, { useState } from 'react';
 import { omit } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import { message } from 'antd';
 
 const useVerifiedAccount = ({
   form,
@@ -33,13 +34,17 @@ const useVerifiedAccount = ({
   const doVerifyAccount = async (info: any) => {
     const Service = service.service;
     const instance = new Service(info);
-    const userInfo = await instance.getUserInfo();
-    const repositories = await instance.getRepositories();
-    setAccountStatus({
-      repositories,
-      verified: true,
-      userInfo,
-    });
+    try {
+      const userInfo = await instance.getUserInfo();
+      const repositories = await instance.getRepositories();
+      setAccountStatus({
+        repositories,
+        verified: true,
+        userInfo,
+      });
+    } catch (error) {
+      message.error(error.message);
+    }
   };
 
   const verifyAccount = () => {

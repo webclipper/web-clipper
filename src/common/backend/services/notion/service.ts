@@ -1,7 +1,8 @@
-import { CompleteStatus } from './../interface';
+import { CompleteStatus, UnauthorizedError } from './../interface';
 import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
 import axios, { AxiosInstance } from 'axios';
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
+import localeService from '@/common/locales';
 
 interface NotionUserContent {
   recordMap: {
@@ -65,6 +66,22 @@ export default class NotionDocumentService implements DocumentService {
     });
     this.request = request;
     this.repositories = [];
+    this.request.interceptors.response.use(
+      r => r,
+      error => {
+        if (error.response && error.response.status === 401) {
+          return Promise.reject(
+            new UnauthorizedError(
+              localeService.format({
+                id: 'backend.services.notion.unauthorizedErrorMessage',
+                defaultMessage: 'Unauthorized! Please Login Notion Web.',
+              })
+            )
+          );
+        }
+        return Promise.reject(error);
+      }
+    );
   }
 
   getId = () => {

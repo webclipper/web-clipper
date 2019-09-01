@@ -49,4 +49,7 @@ export default {
   'backend.services.yuque_oauth.name': '语雀(一键授权)',
   'preference.tab.changelog': '更新日志',
   'preference.extensions.clipExtensions.tooltip': '点击 🌟选择默认插件',
+  'preference.accountList.verify': '校验',
+  'backend.services.youdao.unauthorizedErrorMessage': '授权失败，请登录网页版有道云笔记',
+  'backend.services.notion.unauthorizedErrorMessage': '授权失败，请登录网页版 Notion',
 };

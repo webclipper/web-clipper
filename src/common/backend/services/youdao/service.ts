@@ -1,5 +1,5 @@
 import * as browser from '@web-clipper/chrome-promise';
-import { CompleteStatus } from './../interface';
+import { CompleteStatus, UnauthorizedError } from './../interface';
 import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
 import axios, { AxiosInstance } from 'axios';
 import { stringify } from 'qs';
@@ -29,6 +29,25 @@ export default class YoudaoDocumentService implements DocumentService {
       withCredentials: true,
     });
     this.request = request;
+    this.request.interceptors.response.use(
+      r => r,
+      error => {
+        if (error.response) {
+          const { response } = error;
+          if (response.status === 500 && response.data && response.data.error === '207') {
+            return Promise.reject(
+              new UnauthorizedError(
+                localeService.format({
+                  id: 'backend.services.youdao.unauthorizedErrorMessage',
+                  defaultMessage: 'Unauthorized! Please Login Youdao Web.',
+                })
+              )
+            );
+          }
+        }
+        return Promise.reject(error);
+      }
+    );
   }
 
   getId = () => {
