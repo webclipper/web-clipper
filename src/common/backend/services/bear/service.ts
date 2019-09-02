@@ -11,7 +11,7 @@ export default class GithubDocumentService implements DocumentService {
       name: 'BEAR',
       avatar: 'https://bear.app/static/favicons/favicon-180.png',
       homePage: 'bear://x-callback-url/search',
-      description: 'Beat app',
+      description: 'Bear app',
     };
   };
 
