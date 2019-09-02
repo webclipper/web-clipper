@@ -1,3 +1,10 @@
+## 1.9.0
+
+`2019-09-02`
+
+- ✨ Support Bear.
+- 📝 Add unauthorized error message for notion and youdao.
+
 ## 1.8.0
 
 `2019-09-01`
