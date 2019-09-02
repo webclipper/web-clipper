@@ -10,7 +10,7 @@
 
 You can use Web Clipper to save anything on the web to anywhere.
 
-<img src="https://clipper.website/static/image/screenshot.png>
+<img src="https://clipper.website/static/image/screenshot.png">
 
 ### Support Site
 
