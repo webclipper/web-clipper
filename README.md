@@ -10,6 +10,8 @@
 
 You can use Web Clipper to save anything on the web to anywhere.
 
+<img src="https://clipper.website/static/image/screenshot.png>
+
 ### Support Site
 
 - [Github](https://github.com)
@@ -17,6 +19,7 @@ You can use Web Clipper to save anything on the web to anywhere.
 - [Notion](https://www.notion.so/)
 - [Youdao](https://note.youdao.com/)
 - [OneNote](https://www.onenote.com/)
+- [Bear](https://bear.app)
 
 ### Install
 
