@@ -4071,6 +4071,13 @@ dva-model-creator@^0.3.0:
   dependencies:
     warning "^4.0.3"
 
+dva-model-creator@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/dva-model-creator/-/dva-model-creator-0.4.2.tgz#744ff84380e2dce2b690c57032a2d137e3c02375"
+  integrity sha512-6svOl+Xgqmz+JVi2fmrX92VAH4M1C+8ED4car7gxrXH+ey3my8cKXkIogCVr+dMy0djta067sYZdhR0JrWEGJQ==
+  dependencies:
+    warning "^4.0.3"
+
 dva@2.6.0-beta.12:
   version "2.6.0-beta.12"
   resolved "https://registry.npm.taobao.org/dva/download/dva-2.6.0-beta.12.tgz#a64b11781fa7b096e41dcf002dd06629a3910218"
