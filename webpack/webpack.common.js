@@ -25,7 +25,7 @@ module.exports = {
     splitChunks: {
       cacheGroups: {
         vendor: {
-          test: /[\\/]node_modules[\\/](react|react-dom|antd)[\\/]/,
+          test: /[\\/]node_modules[\\/](react|react-dom|antd|lodash)[\\/]/,
           name: 'vendor',
           chunks: 'all',
         },
