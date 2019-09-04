@@ -4306,10 +4306,10 @@ escodegen@^1.9.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-prettier@^4.1.0:
-  version "4.3.0"
-  resolved "https://registry.npm.taobao.org/eslint-config-prettier/download/eslint-config-prettier-4.3.0.tgz#c55c1fcac8ce4518aeb77906984e134d9eb5a4f0"
-  integrity sha1-xVwfysjORRiut3kGmE4TTZ61pPA=
+eslint-config-prettier@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.2.0.tgz#80e0b8714e3f6868c4ac2a25fbf39c02e73527a7"
+  integrity sha512-VLsgK/D+S/FEsda7Um1+N8FThec6LqE3vhcMyp8mlmto97y3fGf3DX7byJexGuOb1QY0Z/zz222U5t+xSfcZDQ==
   dependencies:
     get-stdin "^6.0.0"
 
