@@ -47,6 +47,7 @@ const Page: React.FC<PageProps> = ({
     accountStatus: { verified, repositories },
     verifyAccount,
     serviceForm,
+    verifying,
   } = useVerifiedAccount({
     form,
     services: servicesMeta,
@@ -55,7 +56,8 @@ const Page: React.FC<PageProps> = ({
 
   useEffect(() => {
     verifyAccount();
-  }, [verifyAccount]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const supportedImageHostingServices = useFilterImageHostingServices({
     backendServiceType: currentAccount.type,
@@ -63,12 +65,22 @@ const Page: React.FC<PageProps> = ({
     imageHostingServicesMap: imageHostingServicesMeta,
   });
 
+  const okText = verifying ? (
+    <FormattedMessage id="preference.accountList.verifying" defaultMessage="Verifying" />
+  ) : (
+    <FormattedMessage id="preference.accountList.confirm" defaultMessage="Confirm" />
+  );
+
   return (
     <Modal
       visible={visible}
       title={<ModalTitle></ModalTitle>}
-      okText={<FormattedMessage id="preference.accountList.confirm" defaultMessage="Confirm" />}
+      okText={okText}
       okType="primary"
+      okButtonProps={{
+        loading: verifying,
+        disabled: !verified,
+      }}
       onCancel={onCancel}
       onOk={() => onEdit(currentAccount.id)}
     >

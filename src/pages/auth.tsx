@@ -44,6 +44,7 @@ const Page: React.FC<PageProps> = props => {
     verifyAccount,
     accountStatus: { repositories, verified, userInfo },
     serviceForm,
+    verifying,
   } = useVerifiedAccount({
     form: props.form,
     services: props.servicesMeta,
@@ -58,7 +59,8 @@ const Page: React.FC<PageProps> = props => {
 
   useEffect(() => {
     verifyAccount();
-  }, [verifyAccount]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Modal
@@ -67,6 +69,10 @@ const Page: React.FC<PageProps> = props => {
         const tahId = (await browser.tabs.getCurrent()).id;
         chrome.tabs.remove(tahId!);
       }}
+      okButtonProps={{
+        disabled: verifying,
+        loading: verifying,
+      }}
       title={<FormattedMessage id="auth.modal.title" defaultMessage="Account Config" />}
       onOk={() => {
         form.validateFields((error, values) => {
@@ -74,7 +80,6 @@ const Page: React.FC<PageProps> = props => {
             return;
           }
           const { defaultRepositoryId, imageHosting, ...info } = values;
-          console.log(info);
           props.dispatch(
             asyncAddAccount.started({
               type,

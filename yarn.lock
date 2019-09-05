@@ -4071,6 +4071,13 @@ dva-model-creator@^0.3.0:
   dependencies:
     warning "^4.0.3"
 
+dva-model-creator@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.npmjs.org/dva-model-creator/-/dva-model-creator-0.4.3.tgz#3b32336be68defc0848a95d83bb3cf33d4f6fd2e"
+  integrity sha512-c4VAyfyNCsQYcxJvtG/m/8xCeunkq2M/8GwafHe27Ho267Z/yXgO9Q/RCktw9aZbWOVc3WE1ZE+X1LDOF37GCw==
+  dependencies:
+    warning "^4.0.3"
+
 dva@2.6.0-beta.12:
   version "2.6.0-beta.12"
   resolved "https://registry.npm.taobao.org/dva/download/dva-2.6.0-beta.12.tgz#a64b11781fa7b096e41dcf002dd06629a3910218"
@@ -4336,10 +4343,15 @@ eslint-plugin-prettier@^3.1.0:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-react-hooks@^1.6.1, eslint-plugin-react-hooks@^1.7.0:
+eslint-plugin-react-hooks@^1.6.1:
   version "1.7.0"
   resolved "https://registry.npm.taobao.org/eslint-plugin-react-hooks/download/eslint-plugin-react-hooks-1.7.0.tgz#6210b6d5a37205f0b92858f895a4e827020a7d04"
   integrity sha1-YhC21aNyBfC5KFj4laToJwIKfQQ=
+
+eslint-plugin-react-hooks@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/eslint-plugin-react-hooks/download/eslint-plugin-react-hooks-2.0.1.tgz#e898ec26a0a335af6f7b0ad1f0bedda7143ed756"
+  integrity sha1-6JjsJqCjNa9vewrR8L7dpxQ+11Y=
 
 eslint-plugin-react@^7.13.0, eslint-plugin-react@^7.14.3:
   version "7.14.3"

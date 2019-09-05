@@ -31,10 +31,13 @@ const useVerifiedAccount = ({
     verified: false,
   });
 
+  const [verifying, setVerifying] = useState(false);
+
   const doVerifyAccount = async (info: any) => {
     const Service = service.service;
     const instance = new Service(info);
     try {
+      setVerifying(true);
       const userInfo = await instance.getUserInfo();
       const repositories = await instance.getRepositories();
       setAccountStatus({
@@ -44,6 +47,8 @@ const useVerifiedAccount = ({
       });
     } catch (error) {
       message.error(error.message);
+    } finally {
+      setVerifying(false);
     }
   };
 
@@ -90,6 +95,7 @@ const useVerifiedAccount = ({
     type,
     service,
     accountStatus,
+    verifying,
     verifyAccount,
     changeType,
     serviceForm,
