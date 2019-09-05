@@ -4,12 +4,13 @@ import Service from './service';
 import localeService from '@/common/locales';
 import { stringify } from 'qs';
 import form from './form';
+import browserId from '@/common/id';
 
 const oauthUrl = `https://www.yuque.com/oauth2/authorize?${stringify({
   client_id: config.yuqueClientId,
   scope: config.yuqueScope,
   redirect_uri: config.yuqueCallback,
-  state: chrome.runtime.id,
+  state: browserId(),
   response_type: 'code',
 })}`;
 
