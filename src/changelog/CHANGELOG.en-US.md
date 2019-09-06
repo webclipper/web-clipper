@@ -1,3 +1,10 @@
+## 1.9.1
+
+`2019-09-06`
+
+- 🐛 Fix oauth failed in firefox.
+- 🐛 Fix infinite loop request when edit account.
+
 ## 1.9.0
 
 `2019-09-02`
