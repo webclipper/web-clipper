@@ -23,9 +23,9 @@ You can use Web Clipper to save anything on the web to anywhere.
 
 ### Install
 
-- [Firefox](https://addons.mozilla.org/zh-CN/firefox/addon/web-clipper-by-diamondyuan/)
+~~- [Firefox](https://addons.mozilla.org/zh-CN/firefox/addon/web-clipper-by-diamondyuan/)~~ （WIP)
 
-ps: I don't use firefox,maybe some compatibility issues.So, issue welcome and PR welcome.
+~~ps: I don't use firefox,maybe some compatibility issues.So, issue welcome and PR welcome.~~
 
 - [Chrome](https://chrome.google.com/webstore/detail/web-clipper/mhfbofiokmppgdliakminbgdgcmbhbac)
 
