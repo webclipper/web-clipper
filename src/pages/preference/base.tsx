@@ -37,6 +37,7 @@ const Base: React.FC<PageProps> = props => {
           key="configLanguage"
           value={props.locale}
           onChange={(e: string) => dispatch(asyncSetLocaleToStorage(e))}
+          dropdownMatchSelectWidth={false}
         >
           <Select.Option key="zh-CN">中文</Select.Option>
           <Select.Option key="en-US">English</Select.Option>
