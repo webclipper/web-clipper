@@ -1522,10 +1522,10 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-"@web-clipper/area-selector@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.npm.taobao.org/@web-clipper/area-selector/download/@web-clipper/area-selector-0.0.3.tgz#4be9290a240744a3a874529dd9f47a6ac190aad1"
-  integrity sha1-S+kpCiQHRKOodFKd2fR6asGQqtE=
+"@web-clipper/area-selector@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.npmjs.org/@web-clipper/area-selector/-/area-selector-0.0.20.tgz#4dc823fd77b86fdd3c6511a930833933542c936d"
+  integrity sha512-OkpitNZ9oxMeIV2fkAPnbFIVSuILtnC1jkMIGUA4NcDvecEL48m3E+bjXBg5gHdT/Q0K7TvoM+51zOoLvvijPw==
   dependencies:
     jquery "^3.4.1"
 
@@ -1537,10 +1537,10 @@
     "@types/chrome" "^0.0.88"
     "@web-clipper/shared" "^0.0.20"
 
-"@web-clipper/extensions@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/@web-clipper/extensions/-/extensions-0.0.5.tgz#00c5065862e68979e39a45084bbe9dbd95755f67"
-  integrity sha512-aTWfDqLeKkjaA2VQJCdhKV6qJQ29I3cBvEQ9Zymyv1ASPJP002E6brtlC4MXoi1Mc4hmrPQQhBvjGOmCdREAhw==
+"@web-clipper/extensions@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.npmjs.org/@web-clipper/extensions/-/extensions-0.0.6.tgz#787c4ba84d2ae0178c1fb320e35df67f8d1eb9bb"
+  integrity sha512-yRSk4V5K3zGb0AQpp13QcN++0KLclaNfFQmbcc9K1oqtqr38PTUZ0uXlOLQcG3FB1Pe671D6dkycEyx5aRQJig==
   dependencies:
     "@diamondyuan/eslint-config-react-typescript" "^7.0.0"
     "@typescript-eslint/eslint-plugin" "^1.13.0"
