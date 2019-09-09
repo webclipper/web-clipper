@@ -31,7 +31,7 @@ export default {
   'preference.basic.liveRendering.title': '所见即所得',
   'preference.basic.liveRendering.description': '开启后编辑器使用所见即所得模式',
   'preference.basic.configLanguage.title': '语言',
-  'preference.basic.configLanguage.description': '选择语言',
+  'preference.basic.configLanguage.description': '欢迎在 GitHub 提交翻译',
   'preference.imageHosting.add': '添加图床',
   'component.imagehostingListItem.noDescription': '没有备注',
   'component.imagehostingListItem.edit': '编辑',
@@ -50,6 +50,7 @@ export default {
   'preference.tab.changelog': '更新日志',
   'preference.extensions.clipExtensions.tooltip': '点击 🌟选择默认插件',
   'preference.accountList.verify': '校验',
-  'backend.services.youdao.unauthorizedErrorMessage': '授权失败，请登录网页版有道云笔记',
-  'backend.services.notion.unauthorizedErrorMessage': '授权失败，请登录网页版 Notion',
+  'backend.services.youdao.unauthorizedErrorMessage': '授权失败，请登录网页版有道云笔记。',
+  'backend.services.notion.unauthorizedErrorMessage': '授权失败，请登录网页版 Notion。',
+  'preference.basic.update.description': '因为审核需要一周，所以 chrome 商店的版本会延迟几个版本。',
 };

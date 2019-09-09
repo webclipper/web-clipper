@@ -2,6 +2,8 @@ import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from './modelTypes/userPreference';
 import { createIntlCache, createIntl, IntlShape, MessageDescriptor } from 'react-intl';
 import enUS from '@/locales/en-US';
 import zhCN from '@/locales/zh-CN';
+import jaJP from '@/locales/ja-JP';
+
 import { localStorageService } from './chrome/storage';
 
 export const getLanguage = () => {
@@ -9,8 +11,8 @@ export const getLanguage = () => {
     [key: string]: string;
   } = {
     zh: 'zh-CN',
+    jp: 'jp-JP',
   };
-
   return languageMap[navigator.language] || navigator.language;
 };
 
@@ -24,6 +26,9 @@ const localData: {
   },
   'en-US': {
     intl: enUS,
+  },
+  'ja-JP': {
+    intl: jaJP,
   },
 };
 

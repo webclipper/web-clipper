@@ -28,7 +28,6 @@ type PageProps = PageStateProps & DvaRouterProps;
 
 const Base: React.FC<PageProps> = props => {
   const { dispatch } = props;
-
   const configs = [
     {
       key: 'configLanguage',
@@ -41,10 +40,17 @@ const Base: React.FC<PageProps> = props => {
         >
           <Select.Option key="zh-CN">中文</Select.Option>
           <Select.Option key="en-US">English</Select.Option>
+          <Select.Option key="ja-JP">日本語</Select.Option>
         </Select>
       ),
       title: (
         <FormattedMessage id="preference.basic.configLanguage.title" defaultMessage="Language" />
+      ),
+      description: (
+        <FormattedMessage
+          id="preference.basic.configLanguage.description"
+          defaultMessage="My native language is Chinese,Welcome to submit a translation on GitHub"
+        />
       ),
     },
     {
@@ -114,6 +120,12 @@ const Base: React.FC<PageProps> = props => {
         </a>
       ),
       title: <FormattedMessage id="preference.basic.update.title" defaultMessage="Has Update" />,
+      description: (
+        <FormattedMessage
+          id="preference.basic.update.description"
+          defaultMessage="Because the review takes a week, the chrome version will fall behind."
+        />
+      ),
     });
   }
 

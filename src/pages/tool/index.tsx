@@ -147,7 +147,7 @@ const Page = React.memo<PageProps>(
 
     return (
       <ToolContainer onClickCloseButton={() => dispatch(asyncHideTool.started())}>
-        <Section title={<FormattedMessage id="tool.title"></FormattedMessage>}>
+        <Section title={<FormattedMessage id="tool.title" />}>
           <Input value={title} onChange={onTitleChange} />
           <Button
             className={styles.saveButton}
@@ -159,7 +159,7 @@ const Page = React.memo<PageProps>(
             onClick={handleCreateDocument}
             block
           >
-            {<FormattedMessage id="tool.save"></FormattedMessage>}
+            {<FormattedMessage id="tool.save" defaultMessage="Save Content" />}
           </Button>
         </Section>
         <ToolExtensions
