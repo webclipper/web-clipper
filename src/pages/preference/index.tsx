@@ -10,6 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import Base from './base';
 import { DvaRouterProps, GlobalStore } from '@/common/types';
 import Changelog from './changelog';
+import IconFont from '@/components/IconFont';
 
 const { Route } = router;
 
@@ -67,7 +68,7 @@ const tabs = [
     path: 'changelog',
     title: (
       <React.Fragment>
-        <Icon type="sound" />
+        <IconFont type="changelog"></IconFont>
         <FormattedMessage id="preference.tab.changelog" defaultMessage="Changelog" />
       </React.Fragment>
     ),
