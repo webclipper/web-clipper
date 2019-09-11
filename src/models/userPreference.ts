@@ -220,11 +220,11 @@ builder.subscript(async function initStore({ dispatch, history }) {
     dispatch(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
   }
   dispatch(removeActionNamespace(initUserPreference(result)));
-  if (result.defaultPluginId) {
-    dispatch(routerRedux.push(`/plugins/${result.defaultPluginId}`));
-  }
   if (history.location.pathname !== '/') {
     return;
+  }
+  if (result.defaultPluginId) {
+    dispatch(routerRedux.push(`/plugins/${result.defaultPluginId}`));
   }
   const defaultAccountId = syncStorageService.get('defaultAccountId');
   if (defaultAccountId) {
