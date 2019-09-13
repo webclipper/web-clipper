@@ -1,4 +1,7 @@
-export default {
+import { LocaleModel } from '@/common/locales/interface';
+import antd from 'antd/lib/locale-provider/en_US';
+
+const messages = {
   'tool.title': 'Title',
   'tool.save': 'Save Content',
   'tool.repository': 'Repository',
@@ -17,3 +20,13 @@ export default {
   'preference.basic.configLanguage.description':
     'My native language is Chinese,Welcome to submit a translation on GitHub.',
 };
+
+const model: LocaleModel = {
+  antd,
+  name: 'English',
+  locale: 'en-US',
+  messages,
+  alias: [],
+};
+
+export default model;

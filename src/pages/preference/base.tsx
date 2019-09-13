@@ -8,6 +8,7 @@ import {
   asyncSetEditorLiveRendering,
 } from '@/actions/userPreference';
 import { FormattedMessage } from 'react-intl';
+import { locales } from '@/common/locales';
 
 const mapStateToProps = ({
   userPreference: { locale, showLineNumber, liveRendering },
@@ -38,9 +39,9 @@ const Base: React.FC<PageProps> = props => {
           onChange={(e: string) => dispatch(asyncSetLocaleToStorage(e))}
           dropdownMatchSelectWidth={false}
         >
-          <Select.Option key="zh-CN">中文</Select.Option>
-          <Select.Option key="en-US">English</Select.Option>
-          <Select.Option key="ja-JP">日本語</Select.Option>
+          {locales.map(o => (
+            <Select.Option key={o.locale}>{o.name}</Select.Option>
+          ))}
         </Select>
       ),
       title: (

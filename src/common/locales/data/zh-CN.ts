@@ -1,4 +1,7 @@
-export default {
+import { LocaleModel } from '@/common/locales/interface';
+import antd from 'antd/lib/locale-provider/zh_CN';
+
+const messages = {
   'tool.title': '笔记标题',
   'tool.save': '保存内容',
   'tool.repository': '知识库',
@@ -54,3 +57,13 @@ export default {
   'backend.services.notion.unauthorizedErrorMessage': '授权失败，请登录网页版 Notion。',
   'preference.basic.update.description': '因为审核需要一周，所以 chrome 商店的版本会延迟几个版本。',
 };
+
+const model: LocaleModel = {
+  antd,
+  name: '简体中文',
+  locale: 'zh-CN',
+  messages,
+  alias: ['zh'],
+};
+
+export default model;
