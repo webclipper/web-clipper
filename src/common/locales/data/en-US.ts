@@ -26,7 +26,7 @@ const model: LocaleModel = {
   name: 'English',
   locale: 'en-US',
   messages,
-  alias: [],
+  alias: ['en'],
 };
 
 export default model;
