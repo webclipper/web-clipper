@@ -1,3 +1,11 @@
+## 1.9.2
+
+`2019-09-11`
+
+- 🐛 Fix default account and add new oauth account not work when enable default extension
+- 🌐 Support ja-JP
+- 💄 fix style of locale selector
+
 ## 1.9.1
 
 `2019-09-06`
