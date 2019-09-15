@@ -1,6 +1,6 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
-import { LocaleProvider } from 'antd';
+import { ConfigProvider } from 'antd';
 import { connect } from 'dva';
 import { localesMap } from '@/common/locales';
 import { GlobalStore } from '@/common/types';
@@ -17,7 +17,7 @@ const LocalWrapper: React.FC<PageStateProps> = ({ children, locale }) => {
   const { antd, messages } = (localesMap.get(language) || localesMap.get('en-US'))!;
   return (
     <IntlProvider key={locale} locale={language} messages={messages}>
-      <LocaleProvider locale={antd}>{children}</LocaleProvider>
+      <ConfigProvider locale={antd}>{children}</ConfigProvider>
     </IntlProvider>
   );
 };
