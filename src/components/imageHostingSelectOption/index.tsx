@@ -18,7 +18,7 @@ export default class Page extends React.Component<PageProps> {
         <FormattedMessage
           id="component.imageHostingSelectOption.noDescription"
           defaultMessage="No Description"
-        ></FormattedMessage>
+        />
       ),
       icon,
     } = this.props;

@@ -26,52 +26,34 @@ type PageStateProps = ReturnType<typeof mapStateToProps>;
 const tabs = [
   {
     path: 'account',
-    title: (
-      <React.Fragment>
-        <Icon type="user"></Icon>
-        <FormattedMessage id="preference.tab.account" defaultMessage="Account" />
-      </React.Fragment>
-    ),
+    icon: <Icon type="user" />,
+    title: <FormattedMessage id="preference.tab.account" defaultMessage="Account" />,
     component: Account,
   },
   {
     path: 'extensions',
-    title: (
-      <React.Fragment>
-        <Icon type="tool" />
-        <FormattedMessage id="preference.tab.extensions" defaultMessage="Extension" />
-      </React.Fragment>
-    ),
+
+    icon: <Icon type="tool" />,
+    title: <FormattedMessage id="preference.tab.extensions" defaultMessage="Extension" />,
     component: Extensions,
   },
   {
     path: 'imageHost',
-    title: (
-      <React.Fragment>
-        <Icon type="picture" />
-        <FormattedMessage id="preference.tab.imageHost" defaultMessage="ImageHost" />
-      </React.Fragment>
-    ),
+    icon: <Icon type="picture" />,
+
+    title: <FormattedMessage id="preference.tab.imageHost" defaultMessage="ImageHost" />,
     component: ImageHosting,
   },
   {
     path: 'base',
-    title: (
-      <React.Fragment>
-        <Icon type="setting" />
-        <FormattedMessage id="preference.tab.basic" defaultMessage="Basic" />
-      </React.Fragment>
-    ),
+    icon: <Icon type="setting" />,
+    title: <FormattedMessage id="preference.tab.basic" defaultMessage="Basic" />,
     component: Base,
   },
   {
     path: 'changelog',
-    title: (
-      <React.Fragment>
-        <IconFont type="changelog"></IconFont>
-        <FormattedMessage id="preference.tab.changelog" defaultMessage="Changelog" />
-      </React.Fragment>
-    ),
+    icon: <IconFont type="changelog" />,
+    title: <FormattedMessage id="preference.tab.changelog" defaultMessage="Changelog" />,
     component: Changelog,
   },
 ];
@@ -95,7 +77,12 @@ const Preference: React.FC<PageProps> = ({
           <Tabs activeKey={pathname} tabPosition="left" style={{ height: '100%' }} onChange={push}>
             {tabs.map(tab => {
               const path = `/preference/${tab.path}`;
-              let tabTitle = tab.title;
+              let tabTitle = (
+                <React.Fragment>
+                  {tab.icon}
+                  {tab.title}
+                </React.Fragment>
+              );
               if (hasUpdate && tab.path === 'base') {
                 tabTitle = <Badge dot>{tabTitle}</Badge>;
               }
