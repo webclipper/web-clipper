@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { connect } from 'dva';
 import { ToolContainer } from 'components/container';
-import * as styles from './complete.scss';
+import * as styles from './complete.less';
 import { Button } from 'antd';
 import { GlobalStore, DvaRouterProps } from '@/common/types';
 import Section from 'components/section';
 import { asyncRemoveTool } from '@/actions/userPreference';
 import { FormattedMessage } from 'react-intl';
+import Share from '@/components/share';
 
 const mapStateToProps = ({
-  clipper: { completeStatus, currentAccountId },
+  clipper: { completeStatus, currentAccountId, createDocumentRequest },
   userPreference: { servicesMeta },
   account: { accounts },
 }: GlobalStore) => {
@@ -18,13 +19,20 @@ const mapStateToProps = ({
     servicesMeta,
     currentAccount,
     completeStatus,
+    createDocumentRequest,
   };
 };
 
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageProps = PageStateProps & DvaRouterProps;
 
-const Page: React.FC<PageProps> = ({ dispatch, completeStatus, currentAccount, servicesMeta }) => {
+const Page: React.FC<PageProps> = ({
+  dispatch,
+  completeStatus,
+  currentAccount,
+  servicesMeta,
+  createDocumentRequest,
+}) => {
   function closeTool() {
     dispatch(asyncRemoveTool.started());
   }
@@ -46,8 +54,8 @@ const Page: React.FC<PageProps> = ({ dispatch, completeStatus, currentAccount, s
   return (
     <ToolContainer onClickCloseButton={closeTool}>
       <Section title={<FormattedMessage id="page.complete.success" defaultMessage="Success" />}>
-        <a className={styles.menuButton} href={completeStatus.href} target="_blank">
-          <Button style={{ marginTop: 16 }} size="large" type="primary" block>
+        <a href={completeStatus.href} target="_blank">
+          <Button className={styles.jump} size="large" type="primary" block>
             <FormattedMessage
               id="page.complete.message"
               defaultMessage="Go to {name}"
@@ -57,6 +65,9 @@ const Page: React.FC<PageProps> = ({ dispatch, completeStatus, currentAccount, s
         </a>
       </Section>
       {Complete && <Complete status={completeStatus}> </Complete>}
+      <Section title={<FormattedMessage id="page.complete.share" defaultMessage="Share" />}>
+        <Share content={createDocumentRequest!.content}></Share>
+      </Section>
     </ToolContainer>
   );
 };

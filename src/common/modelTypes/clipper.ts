@@ -1,5 +1,9 @@
 import { ClipperDataType } from '@/common/modelTypes/userPreference';
-import { Repository, CompleteStatus } from '@/common/backend/services/interface';
+import {
+  Repository,
+  CompleteStatus,
+  CreateDocumentRequest,
+} from '@/common/backend/services/interface';
 
 export interface ClipperStore {
   /** 网页标题 */
@@ -18,4 +22,5 @@ export interface ClipperStore {
     [key: string]: ClipperDataType;
   };
   completeStatus?: CompleteStatus;
+  createDocumentRequest?: CreateDocumentRequest;
 }

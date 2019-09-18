@@ -1,4 +1,5 @@
 declare module '*.scss';
+declare module '*.less';
 declare module '*.png';
 declare module '@diamondyuan/readability';
 declare module 'turndown-plugin-gfm';

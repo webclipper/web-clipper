@@ -192,7 +192,10 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     yield put(
       asyncCreateDocument.done({
         params: { pathname },
-        result: response,
+        result: {
+          result: response,
+          request: createDocumentRequest,
+        },
       })
     );
     yield put(routerRedux.push('/complete'));
@@ -236,10 +239,14 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
   .case(asyncCreateDocument.started, state => ({
     ...state,
   }))
-  .case(asyncCreateDocument.done, (state, { result: completeStatus }) => ({
-    ...state,
-    completeStatus,
-  }))
+  .case(
+    asyncCreateDocument.done,
+    (state, { result: { result: completeStatus, request: createDocumentRequest } }) => ({
+      ...state,
+      completeStatus,
+      createDocumentRequest,
+    })
+  )
   .case(changeData, (state, { data, pathName }) =>
     update(state, {
       clipperData: {
