@@ -1,20 +1,16 @@
 import React from 'react';
 import { Icon } from 'antd';
 import { IconProps } from 'antd/lib/icon';
-import useFetchGithubFile from '@/common/hooks/useFetchGithubFile';
-import iconConfig from '@/../config.json';
+import { useSelector } from 'dva';
+import { GlobalStore } from '@/common/types';
 
-export default (props: IconProps) => {
-  const [loading, config] = useFetchGithubFile('config.json');
-  if (loading || !config) {
-    return <Icon {...props}></Icon>;
-  }
-  let scriptUrl = JSON.parse(config).iconfont;
-  if (process.env.NODE_ENV === 'development') {
-    scriptUrl = iconConfig.iconfont;
-  }
-  const IconFont = Icon.createFromIconfontCN({
-    scriptUrl,
-  });
+const IconFont: React.FC<IconProps> = props => {
+  const option = useSelector(({ userPreference: { iconfontUrl } }: GlobalStore) => ({
+    scriptUrl: iconfontUrl,
+  }));
+
+  const IconFont = Icon.createFromIconfontCN(option);
   return <IconFont {...props}></IconFont>;
 };
+
+export default IconFont;

@@ -12,6 +12,7 @@ export interface UserPreferenceStore {
   imageHostingServicesMeta: {
     [type: string]: ImageHostingServiceMeta;
   };
+  iconfontUrl: string;
 }
 
 /**

@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import { getLanguage } from './../common/locales';
 import localeService from '@/common/locales';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from './../common/modelTypes/userPreference';
@@ -22,6 +23,7 @@ import {
   setLocale,
   asyncSetLocaleToStorage,
   initServices,
+  asyncFetchRemoteConfig,
 } from 'pageActions/userPreference';
 import { initTabInfo, changeData, asyncChangeAccount } from 'pageActions/clipper';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
@@ -34,6 +36,7 @@ import { routerRedux } from 'dva';
 import { localStorageService, syncStorageService } from '@/common/chrome/storage';
 import { loadExtensions } from '@/actions/extension';
 import { initAccounts } from '@/actions/account';
+import iconConfig from '@/../config.json';
 
 const defaultState: UserPreferenceStore = {
   locale: getLanguage(),
@@ -42,6 +45,7 @@ const defaultState: UserPreferenceStore = {
   imageHostingServicesMeta: {},
   showLineNumber: true,
   liveRendering: true,
+  iconfontUrl: iconConfig.iconfont,
 };
 
 const builder = new DvaModelBuilder(defaultState, 'userPreference')
@@ -78,6 +82,22 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
       },
     })
   );
+
+builder
+  .takeEvery(asyncFetchRemoteConfig.started, function*(_, { call, put }) {
+    const response = yield call(
+      Axios.get,
+      'https://api.github.com/repos/webclipper/web-clipper/contents/config.json'
+    );
+    const data = decodeURIComponent(escape(window.atob(response.data.content)));
+    yield put(asyncFetchRemoteConfig.done(JSON.parse(data)));
+  })
+  .case(asyncFetchRemoteConfig.done, (s, { result: { iconfont } }) => {
+    return {
+      ...s,
+      iconfontUrl: iconfont,
+    };
+  });
 
 builder
   .takeEvery(asyncSetShowLineNumber.started, function*(payload, { call, put }) {
@@ -214,6 +234,9 @@ builder
 
 builder.subscript(async function initStore({ dispatch, history }) {
   await dispatch(initAccounts.started());
+  if (process.env.NODE_ENV !== 'development') {
+    dispatch(asyncFetchRemoteConfig.started());
+  }
   const result = await storage.getPreference();
   const tabInfo = await browser.tabs.getCurrent();
   if (tabInfo.title && tabInfo.url) {

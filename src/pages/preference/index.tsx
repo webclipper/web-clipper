@@ -3,6 +3,7 @@ import * as styles from './index.scss';
 import Account from './account';
 import ImageHosting from './imageHosting';
 import Extensions from './extensions';
+import Store from './store';
 import { CenterContainer } from 'components/container';
 import { router, connect } from 'dva';
 import { Tabs, Icon, Badge } from 'antd';
@@ -78,10 +79,10 @@ const Preference: React.FC<PageProps> = ({
             {tabs.map(tab => {
               const path = `/preference/${tab.path}`;
               let tabTitle = (
-                <React.Fragment>
+                <div style={{ width: 150 }}>
                   {tab.icon}
                   {tab.title}
-                </React.Fragment>
+                </div>
               );
               if (hasUpdate && tab.path === 'base') {
                 tabTitle = <Badge dot>{tabTitle}</Badge>;
