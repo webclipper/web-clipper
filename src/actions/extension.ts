@@ -7,4 +7,8 @@ export const loadExtensions = actionCreator.async<void, SerializedExtensionWithI
   'loadExtensions'
 );
 
+export const installRemoteExtension = actionCreator.async<SerializedExtensionWithId, void>(
+  'installRemoteExtension'
+);
+
 export const setDefaultExtensionId = actionCreator.async<string, void>('setDefaultExtensionId');
