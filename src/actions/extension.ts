@@ -15,6 +15,8 @@ export const installRemoteExtension = actionCreator.async<SerializedExtensionWit
   'installRemoteExtension'
 );
 
+export const unInstallRemoteExtension = actionCreator<string>('unInstallRemoteExtension');
+
 export const setDefaultExtensionId = actionCreator.async<string, void>('setDefaultExtensionId');
 
 export const toggleDisableExtension = actionCreator<string>('toggleDisableExtension');
