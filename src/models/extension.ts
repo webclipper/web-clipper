@@ -1,18 +1,44 @@
 import storage from 'common/storage';
 import { GlobalStore } from '@/common/types';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
-import { loadExtensions, setDefaultExtensionId, installRemoteExtension } from '@/actions/extension';
+import {
+  loadExtensions,
+  setDefaultExtensionId,
+  installRemoteExtension,
+  toggleDisableExtension,
+} from '@/actions/extension';
 import { extensions } from 'extensions/index';
 import { localStorageService } from '@/common/chrome/storage';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/modelTypes/userPreference';
 import { getLocaleExtensionManifest, SerializedExtensionWithId } from '@web-clipper/extensions';
-import { LOCAL_EXTENSIONS_EXTENSIONS_KEY } from '@/common/modelTypes/extensions';
+import {
+  LOCAL_EXTENSIONS_EXTENSIONS_KEY,
+  LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY,
+} from '@/common/modelTypes/extensions';
 
 const initStore: GlobalStore['extension'] = {
   extensions: [],
+  disabledExtensions: [],
 };
 
 const builder = new DvaModelBuilder(initStore, 'extension');
+
+builder.takeEvery(toggleDisableExtension, function*(payload, { call, put }) {
+  let disabledExtensions = JSON.parse(
+    localStorageService.get(LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY, '[]')
+  ) as string[];
+  const newDisabledExtensions = disabledExtensions.filter(o => o !== payload);
+  if (newDisabledExtensions.length === disabledExtensions.length) {
+    newDisabledExtensions.push(payload);
+  }
+  yield call(
+    localStorageService.set,
+    LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY,
+    JSON.stringify(newDisabledExtensions)
+  );
+
+  yield put(loadExtensions.started());
+});
 
 builder
   .takeEvery(setDefaultExtensionId.started, function*(id, { call, put }) {
@@ -57,19 +83,26 @@ builder
     const localeExtensions = JSON.parse(
       localStorageService.get(LOCAL_EXTENSIONS_EXTENSIONS_KEY, '[]')
     ) as SerializedExtensionWithId[];
+    let disabledExtensions = JSON.parse(
+      localStorageService.get(LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY, '[]')
+    ) as string[];
     const internalExtensions = extensions.concat(localeExtensions).map(e => ({
       ...e,
       manifest: getLocaleExtensionManifest(e.manifest, locale),
     }));
     yield put(
       loadExtensions.done({
-        result: internalExtensions,
+        result: {
+          extensions: internalExtensions,
+          disabledExtensions,
+        },
       })
     );
   })
-  .case(loadExtensions.done, (state, { result: extensions }) => ({
+  .case(loadExtensions.done, (state, { result: { extensions, disabledExtensions } }) => ({
     ...state,
     extensions,
+    disabledExtensions,
   }));
 
 export default builder.build();
