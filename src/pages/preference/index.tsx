@@ -78,7 +78,7 @@ const Preference: React.FC<PageProps> = ({
             {tabs.map(tab => {
               const path = `/preference/${tab.path}`;
               let tabTitle = (
-                <div style={{ width: 150 }}>
+                <div style={{ width: 100 }}>
                   {tab.icon}
                   {tab.title}
                 </div>
