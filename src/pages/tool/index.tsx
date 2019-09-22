@@ -34,7 +34,7 @@ const mapStateToProps = ({
   loading,
   account: { accounts, defaultAccountId },
   userPreference: { locale },
-  extension: { extensions },
+  extension: { extensions, disabledExtensions },
   version: { hasUpdate },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
@@ -46,7 +46,7 @@ const mapStateToProps = ({
     hasUpdate,
     loadingAccount,
     accounts,
-    extensions,
+    extensions: extensions.filter(o => !disabledExtensions.includes(o.id)),
     currentImageHostingService,
     url,
     creatingDocument,

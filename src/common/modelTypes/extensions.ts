@@ -15,8 +15,10 @@ export interface ExtensionRegistry {
 }
 
 export interface ExtensionStore {
+  disabledExtensions: string[];
   extensions: SerializedExtensionWithId[];
   defaultExtensionId?: string | null;
 }
 
 export const LOCAL_EXTENSIONS_EXTENSIONS_KEY = 'local.extensions.extensions';
+export const LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY = 'local.extensions.disabled.extensions';
