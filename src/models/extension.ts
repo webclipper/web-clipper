@@ -6,6 +6,7 @@ import {
   setDefaultExtensionId,
   installRemoteExtension,
   toggleDisableExtension,
+  unInstallRemoteExtension,
 } from '@/actions/extension';
 import { extensions } from 'extensions/index';
 import { localStorageService } from '@/common/chrome/storage';
@@ -36,7 +37,6 @@ builder.takeEvery(toggleDisableExtension, function*(payload, { call, put }) {
     LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY,
     JSON.stringify(newDisabledExtensions)
   );
-
   yield put(loadExtensions.started());
 });
 
@@ -56,19 +56,36 @@ builder
     defaultExtensionId: params,
   }));
 
-builder.takeEvery(installRemoteExtension.started, function*(payload, { call, put }) {
-  yield call(localStorageService.set, LOCAL_EXTENSIONS_EXTENSIONS_KEY, JSON.stringify([]));
-  const localeExtensions = JSON.parse(
-    localStorageService.get(LOCAL_EXTENSIONS_EXTENSIONS_KEY, '[]')
-  ) as SerializedExtensionWithId[];
-  localeExtensions.push(payload);
-  yield call(
-    localStorageService.set,
-    LOCAL_EXTENSIONS_EXTENSIONS_KEY,
-    JSON.stringify(localeExtensions)
-  );
-  yield put(loadExtensions.started());
-});
+builder
+  .takeEvery(installRemoteExtension.started, function*(payload, { call, put }) {
+    const localeExtensions = JSON.parse(
+      localStorageService.get(LOCAL_EXTENSIONS_EXTENSIONS_KEY, '[]')
+    ) as SerializedExtensionWithId[];
+    const index = localeExtensions.findIndex(o => o.id === payload.id);
+    if (index === -1) {
+      localeExtensions.push(payload);
+    } else {
+      localeExtensions[index] = payload;
+    }
+    yield call(
+      localStorageService.set,
+      LOCAL_EXTENSIONS_EXTENSIONS_KEY,
+      JSON.stringify(localeExtensions)
+    );
+    yield put(loadExtensions.started());
+  })
+  .takeEvery(unInstallRemoteExtension, function*(payload, { call, put }) {
+    const _localeExtensions = JSON.parse(
+      localStorageService.get(LOCAL_EXTENSIONS_EXTENSIONS_KEY, '[]')
+    ) as SerializedExtensionWithId[];
+    const localeExtensions = _localeExtensions.filter(o => o.id !== payload);
+    yield call(
+      localStorageService.set,
+      LOCAL_EXTENSIONS_EXTENSIONS_KEY,
+      JSON.stringify(localeExtensions)
+    );
+    yield put(loadExtensions.started());
+  });
 
 builder
   .subscript(async function loadExtension({ dispatch }) {

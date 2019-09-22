@@ -3,11 +3,15 @@ import { useSelector, useDispatch, connect } from 'dva';
 import { GlobalStore } from '@/common/types';
 import { Icon, Row, Col, Typography, Tooltip } from 'antd';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
-import { setDefaultExtensionId, toggleDisableExtension } from '@/actions/extension';
+import {
+  setDefaultExtensionId,
+  toggleDisableExtension,
+  unInstallRemoteExtension,
+} from '@/actions/extension';
 import { FormattedMessage } from 'react-intl';
 import ExtensionCard from '@/components/ExtensionCard';
 import styles from './index.scss';
-import { SerializedExtensionWithId } from '@web-clipper/extensions';
+import { SerializedExtensionWithId, ExtensionType } from '@web-clipper/extensions';
 
 const Page: React.FC = () => {
   const { extensions, defaultExtensionId, disabledExtensions } = useSelector(
@@ -34,6 +38,33 @@ const Page: React.FC = () => {
     return <Icon type="close-circle" style={iconStyle} onClick={handleClick} />;
   };
 
+  const UninstallButton: React.FC<{ extension: SerializedExtensionWithId }> = ({
+    extension: { id, embedded },
+  }) => {
+    if (embedded) {
+      return null;
+    }
+    let handleClick = () => dispatch(unInstallRemoteExtension(id));
+    return <Icon type="delete" onClick={handleClick} />;
+  };
+
+  const cardActions = (e: SerializedExtensionWithId) => {
+    const actions = [<DisableButton extension={e} key="disable" />];
+
+    if (!e.embedded) {
+      actions.push(<UninstallButton extension={e} key="uninstall"></UninstallButton>);
+    }
+
+    if (e.type !== ExtensionType.Tool) {
+      const isDefaultExtension = defaultExtensionId === e.id;
+      const iconStyle = isDefaultExtension ? { color: 'red' } : {};
+      actions.push(
+        <Icon type="star" key="star" style={iconStyle} onClick={() => handleSetDefault(e.id)} />
+      );
+    }
+    return actions;
+  };
+
   return (
     <div>
       <Typography.Title level={3}>
@@ -43,17 +74,15 @@ const Page: React.FC = () => {
         />
       </Typography.Title>
       <Row gutter={10}>
-        {toolExtensions.map(e => {
-          return (
-            <Col key={e.id} span={12}>
-              <ExtensionCard
-                className={styles.extensionCard}
-                manifest={e.manifest}
-                actions={[<DisableButton extension={e} key="disable" />]}
-              />
-            </Col>
-          );
-        })}
+        {toolExtensions.map(e => (
+          <Col key={e.id} span={12}>
+            <ExtensionCard
+              className={styles.extensionCard}
+              manifest={e.manifest}
+              actions={cardActions(e)}
+            ></ExtensionCard>
+          </Col>
+        ))}
       </Row>
       <Typography.Title level={3}>
         <FormattedMessage
@@ -72,29 +101,15 @@ const Page: React.FC = () => {
         </Tooltip>
       </Typography.Title>
       <Row gutter={10}>
-        {clipExtensions.map(e => {
-          const { manifest, id } = e;
-          const isDefaultExtension = defaultExtensionId === id;
-          const iconStyle = isDefaultExtension ? { color: 'red' } : {};
-          const actions = [
-            <DisableButton extension={e} key="disable" />,
-            <Icon
-              type="star"
-              key="star"
-              style={iconStyle}
-              onClick={() => handleSetDefault(id)}
-            ></Icon>,
-          ];
-          return (
-            <Col key={id} span={12}>
-              <ExtensionCard
-                className={styles.extensionCard}
-                manifest={manifest}
-                actions={actions}
-              ></ExtensionCard>
-            </Col>
-          );
-        })}
+        {clipExtensions.map(e => (
+          <Col key={e.id} span={12}>
+            <ExtensionCard
+              className={styles.extensionCard}
+              manifest={e.manifest}
+              actions={cardActions(e)}
+            ></ExtensionCard>
+          </Col>
+        ))}
       </Row>
     </div>
   );
