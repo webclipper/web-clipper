@@ -1,12 +1,12 @@
-import update from 'immutability-helper';
 import storage from 'common/storage';
 import { GlobalStore } from '@/common/types';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
-import { loadExtensions, setDefaultExtensionId } from '@/actions/extension';
+import { loadExtensions, setDefaultExtensionId, installRemoteExtension } from '@/actions/extension';
 import { extensions } from 'extensions/index';
 import { localStorageService } from '@/common/chrome/storage';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/modelTypes/userPreference';
-import { SerializedExtensionWithId } from '@web-clipper/extensions';
+import { getLocaleExtensionManifest, SerializedExtensionWithId } from '@web-clipper/extensions';
+import { LOCAL_EXTENSIONS_EXTENSIONS_KEY } from '@/common/modelTypes/extensions';
 
 const initStore: GlobalStore['extension'] = {
   extensions: [],
@@ -30,6 +30,20 @@ builder
     defaultExtensionId: params,
   }));
 
+builder.takeEvery(installRemoteExtension.started, function*(payload, { call, put }) {
+  yield call(localStorageService.set, LOCAL_EXTENSIONS_EXTENSIONS_KEY, JSON.stringify([]));
+  const localeExtensions = JSON.parse(
+    localStorageService.get(LOCAL_EXTENSIONS_EXTENSIONS_KEY, '[]')
+  ) as SerializedExtensionWithId[];
+  localeExtensions.push(payload);
+  yield call(
+    localStorageService.set,
+    LOCAL_EXTENSIONS_EXTENSIONS_KEY,
+    JSON.stringify(localeExtensions)
+  );
+  yield put(loadExtensions.started());
+});
+
 builder
   .subscript(async function loadExtension({ dispatch }) {
     const defaultExtensionId = await storage.getDefaultPluginId();
@@ -40,20 +54,13 @@ builder
   })
   .takeEvery(loadExtensions.started, function*(_, { put }) {
     const locale = localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, navigator.language);
-    const internalExtensions = extensions.map(
-      (e): SerializedExtensionWithId => {
-        const { i18nManifest } = e.manifest;
-        let localeManifest: Partial<SerializedExtensionWithId['manifest']> = {};
-        if (i18nManifest && typeof i18nManifest === 'object') {
-          localeManifest = i18nManifest[locale];
-        }
-        return update(e, {
-          manifest: {
-            $merge: localeManifest || {},
-          },
-        });
-      }
-    );
+    const localeExtensions = JSON.parse(
+      localStorageService.get(LOCAL_EXTENSIONS_EXTENSIONS_KEY, '[]')
+    ) as SerializedExtensionWithId[];
+    const internalExtensions = extensions.concat(localeExtensions).map(e => ({
+      ...e,
+      manifest: getLocaleExtensionManifest(e.manifest, locale),
+    }));
     yield put(
       loadExtensions.done({
         result: internalExtensions,

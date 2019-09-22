@@ -8,6 +8,7 @@ export const extensions: SerializedExtensionWithId[] = context.keys().map(key =>
     ...context(key).default.serialize(),
     id,
     router: `/plugins/${id}`,
+    embedded: true,
   };
 });
 

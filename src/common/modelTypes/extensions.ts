@@ -18,3 +18,5 @@ export interface ExtensionStore {
   extensions: SerializedExtensionWithId[];
   defaultExtensionId?: string | null;
 }
+
+export const LOCAL_EXTENSIONS_EXTENSIONS_KEY = 'local.extensions.extensions';

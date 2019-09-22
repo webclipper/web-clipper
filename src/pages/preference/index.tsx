@@ -3,7 +3,6 @@ import * as styles from './index.scss';
 import Account from './account';
 import ImageHosting from './imageHosting';
 import Extensions from './extensions';
-import Store from './store';
 import { CenterContainer } from 'components/container';
 import { router, connect } from 'dva';
 import { Tabs, Icon, Badge } from 'antd';

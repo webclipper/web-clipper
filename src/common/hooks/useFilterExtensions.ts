@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import { SerializedExtensionWithId, ExtensionType } from '@web-clipper/extensions';
+import { ExtensionType, SerializedExtensionInfo } from '@web-clipper/extensions';
 
-const useFilterExtensions = (extensions: SerializedExtensionWithId[]) => {
+const useFilterExtensions = <T extends SerializedExtensionInfo>(extensions: T[]) => {
   return useMemo(() => {
-    const toolExtensions: SerializedExtensionWithId[] = [];
-    const clipExtensions: SerializedExtensionWithId[] = [];
+    const toolExtensions: T[] = [];
+    const clipExtensions: T[] = [];
     extensions.forEach(o => {
       if (o.type === ExtensionType.Tool) {
         toolExtensions.push(o);
