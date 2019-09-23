@@ -1,3 +1,11 @@
+## 1.10.0
+
+`2019-09-19`
+
+- ✨ Support share clip content to weibo twitter and douban.
+- 💄 More icon.
+- 🌐 Easier to add translation
+
 ## 1.9.2
 
 `2019-09-11`
