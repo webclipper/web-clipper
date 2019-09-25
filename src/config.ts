@@ -31,6 +31,7 @@ if (process.env.NODE_ENV === 'development') {
     // oneNoteCallBack: 'http://localhost:3000/onenote_oauth',
     createLogger: false,
     // remoteExtensionHost: 'https://extensions.dev.clipper.website',
+    // remoteExtensionHost: 'https://extensions.clipper.website',
     remoteExtensionHost: 'http://localhost:3000',
   });
 }
