@@ -1537,10 +1537,10 @@
     "@types/chrome" "^0.0.88"
     "@web-clipper/shared" "^0.0.20"
 
-"@web-clipper/extensions@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.npmjs.org/@web-clipper/extensions/-/extensions-0.0.10.tgz#4ae57459f94cf51a5cc5663d84fb7d2cdc8cbe1e"
-  integrity sha512-4T0V8SBpRi1pvrAVXpdXGbosm3cnPrL4lteUPgTRqSCc5DTPA5f9tKWaQmk5alalJbjF+PeJ6Jmtsny4YHUa4A==
+"@web-clipper/extensions@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.npmjs.org/@web-clipper/extensions/-/extensions-0.0.11.tgz#b55dc188be812f5a157c4cd734803ef5a0c95713"
+  integrity sha512-1CEDQXSLaTlOhu6qJNLL5EdWIJFEvNgz0GipEgNZR8AcrlfiwM9pR+oXSWKh/EDtH02e5OzYOMZ4a8ig3AyniA==
 
 "@web-clipper/highlight@^0.0.20":
   version "0.0.20"
@@ -3082,8 +3082,8 @@ copy-descriptor@^0.1.0:
 
 copy-to-clipboard@^3.2.0:
   version "3.2.0"
-  resolved "https://registry.npm.taobao.org/copy-to-clipboard/download/copy-to-clipboard-3.2.0.tgz#d2724a3ccbfed89706fac8a894872c979ac74467"
-  integrity sha1-0nJKPMv+2JcG+siolIcsl5rHRGc=
+  resolved "https://registry.npmjs.org/copy-to-clipboard/-/copy-to-clipboard-3.2.0.tgz#d2724a3ccbfed89706fac8a894872c979ac74467"
+  integrity sha512-eOZERzvCmxS8HWzugj4Uxl8OJxa7T2k1Gi0X5qavwydHIfuSHq2dTD09LOg/XyGq4Zpb5IsR/2OJ5lbOegz78w==
   dependencies:
     toggle-selection "^1.0.6"
 

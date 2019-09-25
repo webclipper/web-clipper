@@ -37,6 +37,7 @@ import { localStorageService, syncStorageService } from '@/common/chrome/storage
 import { loadExtensions } from '@/actions/extension';
 import { initAccounts } from '@/actions/account';
 import iconConfig from '@/../config.json';
+import copyToClipboard from 'copy-to-clipboard';
 
 const defaultState: UserPreferenceStore = {
   locale: getLanguage(),
@@ -204,6 +205,7 @@ builder
     }
     const state: GlobalStore = yield select(state => state);
     const data = state.clipper.clipperData[pathname];
+
     if (afterRun) {
       result = yield (async () => {
         // @ts-ignore
@@ -216,6 +218,7 @@ builder
           imageService: backend.getImageHostingService(),
           loadImage: loadImage,
           captureVisibleTab: browserService.captureVisibleTab,
+          copyToClipboard,
         };
         // eslint-disable-next-line
         return await eval(afterRun);
