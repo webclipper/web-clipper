@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'dva';
 import { GlobalStore } from '@/common/types';
 import Axios from 'axios';
 import useAsync from '@/common/hooks/useAsync';
-import { Skeleton, Col, Row, Icon, Typography } from 'antd';
+import { Skeleton, Col, Row, Icon, Typography, Tooltip } from 'antd';
 import {
   SerializedExtensionInfo,
   getLocaleExtensionManifest,
@@ -73,9 +73,21 @@ const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
       if (installedExtension.manifest.version === manifest.manifest.version) {
         return <Icon type="check" />;
       }
-      return <Icon type="sync" onClick={() => fetchExtension.run(manifest.id)} />;
+      return (
+        <Tooltip
+          title={<FormattedMessage id="preference.extensions.update" defaultMessage="Update" />}
+        >
+          <Icon type="sync" onClick={() => fetchExtension.run(manifest.id)} />
+        </Tooltip>
+      );
     }
-    return <Icon type="download" onClick={() => fetchExtension.run(manifest.id)} />;
+    return (
+      <Tooltip
+        title={<FormattedMessage id="preference.extensions.install" defaultMessage="Install" />}
+      >
+        <Icon type="download" onClick={() => fetchExtension.run(manifest.id)} />
+      </Tooltip>
+    );
   };
 
   const cardActions = (e: SerializedExtensionInfo) => {

@@ -17,7 +17,9 @@ const LocalWrapper: React.FC<PageStateProps> = ({ children, locale }) => {
   const { antd, messages } = (localesMap.get(language) || localesMap.get('en-US'))!;
   return (
     <IntlProvider key={locale} locale={language} messages={messages}>
-      <ConfigProvider locale={antd}>{children}</ConfigProvider>
+      <ConfigProvider locale={antd} getPopupContainer={e => e.parentNode as HTMLElement}>
+        {children}
+      </ConfigProvider>
     </IntlProvider>
   );
 };

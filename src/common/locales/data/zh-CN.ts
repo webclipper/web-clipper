@@ -56,6 +56,13 @@ const messages = {
   'backend.services.youdao.unauthorizedErrorMessage': '授权失败，请登录网页版有道云笔记。',
   'backend.services.notion.unauthorizedErrorMessage': '授权失败，请登录网页版 Notion。',
   'preference.basic.update.description': '因为审核需要一周，所以 chrome 商店的版本会延迟几个版本。',
+  'backend.services.onenote_oauth.name': 'One Note',
+  'preference.extensions.no.Description': '没有描述',
+  'preference.extensions.ConfiguredAsDefaultExtension': '设置成默认扩展',
+  'preference.extensions.CancelSetting': '取消设置',
+  'preference.extensions.Uninstall': '卸载',
+  'preference.extensions.install': '安装',
+  'preference.extensions.update': '更新',
 };
 
 const model: LocaleModel = {

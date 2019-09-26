@@ -44,21 +44,42 @@ const Page: React.FC = () => {
       return null;
     }
     let handleClick = () => dispatch(unInstallRemoteExtension(id));
-    return <Icon type="delete" onClick={handleClick} />;
+    const title = (
+      <FormattedMessage id="preference.extensions.Uninstall" defaultMessage="Uninstall" />
+    );
+    return (
+      <Tooltip title={title}>
+        <Icon type="delete" onClick={handleClick} />{' '}
+      </Tooltip>
+    );
   };
 
   const cardActions = (e: SerializedExtensionWithId) => {
     const actions = [];
 
     if (!e.embedded) {
-      actions.push(<UninstallButton extension={e} key="uninstall"></UninstallButton>);
+      actions.push(<UninstallButton extension={e} key="uninstall" />);
     }
 
     if (e.type !== ExtensionType.Tool) {
       const isDefaultExtension = defaultExtensionId === e.id;
       const iconStyle = isDefaultExtension ? { color: 'red' } : {};
+      const title = isDefaultExtension ? (
+        <FormattedMessage
+          id="preference.extensions.CancelSetting"
+          defaultMessage="Cancel Setting"
+        />
+      ) : (
+        <FormattedMessage
+          id="preference.extensions.ConfiguredAsDefaultExtension"
+          defaultMessage="Configured as default extension"
+        />
+      );
+
       actions.push(
-        <Icon type="star" key="star" style={iconStyle} onClick={() => handleSetDefault(e.id)} />
+        <Tooltip title={title}>
+          <Icon type="star" key="star" style={iconStyle} onClick={() => handleSetDefault(e.id)} />
+        </Tooltip>
       );
     }
     return actions;
