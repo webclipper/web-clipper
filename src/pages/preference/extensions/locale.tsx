@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch, connect } from 'dva';
 import { GlobalStore } from '@/common/types';
-import { Icon, Row, Col, Typography, Tooltip, Empty } from 'antd';
+import { Icon, Row, Col, Typography, Tooltip, Empty, Switch } from 'antd';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import {
   setDefaultExtensionId,
@@ -27,14 +27,6 @@ const Page: React.FC = () => {
   const [toolExtensions, clipExtensions] = useFilterExtensions(extensions);
   const handleSetDefault = (extensionId: string) => {
     dispatch(setDefaultExtensionId.started(extensionId));
-  };
-
-  const DisableButton: React.FC<{ extension: SerializedExtensionWithId }> = ({
-    extension: { id },
-  }) => {
-    const disabled = disabledExtensions.some(o => o === id);
-    let handleClick = () => dispatch(toggleDisableExtension(id));
-    return <a onClick={handleClick}>{disabled ? 'Enable' : 'Disable'}</a>;
   };
 
   const UninstallButton: React.FC<{ extension: SerializedExtensionWithId }> = ({
@@ -82,7 +74,13 @@ const Page: React.FC = () => {
         </Tooltip>
       );
     }
-    return actions;
+    return actions.concat(
+      <Switch
+        size="small"
+        checked={!disabledExtensions.some(o => o === e.id)}
+        onClick={() => dispatch(toggleDisableExtension(e.id))}
+      ></Switch>
+    );
   };
 
   return (
@@ -98,7 +96,6 @@ const Page: React.FC = () => {
         {toolExtensions.map(e => (
           <Col key={e.id} span={12}>
             <ExtensionCard
-              extra={<DisableButton extension={e}></DisableButton>}
               className={styles.extensionCard}
               manifest={e.manifest}
               actions={cardActions(e)}
@@ -126,7 +123,6 @@ const Page: React.FC = () => {
         {clipExtensions.map(e => (
           <Col key={e.id} span={12}>
             <ExtensionCard
-              extra={<DisableButton extension={e}></DisableButton>}
               className={styles.extensionCard}
               manifest={e.manifest}
               actions={cardActions(e)}
