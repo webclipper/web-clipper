@@ -34,8 +34,7 @@ const Page: React.FC = () => {
   }) => {
     const disabled = disabledExtensions.some(o => o === id);
     let handleClick = () => dispatch(toggleDisableExtension(id));
-    const iconStyle = disabled ? { color: 'red' } : {};
-    return <Icon type="close-circle" style={iconStyle} onClick={handleClick} />;
+    return <a onClick={handleClick}>{disabled ? 'Enable' : 'Disable'}</a>;
   };
 
   const UninstallButton: React.FC<{ extension: SerializedExtensionWithId }> = ({
@@ -49,7 +48,7 @@ const Page: React.FC = () => {
   };
 
   const cardActions = (e: SerializedExtensionWithId) => {
-    const actions = [<DisableButton extension={e} key="disable" />];
+    const actions = [];
 
     if (!e.embedded) {
       actions.push(<UninstallButton extension={e} key="uninstall"></UninstallButton>);
@@ -77,6 +76,7 @@ const Page: React.FC = () => {
         {toolExtensions.map(e => (
           <Col key={e.id} span={12}>
             <ExtensionCard
+              extra={<DisableButton extension={e}></DisableButton>}
               className={styles.extensionCard}
               manifest={e.manifest}
               actions={cardActions(e)}
@@ -104,6 +104,7 @@ const Page: React.FC = () => {
         {clipExtensions.map(e => (
           <Col key={e.id} span={12}>
             <ExtensionCard
+              extra={<DisableButton extension={e}></DisableButton>}
               className={styles.extensionCard}
               manifest={e.manifest}
               actions={cardActions(e)}

@@ -84,13 +84,13 @@ const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
 
   return (
     <React.Fragment>
-      <Row>
-        <Typography.Title level={3}>
-          <FormattedMessage
-            id="preference.extensions.toolExtensions"
-            defaultMessage="Tool Extensions"
-          />
-        </Typography.Title>
+      <Typography.Title level={3}>
+        <FormattedMessage
+          id="preference.extensions.toolExtensions"
+          defaultMessage="Tool Extensions"
+        />
+      </Typography.Title>
+      <Row gutter={10}>
         {remoteToolExtensions.map(e => (
           <Col key={e.id} span={12}>
             <ExtensionCard
@@ -101,13 +101,13 @@ const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
           </Col>
         ))}
       </Row>
-      <Row>
-        <Typography.Title level={3}>
-          <FormattedMessage
-            id="preference.extensions.clipExtensions"
-            defaultMessage="Clip Extensions"
-          />
-        </Typography.Title>
+      <Typography.Title level={3}>
+        <FormattedMessage
+          id="preference.extensions.clipExtensions"
+          defaultMessage="Clip Extensions"
+        />
+      </Typography.Title>
+      <Row gutter={10}>
         {remoteClipExtensions.map(e => (
           <Col key={e.id} span={12}>
             <ExtensionCard
