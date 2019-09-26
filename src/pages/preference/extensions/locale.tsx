@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch, connect } from 'dva';
 import { GlobalStore } from '@/common/types';
-import { Icon, Row, Col, Typography, Tooltip } from 'antd';
+import { Icon, Row, Col, Typography, Tooltip, Empty } from 'antd';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import {
   setDefaultExtensionId,
@@ -73,6 +73,7 @@ const Page: React.FC = () => {
         />
       </Typography.Title>
       <Row gutter={10}>
+        {toolExtensions.length === 0 && <Empty></Empty>}
         {toolExtensions.map(e => (
           <Col key={e.id} span={12}>
             <ExtensionCard
