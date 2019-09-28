@@ -96,7 +96,7 @@ export default class YuqueDocumentService implements DocumentService<OneNoteBack
     });
     formData.append('Presentation', blob);
     const result = await this.request.post<OneNoteCreateDocumentResponse>(
-      `v1.0/me/onenote/pages`,
+      `v1.0/me/onenote/sections/${encodeURI(repositoryId)}/pages`,
       formData
     );
     return {
