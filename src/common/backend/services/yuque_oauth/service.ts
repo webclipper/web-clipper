@@ -64,7 +64,7 @@ export default class YuqueDocumentService implements DocumentService {
     if (this.config.repositoryType !== RepositoryType.self) {
       const groups = await this.getUserGroups();
       for (const group of groups) {
-        const repos = await this.getAllRepositories(false, group.id, group.name);
+        const repos = await this.getAllRepositories(true, group.id, group.name);
         response = response.concat(repos);
       }
     }
@@ -134,9 +134,14 @@ export default class YuqueDocumentService implements DocumentService {
     const query = {
       offset: offset,
     };
-    const response = await this.request.get<YuqueRepositoryResponse[]>(
-      `${isGroup ? 'group' : 'users'}/${slug}/repos?${qs.stringify(query)}`
-    );
-    return response.data;
+    try {
+      const response = await this.request.get<YuqueRepositoryResponse[]>(
+        `${isGroup ? 'groups' : 'users'}/${slug}/repos?${qs.stringify(query)}`
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
   };
 }
