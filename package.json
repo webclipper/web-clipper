@@ -33,7 +33,7 @@
     "@web-clipper/highlight": "^0.0.20",
     "@web-clipper/message-listener-combiner": "^0.0.20",
     "@web-clipper/shared": "^0.0.20",
-    "@web-clipper/turndown": "^0.0.11",
+    "@web-clipper/turndown": "^0.0.21",
     "antd": "^3.22.0",
     "axios": "^0.19.0",
     "codemirror": "^5.47.0",
