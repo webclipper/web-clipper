@@ -46,7 +46,8 @@ const defaultState: UserPreferenceStore = {
   imageHostingServicesMeta: {},
   showLineNumber: true,
   liveRendering: true,
-  iconfontUrl: iconConfig.iconfont,
+  iconfontUrl: '',
+  iconfontIcons: [],
 };
 
 const builder = new DvaModelBuilder(defaultState, 'userPreference')
@@ -86,17 +87,31 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
 
 builder
   .takeEvery(asyncFetchRemoteConfig.started, function*(_, { call, put }) {
-    const response = yield call(
-      Axios.get,
-      'https://api.github.com/repos/webclipper/web-clipper/contents/config.json'
-    );
-    const data = decodeURIComponent(escape(window.atob(response.data.content)));
-    yield put(asyncFetchRemoteConfig.done(JSON.parse(data)));
+    let iconfont = iconConfig.iconfont;
+    if (process.env.NODE_ENV !== 'development') {
+      const response = yield call(
+        Axios.get,
+        'https://api.github.com/repos/webclipper/web-clipper/contents/config.json'
+      );
+      const data = decodeURIComponent(escape(window.atob(response.data.content)));
+      iconfont = JSON.parse(data).iconfont;
+    }
+
+    let icons: string[] = [];
+    try {
+      const iconsFile = yield call(Axios.get, iconfont);
+      const matchResult: string[] = iconsFile.data.match(/id="([A-Za-z]+)"/g) || [];
+      icons = matchResult.map(o => o.match(/id="([A-Za-z]+)"/)![1]);
+    } catch (error) {
+      console.log(error);
+    }
+    yield put(asyncFetchRemoteConfig.done({ result: { iconfont, icons } }));
   })
-  .case(asyncFetchRemoteConfig.done, (s, { result: { iconfont } }) => {
+  .case(asyncFetchRemoteConfig.done, (s, { result: { iconfont, icons } }) => {
     return {
       ...s,
       iconfontUrl: iconfont,
+      iconfontIcons: icons,
     };
   });
 
@@ -237,9 +252,7 @@ builder
 
 builder.subscript(async function initStore({ dispatch, history }) {
   await dispatch(initAccounts.started());
-  if (process.env.NODE_ENV !== 'development') {
-    dispatch(asyncFetchRemoteConfig.started());
-  }
+  dispatch(asyncFetchRemoteConfig.started());
   const result = await storage.getPreference();
   const tabInfo = await browser.tabs.getCurrent();
   if (tabInfo.title && tabInfo.url) {

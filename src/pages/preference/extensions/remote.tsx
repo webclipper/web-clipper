@@ -15,6 +15,7 @@ import { FormattedMessage } from 'react-intl';
 import ExtensionCard from '@/components/ExtensionCard';
 import styles from './index.scss';
 import { installRemoteExtension } from '@/actions/extension';
+import { hasUpdate } from '@/common/version';
 
 interface RemoteExtensionProps {
   host: string;
@@ -22,8 +23,12 @@ interface RemoteExtensionProps {
 
 const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
   const { loading, result, error } = useAsync(() => Axios(`${host}/extensions/index`));
-  const { locale, extensions } = useSelector(
-    ({ extension: { extensions }, userPreference: { locale } }: GlobalStore) => {
+  const { locale, extensions, localVersion } = useSelector(
+    ({
+      extension: { extensions },
+      userPreference: { locale },
+      version: { localVersion },
+    }: GlobalStore) => {
       const map = new Map<string, SerializedExtensionWithId>();
       extensions.forEach(e => {
         map.set(e.id, e);
@@ -31,6 +36,7 @@ const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
       return {
         extensions: map,
         locale,
+        localVersion,
       };
     }
   );

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import * as styles from './index.scss';
-import { Button, Icon } from 'antd';
+import { Button } from 'antd';
 import Section from 'components/section';
-
 import { SerializedExtensionWithId } from '@web-clipper/extensions';
 import { FormattedMessage } from 'react-intl';
+import IconFont from '@/components/IconFont';
 
 type ToolExtensionsProps = {
   extensions: SerializedExtensionWithId[];
@@ -29,7 +29,7 @@ const ToolExtensions: React.FC<ToolExtensionsProps> = ({ extensions, onClick }) 
           title={o.manifest.description}
           onClick={() => onClick(o)}
         >
-          <Icon type={o.manifest.icon} />
+          <IconFont type={o.manifest.icon} />
         </Button>
       ))}
     </Section>

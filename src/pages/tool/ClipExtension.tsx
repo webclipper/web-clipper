@@ -1,9 +1,10 @@
 import * as React from 'react';
 import * as styles from './index.scss';
-import { Button, Icon } from 'antd';
+import { Button } from 'antd';
 import Section from 'components/section';
 import { SerializedExtensionWithId } from '@web-clipper/extensions';
 import { FormattedMessage } from 'react-intl';
+import IconFont from '@/components/IconFont';
 
 type PageProps = {
   extensions: SerializedExtensionWithId[];
@@ -34,7 +35,7 @@ const ClipExtensions: React.FC<PageProps> = ({ extensions, pathname, onClick }) 
             style={buttonStyle}
             onClick={() => handleClick(plugin.router)}
           >
-            <Icon type={plugin.manifest.icon} />
+            <IconFont type={plugin.manifest.icon} />
             {plugin.manifest.name}
           </Button>
         );

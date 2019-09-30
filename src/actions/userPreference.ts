@@ -38,6 +38,7 @@ export const asyncFetchRemoteConfig = actionCreator.async<
   void,
   {
     iconfont: string;
+    icons: string[];
   },
   void
 >('asyncFetchRemoteConfig');
