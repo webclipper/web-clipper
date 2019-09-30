@@ -63,6 +63,7 @@ const messages = {
   'preference.extensions.Uninstall': '卸载',
   'preference.extensions.install': '安装',
   'preference.extensions.update': '更新',
+  'preference.extensions.require.update': '需要剪藏更新到 {version} 版本',
 };
 
 const model: LocaleModel = {

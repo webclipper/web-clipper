@@ -1457,6 +1457,11 @@
   dependencies:
     "@types/estree" "*"
 
+"@types/tldjs@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/@types/tldjs/-/tldjs-2.3.0.tgz#bc90f5bd1df3b15123b67845abb907cb0e9096ca"
+  integrity sha512-+gqspH/N6YjpApp96/XzM2AZK4R0Bk2qb4e5o16indSvgblfFaAIxNV8BdJmbqfSAYUyZubLzvrmpvdVEmBq3A==
+
 "@types/turndown@^5.0.0":
   version "5.0.0"
   resolved "https://registry.npm.taobao.org/@types/turndown/download/@types/turndown-5.0.0.tgz#2b763b36f783e4e237cea62cdc8f8592b72b9285"
@@ -1537,10 +1542,10 @@
     "@types/chrome" "^0.0.88"
     "@web-clipper/shared" "^0.0.20"
 
-"@web-clipper/extensions@^0.0.11":
-  version "0.0.11"
-  resolved "https://registry.npmjs.org/@web-clipper/extensions/-/extensions-0.0.11.tgz#b55dc188be812f5a157c4cd734803ef5a0c95713"
-  integrity sha512-1CEDQXSLaTlOhu6qJNLL5EdWIJFEvNgz0GipEgNZR8AcrlfiwM9pR+oXSWKh/EDtH02e5OzYOMZ4a8ig3AyniA==
+"@web-clipper/extensions@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.npmjs.org/@web-clipper/extensions/-/extensions-0.0.12.tgz#a8590104b5b3b807496d38a1b10e4dcd7f280d10"
+  integrity sha512-pHYOuyh33KoHNCH/pedAquPnK7ohQtUjnsV4ZyPzjkiSg/RN/ItAcXUguNMCQH5Cml//DcmmZX0qKZdUYwH2qg==
 
 "@web-clipper/highlight@^0.0.20":
   version "0.0.20"
@@ -1564,10 +1569,10 @@
     "@types/chrome" "^0.0.88"
     blueimp-md5 "^2.11.0"
 
-"@web-clipper/turndown@^0.0.11":
+"@web-clipper/turndown@0.0.11":
   version "0.0.11"
-  resolved "https://registry.npm.taobao.org/@web-clipper/turndown/download/@web-clipper/turndown-0.0.11.tgz#2b9e04155148742aec63f70c23787804ccca497b"
-  integrity sha1-K54EFVFIdCrsY/cMI3h4BMzKSXs=
+  resolved "https://registry.npmjs.org/@web-clipper/turndown/-/turndown-0.0.11.tgz#2b9e04155148742aec63f70c23787804ccca497b"
+  integrity sha512-ntdLUvC601TJavqzjJILT7GYdmP8VmRVKhnE3MC49auX0oeIhBSKFnVcYFWnFMLVc8qlZjdNgDx/Tiftzw/yRQ==
   dependencies:
     "@types/mz" "^0.0.32"
     "@types/turndown" "^5.0.0"
@@ -10636,6 +10641,13 @@ tinycolor2@^1.4.1:
   version "1.4.1"
   resolved "https://registry.npm.taobao.org/tinycolor2/download/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
   integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
+
+tldjs@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/tldjs/-/tldjs-2.3.1.tgz#cf09c3eb5d7403a9e214b7d65f3cf9651c0ab039"
+  integrity sha512-W/YVH/QczLUxVjnQhFC61Iq232NWu3TqDdO0S/MtXVz4xybejBov4ud+CIwN9aYqjOecEqIy0PscGkwpG9ZyTw==
+  dependencies:
+    punycode "^1.4.1"
 
 tmp@^0.0.33:
   version "0.0.33"

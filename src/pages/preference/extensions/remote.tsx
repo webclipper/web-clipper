@@ -74,6 +74,26 @@ const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
     if (fetchExtension.loading) {
       return <Icon type="loading" spin={true}></Icon>;
     }
+    if (manifest.manifest.apiVersion) {
+      if (hasUpdate(manifest.manifest.apiVersion, localVersion)) {
+        return (
+          <Tooltip
+            title={
+              <FormattedMessage
+                id="preference.extensions.require.update"
+                defaultMessage="Should update extension to {name}"
+                values={{
+                  version: manifest.manifest.apiVersion,
+                }}
+              />
+            }
+          >
+            <Icon style={{ cursor: 'not-allowed' }} type="download" />
+          </Tooltip>
+        );
+      }
+    }
+
     const installedExtension = extensions.get(manifest.id);
     if (installedExtension) {
       if (installedExtension.manifest.version === manifest.manifest.version) {

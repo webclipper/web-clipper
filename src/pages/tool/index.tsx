@@ -21,6 +21,7 @@ import { DvaRouterProps } from 'common/types';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import { FormattedMessage } from 'react-intl';
 import { trackEvent } from '@/common/gs';
+import matchUrl from '@/common/matchUrl';
 
 const mapStateToProps = ({
   clipper: {
@@ -46,7 +47,15 @@ const mapStateToProps = ({
     hasUpdate,
     loadingAccount,
     accounts,
-    extensions: extensions.filter(o => !disabledExtensions.includes(o.id)),
+    extensions: extensions
+      .filter(o => !disabledExtensions.includes(o.id))
+      .filter(o => {
+        const matches = o.manifest.matches;
+        if (Array.isArray(matches)) {
+          return matches.some(o => matchUrl(o, url!));
+        }
+        return true;
+      }),
     currentImageHostingService,
     url,
     creatingDocument,
