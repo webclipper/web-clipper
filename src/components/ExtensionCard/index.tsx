@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, Icon } from 'antd';
+import { Card } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { SerializedExtensionInfo } from '@web-clipper/extensions';
+import IconFont from '../IconFont';
 
 interface ExtensionCardProps {
   manifest: SerializedExtensionInfo['manifest'];
@@ -16,7 +17,7 @@ const ExtensionCard: React.FC<ExtensionCardProps> = ({ manifest, actions, classN
       className={className}
       actions={actions}
       extra={extra}
-      title={<Card.Meta avatar={<Icon type={manifest.icon} />} title={manifest.name} />}
+      title={<Card.Meta avatar={<IconFont type={manifest.icon} />} title={manifest.name} />}
     >
       <div style={{ height: 30 }}>
         {manifest.description || (
