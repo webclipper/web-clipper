@@ -1,38 +1,31 @@
 import * as React from 'react';
-import { connect } from 'dva';
+import { useSelector, useDispatch } from 'dva';
 import { ToolContainer } from 'components/container';
 import * as styles from './complete.less';
 import { Button } from 'antd';
-import { GlobalStore, DvaRouterProps } from '@/common/types';
+import { GlobalStore } from '@/common/types';
 import Section from 'components/section';
 import { asyncRemoveTool } from '@/actions/userPreference';
 import { FormattedMessage } from 'react-intl';
 import Share from '@/components/share';
 
-const mapStateToProps = ({
-  clipper: { completeStatus, currentAccountId, createDocumentRequest },
-  userPreference: { servicesMeta },
-  account: { accounts },
-}: GlobalStore) => {
-  const currentAccount = accounts.find(o => o.id === currentAccountId);
-  return {
-    servicesMeta,
-    currentAccount,
-    completeStatus,
-    createDocumentRequest,
-  };
-};
-
-type PageStateProps = ReturnType<typeof mapStateToProps>;
-type PageProps = PageStateProps & DvaRouterProps;
-
-const Page: React.FC<PageProps> = ({
-  dispatch,
-  completeStatus,
-  currentAccount,
-  servicesMeta,
-  createDocumentRequest,
-}) => {
+const Page: React.FC = () => {
+  const { servicesMeta, currentAccount, completeStatus, createDocumentRequest } = useSelector(
+    ({
+      clipper: { completeStatus, currentAccountId, createDocumentRequest },
+      userPreference: { servicesMeta },
+      account: { accounts },
+    }: GlobalStore) => {
+      const currentAccount = accounts.find(o => o.id === currentAccountId);
+      return {
+        servicesMeta,
+        currentAccount,
+        completeStatus,
+        createDocumentRequest,
+      };
+    }
+  );
+  const dispatch = useDispatch();
   function closeTool() {
     dispatch(asyncRemoveTool.started());
   }
@@ -72,4 +65,4 @@ const Page: React.FC<PageProps> = ({
   );
 };
 
-export default connect(mapStateToProps)(Page);
+export default Page;
