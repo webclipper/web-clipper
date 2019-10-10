@@ -1,10 +1,11 @@
 import Axios from 'axios';
+import React from 'react';
 import { getLanguage } from './../common/locales';
 import localeService from '@/common/locales';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from './../common/modelTypes/userPreference';
 import { runScript } from './../browser/actions/message';
 import storage from 'common/storage';
-import { message } from 'antd';
+import * as antd from 'antd';
 import { GlobalStore } from '@/common/types';
 import browserService from 'common/browser';
 import * as browser from '@web-clipper/chrome-promise';
@@ -38,6 +39,8 @@ import { loadExtensions } from '@/actions/extension';
 import { initAccounts } from '@/actions/account';
 import iconConfig from '@/../config.json';
 import copyToClipboard from 'copy-to-clipboard';
+
+const { message } = antd;
 
 const defaultState: UserPreferenceStore = {
   locale: getLanguage(),
@@ -221,6 +224,20 @@ builder
     const state: GlobalStore = yield select(state => state);
     const data = state.clipper.clipperData[pathname];
 
+    function createAndDownloadFile(fileName: string, content: string | Blob) {
+      let aTag = document.createElement('a');
+      let blob: Blob;
+      if (typeof content === 'string') {
+        blob = new Blob([content]);
+      } else {
+        blob = content;
+      }
+      aTag.download = fileName;
+      aTag.href = URL.createObjectURL(blob);
+      aTag.click();
+      URL.revokeObjectURL(aTag.href);
+    }
+
     if (afterRun) {
       result = yield (async () => {
         // @ts-ignore
@@ -234,6 +251,9 @@ builder
           loadImage: loadImage,
           captureVisibleTab: browserService.captureVisibleTab,
           copyToClipboard,
+          createAndDownloadFile,
+          antd,
+          React,
         };
         // eslint-disable-next-line
         return await eval(afterRun);
