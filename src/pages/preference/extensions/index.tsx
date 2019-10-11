@@ -10,7 +10,7 @@ const Page: React.FC<DvaRouterProps> = () => {
   const [activeKey, setActiveKey] = useState('Local');
 
   return (
-    <Tabs activeKey={activeKey} onChange={setActiveKey}>
+    <Tabs activeKey={activeKey} onChange={setActiveKey} destroyInactiveTabPane>
       <Tabs.TabPane tab="Local" key="Local">
         <Locale></Locale>
       </Tabs.TabPane>
