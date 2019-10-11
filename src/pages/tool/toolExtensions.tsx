@@ -12,6 +12,9 @@ type ToolExtensionsProps = {
 };
 
 const ToolExtensions: React.FC<ToolExtensionsProps> = ({ extensions, onClick }) => {
+  if (extensions.length === 0) {
+    return null;
+  }
   return (
     <Section
       line
