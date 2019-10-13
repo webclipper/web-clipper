@@ -8,15 +8,14 @@ interface ExtensionCardProps {
   manifest: SerializedExtensionInfo['manifest'];
   actions?: React.ReactNode[];
   className?: string;
-  extra?: React.ReactNode;
 }
 
-const ExtensionCard: React.FC<ExtensionCardProps> = ({ manifest, actions, className, extra }) => {
+const ExtensionCard: React.FC<ExtensionCardProps> = ({ manifest, actions, className }) => {
   return (
     <Card
       className={className}
       actions={actions}
-      extra={extra}
+      extra={manifest.version}
       title={<Card.Meta avatar={<IconFont type={manifest.icon} />} title={manifest.name} />}
     >
       <div style={{ height: 30 }}>
