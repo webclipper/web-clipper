@@ -28,4 +28,9 @@ export interface GlobalStore {
   version: VersionStore;
   loading: DvaLoadingState;
   extension: ExtensionStore;
+  router: {
+    location: {
+      search: string;
+    };
+  };
 }
