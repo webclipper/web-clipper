@@ -11,6 +11,7 @@ import Base from './base';
 import { DvaRouterProps, GlobalStore } from '@/common/types';
 import Changelog from './changelog';
 import IconFont from '@/components/IconFont';
+import Powerpack from './powerpack';
 
 const { Route } = router;
 
@@ -55,6 +56,12 @@ const tabs = [
     icon: <IconFont type="changelog" />,
     title: <FormattedMessage id="preference.tab.changelog" defaultMessage="Changelog" />,
     component: Changelog,
+  },
+  {
+    path: 'powerpack',
+    icon: <IconFont type="powerpack" />,
+    title: <FormattedMessage id="preference.tab.powerpack" defaultMessage="Powerpack" />,
+    component: Powerpack,
   },
 ];
 
