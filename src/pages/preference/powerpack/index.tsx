@@ -3,13 +3,14 @@ import { Button } from 'antd';
 import IconFont from '@/components/IconFont';
 import { stringify } from 'qs';
 import browserId from '@/common/id';
+import config from '@/config';
 
 interface PowerpackProps {}
 
 const Powerpack: React.FC<PowerpackProps> = _props => {
   const githubOauthUrl = `https://github.com/login/oauth/authorize?${stringify({
-    client_id: 'acad97d010cd6d7ef560',
-    redirect_uri: 'http://localhost:3000/api/user/oauth/github',
+    client_id: config.githubClientId,
+    redirect_uri: config.githubCallback,
     scope: 'user:email',
     state: browserId(),
   })}`;
