@@ -83,3 +83,5 @@ export const asyncSetLocaleToStorage = actionCreator<string>('asyncSetLocaleToSt
 export const initServices = actionCreator<
   Pick<GlobalStore['userPreference'], 'servicesMeta' | 'imageHostingServicesMeta'>
 >('initServices');
+
+export const loginWithToken = actionCreator<string>('loginWithToken');

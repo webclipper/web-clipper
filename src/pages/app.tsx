@@ -19,6 +19,7 @@ import { localStorageService, syncStorageService } from '@/common/chrome/storage
 import localeService from '@/common/locales';
 import { initGa } from '@/common/gs';
 import AuthPage from '@/pages/auth';
+import LoginPage from '@/pages/login';
 import account from '@/models/account';
 import { message } from 'antd';
 import config from '@/config';
@@ -82,6 +83,7 @@ if (!element) {
         <Router history={router!.history}>
           <Switch>
             <Route exact path="/" component={Tool} />
+            <Route exact path="/login" component={LoginPage} />
             <Route exact path="/auth" component={AuthPage} />
             <Route exact path="/complete" component={Complete} />
             <Route path="/preference/:id" component={withTool(preference)} />

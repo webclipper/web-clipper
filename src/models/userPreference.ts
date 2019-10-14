@@ -25,6 +25,7 @@ import {
   asyncSetLocaleToStorage,
   initServices,
   asyncFetchRemoteConfig,
+  loginWithToken,
 } from 'pageActions/userPreference';
 import { initTabInfo, changeData, asyncChangeAccount } from 'pageActions/clipper';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
@@ -87,6 +88,10 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
       },
     })
   );
+
+builder.takeEvery(loginWithToken, function*(token) {
+  yield console.log('loginWithToken', token);
+});
 
 builder
   .takeEvery(asyncFetchRemoteConfig.started, function*(_, { call, put }) {
