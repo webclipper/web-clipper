@@ -3,7 +3,7 @@ import React from 'react';
 import { getLanguage } from './../common/locales';
 import localeService from '@/common/locales';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from './../common/modelTypes/userPreference';
-import { runScript } from './../browser/actions/message';
+import { runScript, closeCurrentTab } from './../browser/actions/message';
 import storage from 'common/storage';
 import * as antd from 'antd';
 import { GlobalStore } from '@/common/types';
@@ -91,6 +91,7 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
 
 builder.takeEvery(loginWithToken, function*(token) {
   yield console.log('loginWithToken', token);
+  chrome.runtime.sendMessage(closeCurrentTab());
 });
 
 builder
