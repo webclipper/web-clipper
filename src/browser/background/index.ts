@@ -4,21 +4,24 @@ import config from '@/config';
 import { MessageListenerCombiner } from '@web-clipper/message-listener-combiner';
 import { closeCurrentTab } from '../actions/message';
 
+console.log(111);
+
 browser.browserAction.setIcon({ path: config.icon });
 
 const listeners = new MessageListenerCombiner().case(
   closeCurrentTab,
   async (_payload, _sender, _sendResponse) => {
-    if (_sender.tab && _sender.tab.id) {
-      chrome.tabs.remove(_sender.tab.id);
-    }
-    return true;
+    // if (_sender.tab && _sender.tab.id) {
+    //   chrome.tabs.remove(_sender.tab.id);
+    // }
+    return _sendResponse(true);
   }
 );
 
 browser.runtime.onMessage.addListener(listeners.handle);
 
 browser.browserAction.onClicked.addListener(async tab => {
+  console.log('click');
   const tabId = tab.id;
   if (!tabId) {
     alert('暂时无法剪辑此类型的页面。');

@@ -1,4 +1,5 @@
 import { ServiceMeta, ImageHostingServiceMeta } from '@/common/backend';
+import { IUserInfo } from '../types';
 
 export interface UserPreferenceStore {
   locale: string;
@@ -14,6 +15,8 @@ export interface UserPreferenceStore {
   };
   iconfontUrl: string;
   iconfontIcons: string[];
+  userInfo: IUserInfo | null;
+  accessToken?: string;
 }
 
 /**
@@ -37,3 +40,8 @@ export interface ImageClipperData {
 export type ClipperDataType = string | ImageClipperData;
 
 export const LOCAL_USER_PREFERENCE_LOCALE_KEY = 'local.userPreference.locale';
+
+/**
+ * user Access Tiken
+ */
+export const LOCAL_ACCESS_TOKEN_LOCALE_KEY = 'local.access.token.locale';

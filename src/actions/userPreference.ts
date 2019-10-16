@@ -1,4 +1,4 @@
-import { ImageHosting, GlobalStore } from '@/common/types';
+import { ImageHosting, GlobalStore, IUserInfo } from '@/common/types';
 import { PreferenceStorage } from 'common/storage/interface';
 import { SerializedExtensionWithId } from '@web-clipper/extensions';
 import { actionCreatorFactory } from 'dva-model-creator';
@@ -85,3 +85,11 @@ export const initServices = actionCreator<
 >('initServices');
 
 export const loginWithToken = actionCreator<string>('loginWithToken');
+
+export const initPowerpack = actionCreator.async<
+  void,
+  {
+    userInfo: IUserInfo | null;
+    accessToken: string;
+  }
+>('initPowerpack');

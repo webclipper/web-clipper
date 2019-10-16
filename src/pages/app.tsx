@@ -62,7 +62,6 @@ if (!element) {
     },
   });
   app.use(createLoading());
-
   if (config.createLogger) {
     app.use(
       createLogger({

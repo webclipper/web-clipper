@@ -2,11 +2,14 @@ import Axios from 'axios';
 import React from 'react';
 import { getLanguage } from './../common/locales';
 import localeService from '@/common/locales';
-import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from './../common/modelTypes/userPreference';
+import {
+  LOCAL_USER_PREFERENCE_LOCALE_KEY,
+  LOCAL_ACCESS_TOKEN_LOCALE_KEY,
+} from './../common/modelTypes/userPreference';
 import { runScript, closeCurrentTab } from './../browser/actions/message';
 import storage from 'common/storage';
 import * as antd from 'antd';
-import { GlobalStore } from '@/common/types';
+import { GlobalStore, IResponse, IUserInfo } from '@/common/types';
 import browserService from 'common/browser';
 import * as browser from '@web-clipper/chrome-promise';
 import { hideTool, removeTool } from 'browserActions/message';
@@ -26,6 +29,7 @@ import {
   initServices,
   asyncFetchRemoteConfig,
   loginWithToken,
+  initPowerpack,
 } from 'pageActions/userPreference';
 import { initTabInfo, changeData, asyncChangeAccount } from 'pageActions/clipper';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
@@ -40,6 +44,7 @@ import { loadExtensions } from '@/actions/extension';
 import { initAccounts } from '@/actions/account';
 import iconConfig from '@/../config.json';
 import copyToClipboard from 'copy-to-clipboard';
+import { getUserInfo } from '@/common/server';
 
 const { message } = antd;
 
@@ -52,6 +57,7 @@ const defaultState: UserPreferenceStore = {
   liveRendering: true,
   iconfontUrl: '',
   iconfontIcons: [],
+  userInfo: null,
 };
 
 const builder = new DvaModelBuilder(defaultState, 'userPreference')
@@ -89,10 +95,54 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
     })
   );
 
-builder.takeEvery(loginWithToken, function*(token) {
-  yield console.log('loginWithToken', token);
-  chrome.runtime.sendMessage(closeCurrentTab());
-});
+builder
+  .takeEvery(loginWithToken, function*(token, { call }) {
+    yield call(localStorageService.set, LOCAL_ACCESS_TOKEN_LOCALE_KEY, token);
+    chrome.runtime.sendMessage(closeCurrentTab());
+  })
+  .subscript(async function initAccessToken({ dispatch }) {
+    function loadAccessToken() {
+      dispatch(initPowerpack.started());
+    }
+    loadAccessToken();
+    localStorageService.onDidChangeStorage(key => {
+      if (key === LOCAL_ACCESS_TOKEN_LOCALE_KEY) {
+        loadAccessToken();
+      }
+    });
+  })
+  .takeEvery(initPowerpack.started, function*(payload, { call, put }) {
+    const accessToken = localStorageService.get(LOCAL_ACCESS_TOKEN_LOCALE_KEY);
+    if (accessToken) {
+      try {
+        const response: IResponse<IUserInfo> = yield call(getUserInfo);
+        yield put(
+          initPowerpack.done({
+            result: {
+              userInfo: response.result,
+              accessToken,
+            },
+            params: payload,
+          })
+        );
+      } catch (_error) {
+        message.error('Failed to load powerpack info.');
+      }
+    } else {
+      yield put(
+        initPowerpack.done({
+          result: {
+            accessToken,
+          },
+          params: payload,
+        })
+      );
+    }
+  })
+  .case(initPowerpack.done, (s, { result: { userInfo } }) => ({
+    ...s,
+    userInfo,
+  }));
 
 builder
   .takeEvery(asyncFetchRemoteConfig.started, function*(_, { call, put }) {
