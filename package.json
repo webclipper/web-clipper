@@ -55,7 +55,8 @@
     "react-markdown": "^4.1.0",
     "regenerator-runtime": "^0.13.3",
     "showdown": "^1.9.0",
-    "tldjs": "^2.3.1"
+    "tldjs": "^2.3.1",
+    "umi-request": "^1.2.8"
   },
   "devDependencies": {
     "@diamondyuan/eslint-config-react-typescript": "^7.0.0",
