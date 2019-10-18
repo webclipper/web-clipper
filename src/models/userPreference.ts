@@ -126,12 +126,21 @@ builder
           })
         );
       } catch (_error) {
-        message.error('Failed to load powerpack info.');
+        yield put(
+          initPowerpack.done({
+            result: {
+              userInfo: null,
+              accessToken,
+            },
+            params: payload,
+          })
+        );
       }
     } else {
       yield put(
         initPowerpack.done({
           result: {
+            userInfo: null,
             accessToken,
           },
           params: payload,
@@ -139,9 +148,10 @@ builder
       );
     }
   })
-  .case(initPowerpack.done, (s, { result: { userInfo } }) => ({
+  .case(initPowerpack.done, (s, { result: { userInfo, accessToken } }) => ({
     ...s,
     userInfo,
+    accessToken,
   }));
 
 builder

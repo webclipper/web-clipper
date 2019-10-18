@@ -90,6 +90,6 @@ export const initPowerpack = actionCreator.async<
   void,
   {
     userInfo: IUserInfo | null;
-    accessToken: string;
+    accessToken?: string;
   }
 >('initPowerpack');
