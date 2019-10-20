@@ -44,6 +44,14 @@ const Powerpack: React.FC<PowerpackProps> = () => {
             >
               Logout
             </Button>,
+            <Button
+              key="upgrade"
+              type="link"
+              href="https://clipper.website/powerpack"
+              target="_blank"
+            >
+              Upgrade
+            </Button>,
           ]}
         >
           <List.Item.Meta
