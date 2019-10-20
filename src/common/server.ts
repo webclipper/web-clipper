@@ -6,7 +6,7 @@ import { IResponse, IUserInfo } from './types';
 
 const request = extend({
   prefix: `${config.serverHost}/api/`,
-  timeout: 1000,
+  timeout: 10000,
   headers: {},
 });
 
@@ -24,5 +24,16 @@ request.interceptors.request.use((url, options) => {
 });
 
 export const getUserInfo = () => {
-  return request.get<IResponse<IUserInfo>>('/user');
+  return request.get<IResponse<IUserInfo>>('user');
+};
+
+export interface PostMailRequestBody {
+  to: string;
+  subject: string;
+  html?: string;
+  text?: string;
+}
+
+export const postMail = (data: PostMailRequestBody) => {
+  return request.post('service/email', { data });
 };

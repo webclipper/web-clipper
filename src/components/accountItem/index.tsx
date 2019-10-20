@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 interface PageProps {
   isDefault: boolean;
   id: string;
-  name: string;
+  name: string | React.ReactNode;
   avatar: string;
   description?: string;
   onEdit(id: string): void;

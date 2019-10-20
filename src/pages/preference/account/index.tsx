@@ -16,6 +16,7 @@ import CreateAccountModal from './modal/createAccountModal';
 import { GlobalStore, AccountPreference } from 'common/types';
 import { FormattedMessage } from 'react-intl';
 import { asyncChangeAccount } from '@/actions/clipper';
+import IconFont from '@/components/IconFont';
 
 const useActions = {
   asyncAddAccount: asyncAddAccount.started,
@@ -167,7 +168,7 @@ class Page extends React.Component<PageProps, PageState> {
   };
 
   render() {
-    const { defaultAccountId, accounts, asyncDeleteAccount } = this.props;
+    const { defaultAccountId, accounts, asyncDeleteAccount, servicesMeta } = this.props;
     const { handleEdit, handleSetDefaultId, toggleAccountModal } = this;
     return (
       <React.Fragment>
@@ -178,7 +179,7 @@ class Page extends React.Component<PageProps, PageState> {
               <AccountItem
                 isDefault={defaultAccountId === account.id}
                 id={account.id}
-                name={account.name}
+                name={account.name || <IconFont type={servicesMeta[account.type].icon}></IconFont>}
                 description={account.description}
                 avatar={account.avatar}
                 onDelete={id => asyncDeleteAccount({ id })}
