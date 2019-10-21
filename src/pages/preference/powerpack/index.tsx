@@ -82,12 +82,15 @@ const Powerpack: React.FC<PowerpackProps> = () => {
   }
 
   return (
-    <div>
-      <p>Sign Up for Powerpack</p>
-      <Button href={githubOauthUrl} target="_blank">
-        <IconFont type="github"></IconFont>
-        Login with Github
-      </Button>
+    <div style={{ height: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div>
+        <h2>Activate Powerpack to unlock many more great feature</h2>
+        <h3>Free trial for 7 days !</h3>
+        <Button href={githubOauthUrl} target="_blank">
+          <IconFont type="github"></IconFont>
+          Login with Github
+        </Button>
+      </div>
     </div>
   );
 };
