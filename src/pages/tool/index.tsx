@@ -22,6 +22,7 @@ import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import { FormattedMessage } from 'react-intl';
 import { trackEvent } from '@/common/gs';
 import matchUrl from '@/common/matchUrl';
+import IconFont from '@/components/IconFont';
 
 const mapStateToProps = ({
   clipper: {
@@ -34,7 +35,7 @@ const mapStateToProps = ({
   },
   loading,
   account: { accounts, defaultAccountId },
-  userPreference: { locale },
+  userPreference: { locale, servicesMeta },
   extension: { extensions, disabledExtensions },
   version: { hasUpdate },
 }: GlobalStore) => {
@@ -66,6 +67,7 @@ const mapStateToProps = ({
     repositories,
     disableCreateDocument,
     locale,
+    servicesMeta,
   };
 };
 type PageStateProps = ReturnType<typeof mapStateToProps>;
@@ -90,6 +92,7 @@ const Page = React.memo<PageProps>(
       dispatch,
       hasUpdate,
       accounts,
+      servicesMeta,
     } = props;
 
     useEffect(() => {
@@ -225,7 +228,22 @@ const Page = React.memo<PageProps>(
             >
               {props.accounts.map(o => (
                 <Select.Option key={o.id || '1'}>
-                  <Avatar size="small" src={o.avatar} />
+                  {(o.avatar || servicesMeta[o.type].icon).startsWith('http') ? (
+                    <Avatar size="small" src={o.avatar} />
+                  ) : (
+                    <span
+                      className="ant-avatar ant-avatar-sm ant-avatar-circle ant-avatar-icon"
+                      style={{
+                        background: 'unset',
+                        color: 'unset',
+                      }}
+                    >
+                      <IconFont
+                        style={{ fontSize: 24 }}
+                        type={o.avatar || servicesMeta[o.type].icon}
+                      ></IconFont>
+                    </span>
+                  )}
                 </Select.Option>
               ))}
             </Select>
@@ -246,6 +264,7 @@ const Page = React.memo<PageProps>(
       locale,
       extensions,
       hasUpdate,
+      servicesMeta,
     }: PageProps) => {
       return {
         loadingAccount,
@@ -258,6 +277,7 @@ const Page = React.memo<PageProps>(
         locale,
         extensions,
         hasUpdate,
+        servicesMeta,
       };
     };
     return isEqual(selector(prevProps), selector(nextProps));

@@ -16,7 +16,6 @@ import CreateAccountModal from './modal/createAccountModal';
 import { GlobalStore, AccountPreference } from 'common/types';
 import { FormattedMessage } from 'react-intl';
 import { asyncChangeAccount } from '@/actions/clipper';
-import IconFont from '@/components/IconFont';
 
 const useActions = {
   asyncAddAccount: asyncAddAccount.started,
@@ -179,9 +178,9 @@ class Page extends React.Component<PageProps, PageState> {
               <AccountItem
                 isDefault={defaultAccountId === account.id}
                 id={account.id}
-                name={account.name || <IconFont type={servicesMeta[account.type].icon}></IconFont>}
+                name={account.name}
                 description={account.description}
-                avatar={account.avatar}
+                avatar={account.avatar || servicesMeta[account.type].icon}
                 onDelete={id => asyncDeleteAccount({ id })}
                 onEdit={id => handleEdit(id)}
                 onSetDefaultAccount={id => handleSetDefaultId(id)}

@@ -2,11 +2,12 @@ import * as React from 'react';
 import { Button, Icon } from 'antd';
 import * as styles from './index.scss';
 import { FormattedMessage } from 'react-intl';
+import IconFont from '../IconFont';
 
 interface PageProps {
   isDefault: boolean;
   id: string;
-  name: string | React.ReactNode;
+  name: string;
   avatar: string;
   description?: string;
   onEdit(id: string): void;
@@ -39,7 +40,11 @@ export default class Page extends React.Component<PageProps> {
           <Icon type="star" style={tagStyle} onClick={this.handleSetDefaultAccount} />
         </div>
         <div className={styles.userInfo}>
-          <img className={styles.avatar} src={avatar} />
+          {avatar.startsWith('http') ? (
+            <img className={styles.avatar} src={avatar} />
+          ) : (
+            <IconFont className={styles.iconAvatar} type={avatar}></IconFont>
+          )}
           <div className={styles.name}>{name}</div>
           <div className={styles.description}>{description}</div>
         </div>
