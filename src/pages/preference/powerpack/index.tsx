@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, List, Avatar } from 'antd';
+import { Button, List, Avatar, Skeleton } from 'antd';
 import IconFont from '@/components/IconFont';
 import { stringify } from 'qs';
 import browserId from '@/common/id';
@@ -20,14 +20,21 @@ const Powerpack: React.FC<PowerpackProps> = () => {
     state: browserId(),
   })}`;
 
-  const { userInfo, accessToken } = useSelector(({ userPreference }: GlobalStore) => ({
-    userInfo: userPreference.userInfo,
-    accessToken: userPreference.accessToken,
-  }));
+  const { userInfo, accessToken, loading } = useSelector(
+    ({ userPreference, loading }: GlobalStore) => ({
+      userInfo: userPreference.userInfo,
+      accessToken: userPreference.accessToken,
+      loading: loading.effects[initPowerpack.started.type],
+    })
+  );
 
   const dispatch = useDispatch();
 
   const reload = () => dispatch(initPowerpack.started());
+
+  if (loading) {
+    return <Skeleton></Skeleton>;
+  }
 
   if (userInfo) {
     return (

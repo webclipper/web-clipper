@@ -10,9 +10,11 @@ const listeners = new MessageListenerCombiner().case(
   closeCurrentTab,
   async (_payload, _sender, _sendResponse) => {
     if (_sender.tab && _sender.tab.id) {
-      chrome.tabs.remove(_sender.tab.id);
+      let id = _sender.tab.id;
+      setTimeout(() => {
+        chrome.tabs.remove(id);
+      }, 1000);
     }
-    return _sendResponse(true);
   }
 );
 

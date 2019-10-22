@@ -23,6 +23,13 @@ request.interceptors.request.use((url, options) => {
   };
 });
 
+request.interceptors.response.use(response => {
+  if (response.clone().status === 401) {
+    localStorageService.delete(LOCAL_ACCESS_TOKEN_LOCALE_KEY);
+  }
+  return response;
+});
+
 export const getUserInfo = () => {
   return request.get<IResponse<IUserInfo>>('user');
 };
