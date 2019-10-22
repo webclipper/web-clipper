@@ -64,6 +64,16 @@ const messages = {
   'preference.extensions.install': '安装',
   'preference.extensions.update': '更新',
   'preference.extensions.require.update': '需要剪藏更新到 {version} 版本',
+  'preference.tab.powerpack': '加强包',
+  'backend.services.mail.name': '邮件',
+  'backend.services.mail.form.homepage.of.mail': '邮箱首页',
+  'backend.services.mail.form.powerpack': '加强包',
+  'backend.services.mail.form.buy.powerpack': '购买加强包',
+  'backend.services.mail.form.send.to': '发送给',
+  'backend.services.mail.form.send.html': '发送 Html',
+  'backend.services.mail.form.send.html.or.markdown': '发送 Html 或 Markdown',
+  'backend.services.mail.form.homepage': '邮箱首页',
+  'preference.accountList.verifying': '校验中',
 };
 
 const model: LocaleModel = {

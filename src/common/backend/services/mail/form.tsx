@@ -4,6 +4,8 @@ import React, { Fragment } from 'react';
 import { MailBackendServiceConfig } from './interface';
 import { useSelector, useDispatch, routerRedux } from 'dva';
 import { GlobalStore } from '@/common/types';
+import { FormattedMessage } from 'react-intl';
+import i18n from '@/common/locales';
 
 interface OneNoteProps {
   verified?: boolean;
@@ -31,7 +33,11 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
   };
   return (
     <Fragment>
-      <Form.Item label="Powerpack">
+      <Form.Item
+        label={
+          <FormattedMessage id="backend.services.mail.form.powerpack" defaultMessage="Powerpack" />
+        }
+      >
         {getFieldDecorator('powerpack', {
           initialValue: !!userInfo,
           valuePropName: 'checked',
@@ -48,12 +54,19 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
         })(
           <Checkbox disabled={true}>
             <Button type="link" onClick={boughtPowerpack}>
-              By Powerpack
+              <FormattedMessage
+                id="backend.services.mail.form.buy.powerpack"
+                defaultMessage="Buy Powerpack"
+              />
             </Button>
           </Checkbox>
         )}
       </Form.Item>
-      <Form.Item label="Send to">
+      <Form.Item
+        label={
+          <FormattedMessage id="backend.services.mail.form.send.to" defaultMessage="Send to" />
+        }
+      >
         {getFieldDecorator('to', {
           initialValue: initData.to,
           rules: [
@@ -64,13 +77,33 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
           ],
         })(<Input disabled={editMode || verified} />)}
       </Form.Item>
-      <Form.Item label="&nbsp;" extra="Send html or markdown." colon={false}>
+      <Form.Item
+        label="&nbsp;"
+        extra={
+          <FormattedMessage
+            id="backend.services.mail.form.send.html.or.markdown"
+            defaultMessage="Send Html or Markdown."
+          />
+        }
+        colon={false}
+      >
         {getFieldDecorator('html', {
           initialValue: initData.html,
           valuePropName: 'checked',
-        })(<Checkbox>Send Html</Checkbox>)}
+        })(
+          <Checkbox>
+            <FormattedMessage
+              id="backend.services.mail.form.send.html"
+              defaultMessage="Send Html"
+            />
+          </Checkbox>
+        )}
       </Form.Item>
-      <Form.Item label="Home">
+      <Form.Item
+        label={
+          <FormattedMessage id="backend.services.mail.form.homepage" defaultMessage="Homepage" />
+        }
+      >
         {getFieldDecorator('home', {
           initialValue: initData.home,
           rules: [
@@ -79,7 +112,14 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
               message: 'Home is required',
             },
           ],
-        })(<Input placeholder="Home of mail." />)}
+        })(
+          <Input
+            placeholder={i18n.format({
+              id: 'backend.services.mail.form.homepage.of.mail',
+              defaultMessage: 'Homepage of Mail',
+            })}
+          />
+        )}
       </Form.Item>
     </Fragment>
   );
