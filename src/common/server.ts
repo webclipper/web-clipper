@@ -44,3 +44,7 @@ export interface PostMailRequestBody {
 export const postMail = (data: PostMailRequestBody) => {
   return request.post('service/email', { data });
 };
+
+export const refresh = () => {
+  return request.get<IResponse<string>>('refresh');
+};

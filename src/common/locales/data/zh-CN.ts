@@ -74,6 +74,13 @@ const messages = {
   'backend.services.mail.form.send.html.or.markdown': '发送 Html 或 Markdown',
   'backend.services.mail.form.homepage': '邮箱首页',
   'preference.accountList.verifying': '校验中',
+  'preference.powerpack.expiry': '过期时间',
+  'preference.powerpack.logout': '登出',
+  'preference.powerpack.upgrade': '购买',
+  'preference.powerpack.activate': '购买加强包解锁更多功能',
+  'preference.powerpack.free.trial': '免费试用7天',
+  'preference.powerpack.login.github': '通过 Github 登录',
+  'preference.powerpack.reload': '刷新',
 };
 
 const model: LocaleModel = {
