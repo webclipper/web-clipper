@@ -1,3 +1,5 @@
+import { getLanguage } from './locales/index';
+import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/modelTypes/userPreference';
 import { extend } from 'umi-request';
 import config from '@/config';
 import { localStorageService } from './chrome/storage';
@@ -18,6 +20,7 @@ request.interceptors.request.use((url, options) => {
       headers: {
         ...options.headers,
         token: localStorageService.get(LOCAL_ACCESS_TOKEN_LOCALE_KEY, ''),
+        locale: localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, getLanguage()),
       },
     },
   };
@@ -26,6 +29,16 @@ request.interceptors.request.use((url, options) => {
 request.interceptors.response.use(response => {
   if (response.clone().status === 401) {
     localStorageService.delete(LOCAL_ACCESS_TOKEN_LOCALE_KEY);
+  }
+  return response;
+});
+
+request.interceptors.response.use(async response => {
+  if (response.clone().status !== 200) {
+    const data: IResponse<unknown> = await response.clone().json();
+    if (data.message) {
+      throw new Error(data.message);
+    }
   }
   return response;
 });

@@ -6,6 +6,7 @@ import { useSelector, useDispatch, routerRedux } from 'dva';
 import { GlobalStore } from '@/common/types';
 import { FormattedMessage } from 'react-intl';
 import i18n from '@/common/locales';
+import { checkBill } from '@/common/powerpack';
 
 interface OneNoteProps {
   verified?: boolean;
@@ -44,10 +45,24 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
           rules: [
             {
               validator(_r, v, cb) {
-                if (v) {
-                  cb();
+                if (v && userInfo) {
+                  if (checkBill(userInfo.expire_date)) {
+                    cb();
+                    return;
+                  }
+                  cb(
+                    i18n.format({
+                      id: 'backend.services.mail.form.powerpack.is.expired',
+                      defaultMessage: 'Powerpack is expired',
+                    })
+                  );
                 }
-                cb('Powerpack is required.');
+                cb(
+                  i18n.format({
+                    id: 'backend.services.mail.form.powerpack.is.required',
+                    defaultMessage: 'Powerpack is required.',
+                  })
+                );
               },
             },
           ],
@@ -72,7 +87,10 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
           rules: [
             {
               required: true,
-              message: 'Address is required.',
+              message: i18n.format({
+                id: 'backend.services.mail.form.address.is.required',
+                defaultMessage: 'Mail Address is required.',
+              }),
             },
           ],
         })(<Input disabled={editMode || verified} />)}
@@ -109,7 +127,10 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
           rules: [
             {
               required: true,
-              message: 'Home is required',
+              message: i18n.format({
+                id: 'backend.services.mail.form.homepage.is.required',
+                defaultMessage: 'Homepage is required',
+              }),
             },
           ],
         })(

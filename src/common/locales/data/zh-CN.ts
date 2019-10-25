@@ -81,6 +81,10 @@ const messages = {
   'preference.powerpack.free.trial': '免费试用7天',
   'preference.powerpack.login.github': '通过 Github 登录',
   'preference.powerpack.reload': '刷新',
+  'backend.services.mail.form.address.is.required': '请填写邮件地址',
+  'backend.services.mail.form.homepage.is.required': '请填写首页地址',
+  'backend.services.mail.form.powerpack.is.expired': '加强包已过期',
+  'backend.services.mail.form.powerpack.is.required': '需要购买加强包',
 };
 
 const model: LocaleModel = {

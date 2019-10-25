@@ -58,6 +58,7 @@ if (!element) {
     history: createHashHistory(),
     onError: e => {
       (e as any).preventDefault();
+      message.destroy();
       message.error(e.message);
     },
   });
