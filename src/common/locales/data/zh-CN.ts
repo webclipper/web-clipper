@@ -85,6 +85,7 @@ const messages = {
   'backend.services.mail.form.homepage.is.required': '请填写首页地址',
   'backend.services.mail.form.powerpack.is.expired': '加强包已过期',
   'backend.services.mail.form.powerpack.is.required': '需要购买加强包',
+  'preference.tab.privacy': '隐私协议',
 };
 
 const model: LocaleModel = {

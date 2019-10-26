@@ -12,6 +12,7 @@ import { DvaRouterProps, GlobalStore } from '@/common/types';
 import Changelog from './changelog';
 import IconFont from '@/components/IconFont';
 import Powerpack from './powerpack';
+import Privacy from './privacy';
 
 const { Route } = router;
 
@@ -62,6 +63,12 @@ const tabs = [
     icon: <IconFont type="powerpack" />,
     title: <FormattedMessage id="preference.tab.powerpack" defaultMessage="Powerpack" />,
     component: Powerpack,
+  },
+  {
+    path: 'privacy',
+    icon: <IconFont type="privacy" />,
+    title: <FormattedMessage id="preference.tab.privacy" defaultMessage="Privacy policy" />,
+    component: Privacy,
   },
 ];
 
