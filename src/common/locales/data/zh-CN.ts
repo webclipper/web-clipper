@@ -86,6 +86,7 @@ const messages = {
   'backend.services.mail.form.powerpack.is.expired': '加强包已过期',
   'backend.services.mail.form.powerpack.is.required': '需要购买加强包',
   'preference.tab.privacy': '隐私协议',
+  'backend.services.bear.form.confirm': '请确认您安装了 Bear 客户端。',
 };
 
 const model: LocaleModel = {
