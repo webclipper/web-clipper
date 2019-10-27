@@ -4,6 +4,7 @@ import { useSelector } from 'dva';
 import { Skeleton } from 'antd';
 import ReactMarkdown from 'react-markdown';
 import useFetchGithubFile from '@/common/hooks/useFetchGithubFile';
+import LinkRender from '@/components/LinkRender';
 
 const supportedLocale = ['en-US', 'zh-CN'];
 
@@ -17,11 +18,12 @@ const Changelog: React.FC = () => {
   if (supportedLocale.every(o => o !== locale)) {
     workLocale = 'en-US';
   }
+
   const [loading, changelog] = useFetchGithubFile(`documents/privacy/PRIVACY.${workLocale}.md`);
   if (loading || !changelog) {
     return <Skeleton active />;
   }
-  return <ReactMarkdown source={changelog} />;
+  return <ReactMarkdown source={changelog} renderers={{ link: LinkRender }} />;
 };
 
 export default Changelog;
