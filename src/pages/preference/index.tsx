@@ -53,12 +53,6 @@ const tabs = [
     component: Base,
   },
   {
-    path: 'changelog',
-    icon: <IconFont type="changelog" />,
-    title: <FormattedMessage id="preference.tab.changelog" defaultMessage="Changelog" />,
-    component: Changelog,
-  },
-  {
     path: 'powerpack',
     icon: <IconFont type="powerpack" />,
     title: <FormattedMessage id="preference.tab.powerpack" defaultMessage="Powerpack" />,
@@ -69,6 +63,12 @@ const tabs = [
     icon: <IconFont type="privacy" />,
     title: <FormattedMessage id="preference.tab.privacy" defaultMessage="Privacy policy" />,
     component: Privacy,
+  },
+  {
+    path: 'changelog',
+    icon: <IconFont type="changelog" />,
+    title: <FormattedMessage id="preference.tab.changelog" defaultMessage="Changelog" />,
+    component: Changelog,
   },
 ];
 
