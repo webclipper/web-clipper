@@ -1,3 +1,19 @@
+## 1.12.0
+
+`2019-10-28`
+
+- ✨ Support Powerpack.
+- 📝 Add Privacy policy.
+
+### Powerpack
+
+- ✨ Support Save to Email
+
+### Extension API
+
+- ✨ Support Download File
+- ✨ Support antd
+
 ## 1.11.0
 
 `2019-09-30`
