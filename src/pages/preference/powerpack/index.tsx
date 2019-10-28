@@ -73,7 +73,9 @@ const Powerpack: React.FC = () => {
             <Button
               key="upgrade"
               type="link"
-              href="https://clipper.website/powerpack"
+              href={`https://clipper.website/powerpack?guest_email=${encodeURIComponent(
+                userInfo.email
+              )}`}
               target="_blank"
             >
               <FormattedMessage id="preference.powerpack.upgrade" defaultMessage="Upgrade" />
