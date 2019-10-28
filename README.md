@@ -53,6 +53,13 @@ $ yarn dev
 $ yarn test
 ```
 
-### DingTalk
+### Feedback
 
-![](https://raw.githubusercontent.com/webclipper/web-clipper/master/DingTalk.jpeg)
+| Type     | Link                                                                               |
+| -------- | ---------------------------------------------------------------------------------- |
+| DingTalk | ![](https://raw.githubusercontent.com/webclipper/web-clipper/master/DingTalk.jpeg) |
+| Telegram | [Link](https://t.me/joinchat/HoVttRRUIA6aXASixzoqAw)                               |
+
+
+
+
