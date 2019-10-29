@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { List, Icon, Avatar } from 'antd';
+import { List, Avatar } from 'antd';
 import * as styles from './index.scss';
 import { FormattedMessage } from 'react-intl';
+import IconFont from '../IconFont';
 
 interface PageProps {
   icon: string;
@@ -27,7 +28,7 @@ export default class Page extends React.Component<PageProps> {
     if (icon.startsWith('http')) {
       avatar = <Avatar src={icon} className={styles.avatar} />;
     } else {
-      avatar = <Icon type={icon} style={{ fontSize: 32 }} />;
+      avatar = <IconFont type={icon} style={{ fontSize: 32 }} />;
     }
 
     return (
