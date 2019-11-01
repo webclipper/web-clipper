@@ -9,7 +9,7 @@ export default class GithubDocumentService implements DocumentService {
   getUserInfo = async () => {
     return {
       name: 'BEAR',
-      avatar: 'https://bear.app/static/favicons/favicon-180.png',
+      avatar: '',
       homePage: 'bear://x-callback-url/search',
       description: 'Bear app',
     };

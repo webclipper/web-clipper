@@ -53,7 +53,7 @@ export default class YuqueDocumentService implements DocumentService<OneNoteBack
     return {
       name: data.displayName,
       description: data.userPrincipalName,
-      avatar: 'https://site-cdn.onenote.net/161202831550_Images/onenoteicon-256.png',
+      avatar: '',
       homePage: 'https://www.onenote.com/notebooks',
     };
   };

@@ -21,7 +21,7 @@ export default (): ServiceMeta => {
       id: 'backend.services.onenote_oauth.name',
       defaultMessage: 'OneNote',
     }),
-    icon: 'onenote_oauth',
+    icon: 'OneNote',
     type: 'onenote_oauth',
     service: Service,
     oauthUrl,

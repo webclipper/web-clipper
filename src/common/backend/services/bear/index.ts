@@ -4,7 +4,7 @@ import Form from './form';
 export default () => {
   return {
     name: 'Bear',
-    icon: 'https://bear.app/static/favicons/favicon-180.png',
+    icon: 'bear',
     type: 'bear',
     service: Service,
     form: Form,
