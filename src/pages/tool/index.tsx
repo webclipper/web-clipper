@@ -227,7 +227,7 @@ const Page = React.memo<PageProps>(
               onSelect={(value: string) => dispatch(asyncChangeAccount.started({ id: value }))}
             >
               {props.accounts.map(o => (
-                <Select.Option key={o.id || '1'}>
+                <Select.Option key={o.id} title={o.name}>
                   {(o.avatar || servicesMeta[o.type].icon).startsWith('http') ? (
                     <Avatar size="small" src={o.avatar} />
                   ) : (
@@ -241,7 +241,7 @@ const Page = React.memo<PageProps>(
                       <IconFont
                         style={{ fontSize: 24 }}
                         type={o.avatar || servicesMeta[o.type].icon}
-                      ></IconFont>
+                      />
                     </span>
                   )}
                 </Select.Option>
