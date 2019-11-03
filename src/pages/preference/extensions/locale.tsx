@@ -7,19 +7,34 @@ import {
   setDefaultExtensionId,
   toggleDisableExtension,
   unInstallRemoteExtension,
+  toggleAutomaticExtension,
 } from '@/actions/extension';
 import { FormattedMessage } from 'react-intl';
 import ExtensionCard from '@/components/ExtensionCard';
 import styles from './index.scss';
 import { SerializedExtensionWithId, ExtensionType } from '@web-clipper/extensions';
+import IconFont from '@/components/IconFont';
 
 const Page: React.FC = () => {
-  const { extensions, defaultExtensionId, disabledExtensions } = useSelector(
-    ({ extension: { extensions, defaultExtensionId, disabledExtensions } }: GlobalStore) => {
+  const {
+    extensions,
+    defaultExtensionId,
+    disabledExtensions,
+    disabledAutomaticExtensions,
+  } = useSelector(
+    ({
+      extension: {
+        extensions,
+        defaultExtensionId,
+        disabledExtensions,
+        disabledAutomaticExtensions,
+      },
+    }: GlobalStore) => {
       return {
         extensions,
-        disabledExtensions: disabledExtensions,
+        disabledExtensions,
         defaultExtensionId,
+        disabledAutomaticExtensions,
       };
     }
   );
@@ -72,6 +87,15 @@ const Page: React.FC = () => {
         <Tooltip title={title}>
           <Icon type="star" key="star" style={iconStyle} onClick={() => handleSetDefault(e.id)} />
         </Tooltip>
+      );
+    }
+    if (e.manifest.automatic) {
+      actions.push(
+        <IconFont
+          type="auto"
+          onClick={() => dispatch(toggleAutomaticExtension(e.id))}
+          style={!disabledAutomaticExtensions.some(o => o === e.id) ? { color: 'red' } : {}}
+        ></IconFont>
       );
     }
     return actions.concat(

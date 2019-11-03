@@ -1,3 +1,4 @@
+import { asyncRunExtension } from './../actions/userPreference';
 import { CompleteStatus } from 'common/backend/interface';
 import { ExtensionType } from '@web-clipper/extensions';
 import { CreateDocumentRequest, UnauthorizedError } from './../common/backend/services/interface';
@@ -110,9 +111,9 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
   })
   .takeLatest(asyncCreateDocument.started, function*({ pathname }, { put, call, select }) {
     const selector = ({
-      clipper: { currentRepository, clipperData, title, repositories, currentAccountId },
+      clipper: { currentRepository, title, repositories, currentAccountId },
       account: { accounts },
-      extension: { extensions },
+      extension: { extensions, disabledAutomaticExtensions },
     }: GlobalStore) => {
       const currentAccount = accounts.find(({ id }) => id === currentAccountId);
       let repositoryId;
@@ -126,17 +127,27 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
         repositoryId = currentRepository.id;
       }
       const extension = extensions.find(o => o.router === pathname);
-      const data = clipperData[pathname];
+      const automaticExtensions = extensions.filter(
+        o =>
+          o.type === ExtensionType.Tool &&
+          o.manifest.automatic &&
+          disabledAutomaticExtensions.every(id => id !== o.id)
+      );
       return {
         repositoryId,
-        data,
+        extensions,
         title,
         extension,
         repositories,
+        automaticExtensions,
       };
     };
-    const selectState: ReturnType<typeof selector> = yield select(selector);
-    const { repositoryId, title, data, extension } = selectState;
+    const {
+      repositoryId,
+      title,
+      extension,
+      automaticExtensions,
+    }: ReturnType<typeof selector> = yield select(selector);
     if (!repositoryId) {
       yield put(
         asyncCreateDocument.failed({
@@ -153,6 +164,12 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     if (!extension) {
       return;
     }
+    if (extension.type === ExtensionType.Text) {
+      for (const iterator of automaticExtensions) {
+        yield put.resolve(asyncRunExtension.started({ pathname, extension: iterator }));
+      }
+    }
+    const data = yield select((g: GlobalStore) => g.clipper.clipperData[pathname]);
     let createDocumentRequest: CreateDocumentRequest | null = null;
     if (extension.type === ExtensionType.Text) {
       createDocumentRequest = {

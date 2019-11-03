@@ -1542,10 +1542,10 @@
     "@types/chrome" "^0.0.88"
     "@web-clipper/shared" "^0.0.20"
 
-"@web-clipper/extensions@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.npmjs.org/@web-clipper/extensions/-/extensions-0.0.13.tgz#dad91018a78b1ab70082e34be718ac938e5572f9"
-  integrity sha512-TOhN23oh4FTml0oqAen8tYFqz8jnd+wB0yOq3rCDB7/iiOEyyMAqKyxYqZ1nyAzGlwLb136DZKb87l3QdNF2Rg==
+"@web-clipper/extensions@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@web-clipper/extensions/-/extensions-0.0.14.tgz#20270405c24113f60874fb8165b37ca16477b387"
+  integrity sha512-YandQrq+g5QckOD+qvOSzGyV5LkyicZJqLZFYU+G3UhknGbANAgQ7mfQcWAK/Ka0N0TvO8Weh7dfWjpRaUZh+Q==
 
 "@web-clipper/highlight@^0.0.20":
   version "0.0.20"

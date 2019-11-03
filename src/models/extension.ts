@@ -1,3 +1,4 @@
+import { toggleAutomaticExtension } from './../actions/extension';
 import storage from 'common/storage';
 import { GlobalStore } from '@/common/types';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
@@ -15,11 +16,13 @@ import { getLocaleExtensionManifest, SerializedExtensionWithId } from '@web-clip
 import {
   LOCAL_EXTENSIONS_EXTENSIONS_KEY,
   LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY,
+  LOCAL_EXTENSIONS_DISABLED_AUTOMATIC_EXTENSIONS_KEY,
 } from '@/common/modelTypes/extensions';
 
 const initStore: GlobalStore['extension'] = {
   extensions: [],
   disabledExtensions: [],
+  disabledAutomaticExtensions: [],
 };
 
 const builder = new DvaModelBuilder(initStore, 'extension');
@@ -35,6 +38,22 @@ builder.takeEvery(toggleDisableExtension, function*(payload, { call, put }) {
   yield call(
     localStorageService.set,
     LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY,
+    JSON.stringify(newDisabledExtensions)
+  );
+  yield put(loadExtensions.started());
+});
+
+builder.takeEvery(toggleAutomaticExtension, function*(payload, { call, put }) {
+  let disabledExtensions = JSON.parse(
+    localStorageService.get(LOCAL_EXTENSIONS_DISABLED_AUTOMATIC_EXTENSIONS_KEY, '[]')
+  ) as string[];
+  const newDisabledExtensions = disabledExtensions.filter(o => o !== payload);
+  if (newDisabledExtensions.length === disabledExtensions.length) {
+    newDisabledExtensions.push(payload);
+  }
+  yield call(
+    localStorageService.set,
+    LOCAL_EXTENSIONS_DISABLED_AUTOMATIC_EXTENSIONS_KEY,
     JSON.stringify(newDisabledExtensions)
   );
   yield put(loadExtensions.started());
@@ -103,6 +122,9 @@ builder
     let disabledExtensions = JSON.parse(
       localStorageService.get(LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY, '[]')
     ) as string[];
+    let disabledAutomaticExtensions = JSON.parse(
+      localStorageService.get(LOCAL_EXTENSIONS_DISABLED_AUTOMATIC_EXTENSIONS_KEY, '[]')
+    ) as string[];
     const internalExtensions = extensions.concat(localeExtensions).map(e => ({
       ...e,
       manifest: getLocaleExtensionManifest(e.manifest, locale),
@@ -112,14 +134,19 @@ builder
         result: {
           extensions: internalExtensions,
           disabledExtensions,
+          disabledAutomaticExtensions,
         },
       })
     );
   })
-  .case(loadExtensions.done, (state, { result: { extensions, disabledExtensions } }) => ({
-    ...state,
-    extensions,
-    disabledExtensions,
-  }));
+  .case(
+    loadExtensions.done,
+    (state, { result: { extensions, disabledExtensions, disabledAutomaticExtensions } }) => ({
+      ...state,
+      extensions,
+      disabledExtensions,
+      disabledAutomaticExtensions,
+    })
+  );
 
 export default builder.build();
