@@ -45,6 +45,8 @@ import { initAccounts } from '@/actions/account';
 import iconConfig from '@/../config.json';
 import copyToClipboard from 'copy-to-clipboard';
 import { getUserInfo } from '@/common/server';
+import remark from 'remark';
+import remakPangu from 'remark-pangu';
 
 const { message } = antd;
 
@@ -304,6 +306,13 @@ builder
       URL.revokeObjectURL(aTag.href);
     }
 
+    async function pangu(document: string): Promise<string> {
+      const result = await remark()
+        .use(remakPangu)
+        .process(document);
+      return result.contents as string;
+    }
+
     if (afterRun) {
       result = yield (async () => {
         // @ts-ignore
@@ -320,6 +329,7 @@ builder
           createAndDownloadFile,
           antd,
           React,
+          pangu,
         };
         // eslint-disable-next-line
         return await eval(afterRun);
