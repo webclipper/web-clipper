@@ -61,3 +61,12 @@ export const postMail = (data: PostMailRequestBody) => {
 export const refresh = () => {
   return request.get<IResponse<string>>('refresh');
 };
+
+export interface OCRRequestBody {
+  image: string;
+  language_type: 'CHN_ENG' | 'ENG' | 'JAP' | 'GER';
+}
+
+export const ocr = (data: OCRRequestBody) => {
+  return request.post<IResponse<string>>('service/ocr', { data });
+};

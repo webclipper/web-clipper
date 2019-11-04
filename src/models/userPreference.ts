@@ -44,7 +44,7 @@ import { loadExtensions } from '@/actions/extension';
 import { initAccounts } from '@/actions/account';
 import iconConfig from '@/../config.json';
 import copyToClipboard from 'copy-to-clipboard';
-import { getUserInfo } from '@/common/server';
+import { getUserInfo, ocr } from '@/common/server';
 import remark from 'remark';
 import remakPangu from 'remark-pangu';
 
@@ -330,6 +330,10 @@ builder
           antd,
           React,
           pangu,
+          ocr: async r => {
+            const response = await ocr(r);
+            return response.result;
+          },
         };
         // eslint-disable-next-line
         return await eval(afterRun);

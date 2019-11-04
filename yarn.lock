@@ -1542,10 +1542,10 @@
     "@types/chrome" "^0.0.88"
     "@web-clipper/shared" "^0.0.20"
 
-"@web-clipper/extensions@^0.0.15":
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/@web-clipper/extensions/-/extensions-0.0.15.tgz#d3f9afa678f3bed99ca22487d83bd4552f1ce652"
-  integrity sha512-N9MNeNttOD4ix+aldnQeyhyUhZa0FnZhirJfzlCYpD0rmlBR9f7lGTLKYuoU7YMSNwzv1XFHy+ukwxSkuixzgg==
+"@web-clipper/extensions@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@web-clipper/extensions/-/extensions-0.0.16.tgz#030046b66f2577f7a3c6be438f0f0344fee84ad3"
+  integrity sha512-Ti+S4wa6PJjuvu0jAalpsMafflc0nI9NPtxVR4Dneu6KBvkqKUrodPVTHN+tGMiDeWBewfkY6jEvqwAGroCZxA==
 
 "@web-clipper/highlight@^0.0.20":
   version "0.0.20"
