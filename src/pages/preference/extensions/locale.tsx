@@ -82,12 +82,29 @@ const Page: React.FC = () => {
       );
     }
     if (e.manifest.automatic) {
+      const automaticDisabled = disabledAutomaticExtensions.some(o => o === e.id);
       actions.push(
-        <IconFont
-          type="auto"
-          onClick={() => dispatch(toggleAutomaticExtension(e.id))}
-          style={!disabledAutomaticExtensions.some(o => o === e.id) ? { color: 'red' } : {}}
-        />
+        <Tooltip
+          title={
+            automaticDisabled ? (
+              <FormattedMessage
+                id="preference.extensions.automaticOperationIsProhibited"
+                defaultMessage="Automatic operation is prohibited"
+              />
+            ) : (
+              <FormattedMessage
+                id="preference.extensions.runAutomaticOnSaving"
+                defaultMessage="Run Automatic On Saving"
+              />
+            )
+          }
+        >
+          <IconFont
+            type="auto"
+            onClick={() => dispatch(toggleAutomaticExtension(e.id))}
+            style={automaticDisabled ? {} : { color: 'red' }}
+          />
+        </Tooltip>
       );
     }
     return actions.concat(

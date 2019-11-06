@@ -90,6 +90,8 @@ const messages = {
   'preference.powerpack.feature.saveToEmail': '保存到邮件',
   'preference.powerpack.features': '功能',
   'preference.extensions.require.powerpack': '请购买加强包',
+  'preference.extensions.runAutomaticOnSaving': '保存时自动运行',
+  'preference.extensions.automaticOperationIsProhibited': '自动运行被禁止',
 };
 
 const model: LocaleModel = {
