@@ -16,17 +16,27 @@ import ExtensionCard from '@/components/ExtensionCard';
 import styles from './index.scss';
 import { installRemoteExtension } from '@/actions/extension';
 import { hasUpdate } from '@/common/version';
+import { checkBill } from '@/common/powerpack';
 
 interface RemoteExtensionProps {
   host: string;
 }
 
-const DownloadButton: React.FC<{
+interface DownloadButtonProps {
   manifest: SerializedExtensionInfo;
   localVersion: string;
   host: string;
   extensions: Map<string, SerializedExtensionWithId>;
-}> = ({ manifest, localVersion, host, extensions }) => {
+  havePowerPack: boolean;
+}
+
+const DownloadButton: React.FC<DownloadButtonProps> = ({
+  manifest,
+  localVersion,
+  host,
+  extensions,
+  havePowerPack,
+}) => {
   const dispatch = useDispatch();
   const fetchExtension = useAsync((id: string) => Axios(`${host}/extensions/${id}`), [], {
     manual: true,
@@ -44,26 +54,37 @@ const DownloadButton: React.FC<{
   if (fetchExtension.loading) {
     return <Icon type="loading" spin={true}></Icon>;
   }
-  if (manifest.manifest.apiVersion) {
-    if (hasUpdate(manifest.manifest.apiVersion, localVersion)) {
-      return (
-        <Tooltip
-          title={
-            <FormattedMessage
-              id="preference.extensions.require.update"
-              defaultMessage="Should update extension to {name}"
-              values={{
-                version: manifest.manifest.apiVersion,
-              }}
-            />
-          }
-        >
-          <Icon style={{ cursor: 'not-allowed' }} type="download" />
-        </Tooltip>
-      );
-    }
+  if (manifest.manifest.powerpack && !havePowerPack) {
+    return (
+      <Tooltip
+        title={
+          <FormattedMessage
+            id="preference.extensions.require.powerpack"
+            defaultMessage="Powerpack is required"
+          />
+        }
+      >
+        <Icon style={{ cursor: 'not-allowed' }} type="download" />
+      </Tooltip>
+    );
   }
-
+  if (manifest.manifest.apiVersion && hasUpdate(manifest.manifest.apiVersion, localVersion)) {
+    return (
+      <Tooltip
+        title={
+          <FormattedMessage
+            id="preference.extensions.require.update"
+            defaultMessage="Should update extension to {name}"
+            values={{
+              version: manifest.manifest.apiVersion,
+            }}
+          />
+        }
+      >
+        <Icon style={{ cursor: 'not-allowed' }} type="download" />
+      </Tooltip>
+    );
+  }
   const installedExtension = extensions.get(manifest.id);
   if (installedExtension) {
     if (installedExtension.manifest.version === manifest.manifest.version) {
@@ -88,7 +109,7 @@ const DownloadButton: React.FC<{
 
 const selector = ({
   extension: { extensions },
-  userPreference: { locale },
+  userPreference: { locale, userInfo },
   version: { localVersion },
 }: GlobalStore) => {
   const map = new Map<string, SerializedExtensionWithId>();
@@ -99,12 +120,13 @@ const selector = ({
     extensions: map,
     locale,
     localVersion,
+    havePowerPack: !!userInfo && checkBill(userInfo.expire_date),
   };
 };
 
 const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
   const { loading, result, error } = useAsync(() => Axios(`${host}/extensions/index`));
-  const { locale, extensions, localVersion } = useSelector(selector);
+  const { locale, extensions, localVersion, havePowerPack } = useSelector(selector);
   const remoteExtensions = useMemo<SerializedExtensionInfo[]>(() => {
     if (!result || !result.data) {
       return [];
@@ -122,6 +144,7 @@ const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
   const cardActions = (e: SerializedExtensionInfo) => {
     return [
       <DownloadButton
+        havePowerPack={havePowerPack}
         manifest={e}
         key="download"
         localVersion={localVersion}

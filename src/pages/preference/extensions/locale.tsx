@@ -75,7 +75,6 @@ const Page: React.FC = () => {
           defaultMessage="Configured as default extension"
         />
       );
-
       actions.push(
         <Tooltip title={title}>
           <Icon type="star" key="star" style={iconStyle} onClick={() => handleSetDefault(e.id)} />
@@ -88,7 +87,7 @@ const Page: React.FC = () => {
           type="auto"
           onClick={() => dispatch(toggleAutomaticExtension(e.id))}
           style={!disabledAutomaticExtensions.some(o => o === e.id) ? { color: 'red' } : {}}
-        ></IconFont>
+        />
       );
     }
     return actions.concat(

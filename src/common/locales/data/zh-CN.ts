@@ -89,6 +89,7 @@ const messages = {
   'backend.services.bear.form.confirm': '请确认您安装了 Bear 客户端。',
   'preference.powerpack.feature.saveToEmail': '保存到邮件',
   'preference.powerpack.features': '功能',
+  'preference.extensions.require.powerpack': '请购买加强包',
 };
 
 const model: LocaleModel = {
