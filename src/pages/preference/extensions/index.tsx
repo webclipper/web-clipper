@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { connect } from 'dva';
 import { DvaRouterProps } from '@/common/types';
 import { Tabs } from 'antd';
 import Locale from './locale';
@@ -12,13 +11,13 @@ const Page: React.FC<DvaRouterProps> = () => {
   return (
     <Tabs activeKey={activeKey} onChange={setActiveKey} destroyInactiveTabPane>
       <Tabs.TabPane tab="Local" key="Local">
-        <Locale></Locale>
+        <Locale />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Remote" key="Remote">
-        <Remote host={config.remoteExtensionHost}></Remote>
+        <Remote host={config.remoteExtensionHost} />
       </Tabs.TabPane>
     </Tabs>
   );
 };
 
-export default connect()(Page);
+export default Page;

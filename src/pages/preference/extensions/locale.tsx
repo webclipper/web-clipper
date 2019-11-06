@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch, connect } from 'dva';
+import { useSelector, useDispatch } from 'dva';
 import { GlobalStore } from '@/common/types';
 import { Icon, Row, Col, Typography, Tooltip, Empty, Switch } from 'antd';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
@@ -15,35 +15,29 @@ import styles from './index.scss';
 import { SerializedExtensionWithId, ExtensionType } from '@web-clipper/extensions';
 import IconFont from '@/components/IconFont';
 
+const selector = ({
+  extension: { extensions, defaultExtensionId, disabledExtensions, disabledAutomaticExtensions },
+}: GlobalStore) => {
+  return {
+    extensions,
+    defaultExtensionId,
+    disabledExtensions,
+    disabledAutomaticExtensions,
+  };
+};
+
 const Page: React.FC = () => {
+  const dispatch = useDispatch();
   const {
     extensions,
     defaultExtensionId,
     disabledExtensions,
     disabledAutomaticExtensions,
-  } = useSelector(
-    ({
-      extension: {
-        extensions,
-        defaultExtensionId,
-        disabledExtensions,
-        disabledAutomaticExtensions,
-      },
-    }: GlobalStore) => {
-      return {
-        extensions,
-        disabledExtensions,
-        defaultExtensionId,
-        disabledAutomaticExtensions,
-      };
-    }
-  );
-  const dispatch = useDispatch();
+  } = useSelector(selector);
   const [toolExtensions, clipExtensions] = useFilterExtensions(extensions);
   const handleSetDefault = (extensionId: string) => {
     dispatch(setDefaultExtensionId.started(extensionId));
   };
-
   const UninstallButton: React.FC<{ extension: SerializedExtensionWithId }> = ({
     extension: { id, embedded },
   }) => {
@@ -63,7 +57,6 @@ const Page: React.FC = () => {
 
   const cardActions = (e: SerializedExtensionWithId) => {
     const actions = [];
-
     if (!e.embedded) {
       actions.push(<UninstallButton extension={e} key="uninstall" />);
     }
@@ -158,4 +151,4 @@ const Page: React.FC = () => {
   );
 };
 
-export default connect()(Page);
+export default Page;

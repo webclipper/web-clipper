@@ -21,25 +21,90 @@ interface RemoteExtensionProps {
   host: string;
 }
 
+const DownloadButton: React.FC<{
+  manifest: SerializedExtensionInfo;
+  localVersion: string;
+  host: string;
+  extensions: Map<string, SerializedExtensionWithId>;
+}> = ({ manifest, localVersion, host, extensions }) => {
+  const dispatch = useDispatch();
+  const fetchExtension = useAsync((id: string) => Axios(`${host}/extensions/${id}`), [], {
+    manual: true,
+    onSuccess: e => {
+      const _extension: SerializedExtension = e.data;
+      const extension: SerializedExtensionWithId = {
+        ..._extension,
+        id: manifest.id,
+        router: `/plugins/${manifest.id}`,
+        embedded: false,
+      };
+      dispatch(installRemoteExtension.started(extension));
+    },
+  });
+  if (fetchExtension.loading) {
+    return <Icon type="loading" spin={true}></Icon>;
+  }
+  if (manifest.manifest.apiVersion) {
+    if (hasUpdate(manifest.manifest.apiVersion, localVersion)) {
+      return (
+        <Tooltip
+          title={
+            <FormattedMessage
+              id="preference.extensions.require.update"
+              defaultMessage="Should update extension to {name}"
+              values={{
+                version: manifest.manifest.apiVersion,
+              }}
+            />
+          }
+        >
+          <Icon style={{ cursor: 'not-allowed' }} type="download" />
+        </Tooltip>
+      );
+    }
+  }
+
+  const installedExtension = extensions.get(manifest.id);
+  if (installedExtension) {
+    if (installedExtension.manifest.version === manifest.manifest.version) {
+      return <Icon type="check" />;
+    }
+    return (
+      <Tooltip
+        title={<FormattedMessage id="preference.extensions.update" defaultMessage="Update" />}
+      >
+        <Icon type="sync" onClick={() => fetchExtension.run(manifest.id)} />
+      </Tooltip>
+    );
+  }
+  return (
+    <Tooltip
+      title={<FormattedMessage id="preference.extensions.install" defaultMessage="Install" />}
+    >
+      <Icon type="download" onClick={() => fetchExtension.run(manifest.id)} />
+    </Tooltip>
+  );
+};
+
+const selector = ({
+  extension: { extensions },
+  userPreference: { locale },
+  version: { localVersion },
+}: GlobalStore) => {
+  const map = new Map<string, SerializedExtensionWithId>();
+  extensions.forEach(e => {
+    map.set(e.id, e);
+  });
+  return {
+    extensions: map,
+    locale,
+    localVersion,
+  };
+};
+
 const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
   const { loading, result, error } = useAsync(() => Axios(`${host}/extensions/index`));
-  const { locale, extensions, localVersion } = useSelector(
-    ({
-      extension: { extensions },
-      userPreference: { locale },
-      version: { localVersion },
-    }: GlobalStore) => {
-      const map = new Map<string, SerializedExtensionWithId>();
-      extensions.forEach(e => {
-        map.set(e.id, e);
-      });
-      return {
-        extensions: map,
-        locale,
-        localVersion,
-      };
-    }
-  );
+  const { locale, extensions, localVersion } = useSelector(selector);
   const remoteExtensions = useMemo<SerializedExtensionInfo[]>(() => {
     if (!result || !result.data) {
       return [];
@@ -48,76 +113,22 @@ const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
   }, [result]);
 
   const [remoteToolExtensions, remoteClipExtensions] = useFilterExtensions(remoteExtensions);
-
   if (loading) {
     return <Skeleton></Skeleton>;
   }
   if (error) {
     return <div>Error</div>;
   }
-
-  const DownloadButton: React.FC<{ manifest: SerializedExtensionInfo }> = ({ manifest }) => {
-    const dispatch = useDispatch();
-    const fetchExtension = useAsync((id: string) => Axios(`${host}/extensions/${id}`), [], {
-      manual: true,
-      onSuccess: e => {
-        const _extension: SerializedExtension = e.data;
-        const extension: SerializedExtensionWithId = {
-          ..._extension,
-          id: manifest.id,
-          router: `/plugins/${manifest.id}`,
-          embedded: false,
-        };
-        dispatch(installRemoteExtension.started(extension));
-      },
-    });
-    if (fetchExtension.loading) {
-      return <Icon type="loading" spin={true}></Icon>;
-    }
-    if (manifest.manifest.apiVersion) {
-      if (hasUpdate(manifest.manifest.apiVersion, localVersion)) {
-        return (
-          <Tooltip
-            title={
-              <FormattedMessage
-                id="preference.extensions.require.update"
-                defaultMessage="Should update extension to {name}"
-                values={{
-                  version: manifest.manifest.apiVersion,
-                }}
-              />
-            }
-          >
-            <Icon style={{ cursor: 'not-allowed' }} type="download" />
-          </Tooltip>
-        );
-      }
-    }
-
-    const installedExtension = extensions.get(manifest.id);
-    if (installedExtension) {
-      if (installedExtension.manifest.version === manifest.manifest.version) {
-        return <Icon type="check" />;
-      }
-      return (
-        <Tooltip
-          title={<FormattedMessage id="preference.extensions.update" defaultMessage="Update" />}
-        >
-          <Icon type="sync" onClick={() => fetchExtension.run(manifest.id)} />
-        </Tooltip>
-      );
-    }
-    return (
-      <Tooltip
-        title={<FormattedMessage id="preference.extensions.install" defaultMessage="Install" />}
-      >
-        <Icon type="download" onClick={() => fetchExtension.run(manifest.id)} />
-      </Tooltip>
-    );
-  };
-
   const cardActions = (e: SerializedExtensionInfo) => {
-    return [<DownloadButton manifest={e} key="download" />];
+    return [
+      <DownloadButton
+        manifest={e}
+        key="download"
+        localVersion={localVersion}
+        extensions={extensions}
+        host={host}
+      />,
+    ];
   };
 
   return (
@@ -135,7 +146,7 @@ const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
               className={styles.extensionCard}
               manifest={getLocaleExtensionManifest(e.manifest, locale)}
               actions={cardActions(e)}
-            ></ExtensionCard>
+            />
           </Col>
         ))}
       </Row>
@@ -152,7 +163,7 @@ const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
               className={styles.extensionCard}
               manifest={getLocaleExtensionManifest(e.manifest, locale)}
               actions={cardActions(e)}
-            ></ExtensionCard>
+            />
           </Col>
         ))}
       </Row>
