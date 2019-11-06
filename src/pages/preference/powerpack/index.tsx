@@ -48,6 +48,10 @@ const Powerpack: React.FC = () => {
 
   const reload = () => dispatch(initPowerpack.started());
 
+  const handleLogout = () => {
+    localStorageService.set(LOCAL_ACCESS_TOKEN_LOCALE_KEY, '');
+  };
+
   if (loading || refreshToken.loading) {
     return <Skeleton></Skeleton>;
   }
@@ -57,14 +61,7 @@ const Powerpack: React.FC = () => {
       <div>
         <List.Item
           actions={[
-            <Button
-              key="logout"
-              type="link"
-              style={{ color: 'red' }}
-              onClick={() => {
-                localStorageService.set(LOCAL_ACCESS_TOKEN_LOCALE_KEY, '');
-              }}
-            >
+            <Button key="logout" type="link" style={{ color: 'red' }} onClick={handleLogout}>
               <FormattedMessage id="preference.powerpack.logout" defaultMessage="Logout" />
             </Button>,
             <Button key="reload" type="link" onClick={refreshToken.run}>
@@ -110,6 +107,9 @@ const Powerpack: React.FC = () => {
         </h1>
         <Button type="primary" onClick={reload}>
           <FormattedMessage id="preference.powerpack.reload" defaultMessage="Reload" />
+        </Button>
+        <Button style={{ marginLeft: 8 }} onClick={handleLogout}>
+          <FormattedMessage id="preference.powerpack.logout" defaultMessage="Logout" />
         </Button>
       </div>
     );
