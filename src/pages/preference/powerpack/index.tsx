@@ -19,6 +19,11 @@ const feature = [
     id: 'preference.powerpack.feature.saveToEmail',
     defaultMessage: 'Save To Email',
   },
+  {
+    icon: 'mail',
+    id: 'preference.powerpack.feature.ocr',
+    defaultMessage: 'OCR',
+  },
 ];
 
 const Powerpack: React.FC = () => {

@@ -314,30 +314,34 @@ builder
     }
 
     if (afterRun) {
-      result = yield (async () => {
-        // @ts-ignore
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const context: ToolContext<any, any> = {
-          locale: state.userPreference.locale,
-          result,
-          data,
-          message,
-          imageService: backend.getImageHostingService(),
-          loadImage: loadImage,
-          captureVisibleTab: browserService.captureVisibleTab,
-          copyToClipboard,
-          createAndDownloadFile,
-          antd,
-          React,
-          pangu,
-          ocr: async r => {
-            const response = await ocr(r);
-            return response.result;
-          },
-        };
-        // eslint-disable-next-line
-        return await eval(afterRun);
-      })();
+      try {
+        result = yield (async () => {
+          // @ts-ignore
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const context: ToolContext<any, any> = {
+            locale: state.userPreference.locale,
+            result,
+            data,
+            message,
+            imageService: backend.getImageHostingService(),
+            loadImage: loadImage,
+            captureVisibleTab: browserService.captureVisibleTab,
+            copyToClipboard,
+            createAndDownloadFile,
+            antd,
+            React,
+            pangu,
+            ocr: async r => {
+              const response = await ocr(r);
+              return response.result;
+            },
+          };
+          // eslint-disable-next-line
+          return await eval(afterRun);
+        })();
+      } catch (error) {
+        message.error(error.message);
+      }
     }
     if (destroy) {
       yield call(browserService.sendActionToCurrentTab, runScript(destroy));
