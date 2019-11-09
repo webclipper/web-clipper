@@ -1,3 +1,22 @@
+## 1.13.0
+
+`2019-11-08`
+
+- ✨ Support imgur.
+- 🐛 Upgrade turndown.
+- 💄 Fix icon of bear and OneNote and sm.ms
+- 💄 Add title when select account.
+- 💄 Fix style of area selector.
+
+### Powerpack
+
+- ✨ Support OCR
+
+### Extension API
+
+- ✨ Support automatic extensions
+- ✨ Support pangu
+
 ## 1.12.0
 
 `2019-10-28`
