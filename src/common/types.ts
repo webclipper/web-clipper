@@ -31,6 +31,7 @@ export interface GlobalStore {
   router: {
     location: {
       search: string;
+      pathname: string;
     };
   };
 }

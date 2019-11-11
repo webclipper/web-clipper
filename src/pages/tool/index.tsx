@@ -1,19 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import * as styles from './index.scss';
 import ClipExtension from './ClipExtension';
 import repositorySelectOptions from 'components/repositorySelectOptions';
 import ToolExtensions from './toolExtensions';
-import { Avatar, Button, Icon, Input, Select, Badge } from 'antd';
+import { Avatar, Button, Icon, Select, Badge } from 'antd';
 import { connect, routerRedux } from 'dva';
 import { GlobalStore } from '@/common/types';
 import { isEqual } from 'lodash';
 import { ToolContainer } from 'components/container';
-import {
-  asyncCreateDocument,
-  updateTitle,
-  selectRepository,
-  asyncChangeAccount,
-} from 'pageActions/clipper';
+import { selectRepository, asyncChangeAccount } from 'pageActions/clipper';
 import { asyncHideTool, asyncRunExtension } from 'pageActions/userPreference';
 import { SerializedExtensionWithId, InitContext } from '@web-clipper/extensions';
 import Section from 'components/section';
@@ -23,16 +18,10 @@ import { FormattedMessage } from 'react-intl';
 import { trackEvent } from '@/common/gs';
 import matchUrl from '@/common/matchUrl';
 import IconFont from '@/components/IconFont';
+import Header from './Header';
 
 const mapStateToProps = ({
-  clipper: {
-    currentAccountId,
-    title,
-    url,
-    currentRepository,
-    repositories,
-    currentImageHostingService,
-  },
+  clipper: { currentAccountId, url, currentRepository, repositories, currentImageHostingService },
   loading,
   account: { accounts, defaultAccountId },
   userPreference: { locale, servicesMeta },
@@ -40,8 +29,6 @@ const mapStateToProps = ({
   version: { hasUpdate },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
-  const creatingDocument = loading.effects[asyncCreateDocument.started.type];
-  const disableCreateDocument = creatingDocument;
   const loadingAccount = loading.effects[asyncChangeAccount.started.type];
   return {
     defaultAccountId,
@@ -59,13 +46,10 @@ const mapStateToProps = ({
       }),
     currentImageHostingService,
     url,
-    creatingDocument,
     currentAccountId,
-    title,
     currentRepository,
     currentAccount,
     repositories,
-    disableCreateDocument,
     locale,
     servicesMeta,
   };
@@ -76,15 +60,12 @@ type PageProps = PageStateProps & DvaRouterProps;
 const Page = React.memo<PageProps>(
   props => {
     const {
-      creatingDocument,
-      title,
       repositories,
       currentAccount,
       currentRepository,
       loadingAccount,
       extensions,
       url,
-      disableCreateDocument,
       currentImageHostingService,
       history: {
         location: { pathname },
@@ -105,14 +86,6 @@ const Page = React.memo<PageProps>(
       }
     }, [accounts.length, dispatch, pathname]);
 
-    const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(
-        updateTitle({
-          title: e.target.value,
-        })
-      );
-    };
-
     const onRepositorySelect = (repositoryId: string) => {
       dispatch(selectRepository({ repositoryId }));
     };
@@ -121,9 +94,6 @@ const Page = React.memo<PageProps>(
       const title: string = option.props.children;
       return title.indexOf(select) !== -1;
     };
-
-    const handleCreateDocument = () =>
-      dispatch(asyncCreateDocument.started({ pathname: props.history.location.pathname }));
 
     const push = (path: string) => dispatch(routerRedux.push(path));
 
@@ -157,23 +127,13 @@ const Page = React.memo<PageProps>(
 
     const [toolExtensions, clipExtensions] = useFilterExtensions(enableExtensions);
 
+    const header = useMemo(() => {
+      return <Header pathname={pathname}></Header>;
+    }, [pathname]);
+
     return (
       <ToolContainer onClickCloseButton={() => dispatch(asyncHideTool.started())}>
-        <Section title={<FormattedMessage id="tool.title" />}>
-          <Input value={title} onChange={onTitleChange} />
-          <Button
-            className={styles.saveButton}
-            style={{ marginTop: 16 }}
-            size="large"
-            type="primary"
-            loading={creatingDocument}
-            disabled={disableCreateDocument}
-            onClick={handleCreateDocument}
-            block
-          >
-            {<FormattedMessage id="tool.save" defaultMessage="Save Content" />}
-          </Button>
-        </Section>
+        {header}
         <ToolExtensions
           extensions={toolExtensions}
           onClick={extension =>
@@ -208,7 +168,7 @@ const Page = React.memo<PageProps>(
         <Section line>
           <div className={styles.toolbar}>
             <Button
-              className={`${styles.toolbarButton} `}
+              className={styles.toolbarButton}
               onClick={() => {
                 if (pathname.startsWith('/preference')) {
                   push('/');
@@ -254,11 +214,9 @@ const Page = React.memo<PageProps>(
   },
   (prevProps: PageProps, nextProps: PageProps) => {
     const selector = ({
-      creatingDocument,
       repositories,
       currentAccount,
       currentRepository,
-      title,
       history,
       loadingAccount,
       locale,
@@ -269,10 +227,8 @@ const Page = React.memo<PageProps>(
       return {
         loadingAccount,
         currentRepository,
-        creatingDocument,
         repositories,
         currentAccount,
-        title,
         pathname: history.location.pathname,
         locale,
         extensions,

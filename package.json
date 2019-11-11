@@ -21,7 +21,7 @@
       "path": "node_modules/cz-conventional-changelog"
     }
   },
-  "author": "Diamondyuan",
+  "author": "DiamondYuan",
   "license": "MIT",
   "dependencies": {
     "@diamondyuan/readability": "^0.1.0",

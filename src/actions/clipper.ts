@@ -1,9 +1,8 @@
+import { ClipperHeaderForm } from 'common/modelTypes/clipper';
 import { Repository, CompleteStatus, CreateDocumentRequest } from 'common/backend/index';
 import { actionCreatorFactory } from 'dva-model-creator';
 
 const actionCreator = actionCreatorFactory('clipper');
-
-export const updateTitle = actionCreator<{ title: string }>('UPDATE_TITLE');
 
 export const asyncCreateDocument = actionCreator.async<
   { pathname: string },
@@ -34,3 +33,5 @@ export const asyncChangeAccount = actionCreator.async<
 export const changeData = actionCreator<{ data: any; pathName: string }>('CHANGE_DATA');
 
 export const watchActionChannel = actionCreator('watchActionChannel');
+
+export const updateClipperHeader = actionCreator<ClipperHeaderForm>('updateClipperHeader');

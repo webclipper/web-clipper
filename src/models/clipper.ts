@@ -1,3 +1,4 @@
+import { updateClipperHeader } from './../actions/clipper';
 import { asyncRunExtension } from './../actions/userPreference';
 import { CompleteStatus } from 'common/backend/interface';
 import { ExtensionType } from '@web-clipper/extensions';
@@ -6,7 +7,6 @@ import { GlobalStore, ImageClipperData, ClipperStore } from '@/common/types';
 import { DvaModelBuilder } from 'dva-model-creator';
 import update from 'immutability-helper';
 import {
-  updateTitle,
   selectRepository,
   initTabInfo,
   asyncCreateDocument,
@@ -21,7 +21,9 @@ import { asyncUpdateAccount } from '@/actions/account';
 import { channel } from 'redux-saga';
 
 const defaultState: ClipperStore = {
-  title: '',
+  clipperHeaderForm: {
+    title: '',
+  },
   currentAccountId: '',
   repositories: [],
   clipperData: {},
@@ -111,7 +113,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
   })
   .takeLatest(asyncCreateDocument.started, function*({ pathname }, { put, call, select }) {
     const selector = ({
-      clipper: { currentRepository, title, repositories, currentAccountId },
+      clipper: { currentRepository, clipperHeaderForm, repositories, currentAccountId },
       account: { accounts },
       extension: { extensions, disabledAutomaticExtensions },
     }: GlobalStore) => {
@@ -136,7 +138,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
       return {
         repositoryId,
         extensions,
-        title,
+        clipperHeaderForm,
         extension,
         repositories,
         automaticExtensions,
@@ -144,7 +146,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     };
     const {
       repositoryId,
-      title,
+      clipperHeaderForm: { title },
       extension,
       automaticExtensions,
     }: ReturnType<typeof selector> = yield select(selector);
@@ -156,10 +158,6 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
         })
       );
       throw new Error('Must select repository.');
-    }
-    if (!title) {
-      yield put(asyncCreateDocument.failed({ params: { pathname }, error: null }));
-      throw new Error('Title is Required.');
     }
     if (!extension) {
       return;
@@ -237,10 +235,6 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
       });
     }
   )
-  .case(updateTitle, (state, { title }) => ({
-    ...state,
-    title,
-  }))
   .case(selectRepository, (state, { repositoryId }) => {
     const currentRepository = state.repositories.find(o => o.id === repositoryId);
     return {
@@ -250,7 +244,10 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
   })
   .case(initTabInfo, (state, { title, url }) => ({
     ...state,
-    title,
+    clipperHeaderForm: {
+      ...state.clipperHeaderForm,
+      title,
+    },
     url,
   }))
   .case(asyncCreateDocument.started, state => ({
@@ -264,6 +261,10 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
       createDocumentRequest,
     })
   )
+  .case(updateClipperHeader, (state, clipperHeaderForm) => ({
+    ...state,
+    clipperHeaderForm,
+  }))
   .case(changeData, (state, { data, pathName }) =>
     update(state, {
       clipperData: {

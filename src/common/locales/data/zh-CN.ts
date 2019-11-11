@@ -94,6 +94,7 @@ const messages = {
   'preference.extensions.automaticOperationIsProhibited': '自动运行被禁止',
   'preference.powerpack.failed': '获取加强包信息失败',
   'preference.powerpack.feature.ocr': 'OCR',
+  'tool.title.required': '请输入笔记标题',
 };
 
 const model: LocaleModel = {
