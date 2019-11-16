@@ -61,6 +61,7 @@ export interface ServiceMeta {
   form?: any;
   complete?: any;
   oauthUrl?: string;
+  headerForm?: any;
 }
 
 export interface DocumentService<T = any> {

@@ -76,6 +76,8 @@ const Page = React.memo<PageProps>(
       servicesMeta,
     } = props;
 
+    const currentService = currentAccount ? servicesMeta[currentAccount.type] : null;
+
     useEffect(() => {
       if (pathname === '/') {
         trackEvent('LoadPage', pathname);
@@ -128,8 +130,14 @@ const Page = React.memo<PageProps>(
     const [toolExtensions, clipExtensions] = useFilterExtensions(enableExtensions);
 
     const header = useMemo(() => {
-      return <Header pathname={pathname}></Header>;
-    }, [pathname]);
+      return (
+        <Header
+          pathname={pathname}
+          service={currentService}
+          currentRepository={currentRepository}
+        />
+      );
+    }, [pathname, currentService, currentRepository]);
 
     return (
       <ToolContainer onClickCloseButton={() => dispatch(asyncHideTool.started())}>

@@ -2,6 +2,7 @@ import { Repository } from '../interface';
 
 export interface GithubBackendServiceConfig {
   accessToken: string;
+  visibility: string;
 }
 
 export interface GithubUserInfoResponse {

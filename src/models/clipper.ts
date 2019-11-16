@@ -146,7 +146,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     };
     const {
       repositoryId,
-      clipperHeaderForm: { title },
+      clipperHeaderForm,
       extension,
       automaticExtensions,
     }: ReturnType<typeof selector> = yield select(selector);
@@ -171,9 +171,9 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     let createDocumentRequest: CreateDocumentRequest | null = null;
     if (extension.type === ExtensionType.Text) {
       createDocumentRequest = {
-        title: title,
         repositoryId,
         content: data as string,
+        ...clipperHeaderForm,
       };
     }
     if (extension.type === ExtensionType.Image) {
@@ -187,9 +187,9 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
           data: (data as ImageClipperData).dataUrl,
         });
         createDocumentRequest = {
-          title: title,
           repositoryId,
           content: `![](${responseUrl})`,
+          ...clipperHeaderForm,
         };
       } catch (_error) {
         message.error('上传图片到图床失败');

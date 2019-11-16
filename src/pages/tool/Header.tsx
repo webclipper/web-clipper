@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { Form, Input, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import Section from '@/components/section';
@@ -8,13 +8,21 @@ import { useSelector, useDispatch } from 'dva';
 import { GlobalStore, ClipperHeaderForm } from '@/common/types';
 import { updateClipperHeader, asyncCreateDocument } from '@/actions/clipper';
 import { isEqual } from 'lodash';
+import { ServiceMeta, Repository } from '@/common/backend';
 
-type PageProps = FormComponentProps & { pathname: string };
+type PageProps = FormComponentProps & {
+  pathname: string;
+  service: ServiceMeta | null;
+  currentRepository?: Repository;
+};
 
 const ClipperHeader: React.FC<PageProps> = props => {
   const {
     form: { getFieldDecorator, validateFields, getFieldsValue, setFieldsValue },
+    form,
     pathname,
+    service,
+    currentRepository,
   } = props;
   const formValue = getFieldsValue() as ClipperHeaderForm;
   const ref = useRef<ClipperHeaderForm>(formValue);
@@ -25,6 +33,7 @@ const ClipperHeader: React.FC<PageProps> = props => {
     };
   }, isEqual);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (isEqual(clipperHeaderForm, ref.current)) {
       return;
@@ -49,8 +58,20 @@ const ClipperHeader: React.FC<PageProps> = props => {
     });
   };
 
+  const headerForm = useMemo(() => {
+    return (
+      !!service &&
+      !!service.headerForm && (
+        <service.headerForm form={form} currentRepository={currentRepository}></service.headerForm>
+      )
+    );
+  }, [currentRepository, form, service]);
+
   return (
-    <Section title={<FormattedMessage id="tool.title" defaultMessage="Title" />}>
+    <Section
+      title={<FormattedMessage id="tool.title" defaultMessage="Title" />}
+      className={styles.header}
+    >
       <Form.Item>
         {getFieldDecorator('title', {
           rules: [
@@ -63,6 +84,7 @@ const ClipperHeader: React.FC<PageProps> = props => {
           ],
         })(<Input placeholder="Please Input Title" />)}
       </Form.Item>
+      {headerForm}
       <Button
         className={styles.saveButton}
         size="large"

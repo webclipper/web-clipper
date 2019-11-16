@@ -8,6 +8,7 @@ import {
 import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
 import axios, { AxiosInstance } from 'axios';
 import md5 from '@web-clipper/shared/lib/md5';
+import { stringify } from 'qs';
 
 const PAGE_LIMIT = 100;
 
@@ -53,12 +54,12 @@ export default class GithubDocumentService implements DocumentService {
 
   getRepositories = async () => {
     let page = 1;
-    let foo = await this.getGithubRepositories(page);
+    let foo = await this.getGithubRepositories({ page, visibility: this.config.visibility });
     let result: GithubRepository[] = [];
     result = result.concat(foo);
     while (foo.length === PAGE_LIMIT) {
       page++;
-      foo = await this.getGithubRepositories(page);
+      foo = await this.getGithubRepositories({ page, visibility: this.config.visibility });
       result = result.concat(foo);
     }
     this.repositories = result;
@@ -72,7 +73,9 @@ export default class GithubDocumentService implements DocumentService {
     );
   };
 
-  createDocument = async (info: CreateDocumentRequest): Promise<CompleteStatus> => {
+  createDocument = async (
+    info: CreateDocumentRequest & { tags: string[] }
+  ): Promise<CompleteStatus> => {
     if (!this.repositories) {
       this.getRepositories();
     }
@@ -87,15 +90,22 @@ export default class GithubDocumentService implements DocumentService {
     }>(`/repos/${repository.namespace}/issues`, {
       title,
       body,
+      labels: info.tags,
     });
     return {
       href: response.data.html_url,
     };
   };
 
-  private getGithubRepositories = async (page: number) => {
+  private getGithubRepositories = async ({
+    page,
+    visibility,
+  }: {
+    page: number;
+    visibility: string;
+  }) => {
     const response = await this.request.get<GithubRepositoryResponse[]>(
-      `user/repos?per_page=${PAGE_LIMIT}&page=${page}`
+      `user/repos?${stringify({ page, per_page: PAGE_LIMIT, visibility })}`
     );
     const repositories = response.data;
     return repositories.map(
