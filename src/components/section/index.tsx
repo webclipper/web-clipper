@@ -5,10 +5,11 @@ import styles from './index.scss';
 interface Props {
   title?: string | React.ReactNode;
   line?: boolean;
+  className?: string;
 }
 
-const Section: React.FC<Props> = ({ line = false, title, children }) => (
-  <div className={styles.section}>
+const Section: React.FC<Props> = ({ line = false, title, children, className }) => (
+  <div className={className ? `${styles.section} ${className}` : styles.section}>
     {line && <Divider style={{ marginBottom: 16 }} />}
     {title && <h1 className={styles.sectionTitle}>{title}</h1>}
     {children}
