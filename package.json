@@ -36,6 +36,7 @@
     "@web-clipper/turndown": "^0.1.0",
     "antd": "^3.23.6",
     "axios": "^0.19.0",
+    "classnames": "^2.2.6",
     "codemirror": "^5.47.0",
     "copy-to-clipboard": "^3.2.0",
     "dayjs": "^1.8.14",
@@ -63,6 +64,7 @@
   "devDependencies": {
     "@diamondyuan/eslint-config-react-typescript": "^7.0.0",
     "@types/chrome": "^0.0.88",
+    "@types/classnames": "^2.2.9",
     "@types/codemirror": "^0.0.76",
     "@types/enzyme": "^3.9.3",
     "@types/enzyme-adapter-react-16": "^1.0.3",
