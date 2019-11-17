@@ -109,7 +109,7 @@ const Page: React.FC<PageProps> = ({
           {getFieldDecorator('defaultRepositoryId', {
             initialValue: currentAccount.defaultRepositoryId,
           })(
-            <Select allowClear disabled={!verified}>
+            <Select allowClear disabled={!verified || verifying} loading={verifying}>
               {repositorySelectOptions(repositories)}
             </Select>
           )}

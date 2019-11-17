@@ -79,7 +79,7 @@ export default class extends Component<YuqueFormProps & FormComponentProps> {
             initialValue: initData.repositoryType,
             rules: [{ required: true, message: 'repositoryType is required!' }],
           })(
-            <Select disabled={editMode || verified}>
+            <Select>
               {RepositoryTypeOptions.map(o => (
                 <Select.Option key={o.key}>{o.label}</Select.Option>
               ))}

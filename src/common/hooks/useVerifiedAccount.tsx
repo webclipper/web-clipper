@@ -55,7 +55,7 @@ const useVerifiedAccount = ({ form, services, initAccount }: UseVerifiedAccountP
   const accountStatus = {
     repositories: result ? result.repositories : [],
     userInfo: result ? result.userInfo : null,
-    verified: !!result,
+    verified: !!result && !loading,
   };
 
   let serviceForm = useMemo(() => {
