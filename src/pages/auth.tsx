@@ -11,6 +11,7 @@ import ImageHostingSelect from '@/components/ImageHostingSelect';
 import repositorySelectOptions from 'components/repositorySelectOptions';
 import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
 import { asyncAddAccount } from '@/actions/account';
+import { isEqual } from 'lodash';
 
 interface PageQuery {
   access_token: string;
@@ -29,9 +30,16 @@ const mapStateToProps = ({
 type PageStateProps = ReturnType<typeof mapStateToProps>;
 type PageProps = PageStateProps & DvaRouterProps & FormComponentProps;
 
+function useDeepCompareMemoize<T>(value: T) {
+  const ref = React.useRef<T>();
+  if (!isEqual(value, ref.current)) {
+    ref.current = value;
+  }
+  return ref.current;
+}
+
 const Page: React.FC<PageProps> = props => {
   const query = parse(props.location.search.slice(1)) as PageQuery;
-  const service = props.servicesMeta[query.type];
   const {
     form: { getFieldDecorator },
     form,
@@ -57,10 +65,10 @@ const Page: React.FC<PageProps> = props => {
     imageHostingServicesMap: imageHostingServicesMeta,
   });
 
+  const memoizeQuery = useDeepCompareMemoize(query);
   useEffect(() => {
-    verifyAccount();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    verifyAccount(memoizeQuery);
+  }, [verifyAccount, memoizeQuery]);
 
   return (
     <Modal
@@ -97,8 +105,18 @@ const Page: React.FC<PageProps> = props => {
       }}
     >
       <Form labelCol={{ span: 7, offset: 0 }} wrapperCol={{ span: 17 }}>
-        <Form.Item label={<FormattedMessage id="auth.form.type" defaultMessage="Type" />}>
-          {service.name}
+        <Form.Item
+          label={<FormattedMessage id="preference.accountList.type" defaultMessage="Type" />}
+        >
+          {getFieldDecorator('type', {
+            initialValue: query.type,
+          })(
+            <Select disabled>
+              {Object.values(props.servicesMeta).map(o => (
+                <Select.Option key={o.type}>{o.name}</Select.Option>
+              ))}
+            </Select>
+          )}
         </Form.Item>
         {serviceForm}
         <Form.Item
