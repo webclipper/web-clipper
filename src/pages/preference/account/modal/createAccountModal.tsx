@@ -44,7 +44,7 @@ const Page: React.FC<PageProps> = ({
   const {
     type,
     accountStatus: { verified, repositories, userInfo },
-    verifyAccount,
+    loadAccount,
     changeType,
     serviceForm,
     okText,
@@ -63,7 +63,7 @@ const Page: React.FC<PageProps> = ({
     } else if (verified) {
       onAdd(userInfo);
     } else {
-      verifyAccount();
+      loadAccount();
     }
   };
 

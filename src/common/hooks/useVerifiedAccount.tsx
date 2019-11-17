@@ -1,102 +1,120 @@
-import { Repository, UserInfo } from 'common/backend';
 import { UserPreferenceStore } from '@/common/types';
 import { FormComponentProps } from 'antd/lib/form';
-import React, { useState } from 'react';
-import { omit } from 'lodash';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import { omit, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { message } from 'antd';
+import useAsync from './useAsync';
 
-const useVerifiedAccount = ({
-  form,
-  services,
-  initAccount,
-}: FormComponentProps & { services: UserPreferenceStore['servicesMeta']; initAccount?: any }) => {
+type UseVerifiedAccountProps = FormComponentProps & {
+  services: UserPreferenceStore['servicesMeta'];
+  initAccount?: any;
+};
+
+function useDeepCompareMemoize<T>(value: T) {
+  const ref = React.useRef<T>();
+  if (!isEqual(value, ref.current)) {
+    ref.current = value;
+  }
+  return ref.current;
+}
+
+const useVerifiedAccount = ({ form, services, initAccount }: UseVerifiedAccountProps) => {
   const [type, _setType] = useState<string>(
     initAccount ? initAccount.type : Object.values(services)[0].type
   );
   const service = services[type];
-
   const changeType = (type: string) => {
     _setType(type);
     const values = form.getFieldsValue();
     form.resetFields(Object.keys(omit(values, ['type'])));
   };
-
-  const [accountStatus, setAccountStatus] = useState<{
-    repositories: Repository[];
-    verified: boolean;
-    userInfo?: UserInfo;
-  }>({
-    repositories: [],
-    verified: false,
-  });
-
-  const [verifying, setVerifying] = useState(false);
-
-  const doVerifyAccount = async (info: any) => {
-    const Service = service.service;
-    const instance = new Service(info);
-    try {
-      setVerifying(true);
+  const { result, run, loading } = useAsync(
+    async (info: any) => {
+      const Service = service.service;
+      const instance = new Service(info);
       const userInfo = await instance.getUserInfo();
       const repositories = await instance.getRepositories();
-      setAccountStatus({
-        repositories,
-        verified: true,
-        userInfo,
-      });
-    } catch (error) {
-      message.error(error.message);
-    } finally {
-      setVerifying(false);
+      return { userInfo, repositories };
+    },
+    [service],
+    {
+      manual: true,
     }
-  };
+  );
 
-  const verifyAccount = () => {
-    if (initAccount) {
-      doVerifyAccount(initAccount);
-      return;
-    }
-    form.validateFields(async (error, values) => {
+  let loadAccount = useCallback(() => {
+    form.validateFields((error, values) => {
       if (error) {
         return;
       }
       const { type, defaultRepositoryId, imageHosting, ...info } = values;
-      doVerifyAccount(info);
+      run(info);
     });
+  }, [form, run]);
+
+  const accountStatus = {
+    repositories: result ? result.repositories : [],
+    userInfo: result ? result.userInfo : null,
+    verified: !!result,
   };
 
-  let serviceForm;
-  if (service.form) {
-    if (initAccount) {
-      const { type, ...info } = initAccount;
-      serviceForm = <service.form form={form} verified={accountStatus.verified} info={info} />;
-    } else {
-      serviceForm = <service.form form={form} verified={accountStatus.verified} />;
+  let serviceForm = useMemo(() => {
+    if (!service.form) {
+      return null;
     }
-  }
+    return (
+      <service.form
+        form={form}
+        verified={accountStatus.verified}
+        info={initAccount}
+        loadAccount={loadAccount}
+      />
+    );
+  }, [accountStatus.verified, form, initAccount, loadAccount, service.form]);
 
-  const okText = accountStatus.verified ? (
-    <FormattedMessage id="preference.accountList.add" defaultMessage="Add" />
-  ) : (
-    <FormattedMessage id="preference.accountList.verify" defaultMessage="Verify" />
-  );
+  const okText = useMemo(() => {
+    return accountStatus.verified ? (
+      <FormattedMessage id="preference.accountList.add" defaultMessage="Add" />
+    ) : (
+      <FormattedMessage id="preference.accountList.verify" defaultMessage="Verify" />
+    );
+  }, [accountStatus.verified]);
 
-  let oauthLink;
-  if (service.oauthUrl) {
-    oauthLink = (
+  let oauthLink = useMemo(() => {
+    return service.oauthUrl ? (
       <a href={service.oauthUrl} target="_blank">
         <FormattedMessage id="preference.accountList.login" defaultMessage="Login" />
       </a>
-    );
-  }
+    ) : null;
+  }, [service.oauthUrl]);
+
+  const _formInfo = useMemo(() => {
+    const values = form.getFieldsValue();
+    const { defaultRepositoryId, type: curT, imageHosting, ...info } = values;
+    if (type !== curT) {
+      return null;
+    }
+    return info;
+  }, [form, type]);
+
+  const formInfo = useDeepCompareMemoize(_formInfo);
+  const verifiedRef = useRef(accountStatus.verified);
+  verifiedRef.current = accountStatus.verified;
+
+  useEffect(() => {
+    if (!verifiedRef.current || !formInfo) {
+      return;
+    }
+    run(formInfo);
+  }, [verifiedRef, formInfo, run]);
 
   return {
     type,
     service,
-    accountStatus,
-    verifying,
-    verifyAccount,
+    accountStatus: accountStatus,
+    verifying: loading,
+    verifyAccount: run,
+    loadAccount,
     changeType,
     serviceForm,
     okText,
