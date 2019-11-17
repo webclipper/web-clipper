@@ -25,6 +25,7 @@ const messages = {
   'component.imageHostingSelectOption.noDescription': '没有备注',
   'preference.accountList.confirm': '确认',
   'backend.services.yuque.form.repositoryType': '知识库类型',
+  'preference.accountList.add': '添加',
   'preference.accountList.addAccount': '添加账户',
   'preference.extensions.clipExtensions': '剪藏插件',
   'preference.extensions.toolExtensions': '工具插件',
@@ -96,6 +97,10 @@ const messages = {
   'preference.powerpack.feature.ocr': 'OCR',
   'tool.title.required': '请输入笔记标题',
   'preference.bind.message': '只有绑定账户后才能使用本插件',
+  'backend.services.github.form.visibility.all': '全部',
+  'backend.services.github.form.visibility': '可见性',
+  'backend.services.github.form.visibility.private': '私有仓库',
+  'backend.services.github.form.visibility.public': '公开仓库',
 };
 
 const model: LocaleModel = {
