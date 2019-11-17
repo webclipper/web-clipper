@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Form, Modal, Select, Icon } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import * as styles from './index.scss';
@@ -54,10 +54,9 @@ const Page: React.FC<PageProps> = ({
     initAccount: currentAccount,
   });
 
-  useEffect(() => {
-    verifyAccount();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useLayoutEffect(() => {
+    verifyAccount(currentAccount);
+  }, [currentAccount, verifyAccount]);
 
   const supportedImageHostingServices = useFilterImageHostingServices({
     backendServiceType: currentAccount.type,
@@ -74,7 +73,7 @@ const Page: React.FC<PageProps> = ({
   return (
     <Modal
       visible={visible}
-      title={<ModalTitle></ModalTitle>}
+      title={<ModalTitle />}
       okText={okText}
       okType="primary"
       okButtonProps={{

@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 interface GithubFormProps {
   verified?: boolean;
   info?: GithubBackendServiceConfig;
+  loadAccount: any;
 }
 
 const visibilityOptions = [
