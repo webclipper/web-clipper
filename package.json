@@ -40,7 +40,7 @@
     "codemirror": "^5.47.0",
     "copy-to-clipboard": "^3.2.0",
     "dayjs": "^1.8.14",
-    "dva": "2.6.0-beta.12",
+    "dva": "2.6.0-beta.18",
     "dva-loading": "^3.0.10",
     "dva-logger": "^1.0.0",
     "dva-model-creator": "^0.4.3",
