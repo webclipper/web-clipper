@@ -1,6 +1,5 @@
 {
   "umi_pro.autoGenerateSagaEffectsCommands": true,
-  "prettier.eslintIntegration": true,
   "editor.detectIndentation": false,
   "eslint.autoFixOnSave": true,
   "eslint.trace.server": "messages",

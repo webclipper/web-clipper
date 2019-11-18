@@ -95,6 +95,7 @@ const messages = {
   'preference.powerpack.failed': '获取加强包信息失败',
   'preference.powerpack.feature.ocr': 'OCR',
   'tool.title.required': '请输入笔记标题',
+  'preference.bind.message': '只有绑定账户后才能使用本插件',
 };
 
 const model: LocaleModel = {
