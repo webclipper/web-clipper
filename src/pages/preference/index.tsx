@@ -5,7 +5,7 @@ import ImageHosting from './imageHosting';
 import Extensions from './extensions';
 import { CenterContainer } from 'components/container';
 import { router, connect } from 'dva';
-import { Tabs, Icon, Badge } from 'antd';
+import { Tabs, Icon, Badge, message } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import Base from './base';
 import { DvaRouterProps, GlobalStore } from '@/common/types';
@@ -13,13 +13,15 @@ import Changelog from './changelog';
 import IconFont from '@/components/IconFont';
 import Powerpack from './powerpack';
 import Privacy from './privacy';
+import locale from '@/common/locales';
 
 const { Route } = router;
 
 const TabPane = Tabs.TabPane;
 
-const mapStateToProps = ({ version: { hasUpdate } }: GlobalStore) => {
+const mapStateToProps = ({ version: { hasUpdate }, account: { accounts } }: GlobalStore) => {
   return {
+    accounts,
     hasUpdate,
   };
 };
@@ -78,8 +80,20 @@ const Preference: React.FC<PageProps> = ({
   location: { pathname },
   history: { push },
   hasUpdate,
+  accounts,
 }) => {
-  const goHome = () => push('/');
+  const goHome = () => {
+    if (accounts.length === 0) {
+      message.error(
+        locale.format({
+          id: 'preference.bind.message',
+          defaultMessage: 'You need to bind an account before you can use it.',
+        })
+      );
+      return;
+    }
+    push('/');
+  };
 
   return (
     <CenterContainer>
