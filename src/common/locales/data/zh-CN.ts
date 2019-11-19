@@ -101,6 +101,8 @@ const messages = {
   'backend.services.github.form.visibility': '可见性',
   'backend.services.github.form.visibility.private': '私有仓库',
   'backend.services.github.form.visibility.public': '公开仓库',
+  'backend.services.github.headerForm.applyLabels': '设置标签',
+  'backend.services.github.form.GenerateNewToken': '生成新 Token',
 };
 
 const model: LocaleModel = {

@@ -1,14 +1,21 @@
-import { Form, Input, Select } from 'antd';
+import { Form, Input, Select, Icon, Tooltip } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React, { Fragment } from 'react';
 import { GithubBackendServiceConfig } from './interface';
 import { FormattedMessage } from 'react-intl';
+import locale from '@/common/locales';
+import { stringify } from 'qs';
 
 interface GithubFormProps {
   verified?: boolean;
   info?: GithubBackendServiceConfig;
   loadAccount: any;
 }
+
+const GenerateNewTokenUrl = `https://github.com/settings/tokens/new?${stringify({
+  scopes: 'repo',
+  description: 'Web Clipper',
+})}`;
 
 const visibilityOptions = [
   {
@@ -85,7 +92,31 @@ const GithubForm: React.FC<GithubFormProps & FormComponentProps> = ({
               ),
             },
           ],
-        })(<Input disabled={disabled} />)}
+        })(
+          <Input
+            disabled={disabled}
+            suffix={
+              <Tooltip
+                title={
+                  <span
+                    style={{
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {locale.format({
+                      id: 'backend.services.github.form.GenerateNewToken',
+                      defaultMessage: 'Generate new token',
+                    })}
+                  </span>
+                }
+              >
+                <a href={GenerateNewTokenUrl} target={GenerateNewTokenUrl}>
+                  <Icon type="key" />
+                </a>
+              </Tooltip>
+            }
+          />
+        )}
       </Form.Item>
     </Fragment>
   );

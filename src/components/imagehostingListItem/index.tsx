@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { List, Avatar, Popconfirm } from 'antd';
+import { List, Avatar } from 'antd';
 import * as styles from './index.scss';
 import { FormattedMessage } from 'react-intl';
 import IconFont from '../IconFont';
@@ -49,25 +49,11 @@ export default class Page extends React.Component<PageProps> {
 
     const actions = [
       <a key="edit" onClick={this.handleEditAccount}>
-        <FormattedMessage
-          id="component.imagehostingListItem.edit"
-          defaultMessage="Edit"
-        ></FormattedMessage>
+        <FormattedMessage id="component.imagehostingListItem.edit" defaultMessage="Edit" />
       </a>,
-      <Popconfirm
-        key="delete"
-        title="Are you sure？"
-        okText="Yes"
-        cancelText="No"
-        onConfirm={this.handleDeleteAccount}
-      >
-        <a>
-          <FormattedMessage
-            id="component.imagehostingListItem.delete"
-            defaultMessage="Delete"
-          ></FormattedMessage>
-        </a>
-      </Popconfirm>,
+      <a key="delete" onClick={this.handleDeleteAccount}>
+        <FormattedMessage id="component.imagehostingListItem.delete" defaultMessage="Delete" />
+      </a>,
     ];
 
     return (

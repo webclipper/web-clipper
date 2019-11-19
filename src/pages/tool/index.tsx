@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react';
 import * as styles from './index.scss';
 import ClipExtension from './ClipExtension';
 import repositorySelectOptions from 'components/repositorySelectOptions';
@@ -88,22 +88,27 @@ const Page = React.memo<PageProps>(
       }
     }, [accounts.length, dispatch, pathname]);
 
-    const onRepositorySelect = (repositoryId: string) => {
-      dispatch(selectRepository({ repositoryId }));
-    };
+    const onRepositorySelect = useCallback(
+      (repositoryId: string) => {
+        dispatch(selectRepository({ repositoryId }));
+      },
+      [dispatch]
+    );
 
     const onFilterOption = (select: any, option: React.ReactElement<any>) => {
       const title: string = option.props.children;
       return title.indexOf(select) !== -1;
     };
 
+    useEffect(() => {
+      if (currentAccount && currentAccount.defaultRepositoryId) {
+        onRepositorySelect(currentAccount.defaultRepositoryId);
+      }
+    }, [currentAccount, onRepositorySelect]);
+
     const push = (path: string) => dispatch(routerRedux.push(path));
 
     let repositoryId;
-    if (currentAccount && repositories.some(o => o.id === currentAccount.defaultRepositoryId)) {
-      repositoryId = currentAccount.defaultRepositoryId;
-    }
-
     if (currentRepository) {
       repositoryId = currentRepository.id;
     }
