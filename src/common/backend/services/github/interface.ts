@@ -24,3 +24,10 @@ export interface GithubRepositoryResponse {
   description: string;
   private: boolean;
 }
+
+export interface GithubLabel {
+  color: string;
+  description: string;
+  name: string;
+  default: boolean;
+}

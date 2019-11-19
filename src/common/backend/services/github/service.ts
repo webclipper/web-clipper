@@ -4,8 +4,9 @@ import {
   GithubUserInfoResponse,
   GithubRepositoryResponse,
   GithubRepository,
+  GithubLabel,
 } from './interface';
-import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
+import { DocumentService, CreateDocumentRequest } from '../../index';
 import axios, { AxiosInstance } from 'axios';
 import md5 from '@web-clipper/shared/lib/md5';
 import { stringify } from 'qs';
@@ -52,7 +53,7 @@ export default class GithubDocumentService implements DocumentService {
     };
   };
 
-  getRepositories = async () => {
+  getRepositories = async (): Promise<GithubRepository[]> => {
     let page = 1;
     let foo = await this.getGithubRepositories({ page, visibility: this.config.visibility });
     let result: GithubRepository[] = [];
@@ -63,23 +64,14 @@ export default class GithubDocumentService implements DocumentService {
       result = result.concat(foo);
     }
     this.repositories = result;
-    return result.map(
-      ({ id, name, groupId, groupName }): Repository => ({
-        id,
-        name,
-        groupId,
-        groupName,
-      })
-    );
+    return result;
   };
 
-  createDocument = async (
-    info: CreateDocumentRequest & { tags: string[] }
-  ): Promise<CompleteStatus> => {
+  createDocument = async (info: CreateDocumentRequest): Promise<CompleteStatus> => {
     if (!this.repositories) {
       this.getRepositories();
     }
-    const { content: body, title, repositoryId } = info;
+    const { content: body, title, repositoryId, labels } = info;
     const repository = this.repositories.find(o => o.id === repositoryId);
     if (!repository) {
       throw new Error('can not find repository');
@@ -90,11 +82,15 @@ export default class GithubDocumentService implements DocumentService {
     }>(`/repos/${repository.namespace}/issues`, {
       title,
       body,
-      labels: info.tags,
+      labels,
     });
     return {
       href: response.data.html_url,
     };
+  };
+
+  getRepoLabels = async (repo: GithubRepository): Promise<GithubLabel[]> => {
+    return (await this.request.get<GithubLabel[]>(`/repos/${repo.namespace}/labels`)).data;
   };
 
   private getGithubRepositories = async ({
