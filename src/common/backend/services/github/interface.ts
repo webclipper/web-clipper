@@ -1,8 +1,12 @@
-import { Repository } from '../interface';
+import { Repository, CreateDocumentRequest } from '../interface';
 
 export interface GithubBackendServiceConfig {
   accessToken: string;
   visibility: string;
+}
+
+export interface GithubCreateDocumentRequest extends CreateDocumentRequest {
+  labels: string[];
 }
 
 export interface GithubUserInfoResponse {

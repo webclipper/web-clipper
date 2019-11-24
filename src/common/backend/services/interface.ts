@@ -2,7 +2,6 @@ export interface CreateDocumentRequest {
   title: string;
   content: string;
   repositoryId: string;
-  labels: string[];
 }
 
 export interface CompleteStatus {
