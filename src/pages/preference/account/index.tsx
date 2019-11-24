@@ -113,7 +113,7 @@ class Page extends React.Component<PageProps, PageState> {
     );
   };
 
-  handleEditAccount = (id: string) => {
+  handleEditAccount = (id: string, userInfo: any, newId: string) => {
     const { form, asyncUpdateAccount, currentAccountId } = this.props;
     form.validateFields((error, values) => {
       if (error) {
@@ -123,6 +123,8 @@ class Page extends React.Component<PageProps, PageState> {
       asyncUpdateAccount({
         account: { type, defaultRepositoryId, imageHosting, info },
         id,
+        newId,
+        userInfo,
         callback: () => {
           this.handleCancel();
           if (currentAccountId === id) {

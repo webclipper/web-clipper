@@ -15,6 +15,7 @@ import {
   watchActionChannel,
 } from 'pageActions/clipper';
 import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
+import { unpackAccountPreference } from '@/common/account';
 import { message } from 'antd';
 import { routerRedux } from 'dva';
 import { asyncUpdateAccount } from '@/actions/account';
@@ -42,7 +43,6 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     }
   })
   .takeEvery(asyncChangeAccount.started, function*(payload, { call, select, put }) {
-    const { id } = payload;
     const selector = ({ userPreference: { imageHosting }, account: { accounts } }: GlobalStore) => {
       return {
         accounts,
@@ -51,11 +51,17 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     };
     const selectState: ReturnType<typeof selector> = yield select(selector);
     const { accounts, imageHosting } = selectState;
-    const account = accounts.find(o => o.id === id);
-    if (!account) {
+    const currentAccount = accounts.find(o => o.id === payload.id);
+    if (!currentAccount) {
       throw new Error('Load Account Error,Account not exist.');
     }
-    let { type, defaultRepositoryId, imageHosting: imageHostingId, ...info } = account;
+
+    const {
+      id,
+      account,
+      account: { type, info },
+      userInfo,
+    } = unpackAccountPreference(currentAccount);
     const documentService = documentServiceFactory(type, info);
     let repositories = [];
     try {
@@ -63,18 +69,18 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     } catch (error) {
       if (error instanceof UnauthorizedError) {
         if (documentService.refreshToken) {
-          info = yield call(documentService.refreshToken, info);
+          const newInfo = yield call(documentService.refreshToken, info);
           yield put(
             asyncUpdateAccount({
-              id: account.id,
+              id,
               account: {
-                info: info,
-                type,
-                defaultRepositoryId,
-                imageHosting: imageHostingId,
+                ...account,
+                info: newInfo,
               },
+              userInfo,
+              newId: id,
               callback: () => {
-                actionChannel.put(asyncChangeAccount.started({ id: account.id }));
+                actionChannel.put(asyncChangeAccount.started({ id }));
               },
             })
           );
@@ -87,8 +93,8 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     }
     backend.setDocumentService(documentService);
     let currentImageHostingService: ClipperStore['currentImageHostingService'];
-    if (imageHostingId) {
-      const imageHostingIndex = imageHosting.findIndex(o => o.id === imageHostingId);
+    if (account.imageHosting) {
+      const imageHostingIndex = imageHosting.findIndex(o => o.id === account.imageHosting);
       if (imageHostingIndex !== -1) {
         const accountImageHosting = imageHosting[imageHostingIndex];
         const imageHostingService = imageHostingServiceFactory(

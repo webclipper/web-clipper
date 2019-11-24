@@ -1,3 +1,4 @@
+import { UserInfo } from '@/common/backend/services/interface';
 import { AccountPreference } from '@/common/types';
 import { actionCreatorFactory } from 'dva-model-creator';
 
@@ -9,7 +10,7 @@ export const asyncAddAccount = actionCreator.async<
     info: any;
     imageHosting?: string;
     defaultRepositoryId?: string;
-    userInfo: any;
+    userInfo: UserInfo;
     type: string;
     callback(): void;
   },
@@ -46,5 +47,7 @@ export const asyncUpdateAccount = actionCreator<{
     defaultRepositoryId?: string;
     type: string;
   };
+  newId: string;
+  userInfo: UserInfo;
   callback(): void;
 }>('asyncUpdateAccount');

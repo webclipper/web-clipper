@@ -54,12 +54,12 @@ model.takeEvery(asyncAddAccount.started, function*(payload, { select, call }) {
   const { accounts }: ReturnType<typeof selector> = yield select(selector);
   const { info, imageHosting, defaultRepositoryId, type, userInfo, callback, id } = payload;
   const userPreference: AccountPreference = {
-    type,
-    id,
     ...userInfo,
+    ...info,
     imageHosting,
     defaultRepositoryId,
-    ...info,
+    type,
+    id,
   };
   if (accounts.some(o => o.id === userPreference.id)) {
     message.error('Do not allow duplicate accounts');
@@ -108,6 +108,8 @@ model.takeEvery(asyncUpdateAccount, function*(payload, { select, put, call }) {
   const {
     id,
     account: { info, defaultRepositoryId, imageHosting },
+    userInfo,
+    newId,
     callback,
   } = payload;
   const accountIndex = accounts.findIndex(o => o.id === id);
@@ -119,8 +121,10 @@ model.takeEvery(asyncUpdateAccount, function*(payload, { select, put, call }) {
   const result = update(accounts, {
     [accountIndex]: {
       $merge: {
+        id: newId,
         defaultRepositoryId,
         imageHosting,
+        ...userInfo,
         ...info,
       },
     },
