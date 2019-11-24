@@ -34,7 +34,8 @@ const useVerifiedAccount = ({ form, services, initAccount }: UseVerifiedAccountP
       const instance = new Service(info);
       const userInfo = await instance.getUserInfo();
       const repositories = await instance.getRepositories();
-      return { userInfo, repositories };
+      const id = await instance.getId();
+      return { userInfo, repositories, id };
     },
     [service],
     {
@@ -56,6 +57,7 @@ const useVerifiedAccount = ({ form, services, initAccount }: UseVerifiedAccountP
     repositories: result ? result.repositories : [],
     userInfo: result ? result.userInfo : null,
     verified: !!result && !loading,
+    id: result ? result.id : null,
   };
 
   let serviceForm = useMemo(() => {

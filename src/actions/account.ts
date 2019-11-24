@@ -5,6 +5,7 @@ const actionCreator = actionCreatorFactory('account');
 
 export const asyncAddAccount = actionCreator.async<
   {
+    id: string;
     info: any;
     imageHosting?: string;
     defaultRepositoryId?: string;

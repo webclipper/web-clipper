@@ -74,7 +74,7 @@ class Page extends React.Component<PageProps, PageState> {
     this.toggleAccountModal(currentAccount);
   };
 
-  handleAdd = (userInfo: any) => {
+  handleAdd = (id: string, userInfo: any) => {
     const { form } = this.props;
     form.validateFields((error, values) => {
       if (error) {
@@ -82,6 +82,7 @@ class Page extends React.Component<PageProps, PageState> {
       }
       const { type, defaultRepositoryId, imageHosting, ...info } = values;
       this.props.asyncAddAccount({
+        id,
         type,
         defaultRepositoryId,
         imageHosting,

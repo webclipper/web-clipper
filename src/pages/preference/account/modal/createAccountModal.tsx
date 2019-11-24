@@ -18,7 +18,7 @@ type PageOwnProps = {
   imageHosting: ImageHosting[];
   visible: boolean;
   onCancel(): void;
-  onAdd(userInfo: any): void;
+  onAdd(id: string, userInfo: any): void;
 };
 type PageProps = PageOwnProps & FormComponentProps;
 
@@ -43,7 +43,7 @@ const Page: React.FC<PageProps> = ({
 }) => {
   const {
     type,
-    accountStatus: { verified, repositories, userInfo },
+    accountStatus: { verified, repositories, userInfo, id },
     loadAccount,
     changeType,
     serviceForm,
@@ -60,8 +60,8 @@ const Page: React.FC<PageProps> = ({
   const handleOk = () => {
     if (oauthLink) {
       onCancel();
-    } else if (verified) {
-      onAdd(userInfo);
+    } else if (verified && id) {
+      onAdd(id, userInfo);
     } else {
       loadAccount();
     }

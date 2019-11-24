@@ -10,7 +10,6 @@ import {
   asyncUpdateAccount,
 } from '@/actions/account';
 import { asyncChangeAccount } from '@/actions/clipper';
-import { ServiceMeta } from '@/common/backend';
 import { message } from 'antd';
 
 const initState: GlobalStore['account'] = {
@@ -49,17 +48,14 @@ model
   }));
 
 model.takeEvery(asyncAddAccount.started, function*(payload, { select, call }) {
-  const selector = ({ userPreference: { servicesMeta }, account: { accounts } }: GlobalStore) => {
-    return { servicesMeta, accounts };
+  const selector = ({ account: { accounts } }: GlobalStore) => {
+    return { accounts };
   };
-  const { servicesMeta, accounts }: ReturnType<typeof selector> = yield select(selector);
-  const { info, imageHosting, defaultRepositoryId, type, userInfo, callback } = payload;
-  const service: ServiceMeta = servicesMeta[type];
-  const { service: Service } = service;
-  const instance = new Service(info);
+  const { accounts }: ReturnType<typeof selector> = yield select(selector);
+  const { info, imageHosting, defaultRepositoryId, type, userInfo, callback, id } = payload;
   const userPreference: AccountPreference = {
     type,
-    id: instance.getId(),
+    id,
     ...userInfo,
     imageHosting,
     defaultRepositoryId,
@@ -104,7 +100,11 @@ model
   }));
 
 model.takeEvery(asyncUpdateAccount, function*(payload, { select, put, call }) {
-  const accounts: AccountPreference[] = yield select((g: GlobalStore) => g.account.accounts);
+  const selector = ({ account: { accounts }, userPreference: { servicesMeta } }: GlobalStore) => ({
+    accounts,
+    servicesMeta,
+  });
+  const { accounts }: ReturnType<typeof selector> = yield select(selector);
   const {
     id,
     account: { info, defaultRepositoryId, imageHosting },
