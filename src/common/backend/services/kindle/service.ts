@@ -6,12 +6,12 @@ import { MailBackendServiceConfig } from './interface';
 export default class MailDocumentService implements DocumentService {
   private config: MailBackendServiceConfig;
 
-  constructor({ to }: MailBackendServiceConfig) {
-    this.config = { to };
+  constructor({ to, domain }: MailBackendServiceConfig) {
+    this.config = { to, domain };
   }
 
   getId = () => {
-    return this.config.to;
+    return `${this.config.to}${this.config.domain}`;
   };
 
   getUserInfo = async () => {
@@ -27,7 +27,7 @@ export default class MailDocumentService implements DocumentService {
     return [
       {
         id: 'mail',
-        name: `Send to ${this.config.to}`,
+        name: `Send to ${this.config.to}${this.config.domain}`,
         groupId: 'mail',
         groupName: 'Mail',
       },
@@ -36,7 +36,7 @@ export default class MailDocumentService implements DocumentService {
 
   createDocument = async (info: CreateDocumentRequest): Promise<CompleteStatus> => {
     const postBody: SendToKindleRequestBody = {
-      to: this.config.to,
+      to: `${this.config.to}${this.config.domain}`,
       title: info.title,
       content: info.content,
     };

@@ -40,8 +40,8 @@ if (process.env.NODE_ENV === 'development') {
     createLogger: false,
     // remoteExtensionHost: 'https://extensions.dev.clipper.website',
     // remoteExtensionHost: 'https://extensions.clipper.website',
-    remoteExtensionHost: 'http://localhost:3000',
-    serverHost: 'http://localhost:3000',
+    // remoteExtensionHost: 'http://localhost:3000',
+    // serverHost: 'http://localhost:3000',
   });
 }
 

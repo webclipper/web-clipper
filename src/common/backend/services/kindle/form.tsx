@@ -1,4 +1,4 @@
-import { Form, Input, Checkbox, Button } from 'antd';
+import { Form, Input, Checkbox, Button, Select } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React, { Fragment } from 'react';
 import { MailBackendServiceConfig } from './interface';
@@ -13,11 +13,22 @@ interface OneNoteProps {
   info?: MailBackendServiceConfig;
 }
 
+const DomainList = ['@kindle.cn', '@kindle.com', '@free.kindle.com'];
+
+const DomainSelect = (
+  <Select style={{ width: 150 }}>
+    {DomainList.map(o => (
+      <Select.Option key={o} value={o}>
+        {o}
+      </Select.Option>
+    ))}
+  </Select>
+);
+
 const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
   const {
     form: { getFieldDecorator },
     info,
-    verified,
   } = props;
 
   let initData: Partial<MailBackendServiceConfig> = {};
@@ -95,7 +106,13 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
               }),
             },
           ],
-        })(<Input disabled={verified} />)}
+        })(
+          <Input
+            addonAfter={getFieldDecorator('domain', {
+              initialValue: initData.domain || '@kindle.com',
+            })(DomainSelect)}
+          />
+        )}
       </Form.Item>
     </Fragment>
   );
