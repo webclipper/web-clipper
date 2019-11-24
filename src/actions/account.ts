@@ -35,8 +35,8 @@ export const asyncDeleteAccount = actionCreator.async<
   void
 >('asyncDeleteAccount');
 
-export const asyncUpdateCurrentAccountId = actionCreator.async<{ id?: string }, void>(
-  'asyncUpdateCurrentAccountId'
+export const asyncUpdateDefaultAccountId = actionCreator.async<{ id?: string }, void>(
+  'asyncUpdateDefaultAccountId'
 );
 
 export const asyncUpdateAccount = actionCreator<{

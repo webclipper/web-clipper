@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   asyncAddAccount,
   asyncDeleteAccount,
-  asyncUpdateCurrentAccountId,
+  asyncUpdateDefaultAccountId,
   asyncUpdateAccount,
 } from 'pageActions/account';
 import { Icon, Button, Form, Row, Col } from 'antd';
@@ -21,7 +21,7 @@ const useActions = {
   asyncAddAccount: asyncAddAccount.started,
   asyncDeleteAccount: asyncDeleteAccount.started,
   asyncUpdateAccount: asyncUpdateAccount,
-  asyncUpdateCurrentAccountId: asyncUpdateCurrentAccountId.started,
+  asyncUpdateDefaultAccountId: asyncUpdateDefaultAccountId.started,
   asyncChangeAccount: asyncChangeAccount.started,
 };
 
@@ -63,7 +63,7 @@ class Page extends React.Component<PageProps, PageState> {
     if (this.props.defaultAccountId === id) {
       return;
     }
-    this.props.asyncUpdateCurrentAccountId({ id });
+    this.props.asyncUpdateDefaultAccountId({ id });
   };
 
   handleEdit = (accountId: string) => {

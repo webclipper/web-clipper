@@ -6,7 +6,7 @@ import {
   initAccounts,
   asyncAddAccount,
   asyncDeleteAccount,
-  asyncUpdateCurrentAccountId,
+  asyncUpdateDefaultAccountId,
   asyncUpdateAccount,
 } from '@/actions/account';
 import { asyncChangeAccount } from '@/actions/clipper';
@@ -27,7 +27,7 @@ model
       if (key === 'defaultAccountId') {
         const defaultAccountId = syncStorageService.get('defaultAccountId');
         dispatch(
-          removeActionNamespace(asyncUpdateCurrentAccountId.started({ id: defaultAccountId }))
+          removeActionNamespace(asyncUpdateDefaultAccountId.started({ id: defaultAccountId }))
         );
       }
     });
@@ -90,11 +90,11 @@ model.takeEvery(asyncDeleteAccount.started, function*({ id }, { select, call }) 
 });
 
 model
-  .takeEvery(asyncUpdateCurrentAccountId.started, function*({ id }, { call, put }) {
+  .takeEvery(asyncUpdateDefaultAccountId.started, function*({ id }, { call, put }) {
     yield call(syncStorageService.set, 'defaultAccountId', id);
-    yield put(asyncUpdateCurrentAccountId.done({ params: { id } }));
+    yield put(asyncUpdateDefaultAccountId.done({ params: { id } }));
   })
-  .case(asyncUpdateCurrentAccountId.done, (s, { params: { id: defaultAccountId } }) => ({
+  .case(asyncUpdateDefaultAccountId.done, (s, { params: { id: defaultAccountId } }) => ({
     ...s,
     defaultAccountId,
   }));
@@ -132,7 +132,7 @@ model.takeEvery(asyncUpdateAccount, function*(payload, { select, put, call }) {
   yield call(syncStorageService.set, 'accounts', JSON.stringify(result));
   const currentAccountId: string = yield select((g: GlobalStore) => g.clipper.currentAccountId);
   if (id === currentAccountId) {
-    yield put(asyncChangeAccount.started({ id }));
+    yield put(asyncChangeAccount.started({ id: newId }));
   }
   callback();
 });
