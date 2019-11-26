@@ -100,11 +100,11 @@ model
   }));
 
 model.takeEvery(asyncUpdateAccount, function*(payload, { select, put, call }) {
-  const selector = ({ account: { accounts }, userPreference: { servicesMeta } }: GlobalStore) => ({
+  const selector = ({ account: { accounts, defaultAccountId } }: GlobalStore) => ({
     accounts,
-    servicesMeta,
+    defaultAccountId,
   });
-  const { accounts }: ReturnType<typeof selector> = yield select(selector);
+  const { accounts, defaultAccountId }: ReturnType<typeof selector> = yield select(selector);
   const {
     id,
     account: { info, defaultRepositoryId, imageHosting },
@@ -131,8 +131,12 @@ model.takeEvery(asyncUpdateAccount, function*(payload, { select, put, call }) {
   });
   yield call(syncStorageService.set, 'accounts', JSON.stringify(result));
   const currentAccountId: string = yield select((g: GlobalStore) => g.clipper.currentAccountId);
+  if (id === defaultAccountId) {
+    yield put.resolve(asyncUpdateDefaultAccountId.started({ id: newId }));
+  }
+  yield put.resolve(initAccounts.started);
   if (id === currentAccountId) {
-    yield put(asyncChangeAccount.started({ id: newId }));
+    yield put.resolve(asyncChangeAccount.started({ id: newId }));
   }
   callback();
 });

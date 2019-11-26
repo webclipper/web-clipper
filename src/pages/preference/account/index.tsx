@@ -114,7 +114,7 @@ class Page extends React.Component<PageProps, PageState> {
   };
 
   handleEditAccount = (id: string, userInfo: any, newId: string) => {
-    const { form, asyncUpdateAccount, currentAccountId } = this.props;
+    const { form, asyncUpdateAccount } = this.props;
     form.validateFields((error, values) => {
       if (error) {
         return;
@@ -127,9 +127,6 @@ class Page extends React.Component<PageProps, PageState> {
         userInfo,
         callback: () => {
           this.handleCancel();
-          if (currentAccountId === id) {
-            this.props.asyncChangeAccount({ id });
-          }
         },
       });
     });

@@ -55,7 +55,6 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     if (!currentAccount) {
       throw new Error('Load Account Error,Account not exist.');
     }
-
     const {
       id,
       account,
