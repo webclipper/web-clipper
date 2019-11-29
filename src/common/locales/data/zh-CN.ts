@@ -103,6 +103,7 @@ const messages = {
   'backend.services.github.form.visibility.public': '公开仓库',
   'backend.services.github.headerForm.applyLabels': '设置标签',
   'backend.services.github.form.GenerateNewToken': '生成新 Token',
+  'backend.services.kindle.form.alert': '你必须告诉 Amazon 允许 {mail} 发送邮件到你的 Kindle.',
 };
 
 const model: LocaleModel = {

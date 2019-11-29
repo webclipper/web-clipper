@@ -113,6 +113,19 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
             })(DomainSelect)}
           />
         )}
+        <p style={{ lineHeight: '30px' }}>
+          <FormattedMessage
+            id="backend.services.kindle.form.alert"
+            defaultMessage="You must tell Amazon allow {mail} send email to your kindle."
+            values={{
+              mail: (
+                <span style={{ fontWeight: 500, display: 'block' }}>
+                  send_to_kindle@push.clipper.website
+                </span>
+              ),
+            }}
+          />
+        </p>
       </Form.Item>
     </Fragment>
   );
