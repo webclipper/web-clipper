@@ -50,7 +50,7 @@ const Page: React.FC<PageProps> = props => {
   const {
     type,
     verifyAccount,
-    accountStatus: { repositories, verified, userInfo },
+    accountStatus: { repositories, verified, userInfo, id },
     serviceForm,
     verifying,
   } = useVerifiedAccount({
@@ -90,6 +90,7 @@ const Page: React.FC<PageProps> = props => {
           const { defaultRepositoryId, imageHosting, ...info } = values;
           props.dispatch(
             asyncAddAccount.started({
+              id: id!,
               type,
               defaultRepositoryId,
               imageHosting,

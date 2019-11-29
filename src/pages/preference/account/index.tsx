@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   asyncAddAccount,
   asyncDeleteAccount,
-  asyncUpdateCurrentAccountId,
+  asyncUpdateDefaultAccountId,
   asyncUpdateAccount,
 } from 'pageActions/account';
 import { Icon, Button, Form, Row, Col } from 'antd';
@@ -21,7 +21,7 @@ const useActions = {
   asyncAddAccount: asyncAddAccount.started,
   asyncDeleteAccount: asyncDeleteAccount.started,
   asyncUpdateAccount: asyncUpdateAccount,
-  asyncUpdateCurrentAccountId: asyncUpdateCurrentAccountId.started,
+  asyncUpdateDefaultAccountId: asyncUpdateDefaultAccountId.started,
   asyncChangeAccount: asyncChangeAccount.started,
 };
 
@@ -63,7 +63,7 @@ class Page extends React.Component<PageProps, PageState> {
     if (this.props.defaultAccountId === id) {
       return;
     }
-    this.props.asyncUpdateCurrentAccountId({ id });
+    this.props.asyncUpdateDefaultAccountId({ id });
   };
 
   handleEdit = (accountId: string) => {
@@ -74,7 +74,7 @@ class Page extends React.Component<PageProps, PageState> {
     this.toggleAccountModal(currentAccount);
   };
 
-  handleAdd = (userInfo: any) => {
+  handleAdd = (id: string, userInfo: any) => {
     const { form } = this.props;
     form.validateFields((error, values) => {
       if (error) {
@@ -82,6 +82,7 @@ class Page extends React.Component<PageProps, PageState> {
       }
       const { type, defaultRepositoryId, imageHosting, ...info } = values;
       this.props.asyncAddAccount({
+        id,
         type,
         defaultRepositoryId,
         imageHosting,
@@ -112,8 +113,8 @@ class Page extends React.Component<PageProps, PageState> {
     );
   };
 
-  handleEditAccount = (id: string) => {
-    const { form, asyncUpdateAccount, currentAccountId } = this.props;
+  handleEditAccount = (id: string, userInfo: any, newId: string) => {
+    const { form, asyncUpdateAccount } = this.props;
     form.validateFields((error, values) => {
       if (error) {
         return;
@@ -122,11 +123,10 @@ class Page extends React.Component<PageProps, PageState> {
       asyncUpdateAccount({
         account: { type, defaultRepositoryId, imageHosting, info },
         id,
+        newId,
+        userInfo,
         callback: () => {
           this.handleCancel();
-          if (currentAccountId === id) {
-            this.props.asyncChangeAccount({ id });
-          }
         },
       });
     });

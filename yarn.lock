@@ -4082,10 +4082,10 @@ dva-model-creator@^0.4.3:
   dependencies:
     warning "^4.0.3"
 
-dva@2.6.0-beta.18:
-  version "2.6.0-beta.18"
-  resolved "https://registry.npm.taobao.org/dva/download/dva-2.6.0-beta.18.tgz#b039796f4e72199a4d553516f4df5cddcb65cc20"
-  integrity sha1-sDl5b05yGZpNVTUW9N9c3ctlzCA=
+dva@^2.6.0-beta.19:
+  version "2.6.0-beta.19"
+  resolved "https://registry.npm.taobao.org/dva/download/dva-2.6.0-beta.19.tgz#b3fafe02d7fd1a1637fe803c6b76005872ae3b77"
+  integrity sha1-s/r+Atf9GhY3/oA8a3YAWHKuO3c=
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@types/isomorphic-fetch" "^0.0.35"

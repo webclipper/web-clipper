@@ -5,8 +5,9 @@ import {
   GithubRepositoryResponse,
   GithubRepository,
   GithubLabel,
+  GithubCreateDocumentRequest,
 } from './interface';
-import { DocumentService, CreateDocumentRequest } from '../../index';
+import { DocumentService } from '../../index';
 import axios, { AxiosInstance } from 'axios';
 import md5 from '@web-clipper/shared/lib/md5';
 import { stringify } from 'qs';
@@ -67,7 +68,7 @@ export default class GithubDocumentService implements DocumentService {
     return result;
   };
 
-  createDocument = async (info: CreateDocumentRequest): Promise<CompleteStatus> => {
+  createDocument = async (info: GithubCreateDocumentRequest): Promise<CompleteStatus> => {
     if (!this.repositories) {
       this.getRepositories();
     }

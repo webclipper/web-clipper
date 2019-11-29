@@ -6,11 +6,10 @@ import {
   initAccounts,
   asyncAddAccount,
   asyncDeleteAccount,
-  asyncUpdateCurrentAccountId,
+  asyncUpdateDefaultAccountId,
   asyncUpdateAccount,
 } from '@/actions/account';
 import { asyncChangeAccount } from '@/actions/clipper';
-import { ServiceMeta } from '@/common/backend';
 import { message } from 'antd';
 
 const initState: GlobalStore['account'] = {
@@ -28,7 +27,7 @@ model
       if (key === 'defaultAccountId') {
         const defaultAccountId = syncStorageService.get('defaultAccountId');
         dispatch(
-          removeActionNamespace(asyncUpdateCurrentAccountId.started({ id: defaultAccountId }))
+          removeActionNamespace(asyncUpdateDefaultAccountId.started({ id: defaultAccountId }))
         );
       }
     });
@@ -49,21 +48,18 @@ model
   }));
 
 model.takeEvery(asyncAddAccount.started, function*(payload, { select, call }) {
-  const selector = ({ userPreference: { servicesMeta }, account: { accounts } }: GlobalStore) => {
-    return { servicesMeta, accounts };
+  const selector = ({ account: { accounts } }: GlobalStore) => {
+    return { accounts };
   };
-  const { servicesMeta, accounts }: ReturnType<typeof selector> = yield select(selector);
-  const { info, imageHosting, defaultRepositoryId, type, userInfo, callback } = payload;
-  const service: ServiceMeta = servicesMeta[type];
-  const { service: Service } = service;
-  const instance = new Service(info);
+  const { accounts }: ReturnType<typeof selector> = yield select(selector);
+  const { info, imageHosting, defaultRepositoryId, type, userInfo, callback, id } = payload;
   const userPreference: AccountPreference = {
-    type,
-    id: instance.getId(),
     ...userInfo,
+    ...info,
     imageHosting,
     defaultRepositoryId,
-    ...info,
+    type,
+    id,
   };
   if (accounts.some(o => o.id === userPreference.id)) {
     message.error('Do not allow duplicate accounts');
@@ -94,20 +90,26 @@ model.takeEvery(asyncDeleteAccount.started, function*({ id }, { select, call }) 
 });
 
 model
-  .takeEvery(asyncUpdateCurrentAccountId.started, function*({ id }, { call, put }) {
+  .takeEvery(asyncUpdateDefaultAccountId.started, function*({ id }, { call, put }) {
     yield call(syncStorageService.set, 'defaultAccountId', id);
-    yield put(asyncUpdateCurrentAccountId.done({ params: { id } }));
+    yield put(asyncUpdateDefaultAccountId.done({ params: { id } }));
   })
-  .case(asyncUpdateCurrentAccountId.done, (s, { params: { id: defaultAccountId } }) => ({
+  .case(asyncUpdateDefaultAccountId.done, (s, { params: { id: defaultAccountId } }) => ({
     ...s,
     defaultAccountId,
   }));
 
 model.takeEvery(asyncUpdateAccount, function*(payload, { select, put, call }) {
-  const accounts: AccountPreference[] = yield select((g: GlobalStore) => g.account.accounts);
+  const selector = ({ account: { accounts, defaultAccountId } }: GlobalStore) => ({
+    accounts,
+    defaultAccountId,
+  });
+  const { accounts, defaultAccountId }: ReturnType<typeof selector> = yield select(selector);
   const {
     id,
     account: { info, defaultRepositoryId, imageHosting },
+    userInfo,
+    newId,
     callback,
   } = payload;
   const accountIndex = accounts.findIndex(o => o.id === id);
@@ -119,16 +121,22 @@ model.takeEvery(asyncUpdateAccount, function*(payload, { select, put, call }) {
   const result = update(accounts, {
     [accountIndex]: {
       $merge: {
+        id: newId,
         defaultRepositoryId,
         imageHosting,
+        ...userInfo,
         ...info,
       },
     },
   });
   yield call(syncStorageService.set, 'accounts', JSON.stringify(result));
   const currentAccountId: string = yield select((g: GlobalStore) => g.clipper.currentAccountId);
+  if (id === defaultAccountId) {
+    yield put.resolve(asyncUpdateDefaultAccountId.started({ id: newId }));
+  }
+  yield put.resolve(initAccounts.started);
   if (id === currentAccountId) {
-    yield put(asyncChangeAccount.started({ id }));
+    yield put.resolve(asyncChangeAccount.started({ id: newId }));
   }
   callback();
 });

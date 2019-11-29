@@ -58,6 +58,16 @@ export const postMail = (data: PostMailRequestBody) => {
   return request.post('service/email', { data });
 };
 
+export interface SendToKindleRequestBody {
+  to: string;
+  title: string;
+  content: string;
+}
+
+export const sentToKindle = (data: SendToKindleRequestBody) => {
+  return request.post('service/sendToKindle', { data });
+};
+
 export const refresh = () => {
   return request.get<IResponse<string>>('refresh');
 };

@@ -19,7 +19,7 @@ type PageOwnProps = {
   currentAccount: AccountPreference;
   visible: boolean;
   onCancel(): void;
-  onEdit(id: string): void;
+  onEdit(oldId: string, userInfo: any, newId: string): void;
 };
 type PageProps = PageOwnProps & FormComponentProps;
 
@@ -44,7 +44,7 @@ const Page: React.FC<PageProps> = ({
   imageHostingServicesMeta,
 }) => {
   const {
-    accountStatus: { verified, repositories },
+    accountStatus: { verified, repositories, userInfo, id },
     verifyAccount,
     serviceForm,
     verifying,
@@ -81,7 +81,7 @@ const Page: React.FC<PageProps> = ({
         disabled: !verified,
       }}
       onCancel={onCancel}
-      onOk={() => onEdit(currentAccount.id)}
+      onOk={() => onEdit(currentAccount.id, userInfo, id!)}
     >
       <Form labelCol={{ span: 7, offset: 0 }} wrapperCol={{ span: 17 }}>
         <Form.Item
