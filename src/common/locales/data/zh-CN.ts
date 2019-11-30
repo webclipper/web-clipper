@@ -104,6 +104,7 @@ const messages = {
   'backend.services.github.headerForm.applyLabels': '设置标签',
   'backend.services.github.form.GenerateNewToken': '生成新 Token',
   'backend.services.kindle.form.alert': '你必须告诉 Amazon 允许 {mail} 发送邮件到你的 Kindle.',
+  'background.not_support_message': '暂时无法剪辑此类型的页面。',
 };
 
 const model: LocaleModel = {

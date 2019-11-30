@@ -23,7 +23,9 @@ browser.runtime.onMessage.addListener(listeners.handle);
 browser.browserAction.onClicked.addListener(async tab => {
   const tabId = tab.id;
   if (!tabId) {
-    alert('暂时无法剪辑此类型的页面。');
+    alert(
+      'Clipping of this type of page is temporarily unavailable.\n\n暂时无法剪辑此类型的页面。'
+    );
     return;
   }
   const status = await browser.tabs.sendMessage<boolean>(tabId, doYouAliveNow());
@@ -35,7 +37,9 @@ browser.browserAction.onClicked.addListener(async tab => {
       tabId
     );
     if (browser.runtime.lastError) {
-      alert('暂时无法剪辑此类型的页面。');
+      alert(
+        'Clipping of this type of page is temporarily unavailable.\n\n暂时无法剪辑此类型的页面。'
+      );
       return;
     }
   }
