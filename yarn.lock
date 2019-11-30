@@ -1020,11 +1020,6 @@
   dependencies:
     "@diamondyuan/eslint-config-javascript" "^7.0.0"
 
-"@diamondyuan/readability@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.npm.taobao.org/@diamondyuan/readability/download/@diamondyuan/readability-0.1.0.tgz#d2a6c9354d57c67886dea4fcae29ec681be8f153"
-  integrity sha1-0qbJNU1XxniG3qT8rinsaBvo8VM=
-
 "@formatjs/intl-relativetimeformat@^2.8.0":
   version "2.8.1"
   resolved "https://registry.npm.taobao.org/@formatjs/intl-relativetimeformat/download/@formatjs/intl-relativetimeformat-2.8.1.tgz#ec22fa43e0c8411e60a9851daedc067c235427aa"
@@ -1572,6 +1567,11 @@
   integrity sha512-7k4zHgEJjpq5sy0bq3XxTM1rhfFtacALao94WYsMifuoNJd+BS23kCGDxQff/BgPmGu3Qte0Ba/oNMsel9pFtA==
   dependencies:
     dva-model-creator "^0.3.0"
+
+"@web-clipper/readability@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@web-clipper/readability/-/readability-0.2.0.tgz#e33948653b871cb552824d88b7012eeb65f7b95e"
+  integrity sha512-HXnMjCEvE5rfiQfRbwzcLbUxbp8QlKH+9dBcdi1W2uBpHHL5U1mv9DGyZBfMohxiajDtw4zvzJ42rEKCrUO0nQ==
 
 "@web-clipper/shared@^0.0.20":
   version "0.0.20"

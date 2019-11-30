@@ -1,7 +1,7 @@
 declare module '*.scss';
 declare module '*.less';
 declare module '*.png';
-declare module '@diamondyuan/readability';
+declare module '@web-clipper/readability';
 declare module 'turndown-plugin-gfm';
 declare module 'dva-logger';
 declare module 'remark-pangu';

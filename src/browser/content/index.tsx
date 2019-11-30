@@ -1,5 +1,5 @@
 import * as QRCode from 'qrcode';
-import * as Readability from '@diamondyuan/readability';
+import * as Readability from '@web-clipper/readability';
 import * as styles from './index.scss';
 import AreaSelector from '@web-clipper/area-selector';
 import Highlighter from '@web-clipper/highlight';
