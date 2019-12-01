@@ -108,6 +108,7 @@ const messages = {
   'backend.services.yuque.headerForm.slug_error':
     '只能输入大小写字母、横线、下划线和点，至少 2 个字符。',
   'backend.services.yuque.headerForm.slug': '路径',
+  'preference.powerpack.feature.sendToKindle': '保存到 Kindle',
 };
 
 const model: LocaleModel = {

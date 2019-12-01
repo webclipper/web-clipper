@@ -24,6 +24,11 @@ const feature = [
     id: 'preference.powerpack.feature.ocr',
     defaultMessage: 'OCR',
   },
+  {
+    icon: 'kindle',
+    id: 'preference.powerpack.feature.sendToKindle',
+    defaultMessage: 'Send To Kindle',
+  },
 ];
 
 const Powerpack: React.FC = () => {
