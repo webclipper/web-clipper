@@ -2,6 +2,7 @@ import { ServiceMeta } from './../interface';
 import Service from './service';
 import Form from './form';
 import localeService from '@/common/locales';
+import headerForm from './headerForm';
 
 export default (): ServiceMeta => {
   return {
@@ -12,6 +13,7 @@ export default (): ServiceMeta => {
     icon: 'yuque',
     type: 'yuque',
     service: Service,
+    headerForm: headerForm,
     form: Form,
     homePage: 'https://www.yuque.com',
   };

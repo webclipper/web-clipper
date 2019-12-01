@@ -1,4 +1,4 @@
-import { DocumentService, CreateDocumentRequest } from './../../index';
+import { DocumentService } from './../../index';
 import axios, { AxiosInstance } from 'axios';
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
 import * as qs from 'qs';
@@ -12,6 +12,7 @@ import {
   YuqueCreateDocumentResponse,
   YuqueRepository,
   YuqueCompleteStatus,
+  YuqueCreateDocumentRequest,
 } from './interface';
 
 const HOST = 'https://www.yuque.com';
@@ -72,7 +73,7 @@ export default class YuqueDocumentService implements DocumentService {
     return response.map(({ namespace, ...rest }) => ({ ...rest }));
   };
 
-  createDocument = async (info: CreateDocumentRequest): Promise<YuqueCompleteStatus> => {
+  createDocument = async (info: YuqueCreateDocumentRequest): Promise<YuqueCompleteStatus> => {
     if (!this.userInfo) {
       this.userInfo = await this.getYuqueUserInfo();
     }
@@ -83,7 +84,7 @@ export default class YuqueDocumentService implements DocumentService {
     }
     const request = {
       title,
-      slug: generateUuid(),
+      slug: info.slug || generateUuid(),
       body,
       private: true,
     };

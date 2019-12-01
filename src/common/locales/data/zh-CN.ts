@@ -105,6 +105,9 @@ const messages = {
   'backend.services.github.form.GenerateNewToken': '生成新 Token',
   'backend.services.kindle.form.alert': '你必须告诉 Amazon 允许 {mail} 发送邮件到你的 Kindle.',
   'background.not_support_message': '暂时无法剪辑此类型的页面。',
+  'backend.services.yuque.headerForm.slug_error':
+    '只能输入大小写字母、横线、下划线和点，至少 2 个字符。',
+  'backend.services.yuque.headerForm.slug': '路径',
 };
 
 const model: LocaleModel = {

@@ -5,6 +5,7 @@ import localeService from '@/common/locales';
 import { stringify } from 'qs';
 import form from './form';
 import browserId from '@/common/id';
+import headerForm from './headerForm';
 
 const oauthUrl = `https://www.yuque.com/oauth2/authorize?${stringify({
   client_id: config.yuqueClientId,
@@ -22,6 +23,7 @@ export default (): ServiceMeta => {
     }),
     icon: 'yuque',
     type: 'yuque_oauth',
+    headerForm: headerForm,
     service: Service,
     oauthUrl,
     form: form,
