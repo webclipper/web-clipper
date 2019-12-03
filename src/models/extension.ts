@@ -18,6 +18,7 @@ import {
   LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY,
   LOCAL_EXTENSIONS_DISABLED_AUTOMATIC_EXTENSIONS_KEY,
 } from '@/common/modelTypes/extensions';
+import { trackEvent } from '@/common/gs';
 
 const initStore: GlobalStore['extension'] = {
   extensions: [],
@@ -148,5 +149,11 @@ builder
       disabledAutomaticExtensions,
     })
   );
+
+builder.subscript(({ history }) => {
+  history.listen(e => {
+    trackEvent('Open_Page', e.pathname);
+  });
+});
 
 export default builder.build();

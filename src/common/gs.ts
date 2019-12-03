@@ -11,7 +11,9 @@ export function initGa() {
   }
 }
 
-export type TrackEventCategory = 'Load_Web_Clipper' /** 加载插件，每次初始化时候记录。 */;
+export type TrackEventCategory =
+  | 'Load_Web_Clipper' /** 加载插件，每次初始化时候记录。 */
+  | 'Open_Page'; /** 打开页面 */
 
 export function trackEvent(category: TrackEventCategory, action: string, label?: string) {
   window._gaq.push(['_trackEvent', category, action, label].filter((o): o is string => !!o));
