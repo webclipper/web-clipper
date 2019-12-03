@@ -109,6 +109,8 @@ const messages = {
     '只能输入大小写字母、横线、下划线和点，至少 2 个字符。',
   'backend.services.yuque.headerForm.slug': '路径',
   'preference.powerpack.feature.sendToKindle': '保存到 Kindle',
+  'component.powerpackForm.expired': '加强包已过期',
+  'component.powerpackForm.required': '请购买加强包',
 };
 
 const model: LocaleModel = {

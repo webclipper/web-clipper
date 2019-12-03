@@ -1,12 +1,10 @@
-import { Form, Input, Checkbox, Button } from 'antd';
+import { Form, Input, Checkbox } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React, { Fragment } from 'react';
 import { MailBackendServiceConfig } from './interface';
-import { useSelector, useDispatch, routerRedux } from 'dva';
-import { GlobalStore } from '@/common/types';
 import { FormattedMessage } from 'react-intl';
 import i18n from '@/common/locales';
-import { checkBill } from '@/common/powerpack';
+import PowerpackForm from '@/components/powerpackForm';
 
 interface OneNoteProps {
   verified?: boolean;
@@ -15,6 +13,7 @@ interface OneNoteProps {
 
 const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
   const {
+    form,
     form: { getFieldDecorator },
     info,
     verified,
@@ -25,58 +24,9 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
     initData = info;
   }
   let editMode = info ? true : false;
-  const userInfo = useSelector((g: GlobalStore) => {
-    return g.userPreference.userInfo;
-  });
-  const dispatch = useDispatch();
-  const boughtPowerpack = () => {
-    dispatch(routerRedux.push('/preference/powerpack'));
-  };
   return (
     <Fragment>
-      <Form.Item
-        label={
-          <FormattedMessage id="backend.services.mail.form.powerpack" defaultMessage="Powerpack" />
-        }
-      >
-        {getFieldDecorator('powerpack', {
-          initialValue: !!userInfo,
-          valuePropName: 'checked',
-          rules: [
-            {
-              validator(_r, v, cb) {
-                if (v && userInfo) {
-                  if (checkBill(userInfo.expire_date)) {
-                    cb();
-                    return;
-                  }
-                  cb(
-                    i18n.format({
-                      id: 'backend.services.mail.form.powerpack.is.expired',
-                      defaultMessage: 'Powerpack is expired',
-                    })
-                  );
-                }
-                cb(
-                  i18n.format({
-                    id: 'backend.services.mail.form.powerpack.is.required',
-                    defaultMessage: 'Powerpack is required.',
-                  })
-                );
-              },
-            },
-          ],
-        })(
-          <Checkbox disabled={true}>
-            <Button type="link" onClick={boughtPowerpack}>
-              <FormattedMessage
-                id="backend.services.mail.form.buy.powerpack"
-                defaultMessage="Buy Powerpack"
-              />
-            </Button>
-          </Checkbox>
-        )}
-      </Form.Item>
+      <PowerpackForm form={form} />
       <Form.Item
         label={
           <FormattedMessage id="backend.services.mail.form.send.to" defaultMessage="Send to" />
