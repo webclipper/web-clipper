@@ -17,13 +17,12 @@ import createLoading from 'dva-loading';
 import LocalWrapper from './locale';
 import { localStorageService, syncStorageService } from '@/common/chrome/storage';
 import localeService from '@/common/locales';
-import { initGa, trackEvent } from '@/common/gs';
+import { initGa } from '@/common/gs';
 import AuthPage from '@/pages/auth';
 import LoginPage from '@/pages/login';
 import account from '@/models/account';
 import { message } from 'antd';
 import config from '@/config';
-import packageJson from '@/../package.json';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -51,7 +50,6 @@ if (!element) {
 
 (async () => {
   initGa();
-  trackEvent('Load_Web_Clipper', packageJson.version);
   await syncStorageService.init();
   await localStorageService.init();
   await localeService.init();
