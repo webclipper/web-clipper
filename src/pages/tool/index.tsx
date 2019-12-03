@@ -15,7 +15,6 @@ import Section from 'components/section';
 import { DvaRouterProps } from 'common/types';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import { FormattedMessage } from 'react-intl';
-import { trackEvent } from '@/common/gs';
 import matchUrl from '@/common/matchUrl';
 import IconFont from '@/components/IconFont';
 import Header from './Header';
@@ -80,7 +79,6 @@ const Page = React.memo<PageProps>(
 
     useEffect(() => {
       if (pathname === '/') {
-        trackEvent('LoadPage', pathname);
         if (accounts.length === 0) {
           dispatch(routerRedux.push('/preference/account'));
           return;

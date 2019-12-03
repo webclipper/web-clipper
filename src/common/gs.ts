@@ -11,6 +11,6 @@ export function initGa() {
   }
 }
 
-export function trackEvent(...args: string[]) {
-  window._gaq.push(['_trackEvent', ...args]);
+export function trackEvent(category: string, action: string, label?: string) {
+  window._gaq.push(['_trackEvent', category, action, label].filter((o): o is string => !!o));
 }
