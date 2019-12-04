@@ -3,7 +3,9 @@ import { GlobalStore } from '@/common/types';
 import { useSelector } from 'dva';
 import { Skeleton } from 'antd';
 import ReactMarkdown from 'react-markdown';
-import useFetchGithubFile from '@/common/hooks/useFetchGithubFile';
+import useAsync from '@/common/hooks/useAsync';
+import request from 'umi-request';
+import config from '@/config';
 
 const supportedLocale = ['en-US', 'zh-CN'];
 
@@ -17,7 +19,11 @@ const Changelog: React.FC = () => {
   if (supportedLocale.every(o => o !== locale)) {
     workLocale = 'en-US';
   }
-  const [loading, changelog] = useFetchGithubFile(`src/changelog/CHANGELOG.${workLocale}.md`);
+  const { loading, result: changelog } = useAsync(
+    () => request.get(`${config.resourceHost}/changelog/CHANGELOG.${workLocale}.md`),
+    []
+  );
+
   if (loading || !changelog) {
     return <Skeleton active />;
   }

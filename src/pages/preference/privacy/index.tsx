@@ -3,8 +3,10 @@ import { GlobalStore } from '@/common/types';
 import { useSelector } from 'dva';
 import { Skeleton } from 'antd';
 import ReactMarkdown from 'react-markdown';
-import useFetchGithubFile from '@/common/hooks/useFetchGithubFile';
 import LinkRender from '@/components/LinkRender';
+import useAsync from '@/common/hooks/useAsync';
+import config from '@/config';
+import request from 'umi-request';
 
 const supportedLocale = ['en-US', 'zh-CN'];
 
@@ -19,7 +21,11 @@ const Changelog: React.FC = () => {
     workLocale = 'en-US';
   }
 
-  const [loading, changelog] = useFetchGithubFile(`documents/privacy/PRIVACY.${workLocale}.md`);
+  const { loading, result: changelog } = useAsync(
+    () => request.get(`${config.resourceHost}/privacy/PRIVACY.${workLocale}.md`),
+    []
+  );
+
   if (loading || !changelog) {
     return <Skeleton active />;
   }

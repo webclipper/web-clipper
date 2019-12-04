@@ -150,7 +150,7 @@ builder
     })
   );
 
-builder.subscript(({ history }) => {
+builder.subscript(function trackLoadPage({ history }) {
   history.listen(e => {
     trackEvent('Open_Page', e.pathname);
   });

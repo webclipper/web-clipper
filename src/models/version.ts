@@ -2,8 +2,9 @@ import { asyncFetchLatestVersion } from './../actions/version';
 import { GlobalStore } from '@/common/types';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
 import packageJson from '../../package.json';
-import axios from 'axios';
+import request from 'umi-request';
 import { hasUpdate } from '@/common/version';
+import config, { RemoteConfig } from '@/config';
 
 const defaultState: GlobalStore['version'] = {
   remoteVersion: '0.0.0',
@@ -13,10 +14,8 @@ const defaultState: GlobalStore['version'] = {
 const model = new DvaModelBuilder(defaultState, 'version')
   .takeEvery(asyncFetchLatestVersion.started, function*(_, { call, put }) {
     try {
-      const url = 'https://api.github.com/repos/webclipper/web-clipper/releases/latest';
-      const response = yield call(axios.get, url);
-      const remoteVersion = response.data.tag_name.slice(1);
-      yield put(asyncFetchLatestVersion.done({ result: remoteVersion }));
+      const response: RemoteConfig = yield call(request.get, `${config.resourceHost}/config.json`);
+      yield put(asyncFetchLatestVersion.done({ result: response.chromeWebStoreVersion }));
     } catch (_error) {
       console.log(_error);
     }

@@ -10,6 +10,12 @@ interface WebClipperConfig {
   createLogger: boolean;
   remoteExtensionHost: string;
   serverHost: string;
+  resourceHost: string;
+}
+
+export interface RemoteConfig {
+  iconfont: string;
+  chromeWebStoreVersion: string;
 }
 
 let config: WebClipperConfig = {
@@ -25,6 +31,7 @@ let config: WebClipperConfig = {
   // oneNoteCallBack: 'http://localhost:3000/onenote_oauth',
   remoteExtensionHost: 'https://extensions.clipper.website',
   serverHost: 'https://api.clipper.website',
+  resourceHost: 'https://resource.clipper.website',
 };
 
 if (process.env.NODE_ENV === 'development') {

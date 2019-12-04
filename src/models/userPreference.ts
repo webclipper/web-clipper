@@ -1,3 +1,4 @@
+import config, { RemoteConfig } from '@/config';
 import Axios from 'axios';
 import React from 'react';
 import { getLanguage } from './../common/locales';
@@ -47,6 +48,7 @@ import copyToClipboard from 'copy-to-clipboard';
 import { getUserInfo, ocr } from '@/common/server';
 import remark from 'remark';
 import remakPangu from 'remark-pangu';
+import request from 'umi-request';
 
 const { message } = antd;
 
@@ -104,7 +106,7 @@ builder
   })
   .subscript(async function initAccessToken({ dispatch }) {
     function loadAccessToken() {
-      dispatch(initPowerpack.started());
+      dispatch(removeActionNamespace(initPowerpack.started()));
     }
     loadAccessToken();
     localStorageService.onDidChangeStorage(key => {
@@ -160,12 +162,8 @@ builder
   .takeEvery(asyncFetchRemoteConfig.started, function*(_, { call, put }) {
     let iconfont = iconConfig.iconfont;
     if (process.env.NODE_ENV !== 'development') {
-      const response = yield call(
-        Axios.get,
-        'https://api.github.com/repos/webclipper/web-clipper/contents/config.json'
-      );
-      const data = decodeURIComponent(escape(window.atob(response.data.content)));
-      iconfont = JSON.parse(data).iconfont;
+      const response: RemoteConfig = yield call(request.get, `${config.resourceHost}/config.json`);
+      iconfont = response.iconfont;
     }
 
     let icons: string[] = [];
@@ -356,7 +354,7 @@ builder
 
 builder.subscript(async function initStore({ dispatch, history }) {
   await dispatch(initAccounts.started());
-  dispatch(asyncFetchRemoteConfig.started());
+  dispatch(removeActionNamespace(asyncFetchRemoteConfig.started()));
   const result = await storage.getPreference();
   const tabInfo = await browser.tabs.getCurrent();
   if (tabInfo.title && tabInfo.url) {

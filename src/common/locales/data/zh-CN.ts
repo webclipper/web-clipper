@@ -111,6 +111,7 @@ const messages = {
   'preference.powerpack.feature.sendToKindle': '保存到 Kindle',
   'component.powerpackForm.expired': '加强包已过期',
   'component.powerpackForm.required': '请购买加强包',
+  'backend.services.kindle.name': '发送到 Kindle',
 };
 
 const model: LocaleModel = {

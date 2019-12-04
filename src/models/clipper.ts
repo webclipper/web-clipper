@@ -4,7 +4,7 @@ import { CompleteStatus } from 'common/backend/interface';
 import { ExtensionType } from '@web-clipper/extensions';
 import { CreateDocumentRequest, UnauthorizedError } from './../common/backend/services/interface';
 import { GlobalStore, ImageClipperData, ClipperStore } from '@/common/types';
-import { DvaModelBuilder } from 'dva-model-creator';
+import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
 import update from 'immutability-helper';
 import {
   selectRepository,
@@ -34,7 +34,7 @@ const actionChannel = channel();
 
 const model = new DvaModelBuilder(defaultState, 'clipper')
   .subscript(function startWatchActionChannel({ dispatch }) {
-    dispatch(watchActionChannel());
+    dispatch(removeActionNamespace(watchActionChannel()));
   })
   .takeEvery(watchActionChannel, function*(_, { put, take }) {
     while (true) {
