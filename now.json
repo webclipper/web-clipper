@@ -2,9 +2,9 @@
   "name": "web-clipper-resource",
   "version": 2,
   "builds": [
-    { "src": "documents/*", "use": "@now/static" },
-    { "src": "src/changelog/*", "use": "@now/static" },
-    { "src": "config.json", "use": "@now/static" }
+    { "src": "/documents/privacy/*", "use": "@now/static" },
+    { "src": "/src/changelog/*", "use": "@now/static" },
+    { "src": "/config.json", "use": "@now/static" }
   ],
   "alias": ["resource.clipper.website"],
   "routes": [
