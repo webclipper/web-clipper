@@ -8,7 +8,8 @@ import packageJson from '@/../package.json';
 
 initGa();
 
-browser.browserAction.setIcon({ path: config.icon });
+const media = window.matchMedia('(prefers-color-scheme: dark)');
+browser.browserAction.setIcon({ path: media.matches ? config.iconDark : config.icon });
 
 const listeners = new MessageListenerCombiner().case(
   closeCurrentTab,

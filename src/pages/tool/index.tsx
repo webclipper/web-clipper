@@ -22,7 +22,7 @@ import Header from './Header';
 const mapStateToProps = ({
   clipper: { currentAccountId, url, currentRepository, repositories, currentImageHostingService },
   loading,
-  account: { accounts, defaultAccountId },
+  account: { accounts },
   userPreference: { locale, servicesMeta },
   extension: { extensions, disabledExtensions },
   version: { hasUpdate },
@@ -30,7 +30,6 @@ const mapStateToProps = ({
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   const loadingAccount = loading.effects[asyncChangeAccount.started.type];
   return {
-    defaultAccountId,
     hasUpdate,
     loadingAccount,
     accounts,
@@ -234,6 +233,7 @@ const Page = React.memo<PageProps>(
       extensions,
       hasUpdate,
       servicesMeta,
+      accounts,
     }: PageProps) => {
       return {
         loadingAccount,
@@ -245,6 +245,7 @@ const Page = React.memo<PageProps>(
         extensions,
         hasUpdate,
         servicesMeta,
+        accounts,
       };
     };
     return isEqual(selector(prevProps), selector(nextProps));

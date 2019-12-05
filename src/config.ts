@@ -1,5 +1,6 @@
 interface WebClipperConfig {
   icon: string;
+  iconDark: string;
   yuqueClientId: string;
   yuqueCallback: string;
   githubClientId: string;
@@ -20,6 +21,7 @@ export interface RemoteConfig {
 
 let config: WebClipperConfig = {
   icon: 'icon.png',
+  iconDark: 'icon-dark.png',
   yuqueClientId: 'D1AwzCeDPLFWGfcGv7ze',
   yuqueCallback: 'http://webclipper-oauth.yfd.im/yuque_oauth',
   githubClientId: '94f779401c7bed8734ce',
