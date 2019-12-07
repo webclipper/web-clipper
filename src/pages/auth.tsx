@@ -8,10 +8,10 @@ import { FormComponentProps } from 'antd/lib/form';
 import * as browser from '@web-clipper/chrome-promise';
 import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
 import ImageHostingSelect from '@/components/ImageHostingSelect';
-import repositorySelectOptions from 'components/repositorySelectOptions';
 import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
 import { asyncAddAccount } from '@/actions/account';
 import { isEqual } from 'lodash';
+import RepositorySelect from '@/components/repositorySelect';
 
 interface PageQuery {
   access_token: string;
@@ -53,6 +53,7 @@ const Page: React.FC<PageProps> = props => {
     accountStatus: { repositories, verified, userInfo, id },
     serviceForm,
     verifying,
+    okText,
   } = useVerifiedAccount({
     form: props.form,
     services: props.servicesMeta,
@@ -73,6 +74,7 @@ const Page: React.FC<PageProps> = props => {
   return (
     <Modal
       visible
+      okText={okText}
       onCancel={async () => {
         const tahId = (await browser.tabs.getCurrent()).id;
         chrome.tabs.remove(tahId!);
@@ -95,7 +97,7 @@ const Page: React.FC<PageProps> = props => {
               defaultRepositoryId,
               imageHosting,
               info,
-              userInfo,
+              userInfo: userInfo!,
               callback: async () => {
                 const tahId = (await browser.tabs.getCurrent()).id;
                 chrome.tabs.remove(tahId!);
@@ -129,9 +131,11 @@ const Page: React.FC<PageProps> = props => {
           }
         >
           {getFieldDecorator('defaultRepositoryId')(
-            <Select allowClear disabled={!verified}>
-              {repositorySelectOptions(repositories)}
-            </Select>
+            <RepositorySelect
+              disabled={!verified}
+              loading={verifying}
+              repositories={repositories}
+            />
           )}
         </Form.Item>
         <Form.Item

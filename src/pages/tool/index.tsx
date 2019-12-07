@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useCallback } from 'react';
 import * as styles from './index.scss';
 import ClipExtension from './ClipExtension';
-import repositorySelectOptions from 'components/repositorySelectOptions';
 import ToolExtensions from './toolExtensions';
 import { Avatar, Button, Icon, Select, Badge } from 'antd';
 import { connect, routerRedux } from 'dva';
@@ -18,6 +17,7 @@ import { FormattedMessage } from 'react-intl';
 import matchUrl from '@/common/matchUrl';
 import IconFont from '@/components/IconFont';
 import Header from './Header';
+import RepositorySelect from '@/components/repositorySelect';
 
 const mapStateToProps = ({
   clipper: { currentAccountId, url, currentRepository, repositories, currentImageHostingService },
@@ -92,11 +92,6 @@ const Page = React.memo<PageProps>(
       [dispatch]
     );
 
-    const onFilterOption = (select: any, option: React.ReactElement<any>) => {
-      const title: string = option.props.children;
-      return title.indexOf(select) !== -1;
-    };
-
     useEffect(() => {
       if (currentAccount && currentAccount.defaultRepositoryId) {
         onRepositorySelect(currentAccount.defaultRepositoryId);
@@ -161,19 +156,15 @@ const Page = React.memo<PageProps>(
           pathname={pathname}
         />
         <Section title={<FormattedMessage id="tool.repository"></FormattedMessage>}>
-          <Select
-            loading={loadingAccount}
+          <RepositorySelect
             disabled={loadingAccount}
+            loading={loadingAccount}
+            repositories={repositories}
             onSelect={onRepositorySelect}
             style={{ width: '100%' }}
-            showSearch
-            optionFilterProp="children"
-            filterOption={onFilterOption}
             dropdownMatchSelectWidth={true}
             value={repositoryId}
-          >
-            {repositorySelectOptions(repositories)}
-          </Select>
+          />
         </Section>
         <Section line>
           <div className={styles.toolbar}>

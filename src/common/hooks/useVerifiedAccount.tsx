@@ -75,12 +75,15 @@ const useVerifiedAccount = ({ form, services, initAccount }: UseVerifiedAccountP
   }, [accountStatus.verified, form, initAccount, loadAccount, service.form]);
 
   const okText = useMemo(() => {
+    if (loading) {
+      return <FormattedMessage id="preference.accountList.verifying" defaultMessage="Verifying" />;
+    }
     return accountStatus.verified ? (
       <FormattedMessage id="preference.accountList.add" defaultMessage="Add" />
     ) : (
       <FormattedMessage id="preference.accountList.verify" defaultMessage="Verify" />
     );
-  }, [accountStatus.verified]);
+  }, [accountStatus.verified, loading]);
 
   let oauthLink = useMemo(() => {
     return service.oauthUrl ? (

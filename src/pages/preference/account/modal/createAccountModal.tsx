@@ -4,11 +4,11 @@ import { FormComponentProps } from 'antd/lib/form';
 import * as styles from './index.scss';
 import { ImageHostingServiceMeta } from 'common/backend';
 import { UserPreferenceStore, ImageHosting } from '@/common/types';
-import repositorySelectOptions from 'components/repositorySelectOptions';
 import { FormattedMessage } from 'react-intl';
 import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
 import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
 import ImageHostingSelect from '@/components/ImageHostingSelect';
+import RepositorySelect from '@/components/repositorySelect';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {
@@ -45,6 +45,7 @@ const Page: React.FC<PageProps> = ({
     type,
     accountStatus: { verified, repositories, userInfo, id },
     loadAccount,
+    verifying,
     changeType,
     serviceForm,
     okText,
@@ -73,6 +74,10 @@ const Page: React.FC<PageProps> = ({
       okType="primary"
       onCancel={onCancel}
       okText={oauthLink ? oauthLink : okText}
+      okButtonProps={{
+        loading: verifying,
+        disabled: verifying,
+      }}
       onOk={handleOk}
       title={<ModalTitle />}
     >
@@ -103,7 +108,11 @@ const Page: React.FC<PageProps> = ({
               }
             >
               {getFieldDecorator('defaultRepositoryId')(
-                <Select disabled={!verified}>{repositorySelectOptions(repositories)}</Select>
+                <RepositorySelect
+                  disabled={!verified}
+                  loading={verifying}
+                  repositories={repositories}
+                />
               )}
             </Form.Item>
             <Form.Item
@@ -116,9 +125,10 @@ const Page: React.FC<PageProps> = ({
             >
               {getFieldDecorator('imageHosting')(
                 <ImageHostingSelect
+                  loading={verifying}
                   disabled={!verified}
                   supportedImageHostingServices={supportedImageHostingServices}
-                ></ImageHostingSelect>
+                />
               )}
             </Form.Item>
           </React.Fragment>

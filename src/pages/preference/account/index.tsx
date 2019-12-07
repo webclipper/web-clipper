@@ -196,10 +196,7 @@ class Page extends React.Component<PageProps, PageState> {
                 block
               >
                 <Icon type="plus" />
-                <FormattedMessage
-                  id="preference.account.add"
-                  defaultMessage="Bind Account"
-                ></FormattedMessage>
+                <FormattedMessage id="preference.account.add" defaultMessage="Bind Account" />
               </Button>
             </div>
           </Col>

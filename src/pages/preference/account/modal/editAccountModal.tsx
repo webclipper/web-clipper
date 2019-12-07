@@ -3,12 +3,12 @@ import { Form, Modal, Select, Icon } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import * as styles from './index.scss';
 import { ImageHostingServiceMeta } from 'common/backend';
-import repositorySelectOptions from 'components/repositorySelectOptions';
 import { AccountPreference, UserPreferenceStore, ImageHosting } from '@/common/types';
 import { FormattedMessage } from 'react-intl';
 import ImageHostingSelect from '@/components/ImageHostingSelect';
 import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
 import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
+import RepositorySelect from '@/components/repositorySelect';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {
@@ -109,9 +109,11 @@ const Page: React.FC<PageProps> = ({
           {getFieldDecorator('defaultRepositoryId', {
             initialValue: currentAccount.defaultRepositoryId,
           })(
-            <Select allowClear disabled={!verified || verifying} loading={verifying}>
-              {repositorySelectOptions(repositories)}
-            </Select>
+            <RepositorySelect
+              disabled={!verified || verifying}
+              loading={verifying}
+              repositories={repositories}
+            />
           )}
         </Form.Item>
         <Form.Item

@@ -112,6 +112,7 @@ const messages = {
   'component.powerpackForm.expired': '加强包已过期',
   'component.powerpackForm.required': '请购买加强包',
   'backend.services.kindle.name': '发送到 Kindle',
+  'auth.modal.title': '账户配置',
 };
 
 const model: LocaleModel = {
