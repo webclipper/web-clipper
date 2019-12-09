@@ -9,7 +9,6 @@ import { stringify } from 'qs';
 interface GithubFormProps {
   verified?: boolean;
   info?: GithubBackendServiceConfig;
-  loadAccount: any;
 }
 
 const GenerateNewTokenUrl = `https://github.com/settings/tokens/new?${stringify({
