@@ -1,3 +1,22 @@
+## 1.14.1
+
+`2019-12-05`
+
+- 🐛 Fix repository search.
+
+## 1.14.0
+
+`2019-12-05`
+
+- ✨ Github support config label and filter repository;
+- ✨ Yuque support config slag and filter repository;
+- ✨ Dark mode supports automatic icon switching.
+- 🐛 When there is no account, there will be a reminder on the close settings page.
+
+### Powerpack
+
+- ✨ Support send to kindle.
+
 ## 1.13.0
 
 `2019-11-08`
