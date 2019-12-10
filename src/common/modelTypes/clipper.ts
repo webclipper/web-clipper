@@ -6,8 +6,8 @@ import {
 } from '@/common/backend/services/interface';
 
 export interface ClipperHeaderForm {
-  title: string;
   [key: string]: string | number;
+  title: string;
 }
 
 export interface ClipperStore {

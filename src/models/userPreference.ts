@@ -237,9 +237,9 @@ builder
     }
   })
   .takeEvery(asyncDeleteImageHosting.started, function*(payload, { call, put }) {
-    const imageHostingList: PromiseType<
-      ReturnType<typeof storage.deleteImageHostingById>
-    > = yield call(storage.deleteImageHostingById, payload.id);
+    const imageHostingList: PromiseType<ReturnType<
+      typeof storage.deleteImageHostingById
+    >> = yield call(storage.deleteImageHostingById, payload.id);
     yield put(
       asyncDeleteImageHosting.done({
         params: payload,
@@ -395,21 +395,15 @@ builder
 
 builder
   .subscript(async function xx({ dispatch }) {
-    const servicesMeta = getServices().reduce(
-      (previousValue, meta) => {
-        previousValue[meta.type] = meta;
-        return previousValue;
-      },
-      {} as UserPreferenceStore['servicesMeta']
-    );
+    const servicesMeta = getServices().reduce((previousValue, meta) => {
+      previousValue[meta.type] = meta;
+      return previousValue;
+    }, {} as UserPreferenceStore['servicesMeta']);
 
-    const imageHostingServicesMeta = getImageHostingServices().reduce(
-      (previousValue, meta) => {
-        previousValue[meta.type] = meta;
-        return previousValue;
-      },
-      {} as UserPreferenceStore['imageHostingServicesMeta']
-    );
+    const imageHostingServicesMeta = getImageHostingServices().reduce((previousValue, meta) => {
+      previousValue[meta.type] = meta;
+      return previousValue;
+    }, {} as UserPreferenceStore['imageHostingServicesMeta']);
     dispatch(
       removeActionNamespace(
         initServices({
@@ -422,20 +416,14 @@ builder
     localStorageService.onDidChangeStorage(async key => {
       if (key === LOCAL_USER_PREFERENCE_LOCALE_KEY) {
         await localeService.init();
-        const servicesMeta = getServices().reduce(
-          (previousValue, meta) => {
-            previousValue[meta.type] = meta;
-            return previousValue;
-          },
-          {} as UserPreferenceStore['servicesMeta']
-        );
-        const imageHostingServicesMeta = getImageHostingServices().reduce(
-          (previousValue, meta) => {
-            previousValue[meta.type] = meta;
-            return previousValue;
-          },
-          {} as UserPreferenceStore['imageHostingServicesMeta']
-        );
+        const servicesMeta = getServices().reduce((previousValue, meta) => {
+          previousValue[meta.type] = meta;
+          return previousValue;
+        }, {} as UserPreferenceStore['servicesMeta']);
+        const imageHostingServicesMeta = getImageHostingServices().reduce((previousValue, meta) => {
+          previousValue[meta.type] = meta;
+          return previousValue;
+        }, {} as UserPreferenceStore['imageHostingServicesMeta']);
         dispatch(
           removeActionNamespace(
             initServices({

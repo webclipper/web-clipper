@@ -18,5 +18,12 @@
   ],
   "editor.tabSize": 2,
   "files.insertFinalNewline": true,
-  "cSpell.words": ["hosting", "image", "option", "repos", "yuque"]
+  "cSpell.words": [
+    "hosting",
+    "image",
+    "option",
+    "repos",
+    "yuque"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

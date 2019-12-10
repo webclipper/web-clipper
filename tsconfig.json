@@ -2,7 +2,7 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "experimentalDecorators": true,
-    "target": "esnext",
+    "target": "es2018",
     "module": "ESNext",
     "declaration": false,
     "noImplicitAny": true,
