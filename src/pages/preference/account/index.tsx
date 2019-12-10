@@ -206,7 +206,4 @@ class Page extends React.Component<PageProps, PageState> {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Form.create<PageProps>()(Page));
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create<PageProps>()(Page));

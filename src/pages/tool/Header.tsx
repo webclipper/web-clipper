@@ -59,12 +59,8 @@ const ClipperHeader: React.FC<PageProps> = props => {
   };
 
   const headerForm = useMemo(() => {
-    return (
-      !!service &&
-      !!service.headerForm && (
-        <service.headerForm form={form} currentRepository={currentRepository}></service.headerForm>
-      )
-    );
+    const HeaderForm = service?.headerForm;
+    return HeaderForm ? <HeaderForm form={form} currentRepository={currentRepository} /> : null;
   }, [currentRepository, form, service]);
 
   return (

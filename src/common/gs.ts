@@ -6,7 +6,7 @@ export function initGa() {
   ga.async = true;
   ga.src = 'https://ssl.google-analytics.com/ga.js';
   let s = document.getElementsByTagName('script')[0];
-  if (s && s.parentNode) {
+  if (s?.parentNode) {
     s.parentNode.insertBefore(ga, s);
   }
 }

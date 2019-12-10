@@ -1,4 +1,5 @@
 export interface AccountPreference {
+  [key: string]: string | undefined;
   id: string;
   type: string;
   name: string;
@@ -7,7 +8,6 @@ export interface AccountPreference {
   description?: string;
   defaultRepositoryId?: string;
   imageHosting?: string;
-  [key: string]: string | undefined;
 }
 
 export interface AccountStore {

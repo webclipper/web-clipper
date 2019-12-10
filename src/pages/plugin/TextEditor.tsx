@@ -96,8 +96,6 @@ class ClipperPluginPage extends React.Component<PageProps> {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  (dispatch: Dispatch) =>
-    bindActionCreators<typeof useActions, typeof useActions>(useActions, dispatch)
+export default connect(mapStateToProps, (dispatch: Dispatch) =>
+  bindActionCreators<typeof useActions, typeof useActions>(useActions, dispatch)
 )(ClipperPluginPage as React.ComponentType<PageProps>);

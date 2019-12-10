@@ -4,11 +4,9 @@ import React, { forwardRef } from 'react';
 import styles from './ImageHostingSelect.scss';
 import ImageHostingSelectOption from 'components/imageHostingSelectOption';
 
-export const ImageHostingSelect: React.FC<
-  {
-    supportedImageHostingServices: ImageHostingWithMeta[];
-  } & SelectProps
-> = ({ supportedImageHostingServices, ...props }, ref) => (
+export const ImageHostingSelect: React.FC<{
+  supportedImageHostingServices: ImageHostingWithMeta[];
+} & SelectProps> = ({ supportedImageHostingServices, ...props }, ref) => (
   <Select className={styles.imageHostingSelect} {...props} ref={ref}>
     {supportedImageHostingServices.map(({ imageHostingServices: { id, remark }, meta }) => {
       return (
