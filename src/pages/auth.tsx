@@ -11,7 +11,7 @@ import ImageHostingSelect from '@/components/ImageHostingSelect';
 import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
 import { asyncAddAccount } from '@/actions/account';
 import { isEqual } from 'lodash';
-import RepositorySelect from '@/components/repositorySelect';
+import RepositorySelect from '@/components/RepositorySelect';
 
 interface PageQuery {
   access_token: string;

@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import ImageHostingSelect from '@/components/ImageHostingSelect';
 import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
 import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
-import RepositorySelect from '@/components/repositorySelect';
+import RepositorySelect from '@/components/RepositorySelect';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {

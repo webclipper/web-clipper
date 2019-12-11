@@ -17,7 +17,7 @@ import { FormattedMessage } from 'react-intl';
 import matchUrl from '@/common/matchUrl';
 import IconFont from '@/components/IconFont';
 import Header from './Header';
-import RepositorySelect from '@/components/repositorySelect';
+import RepositorySelect from '@/components/RepositorySelect';
 
 const mapStateToProps = ({
   clipper: { currentAccountId, url, currentRepository, repositories, currentImageHostingService },
