@@ -81,7 +81,7 @@
     "clean-webpack-plugin": "^0.1.19",
     "compressing": "^1.4.0",
     "copy-webpack-plugin": "^5.0.3",
-    "css-loader": "^1.0.0",
+    "css-loader": "^3.3.0",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^6.7.2",
