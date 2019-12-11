@@ -26,7 +26,7 @@ let config: WebClipperConfig = {
   yuqueCallback: 'http://webclipper-oauth.yfd.im/yuque_oauth',
   githubClientId: '94f779401c7bed8734ce',
   githubCallback: 'https://api.clipper.website/api/user/oauth/github',
-  yuqueScope: 'doc,group,repo',
+  yuqueScope: 'doc,group,repo,attach_upload',
   oneNoteClientId: '563571ad-cfcd-442a-aa34-046bad24b1b6',
   oneNoteCallBack: 'https://webclipper-oauth.yfd.im/onenote_oauth',
   createLogger: false,
