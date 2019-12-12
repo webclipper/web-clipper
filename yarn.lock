@@ -1579,10 +1579,10 @@
   dependencies:
     jquery "^3.4.1"
 
-"@web-clipper/message-listener-combiner@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/@web-clipper/message-listener-combiner/-/message-listener-combiner-0.0.20.tgz#70d58d55414e3ef4cf8a07b683509c49faceae9e"
-  integrity sha512-7k4zHgEJjpq5sy0bq3XxTM1rhfFtacALao94WYsMifuoNJd+BS23kCGDxQff/BgPmGu3Qte0Ba/oNMsel9pFtA==
+"@web-clipper/message-listener-combiner@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@web-clipper/message-listener-combiner/-/message-listener-combiner-0.1.0.tgz#529a62cb7f134943b71effe554ed6293c7f2c76c"
+  integrity sha512-ltMjWfs5KB6BkgkzqmmoEdxtcXcLu9OAFC3iwo25sF9XqeAHamyoQ7HcoKx+059GPWKiEN2l/vVvNJ0xp9sayA==
   dependencies:
     dva-model-creator "^0.3.0"
 

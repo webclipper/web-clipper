@@ -24,7 +24,7 @@
     "@web-clipper/chrome-promise": "^0.0.20",
     "@web-clipper/extensions": "^0.0.17",
     "@web-clipper/highlight": "^0.0.20",
-    "@web-clipper/message-listener-combiner": "^0.0.20",
+    "@web-clipper/message-listener-combiner": "^0.1.0",
     "@web-clipper/readability": "^0.2.0",
     "@web-clipper/shared": "^0.0.20",
     "@web-clipper/turndown": "^0.1.0",
