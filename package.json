@@ -62,7 +62,7 @@
   },
   "devDependencies": {
     "@diamondyuan/eslint-config-react-typescript": "^7.0.1",
-    "@types/chrome": "^0.0.88",
+    "@types/chrome": "^0.0.91",
     "@types/classnames": "^2.2.9",
     "@types/codemirror": "^0.0.76",
     "@types/enzyme": "^3.9.3",
