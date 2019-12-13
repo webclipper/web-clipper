@@ -21,4 +21,8 @@ export interface ImageHostingServiceMeta {
   service: ImageHostingServiceConstructAble;
   form?: any;
   support?: (type: string) => boolean;
+  builtIn?: boolean;
+  builtInRemark?: string;
 }
+
+export const BUILT_IN_IMAGE_HOSTING_ID = 'BUILT_IN_IMAGE_HOSTING_ID';

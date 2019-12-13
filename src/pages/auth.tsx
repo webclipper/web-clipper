@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { connect } from 'dva';
 import { parse } from 'qs';
 import { DvaRouterProps, GlobalStore } from '@/common/types';
@@ -8,10 +8,13 @@ import { FormComponentProps } from 'antd/lib/form';
 import * as browser from '@web-clipper/chrome-promise';
 import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
 import ImageHostingSelect from '@/components/ImageHostingSelect';
-import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
+import useFilterImageHostingServices, {
+  ImageHostingWithMeta,
+} from '@/common/hooks/useFilterImageHostingServices';
 import { asyncAddAccount } from '@/actions/account';
 import { isEqual } from 'lodash';
 import RepositorySelect from '@/components/RepositorySelect';
+import { BUILT_IN_IMAGE_HOSTING_ID } from '@/common/backend/imageHosting/interface';
 
 interface PageQuery {
   access_token: string;
@@ -60,13 +63,28 @@ const Page: React.FC<PageProps> = props => {
     initAccount: query,
   });
 
-  const supportedImageHostingServices = useFilterImageHostingServices({
+  const imageHostingWithBuiltIn = useMemo(() => {
+    const res = [...imageHosting];
+    const meta = imageHostingServicesMeta[type];
+    if (meta?.builtIn) {
+      res.push({
+        type,
+        info: {},
+        id: BUILT_IN_IMAGE_HOSTING_ID,
+        remark: meta.builtInRemark,
+      });
+    }
+    return res;
+  }, [imageHosting, imageHostingServicesMeta, type]);
+
+  const supportedImageHostingServices: ImageHostingWithMeta[] = useFilterImageHostingServices({
     backendServiceType: type,
-    imageHostingServices: imageHosting,
+    imageHostingServices: imageHostingWithBuiltIn,
     imageHostingServicesMap: imageHostingServicesMeta,
   });
 
   const memoizeQuery = useDeepCompareMemoize(query);
+
   useEffect(() => {
     verifyAccount(memoizeQuery);
   }, [verifyAccount, memoizeQuery]);
@@ -147,7 +165,7 @@ const Page: React.FC<PageProps> = props => {
             <ImageHostingSelect
               disabled={!verified}
               supportedImageHostingServices={supportedImageHostingServices}
-            ></ImageHostingSelect>
+            />
           )}
         </Form.Item>
       </Form>

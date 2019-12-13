@@ -16,9 +16,7 @@ const model = new DvaModelBuilder(defaultState, 'version')
     try {
       const response: RemoteConfig = yield call(request.get, `${config.resourceHost}/config.json`);
       yield put(asyncFetchLatestVersion.done({ result: response.chromeWebStoreVersion }));
-    } catch (_error) {
-      console.log(_error);
-    }
+    } catch (_error) {}
   })
   .case(asyncFetchLatestVersion.done, (state, { result: remoteVersion }) => ({
     ...state,

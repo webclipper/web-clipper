@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useMemo } from 'react';
 import { Form, Modal, Select, Icon } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import * as styles from './index.scss';
@@ -9,6 +9,7 @@ import ImageHostingSelect from '@/components/ImageHostingSelect';
 import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
 import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
 import RepositorySelect from '@/components/RepositorySelect';
+import { BUILT_IN_IMAGE_HOSTING_ID } from '@/common/backend/imageHosting/interface';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {
@@ -44,6 +45,7 @@ const Page: React.FC<PageProps> = ({
   imageHostingServicesMeta,
 }) => {
   const {
+    type,
     accountStatus: { verified, repositories, userInfo, id },
     verifyAccount,
     serviceForm,
@@ -58,9 +60,18 @@ const Page: React.FC<PageProps> = ({
     verifyAccount(currentAccount);
   }, [currentAccount, verifyAccount]);
 
+  const imageHostingWithBuiltIn = useMemo(() => {
+    const res = [...imageHosting];
+    const meta = imageHostingServicesMeta[type];
+    if (meta?.builtIn) {
+      res.push({ type, info: {}, id: BUILT_IN_IMAGE_HOSTING_ID, remark: meta.builtInRemark });
+    }
+    return res;
+  }, [imageHosting, imageHostingServicesMeta, type]);
+
   const supportedImageHostingServices = useFilterImageHostingServices({
     backendServiceType: currentAccount.type,
-    imageHostingServices: imageHosting,
+    imageHostingServices: imageHostingWithBuiltIn,
     imageHostingServicesMap: imageHostingServicesMeta,
   });
 

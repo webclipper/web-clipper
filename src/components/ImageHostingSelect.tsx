@@ -7,7 +7,7 @@ import ImageHostingSelectOption from 'components/imageHostingSelectOption';
 export const ImageHostingSelect: React.FC<{
   supportedImageHostingServices: ImageHostingWithMeta[];
 } & SelectProps> = ({ supportedImageHostingServices, ...props }, ref) => (
-  <Select className={styles.imageHostingSelect} {...props} ref={ref}>
+  <Select allowClear className={styles.imageHostingSelect} {...props} ref={ref}>
     {supportedImageHostingServices.map(({ imageHostingServices: { id, remark }, meta }) => {
       return (
         <Select.Option key={id} value={id}>

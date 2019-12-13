@@ -115,6 +115,10 @@ const messages = {
   'auth.modal.title': '账户配置',
   'backend.services.server_chan.accessToken.message': '请输入 AccessToken',
   'backend.services.server_chan.name': 'Server酱',
+  'backend.imageHosting.yuque_oauth.error_429': '请求太频繁，接口限制每小时最多 100 次。',
+  'backend.imageHosting.yuque_oauth.builtInRemark': '语雀内置图床。',
+  'backend.imageHosting.yuque_oauth.error_401': '没有权限，需要删除当前账户重新授权。',
+  'backend.imageHosting.yuque_oauth.error_403': '没有权限，需要删除当前账户重新授权。',
 };
 
 const model: LocaleModel = {

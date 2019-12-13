@@ -7,7 +7,7 @@
     "declaration": false,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "lib",
     "strict": true,
     "removeComments": true,
