@@ -135,10 +135,10 @@ model.takeEvery(asyncUpdateAccount, function*(payload, { select, put, call }) {
     yield put.resolve(asyncUpdateDefaultAccountId.started({ id: newId }));
   }
   yield put.resolve(initAccounts.started);
+  callback();
   if (id === currentAccountId) {
     yield put.resolve(asyncChangeAccount.started({ id: newId }));
   }
-  callback();
 });
 
 export default model.build();

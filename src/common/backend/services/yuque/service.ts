@@ -141,8 +141,7 @@ export default class YuqueDocumentService implements DocumentService {
         `${isGroup ? 'groups' : 'users'}/${slug}/repos?${qs.stringify(query)}`
       );
       return response.data;
-    } catch (error) {
-      console.log(error);
+    } catch (_error) {
       return [];
     }
   };

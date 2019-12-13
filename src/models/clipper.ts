@@ -1,8 +1,9 @@
+import { BUILT_IN_IMAGE_HOSTING_ID } from '@/common/backend/imageHosting/interface';
 import { updateClipperHeader } from './../actions/clipper';
 import { asyncRunExtension } from './../actions/userPreference';
 import { CompleteStatus } from 'common/backend/interface';
 import { ExtensionType } from '@web-clipper/extensions';
-import { CreateDocumentRequest, UnauthorizedError } from './../common/backend/services/interface';
+import { CreateDocumentRequest, UnauthorizedError } from '@/common/backend/services/interface';
 import { GlobalStore, ImageClipperData, ClipperStore } from '@/common/types';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
 import update from 'immutability-helper';
@@ -93,17 +94,25 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     backend.setDocumentService(documentService);
     let currentImageHostingService: ClipperStore['currentImageHostingService'];
     if (account.imageHosting) {
-      const imageHostingIndex = imageHosting.findIndex(o => o.id === account.imageHosting);
-      if (imageHostingIndex !== -1) {
-        const accountImageHosting = imageHosting[imageHostingIndex];
-        const imageHostingService = imageHostingServiceFactory(
-          accountImageHosting.type,
-          accountImageHosting.info
-        );
-        backend.setImageHostingService(imageHostingService);
+      if (account.imageHosting === BUILT_IN_IMAGE_HOSTING_ID) {
         currentImageHostingService = {
-          type: accountImageHosting.type,
+          type: type,
         };
+        const imageHostingService = imageHostingServiceFactory(type, info);
+        backend.setImageHostingService(imageHostingService);
+      } else {
+        const imageHostingIndex = imageHosting.findIndex(o => o.id === account.imageHosting);
+        if (imageHostingIndex !== -1) {
+          const accountImageHosting = imageHosting[imageHostingIndex];
+          const imageHostingService = imageHostingServiceFactory(
+            accountImageHosting.type,
+            accountImageHosting.info
+          );
+          backend.setImageHostingService(imageHostingService);
+          currentImageHostingService = {
+            type: accountImageHosting.type,
+          };
+        }
       }
     }
     yield put(
@@ -197,7 +206,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
           ...clipperHeaderForm,
         };
       } catch (_error) {
-        message.error('上传图片到图床失败');
+        message.error(_error.message);
         yield put(asyncCreateDocument.failed({ params: { pathname }, error: null }));
         return;
       }

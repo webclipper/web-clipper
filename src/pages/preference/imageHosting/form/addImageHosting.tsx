@@ -80,9 +80,11 @@ export default class AddImageHostingModal extends React.Component<PageProps> {
               rules: [{ required: true }],
             })(
               <Select>
-                {services.map(service => (
-                  <Select.Option key={service.type}>{service.name}</Select.Option>
-                ))}
+                {services
+                  .filter(o => !o.builtIn)
+                  .map(service => (
+                    <Select.Option key={service.type}>{service.name}</Select.Option>
+                  ))}
               </Select>
             )}
           </Form.Item>

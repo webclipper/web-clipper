@@ -114,8 +114,7 @@ export default class YoudaoDocumentService implements DocumentService {
         })}`,
         formData
       );
-    } catch (error) {
-      console.log(error);
+    } catch (_error) {
       uuid = generateUuid().replace(/-/g, '');
       fileId = `WEB${uuid}`;
       formData.set('fileId', fileId);
