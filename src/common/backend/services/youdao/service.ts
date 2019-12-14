@@ -157,7 +157,12 @@ export default class YoudaoDocumentService implements DocumentService {
       name: 'YNOTE_CSTK',
     });
     if (!cookie) {
-      throw new Error('Need Login');
+      throw new UnauthorizedError(
+        localeService.format({
+          id: 'backend.services.youdao.unauthorizedErrorMessage',
+          defaultMessage: 'Unauthorized! Please Login Youdao Web.',
+        })
+      );
     }
     return cookie.value;
   };
