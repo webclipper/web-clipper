@@ -9,6 +9,7 @@
     "build": "webpack --config webpack/webpack.prod.js",
     "lint": "eslint --ext .js,.ts,.tsx --ignore-pattern bad.* .",
     "release": "npm run build && node script/release.js",
+    "release:beta": "npm run build && node script/release_beta.js",
     "travis": "npm run build && node script/travis_release.js"
   },
   "pre-commit": [
