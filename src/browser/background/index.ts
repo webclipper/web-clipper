@@ -1,5 +1,5 @@
 import * as browser from '@web-clipper/chrome-promise';
-import { clickIcon, doYouAliveNow } from 'browserActions/browser';
+import { clickIcon } from 'browserActions/browser';
 import config from '@/config';
 import { MessageListenerCombiner } from '@web-clipper/message-listener-combiner';
 import { closeCurrentTab } from '../actions/message';
@@ -35,20 +35,17 @@ browser.browserAction.onClicked.addListener(async tab => {
     return;
   }
   trackEvent('Load_Web_Clipper', packageJson.version, 'success');
-  const status = await browser.tabs.sendMessage<boolean>(tabId, doYouAliveNow());
-  if (!status) {
-    await browser.tabs.executeScript(
-      {
-        file: 'content_script.js',
-      },
-      tabId
+  await browser.tabs.executeScript(
+    {
+      file: 'content_script.js',
+    },
+    tabId
+  );
+  if (browser.runtime.lastError) {
+    alert(
+      'Clipping of this type of page is temporarily unavailable.\n\n暂时无法剪辑此类型的页面。'
     );
-    if (browser.runtime.lastError) {
-      alert(
-        'Clipping of this type of page is temporarily unavailable.\n\n暂时无法剪辑此类型的页面。'
-      );
-      return;
-    }
+    return;
   }
   browser.tabs.sendMessage(tabId, clickIcon());
 });
