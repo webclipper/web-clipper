@@ -4,6 +4,7 @@ import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import { omit, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import useAsync from './useAsync';
+import { message } from 'antd';
 
 type UseVerifiedAccountProps = FormComponentProps & {
   services: UserPreferenceStore['servicesMeta'];
@@ -40,6 +41,9 @@ const useVerifiedAccount = ({ form, services, initAccount }: UseVerifiedAccountP
     [service],
     {
       manual: true,
+      onError: e => {
+        message.error(e.message);
+      },
     }
   );
 
