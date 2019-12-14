@@ -35,7 +35,7 @@ const messages = {
   'preference.basic.liveRendering.title': '所见即所得',
   'preference.basic.liveRendering.description': '开启后编辑器使用所见即所得模式',
   'preference.basic.configLanguage.title': '语言',
-  'preference.basic.configLanguage.description': '欢迎在 GitHub 提交翻译',
+  'preference.basic.configLanguage.description': '欢迎在 {GitHub} 提交翻译',
   'preference.imageHosting.add': '添加图床',
   'component.imagehostingListItem.noDescription': '没有备注',
   'component.imagehostingListItem.edit': '编辑',

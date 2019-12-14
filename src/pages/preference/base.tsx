@@ -51,6 +51,16 @@ const Base: React.FC<PageProps> = props => {
         <FormattedMessage
           id="preference.basic.configLanguage.description"
           defaultMessage="My native language is Chinese,Welcome to submit a translation on GitHub"
+          values={{
+            GitHub: (
+              <a
+                href="https://github.com/webclipper/web-clipper/tree/master/src/common/locales/data"
+                target="_blank"
+              >
+                GitHub
+              </a>
+            ),
+          }}
         />
       ),
     },

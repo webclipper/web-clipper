@@ -87,7 +87,7 @@ const ClipperHeader: React.FC<PageProps> = props => {
         type="primary"
         onClick={handleSubmit}
         loading={loading}
-        disabled={loading || pathname === '/'}
+        disabled={loading || pathname === '/' || !currentRepository}
         block
       >
         {<FormattedMessage id="tool.save" defaultMessage="Save Content" />}
