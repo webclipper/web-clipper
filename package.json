@@ -122,18 +122,6 @@
         "128": "icon.png"
       }
     },
-    "content_scripts": [
-      {
-        "matches": [
-          "<all_urls>"
-        ],
-        "js": [
-          "content_script.js"
-        ],
-        "run_at": "document_end",
-        "all_frames": false
-      }
-    ],
     "background": {
       "scripts": [
         "background.js"
@@ -150,7 +138,16 @@
       "activeTab",
       "storage",
       "contextMenus",
-      "<all_urls>"
+      "https://*.clipper.website",
+      "https://www.notion.so/*",
+      "https://www.yuque.com/*",
+      "https://api.imgur.com/*",
+      "https://sc.ftqq.com/*",
+      "https://sm.ms/*",
+      "https://github.com/*",
+      "https://graph.microsoft.com/*",
+      "https://note.youdao.com/*",
+      "http://localhost:3000/*"
     ]
   }
 }
