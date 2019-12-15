@@ -87,7 +87,7 @@
     "babel-eslint": "^10.0.3",
     "clean-webpack-plugin": "^0.1.19",
     "compressing": "^1.4.0",
-    "copy-webpack-plugin": "^5.0.3",
+    "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^1.0.0",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.14.0",
