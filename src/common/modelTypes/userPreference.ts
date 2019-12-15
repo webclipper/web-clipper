@@ -3,7 +3,6 @@ import { IUserInfo } from '../types';
 
 export interface UserPreferenceStore {
   locale: string;
-  remoteVersion?: string;
   imageHosting: ImageHosting[];
   showLineNumber: boolean;
   liveRendering: boolean;
@@ -13,8 +12,6 @@ export interface UserPreferenceStore {
   imageHostingServicesMeta: {
     [type: string]: ImageHostingServiceMeta;
   };
-  iconfontUrl: string;
-  iconfontIcons: string[];
   userInfo: IUserInfo | null;
   accessToken?: string;
 }

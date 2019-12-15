@@ -1,24 +1,25 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Icon } from 'antd';
 import { IconProps } from 'antd/lib/icon';
-import { useSelector } from 'dva';
-import { GlobalStore } from '@/common/types';
+import Container from 'typedi';
+import { IConfigService } from '@/service/common/config';
+import { Observer, useObserver } from 'mobx-react';
 
 const IconFont: React.FC<IconProps> = props => {
-  const { scriptUrl, iconfontIcons } = useSelector(
-    ({ userPreference: { iconfontUrl, iconfontIcons } }: GlobalStore) => ({
-      scriptUrl: iconfontUrl,
-      iconfontIcons,
-    })
+  const configService = Container.get(IConfigService);
+  const IconFont = useObserver(() => {
+    return Icon.createFromIconfontCN({ scriptUrl: configService.config?.iconfont });
+  });
+  return (
+    <Observer>
+      {() => {
+        if (!configService.remoteIconSet.has(props.type)) {
+          return <Icon {...props} />;
+        }
+        return <IconFont {...props} />;
+      }}
+    </Observer>
   );
-  const iconsSet = useMemo(() => {
-    return new Set(iconfontIcons);
-  }, [iconfontIcons]);
-  if (!iconsSet.has(props.type!)) {
-    return <Icon {...props}></Icon>;
-  }
-  const IconFont = Icon.createFromIconfontCN({ scriptUrl });
-  return <IconFont {...props}></IconFont>;
 };
 
 export default IconFont;

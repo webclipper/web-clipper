@@ -56,8 +56,7 @@ if (!element) {
   await syncStorageService.init();
   await localStorageService.init();
   await localeService.init();
-  const configService = Container.get(IConfigService);
-  await configService.load();
+  Container.get(IConfigService).load();
   const app = dva({
     namespacePrefixWarning: false,
     history: createHashHistory(),

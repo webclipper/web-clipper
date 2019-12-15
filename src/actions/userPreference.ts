@@ -34,15 +34,6 @@ export const asyncSetShowLineNumber = actionCreator.async<
   void
 >('ASYNC_SET_SHOW_LINE_NUMBER');
 
-export const asyncFetchRemoteConfig = actionCreator.async<
-  void,
-  {
-    iconfont: string;
-    icons: string[];
-  },
-  void
->('asyncFetchRemoteConfig');
-
 export const asyncHideTool = actionCreator.async<void, void, void>('ASYNC_HIDE_TOOL');
 
 export const asyncRemoveTool = actionCreator.async<void, void, void>('ASYNC_REMOVE_TOOL');
