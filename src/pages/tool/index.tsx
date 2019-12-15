@@ -18,6 +18,9 @@ import matchUrl from '@/common/matchUrl';
 import IconFont from '@/components/IconFont';
 import Header from './Header';
 import RepositorySelect from '@/components/RepositorySelect';
+import Container from 'typedi';
+import { IConfigService } from '@/service/common/config';
+import { Observer } from 'mobx-react';
 
 const mapStateToProps = ({
   clipper: { currentAccountId, url, currentRepository, repositories, currentImageHostingService },
@@ -25,12 +28,10 @@ const mapStateToProps = ({
   account: { accounts },
   userPreference: { locale, servicesMeta },
   extension: { extensions, disabledExtensions },
-  version: { hasUpdate },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   const loadingAccount = loading.effects[asyncChangeAccount.started.type];
   return {
-    hasUpdate,
     loadingAccount,
     accounts,
     extensions: extensions
@@ -69,10 +70,11 @@ const Page = React.memo<PageProps>(
         location: { pathname },
       },
       dispatch,
-      hasUpdate,
       accounts,
       servicesMeta,
     } = props;
+
+    const configService = Container.get(IConfigService);
 
     const currentService = currentAccount ? servicesMeta[currentAccount.type] : null;
 
@@ -178,9 +180,13 @@ const Page = React.memo<PageProps>(
                 }
               }}
             >
-              <Badge dot={hasUpdate}>
-                <Icon type="setting" style={{ fontSize: 18 }} />
-              </Badge>
+              <Observer>
+                {() => (
+                  <Badge dot={!configService.isLatestVersion}>
+                    <Icon type="setting" style={{ fontSize: 18 }} />
+                  </Badge>
+                )}
+              </Observer>
             </Button>
             <Select
               value={props.currentAccountId}
@@ -222,7 +228,6 @@ const Page = React.memo<PageProps>(
       loadingAccount,
       locale,
       extensions,
-      hasUpdate,
       servicesMeta,
       accounts,
     }: PageProps) => {
@@ -234,7 +239,6 @@ const Page = React.memo<PageProps>(
         pathname: history.location.pathname,
         locale,
         extensions,
-        hasUpdate,
         servicesMeta,
         accounts,
       };

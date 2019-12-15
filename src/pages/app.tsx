@@ -1,4 +1,6 @@
 import 'regenerator-runtime/runtime';
+import 'reflect-metadata';
+import '@/service/configService';
 import React from 'react';
 import * as styles from './app.scss';
 import dva, { router } from 'dva';
@@ -10,7 +12,6 @@ import Complete from '@/pages/complete/complete';
 import PluginPage from '@/pages/plugin/Page';
 import Tool from '@/pages/tool';
 import clipper from '@/models/clipper';
-import version from '@/models/version';
 import extension from '@/models/extension';
 import userPreference from '@/models/userPreference';
 import createLoading from 'dva-loading';
@@ -23,6 +24,8 @@ import LoginPage from '@/pages/login';
 import account from '@/models/account';
 import { message } from 'antd';
 import config from '@/config';
+import Container from 'typedi';
+import { IConfigService } from '@/service/common/config';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -53,6 +56,8 @@ if (!element) {
   await syncStorageService.init();
   await localStorageService.init();
   await localeService.init();
+  const configService = Container.get(IConfigService);
+  await configService.load();
   const app = dva({
     namespacePrefixWarning: false,
     history: createHashHistory(),
@@ -97,7 +102,6 @@ if (!element) {
   app.model(account);
   app.model(clipper);
   app.model(userPreference);
-  app.model(version);
   app.model(extension);
   app.start(element);
 })();

@@ -14,15 +14,16 @@ import IconFont from '@/components/IconFont';
 import Powerpack from './powerpack';
 import Privacy from './privacy';
 import locale from '@/common/locales';
+import Container from 'typedi';
+import { IConfigService } from '@/service/common/config';
 
 const { Route } = router;
 
 const TabPane = Tabs.TabPane;
 
-const mapStateToProps = ({ version: { hasUpdate }, account: { accounts } }: GlobalStore) => {
+const mapStateToProps = ({ account: { accounts } }: GlobalStore) => {
   return {
     accounts,
-    hasUpdate,
   };
 };
 type PageStateProps = ReturnType<typeof mapStateToProps>;
@@ -79,7 +80,6 @@ type PageProps = DvaRouterProps & PageStateProps;
 const Preference: React.FC<PageProps> = ({
   location: { pathname },
   history: { push },
-  hasUpdate,
   accounts,
 }) => {
   const goHome = () => {
@@ -94,6 +94,8 @@ const Preference: React.FC<PageProps> = ({
     }
     push('/');
   };
+
+  const configService = Container.get(IConfigService);
 
   return (
     <CenterContainer>
@@ -111,7 +113,7 @@ const Preference: React.FC<PageProps> = ({
                   {tab.title}
                 </div>
               );
-              if (hasUpdate && tab.path === 'base') {
+              if (!configService.isLatestVersion && tab.path === 'base') {
                 tabTitle = <Badge dot>{tabTitle}</Badge>;
               }
               return (

@@ -9,15 +9,14 @@ import {
 } from '@/actions/userPreference';
 import { FormattedMessage } from 'react-intl';
 import { locales } from '@/common/locales';
+import { useObserver } from 'mobx-react';
+import Container from 'typedi';
+import { IConfigService } from '@/service/common/config';
 
 const mapStateToProps = ({
   userPreference: { locale, showLineNumber, liveRendering },
-  version: { localVersion, remoteVersion, hasUpdate },
 }: GlobalStore) => {
   return {
-    localVersion,
-    remoteVersion,
-    hasUpdate,
     locale,
     showLineNumber,
     liveRendering,
@@ -29,7 +28,7 @@ type PageProps = PageStateProps & DvaRouterProps;
 
 const Base: React.FC<PageProps> = props => {
   const { dispatch } = props;
-  const configs = [
+  const originConfigs = [
     {
       key: 'configLanguage',
       action: (
@@ -122,8 +121,13 @@ const Base: React.FC<PageProps> = props => {
     },
   ];
 
-  if (props.hasUpdate) {
-    configs.push({
+  const configService = Container.get(IConfigService);
+
+  const configs = useObserver(() => {
+    if (configService.isLatestVersion) {
+      return originConfigs;
+    }
+    return originConfigs.concat({
       key: 'update',
       action: (
         <a href="https://github.com/webclipper/web-clipper/releases" target="_blank">
@@ -138,7 +142,7 @@ const Base: React.FC<PageProps> = props => {
         />
       ),
     });
-  }
+  });
 
   return (
     <React.Fragment>
