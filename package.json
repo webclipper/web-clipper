@@ -10,10 +10,17 @@
     "lint": "eslint --ext .js,.ts,.tsx --ignore-pattern bad.* .",
     "release": "npm run build && node script/release.js",
     "release:beta": "npm run build && node script/release_beta.js",
-    "travis": "npm run build && node script/travis_release.js"
+    "travis": "npm run build && node script/travis_release.js",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "src/**/*.{js, jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "pre-commit": [
-    "lint"
+    "lint-staged"
   ],
   "author": "DiamondYuan",
   "license": "MIT",
@@ -101,6 +108,7 @@
     "jest": "^24.8.0",
     "less": "^3.8.1",
     "less-loader": "^5.0.0",
+    "lint-staged": "^9.5.0",
     "node-sass": "^4.12.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.19.1",
