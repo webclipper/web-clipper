@@ -13,8 +13,7 @@
     "travis": "npm run build && node script/travis_release.js"
   },
   "pre-commit": [
-    "lint",
-    "test"
+    "lint"
   ],
   "author": "DiamondYuan",
   "license": "MIT",
