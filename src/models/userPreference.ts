@@ -1,5 +1,3 @@
-import config, { RemoteConfig } from '@/config';
-import Axios from 'axios';
 import React from 'react';
 import { getLanguage } from './../common/locales';
 import localeService from '@/common/locales';
@@ -28,7 +26,6 @@ import {
   setLocale,
   asyncSetLocaleToStorage,
   initServices,
-  asyncFetchRemoteConfig,
   loginWithToken,
   initPowerpack,
 } from 'pageActions/userPreference';
@@ -43,12 +40,10 @@ import { routerRedux } from 'dva';
 import { localStorageService, syncStorageService } from '@/common/chrome/storage';
 import { loadExtensions } from '@/actions/extension';
 import { initAccounts } from '@/actions/account';
-import iconConfig from '@/../config.json';
 import copyToClipboard from 'copy-to-clipboard';
 import { getUserInfo, ocr } from '@/common/server';
 import remark from 'remark';
 import remakPangu from 'remark-pangu';
-import request from 'umi-request';
 
 const { message } = antd;
 
@@ -59,8 +54,6 @@ const defaultState: UserPreferenceStore = {
   imageHostingServicesMeta: {},
   showLineNumber: true,
   liveRendering: true,
-  iconfontUrl: '',
-  iconfontIcons: [],
   userInfo: null,
 };
 
@@ -157,32 +150,6 @@ builder
     userInfo,
     accessToken,
   }));
-
-builder
-  .takeEvery(asyncFetchRemoteConfig.started, function*(_, { call, put }) {
-    let iconfont = iconConfig.iconfont;
-    if (process.env.NODE_ENV !== 'development') {
-      const response: RemoteConfig = yield call(request.get, `${config.resourceHost}/config.json`);
-      iconfont = response.iconfont;
-    }
-
-    let icons: string[] = [];
-    try {
-      const iconsFile = yield call(Axios.get, iconfont);
-      const matchResult: string[] = iconsFile.data.match(/id="([A-Za-z]+)"/g) || [];
-      icons = matchResult.map(o => o.match(/id="([A-Za-z]+)"/)![1]);
-    } catch (error) {
-      console.log(error);
-    }
-    yield put(asyncFetchRemoteConfig.done({ result: { iconfont, icons } }));
-  })
-  .case(asyncFetchRemoteConfig.done, (s, { result: { iconfont, icons } }) => {
-    return {
-      ...s,
-      iconfontUrl: iconfont,
-      iconfontIcons: icons,
-    };
-  });
 
 builder
   .takeEvery(asyncSetShowLineNumber.started, function*(payload, { call, put }) {
@@ -354,7 +321,6 @@ builder
 
 builder.subscript(async function initStore({ dispatch, history }) {
   await dispatch(initAccounts.started());
-  dispatch(removeActionNamespace(asyncFetchRemoteConfig.started()));
   const result = await storage.getPreference();
   const tabInfo = await browser.tabs.getCurrent();
   if (tabInfo.title && tabInfo.url) {
