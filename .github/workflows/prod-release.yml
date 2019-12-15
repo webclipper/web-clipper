@@ -1,0 +1,24 @@
+name: Actions Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Install Dependencies
+        run: |
+          yarn add now
+      - name: Continuous integration
+        run: |
+          yarn now --token $ZEIT_TOKEN -A now.json --force --prod
+        env:
+          ZEIT_TOKEN: ${{ secrets.Now }}

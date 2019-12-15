@@ -19,6 +19,7 @@
   "author": "DiamondYuan",
   "license": "MIT",
   "dependencies": {
+    "@types/crypto-js": "^3.1.43",
     "@web-clipper/area-selector": "^0.1.1",
     "@web-clipper/chrome-promise": "^0.0.20",
     "@web-clipper/extensions": "^0.0.17",
@@ -32,6 +33,7 @@
     "classnames": "^2.2.6",
     "codemirror": "^5.47.0",
     "copy-to-clipboard": "^3.2.0",
+    "crypto-js": "^3.1.9-1",
     "dayjs": "^1.8.17",
     "dva": "^2.6.0-beta.19",
     "dva-loading": "^3.0.19",
