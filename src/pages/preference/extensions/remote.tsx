@@ -17,6 +17,8 @@ import styles from './index.scss';
 import { installRemoteExtension } from '@/actions/extension';
 import { hasUpdate } from '@/common/version';
 import { checkBill } from '@/common/powerpack';
+import Container from 'typedi';
+import { IConfigService } from '@/service/common/config';
 
 interface RemoteExtensionProps {
   host: string;
@@ -110,7 +112,6 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
 const selector = ({
   extension: { extensions },
   userPreference: { locale, userInfo },
-  version: { localVersion },
 }: GlobalStore) => {
   const map = new Map<string, SerializedExtensionWithId>();
   extensions.forEach(e => {
@@ -119,14 +120,14 @@ const selector = ({
   return {
     extensions: map,
     locale,
-    localVersion,
     havePowerPack: !!userInfo && checkBill(userInfo.expire_date),
   };
 };
 
 const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
   const { loading, result, error } = useAsync(() => Axios(`${host}/extensions/index`));
-  const { locale, extensions, localVersion, havePowerPack } = useSelector(selector);
+  const { locale, extensions, havePowerPack } = useSelector(selector);
+  const configService = Container.get(IConfigService);
   const remoteExtensions = useMemo<SerializedExtensionInfo[]>(() => {
     if (!result || !result.data) {
       return [];
@@ -147,7 +148,7 @@ const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
         havePowerPack={havePowerPack}
         manifest={e}
         key="download"
-        localVersion={localVersion}
+        localVersion={configService.localVersion}
         extensions={extensions}
         host={host}
       />,

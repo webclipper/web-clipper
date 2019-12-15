@@ -16,5 +16,8 @@ export default (): ServiceMeta => {
     headerForm: headerForm,
     form: Form,
     homePage: 'https://www.yuque.com',
+    permission: {
+      origins: ['https://www.yuque.com/*'],
+    },
   };
 };

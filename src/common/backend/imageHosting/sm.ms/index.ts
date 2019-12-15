@@ -7,5 +7,8 @@ export default (): ImageHostingServiceMeta => {
     icon: 'smms',
     type: 'sm.ms',
     service: Service,
+    permission: {
+      origins: ['https://sm.ms/*'],
+    },
   };
 };

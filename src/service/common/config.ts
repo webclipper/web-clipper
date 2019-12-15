@@ -10,6 +10,8 @@ export interface IConfigService {
 
   isLatestVersion: boolean;
 
+  readonly localVersion: string;
+
   load(): Promise<void>;
 }
 

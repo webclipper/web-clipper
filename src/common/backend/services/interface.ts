@@ -62,6 +62,7 @@ export interface ServiceMeta {
   complete?: any;
   oauthUrl?: string;
   headerForm?: any;
+  permission?: chrome.permissions.Permissions;
 }
 
 export interface DocumentService<T = any> {

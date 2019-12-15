@@ -27,5 +27,8 @@ export default (): ServiceMeta => {
     oauthUrl,
     form: form,
     homePage: 'https://products.office.com/en-us/onenote/digital-note-taking-app',
+    permission: {
+      origins: ['https://graph.microsoft.com/*'],
+    },
   };
 };

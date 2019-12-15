@@ -8,5 +8,9 @@ export default (): ServiceMeta => {
     type: 'notion',
     homePage: 'https://www.notion.so/',
     service: Service,
+    permission: {
+      origins: ['https://www.notion.so/*'],
+      permissions: ['cookies'],
+    },
   };
 };

@@ -12,5 +12,8 @@ export default () => {
     form: Form,
     headerForm: headerForm,
     homePage: 'https://github.com/',
+    permission: {
+      origins: ['https://api.github.com/*'],
+    },
   } as ServiceMeta;
 };

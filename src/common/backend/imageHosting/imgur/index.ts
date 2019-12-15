@@ -9,5 +9,8 @@ export default (): ImageHostingServiceMeta => {
     type: 'imgur',
     service: Service,
     form: Form,
+    permission: {
+      origins: ['https://api.imgur.com/*'],
+    },
   };
 };

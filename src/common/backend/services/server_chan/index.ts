@@ -13,5 +13,8 @@ export default () => {
     service: Service,
     form: Form,
     homePage: 'https://sc.ftqq.com/',
+    permission: {
+      origins: ['https://sc.ftqq.com/*'],
+    },
   };
 };

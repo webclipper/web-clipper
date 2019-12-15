@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Form, Modal, Select, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import { ImageHostingServiceMeta } from '../../../../common/backend';
@@ -21,13 +21,13 @@ const formItemLayout = {
   labelCol: { span: 6, offset: 0 },
 };
 
-export default class AddImageHostingModal extends React.Component<PageProps> {
-  getImageHostingForm = (info?: Pick<ImageHosting, 'info'>) => {
+const AddImageHostingModal: React.FC<PageProps> = props => {
+  const getImageHostingForm = (info?: Pick<ImageHosting, 'info'>) => {
     const {
       imageHostingServicesMeta,
       form: { getFieldValue },
       form,
-    } = this.props;
+    } = props;
     const type = getFieldValue('type');
     if (type) {
       const ServiceForm = imageHostingServicesMeta[type]?.form;
@@ -37,67 +37,86 @@ export default class AddImageHostingModal extends React.Component<PageProps> {
     }
   };
 
-  handleOk = () => {
-    const { currentImageHosting } = this.props;
+  const handleOk = () => {
+    const { currentImageHosting } = props;
     if (currentImageHosting) {
-      this.props.onEditAccount(currentImageHosting.id);
+      props.onEditAccount(currentImageHosting.id);
     } else {
-      this.props.onAddAccount();
+      props.onAddAccount();
     }
   };
 
-  handleCancel = () => {
-    this.props.onCancel();
-  };
+  const handleCancel = useCallback(() => {
+    props.onCancel();
+  }, [props]);
 
-  render() {
-    const {
-      imageHostingServicesMeta,
-      visible,
-      currentImageHosting,
-      form: { getFieldDecorator },
-    } = this.props;
-    const services = Object.values(imageHostingServicesMeta);
-    let title;
-    let initImageHosting: Omit<ImageHosting, 'id'>;
-    if (currentImageHosting) {
-      title = <FormattedMessage id="preference.imageHosting.edit" defaultMessage="Edit" />;
-      initImageHosting = currentImageHosting;
-    } else {
-      title = <FormattedMessage id="preference.imageHosting.add" defaultMessage="Add" />;
-      initImageHosting = {
-        type: services[0].type,
-      };
+  const {
+    imageHostingServicesMeta,
+    visible,
+    currentImageHosting,
+    form: { getFieldDecorator, getFieldValue },
+    onCancel,
+  } = props;
+
+  const type = getFieldValue('type');
+  const permission = imageHostingServicesMeta[type]?.permission;
+
+  useEffect(() => {
+    if (permission && visible) {
+      chrome.permissions.contains(permission, r => {
+        if (!r) {
+          chrome.permissions.request(permission, g => {
+            if (!g) {
+              onCancel();
+            }
+          });
+        }
+      });
     }
-    return (
-      <Modal title={title} visible={visible} onOk={this.handleOk} onCancel={this.handleCancel}>
-        <Form {...formItemLayout}>
-          <Form.Item
-            label={<FormattedMessage id="preference.imageHosting.type" defaultMessage="Type" />}
-          >
-            {getFieldDecorator('type', {
-              initialValue: initImageHosting.type,
-              rules: [{ required: true }],
-            })(
-              <Select>
-                {services
-                  .filter(o => !o.builtIn)
-                  .map(service => (
-                    <Select.Option key={service.type}>{service.name}</Select.Option>
-                  ))}
-              </Select>
-            )}
-          </Form.Item>
-          {this.getImageHostingForm(initImageHosting.info)}
-          <Form.Item
-            label={<FormattedMessage id="preference.imageHosting.remark" defaultMessage="Remark" />}
-          >
-            {getFieldDecorator('remark', {
-              initialValue: initImageHosting.remark,
-            })(<Input />)}
-          </Form.Item>
-        </Form>
-      </Modal>
-    );
+  }, [onCancel, permission, visible]);
+
+  const services = Object.values(imageHostingServicesMeta);
+  let title;
+  let initImageHosting: Omit<ImageHosting, 'id'>;
+  if (currentImageHosting) {
+    title = <FormattedMessage id="preference.imageHosting.edit" defaultMessage="Edit" />;
+    initImageHosting = currentImageHosting;
+  } else {
+    title = <FormattedMessage id="preference.imageHosting.add" defaultMessage="Add" />;
+    initImageHosting = {
+      type: services[0].type,
+    };
   }
-}
+  return (
+    <Modal title={title} visible={visible} onOk={handleOk} onCancel={handleCancel} destroyOnClose>
+      <Form {...formItemLayout}>
+        <Form.Item
+          label={<FormattedMessage id="preference.imageHosting.type" defaultMessage="Type" />}
+        >
+          {getFieldDecorator('type', {
+            initialValue: initImageHosting.type,
+            rules: [{ required: true }],
+          })(
+            <Select>
+              {services
+                .filter(o => !o.builtIn)
+                .map(service => (
+                  <Select.Option key={service.type}>{service.name}</Select.Option>
+                ))}
+            </Select>
+          )}
+        </Form.Item>
+        {getImageHostingForm(initImageHosting.info)}
+        <Form.Item
+          label={<FormattedMessage id="preference.imageHosting.remark" defaultMessage="Remark" />}
+        >
+          {getFieldDecorator('remark', {
+            initialValue: initImageHosting.remark,
+          })(<Input />)}
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+};
+
+export default AddImageHostingModal;

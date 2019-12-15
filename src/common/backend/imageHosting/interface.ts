@@ -23,6 +23,7 @@ export interface ImageHostingServiceMeta {
   support?: (type: string) => boolean;
   builtIn?: boolean;
   builtInRemark?: string;
+  permission?: chrome.permissions.Permissions;
 }
 
 export const BUILT_IN_IMAGE_HOSTING_ID = 'BUILT_IN_IMAGE_HOSTING_ID';

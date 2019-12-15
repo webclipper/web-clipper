@@ -12,5 +12,9 @@ export default (): ServiceMeta => {
     type: 'youdao',
     homePage: 'https://note.youdao.com/web/',
     service: Service,
+    permission: {
+      origins: ['https://note.youdao.com/*'],
+      permissions: ['cookies'],
+    },
   };
 };

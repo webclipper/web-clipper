@@ -13,7 +13,7 @@ class ConfigService implements IConfigService {
   @observable
   public config?: RemoteConfig;
 
-  private readonly localVersion = packageJson.version;
+  public readonly localVersion = packageJson.version;
 
   load = async () => {
     try {

@@ -139,22 +139,13 @@
     ],
     "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com https://at.alicdn.com; object-src 'self'",
     "permissions": [
-      "webRequest",
-      "webRequestBlocking",
-      "cookies",
       "activeTab",
       "storage",
-      "contextMenus",
-      "https://*.clipper.website",
-      "https://www.notion.so/*",
-      "https://www.yuque.com/*",
-      "https://api.imgur.com/*",
-      "https://sc.ftqq.com/*",
-      "https://sm.ms/*",
-      "https://github.com/*",
-      "https://graph.microsoft.com/*",
-      "https://note.youdao.com/*",
-      "http://localhost:3000/*"
+      "https://*.clipper.website"
+    ],
+    "optional_permissions": [
+      "cookies",
+      "<all_urls>"
     ]
   }
 }
