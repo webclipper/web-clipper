@@ -1,10 +1,12 @@
+import { Container } from 'typedi';
+import { PowerpackUserInfo, IPowerpackService } from '@/service/common/powerpack';
 import { getLanguage } from './locales/index';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/modelTypes/userPreference';
 import { extend } from 'umi-request';
 import config from '@/config';
 import { localStorageService } from './chrome/storage';
 import { LOCAL_ACCESS_TOKEN_LOCALE_KEY } from './modelTypes/userPreference';
-import { IResponse, IUserInfo } from './types';
+import { IResponse } from './types';
 
 const request = extend({
   prefix: `${config.serverHost}/api/`,
@@ -14,13 +16,14 @@ const request = extend({
 
 request.interceptors.request.use(
   (url, options) => {
+    const powerpackService = Container.get(IPowerpackService);
     return {
       url,
       options: {
         ...options,
         headers: {
           ...options.headers,
-          token: localStorageService.get(LOCAL_ACCESS_TOKEN_LOCALE_KEY, ''),
+          token: powerpackService.accessToken || '',
           locale: localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, getLanguage()),
         },
       },
@@ -53,7 +56,7 @@ request.interceptors.response.use(
 );
 
 export const getUserInfo = () => {
-  return request.get<IResponse<IUserInfo>>('user');
+  return request.get<IResponse<PowerpackUserInfo>>('user');
 };
 
 export interface PostMailRequestBody {

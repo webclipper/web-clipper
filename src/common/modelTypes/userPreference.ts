@@ -1,5 +1,4 @@
 import { ServiceMeta, ImageHostingServiceMeta } from '@/common/backend';
-import { IUserInfo } from '../types';
 
 export interface UserPreferenceStore {
   locale: string;
@@ -12,8 +11,6 @@ export interface UserPreferenceStore {
   imageHostingServicesMeta: {
     [type: string]: ImageHostingServiceMeta;
   };
-  userInfo: IUserInfo | null;
-  accessToken?: string;
 }
 
 /**

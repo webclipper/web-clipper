@@ -76,11 +76,3 @@ export const initServices = actionCreator<
 >('initServices');
 
 export const loginWithToken = actionCreator<string>('loginWithToken');
-
-export const initPowerpack = actionCreator.async<
-  void,
-  {
-    userInfo: IUserInfo | null;
-    accessToken?: string;
-  }
->('initPowerpack');

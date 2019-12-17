@@ -4,14 +4,12 @@ import IconFont from '@/components/IconFont';
 import { stringify } from 'qs';
 import browserId from '@/common/id';
 import config from '@/config';
-import { useSelector, useDispatch } from 'dva';
-import { GlobalStore, LOCAL_ACCESS_TOKEN_LOCALE_KEY } from '@/common/types';
 import dayjs from 'dayjs';
-import { localStorageService } from '@/common/chrome/storage';
-import { initPowerpack } from '@/actions/userPreference';
 import { FormattedMessage } from 'react-intl';
 import useAsync from '@/common/hooks/useAsync';
-import { refresh } from '@/common/server';
+import Container from 'typedi';
+import { IPowerpackService } from '@/service/common/powerpack';
+import { useObserver } from 'mobx-react';
 
 const feature = [
   {
@@ -39,28 +37,16 @@ const Powerpack: React.FC = () => {
     state: browserId(),
   })}`;
 
-  const { userInfo, accessToken, loading } = useSelector(
-    ({ userPreference, loading }: GlobalStore) => ({
-      userInfo: userPreference.userInfo,
-      accessToken: userPreference.accessToken,
-      loading: loading.effects[initPowerpack.started.type],
-    })
-  );
+  const powerpackService = Container.get(IPowerpackService);
 
-  const refreshToken = useAsync(() => refresh(), [], {
-    manual: true,
-    onSuccess(r) {
-      localStorageService.set(LOCAL_ACCESS_TOKEN_LOCALE_KEY, r.result);
-    },
+  const { userInfo, accessToken, loading } = useObserver(() => {
+    const { userInfo, accessToken, loading } = powerpackService;
+    return { userInfo, accessToken, loading };
   });
 
-  const dispatch = useDispatch();
-
-  const reload = () => dispatch(initPowerpack.started());
-
-  const handleLogout = () => {
-    localStorageService.set(LOCAL_ACCESS_TOKEN_LOCALE_KEY, '');
-  };
+  const refreshToken = useAsync(() => powerpackService.refresh(), [], {
+    manual: true,
+  });
 
   if (loading || refreshToken.loading) {
     return <Skeleton></Skeleton>;
@@ -71,7 +57,12 @@ const Powerpack: React.FC = () => {
       <div>
         <List.Item
           actions={[
-            <Button key="logout" type="link" style={{ color: 'red' }} onClick={handleLogout}>
+            <Button
+              key="logout"
+              type="link"
+              style={{ color: 'red' }}
+              onClick={powerpackService.logout}
+            >
               <FormattedMessage id="preference.powerpack.logout" defaultMessage="Logout" />
             </Button>,
             <Button key="reload" type="link" onClick={refreshToken.run}>
@@ -115,10 +106,10 @@ const Powerpack: React.FC = () => {
           load powerpack info."
           />
         </h1>
-        <Button type="primary" onClick={reload}>
+        <Button type="primary" onClick={powerpackService.startup}>
           <FormattedMessage id="preference.powerpack.reload" defaultMessage="Reload" />
         </Button>
-        <Button style={{ marginLeft: 8 }} onClick={handleLogout}>
+        <Button style={{ marginLeft: 8 }} onClick={powerpackService.logout}>
           <FormattedMessage id="preference.powerpack.logout" defaultMessage="Logout" />
         </Button>
       </div>

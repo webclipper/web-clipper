@@ -13,8 +13,8 @@ function resolve(dir) {
 
 module.exports = {
   entry: {
-    background: resolve('src/browser/background/index.ts'),
     tool: resolve('src/pages/app.tsx'),
+    background: resolve('src/browser/background/index.ts'),
     content_script: resolve('src/browser/content/index.tsx'),
   },
   output: {

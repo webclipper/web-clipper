@@ -16,9 +16,9 @@ import ExtensionCard from '@/components/ExtensionCard';
 import styles from './index.scss';
 import { installRemoteExtension } from '@/actions/extension';
 import { hasUpdate } from '@/common/version';
-import { checkBill } from '@/common/powerpack';
 import Container from 'typedi';
 import { IConfigService } from '@/service/common/config';
+import usePowerpack from '@/common/hooks/usePowerpack';
 
 interface RemoteExtensionProps {
   host: string;
@@ -109,10 +109,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
   );
 };
 
-const selector = ({
-  extension: { extensions },
-  userPreference: { locale, userInfo },
-}: GlobalStore) => {
+const selector = ({ extension: { extensions }, userPreference: { locale } }: GlobalStore) => {
   const map = new Map<string, SerializedExtensionWithId>();
   extensions.forEach(e => {
     map.set(e.id, e);
@@ -120,13 +117,13 @@ const selector = ({
   return {
     extensions: map,
     locale,
-    havePowerPack: !!userInfo && checkBill(userInfo.expire_date),
   };
 };
 
 const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
   const { loading, result, error } = useAsync(() => Axios(`${host}/extensions/index`));
-  const { locale, extensions, havePowerPack } = useSelector(selector);
+  const { locale, extensions } = useSelector(selector);
+  const { bought, expired } = usePowerpack();
   const configService = Container.get(IConfigService);
   const remoteExtensions = useMemo<SerializedExtensionInfo[]>(() => {
     if (!result || !result.data) {
@@ -145,7 +142,7 @@ const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
   const cardActions = (e: SerializedExtensionInfo) => {
     return [
       <DownloadButton
-        havePowerPack={havePowerPack}
+        havePowerPack={bought && !expired}
         manifest={e}
         key="download"
         localVersion={configService.localVersion}

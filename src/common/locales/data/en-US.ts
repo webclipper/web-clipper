@@ -19,6 +19,7 @@ const messages = {
     'Click on the 🌟 to choose the default extension.',
   'preference.basic.configLanguage.description':
     'My native language is Chinese,Welcome to submit a translation on {GitHub}.',
+  'backend.services.kindle.name': 'Send to Kindle',
 };
 
 const model: LocaleModel = {

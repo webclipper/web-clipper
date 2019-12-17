@@ -1,11 +1,13 @@
 import { hasUpdate } from '@/common/version';
 import config from '@/config';
-import { IConfigService, RemoteConfig } from '@/service/common/config';
+import { RemoteConfig as _RemoteConfig, IConfigService } from '@/service/common/config';
 import { Service } from 'typedi';
 import packageJson from '@/../package.json';
 import localConfig from '@/../config.json';
 import { observable, ObservableSet, runInAction } from 'mobx';
 import request from 'umi-request';
+
+type RemoteConfig = _RemoteConfig;
 
 class ConfigService implements IConfigService {
   @observable

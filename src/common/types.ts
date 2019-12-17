@@ -34,13 +34,6 @@ export interface GlobalStore {
   };
 }
 
-export interface IUserInfo {
-  name: string;
-  email: string;
-  avatar_url: string;
-  expire_date: string;
-}
-
 export interface IResponse<T> {
   result: T;
   message: string;

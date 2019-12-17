@@ -1,6 +1,8 @@
 import 'regenerator-runtime/runtime';
 import 'reflect-metadata';
 import '@/service/configService';
+import '@/service/powerpackService';
+import Container from 'typedi';
 import React from 'react';
 import * as styles from './app.scss';
 import dva, { router } from 'dva';
@@ -24,8 +26,9 @@ import LoginPage from '@/pages/login';
 import account from '@/models/account';
 import { message } from 'antd';
 import config from '@/config';
-import Container from 'typedi';
 import { IConfigService } from '@/service/common/config';
+import { ILocalStorageService, ISyncStorageService } from '@/service/common/storage';
+import { IPowerpackService } from '@/service/common/powerpack';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -56,7 +59,10 @@ if (!element) {
   await syncStorageService.init();
   await localStorageService.init();
   await localeService.init();
+  Container.set(ILocalStorageService, localStorageService);
+  Container.set(ISyncStorageService, syncStorageService);
   Container.get(IConfigService).load();
+  Container.get(IPowerpackService).startup();
   const app = dva({
     namespacePrefixWarning: false,
     history: createHashHistory(),

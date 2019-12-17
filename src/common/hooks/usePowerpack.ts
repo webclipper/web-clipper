@@ -1,20 +1,19 @@
+import { IPowerpackService } from '@/service/common/powerpack';
+import { Container } from 'typedi';
+import { useObserver } from 'mobx-react';
 import { useCallback } from 'react';
-import { checkBill } from '@/common/powerpack';
-import { useSelector, routerRedux, useDispatch } from 'dva';
-import { GlobalStore } from '@/common/types';
-import { isEqual } from 'lodash';
+import { routerRedux, useDispatch } from 'dva';
 
 function usePowerpack() {
-  const { userInfo, bought, expired } = useSelector((g: GlobalStore) => {
-    const userInfo = g.userPreference.userInfo;
-    let bought = !!userInfo;
-    const expired = bought && !checkBill(userInfo!.expire_date);
+  const powerpackService = Container.get(IPowerpackService);
+
+  const { userInfo, bought, expired } = useObserver(() => {
     return {
-      userInfo,
-      bought,
-      expired,
+      userInfo: powerpackService.userInfo,
+      bought: powerpackService.bought,
+      expired: powerpackService.expired,
     };
-  }, isEqual);
+  });
 
   const dispatch = useDispatch();
   const boughtPowerpack = useCallback(() => {

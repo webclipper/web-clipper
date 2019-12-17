@@ -8,7 +8,7 @@ import {
 import { runScript, closeCurrentTab } from './../browser/actions/message';
 import storage from 'common/storage';
 import * as antd from 'antd';
-import { GlobalStore, IResponse, IUserInfo } from '@/common/types';
+import { GlobalStore } from '@/common/types';
 import browserService from 'common/browser';
 import * as browser from '@web-clipper/chrome-promise';
 import { hideTool, removeTool } from 'browserActions/message';
@@ -27,7 +27,6 @@ import {
   asyncSetLocaleToStorage,
   initServices,
   loginWithToken,
-  initPowerpack,
 } from 'pageActions/userPreference';
 import { initTabInfo, changeData, asyncChangeAccount } from 'pageActions/clipper';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
@@ -41,7 +40,7 @@ import { localStorageService, syncStorageService } from '@/common/chrome/storage
 import { loadExtensions } from '@/actions/extension';
 import { initAccounts } from '@/actions/account';
 import copyToClipboard from 'copy-to-clipboard';
-import { getUserInfo, ocr } from '@/common/server';
+import { ocr } from '@/common/server';
 import remark from 'remark';
 import remakPangu from 'remark-pangu';
 
@@ -54,7 +53,6 @@ const defaultState: UserPreferenceStore = {
   imageHostingServicesMeta: {},
   showLineNumber: true,
   liveRendering: true,
-  userInfo: null,
 };
 
 const builder = new DvaModelBuilder(defaultState, 'userPreference')
@@ -92,64 +90,10 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
     })
   );
 
-builder
-  .takeEvery(loginWithToken, function*(token, { call }) {
-    yield call(localStorageService.set, LOCAL_ACCESS_TOKEN_LOCALE_KEY, token);
-    chrome.runtime.sendMessage(closeCurrentTab());
-  })
-  .subscript(async function initAccessToken({ dispatch }) {
-    function loadAccessToken() {
-      dispatch(removeActionNamespace(initPowerpack.started()));
-    }
-    loadAccessToken();
-    localStorageService.onDidChangeStorage(key => {
-      if (key === LOCAL_ACCESS_TOKEN_LOCALE_KEY) {
-        loadAccessToken();
-      }
-    });
-  })
-  .takeEvery(initPowerpack.started, function*(payload, { call, put }) {
-    const accessToken = localStorageService.get(LOCAL_ACCESS_TOKEN_LOCALE_KEY);
-    if (accessToken) {
-      try {
-        const response: IResponse<IUserInfo> = yield call(getUserInfo);
-        yield put(
-          initPowerpack.done({
-            result: {
-              userInfo: response.result,
-              accessToken,
-            },
-            params: payload,
-          })
-        );
-      } catch (_error) {
-        yield put(
-          initPowerpack.done({
-            result: {
-              userInfo: null,
-              accessToken,
-            },
-            params: payload,
-          })
-        );
-      }
-    } else {
-      yield put(
-        initPowerpack.done({
-          result: {
-            userInfo: null,
-            accessToken,
-          },
-          params: payload,
-        })
-      );
-    }
-  })
-  .case(initPowerpack.done, (s, { result: { userInfo, accessToken } }) => ({
-    ...s,
-    userInfo,
-    accessToken,
-  }));
+builder.takeEvery(loginWithToken, function*(token, { call }) {
+  yield call(localStorageService.set, LOCAL_ACCESS_TOKEN_LOCALE_KEY, token);
+  chrome.runtime.sendMessage(closeCurrentTab());
+});
 
 builder
   .takeEvery(asyncSetShowLineNumber.started, function*(payload, { call, put }) {
