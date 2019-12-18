@@ -2,6 +2,8 @@ import 'regenerator-runtime/runtime';
 import 'reflect-metadata';
 import '@/service/configService';
 import '@/service/permissionsService';
+import '@/service/powerpackService';
+import Container from 'typedi';
 import React from 'react';
 import * as styles from './app.scss';
 import dva, { router } from 'dva';
@@ -28,7 +30,6 @@ import config from '@/config';
 import { IConfigService } from '@/service/common/config';
 import { ILocalStorageService, ISyncStorageService } from '@/service/common/storage';
 import { IPowerpackService } from '@/service/common/powerpack';
-import Container from 'typedi';
 
 const { Route, Switch, Router, withRouter } = router;
 
