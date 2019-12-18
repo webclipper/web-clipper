@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Form, Modal, Select, Icon, Divider } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import * as styles from './index.scss';
@@ -9,6 +9,8 @@ import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
 import useFilterImageHostingServices from '@/common/hooks/useFilterImageHostingServices';
 import ImageHostingSelect from '@/components/ImageHostingSelect';
 import RepositorySelect from '@/components/RepositorySelect';
+import Container from 'typedi';
+import { IPermissionsService } from '@/service/common/permissions';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {
@@ -37,7 +39,7 @@ const Page: React.FC<PageProps> = ({
   servicesMeta,
   onCancel,
   form,
-  form: { getFieldDecorator },
+  form: { getFieldDecorator, getFieldValue },
   onAdd,
   visible,
 }) => {
@@ -58,8 +60,18 @@ const Page: React.FC<PageProps> = ({
     imageHostingServicesMap: imageHostingServicesMeta,
   });
 
-  const handleOk = () => {
+  const handleOk = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    const type = getFieldValue('type');
+    const permission = servicesMeta[type]?.permission;
+    if (permission) {
+      const result = await Container.get(IPermissionsService).request(permission);
+      if (!result) {
+        return;
+      }
+    }
     if (oauthLink) {
+      window.open(oauthLink.props.href);
       onCancel();
     } else if (verified && id) {
       onAdd(id, userInfo);
@@ -67,21 +79,6 @@ const Page: React.FC<PageProps> = ({
       loadAccount();
     }
   };
-
-  const permission = servicesMeta[type]?.permission;
-  useEffect(() => {
-    if (permission) {
-      chrome.permissions.contains(permission, r => {
-        if (!r) {
-          chrome.permissions.request(permission, g => {
-            if (!g) {
-              onCancel();
-            }
-          });
-        }
-      });
-    }
-  }, [onCancel, permission]);
 
   return (
     <Modal
