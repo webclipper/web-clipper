@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo, useEffect } from 'react';
+import React, { useLayoutEffect, useMemo } from 'react';
 import { Form, Modal, Select, Icon } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import * as styles from './index.scss';
@@ -80,21 +80,6 @@ const Page: React.FC<PageProps> = ({
   ) : (
     <FormattedMessage id="preference.accountList.confirm" defaultMessage="Confirm" />
   );
-
-  const permission = servicesMeta[type]?.permission;
-  useEffect(() => {
-    if (permission) {
-      chrome.permissions.contains(permission, r => {
-        if (!r) {
-          chrome.permissions.request(permission, g => {
-            if (!g) {
-              onCancel();
-            }
-          });
-        }
-      });
-    }
-  }, [onCancel, permission]);
 
   return (
     <Modal

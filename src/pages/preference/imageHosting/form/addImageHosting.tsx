@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import { Form, Modal, Select, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import { ImageHostingServiceMeta } from '../../../../common/backend';
 import { ImageHosting } from '@/common/types';
 import { FormattedMessage } from 'react-intl';
+import Container from 'typedi';
+import { IPermissionsService } from '@/service/common/permissions';
 
 type PageOwnProps = {
   currentImageHosting?: ImageHosting | null;
@@ -22,6 +24,13 @@ const formItemLayout = {
 };
 
 const AddImageHostingModal: React.FC<PageProps> = props => {
+  const {
+    imageHostingServicesMeta,
+    visible,
+    currentImageHosting,
+    form: { getFieldDecorator, getFieldValue },
+  } = props;
+
   const getImageHostingForm = (info?: Pick<ImageHosting, 'info'>) => {
     const {
       imageHostingServicesMeta,
@@ -37,7 +46,16 @@ const AddImageHostingModal: React.FC<PageProps> = props => {
     }
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
+    const permissionsService = Container.get(IPermissionsService);
+    const type = getFieldValue('type');
+    const permission = imageHostingServicesMeta[type]?.permission;
+    if (permission) {
+      const result = await permissionsService.request(permission);
+      if (!result) {
+        return;
+      }
+    }
     const { currentImageHosting } = props;
     if (currentImageHosting) {
       props.onEditAccount(currentImageHosting.id);
@@ -45,35 +63,6 @@ const AddImageHostingModal: React.FC<PageProps> = props => {
       props.onAddAccount();
     }
   };
-
-  const handleCancel = useCallback(() => {
-    props.onCancel();
-  }, [props]);
-
-  const {
-    imageHostingServicesMeta,
-    visible,
-    currentImageHosting,
-    form: { getFieldDecorator, getFieldValue },
-    onCancel,
-  } = props;
-
-  const type = getFieldValue('type');
-  const permission = imageHostingServicesMeta[type]?.permission;
-
-  useEffect(() => {
-    if (permission && visible) {
-      chrome.permissions.contains(permission, r => {
-        if (!r) {
-          chrome.permissions.request(permission, g => {
-            if (!g) {
-              onCancel();
-            }
-          });
-        }
-      });
-    }
-  }, [onCancel, permission, visible]);
 
   const services = Object.values(imageHostingServicesMeta);
   let title;
@@ -87,8 +76,9 @@ const AddImageHostingModal: React.FC<PageProps> = props => {
       type: services[0].type,
     };
   }
+
   return (
-    <Modal title={title} visible={visible} onOk={handleOk} onCancel={handleCancel} destroyOnClose>
+    <Modal title={title} visible={visible} onOk={handleOk} onCancel={props.onCancel} destroyOnClose>
       <Form {...formItemLayout}>
         <Form.Item
           label={<FormattedMessage id="preference.imageHosting.type" defaultMessage="Type" />}

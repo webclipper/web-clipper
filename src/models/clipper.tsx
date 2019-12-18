@@ -1,3 +1,6 @@
+import { Container } from 'typedi';
+import React from 'react';
+import { IPermissionsService } from '@/service/common/permissions';
 import { BUILT_IN_IMAGE_HOSTING_ID } from '@/common/backend/imageHosting/interface';
 import { updateClipperHeader } from './../actions/clipper';
 import { asyncRunExtension } from './../actions/userPreference';
@@ -17,7 +20,7 @@ import {
 } from 'pageActions/clipper';
 import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
 import { unpackAccountPreference } from '@/common/account';
-import { message } from 'antd';
+import { message, notification, Button } from 'antd';
 import { routerRedux } from 'dva';
 import { asyncUpdateAccount } from '@/actions/account';
 import { channel } from 'redux-saga';
@@ -44,10 +47,14 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     }
   })
   .takeEvery(asyncChangeAccount.started, function*(payload, { call, select, put }) {
-    const selector = ({ userPreference: { imageHosting }, account: { accounts } }: GlobalStore) => {
+    const selector = ({
+      userPreference: { imageHosting, servicesMeta },
+      account: { accounts },
+    }: GlobalStore) => {
       return {
         accounts,
         imageHosting,
+        servicesMeta,
       };
     };
     const selectState: ReturnType<typeof selector> = yield select(selector);
@@ -63,6 +70,42 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
       userInfo,
     } = unpackAccountPreference(currentAccount);
     const documentService = documentServiceFactory(type, info);
+    const permissionsService = Container.get(IPermissionsService);
+    if (selectState.servicesMeta[type]?.permission) {
+      const hasPermissions = yield call(
+        permissionsService.contains,
+        selectState.servicesMeta[type]?.permission
+      );
+      if (!hasPermissions) {
+        const key = `open${Date.now()}`;
+        const close = () => {
+          permissionsService.request(selectState.servicesMeta[type]?.permission!).then(re => {
+            if (re) {
+              actionChannel.put(asyncChangeAccount.started({ id }));
+            }
+          });
+        };
+        notification.error({
+          key,
+          placement: 'topRight',
+          duration: 0,
+          message: 'No Permission',
+          btn: (
+            <Button
+              onClick={() => {
+                notification.close(key);
+                close();
+              }}
+              type="primary"
+            >
+              Grant
+            </Button>
+          ),
+          onClose: () => close,
+        });
+        return;
+      }
+    }
     let repositories = [];
     try {
       repositories = yield call(documentService.getRepositories);
@@ -193,7 +236,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     if (extension.type === ExtensionType.Image) {
       const imageHostingService = backend.getImageHostingService();
       if (!imageHostingService) {
-        message.error('请设定图床');
+        message.error('No image Hosting');
         return;
       }
       try {
