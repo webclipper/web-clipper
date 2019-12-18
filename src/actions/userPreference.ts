@@ -1,4 +1,4 @@
-import { ImageHosting, GlobalStore, IUserInfo } from '@/common/types';
+import { ImageHosting, GlobalStore } from '@/common/types';
 import { PreferenceStorage } from 'common/storage/interface';
 import { SerializedExtensionWithId } from '@web-clipper/extensions';
 import { actionCreatorFactory } from 'dva-model-creator';
