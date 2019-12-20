@@ -16,7 +16,9 @@ export default new TextExtension(
       toggleClipper();
       try {
         const data = await new Highlighter().start();
-        return turndown.turndown(data);
+        let container = document.createElement('div');
+        container.appendChild(data);
+        return turndown.turndown(container);
       } catch (error) {
         throw error;
       } finally {

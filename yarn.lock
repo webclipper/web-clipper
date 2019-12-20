@@ -1630,13 +1630,13 @@
   dependencies:
     jquery "^3.4.1"
 
-"@web-clipper/chrome-promise@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.npm.taobao.org/@web-clipper/chrome-promise/download/@web-clipper/chrome-promise-0.0.20.tgz#69e087fd11842693589a226402c33c48634694af"
-  integrity sha1-aeCH/RGEJpNYmiJkAsM8SGNGlK8=
+"@web-clipper/chrome-promise@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@web-clipper/chrome-promise/-/chrome-promise-0.1.0.tgz#fd773a7cedf581c65c630d11e18eadbec24985b4"
+  integrity sha512-C5APzJ68tRUKwbqB+3EnuxkGXlXpOeDmKmh6p4BoFGlJxlxnKLYyfSFjxldbmNskzv1A55IGA/7NCFloR5Uoag==
   dependencies:
     "@types/chrome" "^0.0.88"
-    "@web-clipper/shared" "^0.0.20"
+    "@web-clipper/shared" "^0.1.0"
 
 "@web-clipper/extensions@^0.0.17":
   version "0.0.17"
@@ -1670,10 +1670,18 @@
     "@types/chrome" "^0.0.88"
     blueimp-md5 "^2.11.0"
 
-"@web-clipper/turndown@^0.1.0":
+"@web-clipper/shared@^0.1.0":
   version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@web-clipper/turndown/-/turndown-0.1.0.tgz#a730fb3d0936634d8d262763f6fccc12ebde83e6"
-  integrity sha512-W53mVFT42KwzOvwoiwaSAbkXZbx/edd1j1MEyBHW4VbuPZ/lzYmHrknTEFjFkmkRRtCswpK0hkjW2tUMFbOk4A==
+  resolved "https://registry.yarnpkg.com/@web-clipper/shared/-/shared-0.1.0.tgz#18935a029a84f21d6e3f124bbc28454e827eec3a"
+  integrity sha512-zMhwuc6783ocr1v+L9BMt2A6KZWMhkVRp6X62/n3to0uKGWUcoeP76qT+rowYESFTSzSSKOb/hngIs0a90AvLQ==
+  dependencies:
+    "@types/chrome" "^0.0.88"
+    blueimp-md5 "^2.11.0"
+
+"@web-clipper/turndown@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@web-clipper/turndown/-/turndown-0.1.1.tgz#5f7275b5ebe01b55be49f85518605da6fe87d484"
+  integrity sha512-T77R8qmkEcY+llY0vv183+hdnJdWLCCbfQ+8ts1/QWOHVyEAXlaaTfxcsdRb/YlSVMN1iU9oxv+ZxWl6YbJGmQ==
   dependencies:
     "@types/mz" "^0.0.32"
     "@types/turndown" "^5.0.0"
