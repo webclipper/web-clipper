@@ -7,8 +7,9 @@ import LinkRender from '@/components/LinkRender';
 import useAsync from '@/common/hooks/useAsync';
 import config from '@/config';
 import request from 'umi-request';
-
-const supportedLocale = ['en-US', 'zh-CN'];
+import Container from 'typedi';
+import { IConfigService } from '@/service/common/config';
+import { useObserver } from 'mobx-react';
 
 const Changelog: React.FC = () => {
   const { locale } = useSelector(({ userPreference: { locale } }: GlobalStore) => {
@@ -16,10 +17,15 @@ const Changelog: React.FC = () => {
       locale,
     };
   });
-  let workLocale = locale;
-  if (supportedLocale.every(o => o !== locale)) {
-    workLocale = 'en-US';
-  }
+  const configService = Container.get(IConfigService);
+  const workLocale = useObserver(() => {
+    let workLocale = 'en-US';
+
+    if (configService.config?.privacyLocale.some(o => o === locale)) {
+      workLocale = locale;
+    }
+    return workLocale;
+  });
 
   const { loading, result: changelog } = useAsync(
     () => request.get(`${config.resourceHost}/privacy/PRIVACY.${workLocale}.md`),

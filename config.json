@@ -1,4 +1,6 @@
 {
   "iconfont": "https://at.alicdn.com/t/font_1402208_2tugo7m06hm.js",
-  "chromeWebStoreVersion": "1.13.0"
+  "chromeWebStoreVersion": "1.13.0",
+  "privacyLocale": ["en-US", "zh-CN"],
+  "changelogLocale": ["en-US", "zh-CN"]
 }
