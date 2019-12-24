@@ -12,12 +12,16 @@ export default new TextExtension(
   },
   {
     run: async context => {
-      const { turndown, Highlighter, toggleClipper } = context;
+      const { turndown, Highlighter, toggleClipper, $ } = context;
       toggleClipper();
       try {
         const data = await new Highlighter().start();
         let container = document.createElement('div');
-        container.appendChild(data);
+        container.appendChild(
+          $(data)
+            .clone()
+            .get(0)
+        );
         return turndown.turndown(container);
       } catch (error) {
         throw error;
