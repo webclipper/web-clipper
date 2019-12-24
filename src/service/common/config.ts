@@ -20,6 +20,8 @@ export interface IConfigService {
 
   remoteIconSet: ObservableSet<string>;
 
+  id: string;
+
   load(): Promise<void>;
 }
 

@@ -1,15 +1,16 @@
+import { IConfigService } from '@/service/common/config';
+import { Container } from 'typedi';
 import config from '@/config';
 import { ServiceMeta } from './../interface';
 import Service from './service';
 import localeService from '@/common/locales';
 import { stringify } from 'qs';
 import form from './form';
-import browserId from '@/common/id';
 
 const oauthUrl = `https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize?${stringify({
   scope: 'Notes.Create User.Read offline_access',
   client_id: config.oneNoteClientId,
-  state: browserId(),
+  state: Container.get(IConfigService).id,
   response_type: 'code',
   response_mode: 'query',
   redirect_uri: config.oneNoteCallBack,

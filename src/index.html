@@ -3,8 +3,70 @@
   <head>
     <meta charset="UTF-8" />
     <title>webpack App</title>
+    <style>
+      .web-clipper-loading {
+        position: fixed;
+        right: 10px;
+        top: 10px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 12px 0px;
+        background: white;
+        width: 324px;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .web-clipper-loading .line {
+        animation: expand 1s ease-in-out infinite;
+        border-radius: 10px;
+        display: inline-block;
+        transform-origin: center center;
+        margin: 0 3px;
+        width: 1px;
+        height: 25px;
+      }
+
+      .web-clipper-loading .line:nth-child(1) {
+        background: #27ae60;
+      }
+
+      .web-clipper-loading .line:nth-child(2) {
+        animation-delay: 180ms;
+        background: #f1c40f;
+      }
+
+      .web-clipper-loading .line:nth-child(3) {
+        animation-delay: 360ms;
+        background: #e67e22;
+      }
+
+      .web-clipper-loading .line:nth-child(4) {
+        animation-delay: 540ms;
+        background: #2980b9;
+      }
+
+      @keyframes expand {
+        0% {
+          transform: scale(1);
+        }
+        25% {
+          transform: scale(2);
+        }
+      }
+    </style>
   </head>
   <body>
+    <div id="app">
+      <div class="web-clipper-loading">
+        <div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+      </div>
+    </div>
     <script type="text/javascript" src="vendor.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-import { IPermissionsService, Permissions } from './common/permissions';
+import { IPermissionsService, Permissions } from '@/service/common/permissions';
 import { Service } from 'typedi';
 
 class PermissionsService implements IPermissionsService {

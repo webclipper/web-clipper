@@ -2,12 +2,12 @@ import React from 'react';
 import { Button, List, Avatar, Skeleton, Row, Col } from 'antd';
 import IconFont from '@/components/IconFont';
 import { stringify } from 'qs';
-import browserId from '@/common/id';
+import { IConfigService } from '@/service/common/config';
+import { Container } from 'typedi';
 import config from '@/config';
 import dayjs from 'dayjs';
 import { FormattedMessage } from 'react-intl';
 import useAsync from '@/common/hooks/useAsync';
-import Container from 'typedi';
 import { IPowerpackService } from '@/service/common/powerpack';
 import { useObserver } from 'mobx-react';
 
@@ -34,7 +34,7 @@ const Powerpack: React.FC = () => {
     client_id: config.githubClientId,
     redirect_uri: config.githubCallback,
     scope: 'user:email',
-    state: browserId(),
+    state: Container.get(IConfigService).id,
   })}`;
 
   const powerpackService = Container.get(IPowerpackService);

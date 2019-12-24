@@ -14,14 +14,6 @@ class ChromeBrowserService {
     }
     return browser.tabs.sendMessage(current.id, action);
   };
-
-  captureVisibleTab = async () => {
-    return new Promise<string>(resolve => {
-      chrome.tabs.captureVisibleTab(image => {
-        resolve(image);
-      });
-    });
-  };
 }
 
 export default new ChromeBrowserService();

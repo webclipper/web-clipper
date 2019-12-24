@@ -1,3 +1,5 @@
+import { ITabService } from '@/service/common/tab';
+import { Container } from 'typedi';
 import React from 'react';
 import { getLanguage } from './../common/locales';
 import localeService from '@/common/locales';
@@ -10,7 +12,6 @@ import storage from 'common/storage';
 import * as antd from 'antd';
 import { GlobalStore } from '@/common/types';
 import browserService from 'common/browser';
-import * as browser from '@web-clipper/chrome-promise';
 import { hideTool, removeTool } from 'browserActions/message';
 import update from 'immutability-helper';
 import {
@@ -223,6 +224,7 @@ builder
     }
 
     if (afterRun) {
+      const tabService = Container.get(ITabService);
       try {
         result = yield (async () => {
           // @ts-ignore
@@ -234,7 +236,7 @@ builder
             message,
             imageService: backend.getImageHostingService(),
             loadImage: loadImage,
-            captureVisibleTab: browserService.captureVisibleTab,
+            captureVisibleTab: tabService.captureVisibleTab,
             copyToClipboard,
             createAndDownloadFile,
             antd,
@@ -266,7 +268,8 @@ builder
 builder.subscript(async function initStore({ dispatch, history }) {
   await dispatch(initAccounts.started());
   const result = await storage.getPreference();
-  const tabInfo = await browser.tabs.getCurrent();
+  const tabService = Container.get(ITabService);
+  const tabInfo = await tabService.getCurrent();
   if (tabInfo.title && tabInfo.url) {
     dispatch(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
   }

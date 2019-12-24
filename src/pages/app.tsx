@@ -1,11 +1,8 @@
 import 'regenerator-runtime/runtime';
 import 'reflect-metadata';
-import '@/service/configService';
-import '@/service/permissionsService';
-import '@/service/powerpackService';
+import '@/service/app.main';
 import Container from 'typedi';
 import React from 'react';
-import * as styles from './app.scss';
 import dva, { router } from 'dva';
 import { createHashHistory } from 'history';
 import createLogger from 'dva-logger';
@@ -30,6 +27,7 @@ import config from '@/config';
 import { IConfigService } from '@/service/common/config';
 import { ILocalStorageService, ISyncStorageService } from '@/service/common/storage';
 import { IPowerpackService } from '@/service/common/powerpack';
+import './app.scss';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -45,14 +43,6 @@ function withTool(WrappedComponent: any): any {
       </React.Fragment>
     );
   };
-}
-
-let element;
-if (!element) {
-  element = document.createElement('div');
-  element.setAttribute('id', styles.app);
-  document.body.appendChild(element);
-  element.className = styles.app;
 }
 
 (async () => {
@@ -109,5 +99,5 @@ if (!element) {
   app.model(clipper);
   app.model(userPreference);
   app.model(extension);
-  app.start(element);
+  app.start('#app');
 })();

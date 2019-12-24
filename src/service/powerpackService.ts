@@ -1,5 +1,5 @@
-import { IResponse } from './../common/types';
-import { getUserInfo } from './../common/server';
+import { IResponse } from '@/common/types';
+import { getUserInfo, refresh } from '@/common/server';
 import { IStorageService } from '@web-clipper/shared/lib/storage';
 import { ILocalStorageService } from '@/service/common/storage';
 import {
@@ -8,7 +8,6 @@ import {
 } from '@/service/common/powerpack';
 import { Service, Inject } from 'typedi';
 import { observable, runInAction, computed } from 'mobx';
-import { refresh } from '@/common/server';
 import dayjs from 'dayjs';
 
 type PowerpackUserInfo = _PowerpackUserInfo;

@@ -5,7 +5,6 @@ import { DvaRouterProps, GlobalStore } from '@/common/types';
 import { Modal, Form, Select } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { FormComponentProps } from 'antd/lib/form';
-import * as browser from '@web-clipper/chrome-promise';
 import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
 import ImageHostingSelect from '@/components/ImageHostingSelect';
 import useFilterImageHostingServices, {
@@ -15,6 +14,8 @@ import { asyncAddAccount } from '@/actions/account';
 import { isEqual } from 'lodash';
 import RepositorySelect from '@/components/RepositorySelect';
 import { BUILT_IN_IMAGE_HOSTING_ID } from '@/common/backend/imageHosting/interface';
+import Container from 'typedi';
+import { ITabService } from '@/service/common/tab';
 
 interface PageQuery {
   access_token: string;
@@ -40,6 +41,12 @@ function useDeepCompareMemoize<T>(value: T) {
   }
   return ref.current;
 }
+
+const closeCurrentTab = async () => {
+  const tabService = Container.get(ITabService);
+  const tabId = (await tabService.getCurrent()).id;
+  chrome.tabs.remove(tabId!);
+};
 
 const Page: React.FC<PageProps> = props => {
   const query = parse(props.location.search.slice(1)) as PageQuery;
@@ -93,10 +100,7 @@ const Page: React.FC<PageProps> = props => {
     <Modal
       visible
       okText={okText}
-      onCancel={async () => {
-        const tahId = (await browser.tabs.getCurrent()).id;
-        chrome.tabs.remove(tahId!);
-      }}
+      onCancel={closeCurrentTab}
       okButtonProps={{
         disabled: verifying,
         loading: verifying,
@@ -116,10 +120,7 @@ const Page: React.FC<PageProps> = props => {
               imageHosting,
               info,
               userInfo: userInfo!,
-              callback: async () => {
-                const tahId = (await browser.tabs.getCurrent()).id;
-                chrome.tabs.remove(tahId!);
-              },
+              callback: closeCurrentTab,
             })
           );
         });
