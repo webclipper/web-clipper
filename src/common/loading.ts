@@ -23,7 +23,6 @@ export function loadingStatus<T>(
           if (!uuid) {
             throw new Error();
           }
-          console.log(key, loadingMap.get(uuid));
           return loadingMap.get(uuid);
         },
       });
@@ -33,19 +32,17 @@ export function loadingStatus<T>(
   return cache.get(instance);
 }
 
-function LoadingHoc(this: any, uuidKey: string, fn: Function) {
-  return function() {
-    loadingMap.set(uuidKey, true);
-    //@ts-ignore
-    let promise = fn.apply(this, arguments);
-    if (typeof promise === 'object' && typeof promise.finally === 'function') {
-      promise.finally(() => {
-        loadingMap.set(uuidKey, false);
-      });
-    } else {
+function LoadingHoc(uuidKey: string, fn: Function) {
+  return async function() {
+    try {
+      loadingMap.set(uuidKey, true);
+      //@ts-ignore
+      return await fn.apply(this, arguments);
+    } catch (err) {
+      throw err;
+    } finally {
       loadingMap.set(uuidKey, false);
     }
-    return promise;
   };
 }
 

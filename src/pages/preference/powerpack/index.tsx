@@ -47,7 +47,6 @@ const Powerpack: React.FC = () => {
       loading: loadingStatus(powerpackService).startup || loadingStatus(powerpackService).refresh,
     };
   });
-
   if (loading) {
     return <Skeleton></Skeleton>;
   }
