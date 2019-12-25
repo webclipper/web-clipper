@@ -33,7 +33,10 @@ export function loadingStatus<T>(
 }
 
 function LoadingHoc(uuidKey: string, fn: Function) {
+  let execCount = 0;
   return async function() {
+    const execCountCache = execCount + 1;
+    execCount = execCountCache;
     try {
       loadingMap.set(uuidKey, true);
       //@ts-ignore
@@ -41,7 +44,9 @@ function LoadingHoc(uuidKey: string, fn: Function) {
     } catch (err) {
       throw err;
     } finally {
-      loadingMap.set(uuidKey, false);
+      if (execCountCache === execCount) {
+        loadingMap.set(uuidKey, false);
+      }
     }
   };
 }
