@@ -8,7 +8,6 @@ export interface PowerpackUserInfo {
 
 export interface IPowerpackService {
   userInfo: PowerpackUserInfo | null;
-  loading: boolean;
   accessToken?: string;
   bought: boolean;
   expired: boolean;

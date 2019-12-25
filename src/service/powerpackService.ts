@@ -9,6 +9,7 @@ import {
 import { Service, Inject } from 'typedi';
 import { observable, runInAction, computed } from 'mobx';
 import dayjs from 'dayjs';
+import { loading } from '@/common/loading';
 
 type PowerpackUserInfo = _PowerpackUserInfo;
 
@@ -20,9 +21,6 @@ class PowerpackService implements IPowerpackService {
 
   @observable
   public accessToken?: string;
-
-  @observable
-  public loading: boolean = false;
 
   @computed get bought() {
     return !!this.userInfo;
@@ -46,8 +44,8 @@ class PowerpackService implements IPowerpackService {
     });
   }
 
+  @loading
   startup = async () => {
-    this.loading = true;
     const accessToken = this.localStorageService.get(
       PowerpackService.LOCAL_ACCESS_TOKEN_LOCALE_KEY
     );
@@ -55,7 +53,6 @@ class PowerpackService implements IPowerpackService {
       runInAction(() => {
         this.accessToken = accessToken;
         this.userInfo = null;
-        this.loading = false;
       });
       return;
     }
@@ -65,7 +62,6 @@ class PowerpackService implements IPowerpackService {
     const response: IResponse<PowerpackUserInfo> = await getUserInfo();
     runInAction(() => {
       this.userInfo = response.result;
-      this.loading = false;
     });
   };
 
@@ -73,6 +69,7 @@ class PowerpackService implements IPowerpackService {
     this.localStorageService.delete(PowerpackService.LOCAL_ACCESS_TOKEN_LOCALE_KEY);
   };
 
+  @loading
   refresh = async () => {
     const response = await refresh();
     await this.localStorageService.set(

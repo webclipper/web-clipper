@@ -7,9 +7,9 @@ import { Container } from 'typedi';
 import config from '@/config';
 import dayjs from 'dayjs';
 import { FormattedMessage } from 'react-intl';
-import useAsync from '@/common/hooks/useAsync';
 import { IPowerpackService } from '@/service/common/powerpack';
 import { useObserver } from 'mobx-react';
+import { loadingStatus } from '@/common/loading';
 
 const feature = [
   {
@@ -40,15 +40,15 @@ const Powerpack: React.FC = () => {
   const powerpackService = Container.get(IPowerpackService);
 
   const { userInfo, accessToken, loading } = useObserver(() => {
-    const { userInfo, accessToken, loading } = powerpackService;
-    return { userInfo, accessToken, loading };
+    const { userInfo, accessToken } = powerpackService;
+    return {
+      userInfo,
+      accessToken,
+      loading: loadingStatus(powerpackService).startup || loadingStatus(powerpackService).refresh,
+    };
   });
 
-  const refreshToken = useAsync(() => powerpackService.refresh(), [], {
-    manual: true,
-  });
-
-  if (loading || refreshToken.loading) {
+  if (loading) {
     return <Skeleton></Skeleton>;
   }
 
@@ -65,7 +65,7 @@ const Powerpack: React.FC = () => {
             >
               <FormattedMessage id="preference.powerpack.logout" defaultMessage="Logout" />
             </Button>,
-            <Button key="reload" type="link" onClick={refreshToken.run}>
+            <Button key="reload" type="link" onClick={powerpackService.refresh}>
               <FormattedMessage id="preference.powerpack.reload" defaultMessage="Reload" />
             </Button>,
             <Button
