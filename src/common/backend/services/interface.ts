@@ -5,7 +5,7 @@ export interface CreateDocumentRequest {
 }
 
 export interface CompleteStatus {
-  href: string;
+  href?: string;
 }
 
 export interface UserInfo {
@@ -70,7 +70,7 @@ export interface DocumentService<T = any> {
 
   getRepositories(): Promise<Repository[]>;
 
-  createDocument(request: CreateDocumentRequest): Promise<CompleteStatus>;
+  createDocument(request: CreateDocumentRequest): Promise<CompleteStatus | void>;
 
   getUserInfo(): Promise<UserInfo>;
 

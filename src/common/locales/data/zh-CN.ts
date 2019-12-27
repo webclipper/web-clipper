@@ -49,6 +49,8 @@ const messages = {
   'preference.accountList.login': '授权登录',
   'page.complete.error': '发生错误',
   'page.complete.success': '保存成功',
+  'page.complete.close': '关闭 Web Clipper',
+  'page.complete.share': '分享',
   'page.complete.message': '前往 {name} 查看',
   'backend.services.yuque_oauth.name': '语雀(一键授权)',
   'preference.tab.changelog': '更新日志',

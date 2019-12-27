@@ -36,7 +36,7 @@ const Page: React.FC = () => {
       </a>
     </ToolContainer>
   );
-  if (!completeStatus || !currentAccount) {
+  if (!currentAccount) {
     return renderError;
   }
   const currentService = servicesMeta[currentAccount.type];
@@ -47,15 +47,21 @@ const Page: React.FC = () => {
   return (
     <ToolContainer onClickCloseButton={closeTool}>
       <Section title={<FormattedMessage id="page.complete.success" defaultMessage="Success" />}>
-        <a href={completeStatus.href} target="_blank">
-          <Button className={styles.jump} size="large" type="primary" block>
-            <FormattedMessage
-              id="page.complete.message"
-              defaultMessage="Go to {name}"
-              values={{ name: <span>{name}</span> }}
-            />
+        {completeStatus?.href ? (
+          <a href={completeStatus.href} target="_blank">
+            <Button className={styles.jump} size="large" type="primary" block>
+              <FormattedMessage
+                id="page.complete.message"
+                defaultMessage="Go to {name}"
+                values={{ name: <span>{name}</span> }}
+              />
+            </Button>
+          </a>
+        ) : (
+          <Button className={styles.jump} size="large" type="primary" block onClick={closeTool}>
+            <FormattedMessage id="page.complete.close" defaultMessage="Close Web Clipper" />
           </Button>
-        </a>
+        )}
       </Section>
       {Complete && <Complete status={completeStatus}> </Complete>}
       <Section title={<FormattedMessage id="page.complete.share" defaultMessage="Share" />}>
