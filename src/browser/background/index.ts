@@ -1,5 +1,5 @@
 import * as browser from '@web-clipper/chrome-promise';
-import { clickIcon } from 'browserActions/browser';
+import { clickIcon, doYouAliveNow } from 'browserActions/browser';
 import config from '@/config';
 import { MessageListenerCombiner } from '@web-clipper/message-listener-combiner';
 import { closeCurrentTab } from '../actions/message';
@@ -35,21 +35,24 @@ browser.browserAction.onClicked.addListener(async tab => {
     return;
   }
   trackEvent('Load_Web_Clipper', packageJson.version, 'success');
-  await browser.tabs.executeScript(
-    {
-      file: 'content_script.js',
-    },
-    tabId
-  );
-  if (browser.runtime.lastError) {
-    if (browser.runtime.lastError.message === 'The extensions gallery cannot be scripted.') {
-      alert('The extensions gallery cannot be scripted.\n\n插件商店不允许执行脚本');
+  const result = await browser.tabs.sendMessage(tabId, doYouAliveNow());
+  if (!result) {
+    await browser.tabs.executeScript(
+      {
+        file: 'content_script.js',
+      },
+      tabId
+    );
+    if (browser.runtime.lastError) {
+      if (browser.runtime.lastError.message === 'The extensions gallery cannot be scripted.') {
+        alert('The extensions gallery cannot be scripted.\n\n插件商店不允许执行脚本');
+        return;
+      }
+      alert(
+        'Clipping of this type of page is temporarily unavailable.\n\nRefreshing the page can resolve。\n\n暂时无法剪辑此类型的页面。\n\n刷新页面可以解决。'
+      );
       return;
     }
-    alert(
-      'Clipping of this type of page is temporarily unavailable.\n\nRefreshing the page can resolve。\n\n暂时无法剪辑此类型的页面。\n\n刷新页面可以解决。'
-    );
-    return;
   }
   browser.tabs.sendMessage(tabId, clickIcon());
 });
