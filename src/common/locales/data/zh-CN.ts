@@ -121,6 +121,11 @@ const messages = {
   'backend.imageHosting.yuque_oauth.builtInRemark': '语雀内置图床。',
   'backend.imageHosting.yuque_oauth.error_401': '没有权限，需要删除当前账户重新授权。',
   'backend.imageHosting.yuque_oauth.error_403': '没有权限，需要删除当前账户重新授权。',
+  'backend.services.joplin.headerForm.tags': '标签',
+  'backend.imageHosting.joplin.name': 'Joplin',
+  'backend.services.joplin.name': 'Joplin',
+  'backend.imageHosting.joplin.builtInRemark': 'Joplin 内置图床',
+  'backend.imageHosting.yuque_oauth.name': '语雀(一键授权)',
 };
 
 const model: LocaleModel = {
