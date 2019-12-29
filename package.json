@@ -105,7 +105,7 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "html-webpack-plugin": "^3.2.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.8.0",
+    "jest": "^24.9.0",
     "less": "^3.8.1",
     "less-loader": "^5.0.0",
     "lint-staged": "^9.5.0",
