@@ -2,6 +2,10 @@
 import { loading, loadingStatus } from './loading';
 import { autorun, action, observable } from 'mobx';
 
+function flushPromises() {
+  return new Promise(resolve => setImmediate(resolve));
+}
+
 jest.useFakeTimers();
 
 class Test {
@@ -39,6 +43,7 @@ describe('test loading decorator', () => {
     await jest.advanceTimersByTime(5000);
     expect(loadingStatus(instance).exec).toBe(true);
     await jest.advanceTimersByTime(5000);
+    await flushPromises();
     expect(loadingStatus(instance).exec).toBe(false);
   });
 
@@ -53,6 +58,7 @@ describe('test loading decorator', () => {
     expect(log).toBeCalledTimes(1);
     expect(log).toHaveBeenLastCalledWith(true);
     await jest.advanceTimersByTime(3000);
+    await flushPromises();
     expect(log).toBeCalledTimes(2);
     expect(log).toHaveBeenLastCalledWith(false);
   });
