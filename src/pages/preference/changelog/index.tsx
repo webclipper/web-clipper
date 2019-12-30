@@ -19,7 +19,7 @@ const Changelog: React.FC = () => {
   const configService = Container.get(IConfigService);
   const workLocale = useObserver(() => {
     let workLocale = 'en-US';
-    if (configService.config?.changelogLocale.some(o => o !== locale)) {
+    if (configService.config?.changelogLocale.some(o => o === locale)) {
       workLocale = locale;
     }
     return workLocale;
