@@ -1,3 +1,11 @@
+## 1.16.0
+
+`2019-12-30`
+
+- ✨ Support Joplin
+- 💄 Add loading page
+- 🐛 Fix web clipper switch error.
+
 ## 1.15.1
 
 `2019-12-15`
