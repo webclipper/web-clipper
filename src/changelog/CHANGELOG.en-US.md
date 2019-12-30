@@ -1,3 +1,16 @@
+## 1.15.1
+
+`2019-12-15`
+
+- ✨ Reduce permissions required by web clipper.
+
+## 1.15.0
+
+`2019-12-14`
+
+- ✨ Yuque(oauth) support built in image hosting
+- ✨ Support server chan
+
 ## 1.14.1
 
 `2019-12-05`
