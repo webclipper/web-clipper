@@ -11,7 +11,6 @@ import { runScript, closeCurrentTab } from './../browser/actions/message';
 import storage from 'common/storage';
 import * as antd from 'antd';
 import { GlobalStore } from '@/common/types';
-import browserService from 'common/browser';
 import { hideTool, removeTool } from 'browserActions/message';
 import update from 'immutability-helper';
 import {
@@ -125,10 +124,12 @@ builder
     );
   })
   .takeEvery(asyncHideTool.started, function*(_, { call }) {
-    yield call(browserService.sendActionToCurrentTab, hideTool());
+    const tabService = Container.get(ITabService);
+    yield call(tabService.sendActionToCurrentTab, hideTool());
   })
   .takeEvery(asyncRemoveTool.started, function*(_, { call }) {
-    yield call(browserService.sendActionToCurrentTab, removeTool());
+    const tabService = Container.get(ITabService);
+    yield call(tabService.sendActionToCurrentTab, removeTool());
   })
   .takeEvery(asyncEditImageHosting.started, function*(payload, { call, put }) {
     const { id, value, closeModal } = payload;
@@ -196,8 +197,9 @@ builder
   .takeEvery(asyncRunExtension.started, function*({ extension, pathname }, { call, put, select }) {
     let result;
     const { run, afterRun, destroy } = extension;
+    const tabService = Container.get(ITabService);
     if (run) {
-      result = yield call(browserService.sendActionToCurrentTab, runScript(run));
+      result = yield call(tabService.sendActionToCurrentTab, runScript(run));
     }
     const state: GlobalStore = yield select(state => state);
     const data = state.clipper.clipperData[pathname];
@@ -224,7 +226,6 @@ builder
     }
 
     if (afterRun) {
-      const tabService = Container.get(ITabService);
       try {
         result = yield (async () => {
           // @ts-ignore
@@ -255,7 +256,7 @@ builder
       }
     }
     if (destroy) {
-      yield call(browserService.sendActionToCurrentTab, runScript(destroy));
+      yield call(tabService.sendActionToCurrentTab, runScript(destroy));
     }
     yield put(
       changeData({

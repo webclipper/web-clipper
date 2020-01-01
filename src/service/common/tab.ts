@@ -16,6 +16,10 @@ export interface ITabService {
   remove(tabId: number): Promise<void>;
 
   captureVisibleTab(option: CaptureVisibleTabOptions | number): Promise<string>;
+
+  sendMessage<T>(tabId: number, message: any): Promise<T>;
+
+  sendActionToCurrentTab<T>(action: any): Promise<T>;
 }
 
 export const ITabService = new Token<ITabService>();

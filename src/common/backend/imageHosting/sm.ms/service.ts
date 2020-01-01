@@ -1,4 +1,4 @@
-import { Base64ImageToBlob } from '../../../blob';
+import { Base64ImageToBlob } from '@/common/blob';
 import axios from 'axios';
 import { UploadImageRequest, ImageHostingService } from '../interface';
 import md5 from '@web-clipper/shared/lib/md5';
