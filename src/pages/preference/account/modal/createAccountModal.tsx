@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Form, Modal, Select, Icon, Divider } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import * as styles from './index.scss';
-import { ImageHostingServiceMeta } from 'common/backend';
+import { ImageHostingServiceMeta, BUILT_IN_IMAGE_HOSTING_ID } from 'common/backend';
 import { UserPreferenceStore, ImageHosting } from '@/common/types';
 import { FormattedMessage } from 'react-intl';
 import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
@@ -54,9 +54,18 @@ const Page: React.FC<PageProps> = ({
     oauthLink,
   } = useVerifiedAccount({ form, services: servicesMeta });
 
+  const imageHostingWithBuiltIn = useMemo(() => {
+    const res = [...imageHosting];
+    const meta = imageHostingServicesMeta[type];
+    if (meta?.builtIn) {
+      res.push({ type, info: {}, id: BUILT_IN_IMAGE_HOSTING_ID, remark: meta.builtInRemark });
+    }
+    return res;
+  }, [imageHosting, imageHostingServicesMeta, type]);
+
   const supportedImageHostingServices = useFilterImageHostingServices({
     backendServiceType: type,
-    imageHostingServices: imageHosting,
+    imageHostingServices: imageHostingWithBuiltIn,
     imageHostingServicesMap: imageHostingServicesMeta,
   });
 
