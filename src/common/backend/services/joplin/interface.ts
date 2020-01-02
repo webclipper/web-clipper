@@ -1,6 +1,7 @@
 import { CreateDocumentRequest } from './../interface';
 export interface JoplinBackendServiceConfig {
   token: string;
+  filterTags: boolean;
 }
 
 export interface JoplinFolderItem {

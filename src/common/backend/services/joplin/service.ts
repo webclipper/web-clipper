@@ -11,11 +11,11 @@ import { extend, RequestMethod } from 'umi-request';
 export default class JoplinDocumentService implements DocumentService {
   private request: RequestMethod;
 
-  constructor({ token }: JoplinBackendServiceConfig) {
+  constructor(private config: JoplinBackendServiceConfig) {
     this.request = extend({
       prefix: 'http://localhost:41184/',
       params: {
-        token: token,
+        token: this.config.token,
       },
     });
   }
@@ -69,6 +69,20 @@ export default class JoplinDocumentService implements DocumentService {
   };
 
   getTags = async () => {
-    return this.request.get<JoplinTag[]>('tags');
+    let tags = await this.request.get<JoplinTag[]>('tags');
+    if (this.config.filterTags) {
+      tags = (
+        await Promise.all(
+          tags.map(async tag => {
+            const notes = await this.request.get<unknown[]>(`tags/${tag.id}/notes`);
+            if (notes.length === 0) {
+              return null;
+            }
+            return tag;
+          })
+        )
+      ).filter((tag): tag is JoplinTag => !!tag);
+    }
+    return tags;
   };
 }

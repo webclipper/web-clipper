@@ -126,6 +126,8 @@ const messages = {
   'backend.services.joplin.name': 'Joplin',
   'backend.imageHosting.joplin.builtInRemark': 'Joplin 内置图床',
   'backend.imageHosting.yuque_oauth.name': '语雀(一键授权)',
+  'backend.services.joplin.filter_unused_tags': '过滤没有被使用的标签',
+  'backend.services.joplin.filter_tags': '过滤标签',
 };
 
 const model: LocaleModel = {
