@@ -12,8 +12,11 @@ export default new TextExtension(
   },
   {
     run: async context => {
-      const { turndown, document, Readability } = context;
+      const { turndown, document, Readability, $ } = context;
       let documentClone = document.cloneNode(true);
+      $(documentClone)
+        .find('#skPlayer')
+        .remove();
       let article = new Readability(documentClone).parse();
       return turndown.turndown(article.content);
     },

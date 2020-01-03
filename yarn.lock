@@ -1657,10 +1657,10 @@
   dependencies:
     dva-model-creator "^0.3.0"
 
-"@web-clipper/readability@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@web-clipper/readability/-/readability-0.2.0.tgz#e33948653b871cb552824d88b7012eeb65f7b95e"
-  integrity sha512-HXnMjCEvE5rfiQfRbwzcLbUxbp8QlKH+9dBcdi1W2uBpHHL5U1mv9DGyZBfMohxiajDtw4zvzJ42rEKCrUO0nQ==
+"@web-clipper/readability@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@web-clipper/readability/-/readability-0.2.1.tgz#1aef4b09d805c377ebf2aa61a20085876faa8221"
+  integrity sha512-NZNhYzCfaM2AYki336uxPdShJvP7mlyt0uzaWti4qFIfbRCVOstxwtc5eO+kbuSnVvPAmJ9arpwjRl5GI0xe+w==
 
 "@web-clipper/shared@^0.0.20":
   version "0.0.20"
