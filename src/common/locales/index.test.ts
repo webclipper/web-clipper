@@ -3,7 +3,7 @@ import { removeEmptyKeys } from './interface';
 it('test remove PR_IS_WELCOME', () => {
   const messages = {
     a: '1',
-    b: 'PR_IS_WELCOME',
+    b: '',
   };
 
   expect(removeEmptyKeys(messages)).toEqual({
