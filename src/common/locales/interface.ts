@@ -11,7 +11,7 @@ export interface LocaleModel {
 export function removeEmptyKeys(params: LocaleModel['messages']): LocaleModel['messages'] {
   const result: LocaleModel['messages'] = {};
   Object.keys(params).forEach(key => {
-    if (params[key] !== 'PR_IS_WELCOME') {
+    if (params[key] !== '') {
       result[key] = params[key];
     }
   });

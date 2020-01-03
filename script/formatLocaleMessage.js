@@ -16,7 +16,7 @@ files
     const result = {};
 
     sortedKeys.forEach(key => {
-      result[key] = messages[key] || 'PR_IS_WELCOME';
+      result[key] = messages[key] || '';
     });
 
     fs.writeFileSync(file, JSON.stringify(result, null, 2));
