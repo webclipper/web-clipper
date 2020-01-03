@@ -1,11 +1,16 @@
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/modelTypes/userPreference';
 import { createIntlCache, createIntl, IntlShape, MessageDescriptor } from 'react-intl';
-import { LocaleModel } from './interface';
+import { LocaleModel, removeEmptyKeys } from './interface';
 import { localStorageService } from '@/common/chrome/storage';
 
 const context = require.context('./data', true, /\.[t|j]s$/);
+
 export const locales = context.keys().map(key => {
-  return context(key).default as LocaleModel;
+  const model = context(key).default as LocaleModel;
+  return {
+    ...model,
+    messages: removeEmptyKeys(model.messages),
+  };
 });
 
 export const localesMap = locales.reduce((p, l) => {

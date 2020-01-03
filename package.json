@@ -11,7 +11,8 @@
     "release": "npm run build && node script/release.js",
     "release:beta": "npm run build && node script/release_beta.js",
     "travis": "npm run build && node script/travis_release.js",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "format:locale": "node script/formatLocaleMessage.js"
   },
   "lint-staged": {
     "src/**/*.{ts, tsx}": [
