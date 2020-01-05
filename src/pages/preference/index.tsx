@@ -16,6 +16,7 @@ import Privacy from './privacy';
 import locale from '@/common/locales';
 import Container from 'typedi';
 import { IConfigService } from '@/service/common/config';
+import { useObserver } from 'mobx-react';
 
 const { Route } = router;
 
@@ -97,6 +98,8 @@ const Preference: React.FC<PageProps> = ({
 
   const configService = Container.get(IConfigService);
 
+  const isLatestVersion = useObserver(() => configService.isLatestVersion);
+
   return (
     <CenterContainer>
       <div className={styles.mainContent}>
@@ -113,7 +116,7 @@ const Preference: React.FC<PageProps> = ({
                   {tab.title}
                 </div>
               );
-              if (!configService.isLatestVersion && tab.path === 'base') {
+              if (!isLatestVersion && tab.path === 'base') {
                 tabTitle = <Badge dot>{tabTitle}</Badge>;
               }
               return (

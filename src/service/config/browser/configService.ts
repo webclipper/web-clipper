@@ -12,7 +12,7 @@ type RemoteConfig = _RemoteConfig;
 
 class BrowserConfigService implements IConfigService {
   @observable
-  public isLatestVersion: boolean = false;
+  public isLatestVersion: boolean = true;
 
   @observable
   public config: RemoteConfig = localConfig;
@@ -24,7 +24,7 @@ class BrowserConfigService implements IConfigService {
 
   load = async () => {
     try {
-      if (process.env.NODE_ENV !== 'development') {
+      if (config.loadRemoteConfig) {
         this.config = await request.get<RemoteConfig>(`${config.resourceHost}/config.json`);
       }
       runInAction(() => {

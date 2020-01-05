@@ -12,6 +12,7 @@ interface WebClipperConfig {
   remoteExtensionHost: string;
   serverHost: string;
   resourceHost: string;
+  loadRemoteConfig: boolean;
 }
 
 export interface RemoteConfig {
@@ -34,10 +35,12 @@ let config: WebClipperConfig = {
   remoteExtensionHost: 'https://extensions.clipper.website',
   serverHost: 'https://api.clipper.website',
   resourceHost: 'https://resource.clipper.website',
+  loadRemoteConfig: true,
 };
 
 if (process.env.NODE_ENV === 'development') {
   config = Object.assign({}, config, {
+    loadRemoteConfig: true,
     icon: 'icon-dev.png',
     yuqueClientId: 'fylbi7lzfNjhkfyi0hJp',
     yuqueCallback: 'http://webclipper-oauth.test.yfd.im/yuque_oauth',
