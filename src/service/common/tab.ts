@@ -24,4 +24,23 @@ export interface ITabService {
   sendActionToCurrentTab<T>(action: any): Promise<T>;
 }
 
+export abstract class AbstractTabService {
+  closeCurrentTab = async () => {
+    const current = await this.getCurrent();
+    return this.remove(current.id!);
+  };
+
+  sendActionToCurrentTab = async <T>(action: any): Promise<T> => {
+    const current = await this.getCurrent();
+    if (!current || !current.id) {
+      throw new Error('No Tab');
+    }
+    return this.sendMessage(current.id, action);
+  };
+
+  abstract getCurrent(): Promise<Tab>;
+  abstract remove(tabId: number): Promise<void>;
+  abstract sendMessage<T>(tabId: number, message: any): Promise<T>;
+}
+
 export const ITabService = new Token<ITabService>();

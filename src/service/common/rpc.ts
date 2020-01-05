@@ -1,8 +1,8 @@
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
 import { SerializedError } from '@/common/error';
 
-export interface IServerChannel {
-  call<T = any>(command: string, arg?: any): Promise<T>;
+export interface IServerChannel<C = any> {
+  call<T = any>(context: C, command: string, arg?: any): Promise<T>;
 }
 
 export interface IChannel {

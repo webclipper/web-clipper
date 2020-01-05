@@ -1,23 +1,28 @@
-import { ITabService, Tab, CaptureVisibleTabOptions } from '@/service/common/tab';
+import {
+  ITabService,
+  Tab,
+  CaptureVisibleTabOptions,
+  AbstractTabService,
+} from '@/service/common/tab';
 import { IServerChannel, IChannel } from '@/service/common/rpc';
 
 export class TabChannel implements IServerChannel {
   constructor(private service: ITabService) {}
 
-  call = async (command: string, arg: any): Promise<any> => {
+  call = async (
+    context: chrome.runtime.Port['sender'],
+    command: string,
+    arg: any
+  ): Promise<any> => {
     switch (command) {
       case 'getCurrent':
-        return this.service.getCurrent();
+        return context?.tab;
       case 'remove':
         return this.service.remove(arg);
       case 'captureVisibleTab':
         return this.service.captureVisibleTab(arg);
-      case 'closeCurrent':
-        return this.service.closeCurrent();
       case 'sendMessage':
         return this.service.sendMessage(arg[0], arg[1]);
-      case 'sendActionToCurrentTab':
-        return this.service.sendActionToCurrentTab(arg);
       default: {
         throw new Error(`Call not found: ${command}`);
       }
@@ -25,8 +30,10 @@ export class TabChannel implements IServerChannel {
   };
 }
 
-export class TabChannelClient implements ITabService {
-  constructor(private channel: IChannel) {}
+export class TabChannelClient extends AbstractTabService {
+  constructor(private channel: IChannel) {
+    super();
+  }
 
   getCurrent = async (): Promise<Tab> => {
     return this.channel.call('getCurrent');
@@ -36,19 +43,11 @@ export class TabChannelClient implements ITabService {
     return this.channel.call('remove', tabId);
   };
 
-  closeCurrent = async () => {
-    return this.channel.call<void>('closeCurrent');
-  };
-
   captureVisibleTab = async (option: CaptureVisibleTabOptions | number) => {
     return this.channel.call<string>('captureVisibleTab', option);
   };
 
   sendMessage = async <T>(tabId: number, message: any) => {
     return this.channel.call<T>('sendMessage', [tabId, message]);
-  };
-
-  sendActionToCurrentTab = async <T>(action: any): Promise<T> => {
-    return this.channel.call('sendActionToCurrentTab', action);
   };
 }
