@@ -1,29 +1,14 @@
 import * as browser from '@web-clipper/chrome-promise';
 import { clickIcon, doYouAliveNow } from 'browserActions/browser';
 import config from '@/config';
-import { MessageListenerCombiner } from '@web-clipper/message-listener-combiner';
-import { closeCurrentTab } from '../actions/message';
 import { initGa, trackEvent } from '@/common/gs';
 import packageJson from '@/../package.json';
+import '@/service/background.main';
 
 initGa();
 
 const media = window.matchMedia('(prefers-color-scheme: dark)');
 browser.browserAction.setIcon({ path: media.matches ? config.iconDark : config.icon });
-
-const listeners = new MessageListenerCombiner().case(
-  closeCurrentTab,
-  async (_payload, _sender, _sendResponse) => {
-    if (_sender.tab && _sender.tab.id) {
-      let id = _sender.tab.id;
-      setTimeout(() => {
-        chrome.tabs.remove(id);
-      }, 1000);
-    }
-  }
-);
-
-browser.runtime.onMessage.addListener(listeners.handle);
 
 browser.browserAction.onClicked.addListener(async tab => {
   const tabId = tab.id;

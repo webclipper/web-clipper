@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'dva';
+import { useSelector } from 'dva';
 import { parse } from 'qs';
 import { DvaRouterProps, GlobalStore } from '@/common/types';
-import { loginWithToken } from '@/actions/userPreference';
 import { Spin } from 'antd';
 import styles from './login.scss';
+import Container from 'typedi';
+import { ITabService } from '@/service/common/tab';
+import { IPowerpackService } from '@/service/common/powerpack';
 
 interface PageQuery {
   token: string;
@@ -12,14 +14,18 @@ interface PageQuery {
 
 const Page: React.FC<DvaRouterProps> = () => {
   const g = useSelector((g: GlobalStore) => g);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (g.router) {
       const query = parse(g.router.location.search.slice(1)) as PageQuery;
-      dispatch(loginWithToken(query.token));
+      (async () => {
+        const powerpackService = Container.get(IPowerpackService);
+        const tabService = Container.get(ITabService);
+        await powerpackService.login(query.token);
+        await tabService.closeCurrent();
+      })();
     }
-  }, [dispatch, g.router]);
+  }, [g.router]);
 
   return (
     <div className={styles.container}>

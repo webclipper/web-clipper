@@ -13,6 +13,8 @@ export interface CaptureVisibleTabOptions {
 export interface ITabService {
   getCurrent(): Promise<Tab>;
 
+  closeCurrent(): Promise<void>;
+
   remove(tabId: number): Promise<void>;
 
   captureVisibleTab(option: CaptureVisibleTabOptions | number): Promise<string>;

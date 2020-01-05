@@ -77,6 +77,10 @@ class PowerpackService implements IPowerpackService {
       response.result
     );
   };
+
+  login = async (token: string) => {
+    this.localStorageService.set(PowerpackService.LOCAL_ACCESS_TOKEN_LOCALE_KEY, token);
+  };
 }
 
 Service(IPowerpackService)(PowerpackService);

@@ -42,14 +42,9 @@ function useDeepCompareMemoize<T>(value: T) {
   return ref.current;
 }
 
-const closeCurrentTab = async () => {
-  const tabService = Container.get(ITabService);
-  const tabId = (await tabService.getCurrent()).id;
-  chrome.tabs.remove(tabId!);
-};
-
 const Page: React.FC<PageProps> = props => {
   const query = parse(props.location.search.slice(1)) as PageQuery;
+  const tabService = Container.get(ITabService);
   const {
     form: { getFieldDecorator },
     form,
@@ -100,7 +95,7 @@ const Page: React.FC<PageProps> = props => {
     <Modal
       visible
       okText={okText}
-      onCancel={closeCurrentTab}
+      onCancel={tabService.closeCurrent}
       okButtonProps={{
         disabled: verifying,
         loading: verifying,
@@ -120,7 +115,7 @@ const Page: React.FC<PageProps> = props => {
               imageHosting,
               info,
               userInfo: userInfo!,
-              callback: closeCurrentTab,
+              callback: tabService.closeCurrent,
             })
           );
         });

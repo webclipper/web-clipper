@@ -1,11 +1,26 @@
-import { ITabService, CaptureVisibleTabOptions } from '@/service/common/tab';
+import { ITabService, CaptureVisibleTabOptions, Tab } from '@/service/common/tab';
 import * as browser from '@web-clipper/chrome-promise';
 import { Service } from 'typedi';
 
 class ChromeTabService implements ITabService {
   getCurrent() {
-    return browser.tabs.getCurrent();
+    return new Promise<Tab>(r => {
+      chrome.tabs.query(
+        {
+          currentWindow: true,
+          active: true,
+        },
+        res => {
+          r(res[0]);
+        }
+      );
+    });
   }
+
+  closeCurrent = async () => {
+    const currentTab = await this.getCurrent();
+    return this.remove(currentTab.id!);
+  };
 
   remove(tabId: number): Promise<void> {
     return browser.tabs.remove(tabId) as Promise<void>;

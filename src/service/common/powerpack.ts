@@ -15,6 +15,7 @@ export interface IPowerpackService {
   startup(): Promise<void>;
   logout(): Promise<void>;
   refresh(): Promise<void>;
+  login(token: string): Promise<void>;
 }
 
 export const IPowerpackService = new Token<IPowerpackService>();

@@ -3,11 +3,8 @@ import { Container } from 'typedi';
 import React from 'react';
 import { getLanguage } from './../common/locales';
 import localeService from '@/common/locales';
-import {
-  LOCAL_USER_PREFERENCE_LOCALE_KEY,
-  LOCAL_ACCESS_TOKEN_LOCALE_KEY,
-} from './../common/modelTypes/userPreference';
-import { runScript, closeCurrentTab } from './../browser/actions/message';
+import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from './../common/modelTypes/userPreference';
+import { runScript } from './../browser/actions/message';
 import storage from 'common/storage';
 import * as antd from 'antd';
 import { GlobalStore } from '@/common/types';
@@ -26,7 +23,6 @@ import {
   setLocale,
   asyncSetLocaleToStorage,
   initServices,
-  loginWithToken,
 } from 'pageActions/userPreference';
 import { initTabInfo, changeData, asyncChangeAccount } from 'pageActions/clipper';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
@@ -89,11 +85,6 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
       },
     })
   );
-
-builder.takeEvery(loginWithToken, function*(token, { call }) {
-  yield call(localStorageService.set, LOCAL_ACCESS_TOKEN_LOCALE_KEY, token);
-  chrome.runtime.sendMessage(closeCurrentTab());
-});
 
 builder
   .takeEvery(asyncSetShowLineNumber.started, function*(payload, { call, put }) {
