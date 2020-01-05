@@ -12,23 +12,25 @@ export class BackgroundIPCServer implements IChannelServer {
       if (port.name !== channelName) {
         return;
       }
-      port.onMessage.addListener(async (message: IPCMessageRequest) => {
-        const { uuid, command, arg } = message;
-        let response: IPCMessageResponse;
-        try {
-          const result = await server.call(command, arg);
-          response = {
-            uuid,
-            result: { data: result },
-          };
-        } catch (error) {
-          response = {
-            uuid,
-            error: { data: transformErrorForSerialization(error) },
-          };
+      port.onMessage.addListener(
+        async (message: IPCMessageRequest, currentPort: chrome.runtime.Port) => {
+          const { uuid, command, arg } = message;
+          let response: IPCMessageResponse;
+          try {
+            const result = await server.call(currentPort.sender, command, arg);
+            response = {
+              uuid,
+              result: { data: result },
+            };
+          } catch (error) {
+            response = {
+              uuid,
+              error: { data: transformErrorForSerialization(error) },
+            };
+          }
+          port.postMessage(response);
         }
-        port.postMessage(response);
-      });
+      );
     });
   }
 }

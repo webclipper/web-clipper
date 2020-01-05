@@ -1,23 +1,21 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'dva';
 import { parse } from 'qs';
-import { DvaRouterProps, GlobalStore } from '@/common/types';
-import { Spin } from 'antd';
-import styles from './login.scss';
+import { DvaRouterProps } from '@/common/types';
 import Container from 'typedi';
 import { ITabService } from '@/service/common/tab';
 import { IPowerpackService } from '@/service/common/powerpack';
+import { useHistory } from 'dva';
 
 interface PageQuery {
   token: string;
 }
 
 const Page: React.FC<DvaRouterProps> = () => {
-  const g = useSelector((g: GlobalStore) => g);
+  const history = useHistory();
 
   useEffect(() => {
-    if (g.router) {
-      const query = parse(g.router.location.search.slice(1)) as PageQuery;
+    if (history?.location?.search) {
+      const query = parse(history.location.search.slice(1)) as PageQuery;
       (async () => {
         const powerpackService = Container.get(IPowerpackService);
         const tabService = Container.get(ITabService);
@@ -25,13 +23,9 @@ const Page: React.FC<DvaRouterProps> = () => {
         await tabService.closeCurrent();
       })();
     }
-  }, [g.router]);
+  }, [history]);
 
-  return (
-    <div className={styles.container}>
-      <Spin size="large" />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Page;
