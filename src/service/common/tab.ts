@@ -24,8 +24,8 @@ export interface ITabService {
   sendActionToCurrentTab<T>(action: any): Promise<T>;
 }
 
-export abstract class AbstractTabService {
-  closeCurrentTab = async () => {
+export abstract class AbstractTabService implements ITabService {
+  closeCurrent = async () => {
     const current = await this.getCurrent();
     return this.remove(current.id!);
   };
@@ -40,6 +40,7 @@ export abstract class AbstractTabService {
 
   abstract getCurrent(): Promise<Tab>;
   abstract remove(tabId: number): Promise<void>;
+  abstract captureVisibleTab(option: CaptureVisibleTabOptions | number): Promise<string>;
   abstract sendMessage<T>(tabId: number, message: any): Promise<T>;
 }
 
