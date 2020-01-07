@@ -20,6 +20,8 @@ You can use Web Clipper to save anything on the web to anywhere.
 - [Youdao](https://note.youdao.com/)
 - [OneNote](https://www.onenote.com/)
 - [Bear](https://bear.app)
+- [Joplin](https://joplinapp.org/)
+- [Server Chan](http://sc.ftqq.com/3.version)
 
 ### Install
 
@@ -44,7 +46,8 @@ ps: Because the review takes a week, the version will fall behind.
 $ git clone https://github.com/webclipper/web-clipper.git
 $ cd web-clipper
 $ yarn
-$ yarn dev
+$ yarn dev // Chrome
+$ yarn dev:ff // Firebox
 ```
 
 ### Test
@@ -59,7 +62,3 @@ $ yarn test
 | -------- | ---------------------------------------------------------------------------------- |
 | DingTalk | ![](https://raw.githubusercontent.com/webclipper/web-clipper/master/DingTalk.jpeg) |
 | Telegram | [Link](https://t.me/joinchat/HoVttRRUIA6aXASixzoqAw)                               |
-
-
-
-
