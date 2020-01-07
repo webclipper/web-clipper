@@ -6,10 +6,12 @@
     "dist": "tsc",
     "test": "jest --verbose",
     "dev": "NODE_ENV=development webpack --config webpack/webpack.dev.js --watch",
+    "dev:ff": "TARGET_BROWSER=Firefox NODE_ENV=development webpack --config webpack/webpack.dev.js --watch",
     "build": "webpack --config webpack/webpack.prod.js",
     "lint": "eslint --ext .js,.ts,.tsx --ignore-pattern bad.* .",
     "release": "npm run build && node script/release.js",
     "release:beta": "npm run build && node script/release_beta.js",
+    "release:ff": "TARGET_BROWSER=Firefox  npm run build && node script/release_beta.js",
     "travis": "npm run build && node script/travis_release.js",
     "lint-staged": "lint-staged",
     "format": "node script/formatLocaleMessage.js"
@@ -145,15 +147,6 @@
     "web_accessible_resources": [
       "tool.html"
     ],
-    "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com https://at.alicdn.com; object-src 'self'",
-    "permissions": [
-      "activeTab",
-      "storage",
-      "https://*.clipper.website/*"
-    ],
-    "optional_permissions": [
-      "cookies",
-      "<all_urls>"
-    ]
+    "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com https://at.alicdn.com; object-src 'self'"
   }
 }

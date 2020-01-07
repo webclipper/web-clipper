@@ -11,10 +11,38 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
 
+let manifestExtra = {
+  name: 'Web Clipper',
+  permissions: ['notifications', 'activeTab', 'storage', 'https://*.clipper.website/*'],
+  optional_permissions: ['cookies', '<all_urls>'],
+};
+
+let background = resolve('src/main/background.main.chrome.ts');
+
+if (process.env.TARGET_BROWSER === 'Firefox') {
+  manifestExtra = {
+    name: 'Web Clipper',
+    applications: {
+      gecko: {
+        id: 'web-clipper@web-clipper',
+      },
+    },
+    permissions: [
+      'notifications',
+      'activeTab',
+      'storage',
+      'https://*.clipper.website/*',
+      'cookies',
+      '<all_urls>',
+    ],
+  };
+  background = resolve('src/main/background.main.firefox.ts');
+}
+
 module.exports = {
   entry: {
-    tool: resolve('src/pages/app.tsx'),
-    background: resolve('src/browser/background/index.ts'),
+    tool: resolve('src/main/tool.main.ts'),
+    background,
     content_script: resolve('src/browser/content/index.tsx'),
   },
   output: {
@@ -154,7 +182,7 @@ module.exports = {
     ]),
     new WebpackCreateExtensionManifestPlugin({
       output: resolve('dist/manifest.json'),
-      extra: { name: 'Web Clipper' },
+      extra: manifestExtra,
     }),
     new HtmlWebpackPlugin({
       title: 'Web Clipper',

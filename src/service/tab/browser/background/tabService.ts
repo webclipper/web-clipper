@@ -18,6 +18,14 @@ class ChromeTabService extends AbstractTabService {
   sendMessage<T>(tabId: number, message: any): Promise<T> {
     return browser.tabs.sendMessage<T>(tabId, message);
   }
+
+  create(createProperties: chrome.tabs.CreateProperties): Promise<chrome.tabs.Tab> {
+    return new Promise<chrome.tabs.Tab>(r => {
+      chrome.tabs.create(createProperties, tab => {
+        r(tab);
+      });
+    });
+  }
 }
 
 Service(ITabService)(ChromeTabService);

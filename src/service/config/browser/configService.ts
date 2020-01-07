@@ -45,11 +45,11 @@ class BrowserConfigService implements IConfigService {
 
   get id() {
     const url = browser.extension.getURL('tool.html');
-    const match = /chrome-extension:\/\/(.*)\/tool.html/.exec(url);
+    const match = /(chrome-extension|moz-extension):\/\/(.*)\/tool.html/.exec(url);
     if (!match) {
       throw new Error('Get ExtensionId failed');
     }
-    return match[1];
+    return match[2];
   }
 }
 

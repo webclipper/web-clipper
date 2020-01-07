@@ -11,6 +11,7 @@ import ImageHostingSelect from '@/components/ImageHostingSelect';
 import RepositorySelect from '@/components/RepositorySelect';
 import Container from 'typedi';
 import { IPermissionsService } from '@/service/common/permissions';
+import { ITabService } from '@/service/common/tab';
 
 type PageOwnProps = {
   imageHostingServicesMeta: {
@@ -80,7 +81,9 @@ const Page: React.FC<PageProps> = ({
       }
     }
     if (oauthLink) {
-      window.open(oauthLink.props.href);
+      Container.get(ITabService).create({
+        url: oauthLink.props.href,
+      });
       onCancel();
     } else if (verified && id) {
       onAdd(id, userInfo);

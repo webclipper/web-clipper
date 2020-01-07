@@ -22,6 +22,8 @@ export interface ITabService {
   sendMessage<T>(tabId: number, message: any): Promise<T>;
 
   sendActionToCurrentTab<T>(action: any): Promise<T>;
+
+  create(createProperties: chrome.tabs.CreateProperties): Promise<chrome.tabs.Tab>;
 }
 
 export abstract class AbstractTabService implements ITabService {
@@ -42,6 +44,7 @@ export abstract class AbstractTabService implements ITabService {
   abstract remove(tabId: number): Promise<void>;
   abstract captureVisibleTab(option: CaptureVisibleTabOptions | number): Promise<string>;
   abstract sendMessage<T>(tabId: number, message: any): Promise<T>;
+  abstract create(createProperties: chrome.tabs.CreateProperties): Promise<chrome.tabs.Tab>;
 }
 
 export const ITabService = new Token<ITabService>();
