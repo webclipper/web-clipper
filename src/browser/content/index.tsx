@@ -37,24 +37,25 @@ const listeners = new MessageListenerCombiner()
     }
   })
   .case(runScript, (script, _sender, sendResponse) => {
-    const toggleClipper = () => {
-      $(`.${styles.toolFrame}`).toggle();
-    };
-    // @ts-ignore
-    // eslint-disable-next-line
-    const context: ContentScriptContext = {
-      locale: localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, navigator.language),
-      turndown: turndownService,
-      Highlighter: Highlighter,
-      toggleClipper,
-      Readability,
-      document,
-      AreaSelector,
-      QRCode,
-      $,
-    };
     if (script) {
       (async () => {
+        await localStorageService.init();
+        const toggleClipper = () => {
+          $(`.${styles.toolFrame}`).toggle();
+        };
+        // @ts-ignore
+        // eslint-disable-next-line
+        const context: ContentScriptContext = {
+          locale: localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, navigator.language),
+          turndown: turndownService,
+          Highlighter: Highlighter,
+          toggleClipper,
+          Readability,
+          document,
+          AreaSelector,
+          QRCode,
+          $,
+        };
         try {
           $(`.${styles.toolFrame}`).blur();
           // eslint-disable-next-line
@@ -69,7 +70,4 @@ const listeners = new MessageListenerCombiner()
     return true;
   });
 
-(async () => {
-  await localStorageService.init();
-  browser.runtime.onMessage.addListener(listeners.handle);
-})();
+browser.runtime.onMessage.addListener(listeners.handle);

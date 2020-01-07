@@ -21,6 +21,8 @@ export class TabChannel implements IServerChannel {
         return this.service.remove(arg);
       case 'captureVisibleTab':
         return this.service.captureVisibleTab(arg);
+      case 'create':
+        return this.service.create(arg);
       case 'sendMessage':
         return this.service.sendMessage(arg[0], arg[1]);
       default: {
@@ -49,5 +51,9 @@ export class TabChannelClient extends AbstractTabService {
 
   sendMessage = async <T>(tabId: number, message: any) => {
     return this.channel.call<T>('sendMessage', [tabId, message]);
+  };
+
+  create = async (createProperties: chrome.tabs.CreateProperties) => {
+    return this.channel.call<chrome.tabs.Tab>('create', createProperties);
   };
 }

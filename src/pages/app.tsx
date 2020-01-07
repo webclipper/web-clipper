@@ -1,6 +1,3 @@
-import 'regenerator-runtime/runtime';
-import 'reflect-metadata';
-import '@/service/app.main';
 import Container from 'typedi';
 import React from 'react';
 import dva, { router } from 'dva';
@@ -45,7 +42,7 @@ function withTool(WrappedComponent: any): any {
   };
 }
 
-(async () => {
+export default async () => {
   initGa();
   await syncStorageService.init();
   await localStorageService.init();
@@ -100,4 +97,4 @@ function withTool(WrappedComponent: any): any {
   app.model(userPreference);
   app.model(extension);
   app.start('#app');
-})();
+};
