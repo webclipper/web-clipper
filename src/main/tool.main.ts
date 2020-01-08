@@ -4,7 +4,7 @@ import Container from 'typedi';
 import { IPermissionsService } from '@/service/common/permissions';
 import { PermissionsChannelClient } from '@/service/permissions/common/permissionsIpc';
 import { ITabService } from '@/service/common/tab';
-import { PopupIpcClient } from '@/service/rpc/browser/popup/rpcClient';
+import { PopupIpcClient } from '@/service/ipc/browser/popup/ipcClient';
 import '@/service/config/browser/configService';
 import '@/service/powerpackService';
 import { TabChannelClient } from '@/service/tab/common/tabIpc';

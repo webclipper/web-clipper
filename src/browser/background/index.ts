@@ -7,8 +7,8 @@ import Container from 'typedi';
 import { IPermissionsService } from '@/service/common/permissions';
 import { PermissionsChannel } from '@/service/permissions/common/permissionsIpc';
 import { ITabService } from '@/service/common/tab';
-import { IChannelServer } from '@/service/common/rpc';
-import { BackgroundIPCServer } from '@/service/rpc/browser/background-main/rpcService';
+import { IChannelServer } from '@/service/common/ipc';
+import { BackgroundIPCServer } from '@/service/ipc/browser/background-main/ipcService';
 import { TabChannel } from '@/service/tab/common/tabIpc';
 
 const backgroundIPCServer: IChannelServer = new BackgroundIPCServer();

@@ -3,7 +3,7 @@ import {
   IServerChannel,
   IPCMessageRequest,
   IPCMessageResponse,
-} from '@/service/common/rpc';
+} from '@/service/common/ipc';
 import { transformErrorForSerialization } from '@/common/error';
 
 export class BackgroundIPCServer implements IChannelServer {
