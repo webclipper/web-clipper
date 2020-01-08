@@ -1,4 +1,4 @@
-import { IChannelClient, ChannelClient } from './../../../common/rpc';
+import { IChannelClient, ChannelClient } from '@/service/common/ipc';
 
 export class PopupIpcClient implements IChannelClient {
   getChannel(channelName: string) {
