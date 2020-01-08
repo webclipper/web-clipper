@@ -22,11 +22,6 @@ let background = resolve('src/main/background.main.chrome.ts');
 if (process.env.TARGET_BROWSER === 'Firefox') {
   manifestExtra = {
     name: 'Web Clipper',
-    applications: {
-      gecko: {
-        id: 'web-clipper@web-clipper',
-      },
-    },
     permissions: [
       'notifications',
       'activeTab',
@@ -36,6 +31,13 @@ if (process.env.TARGET_BROWSER === 'Firefox') {
       '<all_urls>',
     ],
   };
+  if (process.env.NODE_ENV === 'development') {
+    manifestExtra.applications = {
+      gecko: {
+        id: 'web-clipper@web-clipper',
+      },
+    };
+  }
   background = resolve('src/main/background.main.firefox.ts');
 }
 
@@ -53,7 +55,7 @@ module.exports = {
     splitChunks: {
       cacheGroups: {
         vendor: {
-          test: /[\\/]node_modules[\\/](react|react-dom|antd|lodash)[\\/]/,
+          test: /[\\/]node_modules[\\/](react|react-dom|antd|lodash|@ant-design)[\\/]/,
           name: 'vendor',
           chunks: 'all',
         },

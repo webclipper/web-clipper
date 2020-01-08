@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const homedir = require('os').homedir();
 
-const dest = path.resolve(homedir, `${name}_${version}_chrome.zip`);
+const dest = path.resolve(homedir, `${name}_${version}_firefox.zip`);
 const source = path.resolve(__dirname, `../dist`);
 const zipStream = new compressing.zip.Stream();
 
