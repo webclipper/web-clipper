@@ -15,7 +15,6 @@ import createLoading from 'dva-loading';
 import LocalWrapper from './locale';
 import { localStorageService, syncStorageService } from '@/common/chrome/storage';
 import localeService from '@/common/locales';
-import { initGa } from '@/common/gs';
 import AuthPage from '@/pages/auth';
 import LoginPage from '@/pages/login';
 import account from '@/models/account';
@@ -25,6 +24,7 @@ import { IConfigService } from '@/service/common/config';
 import { ILocalStorageService, ISyncStorageService } from '@/service/common/storage';
 import { IPowerpackService } from '@/service/common/powerpack';
 import './app.scss';
+import { ITrackService } from '@/service/common/track';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -43,7 +43,6 @@ function withTool(WrappedComponent: any): any {
 }
 
 export default async () => {
-  initGa();
   await syncStorageService.init();
   await localStorageService.init();
   await localeService.init();
@@ -51,6 +50,7 @@ export default async () => {
   Container.set(ISyncStorageService, syncStorageService);
   Container.get(IConfigService).load();
   Container.get(IPowerpackService).startup();
+  Container.get(ITrackService).init();
   const app = dva({
     namespacePrefixWarning: false,
     history: createHashHistory(),

@@ -7,6 +7,7 @@ import { ITabService } from '@/service/common/tab';
 import { PopupIpcClient } from '@/service/ipc/browser/popup/ipcClient';
 import '@/service/config/browser/configService';
 import '@/service/powerpackService';
+import '@/service/trackService';
 import { TabChannelClient } from '@/service/tab/common/tabIpc';
 import app from '@/pages/app';
 
