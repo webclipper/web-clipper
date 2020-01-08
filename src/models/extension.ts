@@ -1,3 +1,4 @@
+import { ITrackService } from '@/service/common/track';
 import { toggleAutomaticExtension } from './../actions/extension';
 import storage from 'common/storage';
 import { GlobalStore } from '@/common/types';
@@ -18,7 +19,7 @@ import {
   LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY,
   LOCAL_EXTENSIONS_DISABLED_AUTOMATIC_EXTENSIONS_KEY,
 } from '@/common/modelTypes/extensions';
-import { trackEvent } from '@/common/gs';
+import Container from 'typedi';
 
 const initStore: GlobalStore['extension'] = {
   extensions: [],
@@ -152,7 +153,7 @@ builder
 
 builder.subscript(function trackLoadPage({ history }) {
   history.listen(e => {
-    trackEvent('Open_Page', e.pathname);
+    Container.get(ITrackService).trackEvent('Open_Page', e.pathname);
   });
 });
 

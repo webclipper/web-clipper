@@ -1,7 +1,7 @@
+import { ITrackService } from '@/service/common/track';
 import * as browser from '@web-clipper/chrome-promise';
 import { clickIcon, doYouAliveNow } from 'browserActions/browser';
 import config from '@/config';
-import { initGa, trackEvent } from '@/common/gs';
 import packageJson from '@/../package.json';
 import Container from 'typedi';
 import { IPermissionsService } from '@/service/common/permissions';
@@ -20,23 +20,23 @@ backgroundIPCServer.registerChannel(
   new PermissionsChannel(Container.get(IPermissionsService))
 );
 
-initGa();
-
 const media = window.matchMedia('(prefers-color-scheme: dark)');
 browser.browserAction.setIcon({ path: media.matches ? config.iconDark : config.icon });
 
 const tabService = Container.get(ITabService);
+const trackService = Container.get(ITrackService);
+trackService.init();
 
 browser.browserAction.onClicked.addListener(async tab => {
   const tabId = tab.id;
   if (!tabId) {
-    trackEvent('Load_Web_Clipper', packageJson.version, 'error');
+    trackService.trackEvent('Load_Web_Clipper', packageJson.version, 'error');
     alert(
       'Clipping of this type of page is temporarily unavailable.\n\nRefreshing the page can resolve。\n\n暂时无法剪辑此类型的页面。\n\n刷新页面可以解决。'
     );
     return;
   }
-  trackEvent('Load_Web_Clipper', packageJson.version, 'success');
+  trackService.trackEvent('Load_Web_Clipper', packageJson.version, 'success');
   const result = await tabService.sendMessage(tabId, doYouAliveNow());
   if (!result) {
     await browser.tabs.executeScript(
