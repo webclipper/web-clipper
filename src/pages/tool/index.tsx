@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useCallback } from 'react';
 import * as styles from './index.scss';
 import ClipExtension from './ClipExtension';
 import ToolExtensions from './toolExtensions';
-import { Avatar, Button, Icon, Select, Badge } from 'antd';
+import { Button, Icon, Badge, Dropdown, Menu } from 'antd';
 import { connect, routerRedux } from 'dva';
 import { GlobalStore } from '@/common/types';
 import { isEqual } from 'lodash';
@@ -15,12 +15,14 @@ import { DvaRouterProps } from 'common/types';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import { FormattedMessage } from 'react-intl';
 import matchUrl from '@/common/matchUrl';
-import IconFont from '@/components/IconFont';
 import Header from './Header';
 import RepositorySelect from '@/components/RepositorySelect';
 import Container from 'typedi';
 import { IConfigService } from '@/service/common/config';
 import { Observer } from 'mobx-react';
+import IconAvatar from '@/components/avatar';
+import IconFont from '@/components/IconFont';
+import UserItem from '@/components/userItem';
 
 const mapStateToProps = ({
   clipper: { currentAccountId, url, currentRepository, repositories, currentImageHostingService },
@@ -138,6 +140,41 @@ const Page = React.memo<PageProps>(
       );
     }, [pathname, currentService, currentRepository]);
 
+    const overlay = useMemo(() => {
+      return (
+        <Menu onClick={e => dispatch(asyncChangeAccount.started({ id: e.key }))}>
+          {props.accounts.map(o => (
+            <Menu.Item key={o.id} title={o.name}>
+              <UserItem
+                avatar={o.avatar}
+                name={o.name}
+                description={o.description}
+                icon={servicesMeta[o.type].icon}
+              />
+            </Menu.Item>
+          ))}
+        </Menu>
+      );
+    }, [dispatch, props.accounts, servicesMeta]);
+
+    const dropdown = (
+      <Dropdown overlay={overlay} placement="bottomRight">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {!!currentAccount && (
+            <IconAvatar
+              size="small"
+              avatar={currentAccount.avatar}
+              icon={servicesMeta[currentAccount.type].icon}
+            />
+          )}
+          <IconFont
+            type="caret-down"
+            style={{ fontSize: 8, color: 'rgb(140, 140, 140)', marginLeft: 6 }}
+          />
+        </div>
+      </Dropdown>
+    );
+
     return (
       <ToolContainer onClickCloseButton={() => dispatch(asyncHideTool.started())}>
         {header}
@@ -188,32 +225,7 @@ const Page = React.memo<PageProps>(
                 )}
               </Observer>
             </Button>
-            <Select
-              value={props.currentAccountId}
-              style={{ width: '75px' }}
-              onSelect={(value: string) => dispatch(asyncChangeAccount.started({ id: value }))}
-            >
-              {props.accounts.map(o => (
-                <Select.Option key={o.id} title={o.name}>
-                  {(o.avatar || servicesMeta[o.type].icon).startsWith('http') ? (
-                    <Avatar size="small" src={o.avatar} />
-                  ) : (
-                    <span
-                      className="ant-avatar ant-avatar-sm ant-avatar-circle ant-avatar-icon"
-                      style={{
-                        background: 'unset',
-                        color: 'unset',
-                      }}
-                    >
-                      <IconFont
-                        style={{ fontSize: 24 }}
-                        type={o.avatar || servicesMeta[o.type].icon}
-                      />
-                    </span>
-                  )}
-                </Select.Option>
-              ))}
-            </Select>
+            {dropdown}
           </div>
         </Section>
       </ToolContainer>

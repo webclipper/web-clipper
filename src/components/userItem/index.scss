@@ -1,0 +1,17 @@
+.userItem {
+  display: flex;
+  align-items: center;
+  color: #262626;
+  .userItemInfo {
+    margin-left: 8px;
+    align-self: flex-start;
+    color: #595959;
+  }
+  .description {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #8c8c8c;
+  }
+}

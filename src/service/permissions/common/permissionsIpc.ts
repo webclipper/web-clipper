@@ -1,5 +1,5 @@
 import { IPermissionsService, Permissions } from '@/service/common/permissions';
-import { IServerChannel, IChannel } from '@/service/common/rpc';
+import { IServerChannel, IChannel } from '@/service/common/ipc';
 
 export class PermissionsChannel implements IServerChannel {
   constructor(private service: IPermissionsService) {}

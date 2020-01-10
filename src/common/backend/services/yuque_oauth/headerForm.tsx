@@ -20,6 +20,7 @@ const HeaderForm: React.FC<FormComponentProps> = ({ form: { getFieldDecorator } 
           ],
         })(
           <Input
+            autoComplete="off"
             placeholder={locales.format({
               id: 'backend.services.yuque.headerForm.slug',
               defaultMessage: 'Slug',

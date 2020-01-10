@@ -4,7 +4,7 @@ import {
   CaptureVisibleTabOptions,
   AbstractTabService,
 } from '@/service/common/tab';
-import { IServerChannel, IChannel } from '@/service/common/rpc';
+import { IServerChannel, IChannel } from '@/service/common/ipc';
 
 export class TabChannel implements IServerChannel {
   constructor(private service: ITabService) {}
