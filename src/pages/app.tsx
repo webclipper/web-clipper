@@ -23,7 +23,7 @@ import config from '@/config';
 import { IConfigService } from '@/service/common/config';
 import { ILocalStorageService, ISyncStorageService } from '@/service/common/storage';
 import { IPowerpackService } from '@/service/common/powerpack';
-import './app.scss';
+import './app.less';
 import { ITrackService } from '@/service/common/track';
 
 const { Route, Switch, Router, withRouter } = router;
