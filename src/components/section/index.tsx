@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Divider } from 'antd';
-import styles from './index.scss';
+import styles from './index.less';
 import classNames from 'classnames';
 
 interface Props {

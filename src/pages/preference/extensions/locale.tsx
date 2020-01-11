@@ -11,7 +11,7 @@ import {
 } from '@/actions/extension';
 import { FormattedMessage } from 'react-intl';
 import ExtensionCard from '@/components/ExtensionCard';
-import styles from './index.scss';
+import styles from './index.less';
 import { SerializedExtensionWithId, ExtensionType } from '@web-clipper/extensions';
 import IconFont from '@/components/IconFont';
 

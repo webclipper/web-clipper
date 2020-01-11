@@ -13,7 +13,7 @@ import {
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import { FormattedMessage } from 'react-intl';
 import ExtensionCard from '@/components/ExtensionCard';
-import styles from './index.scss';
+import styles from './index.less';
 import { installRemoteExtension } from '@/actions/extension';
 import { hasUpdate } from '@/common/version';
 import Container from 'typedi';

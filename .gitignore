@@ -5,7 +5,6 @@ lib/
 coverage/
 tmp/
 .DS_Store
-*.scss.d.ts
 .idea
 yarn-error.log
 dll/

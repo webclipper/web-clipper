@@ -1,7 +1,7 @@
 import { ImageHostingWithMeta } from './../common/hooks/useFilterImageHostingServices';
 import Select, { SelectProps } from 'antd/lib/select';
 import React, { forwardRef } from 'react';
-import styles from './ImageHostingSelect.scss';
+import styles from './ImageHostingSelect.less';
 import ImageHostingSelectOption from 'components/imageHostingSelectOption';
 
 export const ImageHostingSelect: React.FC<{

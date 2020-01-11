@@ -9,7 +9,7 @@ import { Icon, Button, Form, Row, Col } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'dva';
 import AccountItem from '../../../components/accountItem';
-import * as styles from './index.scss';
+import * as styles from './index.less';
 import EditAccountModal from './modal/editAccountModal';
 import { FormComponentProps } from 'antd/lib/form';
 import CreateAccountModal from './modal/createAccountModal';
