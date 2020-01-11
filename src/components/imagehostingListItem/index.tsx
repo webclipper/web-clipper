@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { List, Avatar } from 'antd';
-import * as styles from './index.scss';
+import * as styles from './index.less';
 import { FormattedMessage } from 'react-intl';
 import IconFont from '../IconFont';
 

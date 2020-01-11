@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as styles from './index.scss';
+import * as styles from './index.less';
 import { Icon } from 'antd';
 
 export default class Container extends React.Component {
