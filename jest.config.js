@@ -1,6 +1,6 @@
 module.exports = {
   moduleNameMapper: {
-    '\\.(css|scss)$': 'identity-obj-proxy',
+    '\\.(css|less)$': 'identity-obj-proxy',
     '^components/(.*)': '<rootDir>/src/components/$1',
     '^common/(.*)': '<rootDir>/src/common/$1',
     '^extensions/(.*)': '<rootDir>/src/extensions/$1',

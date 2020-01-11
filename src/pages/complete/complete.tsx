@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'dva';
 import { ToolContainer } from 'components/container';
-import * as styles from './complete.less';
+import styles from './complete.less';
 import { Button } from 'antd';
 import { GlobalStore } from '@/common/types';
 import Section from 'components/section';

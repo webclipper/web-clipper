@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as styles from './index.less';
+import styles from './index.less';
 import Account from './account';
 import ImageHosting from './imageHosting';
 import Extensions from './extensions';

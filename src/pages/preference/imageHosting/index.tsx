@@ -6,7 +6,7 @@ import {
 } from 'pageActions/userPreference';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'dva';
-import * as styles from './index.less';
+import styles from './index.less';
 import AddImageHosting from './form/addImageHosting';
 import { FormComponentProps } from 'antd/lib/form';
 import ImageHostingListItem from 'components/imagehostingListItem';

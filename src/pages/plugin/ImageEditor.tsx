@@ -5,7 +5,7 @@ import { SerializedExtensionWithId } from '@web-clipper/extensions';
 import { EditorContainer } from 'components/container';
 import { isUndefined } from 'common/object';
 import { GlobalStore, ImageClipperData } from '@/common/types';
-import * as styles from './index.less';
+import styles from './index.less';
 
 const mapStateToProps = ({ clipper: { clipperData } }: GlobalStore) => {
   return {
