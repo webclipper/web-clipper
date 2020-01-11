@@ -71,7 +71,7 @@ module.exports = {
       pageActions: resolve('src/actions'),
       extensions: resolve('src/extensions/'),
     },
-    extensions: ['.ts', '.tsx', '.js', 'scss', 'less'],
+    extensions: ['.ts', '.tsx', '.js', 'less'],
   },
   module: {
     rules: [
@@ -159,26 +159,6 @@ module.exports = {
               },
               javascriptEnabled: true,
             },
-          },
-        ],
-      },
-      {
-        exclude: /node_modules/,
-        test: [/\.scss$/, /\.css$/],
-        use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              camelCase: true,
-              localIdentName: '[path][name]__[local]--[hash:base64:5]',
-            },
-          },
-          {
-            loader: 'sass-loader',
           },
         ],
       },
