@@ -3,7 +3,7 @@ import { Form, Input, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import Section from '@/components/section';
 import { FormattedMessage } from 'react-intl';
-import * as styles from './index.less';
+import styles from './index.less';
 import { useSelector, useDispatch } from 'dva';
 import { GlobalStore, ClipperHeaderForm } from '@/common/types';
 import { updateClipperHeader, asyncCreateDocument } from '@/actions/clipper';

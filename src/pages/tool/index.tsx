@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useCallback } from 'react';
-import * as styles from './index.less';
+import styles from './index.less';
 import ClipExtension from './ClipExtension';
 import ToolExtensions from './toolExtensions';
 import { Button, Icon, Badge, Dropdown, Menu } from 'antd';

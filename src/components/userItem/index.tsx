@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from './index.less';
+import styles from './index.less';
 import IconAvatar from '@/components/avatar';
 
 interface UserItemProps {
@@ -9,16 +9,14 @@ interface UserItemProps {
   description?: string;
 }
 
-const UserItem: React.FC<UserItemProps> = props => {
-  return (
-    <div className={styles.userItem}>
-      <IconAvatar size="large" avatar={props.avatar} icon={props.icon} />
-      <div className={styles.userItemInfo}>
-        <div>{props.name}</div>
-        <div className={styles.description}>{props.description}</div>
-      </div>
+const UserItem: React.FC<UserItemProps> = props => (
+  <div className={styles.userItem}>
+    <IconAvatar size="large" avatar={props.avatar} icon={props.icon} />
+    <div className={styles.userItemInfo}>
+      <div>{props.name}</div>
+      <div className={styles.description}>{props.description}</div>
     </div>
-  );
-};
+  </div>
+);
 
 export default UserItem;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, Icon } from 'antd';
-import * as styles from './index.less';
+import styles from './index.less';
 import { FormattedMessage } from 'react-intl';
 import IconFont from '../IconFont';
 
