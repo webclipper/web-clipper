@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as styles from './index.scss';
+import * as styles from './index.less';
 import { Button } from 'antd';
 import Section from 'components/section';
 import { SerializedExtensionWithId } from '@web-clipper/extensions';

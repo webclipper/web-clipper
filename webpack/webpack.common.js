@@ -117,12 +117,39 @@ module.exports = {
       },
       {
         test: /\.less$/,
+        include: /node_modules\/antd/,
         use: [
           {
             loader: 'style-loader',
           },
           {
             loader: 'css-loader',
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              modifyVars: {
+                '@body-background': 'transparent',
+              },
+              javascriptEnabled: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.less$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              camelCase: true,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]',
+            },
           },
           {
             loader: 'less-loader',
