@@ -2,17 +2,11 @@ import React from 'react';
 import styles from './index.less';
 import { Icon } from 'antd';
 
-export default class Container extends React.Component {
-  public render() {
-    return (
-      <React.Fragment>
-        <div className={styles.mainContainer}>{this.props.children}</div>
-      </React.Fragment>
-    );
-  }
-}
+const Container: React.FC = ({ children }) => {
+  return <div className={styles.mainContainer}>{children}</div>;
+};
 
-interface ToolContainerProps {
+export interface ToolContainerProps {
   onClickCloseButton?: () => void;
   onClickMask?: () => void;
 }
@@ -47,18 +41,10 @@ export class ToolContainer extends React.Component<ToolContainerProps> {
   }
 }
 
-export class CenterContainer extends React.Component {
-  public render() {
-    return <div className={styles.centerContainer}>{this.props.children}</div>;
-  }
-}
+export const CenterContainer: React.FC = ({ children }) => {
+  return <div className={styles.centerContainer}>{children}</div>;
+};
 
-export class EditorContainer extends React.Component {
-  public render() {
-    return (
-      <Container>
-        <div className={styles.editorContainer}>{this.props.children}</div>
-      </Container>
-    );
-  }
-}
+export const EditorContainer: React.FC = ({ children }) => {
+  return <div className={styles.editorContainer}>{children}</div>;
+};
