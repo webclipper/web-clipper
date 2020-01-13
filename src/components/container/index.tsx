@@ -1,15 +1,20 @@
-import * as React from 'react';
+import React from 'react';
 import styles from './index.less';
 import { Icon } from 'antd';
 
 export default class Container extends React.Component {
   public render() {
-    return <div className={styles.mainContainer}>{this.props.children}</div>;
+    return (
+      <React.Fragment>
+        <div className={styles.mainContainer}>{this.props.children}</div>
+      </React.Fragment>
+    );
   }
 }
 
 interface ToolContainerProps {
   onClickCloseButton?: () => void;
+  onClickMask?: () => void;
 }
 
 export class ToolContainer extends React.Component<ToolContainerProps> {
@@ -19,16 +24,25 @@ export class ToolContainer extends React.Component<ToolContainerProps> {
     }
   };
 
+  handleClickMask = () => {
+    if (this.props.onClickMask) {
+      this.props.onClickMask();
+    }
+  };
+
   public render() {
     return (
-      <Container>
-        <div className={styles.toolContainer}>
-          <div className={styles.closeButton} onClick={this.onClickCloseButton}>
-            <Icon type="close" />
+      <React.Fragment>
+        <div className={styles.mask} onClick={this.handleClickMask}></div>
+        <Container>
+          <div className={styles.toolContainer}>
+            <div className={styles.closeButton} onClick={this.onClickCloseButton}>
+              <Icon type="close" />
+            </div>
+            {<div>{this.props.children}</div>}
           </div>
-          {<div>{this.props.children}</div>}
-        </div>
-      </Container>
+        </Container>
+      </React.Fragment>
     );
   }
 }
