@@ -45,7 +45,7 @@ const Page: React.FC = () => {
   }
   const { name, complete: Complete } = currentService;
   return (
-    <ToolContainer onClickCloseButton={closeTool}>
+    <ToolContainer onClickCloseButton={closeTool} onClickMask={closeTool}>
       <Section title={<FormattedMessage id="page.complete.success" defaultMessage="Success" />}>
         {completeStatus?.href ? (
           <a href={completeStatus.href} target="_blank">
