@@ -31,6 +31,8 @@ ps: I don't use firefox,maybe some compatibility issues. Issue welcome and PR we
 
 - [Chrome](https://chrome.google.com/webstore/detail/web-clipper/mhfbofiokmppgdliakminbgdgcmbhbac)
 
+- [Edge](https://microsoftedge.microsoft.com/addons/detail/opejamnnohhbjflpbhnmdlknhjkfhfdp)
+
 ps: Because the review takes a week, the version will fall behind.
 
 #### From Github
