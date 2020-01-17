@@ -35,7 +35,7 @@
     "@web-clipper/message-listener-combiner": "^0.1.0",
     "@web-clipper/readability": "^0.2.1",
     "@web-clipper/shared": "^0.0.20",
-    "@web-clipper/turndown": "^0.1.4",
+    "@web-clipper/turndown": "^0.1.5",
     "antd": "^3.26.6",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",

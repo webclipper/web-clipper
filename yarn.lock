@@ -1678,10 +1678,10 @@
     "@types/chrome" "^0.0.88"
     blueimp-md5 "^2.11.0"
 
-"@web-clipper/turndown@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.npm.taobao.org/@web-clipper/turndown/download/@web-clipper/turndown-0.1.4.tgz?cache=0&sync_timestamp=1577204531645&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40web-clipper%2Fturndown%2Fdownload%2F%40web-clipper%2Fturndown-0.1.4.tgz#916a70f87e03cfde9ed7f02cfa71ae00b104cf27"
-  integrity sha1-kWpw+H4Dz96e1/As+nGuALEEzyc=
+"@web-clipper/turndown@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@web-clipper/turndown/-/turndown-0.1.5.tgz#058c7256d6ecf613a262bde347daa85a97932e04"
+  integrity sha512-XYTPLZDzhj/8QFz6G0EITDnGZvsGTLvSF+CMMV6URTSfFVDPS8KS7EjCqevT4ke8a7p8HBVDc9vwaLF09mUcNQ==
   dependencies:
     "@types/mz" "^0.0.32"
     "@types/turndown" "^5.0.0"
