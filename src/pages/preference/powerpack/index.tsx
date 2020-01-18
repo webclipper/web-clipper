@@ -37,6 +37,15 @@ const Powerpack: React.FC = () => {
     state: Container.get(IConfigService).id,
   })}`;
 
+  const googleOauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?${stringify({
+    client_id: config.googleOauth.clientId,
+    redirect_uri: config.googleOauth.callback,
+    include_granted_scopes: true,
+    response_type: 'code',
+    scope: 'email profile',
+    state: Container.get(IConfigService).id,
+  })}`;
+
   const powerpackService = Container.get(IPowerpackService);
 
   const { userInfo, accessToken, loading } = useObserver(() => {
@@ -132,13 +141,22 @@ const Powerpack: React.FC = () => {
               defaultMessage="Free trial for 7 days !"
             />
           </h3>
-          <Button href={githubOauthUrl} target="_blank">
-            <IconFont type="github" />
-            <FormattedMessage
-              id="preference.powerpack.login.github"
-              defaultMessage="Login with Github"
-            />
-          </Button>
+          <div>
+            <Button href={githubOauthUrl} target="_blank">
+              <IconFont type="github" />
+              <FormattedMessage
+                id="preference.powerpack.login.github"
+                defaultMessage="Login with Github"
+              />
+            </Button>
+            <Button href={googleOauthUrl} target="_blank" style={{ marginLeft: 10 }}>
+              <IconFont type="google" />
+              <FormattedMessage
+                id="preference.powerpack.login.google"
+                defaultMessage="Login with Google"
+              />
+            </Button>
+          </div>
         </div>
       </div>
       <h3>

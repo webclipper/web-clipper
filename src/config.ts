@@ -13,6 +13,10 @@ interface WebClipperConfig {
   serverHost: string;
   resourceHost: string;
   loadRemoteConfig: boolean;
+  googleOauth: {
+    clientId: string;
+    callback: string;
+  };
 }
 
 export interface RemoteConfig {
@@ -21,6 +25,10 @@ export interface RemoteConfig {
 }
 
 let config: WebClipperConfig = {
+  googleOauth: {
+    clientId: '269705697424-vlu486hs2paqj71p9defgvkbrpo9amcq.apps.googleusercontent.com',
+    callback: 'https://api.clipper.website/api/user/oauth/github',
+  },
   icon: 'icon.png',
   iconDark: 'icon-dark.png',
   yuqueClientId: 'D1AwzCeDPLFWGfcGv7ze',
@@ -40,6 +48,11 @@ let config: WebClipperConfig = {
 
 if (process.env.NODE_ENV === 'development') {
   config = Object.assign({}, config, {
+    googleOauth: {
+      clientId: '269705697424-l6h6e3pkcsjs3lggjdlivs7vaarr8gp0.apps.googleusercontent.com',
+      callback: 'https://api.test.clipper.website/api/user/oauth/google',
+      // callback: 'http://localhost:3000/api/user/oauth/google', // Local test
+    },
     loadRemoteConfig: true,
     icon: 'icon-dev.png',
     yuqueClientId: 'fylbi7lzfNjhkfyi0hJp',
