@@ -108,6 +108,7 @@
   "preference.powerpack.features": "功能",
   "preference.powerpack.free.trial": "免费试用7天",
   "preference.powerpack.login.github": "通过 Github 登录",
+  "preference.powerpack.login.google": "通过 Google 登录",
   "preference.powerpack.logout": "登出",
   "preference.powerpack.reload": "刷新",
   "preference.powerpack.upgrade": "购买",
