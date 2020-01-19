@@ -27,7 +27,7 @@ export interface RemoteConfig {
 let config: WebClipperConfig = {
   googleOauth: {
     clientId: '269705697424-vlu486hs2paqj71p9defgvkbrpo9amcq.apps.googleusercontent.com',
-    callback: 'https://api.clipper.website/api/user/oauth/github',
+    callback: 'https://api.clipper.website/api/user/oauth/google',
   },
   icon: 'icon.png',
   iconDark: 'icon-dark.png',
