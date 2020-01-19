@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, Icon } from 'antd';
 import styles from './index.less';
 import { FormattedMessage } from 'react-intl';
-import IconFont from '../IconFont';
+import IconAvatar from '@/components/avatar';
 
 interface PageProps {
   isDefault: boolean;
@@ -40,11 +40,7 @@ export default class Page extends React.Component<PageProps> {
           <Icon type="star" style={tagStyle} onClick={this.handleSetDefaultAccount} />
         </div>
         <div className={styles.userInfo}>
-          {avatar.startsWith('http') ? (
-            <img className={styles.avatar} src={avatar} />
-          ) : (
-            <IconFont className={styles.iconAvatar} type={avatar}></IconFont>
-          )}
+          <IconAvatar size={96} avatar={avatar} icon={avatar} />
           <div className={styles.name}>{name}</div>
           <div className={styles.description}>{description}</div>
         </div>
@@ -56,10 +52,7 @@ export default class Page extends React.Component<PageProps> {
             ></FormattedMessage>
           </Button>
           <Button type="danger" onClick={this.handleDelete}>
-            <FormattedMessage
-              id="component.accountItem.delete"
-              defaultMessage="Delete"
-            ></FormattedMessage>
+            <FormattedMessage id="component.accountItem.delete" defaultMessage="Delete" />
           </Button>
         </div>
       </div>
