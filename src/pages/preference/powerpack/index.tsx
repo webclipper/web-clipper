@@ -16,16 +16,29 @@ const feature = [
     icon: 'mail',
     id: 'preference.powerpack.feature.saveToEmail',
     defaultMessage: 'Save To Email',
+    description: 'preference.powerpack.feature.saveToEmail.description',
+    descriptionDefaultMessage: 'Save web page to specified email',
   },
   {
-    icon: 'mail',
+    icon: 'ocr',
     id: 'preference.powerpack.feature.ocr',
     defaultMessage: 'OCR',
+    description: 'preference.powerpack.feature.ocr.description',
+    descriptionDefaultMessage: 'Recognize text in pictures',
   },
   {
     icon: 'kindle',
     id: 'preference.powerpack.feature.sendToKindle',
     defaultMessage: 'Send To Kindle',
+    description: 'preference.powerpack.feature.sendToKindle.description',
+    descriptionDefaultMessage: 'Save web pages to kindle for reading',
+  },
+  {
+    icon: 'coffee',
+    id: 'preference.powerpack.feature.coffee',
+    defaultMessage: 'Buy me a Coffee',
+    description: 'preference.powerpack.feature.coffee.description',
+    descriptionDefaultMessage: 'Give the author the motivation to maintain this project',
   },
 ];
 
@@ -163,9 +176,27 @@ const Powerpack: React.FC = () => {
         <FormattedMessage id="preference.powerpack.features" defaultMessage="Features" />
       </h3>
       <Row>
-        {feature.map((o, index) => (
-          <Col span={8} key={o.id}>
-            {index + 1}.{<FormattedMessage id={o.id} defaultMessage={o.defaultMessage} />}
+        {feature.map(o => (
+          <Col span={12} key={o.id}>
+            <Row align="middle" style={{ marginBottom: 16 }}>
+              <Col span={5}>
+                <IconFont
+                  type={o.icon}
+                  style={{ fontSize: 48, border: '1px solid #e4e4e4', padding: 8 }}
+                ></IconFont>
+              </Col>
+              <Col span={19}>
+                <div style={{ fontSize: 16 }}>
+                  <FormattedMessage id={o.id} defaultMessage={o.defaultMessage} />
+                </div>
+                <div style={{ color: 'rgba(0, 0, 0, 0.45)', wordBreak: 'break-word' }}>
+                  <FormattedMessage
+                    id={o.description}
+                    defaultMessage={o.descriptionDefaultMessage}
+                  />
+                </div>
+              </Col>
+            </Row>
           </Col>
         ))}
       </Row>
