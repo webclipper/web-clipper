@@ -205,7 +205,7 @@ const Page = React.memo<PageProps>(
             value={repositoryId}
           />
         </Section>
-        <Section line>
+        <Section>
           <div className={styles.toolbar}>
             <Button
               className={styles.toolbarButton}
