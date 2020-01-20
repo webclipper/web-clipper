@@ -20,8 +20,8 @@ const ClipExtensions: React.FC<PageProps> = ({ extensions, pathname, onClick }) 
   };
   return (
     <Section
+      className={styles.section}
       title={<FormattedMessage id="tool.clipExtensions" defaultMessage="Clip Extensions" />}
-      line
     >
       {extensions.map(plugin => {
         const useThisPlugin = plugin.router === pathname;

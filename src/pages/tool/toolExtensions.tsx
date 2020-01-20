@@ -17,7 +17,7 @@ const ToolExtensions: React.FC<ToolExtensionsProps> = ({ extensions, onClick }) 
   }
   return (
     <Section
-      line
+      className={styles.section}
       title={
         <FormattedMessage
           id="tool.toolExtensions"

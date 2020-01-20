@@ -194,7 +194,7 @@ const Page = React.memo<PageProps>(
           onClick={router => push(router)}
           pathname={pathname}
         />
-        <Section title={<FormattedMessage id="tool.repository"></FormattedMessage>}>
+        <Section className={styles.section} title={<FormattedMessage id="tool.repository" />}>
           <RepositorySelect
             disabled={loadingAccount}
             loading={loadingAccount}

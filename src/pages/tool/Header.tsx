@@ -9,6 +9,7 @@ import { GlobalStore, ClipperHeaderForm } from '@/common/types';
 import { updateClipperHeader, asyncCreateDocument } from '@/actions/clipper';
 import { isEqual } from 'lodash';
 import { ServiceMeta, Repository } from '@/common/backend';
+import classNames from 'classnames';
 
 type PageProps = FormComponentProps & {
   pathname: string;
@@ -66,7 +67,7 @@ const ClipperHeader: React.FC<PageProps> = props => {
   return (
     <Section
       title={<FormattedMessage id="tool.title" defaultMessage="Title" />}
-      className={styles.header}
+      className={classNames(styles.header, styles.section)}
     >
       <Form.Item>
         {getFieldDecorator('title', {

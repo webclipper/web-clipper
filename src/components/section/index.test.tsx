@@ -7,14 +7,6 @@ describe('test Section', () => {
   it('should render correct', () => {
     expect(
       render(
-        <Section line title="test">
-          <div>test</div>
-        </Section>
-      )
-    ).toMatchSnapshot();
-
-    expect(
-      render(
         <Section title="test">
           <div>test</div>
         </Section>
