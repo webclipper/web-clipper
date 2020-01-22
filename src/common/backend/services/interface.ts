@@ -11,7 +11,7 @@ export interface CompleteStatus {
 export interface UserInfo {
   name: string;
   avatar: string;
-  homePage: string;
+  homePage?: string;
   description?: string;
 }
 
