@@ -53,7 +53,7 @@ if (process.env.NODE_ENV === 'development') {
       callback: 'https://api.test.clipper.website/api/user/oauth/google',
       // callback: 'http://localhost:3000/api/user/oauth/google', // Local test
     },
-    loadRemoteConfig: true,
+    loadRemoteConfig: false,
     icon: 'icon-dev.png',
     yuqueClientId: 'fylbi7lzfNjhkfyi0hJp',
     yuqueCallback: 'http://webclipper-oauth.test.yfd.im/yuque_oauth',
