@@ -28,6 +28,7 @@
   "author": "DiamondYuan",
   "license": "MIT",
   "dependencies": {
+    "@shihengtech/hooks": "^0.0.7",
     "@web-clipper/area-selector": "^0.1.1",
     "@web-clipper/chrome-promise": "^0.1.2",
     "@web-clipper/extensions": "^0.0.17",
