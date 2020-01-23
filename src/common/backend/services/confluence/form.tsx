@@ -1,30 +1,31 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Select } from 'antd';
+import { Form, Input, Select } from 'antd';
 import Container from 'typedi';
 import { IPermissionsService } from '@/service/common/permissions';
 import { FormComponentProps } from 'antd/lib/form';
 import { useFetch } from '@shihengtech/hooks';
 import { extend } from 'umi-request';
+import {
+  ConfluenceListResult,
+  ConfluenceSpace,
+  ConfluenceServiceConfig,
+} from '@/common/backend/services/confluence/interface';
 
-interface FetchSpaceResponse {
-  results: {
-    id: number;
-    name: string;
-    type: string;
-  }[];
+interface ConfluenceFormProps extends FormComponentProps {
+  info?: ConfluenceServiceConfig;
 }
 
-const ConfluenceForm: React.FC<FormComponentProps> = ({ form }) => {
-  const [verified, setVerified] = useState(false);
+const ConfluenceForm: React.FC<ConfluenceFormProps> = ({ form, info }) => {
+  const [verified, setVerified] = useState(!!info);
   const permissionsService = Container.get(IPermissionsService);
-  const host = form.getFieldValue('host');
+  const host = form.getFieldValue('origin');
   const handle = () => {
-    form.validateFields(['host'], async (err, value) => {
+    form.validateFields(['origin'], async (err, value) => {
       if (err) {
         return;
       }
       const result = await permissionsService.request({
-        origins: [`${new URL(value.host).origin}/*`],
+        origins: [`${new URL(value.origin).origin}/*`],
       });
       if (result) {
         setVerified(true);
@@ -41,7 +42,7 @@ const ConfluenceForm: React.FC<FormComponentProps> = ({ form }) => {
       if (!verified) {
         return [];
       }
-      const spaceList = await request.get<FetchSpaceResponse>(`/rest/api/space`);
+      const spaceList = await request.get<ConfluenceListResult<ConfluenceSpace>>(`/rest/api/space`);
       return spaceList.results;
     },
     [host, verified],
@@ -55,7 +56,8 @@ const ConfluenceForm: React.FC<FormComponentProps> = ({ form }) => {
   return (
     <React.Fragment>
       <Form.Item label="Origin">
-        {form.getFieldDecorator('host', {
+        {form.getFieldDecorator('origin', {
+          initialValue: info?.origin,
           rules: [
             {
               required: true,
@@ -66,13 +68,13 @@ const ConfluenceForm: React.FC<FormComponentProps> = ({ form }) => {
                   const _url = new URL(value);
                   if (_url.origin !== value) {
                     form.setFieldsValue({
-                      host: _url.origin,
+                      origin: _url.origin,
                     });
                     callback();
                   }
                   callback();
                 } catch (_error) {
-                  return callback('we');
+                  return callback('2');
                 }
               },
             },
@@ -82,6 +84,7 @@ const ConfluenceForm: React.FC<FormComponentProps> = ({ form }) => {
       {verified && (
         <Form.Item label="Space">
           {form.getFieldDecorator('spaceId', {
+            initialValue: info?.spaceId,
             rules: [
               {
                 required: true,
@@ -89,16 +92,20 @@ const ConfluenceForm: React.FC<FormComponentProps> = ({ form }) => {
             ],
           })(
             <Select loading={spaces.loading}>
-              {spaces.data!.map(o => (
-                <Select.Option key={o.id} value={o.id}>
-                  {o.name}
-                </Select.Option>
-              ))}
+              {spaces
+                .data!.filter(o => !!o._expandable.homepage)
+                .map(o => {
+                  const spaceHomePage = o._expandable.homepage!.split('/');
+                  return (
+                    <Select.Option key={o.id} value={`${spaceHomePage[spaceHomePage.length - 1]}`}>
+                      {o.name}
+                    </Select.Option>
+                  );
+                })}
             </Select>
           )}
         </Form.Item>
       )}
-      <Button onClick={() => setVerified(false)}>cler</Button>
     </React.Fragment>
   );
 };
