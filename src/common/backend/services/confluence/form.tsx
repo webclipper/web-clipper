@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Input, Select } from 'antd';
-import Container from 'typedi';
-import { IPermissionsService } from '@/service/common/permissions';
 import { FormComponentProps } from 'antd/lib/form';
 import { useFetch } from '@shihengtech/hooks';
 import { extend } from 'umi-request';
@@ -10,26 +8,21 @@ import {
   ConfluenceSpace,
   ConfluenceServiceConfig,
 } from '@/common/backend/services/confluence/interface';
+import useOriginPermission from '@/common/hooks/useOriginPermission';
 
 interface ConfluenceFormProps extends FormComponentProps {
   info?: ConfluenceServiceConfig;
 }
 
 const ConfluenceForm: React.FC<ConfluenceFormProps> = ({ form, info }) => {
-  const [verified, setVerified] = useState(!!info);
-  const permissionsService = Container.get(IPermissionsService);
+  const [verified, requestOriginPermission] = useOriginPermission(!!info);
   const host = form.getFieldValue('origin');
   const handle = () => {
     form.validateFields(['origin'], async (err, value) => {
       if (err) {
         return;
       }
-      const result = await permissionsService.request({
-        origins: [`${new URL(value.origin).origin}/*`],
-      });
-      if (result) {
-        setVerified(true);
-      }
+      requestOriginPermission(value.origin);
     });
   };
 
