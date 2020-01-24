@@ -9,6 +9,7 @@ import {
   ConfluenceServiceConfig,
 } from '@/common/backend/services/confluence/interface';
 import useOriginPermission from '@/common/hooks/useOriginPermission';
+import { FormattedMessage } from 'react-intl';
 
 interface ConfluenceFormProps extends FormComponentProps {
   info?: ConfluenceServiceConfig;
@@ -48,15 +49,28 @@ const ConfluenceForm: React.FC<ConfluenceFormProps> = ({ form, info }) => {
 
   return (
     <React.Fragment>
-      <Form.Item label="Origin">
+      <Form.Item
+        label={
+          <FormattedMessage id="backend.services.confluence.form.origin" defaultMessage="Origin" />
+        }
+      >
         {form.getFieldDecorator('origin', {
           initialValue: info?.origin,
           rules: [
             {
               required: true,
+              message: (
+                <FormattedMessage
+                  id="backend.services.confluence.form.origin.message"
+                  defaultMessage={`Wrong format,Examples https://developer.mozilla.org`}
+                />
+              ),
             },
             {
               validator(_r, value, callback) {
+                if (!value) {
+                  return callback();
+                }
                 try {
                   const _url = new URL(value);
                   if (_url.origin !== value) {
@@ -67,15 +81,35 @@ const ConfluenceForm: React.FC<ConfluenceFormProps> = ({ form, info }) => {
                   }
                   callback();
                 } catch (_error) {
-                  return callback('2');
+                  return callback(
+                    <FormattedMessage
+                      id="backend.services.confluence.form.origin.message"
+                      defaultMessage={`Wrong format,Examples https://developer.mozilla.org`}
+                    />
+                  );
                 }
               },
             },
           ],
-        })(<Input.Search enterButton="验证" onSearch={handle} disabled={verified}></Input.Search>)}
+        })(
+          <Input.Search
+            enterButton={
+              <FormattedMessage
+                id="backend.services.confluence.form.authentication"
+                defaultMessage="Authentication"
+              />
+            }
+            onSearch={handle}
+            disabled={verified}
+          ></Input.Search>
+        )}
       </Form.Item>
       {verified && (
-        <Form.Item label="Space">
+        <Form.Item
+          label={
+            <FormattedMessage id="backend.services.confluence.form.space" defaultMessage="Space" />
+          }
+        >
           {form.getFieldDecorator('spaceId', {
             initialValue: info?.spaceId,
             rules: [
