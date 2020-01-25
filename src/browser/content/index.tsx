@@ -1,3 +1,5 @@
+import 'regenerator-runtime/runtime';
+import 'reflect-metadata';
 import * as QRCode from 'qrcode';
 import * as Readability from '@web-clipper/readability';
 import styles from './index.less';
@@ -7,11 +9,17 @@ import plugins from '@web-clipper/turndown';
 import TurndownService from 'turndown';
 import { MessageListenerCombiner } from '@web-clipper/message-listener-combiner';
 import { clickIcon, doYouAliveNow } from 'browserActions/browser';
-import { removeTool, runScript, hideTool } from 'browserActions/message';
+import { removeTool, runScript } from 'browserActions/message';
 import { ContentScriptContext } from '@web-clipper/extensions';
 import * as browser from '@web-clipper/chrome-promise';
 import { localStorageService } from '@/common/chrome/storage';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/types';
+import { IChannelServer } from '@/service/common/ipc';
+import { ContentScriptChannel } from '@/service/contentScript/common/contentScriptIPC';
+import Container from 'typedi';
+import { IContentScriptService } from '@/service/common/contentScript';
+import '@/service/contentScript/browser/contentScript/contentScript';
+import { ContentScriptIPCServer } from '@/service/ipc/browser/contentScript/contentScriptIPCServer';
 
 const turndownService = new TurndownService({ codeBlockStyle: 'fenced' });
 turndownService.use(plugins);
@@ -20,9 +28,6 @@ const listeners = new MessageListenerCombiner()
   .case(doYouAliveNow, (_payload, _sender, sendResponse) => {
     sendResponse(true);
     return true;
-  })
-  .case(hideTool, () => {
-    $(`.${styles.toolFrame}`).hide();
   })
   .case(removeTool, () => {
     $(`.${styles.toolFrame}`).remove();
@@ -71,3 +76,9 @@ const listeners = new MessageListenerCombiner()
   });
 
 browser.runtime.onMessage.addListener(listeners.handle);
+
+const backgroundIPCServer: IChannelServer = new ContentScriptIPCServer();
+backgroundIPCServer.registerChannel(
+  'contentScript',
+  new ContentScriptChannel(Container.get(IContentScriptService))
+);
