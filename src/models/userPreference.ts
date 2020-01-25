@@ -1,4 +1,3 @@
-import { IContentScriptService } from '@/service/common/contentScript';
 import { ITabService } from '@/service/common/tab';
 import { Container } from 'typedi';
 import React from 'react';
@@ -9,7 +8,6 @@ import { runScript } from './../browser/actions/message';
 import storage from 'common/storage';
 import * as antd from 'antd';
 import { GlobalStore } from '@/common/types';
-import { removeTool } from 'browserActions/message';
 import update from 'immutability-helper';
 import {
   asyncSetEditorLiveRendering,
@@ -18,8 +16,6 @@ import {
   asyncDeleteImageHosting,
   asyncAddImageHosting,
   asyncEditImageHosting,
-  asyncHideTool,
-  asyncRemoveTool,
   asyncRunExtension,
   setLocale,
   asyncSetLocaleToStorage,
@@ -114,14 +110,6 @@ builder
         },
       })
     );
-  })
-  .takeEvery(asyncHideTool.started, function*(_, { call }) {
-    const contentScriptService = Container.get(IContentScriptService);
-    yield call(contentScriptService.hide);
-  })
-  .takeEvery(asyncRemoveTool.started, function*(_, { call }) {
-    const tabService = Container.get(ITabService);
-    yield call(tabService.sendActionToCurrentTab, removeTool());
   })
   .takeEvery(asyncEditImageHosting.started, function*(payload, { call, put }) {
     const { id, value, closeModal } = payload;
