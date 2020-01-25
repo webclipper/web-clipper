@@ -34,10 +34,6 @@ export const asyncSetShowLineNumber = actionCreator.async<
   void
 >('ASYNC_SET_SHOW_LINE_NUMBER');
 
-export const asyncHideTool = actionCreator.async<void, void, void>('ASYNC_HIDE_TOOL');
-
-export const asyncRemoveTool = actionCreator.async<void, void, void>('ASYNC_REMOVE_TOOL');
-
 export const asyncRunExtension = actionCreator.async<
   {
     pathname: string;

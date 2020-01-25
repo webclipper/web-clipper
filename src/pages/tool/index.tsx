@@ -8,7 +8,7 @@ import { GlobalStore } from '@/common/types';
 import { isEqual } from 'lodash';
 import { ToolContainer } from 'components/container';
 import { selectRepository, asyncChangeAccount } from 'pageActions/clipper';
-import { asyncHideTool, asyncRunExtension } from 'pageActions/userPreference';
+import { asyncRunExtension } from 'pageActions/userPreference';
 import { SerializedExtensionWithId, InitContext } from '@web-clipper/extensions';
 import Section from 'components/section';
 import { DvaRouterProps } from 'common/types';
@@ -23,6 +23,7 @@ import { Observer } from 'mobx-react';
 import IconAvatar from '@/components/avatar';
 import IconFont from '@/components/IconFont';
 import UserItem from '@/components/userItem';
+import { IContentScriptService } from '@/service/common/contentScript';
 
 const mapStateToProps = ({
   clipper: { currentAccountId, url, currentRepository, repositories, currentImageHostingService },
@@ -176,7 +177,7 @@ const Page = React.memo<PageProps>(
     );
 
     return (
-      <ToolContainer onClickCloseButton={() => dispatch(asyncHideTool.started())}>
+      <ToolContainer onClickCloseButton={Container.get(IContentScriptService).hide}>
         {header}
         <ToolExtensions
           extensions={toolExtensions}

@@ -9,7 +9,7 @@ import plugins from '@web-clipper/turndown';
 import TurndownService from 'turndown';
 import { MessageListenerCombiner } from '@web-clipper/message-listener-combiner';
 import { clickIcon, doYouAliveNow } from 'browserActions/browser';
-import { removeTool, runScript } from 'browserActions/message';
+import { runScript } from 'browserActions/message';
 import { ContentScriptContext } from '@web-clipper/extensions';
 import * as browser from '@web-clipper/chrome-promise';
 import { localStorageService } from '@/common/chrome/storage';
@@ -28,9 +28,6 @@ const listeners = new MessageListenerCombiner()
   .case(doYouAliveNow, (_payload, _sender, sendResponse) => {
     sendResponse(true);
     return true;
-  })
-  .case(removeTool, () => {
-    $(`.${styles.toolFrame}`).remove();
   })
   .case(clickIcon, () => {
     if ($(`.${styles.toolFrame}`).length === 0) {
