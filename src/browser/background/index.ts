@@ -12,7 +12,6 @@ import { BackgroundIPCServer } from '@/service/ipc/browser/background-main/ipcSe
 import { TabChannel } from '@/service/tab/common/tabIpc';
 
 const backgroundIPCServer: IChannelServer = new BackgroundIPCServer();
-
 backgroundIPCServer.registerChannel('tab', new TabChannel(Container.get(ITabService)));
 
 backgroundIPCServer.registerChannel(
