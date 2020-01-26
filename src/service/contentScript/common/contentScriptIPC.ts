@@ -4,7 +4,11 @@ import { IServerChannel, IChannel } from '@/service/common/ipc';
 export class ContentScriptChannel implements IServerChannel {
   constructor(private service: IContentScriptService) {}
 
-  call = async (_context: chrome.runtime.Port['sender'], command: string): Promise<any> => {
+  call = async (
+    _context: chrome.runtime.Port['sender'],
+    command: string,
+    arg: any
+  ): Promise<any> => {
     switch (command) {
       case 'remove':
         return this.service.remove();
@@ -14,6 +18,10 @@ export class ContentScriptChannel implements IServerChannel {
         return this.service.checkStatus();
       case 'toggle':
         return this.service.toggle();
+      case 'runScript': {
+        const we = this.service.runScript(arg);
+        return we;
+      }
       default: {
         throw new Error(`Call not found: ${command}`);
       }
@@ -26,6 +34,10 @@ export class ContentScriptChannelClient implements IContentScriptService {
 
   remove = async (): Promise<void> => {
     return this.channel.call('remove');
+  };
+
+  runScript = async (script: string): Promise<void> => {
+    return this.channel.call('runScript', script);
   };
 
   hide = async (): Promise<void> => {
