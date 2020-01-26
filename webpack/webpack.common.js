@@ -44,8 +44,8 @@ if (process.env.TARGET_BROWSER === 'Firefox') {
 module.exports = {
   entry: {
     tool: resolve('src/main/tool.main.ts'),
+    content_script: resolve('src/main/contentScript.main.ts'),
     background,
-    content_script: resolve('src/browser/content/index.tsx'),
   },
   output: {
     path: resolve('dist'),

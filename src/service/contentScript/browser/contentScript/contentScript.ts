@@ -1,6 +1,6 @@
 import { IContentScriptService } from '@/service/common/contentScript';
 import { Service } from 'typedi';
-import styles from '@/browser/content/index.less';
+import styles from '@/service/contentScript/browser/contentScript/contentScript.less';
 import * as browser from '@web-clipper/chrome-promise';
 import * as QRCode from 'qrcode';
 import * as Readability from '@web-clipper/readability';
