@@ -1,10 +1,24 @@
-import { ITabService, CaptureVisibleTabOptions, AbstractTabService } from '@/service/common/tab';
+import {
+  ITabService,
+  CaptureVisibleTabOptions,
+  AbstractTabService,
+  Tab,
+} from '@/service/common/tab';
 import * as browser from '@web-clipper/chrome-promise';
 import { Service } from 'typedi';
 
 class ChromeTabService extends AbstractTabService {
   getCurrent() {
-    return browser.tabs.getCurrent();
+    return new Promise<Tab>(r => {
+      chrome.tabs.query(
+        {
+          active: true,
+        },
+        tab => {
+          r(tab[0]);
+        }
+      );
+    });
   }
 
   remove(tabId: number): Promise<void> {
