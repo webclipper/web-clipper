@@ -12,11 +12,10 @@ class ChromeTabService extends AbstractTabService {
     return new Promise<Tab>(r => {
       chrome.tabs.query(
         {
+          currentWindow: true,
           active: true,
         },
-        tab => {
-          r(tab[0]);
-        }
+        tab => r(tab[0])
       );
     });
   }
