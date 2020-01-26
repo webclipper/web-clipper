@@ -1,10 +1,10 @@
+import { IContentScriptService } from '@/service/common/contentScript';
 import { ITabService } from '@/service/common/tab';
 import { Container } from 'typedi';
 import React from 'react';
 import { getLanguage } from './../common/locales';
 import localeService from '@/common/locales';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from './../common/modelTypes/userPreference';
-import { runScript } from './../browser/actions/message';
 import storage from 'common/storage';
 import * as antd from 'antd';
 import { GlobalStore } from '@/common/types';
@@ -175,11 +175,12 @@ builder
     }
   })
   .takeEvery(asyncRunExtension.started, function*({ extension, pathname }, { call, put, select }) {
+    const contentScriptService = Container.get(IContentScriptService);
     let result;
     const { run, afterRun, destroy } = extension;
     const tabService = Container.get(ITabService);
     if (run) {
-      result = yield call(tabService.sendActionToCurrentTab, runScript(run));
+      result = yield call(contentScriptService.runScript, run);
     }
     const state: GlobalStore = yield select(state => state);
     const data = state.clipper.clipperData[pathname];
@@ -228,6 +229,7 @@ builder
               return response.result;
             },
           };
+
           // eslint-disable-next-line
           return await eval(afterRun);
         })();
@@ -236,7 +238,7 @@ builder
       }
     }
     if (destroy) {
-      yield call(tabService.sendActionToCurrentTab, runScript(destroy));
+      contentScriptService.runScript(destroy);
     }
     yield put(
       changeData({

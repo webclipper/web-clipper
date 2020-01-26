@@ -44,7 +44,10 @@ browser.browserAction.onClicked.addListener(async tab => {
     return;
   }
   trackService.trackEvent('Load_Web_Clipper', packageJson.version, 'success');
-  const result = await contentScriptService.checkStatus();
+  let result;
+  try {
+    result = await contentScriptService.checkStatus();
+  } catch (_error) {}
   if (!result) {
     await browser.tabs.executeScript(
       {

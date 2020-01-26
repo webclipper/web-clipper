@@ -5,6 +5,7 @@ export interface IContentScriptService {
   remove(): Promise<void>;
   checkStatus(): Promise<boolean>;
   toggle(): Promise<void>;
+  runScript(script: string): Promise<void>;
 }
 
 export const IContentScriptService = new Token<IContentScriptService>();

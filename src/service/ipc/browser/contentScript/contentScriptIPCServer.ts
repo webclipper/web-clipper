@@ -13,24 +13,26 @@ export class ContentScriptIPCServer implements IChannelServer {
   ) {
     const uuid = channelName;
     chrome.runtime.onMessage.addListener(
-      async (message: IPCMessageRequest, sender: chrome.runtime.MessageSender, sendResponse) => {
+      (message: IPCMessageRequest, sender: chrome.runtime.MessageSender, sendResponse) => {
         if (message.uuid !== uuid) {
           return;
         }
-        let response: IPCMessageResponse;
-        try {
-          const result = await server.call(sender, message.command, message.arg);
-          response = {
-            uuid,
-            result: { data: result },
-          };
-        } catch (error) {
-          response = {
-            uuid,
-            error: { data: transformErrorForSerialization(error) },
-          };
-        }
-        sendResponse(response);
+        (async () => {
+          let response: IPCMessageResponse;
+          try {
+            const result = await server.call(sender, message.command, message.arg);
+            response = {
+              uuid,
+              result: { data: result },
+            };
+          } catch (error) {
+            response = {
+              uuid,
+              error: { data: transformErrorForSerialization(error) },
+            };
+          }
+          sendResponse(response);
+        })();
         return true;
       }
     );
