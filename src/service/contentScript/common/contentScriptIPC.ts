@@ -10,6 +10,10 @@ export class ContentScriptChannel implements IServerChannel {
         return this.service.remove();
       case 'hide':
         return this.service.hide();
+      case 'checkStatus':
+        return this.service.checkStatus();
+      case 'toggle':
+        return this.service.toggle();
       default: {
         throw new Error(`Call not found: ${command}`);
       }
@@ -26,5 +30,11 @@ export class ContentScriptChannelClient implements IContentScriptService {
 
   hide = async (): Promise<void> => {
     return this.channel.call('hide');
+  };
+  checkStatus = async (): Promise<boolean> => {
+    return this.channel.call('checkStatus');
+  };
+  toggle = async (): Promise<void> => {
+    return this.channel.call('toggle');
   };
 }

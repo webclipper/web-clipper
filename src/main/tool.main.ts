@@ -1,4 +1,3 @@
-import { PopupContentScriptIPCClient } from './../service/ipc/browser/popup/ipcClient';
 import 'regenerator-runtime/runtime';
 import 'reflect-metadata';
 import Container from 'typedi';
@@ -7,7 +6,7 @@ import { PermissionsChannelClient } from '@/service/permissions/common/permissio
 import { IContentScriptService } from '@/service/common/contentScript';
 import { ContentScriptChannelClient } from '@/service/contentScript/common/contentScriptIPC';
 import { ITabService } from '@/service/common/tab';
-import { PopupIpcClient } from '@/service/ipc/browser/popup/ipcClient';
+import { PopupIpcClient, PopupContentScriptIPCClient } from '@/service/ipc/browser/popup/ipcClient';
 import '@/service/config/browser/configService';
 import '@/service/powerpackService';
 import '@/service/trackService';

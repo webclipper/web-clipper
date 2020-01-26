@@ -1,6 +1,8 @@
+import { IContentScriptService } from '@/service/common/contentScript';
+import { ContentScriptChannelClient } from '@/service/contentScript/common/contentScriptIPC';
+import { PopupContentScriptIPCClient } from '@/service/ipc/browser/popup/ipcClient';
 import { ITrackService } from '@/service/common/track';
 import * as browser from '@web-clipper/chrome-promise';
-import { clickIcon, doYouAliveNow } from 'browserActions/browser';
 import config from '@/config';
 import packageJson from '@/../package.json';
 import Container from 'typedi';
@@ -12,6 +14,7 @@ import { BackgroundIPCServer } from '@/service/ipc/browser/background-main/ipcSe
 import { TabChannel } from '@/service/tab/common/tabIpc';
 
 const backgroundIPCServer: IChannelServer = new BackgroundIPCServer();
+
 backgroundIPCServer.registerChannel('tab', new TabChannel(Container.get(ITabService)));
 
 backgroundIPCServer.registerChannel(
@@ -19,10 +22,15 @@ backgroundIPCServer.registerChannel(
   new PermissionsChannel(Container.get(IPermissionsService))
 );
 
+const contentScriptIPCClient = new PopupContentScriptIPCClient(Container.get(ITabService));
+const contentScriptChannel = contentScriptIPCClient.getChannel('contentScript');
+Container.set(IContentScriptService, new ContentScriptChannelClient(contentScriptChannel));
+
+const contentScriptService = Container.get(IContentScriptService);
+
 const media = window.matchMedia('(prefers-color-scheme: dark)');
 browser.browserAction.setIcon({ path: media.matches ? config.iconDark : config.icon });
 
-const tabService = Container.get(ITabService);
 const trackService = Container.get(ITrackService);
 trackService.init();
 
@@ -36,7 +44,7 @@ browser.browserAction.onClicked.addListener(async tab => {
     return;
   }
   trackService.trackEvent('Load_Web_Clipper', packageJson.version, 'success');
-  const result = await tabService.sendMessage(tabId, doYouAliveNow());
+  const result = await contentScriptService.checkStatus();
   if (!result) {
     await browser.tabs.executeScript(
       {
@@ -44,7 +52,6 @@ browser.browserAction.onClicked.addListener(async tab => {
       },
       tabId
     );
-
     if (browser.runtime.lastError) {
       if (browser.runtime.lastError.message === 'The extensions gallery cannot be scripted.') {
         alert('The extensions gallery cannot be scripted.\n\n插件商店不允许执行脚本');
@@ -56,5 +63,5 @@ browser.browserAction.onClicked.addListener(async tab => {
       return;
     }
   }
-  tabService.sendMessage(tabId, clickIcon());
+  contentScriptService.toggle();
 });
