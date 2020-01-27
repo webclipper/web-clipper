@@ -4,12 +4,12 @@ import { useSelector } from 'dva';
 import { Skeleton } from 'antd';
 import ReactMarkdown from 'react-markdown';
 import LinkRender from '@/components/LinkRender';
-import useAsync from '@/common/hooks/useAsync';
 import config from '@/config';
 import request from 'umi-request';
 import Container from 'typedi';
 import { IConfigService } from '@/service/common/config';
 import { useObserver } from 'mobx-react';
+import { useFetch } from '@shihengtech/hooks';
 
 const Changelog: React.FC = () => {
   const { locale } = useSelector(({ userPreference: { locale } }: GlobalStore) => {
@@ -27,7 +27,7 @@ const Changelog: React.FC = () => {
     return workLocale;
   });
 
-  const { loading, result: changelog } = useAsync(
+  const { loading, data: changelog } = useFetch(
     () => request.get(`${config.resourceHost}/privacy/PRIVACY.${workLocale}.md`),
     []
   );

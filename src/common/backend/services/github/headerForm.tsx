@@ -1,10 +1,10 @@
 import { Form, Select, Badge } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import React, { Fragment, useMemo } from 'react';
+import React, { Fragment } from 'react';
 import backend from '../..';
-import useAsync from '@/common/hooks/useAsync';
 import GithubDocumentService from './service';
 import locale from '@/common/locales';
+import { useFetch } from '@shihengtech/hooks';
 
 const HeaderForm: React.FC<FormComponentProps & { currentRepository: any }> = ({
   form: { getFieldDecorator },
@@ -12,19 +12,20 @@ const HeaderForm: React.FC<FormComponentProps & { currentRepository: any }> = ({
 }) => {
   const service = backend.getDocumentService() as GithubDocumentService;
 
-  const labelsResponse = useAsync(async () => {
-    if (currentRepository) {
-      return service.getRepoLabels(currentRepository);
+  const labelsResponse = useFetch(
+    async () => {
+      if (currentRepository) {
+        return service.getRepoLabels(currentRepository);
+      }
+      return [];
+    },
+    [currentRepository, service],
+    {
+      initialState: {
+        data: [],
+      },
     }
-    return [];
-  }, [currentRepository, service]);
-
-  const labels = useMemo(() => {
-    if (labelsResponse.result) {
-      return labelsResponse.result;
-    }
-    return [];
-  }, [labelsResponse.result]);
+  );
 
   return (
     <Fragment>
@@ -40,7 +41,7 @@ const HeaderForm: React.FC<FormComponentProps & { currentRepository: any }> = ({
             })}
             loading={labelsResponse.loading}
           >
-            {labels.map(o => (
+            {labelsResponse.data?.map(o => (
               <Select.Option key={o.name} value={o.name} title={o.description}>
                 <Badge color={`#${o.color}`} text={o.name} />
               </Select.Option>

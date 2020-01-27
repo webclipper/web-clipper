@@ -1,24 +1,19 @@
 import { Form, Select } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import React, { Fragment, useMemo } from 'react';
+import React, { Fragment } from 'react';
 import backend from '../..';
-import useAsync from '@/common/hooks/useAsync';
+import { useFetch } from '@shihengtech/hooks';
 import JoplinDocumentService from './service';
 import locale from '@/common/locales';
 
 const HeaderForm: React.FC<FormComponentProps> = ({ form: { getFieldDecorator } }) => {
   const service = backend.getDocumentService() as JoplinDocumentService;
 
-  const tagResponse = useAsync(async () => {
-    return service.getTags();
-  }, [service]);
-
-  const tags = useMemo(() => {
-    if (Array.isArray(tagResponse.result)) {
-      return tagResponse.result;
-    }
-    return [];
-  }, [tagResponse.result]);
+  const tagResponse = useFetch(async () => service.getTags(), [service], {
+    initialState: {
+      data: [],
+    },
+  });
 
   return (
     <Fragment>
@@ -36,7 +31,7 @@ const HeaderForm: React.FC<FormComponentProps> = ({ form: { getFieldDecorator } 
             })}
             loading={tagResponse.loading}
           >
-            {tags.map(o => (
+            {tagResponse.data?.map(o => (
               <Select.Option key={o.id} value={o.title} title={o.title}>
                 {o.title}
               </Select.Option>
