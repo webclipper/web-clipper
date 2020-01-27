@@ -1,8 +1,6 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'dva';
 import { GlobalStore } from '@/common/types';
-import Axios from 'axios';
-import useAsync from '@/common/hooks/useAsync';
 import { Skeleton, Col, Row, Icon, Typography, Tooltip } from 'antd';
 import {
   SerializedExtensionInfo,
@@ -19,6 +17,8 @@ import { hasUpdate } from '@/common/version';
 import Container from 'typedi';
 import { IConfigService } from '@/service/common/config';
 import usePowerpack from '@/common/hooks/usePowerpack';
+import { useFetch, useLoading } from '@shihengtech/hooks';
+import request from 'umi-request';
 
 interface RemoteExtensionProps {
   host: string;
@@ -40,10 +40,9 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
   havePowerPack,
 }) => {
   const dispatch = useDispatch();
-  const fetchExtension = useAsync((id: string) => Axios(`${host}/extensions/${id}`), [], {
-    manual: true,
+  const fetchExtension = useLoading((id: string) => request(`${host}/extensions/${id}`), {
     onSuccess: e => {
-      const _extension: SerializedExtension = e.data;
+      const _extension: SerializedExtension = e;
       const extension: SerializedExtensionWithId = {
         ..._extension,
         id: manifest.id,
@@ -121,18 +120,16 @@ const selector = ({ extension: { extensions }, userPreference: { locale } }: Glo
 };
 
 const Page: React.FC<RemoteExtensionProps> = ({ host }) => {
-  const { loading, result, error } = useAsync(() => Axios(`${host}/extensions/index`));
+  const { loading, data, error } = useFetch(() => request(`${host}/extensions/index`), [], {
+    initialState: {
+      data: [],
+    },
+  });
   const { locale, extensions } = useSelector(selector);
   const { bought, expired } = usePowerpack();
   const configService = Container.get(IConfigService);
-  const remoteExtensions = useMemo<SerializedExtensionInfo[]>(() => {
-    if (!result || !result.data) {
-      return [];
-    }
-    return result.data;
-  }, [result]);
 
-  const [remoteToolExtensions, remoteClipExtensions] = useFilterExtensions(remoteExtensions);
+  const [remoteToolExtensions, remoteClipExtensions] = useFilterExtensions(data);
   if (loading) {
     return <Skeleton></Skeleton>;
   }
