@@ -3,12 +3,12 @@ import { GlobalStore } from '@/common/types';
 import { useSelector } from 'dva';
 import { Skeleton } from 'antd';
 import ReactMarkdown from 'react-markdown';
-import useAsync from '@/common/hooks/useAsync';
 import request from 'umi-request';
 import config from '@/config';
 import { IConfigService } from '@/service/common/config';
 import Container from 'typedi';
 import { useObserver } from 'mobx-react';
+import { useFetch } from '@shihengtech/hooks';
 
 const Changelog: React.FC = () => {
   const { locale } = useSelector(({ userPreference: { locale } }: GlobalStore) => {
@@ -25,7 +25,7 @@ const Changelog: React.FC = () => {
     return workLocale;
   });
 
-  const { loading, result: changelog } = useAsync(
+  const { loading, data: changelog } = useFetch(
     () => request.get(`${config.resourceHost}/changelog/CHANGELOG.${workLocale}.md`),
     []
   );
