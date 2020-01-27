@@ -3,8 +3,8 @@ import { FormComponentProps } from 'antd/lib/form';
 import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { omit, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import useAsync from './useAsync';
 import { message } from 'antd';
+import { useFetch } from '@shihengtech/hooks';
 
 type UseVerifiedAccountProps = FormComponentProps & {
   services: UserPreferenceStore['servicesMeta'];
@@ -29,7 +29,7 @@ const useVerifiedAccount = ({ form, services, initAccount }: UseVerifiedAccountP
     const values = form.getFieldsValue();
     form.resetFields(Object.keys(omit(values, ['type'])));
   };
-  const { result, run, loading } = useAsync(
+  const { data, run, loading } = useFetch(
     async (info: any) => {
       const Service = service.service;
       const instance = new Service(info);
@@ -40,7 +40,7 @@ const useVerifiedAccount = ({ form, services, initAccount }: UseVerifiedAccountP
     },
     [service],
     {
-      manual: true,
+      auto: false,
       onError: e => {
         message.error(e.message);
       },
@@ -58,10 +58,10 @@ const useVerifiedAccount = ({ form, services, initAccount }: UseVerifiedAccountP
   }, [form, run]);
 
   const accountStatus = {
-    repositories: result ? result.repositories : [],
-    userInfo: result ? result.userInfo : null,
-    verified: !!result && !loading,
-    id: result ? result.id : null,
+    repositories: data?.repositories ?? [],
+    userInfo: data?.userInfo ?? null,
+    verified: !!data && !loading,
+    id: data?.id ?? null,
   };
 
   let serviceForm = useMemo(() => {
