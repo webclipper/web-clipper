@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { Form, Modal, Select, Icon } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import styles from './index.less';
@@ -56,7 +56,7 @@ const Page: React.FC<PageProps> = ({
     initAccount: currentAccount,
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     verifyAccount(currentAccount);
   }, [currentAccount, verifyAccount]);
 
