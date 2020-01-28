@@ -1,3 +1,17 @@
+## 1.18.0
+
+`2020-01-20`
+
+- 💄 Optimize UI for account selection
+- 💄 Add mask for web clipper
+- 💄 update powerpack ui
+
+## 1.17.0
+
+`2020-01-08`
+
+- ✨ Support firefox
+
 ## 1.16.0
 
 `2019-12-30`
