@@ -933,14 +933,7 @@
   resolved "https://registry.npm.taobao.org/@babel/preset-stage-0/download/@babel/preset-stage-0-7.0.0.tgz#999aaec79ee8f0a763042c68c06539c97c6e0646"
   integrity sha1-mZqux57o8KdjBCxowGU5yXxuBkY=
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.4.5":
-  version "7.5.5"
-  resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
-  integrity sha1-dPulbTXvvspEQJHHhQzNSU/S8TI=
-  dependencies:
-    regenerator-runtime "^0.13.2"
-
-"@babel/runtime@^7.4.0":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.4.0", "@babel/runtime@^7.4.5":
   version "7.7.2"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.7.2.tgz#111a78002a5c25fc8e3361bedc9529c696b85a6a"
   integrity sha1-ERp4ACpcJfyOM2G+3JUpxpa4Wmo=
@@ -4146,10 +4139,10 @@ dva-core@2.0.1:
     redux-saga "^0.16.0"
     warning "^3.0.0"
 
-dva-loading@^3.0.19:
-  version "3.0.19"
-  resolved "https://registry.yarnpkg.com/dva-loading/-/dva-loading-3.0.19.tgz#843ada94744b9cb21d00614d99b01e78f8bdb7d1"
-  integrity sha512-tv30outk4mAVAhOIlh+yrJ8hKF+bYMHLS1VO3Fg82sGhpb2SDGDjU+Wi2Ylv84kW1IyMJzxE+IbrYv1SSRkWvQ==
+dva-loading@^3.0.20:
+  version "3.0.20"
+  resolved "https://registry.yarnpkg.com/dva-loading/-/dva-loading-3.0.20.tgz#348a0814e0091a80d6f608b51c3e3b92e3883c8d"
+  integrity sha512-U9Na3Y2fLnpL+jBKv/C2pi3T2MbdezZLdGIleZs1bNDnkiPLuQ2btDldbbCFeidGlE6WOHGwSTsn32q4aL72Jg==
   dependencies:
     "@babel/runtime" "^7.0.0"
 

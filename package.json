@@ -45,7 +45,7 @@
     "crypto-js": "^3.1.9-1",
     "dayjs": "^1.8.17",
     "dva": "^2.6.0-beta.19",
-    "dva-loading": "^3.0.19",
+    "dva-loading": "^3.0.20",
     "dva-logger": "^1.0.0",
     "dva-model-creator": "^0.4.3",
     "hypermd": "^0.3.11",
