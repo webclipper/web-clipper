@@ -1,3 +1,10 @@
+## 1.19.0
+
+`2020-01-29`
+
+- ✨ Support confluence
+- ✨ Support ulysses
+
 ## 1.18.0
 
 `2020-01-20`
