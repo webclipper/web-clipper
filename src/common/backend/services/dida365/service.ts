@@ -82,8 +82,18 @@ export default class Dida365DocumentService implements DocumentService {
       .map(({ id, name, groupId }) => ({
         id: id,
         name: name,
-        groupId: groupId ? groupId : 'Root',
-        groupName: groupId ? groupMap.get(groupId)! : 'Root',
+        groupId: groupId
+          ? groupId
+          : localeService.format({
+              id: 'backend.services.dida365.rootGroup',
+              defaultMessage: 'Root',
+            }),
+        groupName: groupId
+          ? groupMap.get(groupId)!
+          : localeService.format({
+              id: 'backend.services.dida365.rootGroup',
+              defaultMessage: 'Root',
+            }),
       }));
   };
 
