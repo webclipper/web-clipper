@@ -1,5 +1,7 @@
+import { Container } from 'typedi';
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
 import localeService from '@/common/locales';
+import { IWebRequestService } from '@/service/common/webRequest';
 import {
   CreateDocumentRequest,
   CompleteStatus,
@@ -98,6 +100,18 @@ export default class Dida365DocumentService implements DocumentService {
   };
 
   createDocument = async (request: CreateDocumentRequest): Promise<CompleteStatus> => {
+    const webRequestService = Container.get(IWebRequestService);
+
+    const header = await webRequestService.startChangeHeader({
+      urls: ['https://api.dida365.com/*'],
+      requestHeaders: [
+        {
+          name: 'origin',
+          value: 'https://dida365.com',
+        },
+      ],
+    });
+
     const settings = await this.request.get<{ timeZone: string }>(
       'user/preferences/settings?includeWeb=true'
     );
@@ -132,33 +146,14 @@ export default class Dida365DocumentService implements DocumentService {
       delete: [],
     };
 
-    const handler = (request: chrome.webRequest.WebRequestHeadersDetails) => {
-      const headers = (request.requestHeaders ?? [])
-        .filter(header => {
-          return header.name !== 'Origin';
-        })
-        .concat([
-          {
-            name: 'origin',
-            value: 'https://dida365.com',
-          },
-        ]);
-      return {
-        requestHeaders: headers,
-      };
-    };
-    chrome.webRequest.onBeforeSendHeaders.addListener(
-      handler,
-      { urls: ['https://api.dida365.com/api/v2/batch/task'] },
-      ['blocking', 'requestHeaders', 'extraHeaders']
-    );
-
     await this.request.post('batch/task', {
       data: data,
+      headers: {
+        [header.name]: header.value,
+      },
     });
 
-    chrome.webRequest.onBeforeSendHeaders.removeListener(handler);
-    chrome.webRequest.handlerBehaviorChanged();
+    await webRequestService.end(header);
 
     return {
       href: `https://dida365.com/#p/${request.repositoryId}/tasks/${id}`,

@@ -1,6 +1,8 @@
 import 'regenerator-runtime/runtime';
 import 'reflect-metadata';
 import Container from 'typedi';
+import { IWebRequestService } from '@/service/common/webRequest';
+import { WebRequestChannelClient } from '@/service/webRequest/common/webRequestIPC';
 import { IPermissionsService } from '@/service/common/permissions';
 import { PermissionsChannelClient } from '@/service/permissions/common/permissionsIpc';
 import { IContentScriptService } from '@/service/common/contentScript';
@@ -24,5 +26,8 @@ Container.set(IPermissionsService, new PermissionsChannelClient(permissionsChann
 const contentScriptIPCClient = new PopupContentScriptIPCClient(Container.get(ITabService));
 const contentScriptChannel = contentScriptIPCClient.getChannel('contentScript');
 Container.set(IContentScriptService, new ContentScriptChannelClient(contentScriptChannel));
+
+const webRequestChannel = ipcClient.getChannel('webRequest');
+Container.set(IWebRequestService, new WebRequestChannelClient(webRequestChannel));
 
 app();

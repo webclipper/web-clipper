@@ -1,3 +1,5 @@
+import { IWebRequestService } from '@/service/common/webRequest';
+import { WebRequestChannel } from '@/service/webRequest/common/webRequestIPC';
 import { IContentScriptService } from '@/service/common/contentScript';
 import { ContentScriptChannelClient } from '@/service/contentScript/common/contentScriptIPC';
 import { PopupContentScriptIPCClient } from '@/service/ipc/browser/popup/ipcClient';
@@ -20,6 +22,11 @@ backgroundIPCServer.registerChannel('tab', new TabChannel(Container.get(ITabServ
 backgroundIPCServer.registerChannel(
   'permissions',
   new PermissionsChannel(Container.get(IPermissionsService))
+);
+
+backgroundIPCServer.registerChannel(
+  'webRequest',
+  new WebRequestChannel(Container.get(IWebRequestService))
 );
 
 const contentScriptIPCClient = new PopupContentScriptIPCClient(Container.get(ITabService));
