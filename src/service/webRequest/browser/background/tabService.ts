@@ -5,14 +5,12 @@ import {
   WebBlockHeader,
 } from '@/service/common/webRequest';
 
-import { Service } from 'typedi';
-
 export const WEB_REQUEST_BLOCK_HEADER = 'web_clipper_web_request';
 
-class BackgroundWebRequestService implements IWebRequestService {
+export class BackgroundWebRequestService implements IWebRequestService {
   private handlerMap: Map<string, any>;
 
-  constructor() {
+  constructor(private extraInfoSpec: string[]) {
     this.handlerMap = new Map<string, any>();
   }
 
@@ -40,11 +38,11 @@ class BackgroundWebRequestService implements IWebRequestService {
     };
 
     this.handlerMap.set(uuid, handler);
-    chrome.webRequest.onBeforeSendHeaders.addListener(handler, { urls: option.urls }, [
-      'blocking',
-      'requestHeaders',
-      'extraHeaders',
-    ]);
+    chrome.webRequest.onBeforeSendHeaders.addListener(
+      handler,
+      { urls: option.urls },
+      this.extraInfoSpec
+    );
     return {
       name: WEB_REQUEST_BLOCK_HEADER,
       value: uuid,
@@ -58,5 +56,3 @@ class BackgroundWebRequestService implements IWebRequestService {
     chrome.webRequest.handlerBehaviorChanged();
   }
 }
-
-Service(IWebRequestService)(BackgroundWebRequestService);

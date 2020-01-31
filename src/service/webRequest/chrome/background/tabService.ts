@@ -4,9 +4,9 @@ import { BackgroundWebRequestService } from '@/service/webRequest/browser/backgr
 
 export const WEB_REQUEST_BLOCK_HEADER = 'web_clipper_web_request';
 
-class FirefoxBackgroundWebRequestService extends BackgroundWebRequestService {
+class ChromeBackgroundWebRequestService extends BackgroundWebRequestService {
   constructor() {
-    super(['blocking', 'requestHeaders']);
+    super(['blocking', 'requestHeaders', 'extraHeaders']);
   }
 }
-Service(IWebRequestService)(FirefoxBackgroundWebRequestService);
+Service(IWebRequestService)(ChromeBackgroundWebRequestService);
