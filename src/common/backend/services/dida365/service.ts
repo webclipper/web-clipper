@@ -1,8 +1,13 @@
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
-import { CreateDocumentRequest, CompleteStatus } from './../interface';
-import { DocumentService } from '../../index';
+import localeService from '@/common/locales';
+import {
+  CreateDocumentRequest,
+  CompleteStatus,
+  UnauthorizedError,
+  Repository,
+} from '@/common/backend/services/interface';
+import { DocumentService } from '@/common/backend/index';
 import { extend, RequestMethod } from 'umi-request';
-import { Repository } from '../interface';
 
 interface Dida365Profile {
   name: string;
@@ -31,9 +36,25 @@ export default class Dida365DocumentService implements DocumentService {
   private request: RequestMethod;
 
   constructor() {
-    this.request = extend({
+    const request = extend({
       prefix: `https://api.dida365.com/api/v2/`,
     });
+    request.interceptors.response.use(
+      response => {
+        if (response.clone().status === 401) {
+          throw new UnauthorizedError(
+            localeService.format({
+              id: 'backend.services.dida365.unauthorizedErrorMessage',
+              defaultMessage: 'Unauthorized! Please Login Dida365 Web.',
+            })
+          );
+        }
+        return response;
+      },
+      { global: false }
+    );
+
+    this.request = request;
   }
 
   getId = () => {
