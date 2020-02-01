@@ -13,6 +13,7 @@
   "backend.services.confluence.form.origin": "",
   "backend.services.confluence.form.origin.message": "",
   "backend.services.confluence.form.space": "",
+  "backend.services.dida365.headerForm.applyTags": "",
   "backend.services.dida365.name": "",
   "backend.services.dida365.rootGroup": "",
   "backend.services.dida365.unauthorizedErrorMessage": "",

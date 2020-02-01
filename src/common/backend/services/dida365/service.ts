@@ -33,6 +33,9 @@ interface Dida365CheckResponse {
     name: string;
   }[];
 }
+interface Dida365CreateDocumentRequest extends CreateDocumentRequest {
+  tags: string[];
+}
 
 export default class Dida365DocumentService implements DocumentService {
   private request: RequestMethod;
@@ -73,6 +76,11 @@ export default class Dida365DocumentService implements DocumentService {
     };
   };
 
+  getTags = async (): Promise<string[]> => {
+    const dida365CheckResponse = await this.request.get<Dida365CheckResponse>(`batch/check/0`);
+    return dida365CheckResponse.tags.map(o => o.name);
+  };
+
   getRepositories = async (): Promise<Repository[]> => {
     const dida365CheckResponse = await this.request.get<Dida365CheckResponse>(`batch/check/0`);
     const groupMap = new Map<string, string>();
@@ -99,7 +107,7 @@ export default class Dida365DocumentService implements DocumentService {
       }));
   };
 
-  createDocument = async (request: CreateDocumentRequest): Promise<CompleteStatus> => {
+  createDocument = async (request: Dida365CreateDocumentRequest): Promise<CompleteStatus> => {
     const webRequestService = Container.get(IWebRequestService);
 
     const header = await webRequestService.startChangeHeader({
@@ -134,7 +142,7 @@ export default class Dida365DocumentService implements DocumentService {
           isFloating: false,
           status: 0,
           deleted: 0,
-          tags: [],
+          tags: request.tags,
           projectId: request.repositoryId,
           title: request.title,
           content: request.content,
