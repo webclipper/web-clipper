@@ -101,7 +101,7 @@ const ConfluenceForm: React.FC<ConfluenceFormProps> = ({ form, info }) => {
             }
             onSearch={handle}
             disabled={verified}
-          ></Input.Search>
+          />
         )}
       </Form.Item>
       {verified && (

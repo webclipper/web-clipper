@@ -9,4 +9,5 @@ class ChromeBackgroundWebRequestService extends BackgroundWebRequestService {
     super(['blocking', 'requestHeaders', 'extraHeaders']);
   }
 }
+
 Service(IWebRequestService)(ChromeBackgroundWebRequestService);
