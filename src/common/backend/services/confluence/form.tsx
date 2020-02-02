@@ -8,34 +8,26 @@ import {
   ConfluenceSpace,
   ConfluenceServiceConfig,
 } from '@/common/backend/services/confluence/interface';
-import useOriginPermission from '@/common/hooks/useOriginPermission';
 import { FormattedMessage } from 'react-intl';
+import useOriginForm from '@/hooks/useOriginForm';
 
 interface ConfluenceFormProps extends FormComponentProps {
   info?: ConfluenceServiceConfig;
 }
 
 const ConfluenceForm: React.FC<ConfluenceFormProps> = ({ form, info }) => {
-  const [verified, requestOriginPermission] = useOriginPermission(!!info);
-  const host = form.getFieldValue('origin');
-  const handle = () => {
-    form.validateFields(['origin'], async (err, value) => {
-      if (err) {
-        return;
-      }
-      requestOriginPermission(value.origin);
-    });
-  };
+  const { verified, handleAuthentication, formRules } = useOriginForm({ form, initStatus: !!info });
 
-  const request = extend({
-    prefix: host,
-  });
+  const host = form.getFieldValue('origin');
 
   const spaces = useFetch(
     async () => {
       if (!verified) {
         return [];
       }
+      const request = extend({
+        prefix: host,
+      });
       const spaceList = await request.get<ConfluenceListResult<ConfluenceSpace>>(`/rest/api/space`);
       return spaceList.results;
     },
@@ -56,41 +48,7 @@ const ConfluenceForm: React.FC<ConfluenceFormProps> = ({ form, info }) => {
       >
         {form.getFieldDecorator('origin', {
           initialValue: info?.origin,
-          rules: [
-            {
-              required: true,
-              message: (
-                <FormattedMessage
-                  id="backend.services.confluence.form.origin.message"
-                  defaultMessage={`Wrong format,Examples https://developer.mozilla.org`}
-                />
-              ),
-            },
-            {
-              validator(_r, value, callback) {
-                if (!value) {
-                  return callback();
-                }
-                try {
-                  const _url = new URL(value);
-                  if (_url.origin !== value) {
-                    form.setFieldsValue({
-                      origin: _url.origin,
-                    });
-                    callback();
-                  }
-                  callback();
-                } catch (_error) {
-                  return callback(
-                    <FormattedMessage
-                      id="backend.services.confluence.form.origin.message"
-                      defaultMessage={`Wrong format,Examples https://developer.mozilla.org`}
-                    />
-                  );
-                }
-              },
-            },
-          ],
+          rules: formRules,
         })(
           <Input.Search
             enterButton={
@@ -99,7 +57,7 @@ const ConfluenceForm: React.FC<ConfluenceFormProps> = ({ form, info }) => {
                 defaultMessage="Authentication"
               />
             }
-            onSearch={handle}
+            onSearch={handleAuthentication}
             disabled={verified}
           />
         )}
