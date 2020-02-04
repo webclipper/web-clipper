@@ -23,7 +23,7 @@ class TrackService implements ITrackService {
   }
 
   trackEvent = (category: TrackEventCategory, action: string, label?: string) => {
-    if (this.enable) {
+    if (!this.enable) {
       return;
     }
     window._gaq.push(['_trackEvent', category, action, label].filter((o): o is string => !!o));
