@@ -2,23 +2,16 @@ import React from 'react';
 import { GlobalStore, DvaRouterProps } from '@/common/types';
 import { connect } from 'dva';
 import { List, Select, Switch } from 'antd';
-import {
-  asyncSetLocaleToStorage,
-  asyncSetShowLineNumber,
-  asyncSetEditorLiveRendering,
-} from '@/actions/userPreference';
+import { asyncSetLocaleToStorage, asyncSetEditorLiveRendering } from '@/actions/userPreference';
 import { FormattedMessage } from 'react-intl';
 import { locales } from '@/common/locales';
 import { useObserver } from 'mobx-react';
 import Container from 'typedi';
 import { IConfigService } from '@/service/common/config';
 
-const mapStateToProps = ({
-  userPreference: { locale, showLineNumber, liveRendering },
-}: GlobalStore) => {
+const mapStateToProps = ({ userPreference: { locale, liveRendering } }: GlobalStore) => {
   return {
     locale,
-    showLineNumber,
     liveRendering,
   };
 };
@@ -60,34 +53,6 @@ const Base: React.FC<PageProps> = props => {
               </a>
             ),
           }}
-        />
-      ),
-    },
-    {
-      key: 'showLineNumber',
-      action: (
-        <Switch
-          checked={props.showLineNumber}
-          onChange={() => {
-            dispatch(
-              asyncSetShowLineNumber.started({
-                value: props.showLineNumber,
-              })
-            );
-          }}
-          key="showLineNumber"
-        />
-      ),
-      title: (
-        <FormattedMessage
-          id="preference.basic.showLineNumber.title"
-          defaultMessage="Show LineNumber"
-        />
-      ),
-      description: (
-        <FormattedMessage
-          id="preference.basic.showLineNumber.description"
-          defaultMessage="Enable Show LineNumber"
         />
       ),
     },

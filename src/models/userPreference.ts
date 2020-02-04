@@ -11,7 +11,6 @@ import { GlobalStore } from '@/common/types';
 import update from 'immutability-helper';
 import {
   asyncSetEditorLiveRendering,
-  asyncSetShowLineNumber,
   initUserPreference,
   asyncDeleteImageHosting,
   asyncAddImageHosting,
@@ -44,15 +43,10 @@ const defaultState: UserPreferenceStore = {
   imageHosting: [],
   servicesMeta: {},
   imageHostingServicesMeta: {},
-  showLineNumber: true,
   liveRendering: true,
 };
 
 const builder = new DvaModelBuilder(defaultState, 'userPreference')
-  .case(asyncSetShowLineNumber.done, (state, { result: { value: showLineNumber } }) => ({
-    ...state,
-    showLineNumber,
-  }))
   .case(asyncSetEditorLiveRendering.done, (state, { result: { value: liveRendering } }) => ({
     ...state,
     liveRendering,
@@ -84,20 +78,6 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
   );
 
 builder
-  .takeEvery(asyncSetShowLineNumber.started, function*(payload, { call, put }) {
-    const { value } = payload;
-    yield call(storage.setShowLineNumber, !value);
-    yield put(
-      asyncSetShowLineNumber.done({
-        params: {
-          value,
-        },
-        result: {
-          value: !value,
-        },
-      })
-    );
-  })
   .takeEvery(asyncSetEditorLiveRendering.started, function*({ value }, { call, put }) {
     yield call(storage.setLiveRendering, !value);
     yield put(

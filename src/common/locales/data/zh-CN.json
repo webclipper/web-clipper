@@ -88,8 +88,6 @@
   "preference.basic.configLanguage.title": "语言",
   "preference.basic.liveRendering.description": "开启后编辑器使用所见即所得模式",
   "preference.basic.liveRendering.title": "所见即所得",
-  "preference.basic.showLineNumber.description": "开启后编辑器显示行号",
-  "preference.basic.showLineNumber.title": "显示行号",
   "preference.basic.update.button": "安装更新",
   "preference.basic.update.description": "因为审核需要一周，所以 chrome 商店的版本会延迟几个版本。",
   "preference.basic.update.title": "有更新",

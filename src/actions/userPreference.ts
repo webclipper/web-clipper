@@ -24,16 +24,6 @@ export const asyncSetEditorLiveRendering = actionCreator.async<
   void
 >('ASYNC_SET_EDITOR_LIVE_RENDERING');
 
-export const asyncSetShowLineNumber = actionCreator.async<
-  {
-    value: boolean;
-  },
-  {
-    value: boolean;
-  },
-  void
->('ASYNC_SET_SHOW_LINE_NUMBER');
-
 export const asyncRunExtension = actionCreator.async<
   {
     pathname: string;

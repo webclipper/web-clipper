@@ -16,11 +16,10 @@ const useActions = {
 
 const mapStateToProps = ({
   clipper: { clipperData },
-  userPreference: { liveRendering, showLineNumber },
+  userPreference: { liveRendering },
 }: GlobalStore) => {
   return {
     liveRendering,
-    showLineNumber,
     clipperData,
   };
 };
@@ -63,7 +62,7 @@ class ClipperPluginPage extends React.Component<PageProps> {
     const data = this.checkExtension();
     let myTextarea = document.getElementById(editorId) as HTMLTextAreaElement;
     this.myCodeMirror = HyperMD.fromTextArea(myTextarea, {
-      lineNumbers: !!this.props.showLineNumber,
+      lineNumbers: false,
       hmdModeLoader: false,
     });
     if (this.myCodeMirror) {

@@ -3,7 +3,6 @@ import { ServiceMeta, ImageHostingServiceMeta } from '@/common/backend';
 export interface UserPreferenceStore {
   locale: string;
   imageHosting: ImageHosting[];
-  showLineNumber: boolean;
   liveRendering: boolean;
   servicesMeta: {
     [type: string]: ServiceMeta;
