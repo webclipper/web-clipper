@@ -110,20 +110,22 @@ class Page extends React.Component<PageProps, PageState> {
 
   renderImageHosting = () => {
     const { imageHosting, imageHostingServicesMeta } = this.props;
-    return imageHosting.map(o => {
-      const meta = imageHostingServicesMeta[o.type];
-      return (
-        <ImageHostingListItem
-          id={o.id}
-          key={o.id}
-          name={meta.name}
-          icon={meta.icon}
-          remark={o.remark}
-          onEditAccount={id => this.handleEditImageHosting(id)}
-          onDeleteAccount={id => this.handleDeleteImageHosting(id)}
-        />
-      );
-    });
+    return imageHosting
+      .filter(o => imageHostingServicesMeta[o.type])
+      .map(o => {
+        const meta = imageHostingServicesMeta[o.type];
+        return (
+          <ImageHostingListItem
+            id={o.id}
+            key={o.id}
+            name={meta.name}
+            icon={meta.icon}
+            remark={o.remark}
+            onEditAccount={id => this.handleEditImageHosting(id)}
+            onDeleteAccount={id => this.handleDeleteImageHosting(id)}
+          />
+        );
+      });
   };
 
   render() {
