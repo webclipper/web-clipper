@@ -8,7 +8,7 @@ import { Observer, useObserver } from 'mobx-react';
 const IconFont: React.FC<IconProps> = props => {
   const configService = Container.get(IConfigService);
   const IconFont = useObserver(() => {
-    return Icon.createFromIconfontCN({ scriptUrl: configService.config?.iconfont });
+    return Icon.createFromIconfontCN({ scriptUrl: 'icon.js' });
   });
   return (
     <Observer>

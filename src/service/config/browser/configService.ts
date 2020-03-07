@@ -30,7 +30,7 @@ class BrowserConfigService implements IConfigService {
       runInAction(() => {
         this.isLatestVersion = !hasUpdate(this.config.chromeWebStoreVersion, this.localVersion);
       });
-      const iconsFile = await request.get(this.config.iconfont);
+      const iconsFile = await request.get('/icon.js');
       const matchResult: string[] = iconsFile.match(/id="([A-Za-z]+)"/g) || [];
       const remoteIcons = matchResult.map(o => o.match(/id="([A-Za-z]+)"/)![1]);
       runInAction(() => {
