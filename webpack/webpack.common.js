@@ -6,6 +6,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackChromeReloaderPlugin = require('webpack-chrome-extension-reloader');
 const tsImportPluginFactory = require('ts-import-plugin');
 const WebpackCreateExtensionManifestPlugin = require('webpack-create-extension-manifest-plugin');
+const fs = require('fs');
+
+const distFiles = fs.readdirSync(resolve('dist'));
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
@@ -194,11 +197,19 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
     }),
-    new CleanWebpackPlugin(['dist'], {
-      root: path.resolve(__dirname, '../'),
-      verbose: true,
-    }),
+    new CleanWebpackPlugin(
+      distFiles.map(p => `dist/${p}`),
+      {
+        root: path.resolve(__dirname, '../'),
+        verbose: true,
+      }
+    ),
     new CopyWebpackPlugin([
+      {
+        from: resolve('chrome/js'),
+        to: resolve('dist'),
+        ignore: ['.*'],
+      },
       {
         from: resolve('chrome/icons'),
         to: resolve('dist'),
