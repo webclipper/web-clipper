@@ -2,7 +2,7 @@ import * as React from 'react';
 import { List, Avatar } from 'antd';
 import styles from './index.less';
 import { FormattedMessage } from 'react-intl';
-import IconFont from '../IconFont';
+import IconFont from '@/components/IconFont';
 
 interface PageProps {
   icon: string;

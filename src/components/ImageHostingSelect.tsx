@@ -1,12 +1,17 @@
-import { ImageHostingWithMeta } from './../common/hooks/useFilterImageHostingServices';
+import { ImageHostingWithMeta } from '@/common/hooks/useFilterImageHostingServices';
 import Select, { SelectProps } from 'antd/lib/select';
 import React, { forwardRef } from 'react';
+import ImageHostingSelectOption from '@/components/imageHostingSelectOption';
 import styles from './ImageHostingSelect.less';
-import ImageHostingSelectOption from 'components/imageHostingSelectOption';
 
-export const ImageHostingSelect: React.FC<{
+interface ImageHostingSelectProps extends SelectProps {
   supportedImageHostingServices: ImageHostingWithMeta[];
-} & SelectProps> = ({ supportedImageHostingServices, ...props }, ref) => (
+}
+
+export const ImageHostingSelect: React.FC<ImageHostingSelectProps> = (
+  { supportedImageHostingServices, ...props },
+  ref
+) => (
   <Select allowClear className={styles.imageHostingSelect} {...props} ref={ref}>
     {supportedImageHostingServices.map(({ imageHostingServices: { id, remark }, meta }) => {
       return (

@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { SerializedExtensionInfo } from '@web-clipper/extensions';
-import IconFont from '../IconFont';
+import IconFont from '@/components/IconFont';
 
 interface ExtensionCardProps {
   manifest: SerializedExtensionInfo['manifest'];
