@@ -29,7 +29,7 @@ export default (): ServiceMeta => {
     form: form,
     homePage: 'https://products.office.com/en-us/onenote/digital-note-taking-app',
     permission: {
-      origins: ['https://graph.microsoft.com/*'],
+      origins: ['https://graph.microsoft.com/*', 'https://login.microsoftonline.com/*'],
     },
   };
 };
