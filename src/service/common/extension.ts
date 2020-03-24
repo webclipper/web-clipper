@@ -1,11 +1,18 @@
+import { Token } from 'typedi';
 export interface Extension {}
 
 export interface IExtensionService {
-  getDefault(): Promise<string>;
+  DefaultExtensionId: string | null;
 
-  setDefault(id: string): Promise<void>;
+  DisabledExtensionIds: string[];
 
-  disableExtension(id: string): Promise<void>;
+  DisabledAutomaticExtensionIds: string[];
 
-  disabledAutomaticExtension(id: string): Promise<void>;
+  toggleDefault(id: string): Promise<void>;
+
+  toggleDisableExtension(id: string): Promise<void>;
+
+  toggleAutomaticExtension(id: string): Promise<void>;
 }
+
+export const IExtensionService = new Token<IExtensionService>();

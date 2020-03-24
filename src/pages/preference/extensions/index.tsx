@@ -1,66 +1,42 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'dva';
+import { useSelector } from 'dva';
 import { GlobalStore } from '@/common/types';
 import { Icon, Row, Col, Typography, Tooltip, Empty, Switch } from 'antd';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
-import {
-  setDefaultExtensionId,
-  toggleDisableExtension,
-  unInstallRemoteExtension,
-  toggleAutomaticExtension,
-} from '@/actions/extension';
 import { FormattedMessage } from 'react-intl';
 import ExtensionCard from '@/components/ExtensionCard';
 import styles from './index.less';
 import { SerializedExtensionWithId, ExtensionType } from '@web-clipper/extensions';
 import IconFont from '@/components/IconFont';
+import Container from 'typedi';
+import { IExtensionService } from '@/service/common/extension';
+import { useObserver } from 'mobx-react';
 
-const selector = ({
-  extension: { extensions, defaultExtensionId, disabledExtensions, disabledAutomaticExtensions },
-}: GlobalStore) => {
+const selector = ({ extension: { extensions } }: GlobalStore) => {
   return {
     extensions,
-    defaultExtensionId,
-    disabledExtensions,
-    disabledAutomaticExtensions,
   };
 };
 
 const Page: React.FC = () => {
-  const dispatch = useDispatch();
-  const {
-    extensions,
-    defaultExtensionId,
-    disabledExtensions,
-    disabledAutomaticExtensions,
-  } = useSelector(selector);
+  const extensionService = Container.get(IExtensionService);
+  const { disabledExtensions, disabledAutomaticExtensions, defaultExtensionId } = useObserver(
+    () => {
+      return {
+        defaultExtensionId: extensionService.DefaultExtensionId,
+        disabledAutomaticExtensions: extensionService.DisabledAutomaticExtensionIds,
+        disabledExtensions: extensionService.DisabledExtensionIds,
+      };
+    }
+  );
+  const { extensions } = useSelector(selector);
   const [toolExtensions, clipExtensions] = useFilterExtensions(extensions);
   const handleSetDefault = (extensionId: string) => {
-    dispatch(setDefaultExtensionId.started(extensionId));
-  };
-  const UninstallButton: React.FC<{ extension: SerializedExtensionWithId }> = ({
-    extension: { id, embedded },
-  }) => {
-    if (embedded) {
-      return null;
-    }
-    let handleClick = () => dispatch(unInstallRemoteExtension(id));
-    const title = (
-      <FormattedMessage id="preference.extensions.Uninstall" defaultMessage="Uninstall" />
-    );
-    return (
-      <Tooltip title={title}>
-        <Icon type="delete" onClick={handleClick} />{' '}
-      </Tooltip>
-    );
+    extensionService.toggleDefault(extensionId);
   };
 
   const cardActions = (e: SerializedExtensionWithId) => {
     const actions = [];
-    if (!e.embedded) {
-      actions.push(<UninstallButton extension={e} key="uninstall" />);
-    }
-
     if (e.type !== ExtensionType.Tool) {
       const isDefaultExtension = defaultExtensionId === e.id;
       const iconStyle = isDefaultExtension ? { color: 'red' } : {};
@@ -101,7 +77,7 @@ const Page: React.FC = () => {
         >
           <IconFont
             type="auto"
-            onClick={() => dispatch(toggleAutomaticExtension(e.id))}
+            onClick={() => extensionService.toggleAutomaticExtension(e.id)}
             style={automaticDisabled ? {} : { color: 'red' }}
           />
         </Tooltip>
@@ -111,8 +87,8 @@ const Page: React.FC = () => {
       <Switch
         size="small"
         checked={!disabledExtensions.some(o => o === e.id)}
-        onClick={() => dispatch(toggleDisableExtension(e.id))}
-      ></Switch>
+        onClick={() => extensionService.toggleDisableExtension(e.id)}
+      />
     );
   };
 

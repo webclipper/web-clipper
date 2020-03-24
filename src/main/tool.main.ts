@@ -12,6 +12,7 @@ import { PopupIpcClient, PopupContentScriptIPCClient } from '@/service/ipc/brows
 import '@/service/config/browser/configService';
 import '@/service/powerpackService';
 import '@/service/trackService';
+import '@/service/extension/browser/extensionService';
 import { TabChannelClient } from '@/service/tab/common/tabIpc';
 import app from '@/pages/app';
 

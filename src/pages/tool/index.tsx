@@ -19,33 +19,26 @@ import Header from './Header';
 import RepositorySelect from '@/components/RepositorySelect';
 import Container from 'typedi';
 import { IConfigService } from '@/service/common/config';
-import { Observer } from 'mobx-react';
+import { Observer, useObserver } from 'mobx-react';
 import IconAvatar from '@/components/avatar';
 import IconFont from '@/components/IconFont';
 import UserItem from '@/components/userItem';
 import { IContentScriptService } from '@/service/common/contentScript';
+import { IExtensionService } from '@/service/common/extension';
 
 const mapStateToProps = ({
   clipper: { currentAccountId, url, currentRepository, repositories, currentImageHostingService },
   loading,
   account: { accounts },
   userPreference: { locale, servicesMeta },
-  extension: { extensions, disabledExtensions },
+  extension: { extensions },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   const loadingAccount = loading.effects[asyncChangeAccount.started.type];
   return {
     loadingAccount,
     accounts,
-    extensions: extensions
-      .filter(o => !disabledExtensions.includes(o.id))
-      .filter(o => {
-        const matches = o.manifest.matches;
-        if (Array.isArray(matches)) {
-          return matches.some(o => matchUrl(o, url!));
-        }
-        return true;
-      }),
+    extensions,
     currentImageHostingService,
     url,
     currentAccountId,
@@ -61,12 +54,13 @@ type PageProps = PageStateProps & DvaRouterProps;
 
 const Page = React.memo<PageProps>(
   props => {
+    const extensionService = Container.get(IExtensionService);
     const {
       repositories,
       currentAccount,
       currentRepository,
       loadingAccount,
-      extensions,
+      extensions: AllExtensions,
       url,
       currentImageHostingService,
       history: {
@@ -76,6 +70,19 @@ const Page = React.memo<PageProps>(
       accounts,
       servicesMeta,
     } = props;
+
+    const extensions = useObserver(() => {
+      return AllExtensions.filter(
+        o => !extensionService.DisabledExtensionIds.includes(o.id)
+      ).filter(o => {
+        const matches = o.manifest.matches;
+        if (Array.isArray(matches)) {
+          // eslint-disable-next-line max-nested-callbacks
+          return matches.some(o => matchUrl(o, url!));
+        }
+        return true;
+      });
+    });
 
     const configService = Container.get(IConfigService);
 

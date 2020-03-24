@@ -7,19 +7,5 @@ export const loadExtensions = actionCreator.async<
   void,
   {
     extensions: SerializedExtensionWithId[];
-    disabledExtensions: string[];
-    disabledAutomaticExtensions: string[];
   }
 >('loadExtensions');
-
-export const installRemoteExtension = actionCreator.async<SerializedExtensionWithId, void>(
-  'installRemoteExtension'
-);
-
-export const unInstallRemoteExtension = actionCreator<string>('unInstallRemoteExtension');
-
-export const setDefaultExtensionId = actionCreator.async<string, void>('setDefaultExtensionId');
-
-export const toggleDisableExtension = actionCreator<string>('toggleDisableExtension');
-
-export const toggleAutomaticExtension = actionCreator<string>('toggleAutomaticExtension');
