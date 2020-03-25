@@ -193,28 +193,25 @@ builder
 
     if (afterRun) {
       try {
-        result = yield (async () => {
-          const context: ToolContext<any, any> = {
-            locale: state.userPreference.locale,
-            result,
-            data,
-            message,
-            imageService: backend.getImageHostingService(),
-            loadImage: loadImage,
-            captureVisibleTab: tabService.captureVisibleTab,
-            copyToClipboard,
-            createAndDownloadFile,
-            antd,
-            React,
-            pangu,
-            ocr: async r => {
-              const response = await ocr(r);
-              return response.result;
-            },
-          };
-
-          return afterRun(context);
-        })();
+        const context: ToolContext<any, any> = {
+          locale: state.userPreference.locale,
+          result,
+          data,
+          message,
+          imageService: backend.getImageHostingService(),
+          loadImage: loadImage,
+          captureVisibleTab: tabService.captureVisibleTab,
+          copyToClipboard,
+          createAndDownloadFile,
+          antd,
+          React,
+          pangu,
+          ocr: async r => {
+            const response = await ocr(r);
+            return response.result;
+          },
+        };
+        result = yield call(afterRun, context);
       } catch (error) {
         message.error(error.message);
       }
