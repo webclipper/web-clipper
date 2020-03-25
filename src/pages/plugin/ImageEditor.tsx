@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import { asyncRunExtension } from 'pageActions/userPreference';
-import { SerializedExtensionWithId } from '@web-clipper/extensions';
 import { EditorContainer } from 'components/container';
 import { isUndefined } from 'common/object';
 import { GlobalStore, ImageClipperData } from '@/common/types';
 import styles from './index.less';
+import { IExtensionWithId } from '@/extensions/common';
 
 const mapStateToProps = ({ clipper: { clipperData } }: GlobalStore) => {
   return {
@@ -14,7 +14,7 @@ const mapStateToProps = ({ clipper: { clipperData } }: GlobalStore) => {
 };
 type PageOwnProps = {
   pathname: string;
-  extension: SerializedExtensionWithId;
+  extension: IExtensionWithId;
 };
 type PageProps = ReturnType<typeof mapStateToProps> & PageOwnProps & { dispatch: any };
 

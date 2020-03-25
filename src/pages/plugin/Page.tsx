@@ -3,23 +3,20 @@ import { connect, router } from 'dva';
 import { ExtensionType } from '@web-clipper/extensions';
 import TextEditor from './TextEditor';
 import ImageEditor from './ImageEditor';
-import { GlobalStore, DvaRouterProps } from '@/common/types';
+import { DvaRouterProps } from '@/common/types';
+import { useObserver } from 'mobx-react';
+import Container from 'typedi';
+import { IExtensionContainer } from '@/service/common/extension';
 
 const { Redirect } = router;
 
-const mapStateToProps = ({ extension: { extensions } }: GlobalStore) => {
-  return { extensions };
-};
-
-type PageProps = ReturnType<typeof mapStateToProps>;
-
-const ClipperPluginPage: React.FC<PageProps & DvaRouterProps> = props => {
+const ClipperPluginPage: React.FC<DvaRouterProps> = props => {
   const {
     history: {
       location: { pathname },
     },
-    extensions,
   } = props;
+  const extensions = useObserver(() => Container.get(IExtensionContainer).extensions);
   const extension = extensions.find(o => o.router === pathname);
   if (!extension) {
     return <Redirect to="/"></Redirect>;
@@ -33,4 +30,4 @@ const ClipperPluginPage: React.FC<PageProps & DvaRouterProps> = props => {
   return <Redirect to="/"></Redirect>;
 };
 
-export default connect(mapStateToProps)(ClipperPluginPage);
+export default connect()(ClipperPluginPage);

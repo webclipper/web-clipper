@@ -1,15 +1,12 @@
-import { SerializedExtensionWithId } from '@web-clipper/extensions';
+import { IExtensionWithId } from './common';
 
 const context = require.context('./extensions', true, /\.[t|j]s$/);
 
-export const extensions: SerializedExtensionWithId[] = context.keys().map(key => {
+export const extensions: IExtensionWithId[] = context.keys().map(key => {
   const id = key.slice(2, key.length - 3);
   return {
-    ...context(key).default.serialize(),
+    ...context(key).default,
     id,
     router: `/plugins/${id}`,
-    embedded: true,
   };
 });
-
-export default context;

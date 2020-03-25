@@ -1,4 +1,4 @@
-import { TextExtension } from '@web-clipper/extensions';
+import { TextExtension } from '@/extensions/common';
 
 export default new TextExtension(
   {

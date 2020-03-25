@@ -9,7 +9,7 @@ import { isEqual } from 'lodash';
 import { ToolContainer } from 'components/container';
 import { selectRepository, asyncChangeAccount } from 'pageActions/clipper';
 import { asyncRunExtension } from 'pageActions/userPreference';
-import { SerializedExtensionWithId, InitContext } from '@web-clipper/extensions';
+import { InitContext } from '@web-clipper/extensions';
 import Section from 'components/section';
 import { DvaRouterProps } from 'common/types';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
@@ -24,21 +24,20 @@ import IconAvatar from '@/components/avatar';
 import IconFont from '@/components/IconFont';
 import UserItem from '@/components/userItem';
 import { IContentScriptService } from '@/service/common/contentScript';
-import { IExtensionService } from '@/service/common/extension';
+import { IExtensionService, IExtensionContainer } from '@/service/common/extension';
+import { IExtensionWithId } from '@/extensions/common';
 
 const mapStateToProps = ({
   clipper: { currentAccountId, url, currentRepository, repositories, currentImageHostingService },
   loading,
   account: { accounts },
   userPreference: { locale, servicesMeta },
-  extension: { extensions },
 }: GlobalStore) => {
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   const loadingAccount = loading.effects[asyncChangeAccount.started.type];
   return {
     loadingAccount,
     accounts,
-    extensions,
     currentImageHostingService,
     url,
     currentAccountId,
@@ -60,7 +59,6 @@ const Page = React.memo<PageProps>(
       currentAccount,
       currentRepository,
       loadingAccount,
-      extensions: AllExtensions,
       url,
       currentImageHostingService,
       history: {
@@ -72,16 +70,16 @@ const Page = React.memo<PageProps>(
     } = props;
 
     const extensions = useObserver(() => {
-      return AllExtensions.filter(
-        o => !extensionService.DisabledExtensionIds.includes(o.id)
-      ).filter(o => {
-        const matches = o.manifest.matches;
-        if (Array.isArray(matches)) {
-          // eslint-disable-next-line max-nested-callbacks
-          return matches.some(o => matchUrl(o, url!));
-        }
-        return true;
-      });
+      return Container.get(IExtensionContainer)
+        .extensions.filter(o => !extensionService.DisabledExtensionIds.includes(o.id))
+        .filter(o => {
+          const matches = o.manifest.matches;
+          if (Array.isArray(matches)) {
+            // eslint-disable-next-line max-nested-callbacks
+            return matches.some(o => matchUrl(o, url!));
+          }
+          return true;
+        });
     });
 
     const configService = Container.get(IConfigService);
@@ -117,10 +115,8 @@ const Page = React.memo<PageProps>(
       repositoryId = currentRepository.id;
     }
 
-    const enableExtensions: SerializedExtensionWithId[] = extensions.filter(o => {
-      if (o.init) {
-        // @ts-ignore
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const enableExtensions: IExtensionWithId[] = extensions.filter(o => {
+      if (o.extensionLifeCycle.init) {
         const context: InitContext = {
           locale: props.locale,
           accountInfo: {
@@ -130,8 +126,7 @@ const Page = React.memo<PageProps>(
           pathname,
           currentImageHostingService,
         };
-        // eslint-disable-next-line no-eval
-        return eval(o.init);
+        return o.extensionLifeCycle.init(context);
       }
       return true;
     });
@@ -247,7 +242,6 @@ const Page = React.memo<PageProps>(
       history,
       loadingAccount,
       locale,
-      extensions,
       servicesMeta,
       accounts,
     }: PageProps) => {
@@ -258,7 +252,6 @@ const Page = React.memo<PageProps>(
         currentAccount,
         pathname: history.location.pathname,
         locale,
-        extensions,
         servicesMeta,
         accounts,
       };
