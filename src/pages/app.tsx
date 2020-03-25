@@ -9,7 +9,6 @@ import Complete from '@/pages/complete/complete';
 import PluginPage from '@/pages/plugin/Page';
 import Tool from '@/pages/tool';
 import clipper from '@/models/clipper';
-import extension from '@/models/extension';
 import userPreference from '@/models/userPreference';
 import createLoading from 'dva-loading';
 import LocalWrapper from './locale';
@@ -95,6 +94,5 @@ export default async () => {
   app.model(account);
   app.model(clipper);
   app.model(userPreference);
-  app.model(extension);
   app.start('#app');
 };

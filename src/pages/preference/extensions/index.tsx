@@ -1,41 +1,37 @@
 import React from 'react';
-import { useSelector } from 'dva';
-import { GlobalStore } from '@/common/types';
 import { Icon, Row, Col, Typography, Tooltip, Empty, Switch } from 'antd';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import { FormattedMessage } from 'react-intl';
 import ExtensionCard from '@/components/ExtensionCard';
 import styles from './index.less';
-import { SerializedExtensionWithId, ExtensionType } from '@web-clipper/extensions';
+import { ExtensionType } from '@web-clipper/extensions';
 import IconFont from '@/components/IconFont';
 import Container from 'typedi';
-import { IExtensionService } from '@/service/common/extension';
+import { IExtensionService, IExtensionContainer } from '@/service/common/extension';
 import { useObserver } from 'mobx-react';
-
-const selector = ({ extension: { extensions } }: GlobalStore) => {
-  return {
-    extensions,
-  };
-};
+import { IExtensionWithId } from '@/extensions/common';
 
 const Page: React.FC = () => {
   const extensionService = Container.get(IExtensionService);
-  const { disabledExtensions, disabledAutomaticExtensions, defaultExtensionId } = useObserver(
-    () => {
-      return {
-        defaultExtensionId: extensionService.DefaultExtensionId,
-        disabledAutomaticExtensions: extensionService.DisabledAutomaticExtensionIds,
-        disabledExtensions: extensionService.DisabledExtensionIds,
-      };
-    }
-  );
-  const { extensions } = useSelector(selector);
+  const extensionContainer = Container.get(IExtensionContainer);
+  const {
+    disabledExtensions,
+    disabledAutomaticExtensions,
+    defaultExtensionId,
+    extensions,
+  } = useObserver(() => {
+    return {
+      defaultExtensionId: extensionService.DefaultExtensionId,
+      disabledAutomaticExtensions: extensionService.DisabledAutomaticExtensionIds,
+      disabledExtensions: extensionService.DisabledExtensionIds,
+      extensions: extensionContainer.extensions,
+    };
+  });
   const [toolExtensions, clipExtensions] = useFilterExtensions(extensions);
   const handleSetDefault = (extensionId: string) => {
     extensionService.toggleDefault(extensionId);
   };
-
-  const cardActions = (e: SerializedExtensionWithId) => {
+  const cardActions = (e: IExtensionWithId) => {
     const actions = [];
     if (e.type !== ExtensionType.Tool) {
       const isDefaultExtension = defaultExtensionId === e.id;

@@ -1,3 +1,4 @@
+import { IExtensionWithId } from '@/extensions/common';
 import { Token } from 'typedi';
 export interface Extension {}
 
@@ -15,4 +16,10 @@ export interface IExtensionService {
   toggleAutomaticExtension(id: string): Promise<void>;
 }
 
+export interface IExtensionContainer {
+  extensions: IExtensionWithId[];
+}
+
 export const IExtensionService = new Token<IExtensionService>();
+
+export const IExtensionContainer = new Token<IExtensionContainer>();

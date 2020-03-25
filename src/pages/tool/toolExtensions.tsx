@@ -2,13 +2,13 @@ import * as React from 'react';
 import styles from './index.less';
 import { Button } from 'antd';
 import Section from 'components/section';
-import { SerializedExtensionWithId } from '@web-clipper/extensions';
 import { FormattedMessage } from 'react-intl';
 import IconFont from '@/components/IconFont';
+import { IExtensionWithId } from '@/extensions/common';
 
 type ToolExtensionsProps = {
-  extensions: SerializedExtensionWithId[];
-  onClick(router: SerializedExtensionWithId): void;
+  extensions: IExtensionWithId[];
+  onClick(router: IExtensionWithId): void;
 };
 
 const ToolExtensions: React.FC<ToolExtensionsProps> = ({ extensions, onClick }) => {

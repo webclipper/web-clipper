@@ -19,8 +19,7 @@ export class ContentScriptChannel implements IServerChannel {
       case 'toggle':
         return this.service.toggle();
       case 'runScript': {
-        const we = this.service.runScript(arg);
-        return we;
+        return this.service.runScript(arg[0], arg[1]);
       }
       default: {
         throw new Error(`Call not found: ${command}`);
@@ -36,8 +35,8 @@ export class ContentScriptChannelClient implements IContentScriptService {
     return this.channel.call('remove');
   };
 
-  runScript = async (script: string): Promise<void> => {
-    return this.channel.call('runScript', script);
+  runScript = async (id: string, lifeCycle: 'run' | 'destroy'): Promise<void> => {
+    return this.channel.call('runScript', [id, lifeCycle]);
   };
 
   hide = async (): Promise<void> => {

@@ -1,4 +1,4 @@
-import { ImageExtension } from '@web-clipper/extensions';
+import { ImageExtension } from '@/extensions/common';
 import { SelectAreaPosition } from '@web-clipper/area-selector';
 
 export default new ImageExtension<SelectAreaPosition>(

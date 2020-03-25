@@ -1,6 +1,6 @@
+import { IExtensionWithId } from './../extensions/common';
 import { ImageHosting, GlobalStore } from '@/common/types';
 import { PreferenceStorage } from 'common/storage/interface';
-import { SerializedExtensionWithId } from '@web-clipper/extensions';
 import { actionCreatorFactory } from 'dva-model-creator';
 
 const actionCreator = actionCreatorFactory('userPreference');
@@ -27,7 +27,7 @@ export const asyncSetEditorLiveRendering = actionCreator.async<
 export const asyncRunExtension = actionCreator.async<
   {
     pathname: string;
-    extension: SerializedExtensionWithId;
+    extension: IExtensionWithId;
   },
   {
     result: unknown;

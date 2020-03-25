@@ -13,6 +13,7 @@ import '@/service/config/browser/configService';
 import '@/service/powerpackService';
 import '@/service/trackService';
 import '@/service/extension/browser/extensionService';
+import '@/service/extension/browser/extensionContainer';
 import { TabChannelClient } from '@/service/tab/common/tabIpc';
 import app from '@/pages/app';
 
