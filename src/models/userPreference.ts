@@ -30,7 +30,6 @@ import backend from 'common/backend/index';
 import { loadImage } from 'common/blob';
 import { routerRedux } from 'dva';
 import { localStorageService, syncStorageService } from '@/common/chrome/storage';
-import { loadExtensions } from '@/actions/extension';
 import { initAccounts } from '@/actions/account';
 import copyToClipboard from 'copy-to-clipboard';
 import { ocr } from '@/common/server';
@@ -262,7 +261,6 @@ builder
             setLocale(localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, navigator.language))
           )
         );
-        dispatch(loadExtensions.started());
       }
     });
   })
