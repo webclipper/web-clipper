@@ -182,14 +182,12 @@ builder
       aTag.click();
       URL.revokeObjectURL(aTag.href);
     }
-
     async function pangu(document: string): Promise<string> {
       const result = await remark()
         .use(remakPangu)
         .process(document);
       return result.contents as string;
     }
-
     if (afterRun) {
       try {
         const context: ToolContext<any, any> = {

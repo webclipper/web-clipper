@@ -26,6 +26,7 @@ import UserItem from '@/components/userItem';
 import { IContentScriptService } from '@/service/common/contentScript';
 import { IExtensionService, IExtensionContainer } from '@/service/common/extension';
 import { IExtensionWithId } from '@/extensions/common';
+import usePowerpack from '@/common/hooks/usePowerpack';
 
 const mapStateToProps = ({
   clipper: { currentAccountId, url, currentRepository, repositories, currentImageHostingService },
@@ -69,9 +70,17 @@ const Page = React.memo<PageProps>(
       servicesMeta,
     } = props;
 
+    const { valid } = usePowerpack();
+
     const extensions = useObserver(() => {
       return Container.get(IExtensionContainer)
         .extensions.filter(o => !extensionService.DisabledExtensionIds.includes(o.id))
+        .filter(o => {
+          if (!valid) {
+            return !o.manifest.powerpack;
+          }
+          return true;
+        })
         .filter(o => {
           const matches = o.manifest.matches;
           if (Array.isArray(matches)) {
