@@ -1,6 +1,6 @@
 {
   "name": "web-clipper",
-  "version": "1.20.0",
+  "version": "1.21.0",
   "description": "Clip anything to anywhere.",
   "scripts": {
     "dist": "tsc",
