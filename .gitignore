@@ -9,3 +9,5 @@ tmp/
 yarn-error.log
 dll/
 webclipper.zip
+
+.now
