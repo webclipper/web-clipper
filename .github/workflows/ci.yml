@@ -19,3 +19,4 @@ jobs:
       - run: npm run lint
       - run: npm run test
       - run: npm run build
+      - uses: codecov/codecov-action@v1
