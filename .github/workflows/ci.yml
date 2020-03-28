@@ -15,8 +15,7 @@ jobs:
         with:
           node-version: '10.x'
       - name: Install Dependencies
-      - run: npm install
-      - name: Continuous integration
+        run: npm install
       - run: npm run lint
       - run: npm run test
       - run: npm run build
