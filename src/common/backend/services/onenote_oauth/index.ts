@@ -7,7 +7,7 @@ import localeService from '@/common/locales';
 import { stringify } from 'qs';
 import form from './form';
 
-const oauthUrl = `https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize?${stringify({
+const oauthUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?${stringify({
   scope: 'Notes.Create User.Read offline_access',
   client_id: config.oneNoteClientId,
   state: Container.get(IConfigService).id,
