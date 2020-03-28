@@ -24,7 +24,7 @@ import { message, notification, Button } from 'antd';
 import { routerRedux } from 'dva';
 import { asyncUpdateAccount } from '@/actions/account';
 import { channel } from 'redux-saga';
-import { IExtensionService } from '@/service/common/extension';
+import { IExtensionService, IExtensionContainer } from '@/service/common/extension';
 
 const defaultState: ClipperStore = {
   clipperHeaderForm: {
@@ -173,7 +173,6 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     const selector = ({
       clipper: { currentRepository, clipperHeaderForm, repositories, currentAccountId },
       account: { accounts },
-      extension: { extensions },
     }: GlobalStore) => {
       const currentAccount = accounts.find(({ id }) => id === currentAccountId);
       let repositoryId;
@@ -186,6 +185,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
       if (currentRepository) {
         repositoryId = currentRepository.id;
       }
+      const extensions = Container.get(IExtensionContainer).extensions;
       const extension = extensions.find(o => o.router === pathname);
       const disabledAutomaticExtensions = Container.get(IExtensionService)
         .DisabledAutomaticExtensionIds;

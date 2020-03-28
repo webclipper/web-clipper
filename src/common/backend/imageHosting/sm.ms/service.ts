@@ -30,7 +30,7 @@ export default class YuqueImageHostingService implements ImageHostingService {
     let formData = new FormData();
     formData.append('smfile', blob);
     formData.append('ssl', 'true');
-    const result = await axios.post(`https://sm.ms/api/upload`, formData);
+    const result = await axios.post(`https://sm.ms/api/v2/upload`, formData);
     return result.data.data.url;
   };
 }
