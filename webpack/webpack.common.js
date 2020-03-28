@@ -8,7 +8,7 @@ const tsImportPluginFactory = require('ts-import-plugin');
 const WebpackCreateExtensionManifestPlugin = require('webpack-create-extension-manifest-plugin');
 const fs = require('fs');
 
-const distFiles = fs.readdirSync(resolve('dist'));
+const distFiles = fs.readdirSync(resolve('dist')).filter(o => o !== '.gitkeep');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
