@@ -52,7 +52,10 @@ class ClipperPluginPage extends React.Component<PageProps> {
       const value = this.myCodeMirror.getValue();
       if (data !== value) {
         try {
-          this.myCodeMirror.setValue(data);
+          const that = this;
+          setTimeout(() => {
+            that.myCodeMirror.setValue(data);
+          }, 10);
         } catch (_error) {}
       }
     }
