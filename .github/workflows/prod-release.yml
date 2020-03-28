@@ -19,6 +19,6 @@ jobs:
           npm install now
       - name: Continuous integration
         run: |
-          yarn now --token $ZEIT_TOKEN -A now.json --force --prod
+          yarn now --token $ZEIT_TOKEN -A now.json --force --prod --confirm --scope=diamondyuan
         env:
           ZEIT_TOKEN: ${{ secrets.Now }}
