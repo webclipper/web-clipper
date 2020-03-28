@@ -1,3 +1,11 @@
+## 1.20.0
+
+`2020-02-25`
+
+- ✨ Support dida365
+- ✨ Support TickTick
+- ✨ Support Webdev (Dropbox)
+
 ## 1.19.0
 
 `2020-01-29`
