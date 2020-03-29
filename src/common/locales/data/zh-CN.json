@@ -41,7 +41,7 @@
   "backend.services.mail.form.send.to": "发送给",
   "backend.services.mail.name": "邮件",
   "backend.services.notion.unauthorizedErrorMessage": "授权失败，请登录网页版 Notion。",
-  "backend.services.onenote_oauth.name": "One Note",
+  "backend.services.onenote_oauth.name": "OneNote",
   "backend.services.server_chan.accessToken.message": "请输入 AccessToken",
   "backend.services.server_chan.name": "Server酱",
   "backend.services.ticktick.headerForm.applyTags": "选择标签",
