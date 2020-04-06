@@ -124,7 +124,7 @@ const Page: React.FC = () => {
           <Icon type="question-circle" style={{ fontSize: 14, marginLeft: 5 }} />
         </Tooltip>
       </Typography.Title>
-      <Row gutter={10}>
+      <Row gutter={8} type="flex">
         {clipExtensions.map(e => (
           <Col key={e.id} span={12}>
             <ExtensionCard
