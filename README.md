@@ -42,7 +42,7 @@ ps: Because the review takes a week, the version will fall behind.
 1. Download the webclipper.zip from [release page](https://github.com/webclipper/web-clipper/releases)
 2. Go to **chrome://extensions/** and check the box for **Developer mode** in the top right.
 3. Locate the ZIP file on your computer and unzip it.
-4. Go back to the chrome://extensions/ page and click the **Load unpacked extension **button and select the unzipped folder for your extension to install it.
+4. Go back to the chrome://extensions/ page and click the **Load unpacked extension** button and select the unzipped folder for your extension to install it.
 
 ### Develop
 
