@@ -1,3 +1,18 @@
+## 1.22.0
+
+`2020-03-28`
+
+- 🐛 Fix OneNote oauth,support business account
+
+## 1.21.0
+
+`2020-03-28`
+
+- ✨ Support zhihu gif
+- ♻️ Move icon to local
+- ♻️ Remove extensions store
+- 🐛 Fix sm.ms
+
 ## 1.20.0
 
 `2020-02-25`
