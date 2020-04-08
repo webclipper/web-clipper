@@ -188,15 +188,3 @@ export class ToolExtension<T = string> extends AbstractExtension<T, string> {
     super(ExtensionType.Tool, manifest, methods);
   }
 }
-
-export interface ImageExtensionData {
-  dataUrl: string;
-  width: number;
-  height: number;
-}
-
-export class ImageExtension<T = string> extends AbstractExtension<T, ImageExtensionData> {
-  constructor(manifest: IExtensionManifest, methods: IExtensionLifeCycle<T, ImageExtensionData>) {
-    super(ExtensionType.Image, manifest, methods);
-  }
-}

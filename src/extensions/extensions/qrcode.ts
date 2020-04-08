@@ -1,6 +1,6 @@
-import { ImageExtension } from '@/extensions/common';
+import { TextExtension } from '@/extensions/common';
 
-export default new ImageExtension<string>(
+export default new TextExtension<string>(
   {
     name: 'QR code',
     icon: 'qrcode',
@@ -19,7 +19,7 @@ export default new ImageExtension<string>(
     },
     afterRun: async context => {
       const { result: dataUrl } = context;
-      return { dataUrl, width: 200, height: 200 };
+      return `![](${dataUrl})\n`;
     },
   }
 );

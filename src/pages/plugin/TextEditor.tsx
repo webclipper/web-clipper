@@ -55,6 +55,8 @@ class ClipperPluginPage extends React.Component<PageProps> {
           const that = this;
           setTimeout(() => {
             that.myCodeMirror.setValue(data);
+            that.myCodeMirror.focus();
+            that.myCodeMirror.setCursor(that.myCodeMirror.lineCount(), 0);
           }, 10);
         } catch (_error) {}
       }

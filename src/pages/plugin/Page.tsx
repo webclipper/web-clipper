@@ -2,7 +2,6 @@ import React from 'react';
 import { connect, router } from 'dva';
 import { ExtensionType } from '@web-clipper/extensions';
 import TextEditor from './TextEditor';
-import ImageEditor from './ImageEditor';
 import { DvaRouterProps } from '@/common/types';
 import { useObserver } from 'mobx-react';
 import Container from 'typedi';
@@ -23,9 +22,6 @@ const ClipperPluginPage: React.FC<DvaRouterProps> = props => {
   }
   if (extension.type === ExtensionType.Text) {
     return <TextEditor extension={extension} pathname={pathname} />;
-  }
-  if (extension.type === ExtensionType.Image) {
-    return <ImageEditor extension={extension} pathname={pathname} />;
   }
   return <Redirect to="/"></Redirect>;
 };
