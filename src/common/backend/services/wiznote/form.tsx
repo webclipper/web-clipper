@@ -19,7 +19,7 @@ const WizNoteForm: React.FC<WizNoteFormProps> = ({ form, info }) => {
         }
       >
         {form.getFieldDecorator('origin', {
-          initialValue: info?.origin,
+          initialValue: info?.origin ?? 'https://note.wiz.cn',
           rules: formRules,
         })(
           <Input.Search
