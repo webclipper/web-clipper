@@ -3,7 +3,9 @@ import {
   IWebRequestService,
   WebRequestBlockOption,
   WebBlockHeader,
+  RequestInBackgroundOptions,
 } from '@/service/common/webRequest';
+import request from 'umi-request';
 
 export const WEB_REQUEST_BLOCK_HEADER = 'web_clipper_web_request';
 
@@ -47,6 +49,10 @@ export class BackgroundWebRequestService implements IWebRequestService {
       name: WEB_REQUEST_BLOCK_HEADER,
       value: uuid,
     };
+  }
+
+  requestInBackground<T>(url: string, options: RequestInBackgroundOptions) {
+    return request<T>(url, options);
   }
 
   async end(webBlockHeader: WebBlockHeader): Promise<void> {

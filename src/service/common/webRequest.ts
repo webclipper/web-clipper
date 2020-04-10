@@ -10,10 +10,19 @@ export interface WebRequestBlockOption {
   urls: string[];
 }
 
+export interface RequestInBackgroundOptions {
+  method?: string;
+  data?: any;
+  prefix?: string;
+  headers?: HeadersInit;
+}
+
 export interface IWebRequestService {
   startChangeHeader(option: WebRequestBlockOption): Promise<WebBlockHeader>;
 
   end(webBlockHeader: WebBlockHeader): Promise<void>;
+
+  requestInBackground<T>(url: string, options?: RequestInBackgroundOptions): Promise<T>;
 }
 
 export const IWebRequestService = new Token<IWebRequestService>();
