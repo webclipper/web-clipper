@@ -8,6 +8,18 @@ import showdown from 'showdown';
 
 const converter = new showdown.Converter();
 
+converter.addExtension({
+  type: 'output',
+  regex: new RegExp(`<pre>`, 'g'),
+  replace: `\`\`\`<pre>`,
+});
+
+converter.addExtension({
+  type: 'output',
+  regex: new RegExp(`</pre>`, 'g'),
+  replace: `</pre>\`\`\``,
+});
+
 export default class WizNoteDocumentService implements DocumentService {
   private config: WizNoteConfig;
   private webRequestService: IWebRequestService;
@@ -66,6 +78,8 @@ export default class WizNoteDocumentService implements DocumentService {
   };
 
   createDocument = async (req: CreateDocumentRequest): Promise<CompleteStatus> => {
+    const html = converter.makeHtml(req.content);
+
     const response = await this.webRequestService.requestInBackground<{
       result: {
         docGuid: string;
@@ -79,9 +93,7 @@ export default class WizNoteDocumentService implements DocumentService {
       method: 'post',
       data: {
         kbGuid: this.userInfo?.kbGuid,
-        html: `<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><style id="wiz_custom_css">html, body {font-size: 12pt;}body {font-family: Helvetica, "Hiragino Sans GB", "微软雅黑", "Microsoft YaHei UI", SimSun, SimHei, arial, sans-serif;line-height: 1.6;margin: 0 auto;padding: 20px 16px;padding: 1.25rem 1rem;}h1, h2, h3, h4, h5, h6 {margin:20px 0 10px;margin:1.25rem 0 0.625rem;padding: 0;font-weight: bold;}h1 {font-size:20pt;font-size:1.67rem;}h2 {font-size:18pt;font-size:1.5rem;}h3 {font-size:15pt;font-size:1.25rem;}h4 {font-size:14pt;font-size:1.17rem;}h5 {font-size:12pt;font-size:1rem;}h6 {font-size:12pt;font-size:1rem;color: #777777;margin: 1rem 0;}div, p, ul, ol, dl, li {margin:0;}blockquote, table, pre, code {margin:8px 0;}ul, ol {padding-left:32px;padding-left:2rem;}ol.wiz-list-level1 > li {list-style-type:decimal;}ol.wiz-list-level2 > li {list-style-type:lower-latin;}ol.wiz-list-level3 > li {list-style-type:lower-roman;}blockquote {padding:0 12px;padding:0 0.75rem;}blockquote > :first-child {margin-top:0;}blockquote > :last-child {margin-bottom:0;}img {border:0;max-width:100%;height:auto !important;margin:2px 0;}table {border-collapse:collapse;border:1px solid #bbbbbb;}td, th {padding:4px 8px;border-collapse:collapse;border:1px solid #bbbbbb;height:28px;word-break:break-all;box-sizing: border-box;}.wiz-hide {display:none !important;}</style></head><body>${converter.makeHtml(
-          req.content
-        )}</body></html>`,
+        html: `<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><style id="wiz_custom_css">html, body {font-size: 12pt;}body {font-family: Helvetica, "Hiragino Sans GB", "微软雅黑", "Microsoft YaHei UI", SimSun, SimHei, arial, sans-serif;line-height: 1.6;margin: 0 auto;padding: 20px 16px;padding: 1.25rem 1rem;}h1, h2, h3, h4, h5, h6 {margin:20px 0 10px;margin:1.25rem 0 0.625rem;padding: 0;font-weight: bold;}h1 {font-size:20pt;font-size:1.67rem;}h2 {font-size:18pt;font-size:1.5rem;}h3 {font-size:15pt;font-size:1.25rem;}h4 {font-size:14pt;font-size:1.17rem;}h5 {font-size:12pt;font-size:1rem;}h6 {font-size:12pt;font-size:1rem;color: #777777;margin: 1rem 0;}div, p, ul, ol, dl, li {margin:0;}blockquote, table, pre, code {margin:8px 0;}ul, ol {padding-left:32px;padding-left:2rem;}ol.wiz-list-level1 > li {list-style-type:decimal;}ol.wiz-list-level2 > li {list-style-type:lower-latin;}ol.wiz-list-level3 > li {list-style-type:lower-roman;}blockquote {padding:0 12px;padding:0 0.75rem;}blockquote > :first-child {margin-top:0;}blockquote > :last-child {margin-bottom:0;}img {border:0;max-width:100%;height:auto !important;margin:2px 0;}table {border-collapse:collapse;border:1px solid #bbbbbb;}td, th {padding:4px 8px;border-collapse:collapse;border:1px solid #bbbbbb;height:28px;word-break:break-all;box-sizing: border-box;}.wiz-hide {display:none !important;}</style></head><body>${html}</body></html>`,
         category: req.repositoryId,
         owner: this.userInfo?.email,
         tags: '',
