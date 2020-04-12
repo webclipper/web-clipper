@@ -9831,7 +9831,7 @@ remark-html@^8.0.0:
 
 remark-pangu@^1.0.1:
   version "1.0.1"
-  resolved "https://registry.yarnpkg.com/remark-pangu/-/remark-pangu-1.0.1.tgz#b78424b083f70254762acea533220a62664d01c3"
+  resolved "https://registry.npm.taobao.org/remark-pangu/download/remark-pangu-1.0.1.tgz#b78424b083f70254762acea533220a62664d01c3"
   integrity sha1-t4QksIP3AlR2Ks6lMyIKYmZNAcM=
   dependencies:
     pangu "^3.3.0"
