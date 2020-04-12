@@ -2,6 +2,7 @@ export interface CreateDocumentRequest {
   title: string;
   content: string;
   repositoryId: string;
+  tags: string[];
 }
 
 export interface CompleteStatus {

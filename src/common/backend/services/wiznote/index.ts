@@ -1,6 +1,7 @@
 import localeService from '@/common/locales';
 import Service from './service';
 import Form from './form';
+import headerForm from './headerForm';
 
 export default () => {
   return {
@@ -10,6 +11,7 @@ export default () => {
     }),
     icon: 'wiznote',
     type: 'WizNote',
+    headerForm,
     service: Service,
     form: Form,
   };

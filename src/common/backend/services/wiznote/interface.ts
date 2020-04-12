@@ -12,3 +12,21 @@ export interface WizNoteUserInfo {
     kbGuid: string;
   };
 }
+
+export interface WizNoteCreateTagResponse {
+  result: {
+    tagGuid: string;
+  };
+}
+
+export interface WizNoteGetTagsResponse {
+  result: {
+    id: string;
+    name: string;
+    tagGuid: string;
+  }[];
+}
+
+export interface WizNoteGetRepositoriesResponse {
+  result: string[];
+}
