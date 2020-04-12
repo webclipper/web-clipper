@@ -4,21 +4,6 @@ import { WizNoteUserInfo, WizNoteConfig } from '@/common/backend/services/wiznot
 import md5 from '@web-clipper/shared/lib/md5';
 import { DocumentService } from '@/common/backend/index';
 import { Repository, CreateDocumentRequest, CompleteStatus } from '../interface';
-import showdown from 'showdown';
-
-const converter = new showdown.Converter();
-
-converter.addExtension({
-  type: 'output',
-  regex: new RegExp(`<pre>`, 'g'),
-  replace: `\`\`\`<pre>`,
-});
-
-converter.addExtension({
-  type: 'output',
-  regex: new RegExp(`</pre>`, 'g'),
-  replace: `</pre>\`\`\``,
-});
 
 export default class WizNoteDocumentService implements DocumentService {
   private config: WizNoteConfig;
@@ -78,7 +63,7 @@ export default class WizNoteDocumentService implements DocumentService {
   };
 
   createDocument = async (req: CreateDocumentRequest): Promise<CompleteStatus> => {
-    const html = converter.makeHtml(req.content);
+    const html = `<pre>${req.content}</pre>`;
 
     const response = await this.webRequestService.requestInBackground<{
       result: {
