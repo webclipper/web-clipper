@@ -7,7 +7,7 @@ import { asyncRunExtension } from './../actions/userPreference';
 import { CompleteStatus } from 'common/backend/interface';
 import { ExtensionType } from '@web-clipper/extensions';
 import { CreateDocumentRequest, UnauthorizedError } from '@/common/backend/services/interface';
-import { GlobalStore, ImageClipperData, ClipperStore } from '@/common/types';
+import { GlobalStore, ClipperStore } from '@/common/types';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
 import update from 'immutability-helper';
 import {
@@ -20,7 +20,7 @@ import {
 } from 'pageActions/clipper';
 import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
 import { unpackAccountPreference } from '@/common/account';
-import { message, notification, Button } from 'antd';
+import { notification, Button } from 'antd';
 import { routerRedux } from 'dva';
 import { asyncUpdateAccount } from '@/actions/account';
 import { channel } from 'redux-saga';
