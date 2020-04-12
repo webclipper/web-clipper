@@ -163,7 +163,6 @@ builder
     } = extension;
     const tabService = Container.get(ITabService);
     if (run) {
-      console.log(extension, extension.id);
       result = yield call(contentScriptService.runScript, id, 'run');
     }
     const state: GlobalStore = yield select(state => state);

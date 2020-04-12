@@ -236,27 +236,6 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
         ...clipperHeaderForm,
       };
     }
-    if (extension.type === ExtensionType.Image) {
-      const imageHostingService = backend.getImageHostingService();
-      if (!imageHostingService) {
-        message.error('No image Hosting');
-        return;
-      }
-      try {
-        const responseUrl: string = yield call(imageHostingService.uploadImage, {
-          data: (data as ImageClipperData).dataUrl,
-        });
-        createDocumentRequest = {
-          repositoryId,
-          content: `![](${responseUrl})`,
-          ...clipperHeaderForm,
-        };
-      } catch (_error) {
-        message.error(_error.message);
-        yield put(asyncCreateDocument.failed({ params: { pathname }, error: null }));
-        return;
-      }
-    }
     if (!createDocumentRequest) {
       return;
     }
@@ -325,14 +304,14 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     ...state,
     clipperHeaderForm,
   }))
-  .case(changeData, (state, { data, pathName }) =>
-    update(state, {
+  .case(changeData, (state, { data, pathName }) => {
+    return update(state, {
       clipperData: {
         [pathName]: {
           $set: data,
         },
       },
-    })
-  );
+    });
+  });
 
 export default model.build();

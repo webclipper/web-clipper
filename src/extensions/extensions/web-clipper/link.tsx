@@ -16,7 +16,7 @@ export default new ToolExtension(
   },
   {
     run: async context => {
-      return context.document.URL;
+      return `[${context.document.URL}](${context.document.URL})`;
     },
     afterRun: async context => {
       return `${context.data} \n ${context.result}`;

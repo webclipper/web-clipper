@@ -40,11 +40,6 @@ class ContentScriptService implements IContentScriptService {
   async runScript(id: string, lifeCycle: 'run' | 'destroy') {
     const extensions = this.extensionContainer.extensions;
     const extension = extensions.find(o => o.id === id);
-    console.log(
-      'extension',
-      extensions.map(o => o.id),
-      id
-    );
     const lifeCycleFunc = extension?.extensionLifeCycle[lifeCycle];
     if (!lifeCycleFunc) {
       return;

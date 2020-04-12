@@ -15,10 +15,10 @@ export default new TextExtension(
       const { document, locale } = context;
       switch (locale) {
         case 'zh-CN': {
-          return `## 链接 \n ${document.URL} \n ## 备注:`;
+          return `## 链接 \n [${document.URL}](${document.URL}) \n ## 备注:`;
         }
         default:
-          return `## Link \n ${document.URL} \n ## Comment:`;
+          return `## Link \n [${document.URL}](${document.URL}) \n ## Comment:`;
       }
     },
   }
