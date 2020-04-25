@@ -33,7 +33,7 @@ You can use Web Clipper to save anything on the web to anywhere.
 
 - [Chrome](https://chrome.google.com/webstore/detail/web-clipper/mhfbofiokmppgdliakminbgdgcmbhbac) 1.18.0
 
-- [Edge](https://microsoftedge.microsoft.com/addons/detail/opejamnnohhbjflpbhnmdlknhjkfhfdp) 1.22.0
+- [Edge](https://microsoftedge.microsoft.com/addons/detail/opejamnnohhbjflpbhnmdlknhjkfhfdp) 1.23.0
 
 ps: Because the review takes a week, the version will fall behind.
 
