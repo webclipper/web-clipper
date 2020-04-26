@@ -16,15 +16,8 @@ function resolve(dir) {
 
 let manifestExtra = {
   name: 'Web Clipper',
-  permissions: [
-    'notifications',
-    'activeTab',
-    'storage',
-    'https://*.clipper.website/*',
-    'webRequest',
-    'webRequestBlocking',
-  ],
-  optional_permissions: ['cookies', '<all_urls>'],
+  permissions: ['notifications', 'activeTab', 'storage', 'https://*.clipper.website/*'],
+  optional_permissions: ['cookies', '<all_urls>', 'webRequest', 'webRequestBlocking'],
 };
 
 let background = resolve('src/main/background.main.chrome.ts');
