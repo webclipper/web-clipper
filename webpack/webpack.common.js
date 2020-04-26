@@ -16,7 +16,7 @@ function resolve(dir) {
 
 let manifestExtra = {
   name: 'Web Clipper',
-  permissions: ['notifications', 'activeTab', 'storage', 'https://*.clipper.website/*'],
+  permissions: ['activeTab', 'storage', 'https://*.clipper.website/*'],
   optional_permissions: ['cookies', '<all_urls>', 'webRequest', 'webRequestBlocking'],
 };
 
@@ -26,7 +26,6 @@ if (process.env.TARGET_BROWSER === 'Firefox') {
   manifestExtra = {
     name: 'Web Clipper',
     permissions: [
-      'notifications',
       'activeTab',
       'webRequest',
       'webRequestBlocking',
