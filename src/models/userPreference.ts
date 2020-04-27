@@ -34,7 +34,7 @@ import { initAccounts } from '@/actions/account';
 import copyToClipboard from 'copy-to-clipboard';
 import { ocr } from '@/common/server';
 import remark from 'remark';
-import remakPangu from 'remark-pangu';
+import remakPangu from '@web-clipper/remark-pangu';
 
 const { message } = antd;
 

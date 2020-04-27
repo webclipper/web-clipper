@@ -3,7 +3,7 @@ declare module '*.png';
 declare module '@web-clipper/readability';
 declare module 'turndown-plugin-gfm';
 declare module 'dva-logger';
-declare module 'remark-pangu';
+declare module '@web-clipper/remark-pangu';
 declare module 'dva-loading';
 
 type PromiseType<T extends Promise<any>> = T extends Promise<infer U> ? U : never;

@@ -75,7 +75,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     if (selectState.servicesMeta[type]?.permission) {
       const hasPermissions = yield call(
         permissionsService.contains,
-        selectState.servicesMeta[type]?.permission
+        selectState.servicesMeta[type]?.permission!
       );
       if (!hasPermissions) {
         const key = `open${Date.now()}`;

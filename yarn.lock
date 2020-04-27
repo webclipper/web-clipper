@@ -1667,6 +1667,15 @@
   resolved "https://registry.yarnpkg.com/@web-clipper/readability/-/readability-0.2.1.tgz#1aef4b09d805c377ebf2aa61a20085876faa8221"
   integrity sha512-NZNhYzCfaM2AYki336uxPdShJvP7mlyt0uzaWti4qFIfbRCVOstxwtc5eO+kbuSnVvPAmJ9arpwjRl5GI0xe+w==
 
+"@web-clipper/remark-pangu@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@web-clipper/remark-pangu/-/remark-pangu-1.0.2.tgz#e530486df39ebdcebf4210fdb728fd4d85dede92"
+  integrity sha512-S3nwrPwoADBbPC9jG4f9RnKVACbXXMYuqkNQTWNhkRyblcQGRB790zlafrwckzb4Xx10FjwdoDKpOYE6JafxGw==
+  dependencies:
+    pangu "^3.3.0"
+    unist-util-is "^2.1.1"
+    unist-util-visit "^1.1.3"
+
 "@web-clipper/shared@^0.0.20":
   version "0.0.20"
   resolved "https://registry.npm.taobao.org/@web-clipper/shared/download/@web-clipper/shared-0.0.20.tgz#b7f93b8623ad786c2db0fc67e9a8882c9586a97e"
@@ -9828,15 +9837,6 @@ remark-html@^8.0.0:
     hast-util-to-html "^4.0.0"
     mdast-util-to-hast "^3.0.0"
     xtend "^4.0.1"
-
-remark-pangu@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npm.taobao.org/remark-pangu/download/remark-pangu-1.0.1.tgz#b78424b083f70254762acea533220a62664d01c3"
-  integrity sha1-t4QksIP3AlR2Ks6lMyIKYmZNAcM=
-  dependencies:
-    pangu "^3.3.0"
-    unist-util-is "^2.1.1"
-    unist-util-visit "^1.1.3"
 
 remark-parse@^5.0.0:
   version "5.0.0"
