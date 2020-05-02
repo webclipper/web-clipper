@@ -1,3 +1,16 @@
+## 1.24.0
+
+`2020-04-28`
+
+- ✨ Support wiznote
+
+## 1.23.0
+
+`2020-04-07`
+
+- 🐛 Fixed an issue where some plugins disappeared
+- 💬 Add notice for notion.
+
 ## 1.22.0
 
 `2020-03-28`
