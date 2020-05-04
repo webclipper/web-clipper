@@ -1,3 +1,10 @@
+---
+name: Tracking bug
+labels: bug
+title: ':bug: Bug'
+assignees: DiamondYuan
+---
+
 ## Version \*
 
 > Version of web clipper
