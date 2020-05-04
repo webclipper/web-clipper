@@ -1,8 +1,10 @@
 ---
 name: Tracking bug
+about: submit bug
+title: ":bug: Bug"
 labels: bug
-title: ':bug: Bug'
 assignees: DiamondYuan
+
 ---
 
 ## Version \*
