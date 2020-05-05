@@ -14,6 +14,8 @@ import { ITabService } from '@/service/common/tab';
 import { IChannelServer } from '@/service/common/ipc';
 import { BackgroundIPCServer } from '@/service/ipc/browser/background-main/ipcService';
 import { TabChannel } from '@/service/tab/common/tabIpc';
+import { ICookieService } from '@/service/common/cookie';
+import { CookieChannel } from '@/service/cookie/common/cookieIpc';
 
 const backgroundIPCServer: IChannelServer = new BackgroundIPCServer();
 
@@ -28,6 +30,8 @@ backgroundIPCServer.registerChannel(
   'webRequest',
   new WebRequestChannel(Container.get(IWebRequestService))
 );
+
+backgroundIPCServer.registerChannel('cookies', new CookieChannel(Container.get(ICookieService)));
 
 const contentScriptIPCClient = new PopupContentScriptIPCClient(Container.get(ITabService));
 const contentScriptChannel = contentScriptIPCClient.getChannel('contentScript');

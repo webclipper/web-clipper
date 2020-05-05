@@ -1,10 +1,11 @@
-import * as browser from '@web-clipper/chrome-promise';
 import { CompleteStatus, UnauthorizedError } from './../interface';
 import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
 import axios, { AxiosInstance } from 'axios';
 import { stringify } from 'qs';
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
 import localeService from '@/common/locales';
+import Container from 'typedi';
+import { ICookieService } from '@/service/common/cookie';
 
 interface YouDaoRepository {
   fileEntry: {
@@ -152,7 +153,7 @@ export default class YoudaoDocumentService implements DocumentService {
   };
 
   private getCSTK = async () => {
-    const cookie = await browser.cookies.get({
+    const cookie = await Container.get(ICookieService).get({
       url: 'https://note.youdao.com',
       name: 'YNOTE_CSTK',
     });

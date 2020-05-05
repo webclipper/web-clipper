@@ -16,6 +16,8 @@ import '@/service/extension/browser/extensionService';
 import '@/service/extension/browser/extensionContainer';
 import { TabChannelClient } from '@/service/tab/common/tabIpc';
 import app from '@/pages/app';
+import { CookieChannelClient } from '@/service/cookie/common/cookieIpc';
+import { ICookieService } from '@/service/common/cookie';
 
 const ipcClient = new PopupIpcClient();
 
@@ -31,5 +33,8 @@ Container.set(IContentScriptService, new ContentScriptChannelClient(contentScrip
 
 const webRequestChannel = ipcClient.getChannel('webRequest');
 Container.set(IWebRequestService, new WebRequestChannelClient(webRequestChannel));
+
+const cookieChannel = ipcClient.getChannel('cookies');
+Container.set(ICookieService, new CookieChannelClient(cookieChannel));
 
 app();
