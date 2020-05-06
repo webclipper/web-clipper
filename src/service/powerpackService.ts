@@ -65,10 +65,6 @@ class PowerpackService implements IPowerpackService {
     });
   };
 
-  logout = async () => {
-    this.localStorageService.delete(PowerpackService.LOCAL_ACCESS_TOKEN_LOCALE_KEY);
-  };
-
   @loading
   refresh = async () => {
     const response = await refresh();
@@ -76,6 +72,10 @@ class PowerpackService implements IPowerpackService {
       PowerpackService.LOCAL_ACCESS_TOKEN_LOCALE_KEY,
       response.result
     );
+  };
+
+  logout = async () => {
+    this.localStorageService.delete(PowerpackService.LOCAL_ACCESS_TOKEN_LOCALE_KEY);
   };
 
   login = async (token: string) => {
