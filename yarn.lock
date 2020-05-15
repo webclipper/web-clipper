@@ -938,10 +938,10 @@
     "@types/chrome" "^0.0.88"
     blueimp-md5 "^2.11.0"
 
-"@web-clipper/turndown@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.npm.taobao.org/@web-clipper/turndown/download/@web-clipper/turndown-0.2.0.tgz#6ed834a46836a5750cfb4280f324562c97a8cebf"
-  integrity sha1-btg0pGg2pXUM+0KA8yRWLJeozr8=
+"@web-clipper/turndown@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@web-clipper/turndown/-/turndown-0.2.1.tgz#190861ba83857e11f7733214bd0df2135ded5629"
+  integrity sha512-ErEAxuXVm6yt6w+9L8n0ssI+N0RG+uyNvShSt7E5cKj2yEWqnaBh7BkX/sfBe3i1Z6qFeJO5mlR+ZLr4Q2d9/w==
   dependencies:
     "@types/mz" "^0.0.32"
     "@types/turndown" "^5.0.0"
