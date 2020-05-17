@@ -3,7 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackChromeReloaderPlugin = require('webpack-chrome-extension-reloader');
+const ExtensionReloader = require('webpack-extension-reloader');
 const tsImportPluginFactory = require('ts-import-plugin');
 const WebpackCreateExtensionManifestPlugin = require('webpack-create-extension-manifest-plugin');
 const fs = require('fs');
@@ -177,7 +177,7 @@ module.exports = {
   },
   plugins: [
     process.env.NODE_ENV === 'development'
-      ? new WebpackChromeReloaderPlugin({
+      ? new ExtensionReloader({
           reloadPage: false,
           entries: {
             contentScript: 'content_script',
