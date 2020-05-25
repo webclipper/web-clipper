@@ -272,38 +272,38 @@
   dependencies:
     "@diamondyuan/eslint-config-javascript" "^7.0.0"
 
-"@formatjs/intl-displaynames@^1.2.0":
-  version "1.2.9"
-  resolved "https://registry.npm.taobao.org/@formatjs/intl-displaynames/download/@formatjs/intl-displaynames-1.2.9.tgz?cache=0&sync_timestamp=1588654381901&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40formatjs%2Fintl-displaynames%2Fdownload%2F%40formatjs%2Fintl-displaynames-1.2.9.tgz#be30523a91b3f5102fcd1754679073be6f8ee545"
-  integrity sha1-vjBSOpGz9RAvzRdUZ5Bzvm+O5UU=
+"@formatjs/intl-displaynames@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-displaynames/-/intl-displaynames-2.1.0.tgz#9dc2f4b7dc2f7bf49e9f80a6ed12f628ba5eddbe"
+  integrity sha512-ih/UHoQwWyv9S3Ggg71xR3h+IYYMQOkL93ikbuV+bCrE8GUnVNiFt7BOiH2IPH82oW+vPf5Qsh3AA14xPaEIOg==
   dependencies:
-    "@formatjs/intl-utils" "^2.2.5"
+    "@formatjs/intl-utils" "^3.1.0"
 
-"@formatjs/intl-listformat@^1.4.1":
-  version "1.4.7"
-  resolved "https://registry.npm.taobao.org/@formatjs/intl-listformat/download/@formatjs/intl-listformat-1.4.7.tgz?cache=0&sync_timestamp=1588654355795&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40formatjs%2Fintl-listformat%2Fdownload%2F%40formatjs%2Fintl-listformat-1.4.7.tgz#6529663d535ba24c1a33b26bdb4f6e0c1616466e"
-  integrity sha1-ZSlmPVNbokwaM7Jr209uDBYWRm4=
+"@formatjs/intl-listformat@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-listformat/-/intl-listformat-2.1.0.tgz#b5ff1f023814cb76a22a17a49a86b7f1eb07e4cf"
+  integrity sha512-xIzrrAcyvMHSK73fpJRX+u5Li79RI8JZTUiYj5txkF2OQDSvGgyjvpFZ46NxcZ6cZm4Vs4Qk1eQqf36toONk+w==
   dependencies:
-    "@formatjs/intl-utils" "^2.2.5"
+    "@formatjs/intl-utils" "^3.1.0"
 
-"@formatjs/intl-relativetimeformat@^4.5.9":
-  version "4.5.15"
-  resolved "https://registry.npm.taobao.org/@formatjs/intl-relativetimeformat/download/@formatjs/intl-relativetimeformat-4.5.15.tgz?cache=0&sync_timestamp=1588654003411&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40formatjs%2Fintl-relativetimeformat%2Fdownload%2F%40formatjs%2Fintl-relativetimeformat-4.5.15.tgz#1e31cdfc334603e380032745398186265ecc6049"
-  integrity sha1-HjHN/DNGA+OAAydFOYGGJl7MYEk=
+"@formatjs/intl-numberformat@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-numberformat/-/intl-numberformat-4.1.0.tgz#ab896564acdd896315d673f23cf5b57441175edd"
+  integrity sha512-kHMjrMfGO0/EoQf5ldzLPZvxCRXWHgqkd2XTT+IsHpVhVCoCTv3oNDcsXWvxbFZRkAtRQTs02T+VSKCnDFJEzw==
   dependencies:
-    "@formatjs/intl-utils" "^2.2.5"
+    "@formatjs/intl-utils" "^3.1.0"
 
-"@formatjs/intl-unified-numberformat@^3.2.0":
-  version "3.3.6"
-  resolved "https://registry.npm.taobao.org/@formatjs/intl-unified-numberformat/download/@formatjs/intl-unified-numberformat-3.3.6.tgz?cache=0&sync_timestamp=1588654377921&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40formatjs%2Fintl-unified-numberformat%2Fdownload%2F%40formatjs%2Fintl-unified-numberformat-3.3.6.tgz#ab69818f7568894023cb31fdb5b5c7eed62c6537"
-  integrity sha1-q2mBj3VoiUAjyzH9tbXH7tYsZTc=
+"@formatjs/intl-relativetimeformat@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-relativetimeformat/-/intl-relativetimeformat-5.1.0.tgz#336b17ad38d84652aacd26a92af8702c60bac8b0"
+  integrity sha512-y45bD/N1yw5Ko4TtnnAkEopXI570S3tGbDBoJTsvIXR2c9AeBzmvygB5yExriyYlMaIcj2IgSNm0MZD8BMHeMQ==
   dependencies:
-    "@formatjs/intl-utils" "^2.2.5"
+    "@formatjs/intl-utils" "^3.1.0"
 
-"@formatjs/intl-utils@^2.2.0", "@formatjs/intl-utils@^2.2.5":
-  version "2.2.5"
-  resolved "https://registry.npm.taobao.org/@formatjs/intl-utils/download/@formatjs/intl-utils-2.2.5.tgz?cache=0&sync_timestamp=1588654355594&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40formatjs%2Fintl-utils%2Fdownload%2F%40formatjs%2Fintl-utils-2.2.5.tgz#eaafd94df3d102ee13e54e80f992a33868a6b1e8"
-  integrity sha1-6q/ZTfPRAu4T5U6A+ZKjOGimseg=
+"@formatjs/intl-utils@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-utils/-/intl-utils-3.1.0.tgz#759012e2e444f7fbeb61f5148a8d95202713d82e"
+  integrity sha512-Q7+ksGpN6Dzp+W4qPai6OcUJ6pka2jPICJ0WlStFdy1RKGm90basrjSmox4xUR9DnMsWE5AfaiSu95nohCTLXw==
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
@@ -4745,25 +4745,25 @@ interpret@1.2.0, interpret@^1.2.0:
   resolved "https://registry.npm.taobao.org/interpret/download/interpret-1.2.0.tgz#d5061a6224be58e8083985f5014d844359576296"
   integrity sha1-1QYaYiS+WOgIOYX1AU2EQ1lXYpY=
 
-intl-format-cache@^4.2.21:
-  version "4.2.27"
-  resolved "https://registry.npm.taobao.org/intl-format-cache/download/intl-format-cache-4.2.27.tgz?cache=0&sync_timestamp=1588654355412&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fintl-format-cache%2Fdownload%2Fintl-format-cache-4.2.27.tgz#d25fa83639913aec10ca5a8f9e3b6449bb0eacf2"
-  integrity sha1-0l+oNjmROuwQylqPnjtkSbsOrPI=
+intl-format-cache@^4.2.31:
+  version "4.2.31"
+  resolved "https://registry.yarnpkg.com/intl-format-cache/-/intl-format-cache-4.2.31.tgz#767a6e431907f967991d298bae510f17b3c4cc74"
+  integrity sha512-fFV9SB3r/0YMPg+3UyCHlZzxyfXOaKSnIWCnXWGVVQkOgruD8A3PjQlB735t6T/e/1dNZsMPbj3cH8Id0NnXUw==
 
-intl-messageformat-parser@^3.6.4:
-  version "3.6.4"
-  resolved "https://registry.npm.taobao.org/intl-messageformat-parser/download/intl-messageformat-parser-3.6.4.tgz?cache=0&sync_timestamp=1588653999656&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fintl-messageformat-parser%2Fdownload%2Fintl-messageformat-parser-3.6.4.tgz#5199d106d816c3dda26ee0694362a9cf823978fb"
-  integrity sha1-UZnRBtgWw92ibuBpQ2Kpz4I5ePs=
+intl-messageformat-parser@^5.0.9:
+  version "5.0.9"
+  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-5.0.9.tgz#a26628db3993a21d077f4e21adc6ccc981953eaa"
+  integrity sha512-vyGrHtKWXWFMtMwV5b7idE0gDT0KnP1m5GtERIGs/uIl7C3p88/GvwqB9GT8p+jpOXUrYtocxPwZMO/va1IxAA==
   dependencies:
-    "@formatjs/intl-unified-numberformat" "^3.2.0"
+    "@formatjs/intl-numberformat" "^4.1.0"
 
-intl-messageformat@^7.8.4:
-  version "7.8.4"
-  resolved "https://registry.npm.taobao.org/intl-messageformat/download/intl-messageformat-7.8.4.tgz?cache=0&sync_timestamp=1588654381691&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fintl-messageformat%2Fdownload%2Fintl-messageformat-7.8.4.tgz#c29146a06b9cd26662978a4d95fff2b133e3642f"
-  integrity sha1-wpFGoGuc0mZil4pNlf/ysTPjZC8=
+intl-messageformat@^8.3.16:
+  version "8.3.16"
+  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-8.3.16.tgz#0f12497f4e0a0ecd50ba142debe1c07597364f56"
+  integrity sha512-Iu+yaeHBCc6IH7eVHDtiNCHD66QfjkW/vSU7b+br0k/TrIvy3F3l/z7Vhwv+SOr7UVmUpMFSwCjs6VLeMaX2UA==
   dependencies:
-    intl-format-cache "^4.2.21"
-    intl-messageformat-parser "^3.6.4"
+    intl-format-cache "^4.2.31"
+    intl-messageformat-parser "^5.0.9"
 
 invariant@^2.2.1, invariant@^2.2.4:
   version "2.2.4"
@@ -7748,22 +7748,22 @@ react-dom@^16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
-react-intl@^3.9.2:
-  version "3.12.1"
-  resolved "https://registry.npm.taobao.org/react-intl/download/react-intl-3.12.1.tgz#e9a783ea20302e9da25e4eda59e5593a43d2ec80"
-  integrity sha1-6aeD6iAwLp2iXk7aWeVZOkPS7IA=
+react-intl@^4.5.12:
+  version "4.5.12"
+  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-4.5.12.tgz#c7c1d7ffd736dc5badfb4d2a542a4d5e9a87152e"
+  integrity sha512-/KY6bkIdH8nI8+jOy3Mgflw1eesBUNN2aCs8qZ1xDEFY7Ky1Tv0BZavV9dJFa08uVFOReu6bFXLu+fKydvN96g==
   dependencies:
-    "@formatjs/intl-displaynames" "^1.2.0"
-    "@formatjs/intl-listformat" "^1.4.1"
-    "@formatjs/intl-relativetimeformat" "^4.5.9"
-    "@formatjs/intl-unified-numberformat" "^3.2.0"
-    "@formatjs/intl-utils" "^2.2.0"
+    "@formatjs/intl-displaynames" "^2.1.0"
+    "@formatjs/intl-listformat" "^2.1.0"
+    "@formatjs/intl-numberformat" "^4.1.0"
+    "@formatjs/intl-relativetimeformat" "^5.1.0"
+    "@formatjs/intl-utils" "^3.1.0"
     "@types/hoist-non-react-statics" "^3.3.1"
     "@types/invariant" "^2.2.31"
     hoist-non-react-statics "^3.3.2"
-    intl-format-cache "^4.2.21"
-    intl-messageformat "^7.8.4"
-    intl-messageformat-parser "^3.6.4"
+    intl-format-cache "^4.2.31"
+    intl-messageformat "^8.3.16"
+    intl-messageformat-parser "^5.0.9"
     shallow-equal "^1.2.1"
 
 react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6, react-is@^16.9.0:
