@@ -9,7 +9,6 @@ const homedir = require('os').homedir();
 const dest = path.resolve(homedir, `${name}_${version}_firefox.zip`);
 const source = path.resolve(__dirname, `../dist`);
 const zipStream = new compressing.zip.Stream();
-
 fs.readdirSync(source).forEach(o => {
   zipStream.addEntry(path.join(source, o));
 });
