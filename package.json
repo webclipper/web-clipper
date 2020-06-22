@@ -11,7 +11,6 @@
     "lint": "eslint --ext .js,.ts,.tsx --ignore-pattern bad.* .",
     "release": "npm run build && node script/release.js",
     "release:beta": "npm run build && node script/release_beta.js",
-    "release:ff": "TARGET_BROWSER=Firefox npm run build && node script/release_ff.js",
     "travis": "npm run build && node script/travis_release.js",
     "lint-staged": "lint-staged",
     "format": "node script/formatLocaleMessage.js"
