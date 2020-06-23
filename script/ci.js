@@ -3,7 +3,6 @@ const path = require('path');
 const compressing = require('compressing');
 const fs = require('fs');
 const pump = require('pump');
-
 const releaseDir = path.join(__dirname, '../release');
 if (!fs.existsSync(releaseDir)) {
   fs.mkdirSync(releaseDir);
@@ -51,6 +50,10 @@ function pack({ targetBrowser, beta }) {
       const manifest = path.resolve(dist, 'manifest.json');
       const manifestJSON = JSON.parse(fs.readFileSync(manifest, { encoding: 'utf8' }));
       manifestJSON.name = `${manifestJSON.name} Beta`;
+      const masterCommitsCount = execSync('git rev-list --count master')
+        .toString()
+        .trim();
+      manifestJSON.version = manifestJSON.version.replace(/.[0-9]$/, masterCommitsCount);
       fs.writeFileSync(manifest, JSON.stringify(manifestJSON));
     }
     console.log(`Build ${browser} Version Success`);
