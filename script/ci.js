@@ -9,7 +9,7 @@ if (!fs.existsSync(releaseDir)) {
   fs.mkdirSync(releaseDir);
 }
 
-function build(targetBrowser) {
+function build({ targetBrowser }) {
   const buildScript = require.resolve('./build');
   const buildEnv = Object.create(process.env);
   buildEnv.NODE_ENV = 'production';
@@ -22,9 +22,9 @@ function build(targetBrowser) {
     cp.on('message', r);
   });
 }
-function pack(targetBrowser) {
+
+function pack({ targetBrowser, beta }) {
   const dist = path.resolve(__dirname, `../dist`);
-  const { version } = JSON.parse(fs.readFileSync(path.join(dist, 'manifest.json'), 'utf-8'));
   const zipStream = new compressing.zip.Stream();
   fs.readdirSync(dist).forEach(o => {
     if (o.match(/^\./)) {
@@ -32,7 +32,7 @@ function pack(targetBrowser) {
     }
     zipStream.addEntry(path.join(dist, o));
   });
-  const dest = path.join(releaseDir, `web_clipper_${version}_${targetBrowser}.zip`);
+  const dest = path.join(releaseDir, `web_clipper_${targetBrowser}${beta ? '_beta' : ''}.zip`);
   const destStream = fs.createWriteStream(dest);
   return new Promise(r => {
     pump(zipStream, destStream, r);
@@ -40,11 +40,20 @@ function pack(targetBrowser) {
 }
 
 (async () => {
-  const browserList = ['Firefox', 'Chrome'];
+  const beta = process.env.BETA === 'true';
+  console.log('beta:', beta);
+  const browserList = ['firefox', 'chrome'];
   for (const browser of browserList) {
     console.log(`Start Build ${browser} Version`);
-    await build(browser);
+    await build({ targetBrowser: browser });
+    if (beta) {
+      const dist = path.resolve(__dirname, `../dist`);
+      const manifest = path.resolve(dist, 'manifest.json');
+      const manifestJSON = JSON.parse(fs.readFileSync(manifest, { encoding: 'utf8' }));
+      manifestJSON.name = `${manifestJSON.name} Beta`;
+      fs.writeFileSync(manifest, JSON.stringify(manifestJSON));
+    }
     console.log(`Build ${browser} Version Success`);
-    await pack(browser);
+    await pack({ targetBrowser: browser, beta });
   }
 })();
