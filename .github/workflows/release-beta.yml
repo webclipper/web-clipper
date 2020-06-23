@@ -1,4 +1,4 @@
-name: Upload Release Asset
+name: Release Beta Version
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          allowDuplicate: true
+          allow_duplicate: true
           tag_name: Beta
           release_name: Release Beta
           draft: false
