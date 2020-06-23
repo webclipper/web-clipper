@@ -2,8 +2,8 @@ name: Release resource
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - 'r*'
 
 jobs:
   release:
