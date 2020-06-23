@@ -42,7 +42,9 @@ function pack(targetBrowser) {
 (async () => {
   const browserList = ['Firefox', 'Chrome'];
   for (const browser of browserList) {
+    console.log(`Start Build ${browser} Version`);
     await build(browser);
+    console.log(`Build ${browser} Version Success`);
     await pack(browser);
   }
 })();
