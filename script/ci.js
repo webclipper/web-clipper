@@ -1,4 +1,4 @@
-const { fork } = require('child_process');
+const { fork, execSync } = require('child_process');
 const path = require('path');
 const compressing = require('compressing');
 const fs = require('fs');
