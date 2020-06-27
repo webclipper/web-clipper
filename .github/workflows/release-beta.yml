@@ -38,7 +38,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          release_id: ${{ steps.create_release.outputs.release_id }}
+          release_id: ${{ steps.create_release.outputs.id }}
           asset_path: ./release/web_clipper_chrome_beta.zip
           asset_name: web_clipper_chrome_beta.zip
           asset_content_type: application/zip
