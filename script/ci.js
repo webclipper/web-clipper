@@ -54,7 +54,7 @@ function pack({ targetBrowser, beta }) {
         .toString()
         .trim();
       manifestJSON.version = manifestJSON.version.replace(/.[0-9]$/, `.${masterCommitsCount}`);
-      console.log(`Current Version ${version}`);
+      console.log(`Current Version ${manifestJSON.version}`);
       fs.writeFileSync(manifest, JSON.stringify(manifestJSON));
     }
     console.log(`Build ${browser} Version Success`);
