@@ -53,7 +53,8 @@ function pack({ targetBrowser, beta }) {
       const masterCommitsCount = execSync('git rev-list --count master')
         .toString()
         .trim();
-      manifestJSON.version = manifestJSON.version.replace(/.[0-9]$/, masterCommitsCount);
+      manifestJSON.version = manifestJSON.version.replace(/.[0-9]$/, `.${masterCommitsCount}`);
+      console.log(`Current Version ${version}`);
       fs.writeFileSync(manifest, JSON.stringify(manifestJSON));
     }
     console.log(`Build ${browser} Version Success`);
