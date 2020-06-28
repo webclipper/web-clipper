@@ -9,7 +9,6 @@ interface WebClipperConfig {
   oneNoteCallBack: string;
   oneNoteClientId: string;
   createLogger: boolean;
-  remoteExtensionHost: string;
   serverHost: string;
   resourceHost: string;
   loadRemoteConfig: boolean;
@@ -40,7 +39,6 @@ let config: WebClipperConfig = {
   oneNoteCallBack: 'https://webclipper-oauth.yfd.im/onenote_oauth',
   createLogger: false,
   // oneNoteCallBack: 'http://localhost:3000/onenote_oauth',
-  remoteExtensionHost: 'https://extensions.clipper.website',
   serverHost: 'https://api.clipper.website',
   resourceHost: 'https://resource.clipper.website',
   loadRemoteConfig: true,
@@ -63,9 +61,6 @@ if (process.env.NODE_ENV === 'development') {
     oneNoteCallBack: 'https://webclipper-oauth.test.yfd.im/onenote_oauth',
     // oneNoteCallBack: 'http://localhost:3000/onenote_oauth',
     createLogger: false,
-    // remoteExtensionHost: 'https://extensions.dev.clipper.website',
-    // remoteExtensionHost: 'https://extensions.clipper.website',
-    // remoteExtensionHost: 'http://localhost:3000',
     // serverHost: 'http://localhost:3000',
   });
 }
