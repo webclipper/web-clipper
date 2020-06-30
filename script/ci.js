@@ -31,7 +31,10 @@ function pack({ targetBrowser, beta }) {
     }
     zipStream.addEntry(path.join(dist, o));
   });
-  const dest = path.join(releaseDir, `web_clipper_${targetBrowser}${beta ? '_beta' : ''}.zip`);
+  const dest = path.join(
+    releaseDir,
+    `web_clipper_${targetBrowser.toLocaleLowerCase()}${beta ? '_beta' : ''}.zip`
+  );
   const destStream = fs.createWriteStream(dest);
   return new Promise(r => {
     pump(zipStream, destStream, r);
@@ -41,7 +44,7 @@ function pack({ targetBrowser, beta }) {
 (async () => {
   const beta = process.env.BETA === 'true';
   console.log('beta:', beta);
-  const browserList = ['firefox', 'chrome'];
+  const browserList = ['Firefox', 'Chrome'];
   for (const browser of browserList) {
     console.log(`Start Build ${browser} Version`);
     await build({ targetBrowser: browser });
