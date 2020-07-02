@@ -22,11 +22,11 @@ jobs:
           BETA=true npm run release
       - name: Create Release
         id: create_release
-        uses: webclipper/create-release@master
+        uses: webclipper/create-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          allow_duplicate: true
+          replace_old_tag: true
           tag_name: Beta
           release_name: Release Beta
           draft: false
