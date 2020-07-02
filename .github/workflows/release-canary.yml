@@ -21,6 +21,8 @@ jobs:
       - name: Build project
         run: |
           BETA=true npm run release
+        env:
+          GITHUB_BRANCH: ${{ github.ref }}
       - name: Create Release
         id: create_release
         uses: webclipper/create-release@v2

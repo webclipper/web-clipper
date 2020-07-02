@@ -53,7 +53,10 @@ function pack({ targetBrowser, beta }) {
       const manifest = path.resolve(dist, 'manifest.json');
       const manifestJSON = JSON.parse(fs.readFileSync(manifest, { encoding: 'utf8' }));
       manifestJSON.name = `${manifestJSON.name} Beta`;
-      const masterCommitsCount = execSync('git rev-list --count master')
+      const branch = process.env.GITHUB_BRANCH || 'refs/heads/master';
+      const masterCommitsCount = execSync(
+        `git rev-list --count ${branch.replace('refs/heads/', '')}`
+      )
         .toString()
         .trim();
       manifestJSON.version = manifestJSON.version.replace(/.[0-9]$/, `.${masterCommitsCount}`);
