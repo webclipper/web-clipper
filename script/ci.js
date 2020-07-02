@@ -33,7 +33,7 @@ function pack({ targetBrowser, beta }) {
   });
   const dest = path.join(
     releaseDir,
-    `web_clipper_${targetBrowser.toLocaleLowerCase()}${beta ? '_beta' : ''}.zip`
+    `web_clipper_${targetBrowser.toLocaleLowerCase()}${beta ? '_canary' : ''}.zip`
   );
   const destStream = fs.createWriteStream(dest);
   return new Promise(r => {
@@ -54,9 +54,7 @@ function pack({ targetBrowser, beta }) {
       const manifestJSON = JSON.parse(fs.readFileSync(manifest, { encoding: 'utf8' }));
       manifestJSON.name = `${manifestJSON.name} Beta`;
       const branch = process.env.GITHUB_BRANCH || 'refs/heads/master';
-      const masterCommitsCount = execSync(
-        `git rev-list --count ${branch.replace('refs/heads/', '')}`
-      )
+      const masterCommitsCount = execSync(`git rev-list --count ${branch}}`)
         .toString()
         .trim();
       manifestJSON.version = manifestJSON.version.replace(/.[0-9]$/, `.${masterCommitsCount}`);
