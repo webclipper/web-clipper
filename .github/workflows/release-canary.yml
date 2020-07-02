@@ -1,9 +1,10 @@
-name: Release Beta Version
+name: Release Canary Version
 
 on:
   push:
     branches:
       - master
+      - canary
 
 jobs:
   build:
@@ -27,8 +28,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           replace_old_tag: true
-          tag_name: Beta
-          release_name: Release Beta
+          tag_name: canary
+          body: 'Be warned: Canary can be unstable.'
+          release_name: Release Canary Version
           draft: false
           prerelease: false
       - name: Upload Release Asset
