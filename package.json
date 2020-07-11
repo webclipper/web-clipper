@@ -58,7 +58,7 @@
     "react-markdown": "^4.1.0",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "^0.13.3",
-    "remark": "^11.0.2",
+    "remark": "^12.0.0",
     "showdown": "^1.9.0",
     "tldjs": "^2.3.1",
     "typedi": "^0.8.0",
