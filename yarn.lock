@@ -981,10 +981,10 @@
     "@types/chrome" "^0.0.88"
     blueimp-md5 "^2.11.0"
 
-"@web-clipper/turndown@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@web-clipper/turndown/-/turndown-0.2.1.tgz#190861ba83857e11f7733214bd0df2135ded5629"
-  integrity sha512-ErEAxuXVm6yt6w+9L8n0ssI+N0RG+uyNvShSt7E5cKj2yEWqnaBh7BkX/sfBe3i1Z6qFeJO5mlR+ZLr4Q2d9/w==
+"@web-clipper/turndown@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@web-clipper/turndown/-/turndown-0.3.0.tgz#5fbc83d7237e34276a0fa2818906ed5a1ca1b721"
+  integrity sha512-oeI44Eq8cuYEJNudroxuSCS7lNRiyoh33Y4s8banCSTgg+OIszGU3DoBUaCncVuJUWNnCL2nPYJxNCFfbjcORA==
   dependencies:
     "@types/mz" "^0.0.32"
     "@types/turndown" "^5.0.0"
