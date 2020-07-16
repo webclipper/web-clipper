@@ -47,7 +47,7 @@
     "hypermd": "^0.3.11",
     "immutability-helper": "^3.0.1",
     "jquery": "^3.4.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "mobx": "^5.15.1",
     "mobx-react": "^6.1.4",
     "qrcode": "^1.4.1",
