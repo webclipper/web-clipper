@@ -59,6 +59,7 @@
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "^0.13.3",
     "remark": "^11.0.2",
+    "short-uuid": "^3.1.1",
     "showdown": "^1.9.0",
     "tldjs": "^2.3.1",
     "typedi": "^0.8.0",
