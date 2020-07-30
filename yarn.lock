@@ -1353,6 +1353,11 @@ antd@^3.26.6:
     shallowequal "^1.1.0"
     warning "~4.0.3"
 
+any-base@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/any-base/download/any-base-1.1.0.tgz#ae101a62bc08a597b4c9ab5b7089d456630549fe"
+  integrity sha1-rhAaYrwIpZe0yatbcInUVmMFSf4=
+
 any-observable@^0.3.0:
   version "0.3.0"
   resolved "https://registry.npm.taobao.org/any-observable/download/any-observable-0.3.0.tgz#af933475e5806a67d0d7df090dd5e8bef65d119b"
@@ -8525,6 +8530,14 @@ shellwords@^0.1.1:
   version "0.1.1"
   resolved "https://registry.npm.taobao.org/shellwords/download/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha1-1rkYHBpI05cyTISHHvvPxz/AZUs=
+
+short-uuid@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.npm.taobao.org/short-uuid/download/short-uuid-3.1.1.tgz#3ff427074b5fa7822c3793994d18a7a82e2f73a4"
+  integrity sha1-P/QnB0tfp4IsN5OZTRinqC4vc6Q=
+  dependencies:
+    any-base "^1.1.0"
+    uuid "^3.3.2"
 
 showdown@^1.9.0:
   version "1.9.1"
