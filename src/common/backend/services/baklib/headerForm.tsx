@@ -1,6 +1,6 @@
-import { Form, Select, TreeSelect, Radio } from 'antd';
+import { Form, Select, TreeSelect, Radio, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import locale from '@/common/locales';
 import { Repository } from '../interface';
 import { useFetch } from '@shihengtech/hooks';
@@ -8,7 +8,7 @@ import backend from '../..';
 import BaklibDocumentService from './service';
 
 const HeaderForm: React.FC<FormComponentProps & { currentRepository: Repository }> = ({
-  form: { getFieldDecorator },
+  form: { getFieldDecorator, setFieldsValue },
   currentRepository,
 }) => {
   const service = backend.getDocumentService() as BaklibDocumentService;
@@ -18,7 +18,13 @@ const HeaderForm: React.FC<FormComponentProps & { currentRepository: Repository 
     }
     return [];
   }, [currentRepository]);
-
+  useEffect(() => {
+    if (Array.isArray(channals.data) && channals.data.length > 0) {
+      setFieldsValue({
+        channel: channals.data[0].value,
+      });
+    }
+  }, [channals.data, setFieldsValue]);
   return (
     <Fragment>
       <Form.Item>
@@ -26,6 +32,7 @@ const HeaderForm: React.FC<FormComponentProps & { currentRepository: Repository 
           rules: [],
         })(
           <TreeSelect
+            allowClear
             treeData={channals.data}
             style={{ width: '100%' }}
             placeholder={locale.format({
@@ -41,7 +48,7 @@ const HeaderForm: React.FC<FormComponentProps & { currentRepository: Repository 
             initialValue: 1,
           })(
             <Radio.Group>
-              <Radio value={0}> 草稿</Radio>
+              <Radio value={0}>草稿</Radio>
               <Radio value={1}>发布</Radio>
             </Radio.Group>
           )}
@@ -60,6 +67,18 @@ const HeaderForm: React.FC<FormComponentProps & { currentRepository: Repository 
               defaultMessage: 'Tags',
             })}
           ></Select>
+        )}
+      </Form.Item>
+      <Form.Item>
+        {getFieldDecorator('description', {
+          initialValue: [],
+        })(
+          <Input.TextArea
+            placeholder={locale.format({
+              id: 'backend.services.baklib.headerForm.description',
+              defaultMessage: 'Description',
+            })}
+          />
         )}
       </Form.Item>
     </Fragment>
