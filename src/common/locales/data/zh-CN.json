@@ -1,7 +1,5 @@
 {
   "auth.modal.title": "账户配置",
-  "backend.services.baklib.headerForm.channel": "栏目",
-  "backend.services.baklib.headerForm.tags": "标签",
   "backend.imageHosting.joplin.builtInRemark": "Joplin 内置图床",
   "backend.imageHosting.joplin.name": "Joplin",
   "backend.imageHosting.yuque_oauth.builtInRemark": "语雀内置图床。",
@@ -10,6 +8,8 @@
   "backend.imageHosting.yuque_oauth.error_429": "请求太频繁，接口限制每小时最多 100 次。",
   "backend.imageHosting.yuque_oauth.name": "语雀(一键授权)",
   "backend.imageHosting.yuque.name": "语雀",
+  "backend.services.baklib.headerForm.channel": "栏目",
+  "backend.services.baklib.headerForm.tags": "标签",
   "backend.services.bear.form.confirm": "请确认您安装了 Bear 客户端。",
   "backend.services.confluence.form.authentication": "授权",
   "backend.services.confluence.form.origin": "Origin",

@@ -8,6 +8,8 @@
   "backend.imageHosting.yuque_oauth.error_429": "",
   "backend.imageHosting.yuque_oauth.name": "",
   "backend.imageHosting.yuque.name": "Yuque",
+  "backend.services.baklib.headerForm.channel": "",
+  "backend.services.baklib.headerForm.tags": "",
   "backend.services.bear.form.confirm": "",
   "backend.services.confluence.form.authentication": "",
   "backend.services.confluence.form.origin": "",
