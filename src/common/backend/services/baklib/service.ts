@@ -76,9 +76,9 @@ export default class BaklibDocumentService implements DocumentService {
   }
 
   createDocument = async (
-    info: CreateDocumentRequest & { channel: string; tags: string }
+    info: CreateDocumentRequest & { channel: string; tags: string; status: number }
   ): Promise<CompleteStatus> => {
-    const wew = await this.request.post<{
+    const response = await this.request.post<{
       message: {
         id: string;
       };
@@ -90,10 +90,10 @@ export default class BaklibDocumentService implements DocumentService {
         channel_id: info.channel,
         tag_list: info.tags,
         content: info.content,
-        status: 0,
+        status: info.status,
       },
     });
-    console.log(wew);
+    console.log(response);
     return {};
   };
 }
