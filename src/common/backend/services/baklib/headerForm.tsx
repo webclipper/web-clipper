@@ -8,7 +8,7 @@ import backend from '../..';
 import BaklibDocumentService from './service';
 
 const HeaderForm: React.FC<FormComponentProps & { currentRepository: Repository }> = ({
-  form: { getFieldDecorator, setFieldsValue },
+  form: { getFieldDecorator, setFieldsValue, getFieldValue },
   currentRepository,
 }) => {
   const service = backend.getDocumentService() as BaklibDocumentService;
@@ -18,13 +18,20 @@ const HeaderForm: React.FC<FormComponentProps & { currentRepository: Repository 
     }
     return [];
   }, [currentRepository]);
+
   useEffect(() => {
-    if (Array.isArray(channals.data) && channals.data.length > 0) {
+    setFieldsValue({
+      channel: null,
+    });
+  }, [currentRepository, setFieldsValue]);
+
+  useEffect(() => {
+    if (Array.isArray(channals.data) && channals.data.length > 0 && !getFieldValue('channel')) {
       setFieldsValue({
         channel: channals.data[0].value,
       });
     }
-  }, [channals.data, setFieldsValue]);
+  }, [channals.data, getFieldValue, setFieldsValue]);
   return (
     <Fragment>
       <Form.Item>
@@ -32,6 +39,8 @@ const HeaderForm: React.FC<FormComponentProps & { currentRepository: Repository 
           rules: [],
         })(
           <TreeSelect
+            disabled={channals.loading}
+            loading={channals.loading}
             allowClear
             treeData={channals.data}
             style={{ width: '100%' }}
@@ -70,9 +79,7 @@ const HeaderForm: React.FC<FormComponentProps & { currentRepository: Repository 
         )}
       </Form.Item>
       <Form.Item>
-        {getFieldDecorator('description', {
-          initialValue: [],
-        })(
+        {getFieldDecorator('description')(
           <Input.TextArea
             placeholder={locale.format({
               id: 'backend.services.baklib.headerForm.description',

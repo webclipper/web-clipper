@@ -110,19 +110,20 @@ const Page = React.memo<PageProps>(
       },
       [dispatch]
     );
-
-    useEffect(() => {
-      if (currentAccount && currentAccount.defaultRepositoryId) {
-        onRepositorySelect(currentAccount.defaultRepositoryId);
-      }
-    }, [currentAccount, onRepositorySelect]);
-
-    const push = (path: string) => dispatch(routerRedux.push(path));
-
-    let repositoryId;
+    let repositoryId: string | undefined;
     if (currentRepository) {
       repositoryId = currentRepository.id;
     }
+    useEffect(() => {
+      if (currentAccount && currentAccount.defaultRepositoryId) {
+        if (repositoryId) {
+          return;
+        }
+        onRepositorySelect(currentAccount.defaultRepositoryId);
+      }
+    }, [repositoryId, currentAccount, onRepositorySelect]);
+
+    const push = (path: string) => dispatch(routerRedux.push(path));
 
     const enableExtensions: IExtensionWithId[] = extensions.filter(o => {
       if (o.extensionLifeCycle.init) {
