@@ -43,18 +43,30 @@ export default class BaklibDocumentService implements DocumentService {
   };
 
   getRepositories = async () => {
-    const tenants = await this.request.get<{
+    const {
+      message: { current_tenants, share_tenants },
+    } = await this.request.get<{
       message: {
-        mine: { id: string; name: string }[];
+        current_tenants: { id: string; name: string; member_role: string[] }[];
+        share_tenants: { id: string; name: string; member_role: string[] }[];
       };
-    }>('v1/user/tenants');
-    return tenants.message.mine.map(
-      ({ id, name }): Repository => ({
-        id,
-        name,
-        groupId: '',
-        groupName: '站点',
-      })
+    }>('v1/tenants');
+    function tenantToRepo(tenants: any, groupName: string) {
+      return tenants.map(
+        ({ id, name, member_role }: any): Repository => {
+          const readOnly = Array.isArray(member_role) && member_role[0] === '只能阅读';
+          return {
+            id,
+            name: readOnly ? `${name} (只读)` : name,
+            disabled: readOnly,
+            groupId: groupName,
+            groupName,
+          };
+        }
+      );
+    }
+    return tenantToRepo(current_tenants, '我的站点').concat(
+      tenantToRepo(share_tenants, '共享站点')
     );
   };
 
