@@ -14,6 +14,7 @@ interface Channel {
 export default class BaklibDocumentService implements DocumentService {
   private request: RequestMethod;
   private token: string;
+  private cache: Map<string, any>;
 
   constructor({ accessToken }: BaklibBackendServiceConfig) {
     this.request = extend({
@@ -29,6 +30,7 @@ export default class BaklibDocumentService implements DocumentService {
       return response;
     });
     this.token = accessToken;
+    this.cache = new Map<string, any>();
   }
 
   getId = () => md5(this.token);
@@ -71,6 +73,9 @@ export default class BaklibDocumentService implements DocumentService {
   };
 
   async getTentChannel(tenant_id: string) {
+    if (this.cache.has(tenant_id)) {
+      return this.cache.get(tenant_id);
+    }
     const response = await this.request.get<{
       message: Channel[];
     }>(`v1/channels?tenant_id=${tenant_id}`);
@@ -84,6 +89,7 @@ export default class BaklibDocumentService implements DocumentService {
         children: channelToTree(o.child_channels, `${parent}-${index}`),
       }));
     }
+    this.cache.set(tenant_id, channelToTree(message, '0'));
     return channelToTree(message, '0');
   }
 
