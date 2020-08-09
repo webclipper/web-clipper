@@ -8,7 +8,6 @@ import locale from '@/common/locales';
 
 const HeaderForm: React.FC<FormComponentProps> = ({ form: { getFieldDecorator } }) => {
   const service = backend.getDocumentService() as JoplinDocumentService;
-
   const tagResponse = useFetch(async () => service.getTags(), [service], {
     initialState: {
       data: [],
