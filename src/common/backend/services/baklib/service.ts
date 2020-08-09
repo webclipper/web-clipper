@@ -76,11 +76,17 @@ export default class BaklibDocumentService implements DocumentService {
   }
 
   createDocument = async (
-    info: CreateDocumentRequest & { channel: string; tags: string; status: number }
+    info: CreateDocumentRequest & {
+      channel: string;
+      tags: string;
+      status: number;
+      description: string;
+    }
   ): Promise<CompleteStatus> => {
     const response = await this.request.post<{
       message: {
         id: string;
+        frontend_url: string;
       };
     }>('v1/articles', {
       data: {
@@ -91,9 +97,11 @@ export default class BaklibDocumentService implements DocumentService {
         tag_list: info.tags,
         content: info.content,
         status: info.status,
+        description: info.description,
       },
     });
-    console.log(response);
-    return {};
+    return {
+      href: response.message.frontend_url,
+    };
   };
 }

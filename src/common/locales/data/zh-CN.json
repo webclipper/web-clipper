@@ -9,6 +9,7 @@
   "backend.imageHosting.yuque_oauth.name": "语雀(一键授权)",
   "backend.imageHosting.yuque.name": "语雀",
   "backend.services.baklib.headerForm.channel": "栏目",
+  "backend.services.baklib.headerForm.description": "描述",
   "backend.services.baklib.headerForm.tags": "标签",
   "backend.services.bear.form.confirm": "请确认您安装了 Bear 客户端。",
   "backend.services.confluence.form.authentication": "授权",

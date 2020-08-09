@@ -9,6 +9,7 @@
   "backend.imageHosting.yuque_oauth.name": "",
   "backend.imageHosting.yuque.name": "",
   "backend.services.baklib.headerForm.channel": "",
+  "backend.services.baklib.headerForm.description": "",
   "backend.services.baklib.headerForm.tags": "",
   "backend.services.bear.form.confirm": "",
   "backend.services.confluence.form.authentication": "",

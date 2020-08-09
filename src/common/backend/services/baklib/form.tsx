@@ -25,9 +25,7 @@ export default class extends Component<YuqueFormProps & FormComponentProps> {
       <Fragment>
         <Form.Item label="AccessToken">
           {getFieldDecorator('accessToken', {
-            initialValue:
-              initData.accessToken ||
-              '656b6dd1323ca1e473be84f4028272d4c022f81f25626bffe34f66af17a2cabb',
+            initialValue: initData.accessToken,
             rules: [
               {
                 required: true,
