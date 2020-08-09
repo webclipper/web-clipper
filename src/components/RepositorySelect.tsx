@@ -50,8 +50,10 @@ const RepositorySelect: React.FC<RepositorySelectProps> = ({ repositories, ...pr
     <Select {...props} allowClear showSearch onSearch={setSearchKey} ref={ref} filterOption={false}>
       {Object.values(repositoryInGroup).map(group => (
         <Select.OptGroup key={group.groupId} label={group.groupName}>
-          {group.repositories.map(({ id, name }) => (
-            <Select.Option key={id}> {name} </Select.Option>
+          {group.repositories.map(({ id, name, disabled }) => (
+            <Select.Option disabled={disabled} key={id}>
+              {name}
+            </Select.Option>
           ))}
         </Select.OptGroup>
       ))}

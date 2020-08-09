@@ -32,6 +32,7 @@ export interface Repository {
    * 团队 名称
    */
   groupName: string;
+  disabled?: boolean;
 }
 
 export interface ServiceMeta {
