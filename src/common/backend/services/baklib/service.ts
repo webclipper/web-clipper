@@ -22,13 +22,16 @@ export default class BaklibDocumentService implements DocumentService {
       headers: { Authorization: `Bearer ${accessToken}` },
       timeout: 5000,
     });
-    this.request.interceptors.response.use(async response => {
-      const json = await response.clone().json();
-      if (json.code !== 0) {
-        throw new Error(json.message);
-      }
-      return response;
-    });
+    this.request.interceptors.response.use(
+      async response => {
+        const json = await response.clone().json();
+        if (json.code !== 0) {
+          throw new Error(json.message);
+        }
+        return response;
+      },
+      { global: false }
+    );
     this.token = accessToken;
     this.cache = new Map<string, any>();
   }
