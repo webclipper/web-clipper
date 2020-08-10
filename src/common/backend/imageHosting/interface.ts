@@ -1,3 +1,5 @@
+import { Repository } from '../services/interface';
+
 export interface ImageHostingServiceConstructAble {
   new (info: any): ImageHostingService;
 }
@@ -8,6 +10,8 @@ export interface ImageHostingService {
   uploadImage(request: UploadImageRequest): Promise<string>;
 
   uploadImageUrl(url: string): Promise<string>;
+
+  updateContext?({ currentRepository }: { currentRepository: Repository }): void;
 }
 
 export interface UploadImageRequest {
