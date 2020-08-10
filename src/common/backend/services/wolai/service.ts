@@ -162,7 +162,7 @@ export default class WolaiDocumentService implements DocumentService {
           id: value.id,
           spaceId: space.id,
           name: value.attributes.title.toString(),
-          groupId: space.domain,
+          groupId: space.id,
           groupName: space.name,
           pageType: PAGE,
         });
@@ -220,7 +220,7 @@ export default class WolaiDocumentService implements DocumentService {
     });
 
     return {
-      href: `https://www.wolai.com/${repository.groupId}/${documentId}`,
+      href: `https://www.wolai.com/${documentId}`,
     };
   };
 
