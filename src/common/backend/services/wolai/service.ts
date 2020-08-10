@@ -1,8 +1,8 @@
 import { CompleteStatus, UnauthorizedError } from '../interface';
 import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
-import axios, { AxiosInstance } from 'axios';
 import localeService from '@/common/locales';
 import short from 'short-uuid';
+import { extend, RequestMethod } from 'umi-request';
 
 interface WolaiUserContent {
   code: number;
@@ -89,39 +89,32 @@ interface WolaiRepository extends Repository {
 const PAGE = 'page';
 
 export default class WolaiDocumentService implements DocumentService {
-  private request: AxiosInstance;
+  private request: RequestMethod;
   private repositories: WolaiRepository[];
   private userContent?: WolaiUserContent;
   private userInfo?: WolaiUserInfo;
 
   constructor() {
-    const request = axios.create({
-      baseURL: 'https://api.wolai.com/',
+    const request = extend({
+      prefix: 'https://api.wolai.com/',
       timeout: 10000,
-      transformResponse: [
-        (data): any => {
-          return JSON.parse(data);
-        },
-      ],
-      withCredentials: true,
+      credentials: 'include',
     });
     this.request = request;
     this.repositories = [];
-    this.request.interceptors.response.use(
-      r => r,
-      error => {
-        if (error.response && error.response.status === 401) {
-          return Promise.reject(
-            new UnauthorizedError(
-              localeService.format({
-                id: 'backend.services.wolai.unauthorizedErrorMessage',
-                defaultMessage: 'Unauthorized! Please Login Wolai Web.',
-              })
-            )
+    request.interceptors.response.use(
+      response => {
+        if (response.clone().status === 401) {
+          throw new UnauthorizedError(
+            localeService.format({
+              id: 'backend.services.wolai.unauthorizedErrorMessage',
+              defaultMessage: 'Unauthorized! Please Login Wolai Web.',
+            })
           );
         }
-        return Promise.reject(error);
-      }
+        return response;
+      },
+      { global: false }
     );
   }
 
@@ -211,17 +204,19 @@ export default class WolaiDocumentService implements DocumentService {
     formData.append('success_action_status', '200');
     formData.append('file', file);
 
-    await axios.post(data.policyData.url, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
+    await extend({}).post(data.policyData.url, {
+      data: formData,
     });
 
     await this.request.post('v1/import/getImportPageData', {
-      spaceId: repository.spaceId,
-      type: 'string',
-      bucket: data.policyData.bucket,
-      filename: filekey,
-      pageTitle: title,
-      pageId: documentId,
+      data: {
+        spaceId: repository.spaceId,
+        type: 'string',
+        bucket: data.policyData.bucket,
+        filename: filekey,
+        pageTitle: title,
+        pageId: documentId,
+      },
     });
 
     return {
@@ -300,26 +295,28 @@ export default class WolaiDocumentService implements DocumentService {
         },
       ],
     };
-    await this.request.post('v1/updateChanges', operations);
+    await this.request.post('v1/updateChanges', { data: operations });
     return documentId;
   };
 
   getFileUrl = async (repository: WolaiRepository, file: File) => {
     const result = await this.request.post('v1/file/getSignedPostUrl', {
-      spaceId: repository.spaceId,
-      fileSize: file.size,
-      type: 'import',
+      data: {
+        spaceId: repository.spaceId,
+        fileSize: file.size,
+        type: 'import',
+      },
     });
-    return result.data;
+    return result;
   };
 
   private getUserContent = async () => {
     const response = await this.request.post<WolaiUserContent>('v1/transaction/getUserData');
-    return response.data;
+    return response;
   };
 
   private fetchUserInfo = async () => {
     const response = await this.request.post<WolaiUserInfo>('v1/authentication/user/getUserInfo');
-    return response.data;
+    return response;
   };
 }
