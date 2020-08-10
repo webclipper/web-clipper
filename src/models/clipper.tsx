@@ -276,6 +276,10 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
   )
   .case(selectRepository, (state, { repositoryId }) => {
     const currentRepository = state.repositories.find(o => o.id === repositoryId);
+    const updateContext = backend.getImageHostingService()?.updateContext;
+    if (currentRepository && updateContext) {
+      updateContext({ currentRepository });
+    }
     return {
       ...state,
       currentRepository,

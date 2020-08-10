@@ -1,4 +1,4 @@
-import { Form, Select, TreeSelect, Radio, Input } from 'antd';
+import { Form, TreeSelect } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React, { Fragment, useEffect } from 'react';
 import locale from '@/common/locales';
@@ -47,43 +47,6 @@ const HeaderForm: React.FC<FormComponentProps & { currentRepository: Repository 
             placeholder={locale.format({
               id: 'backend.services.baklib.headerForm.channel',
               defaultMessage: 'Channel',
-            })}
-          />
-        )}
-      </Form.Item>
-      <Form layout="inline">
-        <Form.Item label="状态">
-          {getFieldDecorator('status', {
-            initialValue: 1,
-          })(
-            <Radio.Group>
-              <Radio value={0}>草稿</Radio>
-              <Radio value={1}>发布</Radio>
-            </Radio.Group>
-          )}
-        </Form.Item>
-      </Form>
-      <Form.Item>
-        {getFieldDecorator('tags', {
-          initialValue: [],
-        })(
-          <Select
-            mode="tags"
-            maxTagCount={3}
-            style={{ width: '100%' }}
-            placeholder={locale.format({
-              id: 'backend.services.baklib.headerForm.tags',
-              defaultMessage: 'Tags',
-            })}
-          ></Select>
-        )}
-      </Form.Item>
-      <Form.Item>
-        {getFieldDecorator('description')(
-          <Input.TextArea
-            placeholder={locale.format({
-              id: 'backend.services.baklib.headerForm.description',
-              defaultMessage: 'Description',
             })}
           />
         )}
