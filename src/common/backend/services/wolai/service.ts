@@ -196,7 +196,7 @@ export default class WolaiDocumentService implements DocumentService {
 
     const documentId = await this.createEmptyFile(repository, title);
 
-    const file = new File([content], fileName, {
+    const file = new File([content], filekey, {
       type: 'text/markdown',
     });
     const { code, data } = await this.getFileUrl(repository, file);
@@ -215,7 +215,7 @@ export default class WolaiDocumentService implements DocumentService {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
-    await this.request.post('v1/file/getImportPageData', {
+    await this.request.post('v1/import/getImportPageData', {
       spaceId: repository.spaceId,
       type: 'string',
       bucket: data.policyData.bucket,
