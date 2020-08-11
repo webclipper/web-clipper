@@ -13,6 +13,16 @@ const Base64ImageToBlob = (image: string): Blob => {
   return blob;
 };
 
+const BlobToBase64 = (blob: Blob): Promise<string> => {
+  const reader = new FileReader();
+  reader.readAsDataURL(blob);
+  return new Promise(resolve => {
+    reader.onloadend = () => {
+      resolve(reader.result as string);
+    };
+  });
+};
+
 function loadImage(date: string): Promise<HTMLImageElement> {
   return new Promise<HTMLImageElement>((resolve, reject) => {
     let img = new Image();
@@ -22,4 +32,4 @@ function loadImage(date: string): Promise<HTMLImageElement> {
   });
 }
 
-export { Base64ImageToBlob, loadImage };
+export { Base64ImageToBlob, loadImage, BlobToBase64 };
