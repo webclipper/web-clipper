@@ -26,6 +26,7 @@ let manifestExtra = {
 };
 
 let background = resolve('src/main/background.main.chrome.ts');
+let tool = resolve('src/main/tool.main.chrome.ts');
 
 if (process.env.TARGET_BROWSER === 'Firefox') {
   manifestExtra = {
@@ -49,11 +50,12 @@ if (process.env.TARGET_BROWSER === 'Firefox') {
     };
   }
   background = resolve('src/main/background.main.firefox.ts');
+  tool = resolve('src/main/tool.main.firefox.ts');
 }
 
 module.exports = {
   entry: {
-    tool: resolve('src/main/tool.main.ts'),
+    tool,
     content_script: resolve('src/main/contentScript.main.ts'),
     background,
   },
