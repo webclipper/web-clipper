@@ -951,10 +951,10 @@
   dependencies:
     dva-model-creator "^0.3.0"
 
-"@web-clipper/readability@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.npm.taobao.org/@web-clipper/readability/download/@web-clipper/readability-0.2.1.tgz#1aef4b09d805c377ebf2aa61a20085876faa8221"
-  integrity sha1-Gu9LCdgFw3fr8qphogCFh2+qgiE=
+"@web-clipper/readability@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.npm.taobao.org/@web-clipper/readability/download/@web-clipper/readability-0.3.0.tgz?cache=0&sync_timestamp=1597248627380&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40web-clipper%2Freadability%2Fdownload%2F%40web-clipper%2Freadability-0.3.0.tgz#d8e8201fe4bedbea3a0d2e4281e02f22092adc33"
+  integrity sha1-2OggH+S+2+o6DS5CgeAvIgkq3DM=
 
 "@web-clipper/remark-pangu@^1.0.2":
   version "1.0.2"

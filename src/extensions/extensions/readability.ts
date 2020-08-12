@@ -17,7 +17,9 @@ export default new TextExtension(
       $(documentClone)
         .find('#skPlayer')
         .remove();
-      let article = new Readability(documentClone).parse();
+      let article = new Readability(documentClone, {
+        keepClasses: true,
+      }).parse();
       return turndown.turndown(article.content);
     },
   }

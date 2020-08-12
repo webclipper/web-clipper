@@ -3,7 +3,7 @@ import { Service, Inject } from 'typedi';
 import styles from '@/service/contentScript/browser/contentScript/contentScript.less';
 import * as browser from '@web-clipper/chrome-promise';
 import * as QRCode from 'qrcode';
-import * as Readability from '@web-clipper/readability';
+import { Readability } from '@web-clipper/readability';
 import AreaSelector from '@web-clipper/area-selector';
 import Highlighter from '@web-clipper/highlight';
 import plugins from '@web-clipper/turndown';
