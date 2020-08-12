@@ -937,10 +937,10 @@
   resolved "https://registry.npm.taobao.org/@web-clipper/extensions/download/@web-clipper/extensions-0.0.17.tgz#3aab8855aedbf31c0f736d879cfc166b627974d6"
   integrity sha1-OquIVa7b8xwPc22HnPwWa2J5dNY=
 
-"@web-clipper/highlight@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.npm.taobao.org/@web-clipper/highlight/download/@web-clipper/highlight-0.0.20.tgz#b0eb71b80e20d0efc57062e6d974a928b63063dc"
-  integrity sha1-sOtxuA4g0O/FcGLm2XSpKLYwY9w=
+"@web-clipper/highlight@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@web-clipper/highlight/-/highlight-0.1.3.tgz#25c7655f8832bda684949c0949e9c82d0bbdc810"
+  integrity sha512-j5U+BUyzQROcAay1c1W36T0VT//Xb2KQQgNLfhaa4jJXzyuthokxFtgeTleECPpPKhlEeN6zA+/9pGIv0umUvQ==
   dependencies:
     jquery "^3.4.1"
 
