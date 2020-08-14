@@ -1,3 +1,17 @@
+## 1.26.0
+
+`2020-08-14`
+
+- ✨ Support wolai
+- ✨ Support baklib
+
+## 1.25.0
+
+`2020-07-01`
+
+- ✨ Support notion database
+- 🔖 Release canary version
+
 ## 1.24.0
 
 `2020-04-28`
