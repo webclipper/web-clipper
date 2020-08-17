@@ -21,7 +21,7 @@
     "lint-staged"
   ],
   "author": "DiamondYuan",
-  "license": "MIT",
+  "license": "GPLv2",
   "dependencies": {
     "@shihengtech/hooks": "^0.0.7",
     "@web-clipper/area-selector": "^0.1.1",
