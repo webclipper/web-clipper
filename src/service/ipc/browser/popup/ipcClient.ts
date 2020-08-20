@@ -29,7 +29,9 @@ export class PopupContentScriptChannelClient implements IChannel {
     };
     const message: IPCMessageResponse<T> = await this.tabService.sendActionToCurrentTab(action);
     if (!message) {
-      return Promise.reject(new Error('ContentScript not ready yet.'));
+      return Promise.reject(
+        new Error(chrome.runtime.lastError?.message ?? 'ContentScript not ready yet.')
+      );
     }
     return new Promise((resolve, reject) => {
       if (message.error) {
