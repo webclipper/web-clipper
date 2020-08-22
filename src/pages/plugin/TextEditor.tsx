@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'dva';
 import { changeData } from 'pageActions/clipper';
 import { asyncRunExtension } from 'pageActions/userPreference';
-import * as HyperMD from 'hypermd';
 import { EditorContainer } from 'components/container';
-import { isUndefined } from 'common/object';
 import { GlobalStore } from 'common/types';
 import { IExtensionWithId } from '@/extensions/common';
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
+import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
+import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 
 const useActions = {
   asyncRunExtension: asyncRunExtension.started,
@@ -31,73 +34,26 @@ type PageProps = ReturnType<typeof mapStateToProps> & typeof useActions & PageOw
 
 const editorId = 'DiamondYuan_Love_LJ';
 
-class ClipperPluginPage extends React.Component<PageProps> {
-  private myCodeMirror: any;
-
-  checkExtension = () => {
-    const { extension, clipperData, pathname } = this.props;
-    const data = clipperData[pathname];
-    if (isUndefined(data)) {
-      this.props.asyncRunExtension({
-        pathname,
-        extension,
-      });
-    }
-    return data || '';
-  };
-
-  componentDidUpdate = () => {
-    const data = this.checkExtension();
-    if (this.myCodeMirror) {
-      const value = this.myCodeMirror.getValue();
-      if (data !== value) {
-        try {
-          const that = this;
-          setTimeout(() => {
-            that.myCodeMirror.setValue(data);
-            that.myCodeMirror.focus();
-            that.myCodeMirror.setCursor(that.myCodeMirror.lineCount(), 0);
-          }, 10);
-        } catch (_error) {}
-      }
-    }
-  };
-
-  componentDidMount = () => {
-    const data = this.checkExtension();
+const ClipperPluginPage: React.FC<PageProps> = () => {
+  useEffect(() => {
     let myTextarea = document.getElementById(editorId) as HTMLTextAreaElement;
-    this.myCodeMirror = HyperMD.fromTextArea(myTextarea, {
-      lineNumbers: false,
-      hmdModeLoader: false,
-    });
-    if (this.myCodeMirror) {
-      const value = this.myCodeMirror.getValue();
-      if (data !== value) {
-        this.myCodeMirror.setValue(data);
-      }
-    }
-    this.myCodeMirror.on('change', (editor: any) => {
-      this.props.changeData({
-        data: editor.getValue(),
-        pathName: this.props.pathname,
+    ClassicEditor.create(myTextarea, {
+      plugins: [Essentials, Paragraph, Bold, Italic],
+      toolbar: ['bold', 'italic'],
+    }).then((editor: any) => {
+      editor.editing.view.change((writer: any) => {
+        writer.setStyle('height', '800px', editor.editing.view.document.getRoot());
+        writer.setStyle('width', '800px', editor.editing.view.document.getRoot());
       });
     });
-    this.myCodeMirror.setSize(800, 621);
-    if (this.props.liveRendering) {
-      HyperMD.switchToHyperMD(this.myCodeMirror);
-    } else {
-      HyperMD.switchToNormal(this.myCodeMirror);
-    }
-  };
+  }, []);
 
-  render() {
-    return (
-      <EditorContainer>
-        <textarea id={editorId} />
-      </EditorContainer>
-    );
-  }
-}
+  return (
+    <EditorContainer>
+      <textarea id={editorId} />
+    </EditorContainer>
+  );
+};
 
 export default connect(mapStateToProps, (dispatch: Dispatch) =>
   bindActionCreators<typeof useActions, typeof useActions>(useActions, dispatch)

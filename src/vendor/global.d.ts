@@ -5,6 +5,11 @@ declare module 'turndown-plugin-gfm';
 declare module 'dva-logger';
 declare module '@web-clipper/remark-pangu';
 declare module 'dva-loading';
+declare module '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+declare module '@ckeditor/ckeditor5-essentials/src/essentials';
+declare module '@ckeditor/ckeditor5-paragraph/src/paragraph';
+declare module '@ckeditor/ckeditor5-basic-styles/src/bold';
+declare module '@ckeditor/ckeditor5-basic-styles/src/italic';
 
 type PromiseType<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
 

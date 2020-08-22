@@ -7,6 +7,7 @@ const ExtensionReloader = require('webpack-extension-reloader');
 const tsImportPluginFactory = require('ts-import-plugin');
 const WebpackCreateExtensionManifestPlugin = require('webpack-create-extension-manifest-plugin');
 const fs = require('fs');
+const { styles } = require('@ckeditor/ckeditor5-dev-utils');
 
 const distFiles = fs.readdirSync(resolve('dist')).filter(o => o !== '.gitkeep');
 
@@ -131,6 +132,34 @@ module.exports = {
             options: {
               limit: 8192,
             },
+          },
+        ],
+      },
+      {
+        test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+        use: ['raw-loader'],
+      },
+      {
+        test: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              injectType: 'singletonStyleTag',
+              attributes: {
+                'data-cke': true,
+              },
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: styles.getPostCssConfig({
+              themeImporter: {
+                themePath: require.resolve('@ckeditor/ckeditor5-theme-lark'),
+              },
+              minify: true,
+            }),
           },
         ],
       },
