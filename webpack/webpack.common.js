@@ -113,18 +113,6 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        include: /hypermd|codemirror/,
-        test: [/\.css$/],
-        use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-          },
-        ],
-      },
-      {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
