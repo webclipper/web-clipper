@@ -26,6 +26,8 @@ You can use Web Clipper to save anything on the web to anywhere.
 - [Joplin](https://joplinapp.org/)
 - [Server Chan](http://sc.ftqq.com/3.version)
 - [dida365](https://dida365.com/)
+- [baklib](https://www.baklib.com/)
+- [wolai](https://www.wolai.com/)
 
 ### Install
 
