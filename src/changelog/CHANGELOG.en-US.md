@@ -1,9 +1,16 @@
+## 1.26.1
+
+`2020-08-27`
+
+- ✨ support vivaldi
+
 ## 1.26.0
 
 `2020-08-14`
 
 - ✨ Support wolai
 - ✨ Support baklib
+- ✨ ~~support vivaldi~~
 
 ## 1.25.0
 
