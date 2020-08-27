@@ -46,6 +46,27 @@ const visibilityOptions = [
   },
 ];
 
+const storageOptions = [
+  {
+    label: (
+      <FormattedMessage
+        id="backend.services.github.form.storageLocation.issue"
+        defaultMessage="Issue"
+      />
+    ),
+    value: 'issue',
+  },
+  {
+    label: (
+      <FormattedMessage
+        id="backend.services.github.form.storageLocation.code"
+        defaultMessage="Code"
+      />
+    ),
+    value: 'code',
+  },
+];
+
 const GithubForm: React.FC<GithubFormProps & FormComponentProps> = ({
   form: { getFieldDecorator },
   info,
@@ -54,9 +75,13 @@ const GithubForm: React.FC<GithubFormProps & FormComponentProps> = ({
   const disabled = verified || !!info;
   let initAccessToken;
   let visibility;
+  let storageLocation;
+  let savePath;
   if (info) {
     initAccessToken = info.accessToken;
     visibility = info.visibility;
+    storageLocation = info.storageLocation;
+    savePath = info.savePath;
   }
   return (
     <Fragment>
@@ -116,6 +141,50 @@ const GithubForm: React.FC<GithubFormProps & FormComponentProps> = ({
                   <KeyOutlined />
                 </a>
               </Tooltip>
+            }
+          />
+        )}
+      </Form.Item>
+      <Form.Item
+        label={
+          <FormattedMessage
+            id="backend.services.github.form.storageLocation"
+            defaultMessage="Storage Location"
+          />
+        }
+      >
+        {getFieldDecorator('storageLocation', {
+          initialValue: storageLocation,
+        })(
+          <Select allowClear>
+            {storageOptions.map(o => (
+              <Select.Option value={o.value} key={o.value}>
+                {o.label}
+              </Select.Option>
+            ))}
+          </Select>
+        )}
+      </Form.Item>
+      <Form.Item label={
+        <FormattedMessage
+          id="backend.services.github.form.storageLocation.code.savePath"
+          defaultMessage="Save Path"
+        />
+      }>
+        {getFieldDecorator('savePath', {
+          initialValue: savePath,
+          rules: [
+            {
+              required: false,
+            },
+          ],
+        })(
+          <Input
+            placeholder={
+              locale.format({
+                id: "backend.services.github.form.storageLocation.code.savePathPlaceHolder",
+                defaultMessage: "Only takes effect when saving to code.",
+              })
             }
           />
         )}
