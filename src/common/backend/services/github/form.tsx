@@ -65,7 +65,7 @@ const storageOptions = [
 ];
 
 const GithubForm: React.FC<GithubFormProps & FormComponentProps> = ({
-  form: { getFieldDecorator },
+  form: { getFieldDecorator, getFieldValue },
   info,
   verified,
 }) => {
@@ -162,12 +162,14 @@ const GithubForm: React.FC<GithubFormProps & FormComponentProps> = ({
           </Select>
         )}
       </Form.Item>
-      <Form.Item label={
-        <FormattedMessage
-          id="backend.services.github.form.storageLocation.code.savePath"
-          defaultMessage="Save Path"
-        />
-      }>
+      <Form.Item
+        label={
+          <FormattedMessage
+            id="backend.services.github.form.storageLocation.code.savePath"
+            defaultMessage="Save Path"
+          />
+        }
+      >
         {getFieldDecorator('savePath', {
           initialValue: savePath,
           rules: [
@@ -177,12 +179,11 @@ const GithubForm: React.FC<GithubFormProps & FormComponentProps> = ({
           ],
         })(
           <Input
-            placeholder={
-              locale.format({
-                id: "backend.services.github.form.storageLocation.code.savePathPlaceHolder",
-                defaultMessage: "Only takes effect when saving to code.",
-              })
-            }
+            disabled={getFieldValue('storageLocation') === 'issue'}
+            placeholder={locale.format({
+              id: 'backend.services.github.form.storageLocation.code.savePathPlaceHolder',
+              defaultMessage: 'Only takes effect when saving to code.',
+            })}
           />
         )}
       </Form.Item>
