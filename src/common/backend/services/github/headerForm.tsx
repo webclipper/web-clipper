@@ -14,8 +14,7 @@ const HeaderForm: React.FC<FormComponentProps & { currentRepository: any }> = ({
 }) => {
   const service = backend.getDocumentService() as GithubDocumentService;
 
-  if (service.getStorageLocation() == 'code')
-    return null;
+  if (service.getStorageLocation() === 'code') return null;
 
   const labelsResponse = useFetch(
     async () => {
