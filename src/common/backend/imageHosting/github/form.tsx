@@ -1,6 +1,10 @@
 import React, { Fragment } from 'react';
 import { FormComponentProps } from 'antd/lib/form';
-import { Form, Input } from 'antd';
+import { Form, Input, Tooltip, Icon } from 'antd';
+import { FormattedMessage } from 'react-intl';
+import { stringify } from 'qs';
+import locale from '@/common/locales';
+
 
 interface Props extends FormComponentProps {
   info: {
@@ -12,9 +16,19 @@ interface Props extends FormComponentProps {
 
 export default ({ form: { getFieldDecorator }, info }: Props) => {
   const initInfo: Partial<Props['info']> = info || {};
+  const GenerateNewTokenUrl = `https://github.com/settings/tokens/new?${stringify({
+    scopes: 'repo',
+    description: 'Web Clipper',
+  })}`;
+    
   return (
     <Fragment>
-      <Form.Item label="AccessToken">
+      <Form.Item label={
+        <FormattedMessage
+          id = "backend.imageHosting.github.form.accessToken"
+          defaultMessage = "AccessToken"
+        />
+      }>
         {getFieldDecorator('accessToken', {
           initialValue: initInfo.accessToken,
           rules: [
@@ -22,9 +36,35 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
               required: true,
             },
           ],
-        })(<Input placeholder="please input gthub access token"></Input>)}
+        })(<Input 
+              placeholder=""             
+              suffix={
+              <Tooltip
+                title={
+                  <span
+                    style={{
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {locale.format({
+                      id: 'backend.imageHosting.github.form.GenerateNewToken',
+                      defaultMessage: 'Generate new token',
+                    })}
+                  </span>
+                }
+              >
+                <a href={GenerateNewTokenUrl} target={GenerateNewTokenUrl}>
+                  <Icon type="key" />
+                </a>
+              </Tooltip>
+        }/>)}
       </Form.Item>
-      <Form.Item label="Relative Path">
+      <Form.Item label={
+        <FormattedMessage
+          id = "backend.imageHosting.github.form.storageLocation.code.savePath"
+          defaultMessage = "Save Path"
+        />
+      }>
         {getFieldDecorator('relativePath', {
           initialValue: initInfo.relativePath,
           rules: [
@@ -32,9 +72,14 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
               required: true,
             },
           ],
-        })(<Input placeholder="just like /picture/"></Input>)}
+        })(<Input placeholder="/picture/"></Input>)}
       </Form.Item>
-      <Form.Item label="Repository Name">
+      <Form.Item label={
+        <FormattedMessage
+        defaultMessage = 'Repo Name'
+        id = "backend.imageHosting.github.form.ReopName"
+        />
+      }>
         {getFieldDecorator('repositoryName', {
           initialValue: initInfo.repositoryName,
           rules: [
@@ -42,7 +87,7 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
               required: true,
             },
           ],
-        })(<Input placeholder="just like web-clipper"></Input>)}
+        })(<Input placeholder="web-clipper"></Input>)}
       </Form.Item>
     </Fragment>
   );
