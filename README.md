@@ -54,8 +54,8 @@ ps: Because the review takes a week, the version will fall behind.
 $ git clone https://github.com/webclipper/web-clipper.git
 $ cd web-clipper
 $ yarn
-$ yarn dev // Chrome
-$ yarn dev:ff // Firebox
+$ yarn dev # Chrome
+$ yarn dev:ff # Firebox
 ```
 
 ### Test
