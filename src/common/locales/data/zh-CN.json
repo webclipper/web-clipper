@@ -11,6 +11,7 @@
   "backend.services.baklib.headerForm.channel": "栏目",
   "backend.services.baklib.headerForm.description": "描述",
   "backend.services.baklib.headerForm.tags": "标签",
+  "backend.services.baklib.name": "Baklib",
   "backend.services.bear.form.confirm": "请确认您安装了 Bear 客户端。",
   "backend.services.confluence.form.authentication": "授权",
   "backend.services.confluence.form.origin": "Origin",

@@ -11,6 +11,7 @@
   "backend.services.baklib.headerForm.channel": "",
   "backend.services.baklib.headerForm.description": "",
   "backend.services.baklib.headerForm.tags": "",
+  "backend.services.baklib.name": "",
   "backend.services.bear.form.confirm": "",
   "backend.services.confluence.form.authentication": "",
   "backend.services.confluence.form.origin": "",

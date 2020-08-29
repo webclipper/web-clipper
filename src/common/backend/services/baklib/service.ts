@@ -1,7 +1,7 @@
 import { DocumentService, CreateDocumentRequest } from './../../index';
 import { extend, RequestMethod } from 'umi-request';
 import md5 from '@web-clipper/shared/lib/md5';
-import { BaklibBackendServiceConfig } from './interface';
+import { BaklibBackendServiceConfig, BaklibTenantsResponse } from './interface';
 import { CompleteStatus, Repository } from '../interface';
 
 interface Channel {
@@ -51,10 +51,7 @@ export default class BaklibDocumentService implements DocumentService {
     const {
       message: { current_tenants, share_tenants },
     } = await this.request.get<{
-      message: {
-        current_tenants: { id: string; name: string; member_role: string[] }[];
-        share_tenants: { id: string; name: string; member_role: string[] }[];
-      };
+      message: BaklibTenantsResponse;
     }>('v1/tenants');
     function tenantToRepo(tenants: any, groupName: string) {
       return tenants.map(
