@@ -13,11 +13,6 @@ export default (): ImageHostingServiceMeta => {
     type: 'github',
     form: Form,
     service: Service,
-    //    builtIn: true,
-    // builtInRemark: localeService.format({
-    //   id: 'backend.imageHosting.github.builtInRemark',
-    //   defaultMessage: 'github built in image hosting service.',
-    // }),
     permission: {
       origins: ['https://api.github.com/*'],
     },
