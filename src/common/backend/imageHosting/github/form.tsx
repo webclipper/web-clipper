@@ -42,7 +42,7 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
               required: true,
             },
           ],
-        })(<Input placeholder="just like webclipper/web-clipper"></Input>)}
+        })(<Input placeholder="just like web-clipper"></Input>)}
       </Form.Item>
     </Fragment>
   );
