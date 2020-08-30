@@ -13,9 +13,11 @@ export default class GithubImageHostingService implements ImageHostingService {
   private config: GithubImageHostingOption;
   private request: AxiosInstance;
   private username: string;
+  private date: Date;
   constructor(config: GithubImageHostingOption) {
     this.username = '';
     this.config = config;
+    this.date = new Date();
     this.request = Axios.create({
       baseURL: 'https://api.github.com',
       headers: {
@@ -39,6 +41,7 @@ export default class GithubImageHostingService implements ImageHostingService {
   uploadImage = async ({ data }: UploadImageRequest) => {
     return this.uploadAsBase64(data);
   };
+
   uploadImageUrl = async (url: string) => {
     const image = await Axios.get(url, { responseType: 'blob' });
     const imageBlob = image.data;
@@ -52,6 +55,7 @@ export default class GithubImageHostingService implements ImageHostingService {
     });
     return response.data.login;
   }
+
   private generateFilename = (data: string): string => {
     const matchedSuffix: any = data.match(/^data:image\/(\w*);base64,/);
     const suffix: string = matchedSuffix[1];
@@ -71,14 +75,15 @@ export default class GithubImageHostingService implements ImageHostingService {
       this.config.relativePath += '/';
 
     const fileName = this.generateFilename(data);
-
+    const folderName = this.date
+      .toLocaleString('chinese', { hour12: false })
+      .replace(new RegExp('/', 'g'), '-');
     const filteredImage = data.replace(/^data:image\/\w+;base64,/, '');
-
     const response = await this.request
       .put(
-        `/repos/${this.username}/${this.config.repositoryName}/contents${this.config.relativePath}${fileName}`,
+        `/repos/${this.username}/${this.config.repositoryName}/contents${this.config.relativePath}${folderName}/${fileName}`,
         {
-          message: 'picture',
+          message: `Upload picture "${fileName}"`,
           content: filteredImage,
         }
       )

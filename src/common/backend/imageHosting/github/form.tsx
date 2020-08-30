@@ -34,6 +34,9 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
           rules: [
             {
               required: true,
+              message:<FormattedMessage 
+                      id = "backend.imageHosting.github.form.accessToken.errorMessage" 
+                      defaultMessage = "AccessToken is required"/>,
             },
           ],
         })(<Input 
@@ -61,21 +64,6 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
       </Form.Item>
       <Form.Item label={
         <FormattedMessage
-          id = "backend.imageHosting.github.form.storageLocation.code.savePath"
-          defaultMessage = "Save Path"
-        />
-      }>
-        {getFieldDecorator('relativePath', {
-          initialValue: initInfo.relativePath,
-          rules: [
-            {
-              required: true,
-            },
-          ],
-        })(<Input placeholder="/picture/"></Input>)}
-      </Form.Item>
-      <Form.Item label={
-        <FormattedMessage
         defaultMessage = 'Repo Name'
         id = "backend.imageHosting.github.form.ReopName"
         />
@@ -85,9 +73,27 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
           rules: [
             {
               required: true,
+              message:<FormattedMessage 
+              id = "backend.imageHosting.github.form.repositoryName.errorMessage" 
+              defaultMessage = "repository name is required"/>,
             },
           ],
-        })(<Input placeholder="web-clipper"></Input>)}
+        })(<Input/>)}
+      </Form.Item>
+      <Form.Item label={
+        <FormattedMessage
+          id = "backend.imageHosting.github.form.storageLocation.code.savePath"
+          defaultMessage = "Save Path"
+        />
+      }>
+        {getFieldDecorator('relativePath', {
+          initialValue: initInfo.relativePath,
+          rules: [
+            {
+              required: false,
+            },
+          ],
+        })(<Input />)}
       </Form.Item>
     </Fragment>
   );
