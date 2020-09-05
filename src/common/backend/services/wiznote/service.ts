@@ -6,10 +6,11 @@ import {
   WizNoteGetTagsResponse,
   WizNoteCreateTagResponse,
   WizNoteGetRepositoriesResponse,
+  WizNoteCreateDocumentRequest,
 } from '@/common/backend/services/wiznote/interface';
 import md5 from '@web-clipper/shared/lib/md5';
 import { DocumentService } from '@/common/backend/index';
-import { Repository, CreateDocumentRequest, CompleteStatus } from '../interface';
+import { Repository, CompleteStatus } from '../interface';
 
 export default class WizNoteDocumentService implements DocumentService {
   private config: WizNoteConfig;
@@ -80,7 +81,7 @@ export default class WizNoteDocumentService implements DocumentService {
     return response.result.tagGuid;
   };
 
-  createDocument = async (req: CreateDocumentRequest): Promise<CompleteStatus> => {
+  createDocument = async (req: WizNoteCreateDocumentRequest): Promise<CompleteStatus> => {
     const existTags = await this.getTags();
     const tags = await Promise.all(
       req.tags.map(async tag => {

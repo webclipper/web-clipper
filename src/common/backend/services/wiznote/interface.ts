@@ -1,3 +1,5 @@
+import { CreateDocumentRequest } from '../interface';
+
 export interface WizNoteConfig {
   origin: string;
   spaceId: number;
@@ -11,6 +13,10 @@ export interface WizNoteUserInfo {
     token: string;
     kbGuid: string;
   };
+}
+
+export interface WizNoteCreateDocumentRequest extends CreateDocumentRequest {
+  tags: string[];
 }
 
 export interface WizNoteCreateTagResponse {
