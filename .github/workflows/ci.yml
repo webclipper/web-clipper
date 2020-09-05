@@ -17,6 +17,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - run: npm run lint
-      - run: npm run test
+      - run: npm run test --collectCoverage
       - run: npm run release
       - uses: codecov/codecov-action@v1
