@@ -550,10 +550,10 @@
   resolved "https://registry.npm.taobao.org/@types/classnames/download/@types/classnames-2.2.10.tgz#cc658ca319b6355399efc1f5b9e818f1a24bf999"
   integrity sha1-zGWMoxm2NVOZ78H1uegY8aJL+Zk=
 
-"@types/codemirror@^0.0.76":
-  version "0.0.76"
-  resolved "https://registry.npm.taobao.org/@types/codemirror/download/@types/codemirror-0.0.76.tgz#c52719878056a216bc05889b46a41d4eb1434423"
-  integrity sha1-xScZh4BWoha8BYibRqQdTrFDRCM=
+"@types/codemirror@^0.0.98":
+  version "0.0.98"
+  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.98.tgz#b35c7a4ab1fc1684b08a4e3eb65240020556ebfb"
+  integrity sha512-cbty5LPayy2vNSeuUdjNA9tggG+go5vAxmnLDRWpiZI5a+RDBi9dlozy4/jW/7P/gletbBWbQREEa7A81YxstA==
   dependencies:
     "@types/tern" "*"
 
