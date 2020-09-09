@@ -47,6 +47,7 @@
     "dva-loading": "^3.0.19",
     "dva-logger": "^1.0.0",
     "dva-model-creator": "^0.4.3",
+    "filenamify": "^4.1.0",
     "hypermd": "^0.3.11",
     "immutability-helper": "^3.0.1",
     "jquery": "^3.4.0",
