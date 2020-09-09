@@ -98,10 +98,16 @@ export default class GithubDocumentService implements DocumentService {
       };
       let fileContent: string = b64EncodeUnicode(`# ${title}\n${body}`);
 
+      let fileName: string = title;
+      fileName = fileName.replace('/', '%20');
+      fileName = fileName.replace('\\', '%20');
+
+      let requestPath: string = `/repos/${repository.namespace}/contents/${this.config.savePath}${fileName}.md`;
+
       const response = await this.request
         .put<{
           content: { html_url: string };
-        }>(`/repos/${repository.namespace}/contents/${this.config.savePath}${title}.md`, {
+        }>(requestPath, {
           message: `Clip "${title}"`,
           content: fileContent,
         })
