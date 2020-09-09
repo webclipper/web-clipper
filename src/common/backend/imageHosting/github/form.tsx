@@ -9,8 +9,8 @@ import locale from '@/common/locales';
 interface Props extends FormComponentProps {
   info: {
     accessToken: string;
-    relativePath: string;
-    repositoryName: string;
+    savePath: string;
+    repoName: string;
   };
 }
 
@@ -36,7 +36,7 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
               required: true,
               message:<FormattedMessage 
                       id = "backend.imageHosting.github.form.accessToken.errorMessage" 
-                      defaultMessage = "AccessToken is required"/>,
+                      defaultMessage = "AccessToken is required."/>,
             },
           ],
         })(<Input 
@@ -50,7 +50,7 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
                     }}
                   >
                     {locale.format({
-                      id: 'backend.imageHosting.github.form.GenerateNewToken',
+                      id: 'backend.imageHosting.github.form.generateNewToken',
                       defaultMessage: 'Generate new token',
                     })}
                   </span>
@@ -65,29 +65,29 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
       <Form.Item label={
         <FormattedMessage
         defaultMessage = 'Repo Name'
-        id = "backend.imageHosting.github.form.ReopName"
+        id = "backend.imageHosting.github.form.repoName"
         />
       }>
-        {getFieldDecorator('repositoryName', {
-          initialValue: initInfo.repositoryName,
+        {getFieldDecorator('repoName', {
+          initialValue: initInfo.repoName,
           rules: [
             {
               required: true,
               message:<FormattedMessage 
-              id = "backend.imageHosting.github.form.repositoryName.errorMessage" 
-              defaultMessage = "repository name is required"/>,
+              id = "backend.imageHosting.github.form.repoName.errorMessage" 
+              defaultMessage = "Repo name is required."/>,
             },
           ],
         })(<Input/>)}
       </Form.Item>
       <Form.Item label={
         <FormattedMessage
-          id = "backend.imageHosting.github.form.storageLocation.code.savePath"
+          id = "backend.imageHosting.github.form.savePath"
           defaultMessage = "Save Path"
         />
       }>
-        {getFieldDecorator('relativePath', {
-          initialValue: initInfo.relativePath,
+        {getFieldDecorator('savePath', {
+          initialValue: initInfo.savePath,
           rules: [
             {
               required: false,
