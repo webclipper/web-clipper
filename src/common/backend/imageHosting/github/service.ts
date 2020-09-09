@@ -6,8 +6,8 @@ import { isUndefined } from 'lodash';
 
 export interface GithubImageHostingOption {
   accessToken: string;
-  relativePath: string;
-  repositoryName: string;
+  savePath: string;
+  repoName: string;
 }
 
 export default class GithubImageHostingService implements ImageHostingService {
@@ -72,10 +72,10 @@ export default class GithubImageHostingService implements ImageHostingService {
       }
     }
 
-    if (isUndefined(this.config.relativePath)) this.config.relativePath = '';
-    if (this.config.relativePath.startsWith('/')) this.config.relativePath.substr(1);
-    if (!this.config.relativePath.endsWith('/') && this.config.relativePath.length > 0)
-      this.config.relativePath += '/';
+    if (isUndefined(this.config.savePath)) this.config.savePath = '';
+    if (this.config.savePath.startsWith('/')) this.config.savePath.substr(1);
+    if (!this.config.savePath.endsWith('/') && this.config.savePath.length > 0)
+      this.config.savePath += '/';
 
     const fileName = this.generateFilename(data);
     const folderName = this.date
@@ -84,9 +84,9 @@ export default class GithubImageHostingService implements ImageHostingService {
     const filteredImage = data.replace(/^data:image\/\w+;base64,/, '');
     const response = await this.request
       .put(
-        `/repos/${this.username}/${this.config.repositoryName}/contents/${this.config.relativePath}${folderName}/${fileName}`,
+        `/repos/${this.username}/${this.config.repoName}/contents/${this.config.savePath}${folderName}/${fileName}`,
         {
-          message: `Upload picture "${fileName}"`,
+          message: `Upload image "${fileName}"`,
           content: filteredImage,
         }
       )
