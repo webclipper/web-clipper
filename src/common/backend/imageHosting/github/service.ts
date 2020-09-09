@@ -80,7 +80,8 @@ export default class GithubImageHostingService implements ImageHostingService {
     const fileName = this.generateFilename(data);
     const folderName = this.date
       .toLocaleString('chinese', { hour12: false })
-      .replace(new RegExp('/', 'g'), '-');
+      .replace(new RegExp('/', 'g'), '-')
+      .replace(new RegExp(':', 'g'), '-');
     const filteredImage = data.replace(/^data:image\/\w+;base64,/, '');
     const response = await this.request
       .put(
