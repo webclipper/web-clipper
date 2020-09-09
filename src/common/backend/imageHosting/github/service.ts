@@ -2,6 +2,7 @@ import { generateUuid } from '@web-clipper/shared/lib/uuid';
 import { BlobToBase64 } from '@/common/blob';
 import Axios, { AxiosInstance } from 'axios';
 import { UploadImageRequest, ImageHostingService } from '../interface';
+import { isUndefined } from 'lodash';
 
 export interface GithubImageHostingOption {
   accessToken: string;
@@ -70,6 +71,8 @@ export default class GithubImageHostingService implements ImageHostingService {
         throw error;
       }
     }
+
+    if (isUndefined(this.config.relativePath)) this.config.relativePath = '';
     if (this.config.relativePath.startsWith('/')) this.config.relativePath.substr(1);
     if (!this.config.relativePath.endsWith('/') && this.config.relativePath.length > 0)
       this.config.relativePath += '/';
@@ -81,7 +84,7 @@ export default class GithubImageHostingService implements ImageHostingService {
     const filteredImage = data.replace(/^data:image\/\w+;base64,/, '');
     const response = await this.request
       .put(
-        `/repos/${this.username}/${this.config.repositoryName}/contents${this.config.relativePath}${folderName}/${fileName}`,
+        `/repos/${this.username}/${this.config.repositoryName}/contents/${this.config.relativePath}${folderName}/${fileName}`,
         {
           message: `Upload picture "${fileName}"`,
           content: filteredImage,
