@@ -58,7 +58,7 @@ export default class GithubImageHostingService implements ImageHostingService {
   }
 
   private generateFilename = (data: string): string => {
-    const matchedSuffix: any = data.match(/^data:image\/(\w*);base64,/);
+    const matchedSuffix: any = data.match(/^data:image\/(.*);base64,/);
     const suffix: string = matchedSuffix[1];
     return `${generateUuid()}\.${suffix}`;
   };
@@ -82,7 +82,7 @@ export default class GithubImageHostingService implements ImageHostingService {
       .toLocaleString('chinese', { hour12: false })
       .replace(new RegExp('/', 'g'), '-')
       .replace(new RegExp(':', 'g'), '-');
-    const filteredImage = data.replace(/^data:image\/\w+;base64,/, '');
+    const filteredImage = data.replace(/^data:image\/.*;base64,/, '');
     const response = await this.request
       .put(
         `/repos/${this.username}/${this.config.repoName}/contents/${this.config.savePath}${folderName}/${fileName}`,
