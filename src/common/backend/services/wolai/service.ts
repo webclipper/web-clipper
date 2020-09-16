@@ -295,7 +295,7 @@ export default class WolaiDocumentService implements DocumentService {
         },
       ],
     };
-    await this.request.post('v1/updateChanges', { data: operations });
+    await this.request.post('v1/transaction/updateChanges', { data: operations });
     return documentId;
   };
 
