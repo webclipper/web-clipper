@@ -1,3 +1,9 @@
+## 1.27.0
+
+`2020-09-23`
+
+- 🐛 Fix the problem that wolai cannot be used
+
 ## 1.26.1
 
 `2020-08-27`
