@@ -54,7 +54,7 @@
     "qs": "^6.7.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-intl": "^3.9.2",
+    "react-intl": "^5.8.3",
     "react-markdown": "^4.1.0",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "^0.13.3",
