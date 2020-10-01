@@ -112,9 +112,11 @@ const Page: React.FC<PageProps> = ({
           {getFieldDecorator('type', {
             initialValue: type,
           })(
-            <Select disabled={verified} onChange={changeType}>
+            <Select showSearch disabled={verified} onChange={changeType}>
               {Object.values(servicesMeta).map(o => (
-                <Select.Option key={o.type}>{o.name}</Select.Option>
+                <Select.Option key={o.type} label={o.name}>
+                  {o.name}
+                </Select.Option>
               ))}
             </Select>
           )}
