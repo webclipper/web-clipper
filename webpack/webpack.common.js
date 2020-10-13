@@ -21,6 +21,7 @@ let manifestExtra = {
     'storage',
     'https://api.clipper.website/*',
     'https://resource.clipper.website/*',
+    'https://mmbiz.qpic.cn/*',
   ],
   optional_permissions: ['cookies', '<all_urls>', 'webRequest', 'webRequestBlocking'],
 };
