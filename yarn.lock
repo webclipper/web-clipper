@@ -272,38 +272,50 @@
   dependencies:
     "@diamondyuan/eslint-config-javascript" "^7.0.0"
 
-"@formatjs/intl-displaynames@^1.2.0":
-  version "1.2.9"
-  resolved "https://registry.npm.taobao.org/@formatjs/intl-displaynames/download/@formatjs/intl-displaynames-1.2.9.tgz?cache=0&sync_timestamp=1588654381901&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40formatjs%2Fintl-displaynames%2Fdownload%2F%40formatjs%2Fintl-displaynames-1.2.9.tgz#be30523a91b3f5102fcd1754679073be6f8ee545"
-  integrity sha1-vjBSOpGz9RAvzRdUZ5Bzvm+O5UU=
+"@formatjs/ecma402-abstract@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.2.6.tgz#8929525dcb49af31f348fcb4789263743872b57f"
+  integrity sha512-5/wUWuOFEaZeHhDvc+xgkFZxjYcij9/CjyUHngTfWhx+NwYqo8/xusVYv9SnTYDHAahek3OSCP93tzcv4M+7Xw==
   dependencies:
-    "@formatjs/intl-utils" "^2.2.5"
+    tslib "^2.0.1"
 
-"@formatjs/intl-listformat@^1.4.1":
-  version "1.4.7"
-  resolved "https://registry.npm.taobao.org/@formatjs/intl-listformat/download/@formatjs/intl-listformat-1.4.7.tgz?cache=0&sync_timestamp=1588654355795&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40formatjs%2Fintl-listformat%2Fdownload%2F%40formatjs%2Fintl-listformat-1.4.7.tgz#6529663d535ba24c1a33b26bdb4f6e0c1616466e"
-  integrity sha1-ZSlmPVNbokwaM7Jr209uDBYWRm4=
+"@formatjs/intl-displaynames@^3.4.1":
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-displaynames/-/intl-displaynames-3.4.1.tgz#b63276045065761cd9d4a2548f337fb3a430a898"
+  integrity sha512-bStuATYAecjxMNVv9TOBLiTK90F7jTbVioiZCrbNt97zbBoShYwddLMdgczGMeyvy/bwJ7NBXY1+5bg1vKUVvA==
   dependencies:
-    "@formatjs/intl-utils" "^2.2.5"
+    "@formatjs/ecma402-abstract" "^1.2.6"
+    tslib "^2.0.1"
 
-"@formatjs/intl-relativetimeformat@^4.5.9":
-  version "4.5.15"
-  resolved "https://registry.npm.taobao.org/@formatjs/intl-relativetimeformat/download/@formatjs/intl-relativetimeformat-4.5.15.tgz?cache=0&sync_timestamp=1588654003411&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40formatjs%2Fintl-relativetimeformat%2Fdownload%2F%40formatjs%2Fintl-relativetimeformat-4.5.15.tgz#1e31cdfc334603e380032745398186265ecc6049"
-  integrity sha1-HjHN/DNGA+OAAydFOYGGJl7MYEk=
+"@formatjs/intl-listformat@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-listformat/-/intl-listformat-4.3.1.tgz#273747c42c6d6fd4e16e3588be3dc2743a68d77e"
+  integrity sha512-BSJ3mzxD0xxfRLAuQCRUHcO4b+JA0/kfLybyLew6nD+TeBMpfxFWTcgN4E8qa3752eYK7eXM4XrXrJYm0nWWmg==
   dependencies:
-    "@formatjs/intl-utils" "^2.2.5"
+    "@formatjs/ecma402-abstract" "^1.2.6"
+    tslib "^2.0.1"
 
-"@formatjs/intl-unified-numberformat@^3.2.0":
-  version "3.3.6"
-  resolved "https://registry.npm.taobao.org/@formatjs/intl-unified-numberformat/download/@formatjs/intl-unified-numberformat-3.3.6.tgz?cache=0&sync_timestamp=1588654377921&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40formatjs%2Fintl-unified-numberformat%2Fdownload%2F%40formatjs%2Fintl-unified-numberformat-3.3.6.tgz#ab69818f7568894023cb31fdb5b5c7eed62c6537"
-  integrity sha1-q2mBj3VoiUAjyzH9tbXH7tYsZTc=
+"@formatjs/intl-relativetimeformat@^7.3.1":
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-relativetimeformat/-/intl-relativetimeformat-7.3.1.tgz#eb90e856f89c1367245b3ece53bb8854458c7c2e"
+  integrity sha512-OcPSa2sU262MSTTRAgGggs9V9tXWJSu54Ugwe5x/sNUUDlbsen0HZc7N05JJSDTW/XWxGzHKkhSqC9TB49+Caw==
   dependencies:
-    "@formatjs/intl-utils" "^2.2.5"
+    "@formatjs/ecma402-abstract" "^1.2.6"
+    tslib "^2.0.1"
 
-"@formatjs/intl-utils@^2.2.0", "@formatjs/intl-utils@^2.2.5":
-  version "2.2.5"
-  resolved "https://registry.npm.taobao.org/@formatjs/intl-utils/download/@formatjs/intl-utils-2.2.5.tgz?cache=0&sync_timestamp=1588654355594&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40formatjs%2Fintl-utils%2Fdownload%2F%40formatjs%2Fintl-utils-2.2.5.tgz#eaafd94df3d102ee13e54e80f992a33868a6b1e8"
-  integrity sha1-6q/ZTfPRAu4T5U6A+ZKjOGimseg=
+"@formatjs/intl@^1.3.8":
+  version "1.3.8"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-1.3.8.tgz#de7ce5119e5c04d70398681d8471f1d2d12f7b7b"
+  integrity sha512-vksg+ksKEtdaMb5M2POx41C5SQy98xdny6maMOyjcSvaaz8hyNuRsaIVVdy5ThRCsuXlsWkcjPUTXQqKM3SLaw==
+  dependencies:
+    "@formatjs/ecma402-abstract" "^1.2.6"
+    "@formatjs/intl-displaynames" "^3.4.1"
+    "@formatjs/intl-listformat" "^4.3.1"
+    "@formatjs/intl-relativetimeformat" "^7.3.1"
+    fast-memoize "^2.5.2"
+    intl-messageformat "^9.3.12"
+    intl-messageformat-parser "^6.0.11"
+    tslib "^2.0.1"
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
@@ -630,11 +642,6 @@
   dependencies:
     "@types/react" "*"
     hoist-non-react-statics "^3.3.0"
-
-"@types/invariant@^2.2.31":
-  version "2.2.32"
-  resolved "https://registry.npm.taobao.org/@types/invariant/download/@types/invariant-2.2.32.tgz?cache=0&sync_timestamp=1588200728355&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Finvariant%2Fdownload%2F%40types%2Finvariant-2.2.32.tgz#cf523a609062564e36e7a7dadb5089ed87da6382"
-  integrity sha1-z1I6YJBiVk4256fa21CJ7YfaY4I=
 
 "@types/isomorphic-fetch@^0.0.35":
   version "0.0.35"
@@ -3832,6 +3839,11 @@ fast-levenshtein@~2.0.6:
   resolved "https://registry.npm.taobao.org/fast-levenshtein/download/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
 
+fast-memoize@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/fast-memoize/-/fast-memoize-2.5.2.tgz#79e3bb6a4ec867ea40ba0e7146816f6cdce9b57e"
+  integrity sha512-Ue0LwpDYErFbmNnZSF0UH6eImUwDmogUO1jyE+JbN2gsQz/jICm1Ve7t9QT0rNSsfJt+Hs4/S3GnsDVjL4HVrw==
+
 fastparse@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/fastparse/download/fastparse-1.1.2.tgz#91728c5a5942eced8531283c79441ee4122c35a9"
@@ -4750,25 +4762,22 @@ interpret@1.2.0, interpret@^1.2.0:
   resolved "https://registry.npm.taobao.org/interpret/download/interpret-1.2.0.tgz#d5061a6224be58e8083985f5014d844359576296"
   integrity sha1-1QYaYiS+WOgIOYX1AU2EQ1lXYpY=
 
-intl-format-cache@^4.2.21:
-  version "4.2.27"
-  resolved "https://registry.npm.taobao.org/intl-format-cache/download/intl-format-cache-4.2.27.tgz?cache=0&sync_timestamp=1588654355412&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fintl-format-cache%2Fdownload%2Fintl-format-cache-4.2.27.tgz#d25fa83639913aec10ca5a8f9e3b6449bb0eacf2"
-  integrity sha1-0l+oNjmROuwQylqPnjtkSbsOrPI=
-
-intl-messageformat-parser@^3.6.4:
-  version "3.6.4"
-  resolved "https://registry.npm.taobao.org/intl-messageformat-parser/download/intl-messageformat-parser-3.6.4.tgz?cache=0&sync_timestamp=1588653999656&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fintl-messageformat-parser%2Fdownload%2Fintl-messageformat-parser-3.6.4.tgz#5199d106d816c3dda26ee0694362a9cf823978fb"
-  integrity sha1-UZnRBtgWw92ibuBpQ2Kpz4I5ePs=
+intl-messageformat-parser@^6.0.11:
+  version "6.0.11"
+  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-6.0.11.tgz#b5769990f9eb8c015ef726cf4d782a9445544993"
+  integrity sha512-0avgk5LN8KGpH6CC8OsDAttzkTtR/6Oy50dYaUpbulnNUDrSxPFMc79IJRktN8PT+HwOzhk26vvfJHXyPdf6ZA==
   dependencies:
-    "@formatjs/intl-unified-numberformat" "^3.2.0"
+    "@formatjs/ecma402-abstract" "^1.2.6"
+    tslib "^2.0.1"
 
-intl-messageformat@^7.8.4:
-  version "7.8.4"
-  resolved "https://registry.npm.taobao.org/intl-messageformat/download/intl-messageformat-7.8.4.tgz?cache=0&sync_timestamp=1588654381691&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fintl-messageformat%2Fdownload%2Fintl-messageformat-7.8.4.tgz#c29146a06b9cd26662978a4d95fff2b133e3642f"
-  integrity sha1-wpFGoGuc0mZil4pNlf/ysTPjZC8=
+intl-messageformat@^9.3.12:
+  version "9.3.12"
+  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-9.3.12.tgz#a5a3f02b7cb275ac1f5bc8127a86763c24fc1255"
+  integrity sha512-+BrnExt/3ICcMVTQoN1aTueTvCblZ94UH/hQQ4sTFaN7E59BPqTN/vBF5W446JFWuYY0cGjuielBbjSsye+13w==
   dependencies:
-    intl-format-cache "^4.2.21"
-    intl-messageformat-parser "^3.6.4"
+    fast-memoize "^2.5.2"
+    intl-messageformat-parser "^6.0.11"
+    tslib "^2.0.1"
 
 invariant@^2.2.1, invariant@^2.2.4:
   version "2.2.4"
@@ -7758,23 +7767,23 @@ react-dom@^16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
-react-intl@^3.9.2:
-  version "3.12.1"
-  resolved "https://registry.npm.taobao.org/react-intl/download/react-intl-3.12.1.tgz#e9a783ea20302e9da25e4eda59e5593a43d2ec80"
-  integrity sha1-6aeD6iAwLp2iXk7aWeVZOkPS7IA=
+react-intl@^5.8.8:
+  version "5.8.8"
+  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-5.8.8.tgz#8f292c96bbc764b2cb937a5e2a7f2c6bd3d08e28"
+  integrity sha512-Ib1TovHjIHI50TWMs6LSFntBIMugB2VBbrZLKijkYGNm6DaQK4Zmp74zuERfjxa3+EZr38pJGwU3cRsIraDCKw==
   dependencies:
-    "@formatjs/intl-displaynames" "^1.2.0"
-    "@formatjs/intl-listformat" "^1.4.1"
-    "@formatjs/intl-relativetimeformat" "^4.5.9"
-    "@formatjs/intl-unified-numberformat" "^3.2.0"
-    "@formatjs/intl-utils" "^2.2.0"
+    "@formatjs/ecma402-abstract" "^1.2.6"
+    "@formatjs/intl" "^1.3.8"
+    "@formatjs/intl-displaynames" "^3.4.1"
+    "@formatjs/intl-listformat" "^4.3.1"
+    "@formatjs/intl-relativetimeformat" "^7.3.1"
     "@types/hoist-non-react-statics" "^3.3.1"
-    "@types/invariant" "^2.2.31"
+    fast-memoize "^2.5.2"
     hoist-non-react-statics "^3.3.2"
-    intl-format-cache "^4.2.21"
-    intl-messageformat "^7.8.4"
-    intl-messageformat-parser "^3.6.4"
+    intl-messageformat "^9.3.12"
+    intl-messageformat-parser "^6.0.11"
     shallow-equal "^1.2.1"
+    tslib "^2.0.1"
 
 react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6, react-is@^16.9.0:
   version "16.13.1"
@@ -9344,6 +9353,11 @@ tslib@^1.10.0, tslib@^1.11.1, tslib@^1.8.1, tslib@^1.9.0:
   version "1.11.2"
   resolved "https://registry.npm.taobao.org/tslib/download/tslib-1.11.2.tgz#9c79d83272c9a7aaf166f73915c9667ecdde3cc9"
   integrity sha1-nHnYMnLJp6rxZvc5Fclmfs3ePMk=
+
+tslib@^2.0.1:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
+  integrity sha512-uZtkfKblCEQtZKBF6EBXVZeQNl82yqtDQdv+eck8u7tdPxjLu2/lp5/uPW+um2tpuxINHWy3GhiccY7QgEaVHQ==
 
 tsutils@^3.17.1:
   version "3.17.1"
