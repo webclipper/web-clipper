@@ -5,7 +5,16 @@ import ImageHosting from './imageHosting';
 import Extensions from './extensions';
 import { CenterContainer } from 'components/container';
 import { router, connect } from 'dva';
-import { Tabs, Icon, Badge, message } from 'antd';
+
+import {
+  CloseOutlined,
+  PictureOutlined,
+  ToolOutlined,
+  UserOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
+
+import { Tabs, Badge, message } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import Base from './base';
 import { DvaRouterProps, GlobalStore } from '@/common/types';
@@ -32,27 +41,27 @@ type PageStateProps = ReturnType<typeof mapStateToProps>;
 const tabs = [
   {
     path: 'account',
-    icon: <Icon type="user" />,
+    icon: <UserOutlined />,
     title: <FormattedMessage id="preference.tab.account" defaultMessage="Account" />,
     component: Account,
   },
   {
     path: 'extensions',
 
-    icon: <Icon type="tool" />,
+    icon: <ToolOutlined />,
     title: <FormattedMessage id="preference.tab.extensions" defaultMessage="Extension" />,
     component: Extensions,
   },
   {
     path: 'imageHost',
-    icon: <Icon type="picture" />,
+    icon: <PictureOutlined />,
 
     title: <FormattedMessage id="preference.tab.imageHost" defaultMessage="ImageHost" />,
     component: ImageHosting,
   },
   {
     path: 'base',
-    icon: <Icon type="setting" />,
+    icon: <SettingOutlined />,
     title: <FormattedMessage id="preference.tab.basic" defaultMessage="Basic" />,
     component: Base,
   },
@@ -104,7 +113,7 @@ const Preference: React.FC<PageProps> = ({
     <CenterContainer>
       <div className={styles.mainContent}>
         <div onClick={goHome} className={styles.closeIcon}>
-          <Icon type="close" />
+          <CloseOutlined />
         </div>
         <div style={{ background: 'white', height: '100%' }}>
           <Tabs activeKey={pathname} tabPosition="left" style={{ height: '100%' }} onChange={push}>

@@ -5,13 +5,16 @@ import {
   asyncUpdateDefaultAccountId,
   asyncUpdateAccount,
 } from 'pageActions/account';
-import { Icon, Button, Form, Row, Col } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.less';
+import { Button, Row, Col } from 'antd';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'dva';
 import AccountItem from '../../../components/accountItem';
 import styles from './index.less';
 import EditAccountModal from './modal/editAccountModal';
-import { FormComponentProps } from 'antd/lib/form';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import CreateAccountModal from './modal/createAccountModal';
 import { GlobalStore, AccountPreference } from 'common/types';
 import { FormattedMessage } from 'react-intl';
@@ -195,7 +198,7 @@ class Page extends React.Component<PageProps, PageState> {
                 onClick={() => toggleAccountModal()}
                 block
               >
-                <Icon type="plus" />
+                <PlusOutlined />
                 <FormattedMessage id="preference.account.add" defaultMessage="Bind Account" />
               </Button>
             </div>

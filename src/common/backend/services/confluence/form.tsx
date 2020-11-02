@@ -1,6 +1,8 @@
 import React from 'react';
-import { Form, Input, Select } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.less';
+import { Input, Select } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { useFetch } from '@shihengtech/hooks';
 import { extend } from 'umi-request';
 import {

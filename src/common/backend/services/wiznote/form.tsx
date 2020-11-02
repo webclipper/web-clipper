@@ -1,6 +1,8 @@
 import React from 'react';
-import { Form, Input } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.less';
+import { Input } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { WizNoteConfig } from '@/common/backend/services/wiznote/interface';
 import { FormattedMessage } from 'react-intl';
 import useOriginForm from '@/hooks/useOriginForm';

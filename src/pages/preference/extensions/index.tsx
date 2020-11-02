@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Row, Col, Typography, Tooltip, Empty, Switch } from 'antd';
+import { QuestionCircleOutlined, SettingOutlined } from '@ant-design/icons';
+import { Row, Col, Typography, Tooltip, Empty, Switch } from 'antd';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import { FormattedMessage } from 'react-intl';
 import ExtensionCard from '@/components/ExtensionCard';
@@ -49,7 +50,7 @@ const Page: React.FC = () => {
       );
       actions.push(
         <Tooltip title={title}>
-          <Icon type="star" key="star" style={iconStyle} onClick={() => handleSetDefault(e.id)} />
+          <SettingOutlined key="star" style={iconStyle} onClick={() => handleSetDefault(e.id)} />
         </Tooltip>
       );
     }
@@ -121,7 +122,7 @@ const Page: React.FC = () => {
             />
           }
         >
-          <Icon type="question-circle" style={{ fontSize: 14, marginLeft: 5 }} />
+          <QuestionCircleOutlined style={{ fontSize: 14, marginLeft: 5 }} />
         </Tooltip>
       </Typography.Title>
       <Row gutter={8} type="flex">

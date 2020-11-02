@@ -1,5 +1,7 @@
-import { Form, TreeSelect } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.less';
+import { TreeSelect } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React, { Fragment, useEffect } from 'react';
 import locale from '@/common/locales';
 import { Repository } from '../interface';

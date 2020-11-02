@@ -1,5 +1,7 @@
-import { Form, Input } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.less';
+import { Input } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React, { Fragment } from 'react';
 import { WebDAVServiceConfig } from './interface';
 import useOriginForm from '@/hooks/useOriginForm';

@@ -8,9 +8,12 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'dva';
 import styles from './index.less';
 import AddImageHosting from './form/addImageHosting';
-import { FormComponentProps } from 'antd/lib/form';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import ImageHostingListItem from 'components/imagehostingListItem';
-import { Form, Button, Icon } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.less';
+import { Button } from 'antd';
 import { GlobalStore, ImageHosting } from 'common/types';
 import { FormattedMessage } from 'react-intl';
 import { asyncDeleteAccount } from '@/actions/account';
@@ -148,7 +151,7 @@ class Page extends React.Component<PageProps, PageState> {
           onClick={this.handleStartAddAccount}
           style={{ height: 30, marginBottom: 10, width: '100%' }}
         >
-          <Icon type="plus" />
+          <PlusOutlined />
           <FormattedMessage id="preference.imageHosting.add" defaultMessage="Add" />
         </Button>
         {this.renderImageHosting()}

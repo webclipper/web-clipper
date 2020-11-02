@@ -1,5 +1,7 @@
-import { Form, Select, Badge } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.less';
+import { Select, Badge } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React, { Fragment } from 'react';
 import backend from '../..';
 import GithubDocumentService from './service';

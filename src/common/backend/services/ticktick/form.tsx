@@ -1,4 +1,4 @@
-import { FormComponentProps } from 'antd/lib/form';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React, { Fragment } from 'react';
 import PowerpackForm from '@/components/powerpackForm';
 

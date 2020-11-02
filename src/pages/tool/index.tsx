@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useCallback } from 'react';
 import styles from './index.less';
 import ClipExtension from './ClipExtension';
 import ToolExtensions from './toolExtensions';
-import { Button, Icon, Badge, Dropdown, Menu } from 'antd';
+import { SettingOutlined } from '@ant-design/icons';
+import { Button, Badge, Dropdown, Menu } from 'antd';
 import { connect, routerRedux } from 'dva';
 import { GlobalStore } from '@/common/types';
 import { isEqual } from 'lodash';
@@ -233,7 +234,7 @@ const Page = React.memo<PageProps>(
               <Observer>
                 {() => (
                   <Badge dot={!configService.isLatestVersion}>
-                    <Icon type="setting" style={{ fontSize: 18 }} />
+                    <SettingOutlined style={{ fontSize: 18 }} />
                   </Badge>
                 )}
               </Observer>

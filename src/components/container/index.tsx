@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './index.less';
-import { Icon } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
 
 const Container: React.FC = ({ children }) => {
   return <div className={styles.mainContainer}>{children}</div>;
@@ -31,7 +31,7 @@ export class ToolContainer extends React.Component<ToolContainerProps> {
         <Container>
           <div className={styles.toolContainer}>
             <div className={styles.closeButton} onClick={this.onClickCloseButton}>
-              <Icon type="close" />
+              <CloseOutlined />
             </div>
             {<div>{this.props.children}</div>}
           </div>
