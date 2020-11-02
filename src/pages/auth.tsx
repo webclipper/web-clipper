@@ -45,7 +45,7 @@ function useDeepCompareMemoize<T>(value: T) {
 }
 
 const Page: React.FC<PageProps> = props => {
-  const query = parse(props.location.search.slice(1)) as PageQuery;
+  const query: PageQuery = parse(props.location.search.slice(1)) as any;
   const tabService = Container.get(ITabService);
   const {
     form: { getFieldDecorator },
@@ -132,7 +132,9 @@ const Page: React.FC<PageProps> = props => {
           })(
             <Select disabled>
               {Object.values(props.servicesMeta).map(o => (
-                <Select.Option key={o.type}>{o.name}</Select.Option>
+                <Select.Option key={o.type} value={o.type}>
+                  {o.name}
+                </Select.Option>
               ))}
             </Select>
           )}
