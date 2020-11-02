@@ -4,7 +4,7 @@ import React, { forwardRef } from 'react';
 import ImageHostingSelectOption from '@/components/imageHostingSelectOption';
 import styles from './ImageHostingSelect.less';
 
-interface ImageHostingSelectProps extends SelectProps {
+interface ImageHostingSelectProps extends SelectProps<string> {
   supportedImageHostingServices: ImageHostingWithMeta[];
 }
 
@@ -23,4 +23,4 @@ export const ImageHostingSelect: React.FC<ImageHostingSelectProps> = (
   </Select>
 );
 
-export default forwardRef(ImageHostingSelect);
+export default forwardRef<null, undefined>(ImageHostingSelect);
