@@ -8,7 +8,11 @@ interface ImageHostingSelectProps extends SelectProps<string> {
   supportedImageHostingServices: ImageHostingWithMeta[];
 }
 
-export const ImageHostingSelect: React.FC<ImageHostingSelectProps> = (
+/**
+ * TODO
+ * fix any
+ */
+export const ImageHostingSelect: React.ForwardRefRenderFunction<any, ImageHostingSelectProps> = (
   { supportedImageHostingServices, ...props },
   ref
 ) => (
@@ -23,4 +27,8 @@ export const ImageHostingSelect: React.FC<ImageHostingSelectProps> = (
   </Select>
 );
 
-export default forwardRef<null, undefined>(ImageHostingSelect);
+/**
+ * TODO
+ * fix any
+ */
+export default forwardRef<any, ImageHostingSelectProps>(ImageHostingSelect);
