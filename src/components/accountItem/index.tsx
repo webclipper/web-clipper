@@ -52,7 +52,7 @@ export default class Page extends React.Component<PageProps> {
               defaultMessage="Edit"
             ></FormattedMessage>
           </Button>
-          <Button danger onClick={this.handleDelete}>
+          <Button type="primary" danger onClick={this.handleDelete}>
             <FormattedMessage id="component.accountItem.delete" defaultMessage="Delete" />
           </Button>
         </div>
