@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useCallback } from 'react';
 import styles from './index.less';
 import ClipExtension from './ClipExtension';
 import ToolExtensions from './toolExtensions';
-import { SettingOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, SettingOutlined } from '@ant-design/icons';
 import { Button, Badge, Dropdown, Menu } from 'antd';
 import { connect, routerRedux } from 'dva';
 import { GlobalStore } from '@/common/types';
@@ -22,7 +22,6 @@ import Container from 'typedi';
 import { IConfigService } from '@/service/common/config';
 import { Observer, useObserver } from 'mobx-react';
 import IconAvatar from '@/components/avatar';
-import IconFont from '@/components/IconFont';
 import UserItem from '@/components/userItem';
 import { IContentScriptService } from '@/service/common/contentScript';
 import { IExtensionService, IExtensionContainer } from '@/service/common/extension';
@@ -181,10 +180,9 @@ const Page = React.memo<PageProps>(
               icon={servicesMeta[currentAccount.type].icon}
             />
           )}
-          <IconFont
-            type="caret-down"
+          <CaretDownOutlined
             style={{ fontSize: 8, color: 'rgb(140, 140, 140)', marginLeft: 6 }}
-          />
+          ></CaretDownOutlined>
         </div>
       </Dropdown>
     );
