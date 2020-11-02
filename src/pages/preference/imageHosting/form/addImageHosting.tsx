@@ -1,6 +1,8 @@
 import React from 'react';
-import { Form, Modal, Select, Input } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.less';
+import { Modal, Select, Input } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { ImageHostingServiceMeta } from '../../../../common/backend';
 import { ImageHosting } from '@/common/types';
 import { FormattedMessage } from 'react-intl';

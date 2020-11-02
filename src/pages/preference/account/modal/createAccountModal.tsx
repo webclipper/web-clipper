@@ -1,6 +1,9 @@
 import React, { useMemo } from 'react';
-import { Form, Modal, Select, Icon, Divider } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.less';
+import { Modal, Select, Divider } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import styles from './index.less';
 import { ImageHostingServiceMeta, BUILT_IN_IMAGE_HOSTING_ID } from 'common/backend';
 import { UserPreferenceStore, ImageHosting } from '@/common/types';
@@ -29,7 +32,7 @@ const ModalTitle = () => (
   <div className={styles.modalTitle}>
     <FormattedMessage id="preference.accountList.addAccount" defaultMessage="Add Account" />
     <a href={'https://www.yuque.com/yuqueclipper/help_cn/bind_account'} target="_blank">
-      <Icon type="question-circle" />
+      <QuestionCircleOutlined />
     </a>
   </div>
 );

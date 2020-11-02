@@ -1,5 +1,5 @@
 import { UserPreferenceStore } from '@/common/types';
-import { FormComponentProps } from 'antd/lib/form';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { omit, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';

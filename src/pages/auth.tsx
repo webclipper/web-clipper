@@ -2,9 +2,11 @@ import React, { useEffect, useMemo } from 'react';
 import { connect } from 'dva';
 import { parse } from 'qs';
 import { DvaRouterProps, GlobalStore } from '@/common/types';
-import { Modal, Form, Select } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.less';
+import { Modal, Select } from 'antd';
 import { FormattedMessage } from 'react-intl';
-import { FormComponentProps } from 'antd/lib/form';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
 import ImageHostingSelect from '@/components/ImageHostingSelect';
 import useFilterImageHostingServices, {

@@ -136,7 +136,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        include: /node_modules\/antd/,
+        include: /node_modules\/antd|@ant-design/,
         use: [
           {
             loader: 'style-loader',
@@ -147,10 +147,12 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-              modifyVars: {
-                '@body-background': 'transparent',
+              lessOptions: {
+                modifyVars: {
+                  '@body-background': 'transparent',
+                },
+                javascriptEnabled: true,
               },
-              javascriptEnabled: true,
             },
           },
         ],
@@ -173,10 +175,12 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-              modifyVars: {
-                '@body-background': 'transparent',
+              lessOptions: {
+                modifyVars: {
+                  '@body-background': 'transparent',
+                },
+                javascriptEnabled: true,
               },
-              javascriptEnabled: true,
             },
           },
         ],

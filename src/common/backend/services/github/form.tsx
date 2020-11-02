@@ -1,5 +1,8 @@
-import { Form, Input, Select, Icon, Tooltip } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { KeyOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.less';
+import { Input, Select, Tooltip } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React, { Fragment } from 'react';
 import { GithubBackendServiceConfig } from './interface';
 import { FormattedMessage } from 'react-intl';
@@ -110,7 +113,7 @@ const GithubForm: React.FC<GithubFormProps & FormComponentProps> = ({
                 }
               >
                 <a href={GenerateNewTokenUrl} target={GenerateNewTokenUrl}>
-                  <Icon type="key" />
+                  <KeyOutlined />
                 </a>
               </Tooltip>
             }

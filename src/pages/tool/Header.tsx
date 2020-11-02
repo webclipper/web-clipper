@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useMemo } from 'react';
-import { Form, Input, Button } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.less';
+import { Input, Button } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import Section from '@/components/section';
 import { FormattedMessage } from 'react-intl';
 import styles from './index.less';
