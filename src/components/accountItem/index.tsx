@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SettingOutlined } from '@ant-design/icons';
+import { StarOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import styles from './index.less';
 import { FormattedMessage } from 'react-intl';
@@ -38,7 +38,7 @@ export default class Page extends React.Component<PageProps> {
     return (
       <div className={styles.card}>
         <div className={styles.star}>
-          <SettingOutlined style={tagStyle} onClick={this.handleSetDefaultAccount} />
+          <StarOutlined style={tagStyle} onClick={this.handleSetDefaultAccount} />
         </div>
         <div className={styles.userInfo}>
           <IconAvatar size={96} avatar={avatar} icon={avatar} />
