@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon as LegacyIcon } from '@ant-design/compatible';
 import { IconProps } from '@ant-design/compatible/es/icon';
-import { createFromIconfontCN, SettingOutlined } from '@ant-design/icons';
+import { createFromIconfontCN } from '@ant-design/icons';
 import Container from 'typedi';
 import { IConfigService } from '@/service/common/config';
 import { Observer, useObserver } from 'mobx-react';
