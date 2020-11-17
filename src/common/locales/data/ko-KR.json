@@ -44,7 +44,6 @@
   "backend.services.mail.form.send.html.or.markdown": "",
   "backend.services.mail.form.send.to": "",
   "backend.services.mail.name": "",
-  "backend.services.notion.form.notice": "",
   "backend.services.notion.unauthorizedErrorMessage": "",
   "backend.services.onenote_oauth.name": "",
   "backend.services.server_chan.accessToken.message": "",
