@@ -10,7 +10,7 @@ export default (): ServiceMeta => {
     service: Service,
     permission: {
       origins: ['https://www.notion.so/*'],
-      permissions: ['cookies'],
+      permissions: ['cookies', 'webRequest', 'webRequestBlocking'],
     },
   };
 };
