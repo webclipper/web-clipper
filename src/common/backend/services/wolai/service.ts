@@ -1,107 +1,37 @@
 import { CompleteStatus, UnauthorizedError } from '../interface';
-import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
+import { DocumentService, CreateDocumentRequest } from '../../index';
 import localeService from '@/common/locales';
 import short from 'short-uuid';
 import { extend, RequestMethod } from 'umi-request';
-
-interface WolaiUserContent {
-  code: number;
-  message: string;
-  data: {
-    spaceViews: {
-      [uuid: string]: {
-        id: string;
-        user_id: string;
-        workspace_id: string;
-        created_time: number;
-        notify_desktop: boolean;
-        notify_email: boolean;
-        notify_mobile: boolean;
-        favorite_pages: any[];
-      };
-    };
-    workspaces: {
-      id: string;
-      created_by: string;
-      created_time: number;
-      domain: string;
-      edited_by: string;
-      edited_time: number;
-      icon: string;
-      members: number;
-      name: string;
-      pages: string[];
-      plan_type: string;
-      team_type: string;
-    }[];
-    blocks: {
-      [uuid: string]: {
-        id: string;
-        active: boolean;
-        attributes: {
-          title?: string[][];
-        };
-        created_by: string;
-        created_time: number;
-        edited_by: string;
-        edited_time: number;
-        parent_id: string;
-        parent_type: string;
-        permissions: {
-          type: string;
-          role: string;
-          user_id: string;
-        }[];
-        sub_nodes: string[];
-        text_content: string;
-        type: string;
-        ver: number;
-        workspace_id: string;
-        setting: {};
-      };
-    };
-  };
-}
-
-interface WolaiUserInfo {
-  code: number;
-  data: {
-    userId: string;
-    mobile: string[];
-    email: string;
-    userName: string;
-    avatar: string;
-    userHash: string;
-    recommendCode: string;
-    registerTime: number;
-    isNewUser: boolean;
-    inviteRemainingCount: number;
-    invitedUserCount: number;
-  };
-  message: string;
-}
-
-interface WolaiRepository extends Repository {
-  pageType: string;
-  spaceId: string;
-}
+import { WolaiRepository, WolaiUserContent, WolaiUserInfo } from './type';
+import { IWebRequestService, WebBlockHeader } from '@/service/common/webRequest';
+import Container from 'typedi';
+import { ICookieService } from '@/service/common/cookie';
 
 const PAGE = 'page';
+const origin = 'https://api.wolai.com/';
 
 export default class WolaiDocumentService implements DocumentService {
   private request: RequestMethod;
   private repositories: WolaiRepository[];
   private userContent?: WolaiUserContent;
   private userInfo?: WolaiUserInfo;
+  private webRequestService: IWebRequestService;
+  private cookieService: ICookieService;
 
   constructor() {
     const request = extend({
-      prefix: 'https://api.wolai.com/',
+      prefix: origin,
       timeout: 10000,
       credentials: 'include',
     });
     this.request = request;
     this.repositories = [];
+    this.webRequestService = Container.get(IWebRequestService);
+    this.cookieService = Container.get(ICookieService);
+    /**
+     * TODO handle error
+     */
     request.interceptors.response.use(
       response => {
         if (response.clone().status === 401) {
@@ -181,12 +111,10 @@ export default class WolaiDocumentService implements DocumentService {
   }: CreateDocumentRequest): Promise<CompleteStatus> => {
     const fileName = `${title}.md`;
     const filekey = `import/${this.getUuid()}/${fileName}`;
-
     const repository = this.repositories.find(o => o.id === repositoryId);
     if (!repository) {
       throw new Error('Illegal repository');
     }
-
     const documentId = await this.createEmptyFile(repository, title);
 
     const file = new File([content], filekey, {
@@ -203,22 +131,30 @@ export default class WolaiDocumentService implements DocumentService {
     formData.append('key', filekey);
     formData.append('success_action_status', '200');
     formData.append('file', file);
-
-    await extend({}).post(data.policyData.url, {
-      data: formData,
+    await this.requestWithCookie(header => {
+      //TODO fixme
+      return extend({}).post(data.policyData.url, {
+        headers: {
+          [header.name]: header.value,
+        },
+        data: formData,
+      });
     });
-
-    await this.request.post('v1/import/getImportPageData', {
-      data: {
-        spaceId: repository.spaceId,
-        type: 'string',
-        bucket: data.policyData.bucket,
-        filename: filekey,
-        pageTitle: title,
-        pageId: documentId,
-      },
+    await this.requestWithCookie(header => {
+      return this.request.post('v1/import/getImportPageData', {
+        headers: {
+          [header.name]: header.value,
+        },
+        data: {
+          spaceId: repository.spaceId,
+          type: 'string',
+          bucket: data.policyData.bucket,
+          filename: filekey,
+          pageTitle: title,
+          pageId: documentId,
+        },
+      });
     });
-
     return {
       href: `https://www.wolai.com/${documentId}`,
     };
@@ -295,28 +231,78 @@ export default class WolaiDocumentService implements DocumentService {
         },
       ],
     };
-    await this.request.post('v1/transaction/updateChanges', { data: operations });
+    await this.requestWithCookie(header => {
+      return this.request.post('v1/transaction/updateChanges', {
+        data: operations,
+        headers: {
+          [header.name]: header.value,
+        },
+      });
+    });
     return documentId;
   };
 
   getFileUrl = async (repository: WolaiRepository, file: File) => {
-    const result = await this.request.post('v1/file/getSignedPostUrl', {
-      data: {
-        spaceId: repository.spaceId,
-        fileSize: file.size,
-        type: 'import',
-      },
+    return this.requestWithCookie(header => {
+      return this.request.post('v1/file/getSignedPostUrl', {
+        headers: {
+          [header.name]: header.value,
+        },
+        data: {
+          spaceId: repository.spaceId,
+          fileSize: file.size,
+          type: 'import',
+        },
+      });
     });
-    return result;
   };
 
   private getUserContent = async () => {
-    const response = await this.request.post<WolaiUserContent>('v1/transaction/getUserData');
-    return response;
+    return this.requestWithCookie<WolaiUserContent>(header => {
+      return this.request.post<WolaiUserContent>('v1/transaction/getUserData', {
+        headers: {
+          [header.name]: header.value,
+        },
+      });
+    });
   };
 
   private fetchUserInfo = async () => {
-    const response = await this.request.post<WolaiUserInfo>('v1/authentication/user/getUserInfo');
-    return response;
+    return this.requestWithCookie<WolaiUserInfo>(header => {
+      return this.request.post<WolaiUserInfo>('v1/authentication/user/getUserInfo', {
+        headers: {
+          [header.name]: header.value,
+        },
+      });
+    });
+  };
+
+  /**
+   * Modify the cookie when request
+   */
+  private requestWithCookie = async <T>(
+    requestFunction: (header: WebBlockHeader) => Promise<T>
+  ) => {
+    const cookies = await this.cookieService.getAll({
+      url: origin,
+    });
+    const cookieString = cookies.map(o => `${o.name}=${o.value}`).join(';');
+    const header = await this.webRequestService.startChangeHeader({
+      urls: [`${origin}*`],
+      requestHeaders: [
+        {
+          name: 'cookie',
+          value: cookieString,
+        },
+      ],
+    });
+    try {
+      const result = await requestFunction(header);
+      await this.webRequestService.end(header);
+      return result;
+    } catch (error) {
+      await this.webRequestService.end(header);
+      throw error;
+    }
   };
 }

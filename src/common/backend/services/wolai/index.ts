@@ -10,7 +10,7 @@ export default (): ServiceMeta => {
     service: Service,
     permission: {
       origins: ['https://api.wolai.com/*'],
-      permissions: ['cookies'],
+      permissions: ['cookies', 'webRequest', 'webRequestBlocking'],
     },
   };
 };
