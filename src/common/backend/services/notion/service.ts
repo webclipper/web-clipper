@@ -1,80 +1,27 @@
 import { CompleteStatus, UnauthorizedError } from './../interface';
-import { DocumentService, Repository, CreateDocumentRequest } from '../../index';
+import { DocumentService, CreateDocumentRequest } from '../../index';
 import axios, { AxiosInstance } from 'axios';
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
 import localeService from '@/common/locales';
-
-interface NotionUserContent {
-  recordMap: {
-    notion_user: {
-      [uuid: string]: {
-        role: string;
-        value: {
-          id: string;
-          email: string;
-          given_name: string;
-          family_name: string;
-          profile_photo: string;
-        };
-      };
-    };
-    space: {
-      [id: string]: {
-        role: string;
-        value: {
-          id: string;
-          name: string;
-          domain: string;
-          pages: string[];
-        };
-      };
-    };
-    block: {
-      [uuid: string]: {
-        role: string;
-        value: {
-          id: string;
-          version: string;
-          parent_id: string;
-          type: string;
-          created_time: number;
-          properties: {
-            title: string[][];
-            content: string[];
-          };
-          collection_id: string;
-        };
-      };
-    };
-    collection: {
-      [uuid: string]: {
-        role: string;
-        value: {
-          id: string;
-          version: string;
-          parent_id: string;
-          name: string[][];
-        };
-      };
-    };
-  };
-}
-
-interface NotionRepository extends Repository {
-  pageType: string;
-}
+import { NotionRepository, NotionUserContent } from './types';
+import { IWebRequestService } from '@/service/common/webRequest';
+import Container from 'typedi';
+import { ICookieService } from '@/service/common/cookie';
 
 const PAGE = 'page';
 const COLLECTION_VIEW_PAGE = 'collection_view_page';
+const origin = 'https://www.notion.so/';
 
 export default class NotionDocumentService implements DocumentService {
   private request: AxiosInstance;
   private repositories: NotionRepository[];
   private userContent?: NotionUserContent;
+  private webRequestService: IWebRequestService;
+  private cookieService: ICookieService;
 
   constructor() {
     const request = axios.create({
-      baseURL: 'https://www.notion.so/',
+      baseURL: origin,
       timeout: 10000,
       transformResponse: [
         (data): any => {
@@ -85,6 +32,8 @@ export default class NotionDocumentService implements DocumentService {
     });
     this.request = request;
     this.repositories = [];
+    this.webRequestService = Container.get(IWebRequestService);
+    this.cookieService = Container.get(ICookieService);
     this.request.interceptors.response.use(
       r => r,
       error => {
@@ -195,7 +144,7 @@ export default class NotionDocumentService implements DocumentService {
         'Content-Type': 'text/markdown',
       },
     });
-    await this.request.post('api/v3/enqueueTask', {
+    await this.requestWithCookie.post('api/v3/enqueueTask', {
       task: {
         eventName: 'importFile',
         request: {
@@ -313,14 +262,14 @@ export default class NotionDocumentService implements DocumentService {
       ];
     }
 
-    await this.request.post('api/v3/submitTransaction', {
+    await this.requestWithCookie.post('api/v3/submitTransaction', {
       operations,
     });
     return documentId;
   };
 
   getFileUrl = async (fileName: string) => {
-    const result = await this.request.post<{
+    const result = await this.requestWithCookie.post<{
       url: string;
       signedPutUrl: string;
     }>('api/v3/getUploadFileUrl', {
@@ -332,7 +281,43 @@ export default class NotionDocumentService implements DocumentService {
   };
 
   private getUserContent = async () => {
-    const response = await this.request.post<NotionUserContent>('api/v3/loadUserContent');
+    const response = await this.requestWithCookie.post<NotionUserContent>('api/v3/loadUserContent');
     return response.data;
   };
+
+  /**
+   * Modify the cookie when request
+   */
+  private get requestWithCookie() {
+    const post = async <T>(url: string, data?: any) => {
+      const cookies = await this.cookieService.getAll({
+        url: origin,
+      });
+      const cookieString = cookies.map(o => `${o.name}=${o.value}`).join(';');
+      const header = await this.webRequestService.startChangeHeader({
+        urls: [`${origin}*`],
+        requestHeaders: [
+          {
+            name: 'cookie',
+            value: cookieString,
+          },
+        ],
+      });
+      try {
+        const result = await this.request.post<T>(url, data, {
+          headers: {
+            [header.name]: header.value,
+          },
+        });
+        await this.webRequestService.end(header);
+        return result;
+      } catch (error) {
+        await this.webRequestService.end(header);
+        throw error;
+      }
+    };
+    return {
+      post,
+    };
+  }
 }
