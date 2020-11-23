@@ -36,7 +36,7 @@
     "@web-clipper/remark-pangu": "^1.0.2",
     "@web-clipper/shared": "^0.0.20",
     "@web-clipper/turndown": "^0.4.1",
-    "antd": "^4.8.0",
+    "antd": "^4.8.5",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "codemirror": "^5.47.0",
