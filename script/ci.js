@@ -13,6 +13,7 @@ function build({ targetBrowser }) {
   const buildEnv = Object.create(process.env);
   buildEnv.NODE_ENV = 'production';
   buildEnv.TARGET_BROWSER = targetBrowser;
+  buildEnv.FF_RELEASE = process.env.FF_RELEASE;
   const cp = fork(buildScript, [], {
     env: buildEnv,
     silent: true,
@@ -43,8 +44,12 @@ function pack({ targetBrowser, beta }) {
 
 (async () => {
   const beta = process.env.BETA === 'true';
-  console.log('beta:', beta);
+  const ffRelease = process.env.FF_RELEASE === 'true';
+  console.log('beta:', beta, 'ffRelease:', ffRelease);
   const browserList = ['Firefox', 'Chrome'];
+  if (ffRelease) {
+    browserList.pop();
+  }
   for (const browser of browserList) {
     console.log(`Start Build ${browser} Version`);
     await build({ targetBrowser: browser });
