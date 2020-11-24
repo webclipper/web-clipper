@@ -42,13 +42,11 @@ if (process.env.TARGET_BROWSER === 'Firefox') {
       '<all_urls>',
     ],
   };
-  if (process.env.NODE_ENV === 'development') {
-    manifestExtra.applications = {
-      gecko: {
-        id: 'web-clipper@web-clipper',
-      },
-    };
-  }
+  manifestExtra.applications = {
+    gecko: {
+      id: 'web-clipper@web-clipper',
+    },
+  };
   background = resolve('src/main/background.main.firefox.ts');
   tool = resolve('src/main/tool.main.firefox.ts');
 }
