@@ -1,3 +1,16 @@
+## 1.28.0
+
+`2020-11-24`
+
+- 🌍 Support zh-TW
+- 🐛 Fix the problem that wolai and wotion cannot be used when third-party cookies are turned off.
+
+## 1.28.0
+
+`2020-09-23`
+
+- 🐛 Fix the problem that wolai cannot be used
+
 ## 1.27.0
 
 `2020-09-23`
