@@ -7,7 +7,7 @@
     "dev": "NODE_ENV=development webpack --config webpack/webpack.dev.js --watch",
     "dev:ff": "TARGET_BROWSER=Firefox NODE_ENV=development webpack --config webpack/webpack.dev.js --watch",
     "release": "node script/ci.js",
-    "release:ff":"FF_RELEASE=true node script/ci.js",
+    "release:ff": "bash script/release_ff.sh",
     "lint": "eslint --ext .js,.ts,.tsx --ignore-pattern bad.* .",
     "lint-staged": "lint-staged",
     "format": "node script/formatLocaleMessage.js"

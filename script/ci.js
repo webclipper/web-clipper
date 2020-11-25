@@ -18,6 +18,7 @@ function build({ targetBrowser }) {
     env: buildEnv,
     silent: true,
   });
+  cp.stderr.on('data', e => console.log(e.toString()));
   return new Promise(r => {
     cp.on('message', r);
   });
