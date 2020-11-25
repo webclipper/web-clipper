@@ -1,3 +1,9 @@
+## 1.28.1
+
+`2020-11-26`
+
+- 🐛 Fix the style of area selector (OCR ScreenShoot). The selector will not be obscured by other elements
+
 ## 1.28.0
 
 `2020-11-24`
