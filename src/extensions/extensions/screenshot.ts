@@ -13,9 +13,10 @@ export default new TextExtension<SelectAreaPosition>(
   {
     init: ({ currentImageHostingService }) => !!currentImageHostingService,
     run: async context => {
-      const { AreaSelector, toggleClipper } = context;
+      const { AreaSelector, toggleClipper, toggleLoading } = context;
       toggleClipper();
-      const response = new AreaSelector().start();
+      const response = await new AreaSelector().start();
+      toggleLoading();
       return response;
     },
     afterRun: async context => {
@@ -53,7 +54,8 @@ export default new TextExtension<SelectAreaPosition>(
       return `![](${url})\n\n`;
     },
     destroy: async context => {
-      const { toggleClipper } = context;
+      const { toggleClipper, toggleLoading } = context;
+      toggleLoading();
       toggleClipper();
     },
   }
