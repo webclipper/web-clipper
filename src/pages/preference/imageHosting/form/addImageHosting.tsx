@@ -75,7 +75,7 @@ const AddImageHostingModal: React.FC<PageProps> = props => {
   } else {
     title = <FormattedMessage id="preference.imageHosting.add" defaultMessage="Add" />;
     initImageHosting = {
-      type: services[0].type,
+      type: services.filter(o => !o.builtIn)[0].type,
     };
   }
 
@@ -93,7 +93,9 @@ const AddImageHostingModal: React.FC<PageProps> = props => {
               {services
                 .filter(o => !o.builtIn)
                 .map(service => (
-                  <Select.Option key={service.type}>{service.name}</Select.Option>
+                  <Select.Option key={service.type} value={service.type}>
+                    {service.name}
+                  </Select.Option>
                 ))}
             </Select>
           )}
