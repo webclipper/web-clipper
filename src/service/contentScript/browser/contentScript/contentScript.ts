@@ -8,7 +8,7 @@ import AreaSelector from '@web-clipper/area-selector';
 import Highlighter from '@web-clipper/highlight';
 import plugins from '@web-clipper/turndown';
 import TurndownService from 'turndown';
-import { ContentScriptContext } from '@web-clipper/extensions';
+import { ContentScriptContext } from '@/extensions/common';
 import { localStorageService } from '@/common/chrome/storage';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/types';
 import { IExtensionContainer } from '@/service/common/extension';
@@ -36,6 +36,25 @@ class ContentScriptService implements IContentScriptService {
   async checkStatus() {
     return true;
   }
+  async toggleLoading() {
+    const loadIngStyle = styles['web-clipper-loading-box'];
+    if ($(`.${loadIngStyle}`).length === 0) {
+      $('body').append(`
+      <div class=${loadIngStyle}>
+        <div class="web-clipper-loading">
+          <div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+        </div>
+      </div>
+      `);
+    } else {
+      $(`.${loadIngStyle}`).remove();
+    }
+  }
 
   async runScript(id: string, lifeCycle: 'run' | 'destroy') {
     const extensions = this.extensionContainer.extensions;
@@ -58,6 +77,9 @@ class ContentScriptService implements IContentScriptService {
       AreaSelector,
       QRCode,
       $,
+      toggleLoading: () => {
+        this.toggleLoading();
+      },
     };
     $(`.${styles.toolFrame}`).blur();
     return lifeCycleFunc(context);

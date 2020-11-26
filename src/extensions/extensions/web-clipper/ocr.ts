@@ -14,9 +14,10 @@ export default new TextExtension<SelectAreaPosition>(
   },
   {
     run: async context => {
-      const { AreaSelector, toggleClipper } = context;
+      const { AreaSelector, toggleClipper, toggleLoading } = context;
       toggleClipper();
-      const response = new AreaSelector().start();
+      const response = await new AreaSelector().start();
+      toggleLoading();
       return response;
     },
     afterRun: async context => {
@@ -49,10 +50,12 @@ export default new TextExtension<SelectAreaPosition>(
       canvas.width = swidth;
       ctx!.drawImage(img, sx, sy, swidth, sheight, 0, 0, swidth, sheight);
       const image = canvas.toDataURL('image/jpeg');
-      return ocr({ image, language_type: 'CHN_ENG' });
+      const res = await ocr({ image, language_type: 'CHN_ENG' });
+      return res;
     },
     destroy: async context => {
-      const { toggleClipper } = context;
+      const { toggleClipper, toggleLoading } = context;
+      toggleLoading();
       toggleClipper();
     },
   }

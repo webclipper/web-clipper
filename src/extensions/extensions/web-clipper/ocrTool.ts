@@ -14,9 +14,10 @@ export default new ToolExtension<SelectAreaPosition>(
   },
   {
     run: async context => {
-      const { AreaSelector, toggleClipper } = context;
+      const { AreaSelector, toggleClipper, toggleLoading } = context;
       toggleClipper();
-      const response = new AreaSelector().start();
+      const response = await new AreaSelector().start();
+      toggleLoading();
       return response;
     },
     afterRun: async context => {
@@ -52,7 +53,8 @@ export default new ToolExtension<SelectAreaPosition>(
       return `${data}\n${await ocr({ image, language_type: 'CHN_ENG' })}`;
     },
     destroy: async context => {
-      const { toggleClipper } = context;
+      const { toggleClipper, toggleLoading } = context;
+      toggleLoading();
       toggleClipper();
     },
   }

@@ -25,7 +25,7 @@ import { initTabInfo, changeData, asyncChangeAccount } from 'pageActions/clipper
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
 import { UserPreferenceStore } from 'common/types';
 import { getServices, getImageHostingServices, imageHostingServiceFactory } from 'common/backend';
-import { ToolContext } from '@web-clipper/extensions';
+import { ToolContext } from '@/extensions/common';
 import backend from 'common/backend/index';
 import { loadImage } from 'common/blob';
 import { routerRedux } from 'dva';

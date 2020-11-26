@@ -23,6 +23,7 @@ export interface ContentScriptContext {
   Highlighter: Type<IHighlighter>;
   AreaSelector: Type<IAreaSelector>;
   toggleClipper: () => void;
+  toggleLoading: () => void;
   Readability: any;
   document: Document;
   QRCode: any;
