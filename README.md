@@ -31,7 +31,7 @@ You can use Web Clipper to save anything on the web to anywhere.
 
 ### Install
 
-- [~~Firefox~~](https://addons.mozilla.org/en-US/firefox/addon/universal-web-clipper/) 1.25.0
+- [Firefox](https://addons.mozilla.org/en-US/firefox/addon/universal-web-clipper/) 1.28.0
 
 - [Chrome](https://chrome.google.com/webstore/detail/web-clipper/mhfbofiokmppgdliakminbgdgcmbhbac) 1.27.0
 
