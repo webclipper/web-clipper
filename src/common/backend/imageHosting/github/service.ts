@@ -95,6 +95,6 @@ export default class GithubImageHostingService implements ImageHostingService {
         throw Error(error);
       });
 
-    return response ? response.data.content.html_url : {};
+    return response ? `${response.data.content.html_url}?raw=true` : '';
   };
 }

@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
-import { FormComponentProps } from 'antd/lib/form';
-import { Form, Input, Tooltip, Icon } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { Input, Tooltip } from 'antd';
+import { Form } from '@ant-design/compatible';
 import { FormattedMessage } from 'react-intl';
 import { stringify } from 'qs';
 import locale from '@/common/locales';
-
+import IconFont from '@/components/IconFont';
 
 interface Props extends FormComponentProps {
   info: {
@@ -20,28 +21,34 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
     scopes: 'repo',
     description: 'Web Clipper',
   })}`;
-    
+
   return (
     <Fragment>
-      <Form.Item label={
-        <FormattedMessage
-          id = "backend.imageHosting.github.form.accessToken"
-          defaultMessage = "AccessToken"
-        />
-      }>
+      <Form.Item
+        label={
+          <FormattedMessage
+            id="backend.imageHosting.github.form.accessToken"
+            defaultMessage="AccessToken"
+          />
+        }
+      >
         {getFieldDecorator('accessToken', {
           initialValue: initInfo.accessToken,
           rules: [
             {
               required: true,
-              message:<FormattedMessage 
-                      id = "backend.imageHosting.github.form.accessToken.errorMessage" 
-                      defaultMessage = "AccessToken is required."/>,
+              message: (
+                <FormattedMessage
+                  id="backend.imageHosting.github.form.accessToken.errorMessage"
+                  defaultMessage="AccessToken is required."
+                />
+              ),
             },
           ],
-        })(<Input 
-              placeholder=""             
-              suffix={
+        })(
+          <Input
+            placeholder=""
+            suffix={
               <Tooltip
                 title={
                   <span
@@ -57,35 +64,44 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
                 }
               >
                 <a href={GenerateNewTokenUrl} target={GenerateNewTokenUrl}>
-                  <Icon type="key" />
+                  <IconFont type="key" />
                 </a>
               </Tooltip>
-        }/>)}
+            }
+          />
+        )}
       </Form.Item>
-      <Form.Item label={
-        <FormattedMessage
-        defaultMessage = 'Repo Name'
-        id = "backend.imageHosting.github.form.repoName"
-        />
-      }>
+      <Form.Item
+        label={
+          <FormattedMessage
+            defaultMessage="Repo Name"
+            id="backend.imageHosting.github.form.repoName"
+          />
+        }
+      >
         {getFieldDecorator('repoName', {
           initialValue: initInfo.repoName,
           rules: [
             {
               required: true,
-              message:<FormattedMessage 
-              id = "backend.imageHosting.github.form.repoName.errorMessage" 
-              defaultMessage = "Repo name is required."/>,
+              message: (
+                <FormattedMessage
+                  id="backend.imageHosting.github.form.repoName.errorMessage"
+                  defaultMessage="Repo name is required."
+                />
+              ),
             },
           ],
-        })(<Input/>)}
+        })(<Input />)}
       </Form.Item>
-      <Form.Item label={
-        <FormattedMessage
-          id = "backend.imageHosting.github.form.savePath"
-          defaultMessage = "Save Path"
-        />
-      }>
+      <Form.Item
+        label={
+          <FormattedMessage
+            id="backend.imageHosting.github.form.savePath"
+            defaultMessage="Save Path"
+          />
+        }
+      >
         {getFieldDecorator('savePath', {
           initialValue: initInfo.savePath,
           rules: [
