@@ -5,7 +5,7 @@ import Form from './form';
 export default () => {
   return {
     name: 'Github Repository',
-    icon: 'github',
+    icon: 'github_repository',
     type: 'github_repository',
     service: Service,
     form: Form,

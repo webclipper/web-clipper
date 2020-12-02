@@ -13,9 +13,6 @@ const HeaderForm: React.FC<FormComponentProps & { currentRepository: any }> = ({
   currentRepository,
 }) => {
   const service = backend.getDocumentService() as GithubDocumentService;
-
-  if (service.getStorageLocation() === 'code') return null;
-
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const labelsResponse = useFetch(
     async () => {

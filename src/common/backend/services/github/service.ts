@@ -11,8 +11,6 @@ import { DocumentService } from '../../index';
 import axios, { AxiosInstance } from 'axios';
 import md5 from '@web-clipper/shared/lib/md5';
 import { stringify } from 'qs';
-import { isUndefined, toNumber } from 'lodash';
-import fileNamify from 'filenamify';
 
 const PAGE_LIMIT = 100;
 
@@ -84,45 +82,6 @@ export default class GithubDocumentService implements DocumentService {
       throw new Error('can not find repository');
     }
 
-    if (this.config.storageLocation === 'code') {
-      if (isUndefined(this.config.savePath)) this.config.savePath = '';
-      if (this.config.savePath.startsWith('/')) this.config.savePath.substr(1);
-      if (!this.config.savePath.endsWith('/') && this.config.savePath.length > 0)
-        this.config.savePath += '/';
-
-      let b64EncodeUnicode = (str: string) => {
-        return btoa(
-          encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function toSolidBytes(_match, p1) {
-            return String.fromCharCode(toNumber(`0x${p1}`));
-          })
-        );
-      };
-      let fileContent: string = b64EncodeUnicode(`# ${title}\n${body}`);
-
-      let fileName: string = fileNamify(title, { replacement: ' ' });
-
-      let requestPath: string = `/repos/${repository.namespace}/contents/${this.config.savePath}${fileName}.md`;
-
-      const response = await this.request
-        .put<{
-          content: { html_url: string };
-        }>(requestPath, {
-          message: `Clip "${title}"`,
-          content: fileContent,
-        })
-        .catch(error => {
-          if (error.response) {
-            if (error.response.status === 422)
-              throw new Error('Response Status: 422. The file may already exist.');
-          } else if (error.request) {
-            throw new Error(error.request);
-          } else {
-            throw new Error(error.message);
-          }
-        });
-
-      return response ? { href: response.data.content.html_url } : {};
-    }
     const response = await this.request.post<{
       html_url: string;
       id: number;
