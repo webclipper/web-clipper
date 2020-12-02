@@ -1,3 +1,13 @@
+## 1.28.2
+
+`2020-12-22`
+
+- ✨ Support Github repository
+- ✨ Support Github imageHosting
+- 💄 show loading when ocr
+
+Thanks @Touma-Kazusa and @Okami Wong
+
 ## 1.28.1
 
 `2020-11-26`
