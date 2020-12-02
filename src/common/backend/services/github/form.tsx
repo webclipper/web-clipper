@@ -47,18 +47,16 @@ const visibilityOptions = [
 ];
 
 const GithubForm: React.FC<GithubFormProps & FormComponentProps> = ({
-  form: { getFieldDecorator, getFieldValue },
+  form: { getFieldDecorator },
   info,
   verified,
 }) => {
   const disabled = verified || !!info;
   let initAccessToken;
   let visibility;
-  let savePath;
   if (info) {
     initAccessToken = info.accessToken;
     visibility = info.visibility;
-    savePath = info.savePath;
   }
   return (
     <Fragment>
@@ -119,31 +117,6 @@ const GithubForm: React.FC<GithubFormProps & FormComponentProps> = ({
                 </a>
               </Tooltip>
             }
-          />
-        )}
-      </Form.Item>
-      <Form.Item
-        label={
-          <FormattedMessage
-            id="backend.services.github.form.storageLocation.code.savePath"
-            defaultMessage="Save Path"
-          />
-        }
-      >
-        {getFieldDecorator('savePath', {
-          initialValue: savePath,
-          rules: [
-            {
-              required: false,
-            },
-          ],
-        })(
-          <Input
-            disabled={getFieldValue('storageLocation') === 'issue'}
-            placeholder={locale.format({
-              id: 'backend.services.github.form.storageLocation.code.savePathPlaceHolder',
-              defaultMessage: 'Only takes effect when saving to code.',
-            })}
           />
         )}
       </Form.Item>
