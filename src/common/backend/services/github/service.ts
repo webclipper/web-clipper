@@ -43,10 +43,6 @@ export default class GithubDocumentService implements DocumentService {
     return md5(this.config.accessToken);
   };
 
-  getStorageLocation = () => {
-    return this.config.storageLocation;
-  };
-
   getUserInfo = async () => {
     const data = await this.request.get<GithubUserInfoResponse>('user');
     const { name, avatar_url: avatar, html_url: homePage, bio: description } = data.data;

@@ -3,8 +3,6 @@ import { Repository, CreateDocumentRequest } from '../interface';
 export interface GithubBackendServiceConfig {
   accessToken: string;
   visibility: string;
-  storageLocation: string;
-  savePath: string;
 }
 
 export interface GithubCreateDocumentRequest extends CreateDocumentRequest {
