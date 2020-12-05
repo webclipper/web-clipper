@@ -1,24 +1,17 @@
-import { Repository } from './../interface';
 import { DocumentService } from './../../index';
 import {
   JoplinBackendServiceConfig,
-  JoplinFolderItem,
-  JoplinTag,
   JoplinCreateDocumentRequest,
+  IJoplinClient,
 } from './interface';
-import { extend, RequestMethod } from 'umi-request';
+import { LegacyJoplinClient } from './LegacyJoplinClient';
+import { JoplinClient } from './JoplinClient';
+
+const HOST = 'http://localhost:41184/';
 
 export default class JoplinDocumentService implements DocumentService {
-  private request: RequestMethod;
-
-  constructor(private config: JoplinBackendServiceConfig) {
-    this.request = extend({
-      prefix: 'http://localhost:41184/',
-      params: {
-        token: this.config.token,
-      },
-    });
-  }
+  private client?: Promise<IJoplinClient>;
+  constructor(private config: JoplinBackendServiceConfig) {}
 
   getId() {
     return 'joplin';
@@ -34,55 +27,32 @@ export default class JoplinDocumentService implements DocumentService {
   };
 
   createDocument = async (data: JoplinCreateDocumentRequest) => {
-    await this.request.post('notes', {
-      data: {
-        parent_id: data.repositoryId,
-        title: data.title,
-        body: data.content,
-        tags: data.tags.join(','),
-      },
-    });
+    const joplinClient = await this.getJoplinClient();
+    return joplinClient.createDocument(data);
   };
 
   getRepositories = async () => {
-    const repositories: Repository[] = [];
-    const folders = await this.request.get<JoplinFolderItem[]>('folders');
-    folders.forEach(folder => {
-      repositories.push({
-        id: folder.id,
-        name: folder.title,
-        groupId: folder.id,
-        groupName: folder.title,
-      });
-      if (Array.isArray(folder.children)) {
-        folder.children.forEach(subFolder => {
-          repositories.push({
-            id: subFolder.id,
-            name: subFolder.title,
-            groupId: folder.id,
-            groupName: folder.title,
-          });
-        });
-      }
-    });
-    return repositories;
+    const joplinClient = await this.getJoplinClient();
+    return joplinClient.getRepositories();
   };
 
   getTags = async () => {
-    let tags = await this.request.get<JoplinTag[]>('tags');
-    if (this.config.filterTags) {
-      tags = (
-        await Promise.all(
-          tags.map(async tag => {
-            const notes = await this.request.get<unknown[]>(`tags/${tag.id}/notes`);
-            if (notes.length === 0) {
-              return null;
-            }
-            return tag;
-          })
-        )
-      ).filter((tag): tag is JoplinTag => !!tag);
-    }
-    return tags;
+    const joplinClient = await this.getJoplinClient();
+    return joplinClient.getTags(this.config.filterTags);
   };
+
+  private async getJoplinClient(): Promise<IJoplinClient> {
+    if (!this.client) {
+      this.client = this._getJoplinClient();
+    }
+    return this.client;
+  }
+
+  private async _getJoplinClient(): Promise<IJoplinClient> {
+    const client = new JoplinClient(this.config.token, HOST);
+    if (await client.support()) {
+      return client;
+    }
+    return new LegacyJoplinClient(this.config.token, HOST);
+  }
 }
