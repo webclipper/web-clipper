@@ -35,7 +35,7 @@
     "@web-clipper/readability": "^0.3.0",
     "@web-clipper/remark-pangu": "^1.0.2",
     "@web-clipper/shared": "^0.0.20",
-    "@web-clipper/turndown": "^0.4.1",
+    "@web-clipper/turndown": "^0.4.2",
     "antd": "^4.8.5",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
