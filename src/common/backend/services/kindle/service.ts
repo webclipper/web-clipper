@@ -42,7 +42,7 @@ export default class MailDocumentService implements DocumentService {
     };
     await sentToKindle(postBody);
     return {
-      href: `https://www.amazon.cn/hz/mycd/myx#/home/settings/payment`,
+      href: `https://www.amazon.cn/hz/mycd/myx#/home/content/pdocs/dateDsc/`,
     };
   };
 }
