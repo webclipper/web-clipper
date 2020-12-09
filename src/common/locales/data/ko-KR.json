@@ -92,7 +92,7 @@
   "preference.accountList.type": "",
   "preference.accountList.verify": "",
   "preference.accountList.verifying": "",
-  "preference.basic.configLanguage.description": "私の母国語は中国語です,{GitHub}で翻訳を送信してください.",
+  "preference.basic.configLanguage.description": "제 모국어는 중국어입니다, 번역은 {GitHub}에서 함께하실 수 있습니다.",
   "preference.basic.configLanguage.title": "",
   "preference.basic.liveRendering.description": "",
   "preference.basic.liveRendering.title": "",
@@ -144,7 +144,7 @@
   "preference.tab.privacy": "",
   "tool.clipExtensions": "",
   "tool.repository": "",
-  "tool.save": "コンテンツを保存する",
+  "tool.save": "컨텐츠 저장",
   "tool.title": "컨텐츠 저장",
   "tool.title.required": "",
   "tool.toolExtensions": ""
