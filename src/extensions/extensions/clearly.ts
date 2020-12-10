@@ -8,6 +8,7 @@ export default new TextExtension<{ title: string; html: string; url: string }>(
     description: 'Super',
   },
   {
+    init: () => false,
     run: async context => {
       const { document } = context;
       let html = document.body.outerHTML;
