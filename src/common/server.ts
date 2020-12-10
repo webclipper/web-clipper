@@ -7,6 +7,10 @@ import config from '@/config';
 import { localStorageService } from './chrome/storage';
 import { LOCAL_ACCESS_TOKEN_LOCALE_KEY } from './modelTypes/userPreference';
 import { IResponse } from './types';
+import timezone from 'dayjs/plugin/timezone';
+import dayjs from 'dayjs';
+
+dayjs.extend(timezone);
 
 const request = extend({
   prefix: `${config.serverHost}/api/`,
@@ -91,4 +95,15 @@ export interface OCRRequestBody {
 
 export const ocr = (data: OCRRequestBody) => {
   return request.post<IResponse<string>>('service/ocr', { data });
+};
+
+export interface IClearlyRequest {
+  html: string;
+  title: string;
+  url: string;
+}
+export const clearly = (data: IClearlyRequest) => {
+  return request.post<IResponse<string>>('service/clearly', {
+    data: { ...data, timezone: dayjs.tz.guess() },
+  });
 };

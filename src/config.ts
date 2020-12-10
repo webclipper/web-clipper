@@ -61,6 +61,7 @@ if (process.env.NODE_ENV === 'development') {
     oneNoteCallBack: 'https://webclipper-oauth.test.yfd.im/onenote_oauth',
     // oneNoteCallBack: 'http://localhost:3000/onenote_oauth',
     createLogger: false,
+    serverHost: 'https://api.test.clipper.website',
     // serverHost: 'http://localhost:3000',
   });
 }

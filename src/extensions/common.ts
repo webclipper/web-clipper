@@ -3,6 +3,7 @@ import { IHighlighter } from '@web-clipper/highlight';
 import { IAreaSelector } from '@web-clipper/area-selector';
 import * as antd from 'antd';
 import React from 'react';
+import { IClearlyRequest } from '@/common/server';
 
 export interface InitContext {
   accountInfo: {
@@ -67,6 +68,7 @@ export interface ToolContext<T, Out> {
   createAndDownloadFile: (fileName: string, content: string | Blob) => void;
   pangu: (content: string) => Promise<string>;
   ocr: (request: OCRRequest) => Promise<string>;
+  clearly: (request: IClearlyRequest) => Promise<string>;
   antd: typeof antd;
   React: typeof React;
 }

@@ -32,7 +32,7 @@ import { routerRedux } from 'dva';
 import { localStorageService, syncStorageService } from '@/common/chrome/storage';
 import { initAccounts } from '@/actions/account';
 import copyToClipboard from 'copy-to-clipboard';
-import { ocr } from '@/common/server';
+import { ocr, clearly } from '@/common/server';
 import remark from 'remark';
 import remakPangu from '@web-clipper/remark-pangu';
 
@@ -204,6 +204,10 @@ builder
           pangu,
           ocr: async r => {
             const response = await ocr(r);
+            return response.result;
+          },
+          clearly: async r => {
+            const response = await clearly(r);
             return response.result;
           },
         };
