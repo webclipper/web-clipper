@@ -3,9 +3,9 @@ import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { Input, Tooltip } from 'antd';
 import { Form } from '@ant-design/compatible';
 import { FormattedMessage } from 'react-intl';
-import { stringify } from 'qs';
 import locale from '@/common/locales';
 import IconFont from '@/components/IconFont';
+import { GithubClient } from '../../clients/github/client';
 
 interface Props extends FormComponentProps {
   info: {
@@ -17,11 +17,6 @@ interface Props extends FormComponentProps {
 
 export default ({ form: { getFieldDecorator }, info }: Props) => {
   const initInfo: Partial<Props['info']> = info || {};
-  const GenerateNewTokenUrl = `https://github.com/settings/tokens/new?${stringify({
-    scopes: 'repo',
-    description: 'Web Clipper',
-  })}`;
-
   return (
     <Fragment>
       <Form.Item
@@ -63,7 +58,10 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
                   </span>
                 }
               >
-                <a href={GenerateNewTokenUrl} target={GenerateNewTokenUrl}>
+                <a
+                  href={GithubClient.generateNewTokenUrl}
+                  target={GithubClient.generateNewTokenUrl}
+                >
                   <IconFont type="key" />
                 </a>
               </Tooltip>
