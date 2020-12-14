@@ -1,6 +1,12 @@
+## 1.28.3
+
+`2020-12-15`
+
+- ✨ support joplin 1.14+
+
 ## 1.28.2
 
-`2020-12-22`
+`2020-12-02`
 
 - ✨ Support Github repository
 - ✨ Support Github imageHosting
