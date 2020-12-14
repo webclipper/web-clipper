@@ -15,8 +15,8 @@ export interface IRequest {
 }
 
 export interface IHelperOptions {
-  baseURL: string;
-  headers: Record<string, string>;
+  baseURL?: string;
+  headers?: Record<string, string>;
   request: IRequest;
 }
 
@@ -24,14 +24,21 @@ export class RequestHelper implements IRequest {
   constructor(private options: IHelperOptions) {}
 
   post<T>(url: string, options: IPostRequestOptions) {
-    return this.options.request.post<T>(url, options);
+    return this.options.request.post<T>(this.getUrl(url), options);
   }
 
   postForm<T>(url: string, options: IPostFormRequestOptions) {
-    return this.options.request.postForm<T>(url, options);
+    return this.options.request.postForm<T>(this.getUrl(url), options);
   }
 
   get<T>(url: string) {
-    return this.options.request.get<T>(url);
+    return this.options.request.get<T>(this.getUrl(url));
+  }
+
+  private getUrl(url: string): string {
+    if (!this.options.baseURL || url.match(/$https?:\/\//)) {
+      return url;
+    }
+    return `${this.options.baseURL}${url}`;
   }
 }
