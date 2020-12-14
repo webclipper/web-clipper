@@ -49,5 +49,8 @@ describe('test RequestHelper', () => {
 
     request.get('https://clipper.website');
     expect(mockRequest.mock.get.mock.calls[1]).toEqual(['https://clipper.website']);
+
+    request.get('http://clipper.website');
+    expect(mockRequest.mock.get.mock.calls[2]).toEqual(['http://clipper.website']);
   });
 });

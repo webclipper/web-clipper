@@ -36,7 +36,7 @@ export class RequestHelper implements IRequest {
   }
 
   private getUrl(url: string): string {
-    if (!this.options.baseURL || url.match(/$https?:\/\//)) {
+    if (!this.options.baseURL || url.match(/^https?:\/\//)) {
       return url;
     }
     return `${this.options.baseURL}${url}`;
