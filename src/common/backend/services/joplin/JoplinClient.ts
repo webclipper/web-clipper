@@ -96,6 +96,7 @@ export class JoplinClient implements IJoplinClient {
       const response = await getOnePage(startPageNumber);
       result = result.concat(response.items);
       hasMore = response.has_more;
+      startPageNumber++;
     }
     return result;
   };
