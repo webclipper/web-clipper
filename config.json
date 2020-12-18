@@ -1,8 +1,8 @@
 {
   "iconfont": "https://at.alicdn.com/t/font_1402208_2lu6nv8l5n.js",
-  "chromeWebStoreVersion": "1.25.0",
-  "edgeWebStoreVersion": "1.25.0",
-  "firefoxWebStoreVersion": "1.25.0",
+  "chromeWebStoreVersion": "1.28.4",
+  "edgeWebStoreVersion": "1.28.4",
+  "firefoxWebStoreVersion": "1.28.4",
   "privacyLocale": ["en-US", "zh-CN"],
   "changelogLocale": ["en-US", "zh-CN"]
 }
