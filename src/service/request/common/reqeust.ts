@@ -1,17 +1,29 @@
-export interface IPostFormRequestOptions {
+export type Method = 'get' | 'post';
+
+export interface BaseRequestOptions {
+  method: Method;
   headers?: Record<string, string>;
+}
+
+export interface IPostFormRequestOptions extends BaseRequestOptions {
+  method: 'post';
   requestType: 'form';
   data: FormData;
 }
-
-export interface IPostRequestOptions {
-  data?: any;
+export interface IPostRequestOptions extends BaseRequestOptions {
+  method: 'post';
+  requestType: 'json';
+  data: any;
 }
 
+export interface IGetFormRequestOptions extends BaseRequestOptions {
+  method: 'get';
+}
+
+export type TRequestOption = IGetFormRequestOptions | IPostRequestOptions | IPostFormRequestOptions;
+
 export interface IRequest {
-  post<T>(url: string, options: IPostRequestOptions): Promise<T>;
-  postForm<T>(url: string, options: IPostFormRequestOptions): Promise<T>;
-  get<T>(url: string): Promise<T>;
+  request<T>(url: string, options: TRequestOption): Promise<T>;
 }
 
 export interface IHelperOptions {
@@ -24,15 +36,19 @@ export class RequestHelper implements IRequest {
   constructor(private options: IHelperOptions) {}
 
   post<T>(url: string, options: IPostRequestOptions) {
-    return this.options.request.post<T>(this.getUrl(url), options);
+    return this.options.request.request<T>(this.getUrl(url), options);
   }
 
   postForm<T>(url: string, options: IPostFormRequestOptions) {
-    return this.options.request.postForm<T>(this.getUrl(url), options);
+    return this.options.request.request<T>(this.getUrl(url), options);
   }
 
-  get<T>(url: string) {
-    return this.options.request.get<T>(this.getUrl(url));
+  get<T>(url: string, options: IGetFormRequestOptions) {
+    return this.options.request.request<T>(this.getUrl(url), options);
+  }
+
+  request<T>(url: string, options: TRequestOption) {
+    return this.options.request.request<T>(url, options);
   }
 
   private getUrl(url: string): string {

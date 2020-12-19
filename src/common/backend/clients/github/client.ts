@@ -1,4 +1,4 @@
-import { IRequest } from '@/service/request/common/reqeust';
+import { IRequest, RequestHelper } from '@/service/request/common/reqeust';
 import { stringify } from 'qs';
 
 export interface IGithubClientOptions {
@@ -19,17 +19,18 @@ export interface ICreateIssueResponse {
 
 export class GithubClient {
   private options: IGithubClientOptions;
+  private request: RequestHelper;
 
   constructor(options: IGithubClientOptions) {
     this.options = options;
-    console.log(this.options);
+    this.request = new RequestHelper({ request: this.options.request });
   }
 
   async createIssue(options: ICreateIssueOptions) {
     const data = { title: options.title, body: options.body, labels: options.labels };
-    const response = await this.options.request.post<ICreateIssueResponse>(
+    const response = await this.request.post<ICreateIssueResponse>(
       `/repos/${options.namespace}/issues`,
-      { data }
+      { data, requestType: 'json', method: 'post' }
     );
     return response;
   }
