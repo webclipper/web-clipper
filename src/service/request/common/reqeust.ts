@@ -60,8 +60,11 @@ export class RequestHelper implements IRequest {
     });
   }
 
-  get<T>(url: string, options: IGetFormRequestOptions) {
-    return this.request<T>(url, options);
+  get<T>(url: string, options?: Omit<IGetFormRequestOptions, 'method'>) {
+    return this.request<T>(url, {
+      ...options,
+      method: 'get',
+    });
   }
 
   async request<T>(url: string, options: TRequestOption) {
