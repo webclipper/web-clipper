@@ -26,29 +26,58 @@ export interface IRequest {
   request<T>(url: string, options: TRequestOption): Promise<T>;
 }
 
+export type RequestInterceptor = (
+  url: string,
+  options: TRequestOption
+) => {
+  url?: string;
+  options?: TRequestOption;
+};
 export interface IHelperOptions {
   baseURL?: string;
   headers?: Record<string, string>;
   request: IRequest;
+  interceptors?: {
+    request?: RequestInterceptor[] | RequestInterceptor;
+  };
 }
-
 export class RequestHelper implements IRequest {
   constructor(private options: IHelperOptions) {}
 
-  post<T>(url: string, options: IPostRequestOptions) {
-    return this.options.request.request<T>(this.getUrl(url), options);
+  post<T>(url: string, options: Omit<IPostRequestOptions, 'method' | 'requestType'>) {
+    return this.request<T>(url, {
+      ...options,
+      method: 'post',
+      requestType: 'json',
+    });
   }
 
-  postForm<T>(url: string, options: IPostFormRequestOptions) {
-    return this.options.request.request<T>(this.getUrl(url), options);
+  postForm<T>(url: string, options: Omit<IPostFormRequestOptions, 'method' | 'requestType'>) {
+    return this.request<T>(url, {
+      ...options,
+      method: 'post',
+      requestType: 'form',
+    });
   }
 
   get<T>(url: string, options: IGetFormRequestOptions) {
-    return this.options.request.request<T>(this.getUrl(url), options);
+    return this.request<T>(url, options);
   }
 
-  request<T>(url: string, options: TRequestOption) {
-    return this.options.request.request<T>(url, options);
+  async request<T>(url: string, options: TRequestOption) {
+    let requestUrl = this.getUrl(url);
+    let requestOptions = options;
+    let requestInterceptors: RequestInterceptor[] | RequestInterceptor =
+      this.options.interceptors?.request || [];
+    if (requestInterceptors && !Array.isArray(requestInterceptors)) {
+      requestInterceptors = [requestInterceptors] as RequestInterceptor[];
+    }
+    for (const interceptor of requestInterceptors) {
+      const res = interceptor(requestUrl, requestOptions);
+      requestUrl = res.url ?? requestUrl;
+      requestOptions = res.options ?? requestOptions;
+    }
+    return this.options.request.request<T>(requestUrl, requestOptions);
   }
 
   private getUrl(url: string): string {

@@ -30,7 +30,7 @@ export class GithubClient {
     const data = { title: options.title, body: options.body, labels: options.labels };
     const response = await this.request.post<ICreateIssueResponse>(
       `/repos/${options.namespace}/issues`,
-      { data, requestType: 'json', method: 'post' }
+      { data }
     );
     return response;
   }
