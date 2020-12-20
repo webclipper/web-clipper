@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { RequestHelper, TRequestOption, IRequest } from './reqeust';
 
 type handler = (url: string, options?: TRequestOption) => any;
@@ -46,6 +49,32 @@ describe('test RequestHelper', () => {
     expect(mockRequest.mock.request.mock.calls[2]).toEqual([
       'http://clipper.website',
       { method: 'get' },
+    ]);
+  });
+
+  it('test post', () => {
+    const mockRequest = new MockRequest(() => {
+      return '';
+    });
+    const request = new RequestHelper({
+      baseURL: 'https://api.clipper.website/',
+      request: mockRequest,
+    });
+    request.post('DiamondYuan', {
+      data: { name: '1' },
+    });
+    expect(mockRequest.mock.request.mock.calls[0]).toEqual([
+      'https://api.clipper.website/DiamondYuan',
+      { method: 'post', requestType: 'json', data: { name: '1' } },
+    ]);
+
+    const formData = new FormData();
+    request.postForm('DiamondYuan', {
+      data: formData,
+    });
+    expect(mockRequest.mock.request.mock.calls[1]).toEqual([
+      'https://api.clipper.website/DiamondYuan',
+      { method: 'post', requestType: 'form', data: formData },
     ]);
   });
 });
