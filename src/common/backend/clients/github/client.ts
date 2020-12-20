@@ -1,22 +1,13 @@
-import { IExtendRequestHelper, IRequestService } from '@/service/common/request';
+import { IExtendRequestHelper } from '@/service/common/request';
 import { RequestHelper } from '@/service/request/common/request';
 import { stringify } from 'qs';
-
-export interface IGithubClientOptions {
-  token: string;
-  request: IRequestService;
-}
-export interface ICreateIssueOptions {
-  title: string;
-  body: string;
-  labels: string[];
-  namespace: string;
-}
-
-export interface ICreateIssueResponse {
-  html_url: string;
-  id: number;
-}
+import {
+  ICreateIssueOptions,
+  ICreateIssueResponse,
+  IGithubClientOptions,
+  IGithubUserInfoResponse,
+  IUploadFileOptions,
+} from './types';
 
 export class GithubClient {
   private options: IGithubClientOptions;
@@ -24,16 +15,36 @@ export class GithubClient {
 
   constructor(options: IGithubClientOptions) {
     this.options = options;
-    this.request = new RequestHelper({ request: this.options.request });
+    this.request = new RequestHelper({
+      baseURL: 'https://api.github.com/',
+      headers: {
+        Accept: 'application/vnd.github.v3+json',
+        Authorization: `token ${this.options.token}`,
+      },
+      request: this.options.request,
+    });
   }
 
   async createIssue(options: ICreateIssueOptions) {
     const data = { title: options.title, body: options.body, labels: options.labels };
     const response = await this.request.post<ICreateIssueResponse>(
-      `/repos/${options.namespace}/issues`,
+      `repos/${options.namespace}/issues`,
       { data }
     );
     return response;
+  }
+
+  async getUserInfo() {
+    return this.request.get<IGithubUserInfoResponse>('user');
+  }
+
+  /**
+   * Create or update file contents
+   *
+   * @see https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#create-or-update-file-contents
+   */
+  async _uploadFile(_options: IUploadFileOptions) {
+    throw new Error('TODO');
   }
 
   static get generateNewTokenUrl() {

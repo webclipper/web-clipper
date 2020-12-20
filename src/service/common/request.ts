@@ -43,7 +43,7 @@ export interface IExtendRequestHelper {
     options: Omit<IPostFormRequestOptions, 'method' | 'requestType'>
   ): Promise<T>;
 
-  get<T>(url: string, options: Omit<IGetFormRequestOptions, 'method'>): Promise<T>;
+  get<T>(url: string, options?: Omit<IGetFormRequestOptions, 'method'>): Promise<T>;
 }
 
 export interface IHelperOptions {
