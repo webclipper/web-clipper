@@ -1,9 +1,10 @@
-import { IRequest, RequestHelper } from '@/service/request/common/reqeust';
+import { IRequestService } from '@/service/common/request';
+import { RequestHelper } from '@/service/request/common/reqeust';
 import { stringify } from 'qs';
 
 export interface IGithubClientOptions {
   token: string;
-  request: IRequest;
+  request: IRequestService;
 }
 export interface ICreateIssueOptions {
   title: string;

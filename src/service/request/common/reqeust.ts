@@ -3,12 +3,12 @@ import {
   IHelperOptions,
   IPostFormRequestOptions,
   IPostRequestOptions,
-  IRequest,
+  IRequestService,
   RequestInterceptor,
   TRequestOption,
 } from '@/service/common/request';
 
-export class RequestHelper implements IRequest {
+export class RequestHelper implements IRequestService {
   constructor(private options: IHelperOptions) {}
 
   post<T>(url: string, options: Omit<IPostRequestOptions, 'method' | 'requestType'>) {

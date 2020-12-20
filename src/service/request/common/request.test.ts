@@ -1,12 +1,12 @@
 /**
  * @jest-environment jsdom
  */
-import { IRequest, TRequestOption } from '@/service/common/request';
+import { IRequestService, TRequestOption } from '@/service/common/request';
 import { RequestHelper } from './reqeust';
 
 type handler = (url: string, options?: TRequestOption) => any;
 
-class MockRequest implements IRequest {
+class MockRequestService implements IRequestService {
   public mock: {
     request: jest.Mock;
   };
@@ -26,45 +26,45 @@ class MockRequest implements IRequest {
 
 describe('test RequestHelper', () => {
   it('test baseURL', () => {
-    const mockRequest = new MockRequest(() => {
+    const mockRequestService = new MockRequestService(() => {
       return '';
     });
     const request = new RequestHelper({
       baseURL: 'https://api.clipper.website/',
-      request: mockRequest,
+      request: mockRequestService,
     });
 
     request.get('diamondyuan');
-    expect(mockRequest.mock.request.mock.calls[0]).toEqual([
+    expect(mockRequestService.mock.request.mock.calls[0]).toEqual([
       'https://api.clipper.website/diamondyuan',
       { method: 'get', headers: {} },
     ]);
 
     request.get('https://clipper.website');
-    expect(mockRequest.mock.request.mock.calls[1]).toEqual([
+    expect(mockRequestService.mock.request.mock.calls[1]).toEqual([
       'https://clipper.website',
       { method: 'get', headers: {} },
     ]);
 
     request.get('http://clipper.website');
-    expect(mockRequest.mock.request.mock.calls[2]).toEqual([
+    expect(mockRequestService.mock.request.mock.calls[2]).toEqual([
       'http://clipper.website',
       { method: 'get', headers: {} },
     ]);
   });
 
   it('test post', () => {
-    const mockRequest = new MockRequest(() => {
+    const mockRequestService = new MockRequestService(() => {
       return '';
     });
     const request = new RequestHelper({
       baseURL: 'https://api.clipper.website/',
-      request: mockRequest,
+      request: mockRequestService,
     });
     request.post('DiamondYuan', {
       data: { name: 'DiamondYuan' },
     });
-    expect(mockRequest.mock.request.mock.calls[0]).toEqual([
+    expect(mockRequestService.mock.request.mock.calls[0]).toEqual([
       'https://api.clipper.website/DiamondYuan',
       { method: 'post', requestType: 'json', data: { name: 'DiamondYuan' }, headers: {} },
     ]);
@@ -74,14 +74,14 @@ describe('test RequestHelper', () => {
     request.postForm('DiamondYuan', {
       data: formData,
     });
-    expect(mockRequest.mock.request.mock.calls[1]).toEqual([
+    expect(mockRequestService.mock.request.mock.calls[1]).toEqual([
       'https://api.clipper.website/DiamondYuan',
       { method: 'post', requestType: 'form', data: formData, headers: {} },
     ]);
   });
 
   it('test header', () => {
-    const mockRequest = new MockRequest(() => {
+    const mockRequestService = new MockRequestService(() => {
       return '';
     });
     const request = new RequestHelper({
@@ -89,12 +89,12 @@ describe('test RequestHelper', () => {
       headers: {
         token: '12345',
       },
-      request: mockRequest,
+      request: mockRequestService,
     });
     request.post('DiamondYuan', {
       data: { name: 'DiamondYuan' },
     });
-    expect(mockRequest.mock.request.mock.calls[0]).toEqual([
+    expect(mockRequestService.mock.request.mock.calls[0]).toEqual([
       'https://api.clipper.website/DiamondYuan',
       {
         method: 'post',
@@ -108,7 +108,7 @@ describe('test RequestHelper', () => {
       data: { name: 'DiamondYuan' },
       headers: { token: '123456' },
     });
-    expect(mockRequest.mock.request.mock.calls[1]).toEqual([
+    expect(mockRequestService.mock.request.mock.calls[1]).toEqual([
       'https://api.clipper.website/DiamondYuan',
       {
         method: 'post',

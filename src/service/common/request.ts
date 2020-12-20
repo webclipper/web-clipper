@@ -22,7 +22,7 @@ export interface IGetFormRequestOptions extends BaseRequestOptions {
 
 export type TRequestOption = IGetFormRequestOptions | IPostRequestOptions | IPostFormRequestOptions;
 
-export interface IRequest {
+export interface IRequestService {
   request<T>(url: string, options: TRequestOption): Promise<T>;
 }
 
@@ -36,7 +36,7 @@ export type RequestInterceptor = (
 export interface IHelperOptions {
   baseURL?: string;
   headers?: Record<string, string>;
-  request: IRequest;
+  request: IRequestService;
   interceptors?: {
     request?: RequestInterceptor[] | RequestInterceptor;
   };
