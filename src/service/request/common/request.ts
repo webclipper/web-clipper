@@ -3,12 +3,12 @@ import {
   IHelperOptions,
   IPostFormRequestOptions,
   IPostRequestOptions,
-  IRequestService,
   RequestInterceptor,
   TRequestOption,
+  IExtendRequestHelper,
 } from '@/service/common/request';
 
-export class RequestHelper implements IRequestService {
+export class RequestHelper implements IExtendRequestHelper {
   constructor(private options: IHelperOptions) {}
 
   post<T>(url: string, options: Omit<IPostRequestOptions, 'method' | 'requestType'>) {
@@ -34,7 +34,7 @@ export class RequestHelper implements IRequestService {
     });
   }
 
-  async request<T>(url: string, options: TRequestOption) {
+  private async request<T>(url: string, options: TRequestOption) {
     let requestUrl = url;
     let requestOptions = options;
     let requestInterceptors: RequestInterceptor[] | RequestInterceptor =

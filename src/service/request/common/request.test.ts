@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { IRequestService, TRequestOption } from '@/service/common/request';
-import { RequestHelper } from './reqeust';
+import { RequestHelper } from './request';
 
 type handler = (url: string, options?: TRequestOption) => any;
 

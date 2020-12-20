@@ -1,5 +1,5 @@
-import { IRequestService } from '@/service/common/request';
-import { RequestHelper } from '@/service/request/common/reqeust';
+import { IExtendRequestHelper, IRequestService } from '@/service/common/request';
+import { RequestHelper } from '@/service/request/common/request';
 import { stringify } from 'qs';
 
 export interface IGithubClientOptions {
@@ -20,7 +20,7 @@ export interface ICreateIssueResponse {
 
 export class GithubClient {
   private options: IGithubClientOptions;
-  private request: RequestHelper;
+  private request: IExtendRequestHelper;
 
   constructor(options: IGithubClientOptions) {
     this.options = options;
