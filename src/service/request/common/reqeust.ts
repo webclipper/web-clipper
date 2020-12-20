@@ -68,13 +68,15 @@ export class RequestHelper implements IRequest {
   }
 
   async request<T>(url: string, options: TRequestOption) {
-    let requestUrl = this.getUrl(url);
+    let requestUrl = url;
     let requestOptions = options;
     let requestInterceptors: RequestInterceptor[] | RequestInterceptor =
       this.options.interceptors?.request || [];
+
     if (requestInterceptors && !Array.isArray(requestInterceptors)) {
       requestInterceptors = [requestInterceptors] as RequestInterceptor[];
     }
+    requestInterceptors = [this.basicRequestInterceptors.bind(this)].concat(requestInterceptors);
     for (const interceptor of requestInterceptors) {
       const res = interceptor(requestUrl, requestOptions);
       requestUrl = res.url ?? requestUrl;
@@ -83,10 +85,25 @@ export class RequestHelper implements IRequest {
     return this.options.request.request<T>(requestUrl, requestOptions);
   }
 
-  private getUrl(url: string): string {
+  private basicRequestInterceptors(
+    url: string,
+    options: TRequestOption
+  ): ReturnType<RequestInterceptor> {
+    let requestUrl = url;
     if (!this.options.baseURL || url.match(/^https?:\/\//)) {
-      return url;
+      requestUrl = url;
+    } else {
+      requestUrl = `${this.options.baseURL}${url}`;
     }
-    return `${this.options.baseURL}${url}`;
+    return {
+      url: requestUrl,
+      options: {
+        ...options,
+        headers: {
+          ...this.options?.headers,
+          ...options.headers,
+        },
+      },
+    };
   }
 }
