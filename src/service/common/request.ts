@@ -1,6 +1,6 @@
 import { Token } from 'typedi';
 
-export type Method = 'get' | 'post';
+export type Method = 'get' | 'post' | 'put';
 
 export interface BaseRequestOptions {
   method: Method;
@@ -22,7 +22,16 @@ export interface IGetFormRequestOptions extends BaseRequestOptions {
   method: 'get';
 }
 
-export type TRequestOption = IGetFormRequestOptions | IPostRequestOptions | IPostFormRequestOptions;
+export interface IPutRequestOptions extends BaseRequestOptions {
+  method: 'put';
+  data: any;
+}
+
+export type TRequestOption =
+  | IGetFormRequestOptions
+  | IPostRequestOptions
+  | IPostFormRequestOptions
+  | IPutRequestOptions;
 
 export interface IRequestService {
   request<T>(url: string, options: TRequestOption): Promise<T>;
@@ -42,6 +51,8 @@ export interface IExtendRequestHelper {
     url: string,
     options: Omit<IPostFormRequestOptions, 'method' | 'requestType'>
   ): Promise<T>;
+
+  put<T>(url: string, options: Omit<IPostRequestOptions, 'method'>): Promise<T>;
 
   get<T>(url: string, options?: Omit<IGetFormRequestOptions, 'method'>): Promise<T>;
 }

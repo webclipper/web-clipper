@@ -6,6 +6,7 @@ import {
   RequestInterceptor,
   TRequestOption,
   IExtendRequestHelper,
+  IPutRequestOptions,
 } from '@/service/common/request';
 
 export class RequestHelper implements IExtendRequestHelper {
@@ -24,6 +25,13 @@ export class RequestHelper implements IExtendRequestHelper {
       ...options,
       method: 'post',
       requestType: 'form',
+    });
+  }
+
+  put<T>(url: string, options: Omit<IPutRequestOptions, 'method'>) {
+    return this.request<T>(url, {
+      ...options,
+      method: 'put',
     });
   }
 

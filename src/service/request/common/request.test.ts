@@ -53,7 +53,7 @@ describe('test RequestHelper', () => {
     ]);
   });
 
-  it('test post', () => {
+  it('test post put', () => {
     const mockRequestService = new MockRequestService(() => {
       return '';
     });
@@ -77,6 +77,14 @@ describe('test RequestHelper', () => {
     expect(mockRequestService.mock.request.mock.calls[1]).toEqual([
       'https://api.clipper.website/DiamondYuan',
       { method: 'post', requestType: 'form', data: formData, headers: {} },
+    ]);
+
+    request.put('DiamondYuan', {
+      data: { name: 'DiamondYuan' },
+    });
+    expect(mockRequestService.mock.request.mock.calls[2]).toEqual([
+      'https://api.clipper.website/DiamondYuan',
+      { method: 'put', data: { name: 'DiamondYuan' }, headers: {} },
     ]);
   });
 
