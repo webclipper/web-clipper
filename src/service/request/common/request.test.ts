@@ -1,28 +1,8 @@
 /**
  * @jest-environment jsdom
  */
-import { IRequestService, TRequestOption } from '@/service/common/request';
+import { MockRequestService } from '@/__test__/utils';
 import { RequestHelper } from './request';
-
-type handler = (url: string, options?: TRequestOption) => any;
-
-class MockRequestService implements IRequestService {
-  public mock: {
-    request: jest.Mock;
-  };
-  private handler: handler;
-  constructor(handler: handler) {
-    this.mock = {
-      request: jest.fn(),
-    };
-    this.handler = handler;
-  }
-
-  request(url: string, options: TRequestOption) {
-    this.mock.request(url, options);
-    return this.handler(url, options);
-  }
-}
 
 describe('test RequestHelper', () => {
   it('test baseURL', () => {
