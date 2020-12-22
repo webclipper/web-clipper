@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - test-*
 
 jobs:
   release:
@@ -13,10 +14,9 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '12.x'
       - name: Install Dependencies
         run: npm install
       - run: npm run lint
       - run: npm run test --collectCoverage
-      - run: npm run release
       - uses: codecov/codecov-action@v1
