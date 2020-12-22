@@ -1,8 +1,11 @@
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
 import { BlobToBase64 } from '@/common/blob';
-import Axios, { AxiosInstance } from 'axios';
+import Axios from 'axios';
 import { UploadImageRequest, ImageHostingService } from '../interface';
 import { isUndefined } from 'lodash';
+import { GithubClient } from '../../clients/github/client';
+import Container from 'typedi';
+import { BasicRequestService } from '@/service/common/request';
 
 export interface GithubImageHostingOption {
   accessToken: string;
@@ -12,26 +15,16 @@ export interface GithubImageHostingOption {
 
 export default class GithubImageHostingService implements ImageHostingService {
   private config: GithubImageHostingOption;
-  private request: AxiosInstance;
   private username: string;
   private date: Date;
+  private githubClient: GithubClient;
   constructor(config: GithubImageHostingOption) {
     this.username = '';
     this.config = config;
     this.date = new Date();
-    this.request = Axios.create({
-      baseURL: 'https://api.github.com',
-      headers: {
-        Accept: 'application/vnd.github.v3+object',
-        Authorization: `token ${this.config.accessToken}`,
-      },
-      timeout: 10000,
-      transformResponse: [
-        (data): string => {
-          return JSON.parse(data);
-        },
-      ],
-      withCredentials: true,
+    this.githubClient = new GithubClient({
+      token: this.config.accessToken,
+      request: Container.get(BasicRequestService),
     });
   }
 
@@ -51,10 +44,8 @@ export default class GithubImageHostingService implements ImageHostingService {
   };
 
   private async getUserName() {
-    const response = await this.request.get<{ login: string }>('/user').catch(() => {
-      throw new Error('Get Username Error');
-    });
-    return response.data.login;
+    const response = await this.githubClient.getUserInfo();
+    return response.login;
   }
 
   private generateFilename = (data: string): string => {
@@ -83,18 +74,14 @@ export default class GithubImageHostingService implements ImageHostingService {
       .replace(new RegExp('/', 'g'), '-')
       .replace(new RegExp(':', 'g'), '-');
     const filteredImage = data.replace(/^data:image\/.*;base64,/, '');
-    const response = await this.request
-      .put(
-        `/repos/${this.username}/${this.config.repoName}/contents/${this.config.savePath}${folderName}/${fileName}`,
-        {
-          message: `Upload image "${fileName}"`,
-          content: filteredImage,
-        }
-      )
-      .catch(error => {
-        throw Error(error);
-      });
-
-    return response ? `${response.data.content.html_url}?raw=true` : '';
+    const response = await this.githubClient.uploadFile({
+      owner: this.username,
+      repo: this.config.repoName,
+      path: `${this.config.savePath}${folderName}/${fileName}`,
+      message: `Upload image "${fileName}"`,
+      content: filteredImage,
+      branch: 'test',
+    });
+    return `${response.content.html_url}?raw=true`;
   };
 }

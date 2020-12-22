@@ -17,6 +17,7 @@ export interface ICreateIssueResponse {
 }
 
 export interface IGithubUserInfoResponse {
+  login: string;
   avatar_url: string;
   name: string;
   bio: string;
