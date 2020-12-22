@@ -7,6 +7,7 @@ import { IContentScriptService } from '@/service/common/contentScript';
 import { ContentScriptChannelClient } from '@/service/contentScript/common/contentScriptIPC';
 import { ITabService } from '@/service/common/tab';
 import { PopupIpcClient, PopupContentScriptIPCClient } from '@/service/ipc/browser/popup/ipcClient';
+import '@/service/request/tool/basic';
 import '@/service/config/browser/configService';
 import '@/service/powerpackService';
 import '@/service/trackService';

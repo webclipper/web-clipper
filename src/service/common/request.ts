@@ -66,4 +66,4 @@ export interface IHelperOptions {
   };
 }
 
-export const BasicRequestService = new Token<IRequestService>();
+export const IBasicRequestService = new Token<IRequestService>();

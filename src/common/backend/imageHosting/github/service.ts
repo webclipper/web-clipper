@@ -5,7 +5,7 @@ import { UploadImageRequest, ImageHostingService } from '../interface';
 import { isUndefined } from 'lodash';
 import { GithubClient } from '../../clients/github/client';
 import Container from 'typedi';
-import { BasicRequestService } from '@/service/common/request';
+import { IBasicRequestService } from '@/service/common/request';
 
 export interface GithubImageHostingOption {
   accessToken: string;
@@ -24,7 +24,7 @@ export default class GithubImageHostingService implements ImageHostingService {
     this.date = new Date();
     this.githubClient = new GithubClient({
       token: this.config.accessToken,
-      request: Container.get(BasicRequestService),
+      request: Container.get(IBasicRequestService),
     });
   }
 
