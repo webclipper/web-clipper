@@ -7,6 +7,7 @@ import {
   IGithubClientOptions,
   IGithubUserInfoResponse,
   IUploadFileOptions,
+  IUploadFileResponse,
 } from './types';
 
 export class GithubClient {
@@ -43,8 +44,16 @@ export class GithubClient {
    *
    * @see https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#create-or-update-file-contents
    */
-  async _uploadFile(_options: IUploadFileOptions) {
-    throw new Error('TODO');
+  async uploadFile(options: IUploadFileOptions) {
+    return this.request.put<IUploadFileResponse>(
+      `/repos/${options.owner}/${options.repo}/contents/${options.path}`,
+      {
+        data: {
+          message: options.message,
+          content: options.content,
+        },
+      }
+    );
   }
 
   static get generateNewTokenUrl() {

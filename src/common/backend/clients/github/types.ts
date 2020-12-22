@@ -27,5 +27,13 @@ export interface IUploadFileOptions {
   owner: string;
   repo: string;
   path: string;
+  message: string;
+  content: string;
   branch?: string;
+}
+
+export interface IUploadFileResponse {
+  content: {
+    html_url: string;
+  };
 }
