@@ -5,6 +5,7 @@ module.exports = {
     '^common/(.*)': '<rootDir>/src/common/$1',
     '^extensions/(.*)': '<rootDir>/src/extensions/$1',
     '@/service/(.*)': '<rootDir>/src/service/$1',
+    '@/__test__/(.*)': '<rootDir>/src/__test__/$1',
     '^actions/(.*)': '<rootDir>/src/store/actions/$1',
   },
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
