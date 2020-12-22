@@ -80,7 +80,6 @@ export default class GithubImageHostingService implements ImageHostingService {
       path: `${this.config.savePath}${folderName}/${fileName}`,
       message: `Upload image "${fileName}"`,
       content: filteredImage,
-      branch: 'test',
     });
     return `${response.content.html_url}?raw=true`;
   };

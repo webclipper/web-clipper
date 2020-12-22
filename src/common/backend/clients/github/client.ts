@@ -46,11 +46,12 @@ export class GithubClient {
    */
   async uploadFile(options: IUploadFileOptions) {
     return this.request.put<IUploadFileResponse>(
-      `/repos/${options.owner}/${options.repo}/contents/${options.path}`,
+      `repos/${options.owner}/${options.repo}/contents/${options.path}`,
       {
         data: {
           message: options.message,
           content: options.content,
+          branch: options.branch,
         },
       }
     );
