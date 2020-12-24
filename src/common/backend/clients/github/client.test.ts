@@ -60,4 +60,30 @@ describe('test GithubClient', () => {
     ]);
     expect(result).toEqual(expectResult);
   });
+
+  test('test createIssue', async () => {
+    const expectResult = { html_url: 'html_url', id: 'id' };
+    const testFixtures = getTestFixtures(expectResult);
+    const result = await testFixtures.githubClient.uploadFile({
+      owner: 'owner',
+      repo: 'repo',
+      path: 'path',
+      message: 'message',
+      content: 'content',
+      branch: 'branch',
+    });
+    console.log(testFixtures.mockRequestService.mock.calls[0]);
+    expect(testFixtures.mockRequestService.mock.calls[0]).toEqual([
+      'https://api.github.com/repos/owner/repo/contents/path',
+      {
+        data: { message: 'message', content: 'content', branch: 'branch' },
+        method: 'put',
+        headers: {
+          Accept: 'application/vnd.github.v3+json',
+          Authorization: 'token DiamondYuan',
+        },
+      },
+    ]);
+    expect(result).toEqual(expectResult);
+  });
 });
