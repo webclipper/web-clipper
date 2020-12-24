@@ -5782,10 +5782,10 @@ left-pad@^1.3.0:
   resolved "https://registry.npm.taobao.org/left-pad/download/left-pad-1.3.0.tgz#5b8a3a7765dfe001261dde915589e782f8c94d1e"
   integrity sha1-W4o6d2Xf4AEmHd6RVYnngvjJTR4=
 
-less-loader@^7.0.2:
-  version "7.0.2"
-  resolved "https://registry.npm.taobao.org/less-loader/download/less-loader-7.0.2.tgz#0d73a49ec32a9d3ff12614598e6e2b47fb2a35c4"
-  integrity sha1-DXOknsMqnT/xJhRZjm4rR/sqNcQ=
+less-loader@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/less-loader/-/less-loader-7.2.0.tgz#37ba9c778d999930cd24fa1b59aa4e0ba5ba0441"
+  integrity sha512-C/08kYL2+wFLFQ/c8tey4qX6xpPVtBBwGa9gtpI/bktWpSUaUkZxeOUMM2zGDrQ4s/ZVpA+Rv2RyIvwEXNVuIg==
   dependencies:
     klona "^2.0.4"
     loader-utils "^2.0.0"
