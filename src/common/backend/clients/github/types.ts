@@ -38,3 +38,16 @@ export interface IUploadFileResponse {
     html_url: string;
   };
 }
+
+export interface IListBranchesOptions {
+  owner: string;
+  repo: string;
+  protected: boolean;
+  per_page: number;
+  page: number;
+}
+
+export interface IBranch {
+  name: string;
+  protected: boolean;
+}

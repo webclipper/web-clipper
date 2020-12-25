@@ -72,7 +72,6 @@ describe('test GithubClient', () => {
       content: 'content',
       branch: 'branch',
     });
-    console.log(testFixtures.mockRequestService.mock.calls[0]);
     expect(testFixtures.mockRequestService.mock.calls[0]).toEqual([
       'https://api.github.com/repos/owner/repo/contents/path',
       {
@@ -85,5 +84,26 @@ describe('test GithubClient', () => {
       },
     ]);
     expect(result).toEqual(expectResult);
+  });
+
+  test('test list branches', async () => {
+    const testFixtures = getTestFixtures([]);
+    await testFixtures.githubClient.listBranch({
+      owner: 'owner',
+      repo: 'repo',
+      protected: false,
+      page: 1,
+      per_page: 100,
+    });
+    expect(testFixtures.mockRequestService.mock.calls[0]).toEqual([
+      'https://api.github.com/repos/owner/repo/branches?protected=false&per_page=100&page=1',
+      {
+        method: 'get',
+        headers: {
+          Accept: 'application/vnd.github.v3+json',
+          Authorization: 'token DiamondYuan',
+        },
+      },
+    ]);
   });
 });

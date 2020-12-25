@@ -8,6 +8,8 @@ import {
   IGithubUserInfoResponse,
   IUploadFileOptions,
   IUploadFileResponse,
+  IListBranchesOptions,
+  IBranch,
 } from './types';
 
 export class GithubClient {
@@ -54,6 +56,16 @@ export class GithubClient {
           branch: options.branch,
         },
       }
+    );
+  }
+
+  async listBranch(options: IListBranchesOptions) {
+    return this.request.get<IBranch[]>(
+      `repos/${options.owner}/${options.repo}/branches?${stringify({
+        protected: options.protected,
+        per_page: options.per_page,
+        page: options.page,
+      })}`
     );
   }
 
