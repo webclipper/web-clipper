@@ -10,6 +10,9 @@ import {
   IUploadFileResponse,
   IListBranchesOptions,
   IBranch,
+  TPageRequest,
+  IPageQuery,
+  TOmitPage,
 } from './types';
 
 export class GithubClient {
@@ -28,25 +31,44 @@ export class GithubClient {
     });
   }
 
-  async createIssue(options: ICreateIssueOptions) {
+  createIssue = async (options: ICreateIssueOptions) => {
     const data = { title: options.title, body: options.body, labels: options.labels };
     const response = await this.request.post<ICreateIssueResponse>(
       `repos/${options.namespace}/issues`,
       { data }
     );
     return response;
-  }
+  };
 
-  async getUserInfo() {
+  getUserInfo = () => {
     return this.request.get<IGithubUserInfoResponse>('user');
-  }
+  };
+
+  queryAll = async <O extends IPageQuery, T>(
+    args: TOmitPage<O>,
+    pageRequest: TPageRequest<O, T>
+  ): Promise<T[]> => {
+    const startPage: number = 1;
+    const pageSize: number = 5;
+    const baseArgs = { ...args, page: startPage, per_page: pageSize } as O;
+    let result: T[] = [];
+    while (true) {
+      const response = await pageRequest(baseArgs);
+      result = result.concat(response);
+      if (response.length === pageSize) {
+        baseArgs.page = baseArgs.page + 1;
+        continue;
+      }
+      return result;
+    }
+  };
 
   /**
    * Create or update file contents
    *
    * @see https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#create-or-update-file-contents
    */
-  async uploadFile(options: IUploadFileOptions) {
+  uploadFile = (options: IUploadFileOptions) => {
     return this.request.put<IUploadFileResponse>(
       `repos/${options.owner}/${options.repo}/contents/${options.path}`,
       {
@@ -57,9 +79,9 @@ export class GithubClient {
         },
       }
     );
-  }
+  };
 
-  async listBranch(options: IListBranchesOptions) {
+  listBranch = (options: IListBranchesOptions) => {
     return this.request.get<IBranch[]>(
       `repos/${options.owner}/${options.repo}/branches?${stringify({
         protected: options.protected,
@@ -67,7 +89,7 @@ export class GithubClient {
         page: options.page,
       })}`
     );
-  }
+  };
 
   static get generateNewTokenUrl() {
     return `https://github.com/settings/tokens/new?${stringify({

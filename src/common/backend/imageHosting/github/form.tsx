@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { Input, Tooltip } from 'antd';
 import { Form } from '@ant-design/compatible';
@@ -6,6 +6,9 @@ import { FormattedMessage } from 'react-intl';
 import locale from '@/common/locales';
 import IconFont from '@/components/IconFont';
 import { GithubClient } from '../../clients/github/client';
+import { IBasicRequestService } from '@/service/common/request';
+import Container from 'typedi';
+import { IBranch, IListBranchesOptions } from '../../clients/github/types';
 
 interface Props extends FormComponentProps {
   info: {
@@ -17,6 +20,24 @@ interface Props extends FormComponentProps {
 
 export default ({ form: { getFieldDecorator }, info }: Props) => {
   const initInfo: Partial<Props['info']> = info || {};
+
+  const [token, setToken] = useState('');
+
+  React.useEffect(() => {
+    if (token) {
+      const githubClient = new GithubClient({
+        token: token,
+        request: Container.get(IBasicRequestService),
+      });
+      githubClient
+        .queryAll<IListBranchesOptions, IBranch>(
+          { owner: 'webclipper', repo: 'web-clipper', protected: false },
+          githubClient.listBranch
+        )
+        .then(console.log);
+    }
+  }, [token]);
+
   return (
     <Fragment>
       <Form.Item
@@ -42,6 +63,7 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
           ],
         })(
           <Input
+            onChange={e => setToken(e.target.value)}
             placeholder=""
             suffix={
               <Tooltip

@@ -39,15 +39,22 @@ export interface IUploadFileResponse {
   };
 }
 
-export interface IListBranchesOptions {
+export interface IListBranchesOptions extends IPageQuery {
   owner: string;
   repo: string;
   protected: boolean;
-  per_page: number;
-  page: number;
 }
 
 export interface IBranch {
   name: string;
   protected: boolean;
 }
+
+export interface IPageQuery {
+  per_page: number;
+  page: number;
+}
+
+export type TOmitPage<T> = Omit<T, 'page' | 'per_page'>;
+
+export type TPageRequest<O extends IPageQuery, R> = (option: O) => Promise<R[]>;
