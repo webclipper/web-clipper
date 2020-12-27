@@ -13,6 +13,8 @@ import {
   TPageRequest,
   IPageQuery,
   TOmitPage,
+  IGetGithubRepositoryOptions,
+  IRepository,
 } from './types';
 
 export class GithubClient {
@@ -85,6 +87,21 @@ export class GithubClient {
     return this.request.get<IBranch[]>(
       `repos/${options.owner}/${options.repo}/branches?${stringify({
         protected: options.protected,
+        per_page: options.per_page,
+        page: options.page,
+      })}`
+    );
+  };
+
+  /**
+   *
+   * @see https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#list-repositories-for-the-authenticated-user
+   * @param options IGetGithubRepositoryOptions
+   */
+  getRepos = (options: IGetGithubRepositoryOptions) => {
+    return this.request.get<IRepository[]>(
+      `user/repos?${stringify({
+        affiliation: options.affiliation,
         per_page: options.per_page,
         page: options.page,
       })}`

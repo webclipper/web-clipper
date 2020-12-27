@@ -58,3 +58,13 @@ export interface IPageQuery {
 export type TOmitPage<T> = Omit<T, 'page' | 'per_page'>;
 
 export type TPageRequest<O extends IPageQuery, R> = (option: O) => Promise<R[]>;
+
+export interface IGetGithubRepositoryOptions extends IPageQuery {
+  visibility: 'all' | 'public' | 'private';
+  affiliation: 'owner' | 'collaborator' | 'organization_member';
+}
+
+export interface IRepository {
+  name: string;
+  full_name: string;
+}

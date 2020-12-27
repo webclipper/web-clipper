@@ -106,4 +106,24 @@ describe('test GithubClient', () => {
       },
     ]);
   });
+
+  test('test getRepos', async () => {
+    const testFixtures = getTestFixtures([]);
+    await testFixtures.githubClient.getRepos({
+      visibility: 'all',
+      affiliation: 'owner',
+      page: 1,
+      per_page: 100,
+    });
+    expect(testFixtures.mockRequestService.mock.calls[0]).toEqual([
+      'https://api.github.com/user/repos?affiliation=owner&per_page=100&page=1',
+      {
+        method: 'get',
+        headers: {
+          Accept: 'application/vnd.github.v3+json',
+          Authorization: 'token DiamondYuan',
+        },
+      },
+    ]);
+  });
 });
