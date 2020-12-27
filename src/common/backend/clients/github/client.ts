@@ -51,7 +51,7 @@ export class GithubClient {
     pageRequest: TPageRequest<O, T>
   ): Promise<T[]> => {
     const startPage: number = 1;
-    const pageSize: number = 5;
+    const pageSize: number = 50;
     const baseArgs = { ...args, page: startPage, per_page: pageSize } as O;
     let result: T[] = [];
     while (true) {

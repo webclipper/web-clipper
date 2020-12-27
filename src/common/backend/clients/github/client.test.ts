@@ -1,5 +1,6 @@
 import { MockRequestService } from '@/__test__/utils';
 import { GithubClient } from './client';
+import { IRepository } from './types';
 
 describe('test GithubClient', () => {
   test('test generateNewTokenUrl', () => {
@@ -9,7 +10,11 @@ describe('test GithubClient', () => {
   });
 
   function getTestFixtures(response?: any) {
-    const mockRequestService = new MockRequestService(() => response);
+    let handler = () => response;
+    if (typeof response === 'function') {
+      handler = response;
+    }
+    const mockRequestService = new MockRequestService(handler);
     const githubClient = new GithubClient({
       token: 'DiamondYuan',
       request: mockRequestService,
@@ -125,5 +130,29 @@ describe('test GithubClient', () => {
         },
       },
     ]);
+  });
+
+  test('test git all', async () => {
+    const result: IRepository[] = [];
+    for (let i = 0; i < 670; i++) {
+      result.push({
+        name: `${i}`,
+        full_name: `webclipper/${i}`,
+      });
+    }
+    const testFixtures = getTestFixtures((...args: [string, Object]) => {
+      const url = new URL(args[0]);
+      const page = parseInt(url.searchParams.get('page')!, 10);
+      const per_page = parseInt(url.searchParams.get('per_page')!, 10);
+      return result.slice(per_page * (page - 1), per_page * page);
+    });
+    const res = await testFixtures.githubClient.queryAll(
+      {
+        visibility: 'all',
+        affiliation: 'owner',
+      },
+      testFixtures.githubClient.getRepos
+    );
+    expect(res).toEqual(result);
   });
 });
