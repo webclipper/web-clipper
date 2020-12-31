@@ -709,6 +709,11 @@
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-14.14.16.tgz?cache=0&sync_timestamp=1608753334141&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.14.16.tgz#3cc351f8d48101deadfed4c9e4f116048d437b4b"
   integrity sha1-PMNR+NSBAd6t/tTJ5PEWBI1De0s=
 
+"@types/pako@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/@types/pako/download/@types/pako-1.0.1.tgz?cache=0&sync_timestamp=1605054895745&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fpako%2Fdownload%2F%40types%2Fpako-1.0.1.tgz#33b237f3c9aff44d0f82fe63acffa4a365ef4a61"
+  integrity sha1-M7I388mv9E0Pgv5jrP+ko2XvSmE=
+
 "@types/prop-types@*":
   version "15.7.3"
   resolved "https://registry.npm.taobao.org/@types/prop-types/download/@types/prop-types-15.7.3.tgz?cache=0&sync_timestamp=1605055061207&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fprop-types%2Fdownload%2F%40types%2Fprop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
@@ -6902,6 +6907,11 @@ p-try@^2.0.0:
   version "2.2.0"
   resolved "https://registry.npm.taobao.org/p-try/download/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha1-yyhoVA4xPWHeWPr741zpAE1VQOY=
+
+pako@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npm.taobao.org/pako/download/pako-2.0.2.tgz#8a72af7a93431ef22aa97e0d53b0acaa3c689220"
+  integrity sha1-inKvepNDHvIqqX4NU7CsqjxokiA=
 
 pako@~1.0.5:
   version "1.0.11"
