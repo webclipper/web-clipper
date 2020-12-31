@@ -765,7 +765,7 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react@*":
+"@types/react@*", "@types/react@^17.0.0":
   version "17.0.0"
   resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-17.0.0.tgz?cache=0&sync_timestamp=1606158558386&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact%2Fdownload%2F%40types%2Freact-17.0.0.tgz#5af3eb7fad2807092f0046a1302b7823e27919b8"
   integrity sha1-WvPrf60oBwkvAEahMCt4I+J5Gbg=
@@ -773,7 +773,7 @@
     "@types/prop-types" "*"
     csstype "^3.0.2"
 
-"@types/react@^16", "@types/react@^16.9.55":
+"@types/react@^16":
   version "16.14.2"
   resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-16.14.2.tgz?cache=0&sync_timestamp=1606158558386&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact%2Fdownload%2F%40types%2Freact-16.14.2.tgz#85dcc0947d0645349923c04ccef6018a1ab7538c"
   integrity sha1-hdzAlH0GRTSZI8BMzvYBihq3U4w=
