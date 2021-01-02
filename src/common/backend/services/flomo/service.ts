@@ -42,7 +42,7 @@ export default class GithubDocumentService implements DocumentService {
       requestType: 'json',
       headers: {
         'x-requested-with': 'XMLHttpRequest',
-        'x-xsrf-token': cookies?.value!,
+        'x-xsrf-token': decodeURIComponent(cookies?.value!),
       },
       data: {
         source: 'web',
