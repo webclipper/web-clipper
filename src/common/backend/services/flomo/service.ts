@@ -37,6 +37,9 @@ export default class GithubDocumentService implements DocumentService {
       name: 'XSRF-TOKEN',
       url: 'https://flomoapp.com/',
     });
+    if (!cookies) {
+      throw new Error('Please Login');
+    }
     request.request('https://flomoapp.com/api/memo/', {
       method: 'put',
       requestType: 'json',
