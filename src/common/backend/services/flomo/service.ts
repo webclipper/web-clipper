@@ -32,7 +32,15 @@ export default class GithubDocumentService implements DocumentService {
 
   createDocument = async (info: CreateDocumentRequest): Promise<CompleteStatus> => {
     const request = Container.get(IBasicRequestService);
-    const converter = new showdown.Converter();
+    const converter = new showdown.Converter({});
+
+    converter.addExtension({
+      type: 'html',
+      filter: (html: string) => {
+        console.log(html);
+        return html.replace(/<img src="(.+?)"(.*)\/>/g, '<p>$1</p>');
+      },
+    });
     const cookies = await Container.get(ICookieService).get({
       name: 'XSRF-TOKEN',
       url: 'https://flomoapp.com/',
