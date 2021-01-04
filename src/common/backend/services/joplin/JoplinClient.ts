@@ -74,6 +74,7 @@ export class JoplinClient implements IJoplinClient {
         title: data.title,
         body: data.content,
         tags: data.tags.join(','),
+        source_url: data.url,
       },
     });
   };

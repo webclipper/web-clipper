@@ -227,12 +227,18 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
         yield put.resolve(asyncRunExtension.started({ pathname, extension: iterator }));
       }
     }
-    const data = yield select((g: GlobalStore) => g.clipper.clipperData[pathname]);
+    const { data, url } = yield select((g: GlobalStore) => {
+      return {
+        url: g.clipper.url,
+        data: g.clipper.clipperData[pathname],
+      };
+    });
     let createDocumentRequest: CreateDocumentRequest | null = null;
     if (extension.type === ExtensionType.Text) {
       createDocumentRequest = {
         repositoryId,
         content: data as string,
+        url,
         ...clipperHeaderForm,
       };
     }
