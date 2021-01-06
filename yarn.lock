@@ -568,10 +568,10 @@
   resolved "https://registry.npm.taobao.org/@types/classnames/download/@types/classnames-2.2.11.tgz?cache=0&sync_timestamp=1605053442370&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fclassnames%2Fdownload%2F%40types%2Fclassnames-2.2.11.tgz#2521cc86f69d15c5b90664e4829d84566052c1cf"
   integrity sha1-JSHMhvadFcW5BmTkgp2EVmBSwc8=
 
-"@types/codemirror@^0.0.76":
-  version "0.0.76"
-  resolved "https://registry.npm.taobao.org/@types/codemirror/download/@types/codemirror-0.0.76.tgz?cache=0&sync_timestamp=1607160029973&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fcodemirror%2Fdownload%2F%40types%2Fcodemirror-0.0.76.tgz#c52719878056a216bc05889b46a41d4eb1434423"
-  integrity sha1-xScZh4BWoha8BYibRqQdTrFDRCM=
+"@types/codemirror@^0.0.104":
+  version "0.0.104"
+  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.104.tgz#b5d7612211d2dfb476ecee2c77c0846b78e75796"
+  integrity sha512-b417c7DZifNj1IQzOurj+HDBzHEW+C6Y8DaBai3va7p7hR/mh3YLs4wYyDapqjYiIcvJSu/kPd8XUSPaDRftbg==
   dependencies:
     "@types/tern" "*"
 
