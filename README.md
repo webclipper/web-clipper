@@ -28,6 +28,7 @@ You can use Web Clipper to save anything on the web to anywhere.
 - [dida365](https://dida365.com/)
 - [baklib](https://www.baklib.com/)
 - [wolai](https://www.wolai.com/)
+- [Leanote](https://github.com/leanote/leanote)
 
 ### Install
 
