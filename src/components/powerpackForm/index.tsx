@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormComponentProps } from '@ant-design/compatible/lib/form';
-import Form from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
 import { FormattedMessage } from 'react-intl';
 import { Checkbox, Button } from 'antd';
 import usePowerpack from '@/common/hooks/usePowerpack';
