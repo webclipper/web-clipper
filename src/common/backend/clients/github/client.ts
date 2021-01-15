@@ -103,6 +103,7 @@ export class GithubClient {
       `user/repos?${stringify({
         affiliation: options.affiliation,
         per_page: options.per_page,
+        type: options.type,
         page: options.page,
       })}`
     );

@@ -60,11 +60,16 @@ export type TOmitPage<T> = Omit<T, 'page' | 'per_page'>;
 export type TPageRequest<O extends IPageQuery, R> = (option: O) => Promise<R[]>;
 
 export interface IGetGithubRepositoryOptions extends IPageQuery {
-  visibility: 'all' | 'public' | 'private';
-  affiliation: 'owner' | 'collaborator' | 'organization_member';
+  visibility?: 'all' | 'public' | 'private';
+  affiliation?: 'owner' | 'collaborator' | 'organization_member';
+  type?: 'all' | 'owner' | 'public' | 'private' | 'member';
 }
 
 export interface IRepository {
   name: string;
+  /**
+   *like webclipper/web-clipper
+   */
   full_name: string;
+  default_branch: string;
 }

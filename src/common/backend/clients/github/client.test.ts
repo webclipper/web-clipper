@@ -138,6 +138,7 @@ describe('test GithubClient', () => {
       result.push({
         name: `${i}`,
         full_name: `webclipper/${i}`,
+        default_branch: 'main',
       });
     }
     const testFixtures = getTestFixtures((...args: [string, Object]) => {

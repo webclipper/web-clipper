@@ -6,20 +6,13 @@ import { isUndefined } from 'lodash';
 import { GithubClient } from '../../clients/github/client';
 import Container from 'typedi';
 import { IBasicRequestService } from '@/service/common/request';
-
-export interface GithubImageHostingOption {
-  accessToken: string;
-  savePath: string;
-  repoName: string;
-}
+import { GithubImageHostingOption } from './type';
 
 export default class GithubImageHostingService implements ImageHostingService {
   private config: GithubImageHostingOption;
-  private username: string;
   private date: Date;
   private githubClient: GithubClient;
   constructor(config: GithubImageHostingOption) {
-    this.username = '';
     this.config = config;
     this.date = new Date();
     this.githubClient = new GithubClient({
@@ -43,11 +36,6 @@ export default class GithubImageHostingService implements ImageHostingService {
     return this.uploadAsBase64(imageBase64);
   };
 
-  private async getUserName() {
-    const response = await this.githubClient.getUserInfo();
-    return response.login;
-  }
-
   private generateFilename = (data: string): string => {
     const matchedSuffix: any = data.match(/^data:image\/(.*);base64,/);
     const suffix: string = matchedSuffix[1];
@@ -55,14 +43,10 @@ export default class GithubImageHostingService implements ImageHostingService {
   };
 
   private uploadAsBase64 = async (data: string): Promise<string> => {
-    if (this.username === '') {
-      try {
-        this.username = await this.getUserName();
-      } catch (error) {
-        throw error;
-      }
+    if (!this.config.repo) {
+      throw new Error('');
     }
-
+    const [username, repo] = this.config.repo.split('/');
     if (isUndefined(this.config.savePath)) this.config.savePath = '';
     if (this.config.savePath.startsWith('/')) this.config.savePath.substr(1);
     if (!this.config.savePath.endsWith('/') && this.config.savePath.length > 0)
@@ -75,8 +59,9 @@ export default class GithubImageHostingService implements ImageHostingService {
       .replace(new RegExp(':', 'g'), '-');
     const filteredImage = data.replace(/^data:image\/.*;base64,/, '');
     const response = await this.githubClient.uploadFile({
-      owner: this.username,
-      repo: this.config.repoName,
+      owner: username,
+      repo,
+      branch: this.config.branch,
       path: `${this.config.savePath}${folderName}/${fileName}`,
       message: `Upload image "${fileName}"`,
       content: filteredImage,
