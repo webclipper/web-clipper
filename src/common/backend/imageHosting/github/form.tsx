@@ -185,8 +185,8 @@ export default ({ form: { getFieldDecorator }, info, form }: Props) => {
       <Form.Item
         label={
           <FormattedMessage
-            defaultMessage="Repo Name"
-            id="backend.imageHosting.github.form.repoName"
+            defaultMessage="Repository"
+            id="backend.imageHosting.github.form.repo"
           />
         }
       >
@@ -197,8 +197,8 @@ export default ({ form: { getFieldDecorator }, info, form }: Props) => {
               required: true,
               message: (
                 <FormattedMessage
-                  id="backend.imageHosting.github.form.repoName.errorMessage"
-                  defaultMessage="Repo name is required."
+                  id="backend.imageHosting.github.form.repo.errorMessage"
+                  defaultMessage="Please select a repository"
                 />
               ),
             },
