@@ -103,7 +103,7 @@ export default ({ form: { getFieldDecorator }, info, form }: Props) => {
     },
   });
   const currentRepo = form.getFieldValue('repo');
-  const { data: branchResponse, loading: branchLoasd } = useFetch(
+  const { data: branchResponse, loading: branchLoading } = useFetch(
     () =>
       fetchBranches({
         accessToken,
@@ -231,7 +231,7 @@ export default ({ form: { getFieldDecorator }, info, form }: Props) => {
           <Select
             disabled={loading || !reposResult?.init || !branchResponse?.init}
             placeholder={branchResponse?.default_branch}
-            loading={branchLoasd}
+            loading={branchLoading}
             options={branchResponse?.branches?.map((o: IBranch) => {
               return {
                 value: o.name,
