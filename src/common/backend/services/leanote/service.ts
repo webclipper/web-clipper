@@ -3,6 +3,7 @@ import { DocumentService, CreateDocumentRequest } from '../../index';
 import { IBasicRequestService } from '@/service/common/request';
 import { Container } from 'typedi';
 import LeanoteClient from '../../clients/leanote/client';
+import md5 from '@web-clipper/shared/lib/md5';
 import { LeanoteBackendServiceConfig, LeanoteNotebook } from '../../clients/leanote/interface';
 
 /**
@@ -21,13 +22,14 @@ export default class LeanoteDocumentService implements DocumentService {
     this.client = new LeanoteClient(config, Container.get(IBasicRequestService));
   }
 
+  /** Unique account identification */
   getId = () => {
-    return this.config.email;
+    return md5(`leanote_${this.config.leanote_host}_${this.config.email}`);
   };
 
   getUserInfo = async () => {
     return {
-      name: 'leanote',
+      name: this.config.leanote_host,
       avatar: '',
       homePage: this.config.leanote_host,
       description: `send to ${this.config.email} account on leanote`,
