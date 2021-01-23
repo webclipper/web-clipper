@@ -1,7 +1,7 @@
 export interface LeanoteBackendServiceConfig {
   leanote_host: string;
   email: string;
-  pwd: boolean;
+  pwd: string;
   token_cached: string;
 }
 

@@ -41,12 +41,10 @@ export default class LeanoteDocumentService implements DocumentService {
    */
   getRepositories = async () => {
     let response = await this.client.getSyncNotebooks();
-    console.log(response);
     if (response.Msg && response.Msg === 'NOTLOGIN') {
       await this.client.login();
       response = await this.client.getSyncNotebooks();
     }
-    console.log(response);
     return response.map(function(leanoteNotebook: LeanoteNotebook) {
       return {
         id: leanoteNotebook.NotebookId,

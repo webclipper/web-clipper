@@ -3,6 +3,7 @@ import { CreateDocumentRequest } from '../../index';
 import { RequestHelper } from '@/service/request/common/request';
 import showdown from 'showdown';
 import { LeanoteBackendServiceConfig, LeanoteNotebook, LeanoteResponse } from './interface';
+const FormData = require('form-data');
 
 const converter = new showdown.Converter();
 /**
@@ -81,6 +82,7 @@ export default class LeanoteClient {
       `/api/auth/login?email=${this.config.email}&pwd=${this.config.pwd}`
     );
     this.config.token_cached = data.Token;
+    return data.Token;
   };
 
   /**
