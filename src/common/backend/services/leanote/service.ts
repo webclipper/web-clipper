@@ -1,6 +1,8 @@
 import { CompleteStatus } from 'common/backend/interface';
 import { DocumentService, CreateDocumentRequest } from '../../index';
-import axios, { AxiosInstance } from 'axios';
+import { IBasicRequestService, IExtendRequestHelper } from '@/service/common/request';
+import { RequestHelper } from '@/service/request/common/request';
+import { Container } from 'typedi';
 import showdown from 'showdown';
 import { LeanoteBackendServiceConfig, LeanoteNotebook, LeanoteResponse } from './interface';
 
@@ -11,7 +13,7 @@ const converter = new showdown.Converter();
  */
 export default class LeanoteDocumentService implements DocumentService {
   private config: LeanoteBackendServiceConfig;
-  private request: AxiosInstance;
+  private request: IExtendRequestHelper;
   private formData: FormData;
   private imagesCount: number;
 
@@ -19,14 +21,13 @@ export default class LeanoteDocumentService implements DocumentService {
    * This extension will need the user and password to connect to leanote and fetch a token
    * You must supply the one of your leanote server.
    */
-  constructor({ leanote_host, email, pwd, html, token_cached }: LeanoteBackendServiceConfig) {
-    this.config = { leanote_host, email, pwd, html, token_cached };
+  constructor({ leanote_host, email, pwd, token_cached }: LeanoteBackendServiceConfig) {
+    this.config = { leanote_host, email, pwd, token_cached };
     this.formData = new FormData();
     this.imagesCount = 0;
-    this.request = axios.create({
+    this.request = new RequestHelper({
       baseURL: this.config.leanote_host,
-      timeout: 3000,
-      transformResponse: [data => JSON.parse(data)],
+      request: Container.get(IBasicRequestService),
     });
   }
 
@@ -50,11 +51,11 @@ export default class LeanoteDocumentService implements DocumentService {
    */
   getRepositories = async () => {
     let response = await this._getSyncNotebooks();
-    if (response.data.Msg && response.data.Msg === 'NOTLOGIN') {
+    if (response.Msg && response.Msg === 'NOTLOGIN') {
       await this._login();
       response = await this._getSyncNotebooks();
     }
-    return response.data.map(function(leanoteNotebook: LeanoteNotebook) {
+    return response.map(function(leanoteNotebook: LeanoteNotebook) {
       return {
         id: leanoteNotebook.NotebookId,
         name: leanoteNotebook.Title,
@@ -76,14 +77,12 @@ export default class LeanoteDocumentService implements DocumentService {
     const formData = this.formData;
     this.formData = new FormData();
     this.imagesCount = 0;
-    await this.request.post<LeanoteResponse>('/api/note/addNote', formData, {
-      params: {
-        token: this.config.token_cached,
-      },
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    });
+    await this.request.postForm<LeanoteResponse>(
+      `/api/note/addNote?token=${this.config.token_cached}`,
+      {
+        data: formData,
+      }
+    );
     return {
       href: `${this.config.leanote_host}`,
     };
@@ -111,21 +110,15 @@ export default class LeanoteDocumentService implements DocumentService {
     if (!this.config.email || !this.config.pwd || this.config.email === '') {
       throw new Error('Cannot login');
     }
-    const response = await this.request.get<LeanoteResponse>('/api/auth/login', {
-      params: {
-        email: this.config.email,
-        pwd: this.config.pwd,
-      },
-    });
-    const { data } = response;
+    const data = await this.request.get<LeanoteResponse>(
+      `/api/auth/login?email=${this.config.email}&pwd=${this.config.pwd}`
+    );
     this.config.token_cached = data.Token;
   };
 
   _getSyncNotebooks = () => {
-    return this.request.get<LeanoteNotebook[]>('/api/notebook/getSyncNotebooks', {
-      params: {
-        token: this.config.token_cached,
-      },
-    });
+    return this.request.get<LeanoteNotebook[] | LeanoteResponse>(
+      `/api/notebook/getSyncNotebooks?token=${this.config.token_cached}`
+    );
   };
 }
