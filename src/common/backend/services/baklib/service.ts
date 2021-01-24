@@ -18,7 +18,7 @@ export default class BaklibDocumentService implements DocumentService {
 
   constructor({ accessToken }: BaklibBackendServiceConfig) {
     this.request = extend({
-      prefix: 'https://www.baklib.com/api/',
+      prefix: 'https://www.baklib-free.com/api/',
       headers: { Authorization: `Bearer ${accessToken}` },
       timeout: 5000,
     });
@@ -42,7 +42,7 @@ export default class BaklibDocumentService implements DocumentService {
     return {
       name: 'Baklib',
       avatar: '',
-      homePage: 'https://www.baklib.com/-/groups',
+      homePage: 'https://www.baklib-free.com/-/groups',
       description: 'Baklib',
     };
   };

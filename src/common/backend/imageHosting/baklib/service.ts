@@ -16,7 +16,7 @@ export default class YuqueImageHostingService implements ImageHostingService {
   constructor({ accessToken }: BaklibBackendServiceConfig) {
     this.accessToken = accessToken;
     this.request = extend({
-      prefix: 'https://www.baklib.com/api/',
+      prefix: 'https://www.baklib-free.com/api/',
       headers: { Authorization: `Bearer ${accessToken}` },
       timeout: 5000,
     });
