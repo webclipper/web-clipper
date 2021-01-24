@@ -1,6 +1,6 @@
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.less';
-import { Input, Checkbox } from 'antd';
+import { Input } from 'antd';
 import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React, { Fragment } from 'react';
 import { LeanoteBackendServiceConfig } from '../../clients/leanote/interface';
@@ -28,7 +28,10 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
     <Fragment>
       <Form.Item
         label={
-          <FormattedMessage id="backend.services.leanote.form.leanote_host" defaultMessage="Leanote host" />
+          <FormattedMessage
+            id="backend.services.leanote.form.leanote_host"
+            defaultMessage="Leanote host"
+          />
         }
       >
         {getFieldDecorator('leanote_host', {
@@ -45,9 +48,7 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
         })(<Input disabled={editMode || verified} />)}
       </Form.Item>
       <Form.Item
-        label={
-          <FormattedMessage id="backend.services.leanote.form.email" defaultMessage="email" />
-        }
+        label={<FormattedMessage id="backend.services.leanote.form.email" defaultMessage="email" />}
       >
         {getFieldDecorator('email', {
           initialValue: initData.email,
@@ -63,9 +64,7 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
         })(<Input disabled={editMode || verified} />)}
       </Form.Item>
       <Form.Item
-        label={
-          <FormattedMessage id="backend.services.leanote.form.pwd" defaultMessage="pwd" />
-        }
+        label={<FormattedMessage id="backend.services.leanote.form.pwd" defaultMessage="pwd" />}
       >
         {getFieldDecorator('pwd', {
           initialValue: initData.pwd,
@@ -73,14 +72,16 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
       </Form.Item>
       <Form.Item
         label={
-          <FormattedMessage id="backend.services.leanote.form.token" defaultMessage="token_cached" />
+          <FormattedMessage
+            id="backend.services.leanote.form.token"
+            defaultMessage="token_cached"
+          />
         }
       >
         {getFieldDecorator('token_cached', {
           initialValue: initData.token_cached,
         })(<Input disabled={editMode || verified} />)}
       </Form.Item>
-      
     </Fragment>
   );
 };
