@@ -5,16 +5,18 @@ import { FormComponentProps } from '@ant-design/compatible/lib/form';
 
 interface UseOriginFormProps extends FormComponentProps {
   initStatus: boolean;
+  originKey?: string;
 }
 
-const useOriginForm = ({ initStatus, form }: UseOriginFormProps) => {
+const useOriginForm = ({ initStatus, form, originKey }: UseOriginFormProps) => {
+  const key = originKey || 'origin';
   const [verified, requestOriginPermission] = useOriginPermission(initStatus);
   const handleAuthentication = () => {
-    form.validateFields(['origin'], async (err, value) => {
+    form.validateFields([key], async (err, value) => {
       if (err) {
         return;
       }
-      requestOriginPermission(value.origin);
+      requestOriginPermission(value[key]);
     });
   };
   const formRules = [
@@ -36,7 +38,7 @@ const useOriginForm = ({ initStatus, form }: UseOriginFormProps) => {
           const _url = new URL(value);
           if (_url.origin !== value) {
             form.setFieldsValue({
-              origin: _url.origin,
+              [key]: _url.origin,
             });
             callback();
           }

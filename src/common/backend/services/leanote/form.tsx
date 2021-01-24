@@ -6,6 +6,7 @@ import React, { Fragment } from 'react';
 import { LeanoteBackendServiceConfig } from '../../clients/leanote/interface';
 import { FormattedMessage } from 'react-intl';
 import i18n from '@/common/locales';
+import useOriginForm from '@/hooks/useOriginForm';
 
 interface OneNoteProps {
   verified?: boolean;
@@ -15,10 +16,14 @@ interface OneNoteProps {
 const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
   const {
     form: { getFieldDecorator },
+    form,
     info,
-    verified,
   } = props;
-
+  const { verified, handleAuthentication, formRules } = useOriginForm({
+    form,
+    initStatus: !!info,
+    originKey: 'leanote_host',
+  });
   let initData: Partial<LeanoteBackendServiceConfig> = {};
   if (info) {
     initData = info;
@@ -28,24 +33,24 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
     <Fragment>
       <Form.Item
         label={
-          <FormattedMessage
-            id="backend.services.leanote.form.leanote_host"
-            defaultMessage="Leanote host"
-          />
+          <FormattedMessage id="backend.services.confluence.form.origin" defaultMessage="Origin" />
         }
       >
-        {getFieldDecorator('leanote_host', {
-          initialValue: initData.leanote_host,
-          rules: [
-            {
-              required: true,
-              message: i18n.format({
-                id: 'backend.services.leanote.form.leanote_host',
-                defaultMessage: 'Leanote instance url is required eg. https://leanote.com',
-              }),
-            },
-          ],
-        })(<Input disabled={editMode || verified} />)}
+        {form.getFieldDecorator('leanote_host', {
+          initialValue: info?.leanote_host,
+          rules: formRules,
+        })(
+          <Input.Search
+            enterButton={
+              <FormattedMessage
+                id="backend.services.confluence.form.authentication"
+                defaultMessage="Authentication"
+              />
+            }
+            onSearch={handleAuthentication}
+            disabled={verified}
+          />
+        )}
       </Form.Item>
       <Form.Item
         label={<FormattedMessage id="backend.services.leanote.form.email" defaultMessage="email" />}
@@ -61,26 +66,16 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
               }),
             },
           ],
-        })(<Input disabled={editMode || verified} />)}
-      </Form.Item>
-      <Form.Item
-        label={<FormattedMessage id="backend.services.leanote.form.pwd" defaultMessage="pwd" />}
-      >
-        {getFieldDecorator('pwd', {
-          initialValue: initData.pwd,
-        })(<Input disabled={editMode || verified} />)}
+        })(<Input disabled={editMode} />)}
       </Form.Item>
       <Form.Item
         label={
-          <FormattedMessage
-            id="backend.services.leanote.form.token"
-            defaultMessage="token_cached"
-          />
+          <FormattedMessage id="backend.services.leanote.form.pwd" defaultMessage="Password" />
         }
       >
-        {getFieldDecorator('token_cached', {
-          initialValue: initData.token_cached,
-        })(<Input disabled={editMode || verified} />)}
+        {getFieldDecorator('pwd', {
+          initialValue: initData.pwd,
+        })(<Input disabled={editMode} />)}
       </Form.Item>
     </Fragment>
   );
