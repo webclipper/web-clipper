@@ -10,6 +10,7 @@
   "backend.imageHosting.github.form.savePath": "",
   "backend.imageHosting.joplin.builtInRemark": "",
   "backend.imageHosting.joplin.name": "",
+  "backend.imageHosting.leanote.builtInRemark": "Leanote built in image hosting service.",
   "backend.imageHosting.yuque_oauth.builtInRemark": "",
   "backend.imageHosting.yuque_oauth.error_401": "",
   "backend.imageHosting.yuque_oauth.error_403": "",

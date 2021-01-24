@@ -10,6 +10,7 @@
   "backend.imageHosting.github.form.savePath": "保存路径",
   "backend.imageHosting.joplin.builtInRemark": "Joplin 内置图床",
   "backend.imageHosting.joplin.name": "Joplin",
+  "backend.imageHosting.leanote.builtInRemark": "蚂蚁笔记内置图床",
   "backend.imageHosting.yuque_oauth.builtInRemark": "语雀内置图床。",
   "backend.imageHosting.yuque_oauth.error_401": "没有权限，需要删除当前账户重新授权。",
   "backend.imageHosting.yuque_oauth.error_403": "没有权限，需要删除当前账户重新授权。",
