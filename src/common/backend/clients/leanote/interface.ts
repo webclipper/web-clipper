@@ -11,6 +11,10 @@ export interface LeanoteResponse {
   Token: string;
 }
 
+export interface LeanoteCreateDocumentResponse {
+  NoteId: string;
+}
+
 export interface LeanoteNotebook {
   NotebookId: string;
   Title: string;

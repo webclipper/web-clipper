@@ -2,7 +2,12 @@ import { IExtendRequestHelper, IRequestService } from '@/service/common/request'
 import { CreateDocumentRequest } from '../../index';
 import { RequestHelper } from '@/service/request/common/request';
 import showdown from 'showdown';
-import { LeanoteBackendServiceConfig, LeanoteNotebook, LeanoteResponse } from './interface';
+import {
+  LeanoteBackendServiceConfig,
+  LeanoteCreateDocumentResponse,
+  LeanoteNotebook,
+  LeanoteResponse,
+} from './interface';
 const FormData = require('form-data');
 
 const converter = new showdown.Converter();
@@ -32,18 +37,20 @@ export default class LeanoteClient {
   }
 
   /**
+   * @TODO: Support markdown
+   *
    * Perform a POST with document request as formData to leanote server to create a note
    *
    * @see documentation https://github.com/leanote/leanote/wiki/leanote-api
    */
-  createDocument = async (info: CreateDocumentRequest): Promise<LeanoteResponse> => {
+  createDocument = async (info: CreateDocumentRequest): Promise<LeanoteCreateDocumentResponse> => {
     this.formData.append('NotebookId', info.repositoryId);
     this.formData.append('Title', info.title);
     this.formData.append('Content', converter.makeHtml(info.content));
     const formData = this.formData;
     this.formData = new FormData();
     this.imagesCount = 0;
-    return this.request.postForm<LeanoteResponse>(
+    return this.request.postForm<LeanoteCreateDocumentResponse>(
       `/api/note/addNote?token=${this.config.token_cached}`,
       {
         data: formData,
@@ -66,7 +73,7 @@ export default class LeanoteClient {
     this.formData.append(`Files[${localFileId}][HasBody]`, 'true');
     this.imagesCount++;
     this.formData.append(`FileDatas[${localFileId}]`, blob, filename);
-    return `${this.config.leanote_host}api/file/getImage?fileId=${localFileId}`;
+    return `${this.config.leanote_host}/api/file/getImage?fileId=${localFileId}`;
   };
 
   /**

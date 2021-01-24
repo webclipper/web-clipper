@@ -6,8 +6,6 @@ import React, { Fragment } from 'react';
 import { WebDAVServiceConfig } from './interface';
 import useOriginForm from '@/hooks/useOriginForm';
 import { FormattedMessage } from 'react-intl';
-import PowerpackForm from '@/components/powerpackForm';
-
 interface FormProps extends FormComponentProps {
   info?: WebDAVServiceConfig;
 }
@@ -16,7 +14,6 @@ const ConfigForm: React.FC<FormProps> = ({ form, form: { getFieldDecorator }, in
   const { verified, handleAuthentication, formRules } = useOriginForm({ form, initStatus: !!info });
   return (
     <Fragment>
-      <PowerpackForm form={form} />
       <Form.Item
         label={
           <FormattedMessage id="backend.services.confluence.form.origin" defaultMessage="Origin" />

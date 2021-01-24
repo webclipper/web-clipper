@@ -35,13 +35,13 @@ export default class LeanoteImageHostingService implements ImageHostingService {
    * @return string image url once hosted
    */
   private uploadBlob = async (blob: Blob): Promise<string> => {
+    message.destroy();
     message.warning(
       localeService.format({
         id: 'backend.services.leanote.warning.image.host.saving.delayed',
         defaultMessage: 'Image will be attached only if the current clipping is saved',
       })
     );
-
-    return backend.getDocumentService().uploadBlob(blob);
+    return backend.getDocumentService()!.uploadBlob(blob);
   };
 }

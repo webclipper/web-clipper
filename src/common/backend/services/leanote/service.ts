@@ -7,6 +7,7 @@ import md5 from '@web-clipper/shared/lib/md5';
 import { LeanoteBackendServiceConfig, LeanoteNotebook } from '../../clients/leanote/interface';
 
 /**
+ *
  * Document service for self hosted leanote or leanote.com
  */
 export default class LeanoteDocumentService implements DocumentService {
@@ -58,12 +59,18 @@ export default class LeanoteDocumentService implements DocumentService {
   };
 
   /**
+   * @TODO handle Error
    * Use the leanote api to clip document as note in leanote
    *
    * @see documentation https://github.com/leanote/leanote/wiki/leanote-api
    */
   createDocument = async (info: CreateDocumentRequest): Promise<CompleteStatus> => {
-    await this.client.createDocument(info);
+    const result = await this.client.createDocument(info);
+    if (result.NoteId) {
+      return {
+        href: `${this.config.leanote_host}/note/${result.NoteId}`,
+      };
+    }
     return {
       href: `${this.config.leanote_host}`,
     };
