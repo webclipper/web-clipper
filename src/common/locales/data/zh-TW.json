@@ -1,5 +1,7 @@
 {
   "auth.modal.title": "賬戶配置",
+  "backend.imageHosting.baklib.builtInRemark": "",
+  "backend.imageHosting.baklib.name": "",
   "backend.imageHosting.github.form.accessToken": "",
   "backend.imageHosting.github.form.accessToken.errorMessage": "",
   "backend.imageHosting.github.form.generateNewToken": "",
@@ -43,6 +45,8 @@
   "backend.services.joplin.name": "Joplin",
   "backend.services.kindle.form.alert": "你必須告訴 Amazon 允許 {mail} 发送郵件到你的 Kindle.",
   "backend.services.kindle.name": "发送到 Kindle",
+  "backend.services.leanote.form.email": "",
+  "backend.services.leanote.name": "",
   "backend.services.mail.form.address.is.required": "請填寫郵件地址",
   "backend.services.mail.form.buy.powerpack": "購買加強包",
   "backend.services.mail.form.homepage": "郵箱首頁",

@@ -5,7 +5,7 @@ const localsPath = path.resolve(__dirname, '../src/common/locales/data');
 const files = fs.readdirSync(localsPath);
 
 const sortedKeys = Object.keys(
-  JSON.parse(fs.readFileSync(path.resolve(localsPath, 'zh-CN.json'), { encoding: 'utf-8' }))
+  JSON.parse(fs.readFileSync(path.resolve(localsPath, 'en-US.json'), { encoding: 'utf-8' }))
 ).sort((a, b) => a.localeCompare(b));
 
 files

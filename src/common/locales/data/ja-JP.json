@@ -1,5 +1,7 @@
 {
   "auth.modal.title": "",
+  "backend.imageHosting.baklib.builtInRemark": "",
+  "backend.imageHosting.baklib.name": "",
   "backend.imageHosting.github.form.accessToken": "",
   "backend.imageHosting.github.form.accessToken.errorMessage": "",
   "backend.imageHosting.github.form.generateNewToken": "",
@@ -43,6 +45,8 @@
   "backend.services.joplin.name": "",
   "backend.services.kindle.form.alert": "",
   "backend.services.kindle.name": "",
+  "backend.services.leanote.form.email": "",
+  "backend.services.leanote.name": "",
   "backend.services.mail.form.address.is.required": "",
   "backend.services.mail.form.buy.powerpack": "",
   "backend.services.mail.form.homepage": "",

@@ -1,5 +1,7 @@
 {
   "auth.modal.title": "",
+  "backend.imageHosting.baklib.builtInRemark": "Baklib built in image hosting service.",
+  "backend.imageHosting.baklib.name": "Baklib",
   "backend.imageHosting.github.form.accessToken": "",
   "backend.imageHosting.github.form.accessToken.errorMessage": "",
   "backend.imageHosting.github.form.generateNewToken": "",
@@ -43,6 +45,8 @@
   "backend.services.joplin.name": "",
   "backend.services.kindle.form.alert": "",
   "backend.services.kindle.name": "Send to Kindle",
+  "backend.services.leanote.form.email": "Email",
+  "backend.services.leanote.name": "Leanote",
   "backend.services.mail.form.address.is.required": "",
   "backend.services.mail.form.buy.powerpack": "",
   "backend.services.mail.form.homepage": "",

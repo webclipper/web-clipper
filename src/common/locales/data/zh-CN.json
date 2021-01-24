@@ -1,5 +1,7 @@
 {
   "auth.modal.title": "账户配置",
+  "backend.imageHosting.baklib.builtInRemark": "Baklib 内置图床",
+  "backend.imageHosting.baklib.name": "Baklib",
   "backend.imageHosting.github.form.accessToken": "AccessToken",
   "backend.imageHosting.github.form.accessToken.errorMessage": "请填写 AccessToken。",
   "backend.imageHosting.github.form.generateNewToken": "生成新 Token",
@@ -43,6 +45,8 @@
   "backend.services.joplin.name": "Joplin",
   "backend.services.kindle.form.alert": "你必须告诉 Amazon 允许 {mail} 发送邮件到你的 Kindle.",
   "backend.services.kindle.name": "发送到 Kindle",
+  "backend.services.leanote.form.email": "邮箱",
+  "backend.services.leanote.name": "蚂蚁笔记",
   "backend.services.mail.form.address.is.required": "请填写邮件地址",
   "backend.services.mail.form.buy.powerpack": "购买加强包",
   "backend.services.mail.form.homepage": "邮箱首页",

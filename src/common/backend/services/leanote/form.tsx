@@ -53,7 +53,7 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
         )}
       </Form.Item>
       <Form.Item
-        label={<FormattedMessage id="backend.services.leanote.form.email" defaultMessage="email" />}
+        label={<FormattedMessage id="backend.services.leanote.form.email" defaultMessage="Email" />}
       >
         {getFieldDecorator('email', {
           initialValue: initData.email,
