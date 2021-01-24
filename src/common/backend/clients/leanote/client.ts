@@ -66,7 +66,7 @@ export default class LeanoteClient {
     this.formData.append(`Files[${localFileId}][HasBody]`, 'true');
     this.imagesCount++;
     this.formData.append(`FileDatas[${localFileId}]`, blob, filename);
-    return `${this.config.leanote_host}/api/file/getImage?fileId=${localFileId}`;
+    return `/${this.config.leanote_host}api/file/getImage?fileId=${localFileId}`;
   };
 
   /**

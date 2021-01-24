@@ -43,7 +43,7 @@ export default class LeanoteDocumentService implements DocumentService {
    */
   getRepositories = async () => {
     let response = await this.client.getSyncNotebooks();
-    if (response.Msg && response.Msg === 'NOTLOGIN') {
+    if ((response as any).Msg && (response as any).Msg === 'NOTLOGIN') {
       await this.client.login();
       response = await this.client.getSyncNotebooks();
     }
