@@ -301,6 +301,10 @@ export default class NotionDocumentService implements DocumentService {
             name: 'cookie',
             value: cookieString,
           },
+          {
+            name: `Content-Type`,
+            value: 'application/json',
+          },
         ],
       });
       try {
