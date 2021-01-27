@@ -8,6 +8,7 @@
   "backend.imageHosting.github.form.repo": "",
   "backend.imageHosting.github.form.repo.errorMessage": "",
   "backend.imageHosting.github.form.savePath": "",
+  "backend.imageHosting.github.repo.errorMessage": "",
   "backend.imageHosting.joplin.builtInRemark": "Joplin 內置圖床",
   "backend.imageHosting.joplin.name": "Joplin",
   "backend.imageHosting.leanote.builtInRemark": "",

@@ -7,6 +7,7 @@ import { GithubClient } from '../../clients/github/client';
 import Container from 'typedi';
 import { IBasicRequestService } from '@/service/common/request';
 import { GithubImageHostingOption } from './type';
+import localeService from '@/common/locales';
 
 export default class GithubImageHostingService implements ImageHostingService {
   private config: GithubImageHostingOption;
@@ -44,7 +45,12 @@ export default class GithubImageHostingService implements ImageHostingService {
 
   private uploadAsBase64 = async (data: string): Promise<string> => {
     if (!this.config.repo) {
-      throw new Error('');
+      throw new Error(
+        localeService.format({
+          id: 'backend.imageHosting.github.repo.errorMessage',
+          defaultMessage: 'Please config the github imageHosting again.',
+        })
+      );
     }
     const [username, repo] = this.config.repo.split('/');
     if (isUndefined(this.config.savePath)) this.config.savePath = '';

@@ -8,6 +8,7 @@
   "backend.imageHosting.github.form.repo": "仓库",
   "backend.imageHosting.github.form.repo.errorMessage": "请选择仓库。",
   "backend.imageHosting.github.form.savePath": "保存路径",
+  "backend.imageHosting.github.repo.errorMessage": "请重新设置 GitHub 图床",
   "backend.imageHosting.joplin.builtInRemark": "Joplin 内置图床",
   "backend.imageHosting.joplin.name": "Joplin",
   "backend.imageHosting.leanote.builtInRemark": "蚂蚁笔记内置图床",
