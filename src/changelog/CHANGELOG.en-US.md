@@ -1,3 +1,18 @@
+## 1.29.0
+
+`2020-1-27`
+
+- ✨ support leanote
+- ✨ support flomo
+- ✨ github imageHosting support config branch
+- 🐛 fix notion 415 error
+
+## 1.28.4
+
+`2020-12-16`
+
+- 🐛 Fix the problem of joplin 1.14 page stuck
+
 ## 1.28.3
 
 `2020-12-15`
