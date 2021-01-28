@@ -2,10 +2,13 @@
 
 `2020-1-27`
 
-- ✨ 支持蚂蚁笔记
+- ✨ 支持蚂蚁笔记 @PascalNoisette
 - ✨ 支持浮墨笔记
 - ✨ GitHub 图床支持设置分支
 - 🐛 修复 Notion Http 415 Error
+- 🐛 修复了 WebDAV 需要付费的 bug (😄 真的是一个 bug)
+
+非常感谢 [PascalNoisette](https://github.com/PascalNoisette) 的贡献
 
 ## 1.28.4
 

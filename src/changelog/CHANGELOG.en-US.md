@@ -6,6 +6,9 @@
 - ✨ support flomo
 - ✨ github imageHosting support config branch
 - 🐛 fix notion 415 error
+- 🐛 Fixed the bug that WebDAV requires powerpack (😄 It's really a bug)
+
+Thanks [PascalNoisette](https://github.com/PascalNoisette)
 
 ## 1.28.4
 
