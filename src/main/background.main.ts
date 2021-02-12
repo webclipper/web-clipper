@@ -16,6 +16,7 @@ import { BackgroundIPCServer } from '@/service/ipc/browser/background-main/ipcSe
 import { TabChannel } from '@/service/tab/common/tabIpc';
 import { ICookieService } from '@/service/common/cookie';
 import { CookieChannel } from '@/service/cookie/common/cookieIpc';
+import { syncStorageService } from '@/common/chrome/storage';
 
 const backgroundIPCServer: IChannelServer = new BackgroundIPCServer();
 
@@ -39,8 +40,27 @@ Container.set(IContentScriptService, new ContentScriptChannelClient(contentScrip
 
 const contentScriptService = Container.get(IContentScriptService);
 
-const media = window.matchMedia('(prefers-color-scheme: dark)');
-browser.browserAction.setIcon({ path: media.matches ? config.iconDark : config.icon });
+syncStorageService.init().then(() => {
+  resetIcon();
+});
+
+function resetIcon() {
+  const iconColor = syncStorageService.get('iconColor');
+  if (iconColor === 'auto') {
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    browser.browserAction.setIcon({ path: media.matches ? config.iconDark : config.icon });
+  } else if (iconColor === 'light') {
+    browser.browserAction.setIcon({ path: config.iconDark });
+  } else {
+    browser.browserAction.setIcon({ path: config.icon });
+  }
+}
+
+syncStorageService.onDidChangeStorage(e => {
+  if (e === 'iconColor') {
+    resetIcon();
+  }
+});
 
 const trackService = Container.get(ITrackService);
 trackService.init();
