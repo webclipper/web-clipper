@@ -2,17 +2,22 @@ import React from 'react';
 import { GlobalStore, DvaRouterProps } from '@/common/types';
 import { connect } from 'dva';
 import { List, Select, Switch } from 'antd';
-import { asyncSetLocaleToStorage, asyncSetEditorLiveRendering } from '@/actions/userPreference';
+import {
+  asyncSetLocaleToStorage,
+  asyncSetEditorLiveRendering,
+  asyncSetIconColor,
+} from '@/actions/userPreference';
 import { FormattedMessage } from 'react-intl';
 import { locales } from '@/common/locales';
 import { useObserver } from 'mobx-react';
 import Container from 'typedi';
 import { IConfigService } from '@/service/common/config';
 
-const mapStateToProps = ({ userPreference: { locale, liveRendering } }: GlobalStore) => {
+const mapStateToProps = ({ userPreference: { locale, liveRendering, iconColor } }: GlobalStore) => {
   return {
     locale,
     liveRendering,
+    iconColor,
   };
 };
 type PageStateProps = ReturnType<typeof mapStateToProps>;
@@ -32,7 +37,9 @@ const Base: React.FC<PageProps> = props => {
           dropdownMatchSelectWidth={false}
         >
           {locales.map(o => (
-            <Select.Option key={o.locale}>{o.name}</Select.Option>
+            <Select.Option key={o.locale} value={o.locale}>
+              {o.name}
+            </Select.Option>
           ))}
         </Select>
       ),
@@ -54,6 +61,42 @@ const Base: React.FC<PageProps> = props => {
             ),
           }}
         />
+      ),
+    },
+    {
+      key: 'iconColor',
+      action: (
+        <Select
+          key="configLanguage"
+          value={props.iconColor}
+          dropdownMatchSelectWidth={false}
+          onChange={(e: 'dark' | 'light' | 'auto') =>
+            dispatch(asyncSetIconColor.started({ value: e }))
+          }
+        >
+          {[
+            {
+              name: 'Dark',
+              value: 'dark',
+            },
+            {
+              name: 'Auto',
+              value: 'auto',
+            },
+            {
+              name: 'Light',
+              value: 'light',
+            },
+          ].map(o => (
+            <Select.Option key={o.value} value={o.value}>
+              {o.name}
+            </Select.Option>
+          ))}
+        </Select>
+      ),
+      title: <FormattedMessage id="preference.basic.iconColor.title" defaultMessage="Icon Color" />,
+      description: (
+        <FormattedMessage id="preference.basic.iconColor.description" defaultMessage="Icon Color" />
       ),
     },
     {

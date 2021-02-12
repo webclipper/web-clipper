@@ -20,6 +20,7 @@ import {
   setLocale,
   asyncSetLocaleToStorage,
   initServices,
+  asyncSetIconColor,
 } from 'pageActions/userPreference';
 import { initTabInfo, changeData, asyncChangeAccount } from 'pageActions/clipper';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
@@ -44,9 +45,14 @@ const defaultState: UserPreferenceStore = {
   servicesMeta: {},
   imageHostingServicesMeta: {},
   liveRendering: true,
+  iconColor: 'auto',
 };
 
 const builder = new DvaModelBuilder(defaultState, 'userPreference')
+  .case(asyncSetIconColor.done, (state, { result: { value: iconColor } }) => ({
+    ...state,
+    iconColor,
+  }))
   .case(asyncSetEditorLiveRendering.done, (state, { result: { value: liveRendering } }) => ({
     ...state,
     liveRendering,
@@ -78,6 +84,19 @@ const builder = new DvaModelBuilder(defaultState, 'userPreference')
   );
 
 builder
+  .takeEvery(asyncSetIconColor.started, function*({ value }, { call, put }) {
+    yield call(storage.setIconColor, value);
+    yield put(
+      asyncSetIconColor.done({
+        params: {
+          value,
+        },
+        result: {
+          value: value,
+        },
+      })
+    );
+  })
   .takeEvery(asyncSetEditorLiveRendering.started, function*({ value }, { call, put }) {
     yield call(storage.setLiveRendering, !value);
     yield put(

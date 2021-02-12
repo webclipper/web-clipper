@@ -4,6 +4,7 @@ export interface UserPreferenceStore {
   locale: string;
   imageHosting: ImageHosting[];
   liveRendering: boolean;
+  iconColor: 'dark' | 'light' | 'auto';
   servicesMeta: {
     [type: string]: ServiceMeta;
   };

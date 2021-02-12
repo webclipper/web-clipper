@@ -24,6 +24,16 @@ export const asyncSetEditorLiveRendering = actionCreator.async<
   void
 >('ASYNC_SET_EDITOR_LIVE_RENDERING');
 
+export const asyncSetIconColor = actionCreator.async<
+  {
+    value: 'dark' | 'light' | 'auto';
+  },
+  {
+    value: 'dark' | 'light' | 'auto';
+  },
+  void
+>('ASYNC_SET_ICON_COLOR');
+
 export const asyncRunExtension = actionCreator.async<
   {
     pathname: string;

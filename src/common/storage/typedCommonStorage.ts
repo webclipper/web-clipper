@@ -9,6 +9,7 @@ const keysOfStorage = {
   liveRendering: 'liveRendering',
   showLineNumber: 'showLineNumber',
   imageHosting: 'imageHosting',
+  iconColor: 'iconColor',
 };
 
 export class TypedCommonStorage implements TypedCommonStorageInterface {
@@ -23,12 +24,13 @@ export class TypedCommonStorage implements TypedCommonStorageInterface {
     const showLineNumber = await this.getShowLineNumber();
     const liveRendering = await this.getLiveRendering();
     const imageHosting = await this.getImageHosting();
-
+    const iconColor = await this.getIconColor();
     return {
       defaultPluginId,
       showLineNumber,
       liveRendering,
       imageHosting,
+      iconColor,
     };
   };
 
@@ -53,6 +55,14 @@ export class TypedCommonStorage implements TypedCommonStorageInterface {
   getLiveRendering = async () => {
     const value = await this.store.get<boolean>(keysOfStorage.liveRendering);
     return value !== false;
+  };
+
+  setIconColor = async (value: string) => {
+    await this.store.set(keysOfStorage.iconColor, value);
+  };
+  getIconColor = async () => {
+    const value = await this.store.get<'dark' | 'light' | 'auto'>(keysOfStorage.iconColor);
+    return value ?? 'auto';
   };
 
   addImageHosting = async (imageHosting: ImageHosting) => {

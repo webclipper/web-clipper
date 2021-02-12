@@ -4,6 +4,7 @@ export interface PreferenceStorage {
   defaultPluginId?: string | null;
   showLineNumber: boolean;
   liveRendering: boolean;
+  iconColor: 'dark' | 'light' | 'auto';
 }
 
 export interface CommonStorage {
@@ -30,6 +31,10 @@ export interface TypedCommonStorageInterface {
   setLiveRendering(value: boolean): Promise<void>;
 
   getLiveRendering(): Promise<boolean>;
+
+  setIconColor(value: string): Promise<void>;
+
+  getIconColor(): Promise<string>;
 
   /** --------图床--------- */
 
