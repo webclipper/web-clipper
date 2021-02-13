@@ -111,6 +111,8 @@
   "preference.accountList.verifying": "校驗中",
   "preference.basic.configLanguage.description": "歡迎在 {GitHub} 提交翻譯",
   "preference.basic.configLanguage.title": "語言",
+  "preference.basic.iconColor.description": "",
+  "preference.basic.iconColor.title": "",
   "preference.basic.liveRendering.description": "開啟後編輯器使用所見即所得模式",
   "preference.basic.liveRendering.title": "所見即所得",
   "preference.basic.update.button": "安裝更新",
