@@ -26,6 +26,7 @@ describe('test storage', () => {
     defaultPluginId: undefined,
     showLineNumber: true,
     liveRendering: true,
+    iconColor: 'auto',
   };
 
   beforeEach(() => {
