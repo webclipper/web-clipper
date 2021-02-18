@@ -24,6 +24,10 @@ import { ILocalStorageService, ISyncStorageService } from '@/service/common/stor
 import { IPowerpackService } from '@/service/common/powerpack';
 import './app.less';
 import { ITrackService } from '@/service/common/track';
+Container.set(ILocalStorageService, localStorageService);
+Container.set(ISyncStorageService, syncStorageService);
+import '@/service/preference/browser/preferenceService';
+import { IPreferenceService } from '@/service/common/preference';
 
 const { Route, Switch, Router, withRouter } = router;
 
@@ -45,11 +49,10 @@ export default async () => {
   await syncStorageService.init();
   await localStorageService.init();
   await localeService.init();
-  Container.set(ILocalStorageService, localStorageService);
-  Container.set(ISyncStorageService, syncStorageService);
   Container.get(IConfigService).load();
   Container.get(IPowerpackService).startup();
   Container.get(ITrackService).init();
+  await Container.get(IPreferenceService).init();
   const app = dva({
     namespacePrefixWarning: false,
     history: createHashHistory(),

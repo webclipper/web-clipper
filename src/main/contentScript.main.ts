@@ -9,7 +9,6 @@ import '@/service/extension/browser/extensionContainer';
 import { IContentScriptService } from '@/service/common/contentScript';
 import '@/service/contentScript/browser/contentScript/contentScript';
 import { ContentScriptIPCServer } from '@/service/ipc/browser/contentScript/contentScriptIPCServer';
-
 Container.set(ILocalStorageService, localStorageService);
 Container.set(ISyncStorageService, syncStorageService);
 

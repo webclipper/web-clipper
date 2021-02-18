@@ -2,16 +2,13 @@ import React from 'react';
 import { GlobalStore, DvaRouterProps } from '@/common/types';
 import { connect } from 'dva';
 import { List, Select, Switch } from 'antd';
-import {
-  asyncSetLocaleToStorage,
-  asyncSetEditorLiveRendering,
-  asyncSetIconColor,
-} from '@/actions/userPreference';
+import { asyncSetLocaleToStorage, asyncSetEditorLiveRendering } from '@/actions/userPreference';
 import { FormattedMessage } from 'react-intl';
 import { locales } from '@/common/locales';
 import { useObserver } from 'mobx-react';
 import Container from 'typedi';
 import { IConfigService } from '@/service/common/config';
+import { IPreferenceService } from '@/service/common/preference';
 
 const mapStateToProps = ({ userPreference: { locale, liveRendering, iconColor } }: GlobalStore) => {
   return {
@@ -26,6 +23,15 @@ type PageProps = PageStateProps & DvaRouterProps;
 
 const Base: React.FC<PageProps> = props => {
   const { dispatch } = props;
+
+  const { iconColor, preferenceService } = useObserver(() => {
+    const preferenceService = Container.get(IPreferenceService);
+    return {
+      preferenceService,
+      iconColor: preferenceService.userPreference.iconColor,
+    } as const;
+  });
+
   const originConfigs = [
     {
       key: 'configLanguage',
@@ -68,11 +74,9 @@ const Base: React.FC<PageProps> = props => {
       action: (
         <Select
           key="configLanguage"
-          value={props.iconColor}
+          value={iconColor}
           dropdownMatchSelectWidth={false}
-          onChange={(e: 'dark' | 'light' | 'auto') =>
-            dispatch(asyncSetIconColor.started({ value: e }))
-          }
+          onChange={preferenceService.updateIconColor}
         >
           {[
             {

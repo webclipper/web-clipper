@@ -2,7 +2,7 @@ import { Inject, Service } from 'typedi';
 import { observable } from 'mobx';
 import { ISyncStorageService } from '@/service/common/storage';
 import { IStorageService } from '@web-clipper/shared/lib/storage';
-import { IPreferenceService, IUserPreference } from '@/service/common/preference';
+import { IPreferenceService, IUserPreference, TIconColor } from '@/service/common/preference';
 
 class PreferenceService implements IPreferenceService {
   @observable
@@ -25,6 +25,10 @@ class PreferenceService implements IPreferenceService {
       console.log('Load Config Error');
     }
   };
+
+  async updateIconColor(color: TIconColor) {
+    await this.syncStorageService.set('iconColor', color);
+  }
 
   private getIconColor() {
     return (this.syncStorageService.get('iconColor') as 'dark' | 'light' | 'auto' | null) ?? 'auto';
