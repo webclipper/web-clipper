@@ -255,7 +255,7 @@ builder.subscript(async function initStore({ dispatch, history }) {
     dispatch(initTabInfo({ title: tabInfo.title, url: tabInfo.url }));
   }
   dispatch(removeActionNamespace(initUserPreference(result)));
-  if (history.location.pathname !== '/') {
+  if (history.location.pathname !== '/' && history.location.pathname !== '/editor') {
     return;
   }
   if (result.defaultPluginId) {

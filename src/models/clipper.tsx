@@ -220,12 +220,12 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
       throw new Error('Must select repository.');
     }
     if (!extension) {
-      return;
-    }
-    if (extension.type === ExtensionType.Text) {
-      for (const iterator of automaticExtensions) {
-        yield put.resolve(asyncRunExtension.started({ pathname, extension: iterator }));
+      if (pathname !== '/editor') {
+        return;
       }
+    }
+    for (const iterator of automaticExtensions) {
+      yield put.resolve(asyncRunExtension.started({ pathname, extension: iterator }));
     }
     const { data, url } = yield select((g: GlobalStore) => {
       return {
@@ -234,14 +234,12 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
       };
     });
     let createDocumentRequest: CreateDocumentRequest | null = null;
-    if (extension.type === ExtensionType.Text) {
-      createDocumentRequest = {
-        repositoryId,
-        content: data as string,
-        url,
-        ...clipperHeaderForm,
-      };
-    }
+    createDocumentRequest = {
+      repositoryId,
+      content: data as string,
+      url,
+      ...clipperHeaderForm,
+    };
     if (!createDocumentRequest) {
       return;
     }

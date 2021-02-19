@@ -1,4 +1,4 @@
-import { IContentScriptService } from '@/service/common/contentScript';
+import { IContentScriptService, IToggleConfig } from '@/service/common/contentScript';
 import { Service, Inject } from 'typedi';
 import styles from '@/service/contentScript/browser/contentScript/contentScript.less';
 import * as browser from '@web-clipper/chrome-promise';
@@ -24,8 +24,16 @@ class ContentScriptService implements IContentScriptService {
   async hide() {
     $(`.${styles.toolFrame}`).hide();
   }
-  async toggle() {
+  async toggle(config: IToggleConfig) {
     if ($(`.${styles.toolFrame}`).length === 0) {
+      if (config) {
+        $('body').append(
+          `<iframe src="${browser.extension.getURL('tool.html')}#${config.pathname}" class=${
+            styles.toolFrame
+          }></iframe>`
+        );
+        return;
+      }
       $('body').append(
         `<iframe src="${browser.extension.getURL('tool.html')}" class=${styles.toolFrame}></iframe>`
       );

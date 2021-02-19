@@ -72,7 +72,7 @@ const contentScriptService = Container.get(IContentScriptService);
         tab.id
       );
       const markdown = await contentScriptService.getSelectionMarkdown();
-      contentScriptService.toggle();
+      contentScriptService.toggle({ pathname: '/editor' });
       console.log('markdown', markdown);
     },
   });
