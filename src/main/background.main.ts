@@ -20,6 +20,7 @@ import { syncStorageService } from '@/common/chrome/storage';
 import { IPreferenceService } from '@/service/common/preference';
 import '@/service/preference/browser/preferenceService';
 import { autorun } from 'mobx';
+import { stringify } from 'qs';
 
 const backgroundIPCServer: IChannelServer = new BackgroundIPCServer();
 
@@ -72,8 +73,7 @@ const contentScriptService = Container.get(IContentScriptService);
         tab.id
       );
       const markdown = await contentScriptService.getSelectionMarkdown();
-      contentScriptService.toggle({ pathname: '/editor' });
-      console.log('markdown', markdown);
+      contentScriptService.toggle({ pathname: '/editor', query: stringify({ markdown }) });
     },
   });
 

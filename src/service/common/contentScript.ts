@@ -2,6 +2,7 @@ import { Token } from 'typedi';
 
 export interface IToggleConfig {
   pathname: string;
+  query?: string;
 }
 export interface IContentScriptService {
   hide(): Promise<void>;

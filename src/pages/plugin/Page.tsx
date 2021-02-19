@@ -12,19 +12,19 @@ const { Redirect } = router;
 const ClipperPluginPage: React.FC<DvaRouterProps> = props => {
   const {
     history: {
-      location: { pathname },
+      location: { pathname, search },
     },
   } = props;
   const extensions = useObserver(() => Container.get(IExtensionContainer).extensions);
   if (pathname === '/editor') {
-    return <TextEditor extension={null} pathname={pathname} />;
+    return <TextEditor extension={null} pathname={pathname} search={search} />;
   }
   const extension = extensions.find(o => o.router === pathname);
   if (!extension) {
     return <Redirect to="/"></Redirect>;
   }
   if (extension.type === ExtensionType.Text) {
-    return <TextEditor extension={extension} pathname={pathname} />;
+    return <TextEditor extension={extension} pathname={pathname} search={search} />;
   }
   return <Redirect to="/"></Redirect>;
 };
