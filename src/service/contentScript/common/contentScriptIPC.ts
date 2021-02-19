@@ -1,4 +1,4 @@
-import { IContentScriptService } from '@/service/common/contentScript';
+import { IContentScriptService, IToggleConfig } from '@/service/common/contentScript';
 import { IServerChannel, IChannel } from '@/service/common/ipc';
 
 export class ContentScriptChannel implements IServerChannel {
@@ -16,9 +16,10 @@ export class ContentScriptChannel implements IServerChannel {
         return this.service.hide();
       case 'checkStatus':
         return this.service.checkStatus();
-      case 'toggle':
+      case 'toggle': {
         return this.service.toggle(arg[0]);
-      case 'quickSave':
+      }
+      case 'getSelectionMarkdown':
         return this.service.getSelectionMarkdown();
       case 'runScript': {
         return this.service.runScript(arg[0], arg[1]);
@@ -47,8 +48,8 @@ export class ContentScriptChannelClient implements IContentScriptService {
   checkStatus = async (): Promise<boolean> => {
     return this.channel.call('checkStatus');
   };
-  toggle = async (): Promise<void> => {
-    return this.channel.call('toggle');
+  toggle = async (config?: IToggleConfig): Promise<void> => {
+    return this.channel.call('toggle', [config]);
   };
   getSelectionMarkdown = async (): Promise<string> => {
     return this.channel.call('getSelectionMarkdown');

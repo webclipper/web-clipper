@@ -25,7 +25,7 @@ const mapStateToProps = ({
 };
 type PageOwnProps = {
   pathname: string;
-  extension: IExtensionWithId;
+  extension: IExtensionWithId | null;
 };
 type PageProps = ReturnType<typeof mapStateToProps> & typeof useActions & PageOwnProps;
 
@@ -37,7 +37,7 @@ class ClipperPluginPage extends React.Component<PageProps> {
   checkExtension = () => {
     const { extension, clipperData, pathname } = this.props;
     const data = clipperData[pathname];
-    if (isUndefined(data)) {
+    if (isUndefined(data) && extension) {
       this.props.asyncRunExtension({
         pathname,
         extension,

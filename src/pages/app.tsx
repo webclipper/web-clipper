@@ -86,6 +86,7 @@ export default async () => {
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/auth" component={AuthPage} />
             <Route exact path="/complete" component={Complete} />
+            <Route path="/editor" component={withTool(PluginPage)} />
             <Route path="/preference/:id" component={withTool(preference)} />
             <Route path="/plugins/:id" component={withTool(PluginPage)} />
           </Switch>
