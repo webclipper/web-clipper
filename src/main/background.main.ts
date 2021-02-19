@@ -60,6 +60,23 @@ const contentScriptService = Container.get(IContentScriptService);
     }
   });
 
+  chrome.contextMenus.create({
+    id: 'quick save',
+    title: '快速保存',
+    contexts: ['selection'],
+    onclick: async (_info, tab) => {
+      await browser.tabs.executeScript(
+        {
+          file: 'content_script.js',
+        },
+        tab.id
+      );
+      const markdown = await contentScriptService.getSelectionMarkdown();
+      contentScriptService.toggle();
+      console.log('markdown', markdown);
+    },
+  });
+
   browser.browserAction.onClicked.addListener(async tab => {
     const tabId = tab.id;
     if (!tabId) {

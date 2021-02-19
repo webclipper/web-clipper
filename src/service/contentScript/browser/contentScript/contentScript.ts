@@ -33,6 +33,17 @@ class ContentScriptService implements IContentScriptService {
       $(`.${styles.toolFrame}`).toggle();
     }
   }
+  async getSelectionMarkdown() {
+    let selection = document.getSelection();
+    if (selection?.rangeCount) {
+      let container = document.createElement('div');
+      for (let i = 0, len = selection.rangeCount; i < len; ++i) {
+        container.appendChild(selection.getRangeAt(i).cloneContents());
+      }
+      return turndownService.turndown(container.innerHTML);
+    }
+    return '';
+  }
   async checkStatus() {
     return true;
   }

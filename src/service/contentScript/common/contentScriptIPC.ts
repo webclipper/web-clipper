@@ -17,7 +17,9 @@ export class ContentScriptChannel implements IServerChannel {
       case 'checkStatus':
         return this.service.checkStatus();
       case 'toggle':
-        return this.service.toggle();
+        return this.service.toggle(arg[0]);
+      case 'quickSave':
+        return this.service.getSelectionMarkdown();
       case 'runScript': {
         return this.service.runScript(arg[0], arg[1]);
       }
@@ -47,5 +49,8 @@ export class ContentScriptChannelClient implements IContentScriptService {
   };
   toggle = async (): Promise<void> => {
     return this.channel.call('toggle');
+  };
+  getSelectionMarkdown = async (): Promise<string> => {
+    return this.channel.call('getSelectionMarkdown');
   };
 }
