@@ -28,9 +28,9 @@ class ContentScriptService implements IContentScriptService {
     if ($(`.${styles.toolFrame}`).length === 0) {
       if (config) {
         $('body').append(
-          `<iframe src="${browser.extension.getURL('tool.html')}#${config.pathname}" class=${
-            styles.toolFrame
-          }></iframe>`
+          `<iframe src="${browser.extension.getURL('tool.html')}#${config.pathname}?${
+            config.query
+          }" class=${styles.toolFrame}></iframe>`
         );
         return;
       }

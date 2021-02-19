@@ -8,6 +8,7 @@ import { EditorContainer } from 'components/container';
 import { isUndefined } from 'common/object';
 import { GlobalStore } from 'common/types';
 import { IExtensionWithId } from '@/extensions/common';
+import { parse } from 'qs';
 
 const useActions = {
   asyncRunExtension: asyncRunExtension.started,
@@ -25,6 +26,7 @@ const mapStateToProps = ({
 };
 type PageOwnProps = {
   pathname: string;
+  search?: string;
   extension: IExtensionWithId | null;
 };
 type PageProps = ReturnType<typeof mapStateToProps> & typeof useActions & PageOwnProps;
@@ -35,13 +37,17 @@ class ClipperPluginPage extends React.Component<PageProps> {
   private myCodeMirror: any;
 
   checkExtension = () => {
-    const { extension, clipperData, pathname } = this.props;
+    const { extension, clipperData, pathname, search } = this.props;
     const data = clipperData[pathname];
     if (isUndefined(data) && extension) {
       this.props.asyncRunExtension({
         pathname,
         extension,
       });
+    }
+    if (search) {
+      const content = parse(search.slice(1));
+      return content.markdown || '';
     }
     return data || '';
   };
