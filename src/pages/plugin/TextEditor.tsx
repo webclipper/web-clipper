@@ -45,7 +45,7 @@ class ClipperPluginPage extends React.Component<PageProps> {
         extension,
       });
     }
-    if (search) {
+    if (isUndefined(data) && search) {
       const content = parse(search.slice(1));
       return content.markdown || '';
     }

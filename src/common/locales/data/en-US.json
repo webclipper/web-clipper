@@ -166,5 +166,6 @@
   "tool.save": "Save Content",
   "tool.title": "Title",
   "tool.title.required": "",
-  "tool.toolExtensions": "Tool Extension"
+  "tool.toolExtensions": "Tool Extension",
+  "contextMenus.selection.save.title": "Save selection"
 }
