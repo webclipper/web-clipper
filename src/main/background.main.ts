@@ -62,8 +62,8 @@ const contentScriptService = Container.get(IContentScriptService);
   });
 
   chrome.contextMenus.create({
-    id: 'quick save',
-    title: '快速保存',
+    id: 'contextMenus.selection.save',
+    title: 'Save selection',
     contexts: ['selection'],
     onclick: async (_info, tab) => {
       await browser.tabs.executeScript(
@@ -73,7 +73,12 @@ const contentScriptService = Container.get(IContentScriptService);
         tab.id
       );
       const markdown = await contentScriptService.getSelectionMarkdown();
-      contentScriptService.toggle({ pathname: '/editor', query: stringify({ markdown }) });
+      const note = `
+## Content
+${markdown}
+## Note
+`.trimStart();
+      contentScriptService.toggle({ pathname: '/editor', query: stringify({ markdown: note }) });
     },
   });
 
