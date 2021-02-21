@@ -92,6 +92,8 @@
   "component.imageHostingSelectOption.noDescription": "沒有備注",
   "component.powerpackForm.expired": "加強包已過期",
   "component.powerpackForm.required": "請購買加強包",
+  "contextMenus.selection.save.template": "",
+  "contextMenus.selection.save.title": "",
   "hooks.useOriginForm.origin.message": "格式錯誤,示例 https://developer.mozilla.org",
   "page.complete.close": "關閉 Web Clipper",
   "page.complete.error": "发生錯誤",

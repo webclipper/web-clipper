@@ -92,6 +92,8 @@
   "component.imageHostingSelectOption.noDescription": "",
   "component.powerpackForm.expired": "",
   "component.powerpackForm.required": "",
+  "contextMenus.selection.save.template": "",
+  "contextMenus.selection.save.title": "",
   "hooks.useOriginForm.origin.message": "",
   "page.complete.close": "",
   "page.complete.error": "",

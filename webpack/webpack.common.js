@@ -71,7 +71,10 @@ module.exports = {
         vendor: {
           test: /[\\/]node_modules[\\/](react|react-dom|antd|lodash|@ant-design)[\\/]/,
           name: 'vendor',
-          chunks: 'all',
+          chunks(chunk) {
+            console.log(chunk.name);
+            return chunk.name !== 'background';
+          },
         },
       },
     },

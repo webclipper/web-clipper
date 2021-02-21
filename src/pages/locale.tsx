@@ -3,6 +3,7 @@ import { IntlProvider } from 'react-intl';
 import { ConfigProvider } from 'antd';
 import { connect } from 'dva';
 import { localesMap } from '@/common/locales';
+import { localeProvider } from '@/common/locales/antd';
 import { GlobalStore } from '@/common/types';
 
 const mapStateToProps = ({ userPreference: { locale } }: GlobalStore) => {
@@ -14,11 +15,11 @@ type PageStateProps = ReturnType<typeof mapStateToProps>;
 
 const LocalWrapper: React.FC<PageStateProps> = ({ children, locale }) => {
   const language = locale;
-  const { antd, messages } = (localesMap.get(language) || localesMap.get('en-US'))!;
+  const model = (localesMap.get(language) || localesMap.get('en-US'))!;
   return (
-    <IntlProvider key={locale} locale={language} messages={messages}>
+    <IntlProvider key={locale} locale={language} messages={model.messages}>
       <ConfigProvider
-        locale={antd}
+        locale={localeProvider[model.locale as keyof typeof localeProvider]}
         getPopupContainer={e => {
           if (!e || !e.parentNode) {
             return document.body;
