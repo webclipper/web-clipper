@@ -16,11 +16,13 @@ import { BackgroundIPCServer } from '@/service/ipc/browser/background-main/ipcSe
 import { TabChannel } from '@/service/tab/common/tabIpc';
 import { ICookieService } from '@/service/common/cookie';
 import { CookieChannel } from '@/service/cookie/common/cookieIpc';
-import { syncStorageService } from '@/common/chrome/storage';
+import { syncStorageService, localStorageService } from '@/common/chrome/storage';
 import { IPreferenceService } from '@/service/common/preference';
 import '@/service/preference/browser/preferenceService';
 import { autorun } from 'mobx';
 import { stringify } from 'qs';
+import localeService from '@/common/locales';
+import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/types';
 
 const backgroundIPCServer: IChannelServer = new BackgroundIPCServer();
 
@@ -44,10 +46,18 @@ const contentScriptService = Container.get(IContentScriptService);
 
 (async () => {
   await syncStorageService.init();
+  await localStorageService.init();
   const trackService = Container.get(ITrackService);
   await trackService.init();
   const preferenceService = Container.get(IPreferenceService);
   await preferenceService.init();
+  await localeService.init();
+
+  localStorageService.onDidChangeStorage(async key => {
+    if (key === LOCAL_USER_PREFERENCE_LOCALE_KEY) {
+      await localeService.init();
+    }
+  });
 
   autorun(() => {
     const iconColor = preferenceService.userPreference.iconColor;
@@ -63,7 +73,10 @@ const contentScriptService = Container.get(IContentScriptService);
 
   chrome.contextMenus.create({
     id: 'contextMenus.selection.save',
-    title: 'Save selection',
+    title: localeService.format({
+      id: 'contextMenus.selection.save.title',
+      defaultMessage: 'Save selection',
+    }),
     contexts: ['selection'],
     onclick: async (_info, tab) => {
       await browser.tabs.executeScript(
@@ -72,12 +85,14 @@ const contentScriptService = Container.get(IContentScriptService);
         },
         tab.id
       );
-      const markdown = await contentScriptService.getSelectionMarkdown();
-      const note = `
-## Content
-${markdown}
-## Note
-`.trimStart();
+      const content = await contentScriptService.getSelectionMarkdown();
+      const note = localeService.format(
+        {
+          id: 'contextMenus.selection.save.template',
+          defaultMessage: '## Content\n{content}\n## Note',
+        },
+        { content }
+      );
       contentScriptService.toggle({ pathname: '/editor', query: stringify({ markdown: note }) });
     },
   });

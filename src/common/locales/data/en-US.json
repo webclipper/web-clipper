@@ -92,6 +92,8 @@
   "component.imageHostingSelectOption.noDescription": "",
   "component.powerpackForm.expired": "",
   "component.powerpackForm.required": "",
+  "contextMenus.selection.save.template": "## Content\n {content}\n## Note",
+  "contextMenus.selection.save.title": "Save selection",
   "hooks.useOriginForm.origin.message": "",
   "page.complete.close": "",
   "page.complete.error": "Some Error",
@@ -166,6 +168,5 @@
   "tool.save": "Save Content",
   "tool.title": "Title",
   "tool.title.required": "",
-  "tool.toolExtensions": "Tool Extension",
-  "contextMenus.selection.save.title": "Save selection"
+  "tool.toolExtensions": "Tool Extension"
 }

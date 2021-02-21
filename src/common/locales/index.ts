@@ -44,11 +44,11 @@ class LocaleService {
     this.intl = intl;
   }
 
-  format(descriptor: MessageDescriptor): string {
+  format(descriptor: MessageDescriptor, values?: Record<string, any>): string {
     if (!this.intl) {
       throw Error('Should init intl before use');
     }
-    return this.intl.formatMessage(descriptor);
+    return this.intl.formatMessage(descriptor, values);
   }
 }
 
