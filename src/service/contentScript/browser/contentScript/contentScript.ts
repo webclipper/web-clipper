@@ -55,6 +55,9 @@ class ContentScriptService implements IContentScriptService {
   async checkStatus() {
     return true;
   }
+  async getPageUrl() {
+    return location.href;
+  }
   async toggleLoading() {
     const loadIngStyle = styles['web-clipper-loading-box'];
     if ($(`.${loadIngStyle}`).length === 0) {

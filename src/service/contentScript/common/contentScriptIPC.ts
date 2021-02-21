@@ -16,6 +16,8 @@ export class ContentScriptChannel implements IServerChannel {
         return this.service.hide();
       case 'checkStatus':
         return this.service.checkStatus();
+      case 'getPageUrl':
+        return this.service.getPageUrl();
       case 'toggle': {
         return this.service.toggle(arg[0]);
       }
@@ -53,5 +55,8 @@ export class ContentScriptChannelClient implements IContentScriptService {
   };
   getSelectionMarkdown = async (): Promise<string> => {
     return this.channel.call('getSelectionMarkdown');
+  };
+  getPageUrl = async (): Promise<string> => {
+    return this.channel.call('getPageUrl');
   };
 }

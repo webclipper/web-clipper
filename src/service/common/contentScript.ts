@@ -11,6 +11,7 @@ export interface IContentScriptService {
   toggle(config?: IToggleConfig): Promise<void>;
   runScript(id: string, lifeCycle: 'run' | 'destroy'): Promise<void>;
   getSelectionMarkdown(): Promise<string>;
+  getPageUrl(): Promise<string>;
 }
 
 export const IContentScriptService = new Token<IContentScriptService>();
