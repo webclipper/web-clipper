@@ -70,7 +70,6 @@ const contentScriptService = Container.get(IContentScriptService);
       browser.browserAction.setIcon({ path: config.icon });
     }
   });
-
   chrome.contextMenus.create({
     id: 'contextMenus.selection.save',
     title: localeService.format({
@@ -91,7 +90,7 @@ const contentScriptService = Container.get(IContentScriptService);
           id: 'contextMenus.selection.save.template',
           defaultMessage: '## Content\n{content}\n## Note',
         },
-        { content }
+        { content, url: await contentScriptService.getPageUrl() }
       );
       contentScriptService.toggle({ pathname: '/editor', query: stringify({ markdown: note }) });
     },
