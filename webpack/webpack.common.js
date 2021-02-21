@@ -72,7 +72,6 @@ module.exports = {
           test: /[\\/]node_modules[\\/](react|react-dom|antd|lodash|@ant-design)[\\/]/,
           name: 'vendor',
           chunks(chunk) {
-            console.log(chunk.name);
             return chunk.name !== 'background';
           },
         },
