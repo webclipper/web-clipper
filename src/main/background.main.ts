@@ -101,7 +101,11 @@ const contentScriptService = Container.get(IContentScriptService);
     if (!tabId) {
       trackService.trackEvent('Load_Web_Clipper', packageJson.version, 'error');
       alert(
-        'Clipping of this type of page is temporarily unavailable.\n\nRefreshing the page can resolve。\n\n暂时无法剪辑此类型的页面。\n\n刷新页面可以解决。'
+        localeService.format({
+          id: 'backend.not.unavailable',
+          defaultMessage:
+            'Clipping of this type of page is temporarily unavailable.\n\nRefreshing the page can resolve。',
+        })
       );
       return;
     }
@@ -123,7 +127,11 @@ const contentScriptService = Container.get(IContentScriptService);
           return;
         }
         alert(
-          'Clipping of this type of page is temporarily unavailable.\n\nRefreshing the page can resolve。\n\n暂时无法剪辑此类型的页面。\n\n刷新页面可以解决。'
+          localeService.format({
+            id: 'backend.not.unavailable',
+            defaultMessage:
+              'Clipping of this type of page is temporarily unavailable.\n\nRefreshing the page can resolve。',
+          })
         );
         return;
       }
