@@ -18,6 +18,7 @@
   "backend.imageHosting.yuque_oauth.error_429": "請求太頻繁，接口限制每小時最多 100 次。",
   "backend.imageHosting.yuque_oauth.name": "語雀(一鍵授權)",
   "backend.imageHosting.yuque.name": "語雀",
+  "backend.not.unavailable": "",
   "backend.services.baklib.headerForm.channel": "欄目",
   "backend.services.baklib.headerForm.description": "描述",
   "backend.services.baklib.headerForm.tags": "標簽",
