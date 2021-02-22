@@ -1,5 +1,6 @@
 {
   "auth.modal.title": "",
+  "backend.error.store": "The extensions gallery cannot be scripted.",
   "backend.imageHosting.baklib.builtInRemark": "Baklib built in image hosting service.",
   "backend.imageHosting.baklib.name": "Baklib",
   "backend.imageHosting.github.form.accessToken": "",

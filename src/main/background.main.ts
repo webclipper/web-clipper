@@ -123,7 +123,12 @@ const contentScriptService = Container.get(IContentScriptService);
       );
       if (browser.runtime.lastError) {
         if (browser.runtime.lastError.message === 'The extensions gallery cannot be scripted.') {
-          alert('The extensions gallery cannot be scripted.\n\n插件商店不允许执行脚本');
+          alert(
+            localeService.format({
+              id: 'backend.not.unavailable',
+              defaultMessage: 'The extensions gallery cannot be scripted.',
+            })
+          );
           return;
         }
         alert(

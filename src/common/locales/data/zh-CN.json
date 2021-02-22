@@ -1,5 +1,6 @@
 {
   "auth.modal.title": "账户配置",
+  "backend.error.store": "插件商店不允许执行脚本",
   "backend.imageHosting.baklib.builtInRemark": "Baklib 内置图床",
   "backend.imageHosting.baklib.name": "Baklib",
   "backend.imageHosting.github.form.accessToken": "AccessToken",
@@ -85,6 +86,7 @@
   "backend.services.yuque.headerForm.slug_error": "只能输入大小写字母、横线、下划线和点，至少 2 个字符。",
   "backend.services.yuque.name": "语雀",
   "background.not_support_message": "暂时无法剪辑此类型的页面。",
+  
   "component.accountItem.delete": "删除",
   "component.accountItem.edit": "编辑",
   "component.imagehostingListItem.delete": "删除",
