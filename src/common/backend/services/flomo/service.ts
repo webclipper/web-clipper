@@ -4,6 +4,7 @@ import Container from 'typedi';
 import { DocumentService, CreateDocumentRequest } from '../../index';
 import showdown from 'showdown';
 import { ICookieService } from '@/service/common/cookie';
+import locale from '@/common/locales';
 
 export default class GithubDocumentService implements DocumentService {
   getId = () => {
@@ -20,6 +21,10 @@ export default class GithubDocumentService implements DocumentService {
   };
 
   getRepositories = async () => {
+    /**
+     * Check Login
+     */
+    await this.getXSRFToken();
     return [
       {
         id: 'flomo',
@@ -33,37 +38,51 @@ export default class GithubDocumentService implements DocumentService {
   createDocument = async (info: CreateDocumentRequest): Promise<CompleteStatus> => {
     const request = Container.get(IBasicRequestService);
     const converter = new showdown.Converter({});
-
     converter.addExtension({
       type: 'html',
       filter: (html: string) => {
-        console.log(html);
         return html.replace(/<img src="(.+?)"(.*)\/>/g, '<p>$1</p>');
       },
     });
+    const XSRFToken = await this.getXSRFToken();
+    const res = await request.request<{ code: number; message: string }>(
+      'https://flomoapp.com/api/memo/',
+      {
+        method: 'put',
+        requestType: 'json',
+        headers: {
+          'x-requested-with': 'XMLHttpRequest',
+          'x-xsrf-token': decodeURIComponent(XSRFToken),
+        },
+        data: {
+          source: 'web',
+          parent_memo_slug: null,
+          content: converter.makeHtml(info.content),
+          file_ids: [],
+        },
+      }
+    );
+    if (res.code !== 0) {
+      throw new Error(res.message);
+    }
+    return {
+      href: `https://flomoapp.com/mine`,
+    };
+  };
+
+  private async getXSRFToken(): Promise<string> {
     const cookies = await Container.get(ICookieService).get({
       name: 'XSRF-TOKEN',
       url: 'https://flomoapp.com/',
     });
     if (!cookies) {
-      throw new Error('Please Login');
+      throw new Error(
+        locale.format({
+          id: 'backend.services.flomo.login',
+          defaultMessage: 'Unauthorized! Please Login Flomo Web.',
+        })
+      );
     }
-    request.request('https://flomoapp.com/api/memo/', {
-      method: 'put',
-      requestType: 'json',
-      headers: {
-        'x-requested-with': 'XMLHttpRequest',
-        'x-xsrf-token': decodeURIComponent(cookies?.value!),
-      },
-      data: {
-        source: 'web',
-        parent_memo_slug: null,
-        content: converter.makeHtml(info.content),
-        file_ids: [],
-      },
-    });
-    return {
-      href: `https://flomoapp.com/mine`,
-    };
-  };
+    return cookies.value;
+  }
 }

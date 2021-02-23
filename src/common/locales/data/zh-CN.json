@@ -32,6 +32,7 @@
   "backend.services.dida365.name": "滴答清单",
   "backend.services.dida365.rootGroup": "根目录",
   "backend.services.dida365.unauthorizedErrorMessage": "授权失败，请登录网页版滴答清单。",
+  "backend.services.flomo.login": "授权失败，请登录网页版浮墨笔记。",
   "backend.services.github.form.GenerateNewToken": "生成新 Token",
   "backend.services.github.form.storageLocation": "保存位置",
   "backend.services.github.form.storageLocation.code": "Code",
@@ -86,7 +87,6 @@
   "backend.services.yuque.headerForm.slug_error": "只能输入大小写字母、横线、下划线和点，至少 2 个字符。",
   "backend.services.yuque.name": "语雀",
   "background.not_support_message": "暂时无法剪辑此类型的页面。",
-  
   "component.accountItem.delete": "删除",
   "component.accountItem.edit": "编辑",
   "component.imagehostingListItem.delete": "删除",

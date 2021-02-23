@@ -32,6 +32,7 @@
   "backend.services.dida365.name": "",
   "backend.services.dida365.rootGroup": "",
   "backend.services.dida365.unauthorizedErrorMessage": "",
+  "backend.services.flomo.login": "",
   "backend.services.github.form.GenerateNewToken": "",
   "backend.services.github.form.storageLocation": "",
   "backend.services.github.form.storageLocation.code": "",

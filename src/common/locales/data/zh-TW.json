@@ -32,6 +32,7 @@
   "backend.services.dida365.name": "滴答清單",
   "backend.services.dida365.rootGroup": "根目錄",
   "backend.services.dida365.unauthorizedErrorMessage": "授權失敗，請登錄網頁版滴答清單。",
+  "backend.services.flomo.login": "",
   "backend.services.github.form.GenerateNewToken": "生成新 Token",
   "backend.services.github.form.storageLocation": "",
   "backend.services.github.form.storageLocation.code": "",
