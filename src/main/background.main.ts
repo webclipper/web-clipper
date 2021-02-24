@@ -117,7 +117,6 @@ async function initContentScriptService(tabId: number) {
       const note = localeService.format(
         {
           id: 'contextMenus.selection.save.template',
-          defaultMessage: 'Save From : [{title}]({url}) \n## Content\n{content}\n## Note',
         },
         { content, url: await contentScriptService.getPageUrl(), title: tab.title }
       );

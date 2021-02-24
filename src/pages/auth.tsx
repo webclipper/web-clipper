@@ -102,7 +102,7 @@ const Page: React.FC<PageProps> = props => {
         disabled: verifying,
         loading: verifying,
       }}
-      title={<FormattedMessage id="auth.modal.title" defaultMessage="Account Config" />}
+      title={<FormattedMessage id="auth.modal.title" />}
       onOk={() => {
         form.validateFields((error, values) => {
           if (error) {

@@ -7,7 +7,6 @@ export default (): ServiceMeta => {
   return {
     name: localeService.format({
       id: 'backend.services.mail.name',
-      defaultMessage: 'Mail',
     }),
     icon: 'mail',
     type: 'mail',

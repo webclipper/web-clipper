@@ -79,7 +79,6 @@ export default class GithubDocumentService implements DocumentService {
       throw new Error(
         locale.format({
           id: 'backend.services.flomo.login',
-          defaultMessage: 'Unauthorized! Please Login Flomo Web.',
         })
       );
     }

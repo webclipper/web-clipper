@@ -132,24 +132,14 @@ export default ({ form: { getFieldDecorator }, info, form }: Props) => {
 
   return (
     <Fragment>
-      <Form.Item
-        label={
-          <FormattedMessage
-            id="backend.imageHosting.github.form.accessToken"
-            defaultMessage="AccessToken"
-          />
-        }
-      >
+      <Form.Item label={<FormattedMessage id="backend.imageHosting.github.form.accessToken" />}>
         {getFieldDecorator('accessToken', {
           initialValue: initInfo.accessToken,
           rules: [
             {
               required: true,
               message: (
-                <FormattedMessage
-                  id="backend.imageHosting.github.form.accessToken.errorMessage"
-                  defaultMessage="AccessToken is required."
-                />
+                <FormattedMessage id="backend.imageHosting.github.form.accessToken.errorMessage" />
               ),
             },
           ],
@@ -166,7 +156,6 @@ export default ({ form: { getFieldDecorator }, info, form }: Props) => {
                   >
                     {locale.format({
                       id: 'backend.imageHosting.github.form.generateNewToken',
-                      defaultMessage: 'Generate new token',
                     })}
                   </span>
                 }
@@ -182,25 +171,13 @@ export default ({ form: { getFieldDecorator }, info, form }: Props) => {
           />
         )}
       </Form.Item>
-      <Form.Item
-        label={
-          <FormattedMessage
-            defaultMessage="Repository"
-            id="backend.imageHosting.github.form.repo"
-          />
-        }
-      >
+      <Form.Item label={<FormattedMessage id="backend.imageHosting.github.form.repo" />}>
         {getFieldDecorator('repo', {
           initialValue: initInfo.repo,
           rules: [
             {
               required: true,
-              message: (
-                <FormattedMessage
-                  id="backend.imageHosting.github.form.repo.errorMessage"
-                  defaultMessage="Please select a repository"
-                />
-              ),
+              message: <FormattedMessage id="backend.imageHosting.github.form.repo.errorMessage" />,
             },
           ],
         })(

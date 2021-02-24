@@ -8,7 +8,6 @@ export default (): ServiceMeta => {
   return {
     name: localeService.format({
       id: 'backend.services.joplin.name',
-      defaultMessage: 'Joplin',
     }),
     icon: 'joplin',
     type: 'joplin',

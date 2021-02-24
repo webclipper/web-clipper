@@ -9,7 +9,6 @@ export default (): ServiceMeta => {
   return {
     name: localeService.format({
       id: 'backend.services.baklib.name',
-      defaultMessage: 'Baklib',
     }),
     complete,
     icon: 'baklib',

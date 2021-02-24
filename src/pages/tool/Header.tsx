@@ -76,9 +76,7 @@ const ClipperHeader: React.FC<PageProps> = props => {
           rules: [
             {
               required: true,
-              message: (
-                <FormattedMessage id="tool.title.required" defaultMessage="Title is Required" />
-              ),
+              message: <FormattedMessage id="tool.title.required" />,
             },
           ],
         })(<Input placeholder="Please Input Title" />)}

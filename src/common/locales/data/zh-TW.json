@@ -13,6 +13,7 @@
   "backend.imageHosting.joplin.builtInRemark": "Joplin 內置圖床",
   "backend.imageHosting.joplin.name": "Joplin",
   "backend.imageHosting.leanote.builtInRemark": "",
+  "backend.imageHosting.leanote.name": "",
   "backend.imageHosting.yuque_oauth.builtInRemark": "語雀內置圖床。",
   "backend.imageHosting.yuque_oauth.error_401": "沒有權限，需要刪除當前賬戶重新授權。",
   "backend.imageHosting.yuque_oauth.error_403": "沒有權限，需要刪除當前賬戶重新授權。",
