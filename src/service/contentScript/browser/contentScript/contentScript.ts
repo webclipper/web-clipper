@@ -25,19 +25,18 @@ class ContentScriptService implements IContentScriptService {
     $(`.${styles.toolFrame}`).hide();
   }
   async toggle(config: IToggleConfig) {
+    let src = browser.extension.getURL('tool.html');
+    if (config) {
+      src = `${browser.extension.getURL('tool.html')}#${config.pathname}?${config.query}`;
+    }
     if ($(`.${styles.toolFrame}`).length === 0) {
       if (config) {
-        $('body').append(
-          `<iframe src="${browser.extension.getURL('tool.html')}#${config.pathname}?${
-            config.query
-          }" class=${styles.toolFrame}></iframe>`
-        );
+        $('body').append(`<iframe src="${src}" class=${styles.toolFrame}></iframe>`);
         return;
       }
-      $('body').append(
-        `<iframe src="${browser.extension.getURL('tool.html')}" class=${styles.toolFrame}></iframe>`
-      );
+      $('body').append(`<iframe src="${src}" class=${styles.toolFrame}></iframe>`);
     } else {
+      $(`.${styles.toolFrame}`).attr('src', src);
       $(`.${styles.toolFrame}`).toggle();
     }
   }

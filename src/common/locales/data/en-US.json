@@ -95,7 +95,7 @@
   "component.imageHostingSelectOption.noDescription": "",
   "component.powerpackForm.expired": "",
   "component.powerpackForm.required": "",
-  "contextMenus.selection.save.template": "Save From: {url}\n\n## Content\n {content}\n## Note",
+  "contextMenus.selection.save.template": "Save From : [{title}]({url}) \n## Content\n{content}\n## Note",
   "contextMenus.selection.save.title": "Save selection",
   "hooks.useOriginForm.origin.message": "",
   "page.complete.close": "",

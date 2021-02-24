@@ -33,8 +33,15 @@ type PageProps = ReturnType<typeof mapStateToProps> & typeof useActions & PageOw
 
 const editorId = 'DiamondYuan_Love_LJ';
 
-class ClipperPluginPage extends React.Component<PageProps> {
+class ClipperPluginPage extends React.Component<PageProps, { markdown: string }> {
   private myCodeMirror: any;
+
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      markdown: '',
+    };
+  }
 
   checkExtension = () => {
     const { extension, clipperData, pathname, search } = this.props;
@@ -51,7 +58,22 @@ class ClipperPluginPage extends React.Component<PageProps> {
         data: content.markdown || '',
         pathName: this.props.pathname,
       });
+      this.setState({
+        markdown: (content.markdown as string) || '',
+      });
       return content.markdown || '';
+    }
+    if (search && !isUndefined(data)) {
+      const content = parse(search.slice(1));
+      if (content.markdown !== this.state.markdown) {
+        this.setState({
+          markdown: (content.markdown as string) || '',
+        });
+        this.props.changeData({
+          data: (content.markdown as string) || '',
+          pathName: this.props.pathname,
+        });
+      }
     }
     return data || '';
   };

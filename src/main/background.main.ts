@@ -44,6 +44,40 @@ const contentScriptChannel = contentScriptIPCClient.getChannel('contentScript');
 Container.set(IContentScriptService, new ContentScriptChannelClient(contentScriptChannel));
 const contentScriptService = Container.get(IContentScriptService);
 
+async function initContentScriptService(tabId: number) {
+  let result;
+  try {
+    result = await contentScriptService.checkStatus();
+  } catch (_error) {}
+  if (!result) {
+    await browser.tabs.executeScript(
+      {
+        file: 'content_script.js',
+      },
+      tabId
+    );
+    if (browser.runtime.lastError) {
+      if (browser.runtime.lastError.message === 'The extensions gallery cannot be scripted.') {
+        alert(
+          localeService.format({
+            id: 'backend.not.unavailable',
+            defaultMessage: 'The extensions gallery cannot be scripted.',
+          })
+        );
+        return;
+      }
+      alert(
+        localeService.format({
+          id: 'backend.not.unavailable',
+          defaultMessage:
+            'Clipping of this type of page is temporarily unavailable.\n\nRefreshing the page can resolve。',
+        })
+      );
+      return;
+    }
+  }
+}
+
 (async () => {
   await syncStorageService.init();
   await localStorageService.init();
@@ -78,19 +112,14 @@ const contentScriptService = Container.get(IContentScriptService);
     }),
     contexts: ['selection'],
     onclick: async (_info, tab) => {
-      await browser.tabs.executeScript(
-        {
-          file: 'content_script.js',
-        },
-        tab.id
-      );
+      await initContentScriptService(tab.id!);
       const content = await contentScriptService.getSelectionMarkdown();
       const note = localeService.format(
         {
           id: 'contextMenus.selection.save.template',
-          defaultMessage: '## Content\n{content}\n## Note',
+          defaultMessage: 'Save From : [{title}]({url}) \n## Content\n{content}\n## Note',
         },
-        { content, url: await contentScriptService.getPageUrl() }
+        { content, url: await contentScriptService.getPageUrl(), title: tab.title }
       );
       contentScriptService.toggle({ pathname: '/editor', query: stringify({ markdown: note }) });
     },
@@ -110,37 +139,7 @@ const contentScriptService = Container.get(IContentScriptService);
       return;
     }
     trackService.trackEvent('Load_Web_Clipper', packageJson.version, 'success');
-    let result;
-    try {
-      result = await contentScriptService.checkStatus();
-    } catch (_error) {}
-    if (!result) {
-      await browser.tabs.executeScript(
-        {
-          file: 'content_script.js',
-        },
-        tabId
-      );
-      if (browser.runtime.lastError) {
-        if (browser.runtime.lastError.message === 'The extensions gallery cannot be scripted.') {
-          alert(
-            localeService.format({
-              id: 'backend.not.unavailable',
-              defaultMessage: 'The extensions gallery cannot be scripted.',
-            })
-          );
-          return;
-        }
-        alert(
-          localeService.format({
-            id: 'backend.not.unavailable',
-            defaultMessage:
-              'Clipping of this type of page is temporarily unavailable.\n\nRefreshing the page can resolve。',
-          })
-        );
-        return;
-      }
-    }
+    await initContentScriptService(tabId);
     contentScriptService.toggle();
   });
 })();
