@@ -69,7 +69,7 @@ module.exports = {
     splitChunks: {
       cacheGroups: {
         vendor: {
-          test: /[\\/]node_modules[\\/](react|react-dom|antd|lodash|@ant-design)[\\/]/,
+          test: /[\\/]node_modules[\\/](react\/|react-dom|antd|lodash|@ant-design)[\\/]/,
           name: 'vendor',
           chunks(chunk) {
             return chunk.name !== 'background';
