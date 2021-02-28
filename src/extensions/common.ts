@@ -4,6 +4,8 @@ import { IAreaSelector } from '@web-clipper/area-selector';
 import * as antd from 'antd';
 import React from 'react';
 import { IClearlyRequest } from '@/common/server';
+import { IContentScriptService } from '@/service/common/contentScript';
+import { IContextMenuExtension } from './contextMenus';
 
 export interface InitContext {
   accountInfo: {
@@ -190,4 +192,19 @@ export class ToolExtension<T = string> extends AbstractExtension<T, string> {
   constructor(manifest: IExtensionManifest, methods: IExtensionLifeCycle<T, string>) {
     super(ExtensionType.Tool, manifest, methods);
   }
+}
+
+export interface IContextMenuContext {
+  contentScriptService: IContentScriptService;
+  initContentScriptService(id: number): Promise<void>;
+}
+
+export interface IContextMenuExtensionFactory {
+  id: string;
+  new (): IContextMenuExtension;
+}
+
+export interface IContextMenusWithId {
+  id: string;
+  contextMenu: IContextMenuExtensionFactory;
 }

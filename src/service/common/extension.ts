@@ -1,4 +1,4 @@
-import { IExtensionWithId } from '@/extensions/common';
+import { IExtensionWithId, IContextMenusWithId } from '@/extensions/common';
 import { Token } from 'typedi';
 export interface Extension {}
 
@@ -18,6 +18,7 @@ export interface IExtensionService {
 
 export interface IExtensionContainer {
   extensions: IExtensionWithId[];
+  contextMenus: IContextMenusWithId[];
 }
 
 export const IExtensionService = new Token<IExtensionService>();

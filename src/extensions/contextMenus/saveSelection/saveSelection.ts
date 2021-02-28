@@ -5,12 +5,11 @@ import { stringify } from 'qs';
 class ContextMenu extends ContextMenuExtension {
   constructor() {
     super({
-      id: 'contextMenus.selection.save',
-      title: localeService.format({
+      name: localeService.format({
         id: 'contextMenus.selection.save.title',
         defaultMessage: 'Save selection',
       }),
-      contexts: ['selection'],
+      version: '0.0.1',
     });
   }
 

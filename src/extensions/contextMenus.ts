@@ -1,4 +1,5 @@
 import { IContentScriptService } from '@/service/common/contentScript';
+import { IExtensionManifest } from './common';
 
 export interface IContextMenuProperties {
   id: string;
@@ -7,6 +8,7 @@ export interface IContextMenuProperties {
 }
 
 export interface IContextMenuExtension {
+  readonly manifest: IExtensionManifest;
   run(id: chrome.tabs.Tab, context: IContextMenuContext): Promise<void>;
 }
 
@@ -16,7 +18,17 @@ export interface IContextMenuContext {
 }
 
 export abstract class ContextMenuExtension implements IContextMenuExtension {
-  constructor(public properties: IContextMenuProperties) {}
+  constructor(public manifest: IExtensionManifest) {}
 
   abstract run(id: chrome.tabs.Tab, context: IContextMenuContext): Promise<void>;
+}
+
+export interface IContextMenuExtensionFactory {
+  id: string;
+  new (): IContextMenuExtension;
+}
+
+export interface IContextMenusWithId {
+  id: string;
+  contextMenu: IContextMenuExtensionFactory;
 }
