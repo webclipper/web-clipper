@@ -124,7 +124,7 @@ async function initContentScriptService(tabId: number) {
         chrome.contextMenus.create({
           id: iterator.id,
           title: instance.manifest.name,
-          contexts: ['selection'],
+          contexts: instance.manifest.contexts,
           onclick: (_info, tab) => {
             instance.run(tab!, {
               contentScriptService,

@@ -7,8 +7,12 @@ export interface IContextMenuProperties {
   contexts: string[];
 }
 
+interface IContextMenuExtensionManifest extends IExtensionManifest {
+  contexts?: string[];
+}
+
 export interface IContextMenuExtension {
-  readonly manifest: IExtensionManifest;
+  readonly manifest: IContextMenuExtensionManifest;
   run(id: chrome.tabs.Tab, context: IContextMenuContext): Promise<void>;
 }
 
@@ -18,7 +22,7 @@ export interface IContextMenuContext {
 }
 
 export abstract class ContextMenuExtension implements IContextMenuExtension {
-  constructor(public manifest: IExtensionManifest) {}
+  constructor(public manifest: IContextMenuExtensionManifest) {}
 
   abstract run(id: chrome.tabs.Tab, context: IContextMenuContext): Promise<void>;
 }

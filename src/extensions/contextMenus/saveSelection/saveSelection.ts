@@ -10,6 +10,7 @@ class ContextMenu extends ContextMenuExtension {
         defaultMessage: 'Save selection',
       }),
       version: '0.0.1',
+      contexts: ['selection'],
     });
   }
 
