@@ -1,12 +1,13 @@
 import { getLocaleExtensionManifest } from '@web-clipper/extensions';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/types';
 import { IExtensionWithId } from '@/extensions/common';
-import { extensions, IContextMenusWithId, contextMenus } from '@/extensions';
+import { extensions, contextMenus } from '@/extensions';
 import { IStorageService } from '@web-clipper/shared/lib/storage';
 import { ILocalStorageService } from '@/service/common/storage';
 import { Service, Inject } from 'typedi';
 import { IExtensionContainer } from '@/service/common/extension';
 import { observable } from 'mobx';
+import { IContextMenusWithId } from '@/extensions/contextMenus';
 
 class ExtensionContainer implements IExtensionContainer {
   @observable

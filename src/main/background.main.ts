@@ -20,9 +20,16 @@ import { syncStorageService, localStorageService } from '@/common/chrome/storage
 import { IPreferenceService } from '@/service/common/preference';
 import '@/service/preference/browser/preferenceService';
 import { autorun } from 'mobx';
-import { stringify } from 'qs';
 import localeService from '@/common/locales';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/types';
+import { ILocalStorageService, ISyncStorageService } from '@/service/common/storage';
+
+Container.set(ILocalStorageService, localStorageService);
+Container.set(ISyncStorageService, syncStorageService);
+
+import '@/service/extension/browser/extensionContainer';
+import '@/service/extension/browser/extensionService';
+import { IExtensionContainer, IExtensionService } from '@/service/common/extension';
 
 const backgroundIPCServer: IChannelServer = new BackgroundIPCServer();
 
@@ -103,25 +110,30 @@ async function initContentScriptService(tabId: number) {
     } else {
       browser.browserAction.setIcon({ path: config.icon });
     }
-  });
-  chrome.contextMenus.create({
-    id: 'contextMenus.selection.save',
-    title: localeService.format({
-      id: 'contextMenus.selection.save.title',
-      defaultMessage: 'Save selection',
-    }),
-    contexts: ['selection'],
-    onclick: async (_info, tab) => {
-      await initContentScriptService(tab.id!);
-      const content = await contentScriptService.getSelectionMarkdown();
-      const note = localeService.format(
-        {
-          id: 'contextMenus.selection.save.template',
-        },
-        { content, url: await contentScriptService.getPageUrl(), title: tab.title }
-      );
-      contentScriptService.toggle({ pathname: '/editor', query: stringify({ markdown: note }) });
-    },
+    const extensionContainer = Container.get(IExtensionContainer);
+    const extensionService = Container.get(IExtensionService);
+    const contextMenus = extensionContainer.contextMenus;
+    const currentContextMenus = contextMenus.filter(
+      // eslint-disable-next-line max-nested-callbacks
+      p => !extensionService.DisabledExtensionIds.includes(p.id)
+    );
+    chrome.contextMenus.removeAll(() => {
+      for (const iterator of currentContextMenus) {
+        const Factory = iterator.contextMenu;
+        const instance = new Factory();
+        chrome.contextMenus.create({
+          id: iterator.id,
+          title: instance.manifest.name,
+          contexts: ['selection'],
+          onclick: (_info, tab) => {
+            instance.run(tab!, {
+              contentScriptService,
+              initContentScriptService,
+            });
+          },
+        });
+      }
+    });
   });
 
   browser.browserAction.onClicked.addListener(async tab => {
