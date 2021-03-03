@@ -94,31 +94,31 @@ const Page: React.FC = () => {
   return (
     <div>
       <Typography.Title level={3}>
-        <FormattedMessage id="preference.extensions.contextMenus" defaultMessage="ContextMenus" />
-        <Row gutter={10}>
-          {contextMenus.length === 0 && <Empty></Empty>}
-          {contextMenus.map(e => {
-            const Factory = e.contextMenu;
-            const contextMenus = new Factory();
-            return (
-              <Col key={e.id} span={12}>
-                <ExtensionCard
-                  className={styles.extensionCard}
-                  manifest={contextMenus.manifest}
-                  actions={[
-                    <Switch
-                      key="toggle"
-                      size="small"
-                      checked={!disabledExtensions.some(o => o === e.id)}
-                      onClick={() => extensionService.toggleDisableExtension(e.id)}
-                    />,
-                  ]}
-                ></ExtensionCard>
-              </Col>
-            );
-          })}
-        </Row>
+        <FormattedMessage id="preference.extensions.contextMenus" />
       </Typography.Title>
+      <Row gutter={10}>
+        {contextMenus.length === 0 && <Empty></Empty>}
+        {contextMenus.map(e => {
+          const Factory = e.contextMenu;
+          const contextMenus = new Factory();
+          return (
+            <Col key={e.id} span={12}>
+              <ExtensionCard
+                className={styles.extensionCard}
+                manifest={contextMenus.manifest}
+                actions={[
+                  <Switch
+                    key="toggle"
+                    size="small"
+                    checked={!disabledExtensions.some(o => o === e.id)}
+                    onClick={() => extensionService.toggleDisableExtension(e.id)}
+                  />,
+                ]}
+              ></ExtensionCard>
+            </Col>
+          );
+        })}
+      </Row>
       <Typography.Title level={3}>
         <FormattedMessage
           id="preference.extensions.toolExtensions"
