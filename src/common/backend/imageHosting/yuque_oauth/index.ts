@@ -6,7 +6,6 @@ export default (): ImageHostingServiceMeta => {
   return {
     name: localeService.format({
       id: 'backend.imageHosting.yuque_oauth.name',
-      defaultMessage: 'Yuque Oauth',
     }),
     icon: 'yuque',
     type: 'yuque_oauth',

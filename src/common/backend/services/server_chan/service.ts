@@ -18,13 +18,11 @@ export default class GithubDocumentService implements DocumentService {
     return {
       name: localeService.format({
         id: 'backend.services.server_chan.name',
-        defaultMessage: 'ServerChan',
       }),
       avatar: '',
       homePage: 'https://sc.ftqq.com/',
       description: localeService.format({
         id: 'backend.services.server_chan.name',
-        defaultMessage: 'ServerChan',
       }),
     };
   };
@@ -35,12 +33,10 @@ export default class GithubDocumentService implements DocumentService {
         id: 'server_chan',
         name: localeService.format({
           id: 'backend.services.server_chan.name',
-          defaultMessage: 'ServerChan',
         }),
         groupId: 'server_chan',
         groupName: localeService.format({
           id: 'backend.services.server_chan.name',
-          defaultMessage: 'ServerChan',
         }),
       },
     ];

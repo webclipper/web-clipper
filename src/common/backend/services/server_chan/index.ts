@@ -6,7 +6,6 @@ export default () => {
   return {
     name: localeService.format({
       id: 'backend.services.server_chan.name',
-      defaultMessage: 'ServerChan',
     }),
     icon: 'wechat',
     type: 'server_chan',

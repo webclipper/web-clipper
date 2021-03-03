@@ -6,7 +6,6 @@ export default (): ImageHostingServiceMeta => {
   return {
     name: localeService.format({
       id: 'backend.imageHosting.joplin.name',
-      defaultMessage: 'Joplin',
     }),
     icon: 'joplin',
     type: 'joplin',
