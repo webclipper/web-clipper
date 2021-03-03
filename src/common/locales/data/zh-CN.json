@@ -97,7 +97,7 @@
   "component.powerpackForm.expired": "加强包已过期",
   "component.powerpackForm.required": "请购买加强包",
   "contextMenus.selection.save.description": "保存选择的内容",
-  "contextMenus.selection.save.template": "来源：[{title}]{url}\n\n## 摘录内容 \n{content}\n## 想法",
+  "contextMenus.selection.save.template": "来源：[{title}]({url})\n\n## 摘录内容 \n{content}\n## 想法",
   "contextMenus.selection.save.title": "保存选择的内容",
   "hooks.useOriginForm.origin.message": "格式错误,示例 https://developer.mozilla.org",
   "page.complete.close": "关闭 Web Clipper",
