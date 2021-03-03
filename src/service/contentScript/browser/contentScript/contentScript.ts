@@ -36,7 +36,11 @@ class ContentScriptService implements IContentScriptService {
       }
       $('body').append(`<iframe src="${src}" class=${styles.toolFrame}></iframe>`);
     } else {
-      $(`.${styles.toolFrame}`).attr('src', src);
+      const srcRaw = $(`.${styles.toolFrame}`).attr('src');
+
+      if (srcRaw !== src) {
+        $(`.${styles.toolFrame}`).attr('src', src);
+      }
       $(`.${styles.toolFrame}`).toggle();
     }
   }
