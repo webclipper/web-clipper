@@ -5,8 +5,10 @@ import Section from 'components/section';
 import { FormattedMessage } from 'react-intl';
 import IconFont from '@/components/IconFont';
 import { IExtensionWithId } from '@/extensions/common';
+import localeService from '@/common/locales';
 
 type PageProps = {
+  hasEditor: boolean;
   extensions: IExtensionWithId[];
   pathname: string;
   onClick(router: string): void;
@@ -40,6 +42,16 @@ const ClipExtensions: React.FC<PageProps> = ({ extensions, pathname, onClick }) 
           </Button>
         );
       })}
+      <Button
+        block
+        key={'/editor'}
+        className={styles.menuButton}
+        style={pathname === '/editor' ? { color: '#40a9ff' } : {}}
+        onClick={() => handleClick('/editor')}
+      >
+        <IconFont type={'select'} />
+        {localeService.format({ id: 'contextMenus.selection.save.title' })}
+      </Button>
     </Section>
   );
 };

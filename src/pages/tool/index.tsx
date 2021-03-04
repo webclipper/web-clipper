@@ -29,7 +29,14 @@ import { IExtensionWithId } from '@/extensions/common';
 import usePowerpack from '@/common/hooks/usePowerpack';
 
 const mapStateToProps = ({
-  clipper: { currentAccountId, url, currentRepository, repositories, currentImageHostingService },
+  clipper: {
+    currentAccountId,
+    url,
+    currentRepository,
+    repositories,
+    currentImageHostingService,
+    clipperData,
+  },
   loading,
   account: { accounts },
   userPreference: { locale, servicesMeta },
@@ -37,6 +44,7 @@ const mapStateToProps = ({
   const currentAccount = accounts.find(o => o.id === currentAccountId);
   const loadingAccount = loading.effects[asyncChangeAccount.started.type];
   return {
+    hasEditor: typeof clipperData['/editor'] !== 'undefined',
     loadingAccount,
     accounts,
     currentImageHostingService,
@@ -68,6 +76,7 @@ const Page = React.memo<PageProps>(
       dispatch,
       accounts,
       servicesMeta,
+      hasEditor,
     } = props;
 
     const { valid } = usePowerpack();
@@ -202,6 +211,7 @@ const Page = React.memo<PageProps>(
           }
         />
         <ClipExtension
+          hasEditor={hasEditor}
           extensions={clipExtensions}
           onClick={router => push(router)}
           pathname={pathname}
@@ -253,8 +263,10 @@ const Page = React.memo<PageProps>(
       locale,
       servicesMeta,
       accounts,
+      hasEditor,
     }: PageProps) => {
       return {
+        hasEditor,
         loadingAccount,
         currentRepository,
         repositories,
