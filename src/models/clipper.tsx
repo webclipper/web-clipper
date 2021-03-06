@@ -220,11 +220,16 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
       throw new Error('Must select repository.');
     }
     if (!extension) {
+      // DEBT
       if (pathname !== '/editor') {
         return;
       }
     }
     for (const iterator of automaticExtensions) {
+      // DEBT
+      if (iterator.id === 'web-clipper/link.' && pathname === '/editor') {
+        continue;
+      }
       yield put.resolve(asyncRunExtension.started({ pathname, extension: iterator }));
     }
     const { data, url } = yield select((g: GlobalStore) => {
