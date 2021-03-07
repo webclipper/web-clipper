@@ -23,6 +23,14 @@ let manifestExtra = {
     'https://resource.clipper.website/*',
     'contextMenus',
   ],
+  commands: {
+    'toggle-feature-foo': {
+      suggested_key: {
+        default: 'Alt+S',
+      },
+      description: 'Test',
+    },
+  },
   optional_permissions: ['cookies', '<all_urls>', 'webRequest', 'webRequestBlocking'],
 };
 

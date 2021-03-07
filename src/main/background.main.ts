@@ -100,6 +100,28 @@ async function initContentScriptService(tabId: number) {
     }
   });
 
+  chrome.commands.onCommand.addListener(async e => {
+    if (e === 'toggle-feature-foo') {
+      const extensionService = Container.get(IExtensionService);
+      const extensionContainer = Container.get(IExtensionContainer);
+      const contextMenus = extensionContainer.contextMenus;
+      const currentContextMenus = contextMenus.filter(
+        // eslint-disable-next-line max-nested-callbacks
+        p => !extensionService.DisabledExtensionIds.includes(p.id)
+      );
+      for (const iterator of currentContextMenus) {
+        const Factory = iterator.contextMenu;
+        const instance = new Factory();
+        if (iterator.id === 'contextMenus.selection.save') {
+          instance.run((await Container.get(ITabService).getCurrent()) as any, {
+            contentScriptService,
+            initContentScriptService,
+          });
+        }
+      }
+    }
+  });
+
   autorun(() => {
     const iconColor = preferenceService.userPreference.iconColor;
     if (iconColor === 'auto') {
