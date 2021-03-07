@@ -99,7 +99,7 @@ async function initContentScriptService(tabId: number) {
       await localeService.init();
     }
   });
-
+  //DEBT
   chrome.commands.onCommand.addListener(async e => {
     if (e === 'toggle-feature-foo') {
       const extensionService = Container.get(IExtensionService);

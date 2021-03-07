@@ -7,9 +7,9 @@ class ContextMenu extends ContextMenuExtension {
 
   constructor() {
     super({
-      name: localeService.format({
+      name: `${localeService.format({
         id: 'contextMenus.selection.save.title',
-      }),
+      })} (Alt+S)`,
       description: localeService.format({
         id: 'contextMenus.selection.save.description',
       }),
