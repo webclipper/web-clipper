@@ -40,6 +40,14 @@ let tool = resolve('src/main/tool.main.chrome.ts');
 if (process.env.TARGET_BROWSER === 'Firefox') {
   manifestExtra = {
     name: 'Web Clipper',
+    commands: {
+      'toggle-feature-foo': {
+        suggested_key: {
+          default: 'Alt+S',
+        },
+        description: 'Test',
+      },
+    },
     permissions: [
       'contextMenus',
       'activeTab',
