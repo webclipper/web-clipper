@@ -7,6 +7,7 @@ const ExtensionReloader = require('webpack-extension-reloader');
 const tsImportPluginFactory = require('ts-import-plugin');
 const WebpackCreateExtensionManifestPlugin = require('webpack-create-extension-manifest-plugin');
 const fs = require('fs');
+const getVersion = require('./getVersion');
 
 const distFiles = fs.readdirSync(resolve('dist')).filter(o => o !== '.gitkeep');
 
@@ -14,8 +15,11 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
 
+const packageJson = JSON.parse(fs.readFileSync(resolve('package.json'), 'utf8'));
+
 let manifestExtra = {
   name: 'Web Clipper',
+  version: getVersion(packageJson.version),
   permissions: [
     'activeTab',
     'storage',
@@ -40,6 +44,7 @@ let tool = resolve('src/main/tool.main.chrome.ts');
 if (process.env.TARGET_BROWSER === 'Firefox') {
   manifestExtra = {
     name: 'Web Clipper',
+    version: getVersion(packageJson.version),
     commands: {
       'toggle-feature-foo': {
         suggested_key: {

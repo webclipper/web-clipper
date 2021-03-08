@@ -118,6 +118,7 @@
     "pre-commit": "^1.2.2",
     "prettier": "^1.19.1",
     "pump": "^3.0.0",
+    "semver": "^7.3.4",
     "style-loader": "^0.23.1",
     "terser-webpack-plugin": "^2.3.1",
     "ts-import-plugin": "^1.5.5",
