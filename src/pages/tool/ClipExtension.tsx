@@ -14,7 +14,7 @@ type PageProps = {
   onClick(router: string): void;
 };
 
-const ClipExtensions: React.FC<PageProps> = ({ extensions, pathname, onClick }) => {
+const ClipExtensions: React.FC<PageProps> = ({ extensions, pathname, onClick, hasEditor }) => {
   const handleClick = (pluginRouter: string) => {
     if (pluginRouter !== pathname) {
       onClick(pluginRouter);
@@ -42,16 +42,18 @@ const ClipExtensions: React.FC<PageProps> = ({ extensions, pathname, onClick }) 
           </Button>
         );
       })}
-      <Button
-        block
-        key={'/editor'}
-        className={styles.menuButton}
-        style={pathname === '/editor' ? { color: '#40a9ff' } : {}}
-        onClick={() => handleClick('/editor')}
-      >
-        <IconFont type={'select'} />
-        {localeService.format({ id: 'contextMenus.selection.save.title' })}
-      </Button>
+      {hasEditor && (
+        <Button
+          block
+          key={'/editor'}
+          className={styles.menuButton}
+          style={pathname === '/editor' ? { color: '#40a9ff' } : {}}
+          onClick={() => handleClick('/editor')}
+        >
+          <IconFont type={'select'} />
+          {localeService.format({ id: 'contextMenus.selection.save.title' })}
+        </Button>
+      )}
     </Section>
   );
 };
