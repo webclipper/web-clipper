@@ -1,6 +1,6 @@
 {
   "name": "web-clipper",
-  "version": "1.30.0-alpha.2",
+  "version": "1.30.0-alpha.3",
   "description": "Universal open source web clipper for Notion,OneNote,Joplin,Yuque,Bear,Github and more notes.",
   "scripts": {
     "test": "jest --verbose",
