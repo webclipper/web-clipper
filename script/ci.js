@@ -1,8 +1,9 @@
-const { fork, execSync } = require('child_process');
+const { fork } = require('child_process');
 const path = require('path');
 const compressing = require('compressing');
 const fs = require('fs');
 const pump = require('pump');
+const getVersion = require('../webpack/getVersion');
 const releaseDir = path.join(__dirname, '../release');
 if (!fs.existsSync(releaseDir)) {
   fs.mkdirSync(releaseDir);
@@ -59,11 +60,10 @@ function pack({ targetBrowser, beta }) {
       const manifest = path.resolve(dist, 'manifest.json');
       const manifestJSON = JSON.parse(fs.readFileSync(manifest, { encoding: 'utf8' }));
       manifestJSON.name = `${manifestJSON.name} Beta`;
-      const branch = process.env.GITHUB_BRANCH || 'refs/heads/master';
-      const masterCommitsCount = execSync(`git rev-list --count ${branch}`)
-        .toString()
-        .trim();
-      manifestJSON.version = manifestJSON.version.replace(/.[0-9]$/, `.${masterCommitsCount}`);
+      const packageJSON = JSON.parse(
+        fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf-8')
+      );
+      manifestJSON.version = getVersion(packageJSON.version);
       console.log(`Current Version ${manifestJSON.version}`);
       fs.writeFileSync(manifest, JSON.stringify(manifestJSON));
     }

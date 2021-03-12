@@ -26,13 +26,13 @@ class PreferenceService implements IPreferenceService {
     }
   };
 
-  async updateIconColor(color: TIconColor) {
+  updateIconColor = async (color: TIconColor) => {
     await this.syncStorageService.set('iconColor', color);
-  }
+  };
 
-  private getIconColor() {
+  private getIconColor = () => {
     return (this.syncStorageService.get('iconColor') as 'dark' | 'light' | 'auto' | null) ?? 'auto';
-  }
+  };
 }
 
 Service(IPreferenceService)(PreferenceService);
