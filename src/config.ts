@@ -8,7 +8,6 @@ interface WebClipperConfig {
   yuqueScope: string;
   oneNoteCallBack: string;
   oneNoteClientId: string;
-  createLogger: boolean;
   serverHost: string;
   resourceHost: string;
   loadRemoteConfig: boolean;
@@ -37,7 +36,6 @@ let config: WebClipperConfig = {
   yuqueScope: 'doc,group,repo,attach_upload',
   oneNoteClientId: '563571ad-cfcd-442a-aa34-046bad24b1b6',
   oneNoteCallBack: 'https://webclipper-oauth.yfd.im/onenote_oauth',
-  createLogger: false,
   // oneNoteCallBack: 'http://localhost:3000/onenote_oauth',
   serverHost: 'https://api.clipper.website',
   resourceHost: 'https://resource.clipper.website',
@@ -60,7 +58,6 @@ if (process.env.NODE_ENV === 'development') {
     oneNoteClientId: '01c7500b-98dd-4f37-813f-a959382793ac',
     oneNoteCallBack: 'https://webclipper-oauth.test.yfd.im/onenote_oauth',
     // oneNoteCallBack: 'http://localhost:3000/onenote_oauth',
-    createLogger: false,
     serverHost: 'https://api.test.clipper.website',
     // serverHost: 'http://localhost:3000',
   });

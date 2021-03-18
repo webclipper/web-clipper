@@ -2,8 +2,6 @@ import Container from 'typedi';
 import React from 'react';
 import dva, { router } from 'dva';
 import { createHashHistory } from 'history';
-import createLogger from 'dva-logger';
-import { Action } from 'dva-model-creator';
 import preference from '@/pages/preference';
 import Complete from '@/pages/complete/complete';
 import PluginPage from '@/pages/plugin/Page';
@@ -18,7 +16,6 @@ import AuthPage from '@/pages/auth';
 import LoginPage from '@/pages/login';
 import account from '@/models/account';
 import { message } from 'antd';
-import config from '@/config';
 import { IConfigService } from '@/service/common/config';
 import { ILocalStorageService, ISyncStorageService } from '@/service/common/storage';
 import { IPowerpackService } from '@/service/common/powerpack';
@@ -63,19 +60,6 @@ export default async () => {
     },
   });
   app.use(createLoading());
-  if (config.createLogger) {
-    app.use(
-      createLogger({
-        predicate: (_: Function, { type }: Action<any>) => {
-          return (
-            !type.endsWith('@@end') &&
-            !type.endsWith('@@start') &&
-            !type.startsWith('@@DVA_LOADING')
-          );
-        },
-      })
-    );
-  }
 
   app.router(router => {
     return (
