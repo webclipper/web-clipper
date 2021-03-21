@@ -16,8 +16,8 @@ export default class BaklibDocumentService implements DocumentService {
   private token: string;
   private cache: Map<string, any>;
 
-  constructor({ accessToken, host }: BaklibBackendServiceConfig) {
-    const realHost = host || 'www.baklib.com/';
+  constructor({ accessToken, origin }: BaklibBackendServiceConfig) {
+    const realHost = origin || 'www.baklib.com/';
     this.request = extend({
       prefix: `https://${realHost}/api/`,
       headers: { Authorization: `Bearer ${accessToken}` },

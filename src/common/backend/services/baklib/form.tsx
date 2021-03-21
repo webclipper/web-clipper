@@ -2,52 +2,72 @@ import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.less';
 import { Input } from 'antd';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { BaklibBackendServiceConfig } from './interface';
+import useOriginForm from '@/hooks/useOriginForm';
+import { FormattedMessage } from 'react-intl';
 
 interface YuqueFormProps {
   verified?: boolean;
   info?: BaklibBackendServiceConfig;
 }
 
-export default class extends Component<YuqueFormProps & FormComponentProps> {
-  render() {
-    const {
-      form: { getFieldDecorator },
-      info,
-      verified,
-    } = this.props;
+const FormItem: React.FC<YuqueFormProps & FormComponentProps> = props => {
+  const {
+    form,
+    form: { getFieldDecorator },
+    info,
+    verified,
+  } = props;
 
-    let initData: Partial<BaklibBackendServiceConfig> = {};
-    if (info) {
-      initData = info;
-    }
-    let editMode = info ? true : false;
-    return (
-      <Fragment>
-        <Form.Item label="Host">
-          {getFieldDecorator('host', {
-            initialValue: initData.host || 'www.baklib.com',
-            rules: [
-              {
-                required: true,
-                message: 'Host is required!',
-              },
-            ],
-          })(<Input disabled={editMode || verified} />)}
-        </Form.Item>
-        <Form.Item label="AccessToken">
-          {getFieldDecorator('accessToken', {
-            initialValue: initData.accessToken,
-            rules: [
-              {
-                required: true,
-                message: 'AccessToken is required!',
-              },
-            ],
-          })(<Input disabled={editMode || verified} />)}
-        </Form.Item>
-      </Fragment>
-    );
+  const { verified: formVerified, handleAuthentication, formRules } = useOriginForm({
+    form,
+    initStatus: !!info,
+  });
+
+  let initData: Partial<BaklibBackendServiceConfig> = {};
+  if (info) {
+    initData = info;
   }
-}
+  let editMode = info ? true : false;
+  return (
+    <Fragment>
+      <Form.Item label="Host">
+        {getFieldDecorator('origin', {
+          initialValue: initData.origin || 'https://www.baklib.com',
+          rules: [
+            {
+              required: true,
+              message: 'Host is required!',
+            },
+            ...formRules,
+          ],
+        })(
+          <Input.Search
+            enterButton={
+              <FormattedMessage
+                id="backend.services.baklib.form.authentication"
+                defaultMessage="Authentication"
+              />
+            }
+            disabled={editMode || formVerified}
+            onSearch={handleAuthentication}
+          />
+        )}
+      </Form.Item>
+      <Form.Item label="AccessToken">
+        {getFieldDecorator('accessToken', {
+          initialValue: initData.accessToken,
+          rules: [
+            {
+              required: true,
+              message: 'AccessToken is required!',
+            },
+          ],
+        })(<Input disabled={editMode || verified} />)}
+      </Form.Item>
+    </Fragment>
+  );
+};
+
+export default FormItem;

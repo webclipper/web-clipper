@@ -6,7 +6,7 @@ export enum RepositoryType {
 
 export interface BaklibBackendServiceConfig {
   accessToken: string;
-  host: string;
+  origin: string;
 }
 
 export interface BaklibTenantsResponse {
