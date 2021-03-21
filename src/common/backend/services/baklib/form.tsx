@@ -25,6 +25,17 @@ export default class extends Component<YuqueFormProps & FormComponentProps> {
     let editMode = info ? true : false;
     return (
       <Fragment>
+        <Form.Item label="Host">
+          {getFieldDecorator('host', {
+            initialValue: initData.host || 'www.baklib.com',
+            rules: [
+              {
+                required: true,
+                message: 'Host is required!',
+              },
+            ],
+          })(<Input disabled={editMode || verified} />)}
+        </Form.Item>
         <Form.Item label="AccessToken">
           {getFieldDecorator('accessToken', {
             initialValue: initData.accessToken,
