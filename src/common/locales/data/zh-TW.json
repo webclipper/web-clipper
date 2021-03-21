@@ -21,6 +21,7 @@
   "backend.imageHosting.yuque_oauth.name": "語雀(一鍵授權)",
   "backend.imageHosting.yuque.name": "語雀",
   "backend.not.unavailable": "",
+  "backend.services.baklib.form.authentication": "",
   "backend.services.baklib.headerForm.channel": "欄目",
   "backend.services.baklib.headerForm.description": "描述",
   "backend.services.baklib.headerForm.tags": "標簽",

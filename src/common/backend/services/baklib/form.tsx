@@ -7,12 +7,12 @@ import { BaklibBackendServiceConfig } from './interface';
 import useOriginForm from '@/hooks/useOriginForm';
 import { FormattedMessage } from 'react-intl';
 
-interface YuqueFormProps {
+interface BaklibFormProps {
   verified?: boolean;
   info?: BaklibBackendServiceConfig;
 }
 
-const FormItem: React.FC<YuqueFormProps & FormComponentProps> = props => {
+const FormItem: React.FC<BaklibFormProps & FormComponentProps> = props => {
   const {
     form,
     form: { getFieldDecorator },

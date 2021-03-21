@@ -21,6 +21,7 @@
   "backend.imageHosting.yuque_oauth.name": "Yuque Oauth",
   "backend.imageHosting.yuque.name": "Yuque",
   "backend.not.unavailable": "Clipping of this type of page is temporarily unavailable.\n\nRefreshing the page can resolve。",
+  "backend.services.baklib.form.authentication": "Authentication",
   "backend.services.baklib.headerForm.channel": "",
   "backend.services.baklib.headerForm.description": "",
   "backend.services.baklib.headerForm.tags": "",

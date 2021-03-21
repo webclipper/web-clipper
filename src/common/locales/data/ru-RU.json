@@ -21,6 +21,7 @@
   "backend.imageHosting.yuque_oauth.name": "",
   "backend.imageHosting.yuque.name": "",
   "backend.not.unavailable": "",
+  "backend.services.baklib.form.authentication": "",
   "backend.services.baklib.headerForm.channel": "",
   "backend.services.baklib.headerForm.description": "",
   "backend.services.baklib.headerForm.tags": "",
