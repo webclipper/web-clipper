@@ -15,11 +15,12 @@ export default class BaklibDocumentService implements DocumentService {
   private request: RequestMethod;
   private token: string;
   private cache: Map<string, any>;
+  private origin: string;
 
   constructor({ accessToken, origin }: BaklibBackendServiceConfig) {
-    const realHost = origin || 'www.baklib.com/';
+    const realHost = origin || 'https://www.baklib.com';
     this.request = extend({
-      prefix: `https://${realHost}/api/`,
+      prefix: `${realHost}/api/`,
       headers: { Authorization: `Bearer ${accessToken}` },
       timeout: 5000,
     });
@@ -35,6 +36,7 @@ export default class BaklibDocumentService implements DocumentService {
     );
     this.token = accessToken;
     this.cache = new Map<string, any>();
+    this.origin = origin;
   }
 
   getId = () => md5(this.token);
@@ -43,7 +45,7 @@ export default class BaklibDocumentService implements DocumentService {
     return {
       name: 'Baklib',
       avatar: '',
-      homePage: 'https://www.baklib-free.com/-/groups',
+      homePage: `${this.origin}/-/groups`,
       description: 'Baklib',
     };
   };

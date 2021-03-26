@@ -64,7 +64,7 @@ const FormItem: React.FC<BaklibFormProps & FormComponentProps> = props => {
               message: 'AccessToken is required!',
             },
           ],
-        })(<Input disabled={editMode || verified} />)}
+        })(<Input disabled={editMode || verified || !formVerified} />)}
       </Form.Item>
     </Fragment>
   );
