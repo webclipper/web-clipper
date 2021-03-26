@@ -1,3 +1,10 @@
+## 1.30.0
+
+`2021-3-26`
+
+- ✨ support config icon color
+- ✨ support save selection
+
 ## 1.29.0
 
 `2021-1-27`
