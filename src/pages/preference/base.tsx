@@ -80,15 +80,15 @@ const Base: React.FC<PageProps> = props => {
         >
           {[
             {
-              name: 'Dark',
+              name: <FormattedMessage id="preference.basic.iconColor.dark" />,
               value: 'dark',
             },
             {
-              name: 'Auto',
+              name: <FormattedMessage id="preference.basic.iconColor.auto" />,
               value: 'auto',
             },
             {
-              name: 'Light',
+              name: <FormattedMessage id="preference.basic.iconColor.light" />,
               value: 'light',
             },
           ].map(o => (
