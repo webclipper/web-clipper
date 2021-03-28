@@ -1,5 +1,5 @@
 {
-  "name": "web-clipper-t",
+  "name": "web-clipper",
   "version": "1.30.0",
   "description": "Universal open source web clipper for Notion,OneNote,Joplin,Yuque,Bear,Github and more notes.",
   "scripts": {
@@ -19,6 +19,7 @@
     ]
   },
   "pre-commit": [
+    "lint-staged"
   ],
   "author": "DiamondYuan",
   "license": "GPL-2.0-or-later",
