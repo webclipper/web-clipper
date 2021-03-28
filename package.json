@@ -4,6 +4,7 @@
   "description": "Universal open source web clipper for Notion,OneNote,Joplin,Yuque,Bear,Github and more notes.",
   "scripts": {
     "test": "jest",
+    "cov": "jest --coverage",
     "dev": "NODE_ENV=development webpack --config webpack/webpack.dev.js --watch",
     "dev:ff": "TARGET_BROWSER=Firefox NODE_ENV=development webpack --config webpack/webpack.dev.js --watch",
     "release": "node script/ci.js",
