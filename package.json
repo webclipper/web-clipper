@@ -19,7 +19,6 @@
     ]
   },
   "pre-commit": [
-    "lint-staged"
   ],
   "author": "DiamondYuan",
   "license": "GPL-2.0-or-later",
