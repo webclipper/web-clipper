@@ -1,4 +1,4 @@
-interface WebClipperConfig      {
+interface WebClipperConfig {
   icon: string;
   iconDark: string;
   yuqueClientId: string;
