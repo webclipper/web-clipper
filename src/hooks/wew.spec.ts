@@ -1,4 +1,4 @@
-import test from './test';
+import test from './xxx';
 
 describe('', () => {
   it('', () => {
