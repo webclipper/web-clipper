@@ -9,6 +9,10 @@ export interface IExtensionService {
 
   DisabledAutomaticExtensionIds: string[];
 
+  getExtensionConfig<T>(id: string): T | undefined;
+
+  setExtensionConfig<T = any>(id: string, data: T): Promise<void>;
+
   toggleDefault(id: string): Promise<void>;
 
   toggleDisableExtension(id: string): Promise<void>;

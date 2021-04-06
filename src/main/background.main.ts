@@ -173,6 +173,6 @@ async function initContentScriptService(tabId: number) {
     }
     trackService.trackEvent('Load_Web_Clipper', packageJson.version, 'success');
     await initContentScriptService(tabId);
-    contentScriptService.toggle();
+    contentScriptService.toggle({ pathname: '/preference/extensions' });
   });
 })();

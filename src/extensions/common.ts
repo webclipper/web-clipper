@@ -6,6 +6,7 @@ import React from 'react';
 import { IClearlyRequest } from '@/common/server';
 import { IContentScriptService } from '@/service/common/contentScript';
 import { IContextMenuExtension } from './contextMenus';
+import { ISchema } from '@formily/antd';
 
 export interface InitContext {
   accountInfo: {
@@ -63,6 +64,7 @@ export interface ToolContext<T, Out> {
   result: T;
   data: Out;
   message: Message;
+  config?: any;
   imageService?: ImageHostingService;
   loadImage: any;
   captureVisibleTab: any;
@@ -98,6 +100,7 @@ export interface IExtensionLifeCycle<T, U> {
 }
 
 export interface IExtensionManifest {
+  readonly extensionId?: string;
   readonly name: string;
 
   readonly version: string;
@@ -115,6 +118,11 @@ export interface IExtensionManifest {
   readonly keywords?: string[];
 
   readonly automatic?: boolean;
+
+  readonly config?: {
+    scheme: ISchema;
+    default: { [key: string]: string };
+  };
 
   readonly i18nManifest?: {
     [key: string]: {
