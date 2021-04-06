@@ -188,6 +188,13 @@ builder
     if (manifest.extensionId) {
       config =
         extensionService.getExtensionConfig(manifest.extensionId) || manifest.config?.default;
+      if (Array.isArray(config?.autoRunExclude) && config?.autoRunExclude.length > 0) {
+        const autoRunExclude: string[] = config?.autoRunExclude;
+        // TODO
+        if (autoRunExclude.some(p => `/plugins/${p}` === pathname)) {
+          return;
+        }
+      }
     }
 
     if (run) {

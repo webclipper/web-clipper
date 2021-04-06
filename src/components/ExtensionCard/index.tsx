@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Input, Modal } from 'antd';
+import { Card, Input, Modal, Select } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { SerializedExtensionInfo } from '@/extensions/common';
 import IconFont from '@/components/IconFont';
@@ -7,13 +7,32 @@ import { SettingOutlined } from '@ant-design/icons';
 import { SchemaForm, LifeCycleTypes } from '@formily/antd';
 import { toJS } from 'mobx';
 import Container from 'typedi';
-import { IExtensionService } from '@/service/common/extension';
+import { IExtensionContainer, IExtensionService } from '@/service/common/extension';
+import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 
 interface ExtensionCardProps {
   manifest: SerializedExtensionInfo['manifest'];
   actions?: React.ReactNode[];
   className?: string;
 }
+
+const ExtensionSelect: React.FC<{ value: string; onChange: any }> = ({ value, onChange }) => {
+  const extensionContainer = Container.get(IExtensionContainer);
+  const [_toolExtensions, clipExtensions] = useFilterExtensions(extensionContainer.extensions);
+
+  return (
+    <Select
+      mode="multiple"
+      value={value}
+      onChange={onChange}
+      options={clipExtensions.map(o => ({
+        title: o.manifest.name,
+        value: o.id,
+        key: o.id,
+      }))}
+    ></Select>
+  );
+};
 
 const ReachableContext = React.createContext<{
   manifest: SerializedExtensionInfo['manifest'] | null;
@@ -34,8 +53,12 @@ const config = () => {
               toJS(config?.default);
             return (
               <SchemaForm
-                style={{ width: '100%' }}
-                components={{ Input, textarea: Input.TextArea }}
+                style={{ marginLeft: '40px' }}
+                components={{
+                  Input,
+                  textarea: Input.TextArea,
+                  clipExtensionsSelect: ExtensionSelect,
+                }}
                 defaultValue={defaultValue}
                 effects={$ => {
                   $(LifeCycleTypes.ON_FORM_VALUES_CHANGE).subscribe(data => {
