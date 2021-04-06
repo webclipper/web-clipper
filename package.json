@@ -27,6 +27,8 @@
   "dependencies": {
     "@ant-design/compatible": "^1.0.8",
     "@ant-design/icons": "^4.2.2",
+    "@formily/antd": "^1.3.13",
+    "@formily/antd-components": "^1.3.13",
     "@shihengtech/hooks": "^0.0.7",
     "@web-clipper/area-selector": "^0.1.3",
     "@web-clipper/chrome-promise": "^0.1.2",
@@ -67,6 +69,7 @@
     "remark": "^11.0.2",
     "short-uuid": "^3.1.1",
     "showdown": "^1.9.0",
+    "styled-components": "^5.2.1",
     "tldjs": "^2.3.1",
     "typedi": "^0.8.0",
     "umi-request": "^1.2.15"

@@ -40,6 +40,20 @@ class ExtensionService implements IExtensionService {
     });
   }
 
+  getExtensionConfig<T>(id: string): T | undefined {
+    const config = this.localStorageService.get('extensionConfig', '{}');
+    if (JSON.parse(config)[id]) {
+      return JSON.parse(JSON.parse(config)[id]);
+    }
+    return;
+  }
+
+  async setExtensionConfig(id: string, data: any): Promise<void> {
+    const config = JSON.parse(this.localStorageService.get('extensionConfig', '{}'));
+    config[id] = JSON.stringify(data);
+    await this.localStorageService.set('extensionConfig', JSON.stringify(config));
+  }
+
   async toggleDefault(id: string) {
     if (this.DefaultExtensionId === id) {
       await this.syncStorageService.delete('defaultPluginId');

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ExtensionType, SerializedExtensionInfo } from '@web-clipper/extensions';
+import { ExtensionType, SerializedExtensionInfo } from '@/extensions/common';
 
 const useFilterExtensions = <T extends SerializedExtensionInfo>(extensions: T[]) => {
   return useMemo(() => {

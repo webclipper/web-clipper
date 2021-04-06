@@ -36,6 +36,7 @@ import copyToClipboard from 'copy-to-clipboard';
 import { ocr, clearly } from '@/common/server';
 import remark from 'remark';
 import remakPangu from '@web-clipper/remark-pangu';
+import { IExtensionService } from '@/service/common/extension';
 
 const { message } = antd;
 
@@ -179,8 +180,16 @@ builder
     const {
       extensionLifeCycle: { run, afterRun, destroy },
       id,
+      manifest,
     } = extension;
     const tabService = Container.get(ITabService);
+    const extensionService = Container.get(IExtensionService);
+    let config: any;
+    if (manifest.extensionId) {
+      config =
+        extensionService.getExtensionConfig(manifest.extensionId) || manifest.config?.default;
+    }
+
     if (run) {
       result = yield call(contentScriptService.runScript, id, 'run');
     }
@@ -221,6 +230,7 @@ builder
           antd,
           React,
           pangu,
+          config,
           ocr: async r => {
             const response = await ocr(r);
             return response.result;
