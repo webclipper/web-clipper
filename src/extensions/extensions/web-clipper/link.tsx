@@ -23,6 +23,11 @@ export default new ToolExtension<any>(
             'x-component': 'textarea',
             'x-component-props': { autoSize: true },
           },
+          autoRunExclude: {
+            type: 'string',
+            title: 'AutoRunExclude',
+            'x-component': 'clipExtensionsSelect',
+          },
         },
       },
       default: {
