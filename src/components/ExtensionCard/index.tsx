@@ -9,6 +9,7 @@ import { toJS } from 'mobx';
 import Container from 'typedi';
 import { IExtensionContainer, IExtensionService } from '@/service/common/extension';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
+import './index.less';
 
 interface ExtensionCardProps {
   manifest: SerializedExtensionInfo['manifest'];
