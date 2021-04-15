@@ -161,7 +161,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        include: /node_modules\/antd|@ant-design/,
+        include: /node_modules\/antd|@ant-design|@formily/,
         use: [
           {
             loader: 'style-loader',
