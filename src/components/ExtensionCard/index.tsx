@@ -1,10 +1,12 @@
 import React from 'react';
-import { Card, Input, Modal, Select } from 'antd';
+import { Card, Modal, Select } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { SerializedExtensionInfo } from '@/extensions/common';
 import IconFont from '@/components/IconFont';
 import { SettingOutlined } from '@ant-design/icons';
-import { SchemaForm, LifeCycleTypes } from '@formily/antd';
+import { Form, FormItem, Input as FormInput } from '@formily/antd';
+import { createForm, onFormValuesChange } from '@formily/core';
+import { createSchemaField } from '@formily/react';
 import { toJS } from 'mobx';
 import Container from 'typedi';
 import { IExtensionContainer, IExtensionService } from '@/service/common/extension';
@@ -35,6 +37,14 @@ const ExtensionSelect: React.FC<{ value: string; onChange: any }> = ({ value, on
   );
 };
 
+const SchemaField = createSchemaField({
+  components: {
+    FormItem,
+    textarea: FormInput.TextArea!,
+    clipExtensionsSelect: ExtensionSelect,
+  },
+});
+
 const ReachableContext = React.createContext<{
   manifest: SerializedExtensionInfo['manifest'] | null;
   // eslint-disable-next-line no-undefined
@@ -52,24 +62,25 @@ const config = () => {
             const defaultValue =
               Container.get(IExtensionService).getExtensionConfig(extensionId) ||
               toJS(config?.default);
+            const normalForm = createForm({
+              validateFirst: true,
+              initialValues: defaultValue as any,
+              effects: () => {
+                onFormValuesChange(form => {
+                  if (form.mounted) {
+                    Container.get(IExtensionService).setExtensionConfig(extensionId, form.values);
+                  }
+                });
+              },
+            });
             return (
-              <SchemaForm
-                style={{ marginLeft: '40px' }}
-                components={{
-                  Input,
-                  textarea: Input.TextArea,
-                  clipExtensionsSelect: ExtensionSelect,
-                }}
-                defaultValue={defaultValue}
-                effects={$ => {
-                  $(LifeCycleTypes.ON_FORM_VALUES_CHANGE).subscribe(data => {
-                    if (data.mounted) {
-                      Container.get(IExtensionService).setExtensionConfig(extensionId, data.values);
-                    }
-                  });
-                }}
-                schema={config!.scheme}
-              ></SchemaForm>
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <div style={{ width: '600px' }}>
+                  <Form form={normalForm} layout="vertical">
+                    <SchemaField schema={config!.scheme} />
+                  </Form>
+                </div>
+              </div>
             );
           }}
         </ReachableContext.Consumer>

@@ -11,21 +11,19 @@ export default new ToolExtension<any>(
     description: 'Add link at the end of the document.',
     config: {
       scheme: {
-        'x-component-props': {
-          labelCol: 7,
-          wrapperCol: 12,
-        },
         type: 'object',
         properties: {
           template: {
             type: 'string',
             title: 'Template',
+            'x-decorator': 'FormItem',
             'x-component': 'textarea',
             'x-component-props': { autoSize: true },
           },
           autoRunExclude: {
             type: 'string',
             title: 'AutoRunExclude',
+            'x-decorator': 'FormItem',
             'x-component': 'clipExtensionsSelect',
           },
         },
