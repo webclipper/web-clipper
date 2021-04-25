@@ -1,53 +1,26 @@
-import { DocumentService, CreateDocumentRequest, UserInfo, UnauthorizedError } from './../../index';
+import { DocumentService, CreateDocumentRequest, UserInfo } from './../../index';
 import md5 from '@web-clipper/shared/lib/md5';
-import {
-  WallabagBackendServiceConfig,
-  WallabagCreateDocumentResponse,
-  WallabagTokenResponse,
-  WallabagUserInfoResponse,
-} from './interface';
 import { CompleteStatus } from '../interface';
-import showdown from 'showdown';
-import axios, { AxiosInstance } from 'axios';
-import { stringify } from 'qs';
-
-const converter = new showdown.Converter();
+import WallabagClient from 'common/backend/clients/wallabag/client';
+import { Container } from 'typedi';
+import { IBasicRequestService } from '@/service/common/request';
+import { WallabagBackendServiceConfig } from 'common/backend/clients/wallabag/interface';
 
 export default class WallabagDocumentService implements DocumentService {
-  private request: AxiosInstance;
-  private access_token: string;
-  private readonly origin: string;
+  private client: WallabagClient;
+  private config: WallabagBackendServiceConfig;
 
-  constructor({ origin, access_token }: WallabagBackendServiceConfig) {
-    const realHost = origin || 'https://app.wallabag.it';
-    this.request = axios.create({
-      baseURL: `${realHost}/api/`,
-      headers: { Authorization: `Bearer ${access_token}` },
-      timeout: 100000,
-      transformResponse: [data => JSON.parse(data)],
-      withCredentials: true,
-    });
-
-    this.request.interceptors.response.use(
-      r => r,
-      error => {
-        if (error.response && error.response.status === 401) {
-          const ere = new UnauthorizedError();
-          return Promise.reject(ere);
-        }
-        return Promise.reject(error);
-      }
-    );
-    this.access_token = access_token;
-    this.origin = origin;
+  constructor(config: WallabagBackendServiceConfig) {
+    this.config = config;
+    this.client = new WallabagClient(config, Container.get(IBasicRequestService));
   }
 
-  getId = () => md5(this.access_token);
+  getId = () => md5(`wallabag_${this.config.wallabag_host}`);
 
   getUserInfo = async (): Promise<UserInfo> => {
-    const response = await this.request.get<WallabagUserInfoResponse>('user.json');
+    let response = await this.client.getUserInfo();
     return {
-      name: response.data.username,
+      name: response.username,
       avatar: '',
     };
   };
@@ -70,45 +43,9 @@ export default class WallabagDocumentService implements DocumentService {
       status: number;
     }
   ): Promise<CompleteStatus> => {
-    let formData = new FormData();
-    const html = converter.makeHtml(`${info.content}`);
-    formData.append('content', html);
-    formData.append('title', info.title);
-    if (info.url) {
-      formData.append('url', info.url as string);
-    }
-
-    const response = await this.request.post<WallabagCreateDocumentResponse>(
-      'entries.json',
-      formData
-    );
+    const document = await this.client.createDocument(info);
     return {
-      href: `${this.origin}/view/${encodeURIComponent(response.data.id)}`,
-    };
-  };
-
-  refreshToken = async ({
-    access_token,
-    refresh_token,
-    client_id,
-    client_secret,
-    ...rest
-  }: WallabagBackendServiceConfig) => {
-    const response = await this.request.get<WallabagTokenResponse>(
-      `${this.origin}/oauth/v2/token?${stringify({
-        grant_type: 'refresh_token',
-        client_id,
-        client_secret,
-        refresh_token,
-      })}`
-    );
-    this.access_token = response.data.access_token;
-    return {
-      ...rest,
-      access_token: response.data.access_token,
-      refresh_token: response.data.refresh_token,
-      client_id,
-      client_secret,
+      href: `${this.config.wallabag_host}/view/${encodeURIComponent(document.id)}`,
     };
   };
 }

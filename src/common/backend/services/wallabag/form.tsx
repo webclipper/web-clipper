@@ -3,9 +3,9 @@ import '@ant-design/compatible/assets/index.less';
 import { Input } from 'antd';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
 import React, { Fragment } from 'react';
-import { WallabagBackendServiceConfig } from './interface';
 import useOriginForm from '@/hooks/useOriginForm';
 import { FormattedMessage } from 'react-intl';
+import { WallabagBackendServiceConfig } from 'common/backend/clients/wallabag/interface';
 
 interface WallabagFormProps {
   verified?: boolean;
@@ -32,26 +32,24 @@ const FormItem: React.FC<WallabagFormProps & FormComponentProps> = props => {
   let editMode = info ? true : false;
   return (
     <Fragment>
-      <Form.Item label="Host">
-        {getFieldDecorator('origin', {
-          initialValue: initData.origin || 'https://app.wallabag.it',
-          rules: [
-            {
-              required: true,
-              message: 'Host is required!',
-            },
-            ...formRules,
-          ],
+      <Form.Item
+        label={
+          <FormattedMessage id="backend.services.confluence.form.origin" defaultMessage="Origin" />
+        }
+      >
+        {form.getFieldDecorator('wallabag_host', {
+          initialValue: info?.wallabag_host || 'https://app.wallabag.it',
+          rules: formRules,
         })(
           <Input.Search
             enterButton={
               <FormattedMessage
-                id="backend.services.wallabag.form.authentication"
+                id="backend.services.confluence.form.authentication"
                 defaultMessage="Authentication"
               />
             }
-            disabled={editMode || formVerified}
             onSearch={handleAuthentication}
+            disabled={verified}
           />
         )}
       </Form.Item>

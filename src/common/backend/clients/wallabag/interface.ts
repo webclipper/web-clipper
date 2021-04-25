@@ -3,22 +3,19 @@ export interface WallabagBackendServiceConfig {
   refresh_token: string;
   client_id: string;
   client_secret: string;
-  origin: string;
+  wallabag_host: string;
 }
 
-export interface WallabagTokenResponse {
+export interface WallabagRefreshTokenResponse {
   access_token: string;
   refresh_token: string;
 }
 
 export interface WallabagUserInfoResponse {
   username: string;
+  id: string;
 }
+
 export interface WallabagCreateDocumentResponse {
   id: string;
-  _links: {
-    self: {
-      href: string;
-    };
-  };
 }
