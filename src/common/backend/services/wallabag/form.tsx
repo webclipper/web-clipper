@@ -23,6 +23,7 @@ const FormItem: React.FC<WallabagFormProps & FormComponentProps> = props => {
   const { verified: formVerified, handleAuthentication, formRules } = useOriginForm({
     form,
     initStatus: !!info,
+    originKey: 'wallabag_host',
   });
 
   let initData: Partial<WallabagBackendServiceConfig> = {};
