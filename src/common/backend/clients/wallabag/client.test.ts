@@ -58,9 +58,17 @@ describe('test WallabagClient', () => {
       wallabag_host: 'https://wallabag_host',
     };
 
+    let isFirstRequest = true;
     const mockRequestService = new MockRequestService(url => {
       switch (url) {
         case `${inputStub.wallabag_host}/api/user.json`:
+          if (isFirstRequest) {
+            // the first request fails with status 401
+            isFirstRequest = false;
+            const err = new Error() as any;
+            err.response = { status: 401 };
+            throw err;
+          }
           return notebookListStubResponse;
         case `${inputStub.wallabag_host}/oauth/v2/token?grant_type=refresh_token&client_id=client_id&client_secret=client_secret&refresh_token=refresh_token`:
           return refreshTokenStubResponse;
@@ -76,7 +84,7 @@ describe('test WallabagClient', () => {
     expect(firstUserInfoRequest[0]).toEqual(userInfoUrl);
     expect(secondUserInfoRequest[0]).toEqual(userInfoUrl);
     expect(secondUserInfoRequest[1].headers.Authorization).toEqual(
-      `Bearer ${refreshTokenStubResponse}`
+      `Bearer ${refreshTokenStubResponse.access_token}`
     );
 
     expect(notebookListStubResponse).toEqual(result);

@@ -14,7 +14,7 @@ const FormData = require('form-data');
 
 const converter = new showdown.Converter();
 /**
- * Client for self hosted wallabag or wallabag.com
+ * Client for self hosted wallabag or wallabag.it
  */
 export default class WallabagClient {
   private config: WallabagBackendServiceConfig;
@@ -52,21 +52,32 @@ export default class WallabagClient {
    * @see documentation https://app.wallabag.it/api/doc#get--api-user.{_format}
    */
   getUserInfo = async () => {
-    let response = await this.request.get<WallabagUserInfoResponse>('user.json');
-    if ((response as any).error && (response as any).error === 'invalid_grant') {
-      await this.refreshToken();
-      response = await this.request.get<WallabagUserInfoResponse>('user.json');
-    }
-
-    return response;
+    return this.refreshTokenOnError(async () => {
+      return this.request.get<WallabagUserInfoResponse>('user.json');
+    });
   };
 
   /**
-   * @TODO: Support markdown
+   * Wrap a function that performs a network request to refresh the token
+   * and repeat the request when necessary.
+   * @param fn function to (re-)execute
+   */
+  async refreshTokenOnError<T>(fn: () => T) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        await this.refreshToken();
+        return fn();
+      }
+      throw err;
+    }
+  }
+
+  /**
+   * Perform a POST with document request as formData to wallabag server to create an entry.
    *
-   * Perform a POST with document request as formData to wallabag server to create a note
-   *
-   * @see documentation https://github.com/wallabag/wallabag/wiki/wallabag-api
+   * @see documentation https://app.wallabag.it/api/doc#post--api-entries.{_format}
    */
   createDocument = async (info: CreateDocumentRequest): Promise<WallabagCreateDocumentResponse> => {
     const formData = new FormData();
@@ -77,8 +88,10 @@ export default class WallabagClient {
       formData.append('url', info.url as string);
     }
 
-    return this.request.postForm<WallabagCreateDocumentResponse>('entries.json', {
-      data: formData,
+    return this.refreshTokenOnError(async () => {
+      return this.request.postForm<WallabagCreateDocumentResponse>('entries.json', {
+        data: formData,
+      });
     });
   };
 
