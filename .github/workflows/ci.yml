@@ -1,6 +1,8 @@
 name: CI Test
 
 on:
+  pull_request_target:
+    types: [opened, edited, reopened]
   push:
     branches:
       - '**'
