@@ -1,5 +1,5 @@
 import { IExtendRequestHelper, IRequestService } from '@/service/common/request';
-import { CreateDocumentRequest } from '../../index';
+import { CreateDocumentRequest, UnauthorizedError } from 'common/backend/services/interface';
 import { RequestHelper } from '@/service/request/common/request';
 import showdown from 'showdown';
 import {
@@ -35,7 +35,6 @@ export default class WallabagClient {
     request: IRequestService
   ) {
     this.config = { access_token, refresh_token, client_id, client_secret, wallabag_host };
-
     this.requestService = request;
     this.request = new RequestHelper({
       baseURL: `${this.config.wallabag_host}/api/`,
@@ -67,8 +66,7 @@ export default class WallabagClient {
       return await fn();
     } catch (err) {
       if (err.response && err.response.status === 401) {
-        await this.refreshToken();
-        return fn();
+        throw new UnauthorizedError('Unauthorized! Please login to wallabag');
       }
       throw err;
     }
@@ -128,6 +126,6 @@ export default class WallabagClient {
       },
     });
 
-    return response.access_token;
+    return { access_token: response.access_token, refresh_token: response.refresh_token };
   };
 }

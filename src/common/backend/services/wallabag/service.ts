@@ -1,4 +1,8 @@
-import { DocumentService, CreateDocumentRequest, UserInfo } from './../../index';
+import {
+  DocumentService,
+  CreateDocumentRequest,
+  UserInfo,
+} from '@/common/backend/services/interface';
 import md5 from '@web-clipper/shared/lib/md5';
 import { CompleteStatus } from '../interface';
 import WallabagClient from 'common/backend/clients/wallabag/client';
@@ -46,6 +50,15 @@ export default class WallabagDocumentService implements DocumentService {
     const document = await this.client.createDocument(info);
     return {
       href: `${this.config.wallabag_host}/view/${encodeURIComponent(document.id)}`,
+    };
+  };
+
+  refreshToken = async ({ access_token, refresh_token, ...rest }: WallabagBackendServiceConfig) => {
+    const tokens = await this.client.refreshToken();
+    return {
+      ...rest,
+      access_token: tokens.access_token,
+      refresh_token: tokens.refresh_token,
     };
   };
 }

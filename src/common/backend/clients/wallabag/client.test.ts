@@ -1,5 +1,7 @@
 import { MockRequestService } from '@/__test__/utils';
 import WallabagClient from './client';
+import { UnauthorizedError } from 'common/backend/services/interface';
+
 const FormData = require('form-data');
 
 describe('test WallabagClient', () => {
@@ -20,7 +22,7 @@ describe('test WallabagClient', () => {
     const result = await client.refreshToken();
     const expectUrlGenerated = `${inputStub.wallabag_host}/oauth/v2/token?grant_type=refresh_token&client_id=client_id&client_secret=client_secret&refresh_token=refresh_token`;
     expect(mockRequestService.mock.request.mock.calls[0][0]).toEqual(expectUrlGenerated);
-    expect(result).toEqual(expectedResponse.access_token);
+    expect(result).toEqual(expectedResponse);
   });
 
   test('test getUserInfo', async () => {
@@ -40,8 +42,8 @@ describe('test WallabagClient', () => {
     expect(notebookListStubResponse).toEqual(result);
   });
 
-  test('test getUserInfo with exceeded access_token', async () => {
-    const notebookListStubResponse = {
+  test('test getUserInfo with expired access_token', async () => {
+    const expiredAccessTokenStubResponse = {
       error: 'invalid_grant',
       error_description: 'The access token provided has expired.',
     };
@@ -63,13 +65,14 @@ describe('test WallabagClient', () => {
       switch (url) {
         case `${inputStub.wallabag_host}/api/user.json`:
           if (isFirstRequest) {
-            // the first request fails with status 401
+            // the first request fails with expiredAccessTokenStubResponse
             isFirstRequest = false;
             const err = new Error() as any;
+            err.data = expiredAccessTokenStubResponse;
             err.response = { status: 401 };
             throw err;
           }
-          return notebookListStubResponse;
+          return expiredAccessTokenStubResponse;
         case `${inputStub.wallabag_host}/oauth/v2/token?grant_type=refresh_token&client_id=client_id&client_secret=client_secret&refresh_token=refresh_token`:
           return refreshTokenStubResponse;
         default:
@@ -77,17 +80,7 @@ describe('test WallabagClient', () => {
       }
     });
     const client = new WallabagClient(inputStub, mockRequestService);
-    const result = await client.getUserInfo();
-    const userInfoUrl = `${inputStub.wallabag_host}/api/user.json`;
-    let firstUserInfoRequest = mockRequestService.mock.request.mock.calls[0];
-    let secondUserInfoRequest = mockRequestService.mock.request.mock.calls[2];
-    expect(firstUserInfoRequest[0]).toEqual(userInfoUrl);
-    expect(secondUserInfoRequest[0]).toEqual(userInfoUrl);
-    expect(secondUserInfoRequest[1].headers.Authorization).toEqual(
-      `Bearer ${refreshTokenStubResponse.access_token}`
-    );
-
-    expect(notebookListStubResponse).toEqual(result);
+    await expect(client.getUserInfo()).rejects.toThrow(UnauthorizedError);
   });
 
   test('test create document', async () => {
