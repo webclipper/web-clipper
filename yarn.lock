@@ -398,8 +398,8 @@
 
 "@diamondyuan/eslint@^7.0.3":
   version "7.0.3"
-  resolved "https://registry.yarnpkg.com/@diamondyuan/eslint/-/eslint-7.0.3.tgz#ec69cd28974d78ab3efade7e4af82b6e8034c23e"
-  integrity sha512-To5O1kooq8rjNDU52r2w52oOCxIPXrNtuqvjlUHfDM50GAZWHDXs7+riFtoAI9CU6tHnKCJ7kmnBa5BnWkuUxQ==
+  resolved "https://registry.nlark.com/@diamondyuan/eslint/download/@diamondyuan/eslint-7.0.3.tgz#ec69cd28974d78ab3efade7e4af82b6e8034c23e"
+  integrity sha1-7GnNKJdNeKs++t5+SvgrboA0wj4=
   dependencies:
     "@diamondyuan/eslint-config-javascript" "^7.0.2"
     "@diamondyuan/eslint-config-react" "^7.0.2"
