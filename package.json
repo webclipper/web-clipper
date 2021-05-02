@@ -103,7 +103,7 @@
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^1.0.0",
     "enzyme": "^3.6.0",
-    "enzyme-adapter-react-16": "^1.14.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
     "eslint-import-resolver-webpack": "^0.12.0",
