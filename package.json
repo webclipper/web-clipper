@@ -49,7 +49,6 @@
     "dayjs": "^1.10.4",
     "dva": "^2.6.0-beta.19",
     "dva-loading": "^3.0.19",
-    "dva-logger": "^1.0.0",
     "dva-model-creator": "^0.4.3",
     "filenamify": "^4.1.0",
     "hypermd": "^0.3.11",
