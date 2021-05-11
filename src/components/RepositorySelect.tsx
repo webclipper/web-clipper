@@ -19,6 +19,7 @@ interface RepositorySelectProps extends SelectProps<string> {
 const RepositorySelect: React.FC<RepositorySelectProps> = ({ repositories, ...props }, ref) => {
   const [searchKey, _setSearchKey] = useState<string>();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const setSearchKey = useCallback(debounce(_setSearchKey, repositories.length > 100 ? 500 : 0), [
     _setSearchKey,
     repositories,
