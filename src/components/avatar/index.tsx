@@ -1,5 +1,5 @@
-import { Avatar } from 'antd';
 import React from 'react';
+import { Avatar } from 'antd';
 import IconFont from '@/components/IconFont';
 
 interface IconAvatarProps {

@@ -31,15 +31,12 @@ export class WebRequestChannel implements IServerChannel {
 export class WebRequestChannelClient implements IWebRequestService {
   constructor(private channel: IChannel) {}
 
-  startChangeHeader = async (option: WebRequestBlockOption): Promise<WebBlockHeader> => {
-    return this.channel.call('startChangeHeader', option);
-  };
+  startChangeHeader = async (option: WebRequestBlockOption): Promise<WebBlockHeader> =>
+    this.channel.call('startChangeHeader', option);
 
-  end = async (webBlockHeader: WebBlockHeader): Promise<void> => {
-    return this.channel.call('end', webBlockHeader);
-  };
+  end = async (webBlockHeader: WebBlockHeader): Promise<void> =>
+    this.channel.call('end', webBlockHeader);
 
-  requestInBackground = async <T>(url: string, options: RequestInBackgroundOptions): Promise<T> => {
-    return this.channel.call('requestInBackground', [url, options]);
-  };
+  requestInBackground = async <T>(url: string, options: RequestInBackgroundOptions): Promise<T> =>
+    this.channel.call('requestInBackground', [url, options]);
 }

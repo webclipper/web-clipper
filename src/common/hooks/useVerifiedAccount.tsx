@@ -76,6 +76,7 @@ const useVerifiedAccount = ({ form, services, initAccount }: UseVerifiedAccountP
         loadAccount={loadAccount}
       />
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountStatus.verified, form, initAccount, loadAccount, service.form]);
 
   const okText = useMemo(() => {

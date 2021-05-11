@@ -9,11 +9,11 @@ const WebpackCreateExtensionManifestPlugin = require('webpack-create-extension-m
 const fs = require('fs');
 const getVersion = require('./getVersion');
 
-const distFiles = fs.readdirSync(resolve('dist')).filter(o => o !== '.gitkeep');
-
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
+
+const distFiles = fs.readdirSync(resolve('dist')).filter(o => o !== '.gitkeep');
 
 const packageJson = JSON.parse(fs.readFileSync(resolve('package.json'), 'utf8'));
 

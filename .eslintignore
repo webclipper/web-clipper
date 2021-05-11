@@ -3,3 +3,4 @@ dist/
 coverage/
 node_modules/
 chrome/js/icon.js
+releases/
