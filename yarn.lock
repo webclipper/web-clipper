@@ -914,7 +914,7 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react@*":
+"@types/react@*", "@types/react@^17.0.5":
   version "17.0.5"
   resolved "https://registry.nlark.com/@types/react/download/@types/react-17.0.5.tgz?cache=0&sync_timestamp=1620163056534&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Freact%2Fdownload%2F%40types%2Freact-17.0.5.tgz#3d887570c4489011f75a3fc8f965bf87d09a1bea"
   integrity sha1-PYh1cMRIkBH3Wj/I+WW/h9CaG+o=
@@ -923,7 +923,7 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@^16", "@types/react@^16.9.55":
+"@types/react@^16":
   version "16.14.6"
   resolved "https://registry.nlark.com/@types/react/download/@types/react-16.14.6.tgz?cache=0&sync_timestamp=1620163056534&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Freact%2Fdownload%2F%40types%2Freact-16.14.6.tgz#d933a2a6bc1bfe320a5eea480e8f45ba8126d6ee"
   integrity sha1-2TOiprwb/jIKXupIDo9FuoEm1u4=
