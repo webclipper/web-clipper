@@ -11,6 +11,7 @@ interface WebClipperConfig {
   serverHost: string;
   resourceHost: string;
   loadRemoteConfig: boolean;
+  admin: boolean;
   googleOauth: {
     clientId: string;
     callback: string;
@@ -23,6 +24,7 @@ export interface RemoteConfig {
 }
 
 let config: WebClipperConfig = {
+  admin: false,
   googleOauth: {
     clientId: '269705697424-vlu486hs2paqj71p9defgvkbrpo9amcq.apps.googleusercontent.com',
     callback: 'https://api.clipper.website/api/user/oauth/google',
@@ -44,6 +46,7 @@ let config: WebClipperConfig = {
 
 if (process.env.NODE_ENV === 'development') {
   config = Object.assign({}, config, {
+    admin: true,
     googleOauth: {
       clientId: '269705697424-l6h6e3pkcsjs3lggjdlivs7vaarr8gp0.apps.googleusercontent.com',
       callback: 'https://api.test.clipper.website/api/user/oauth/google',

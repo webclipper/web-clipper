@@ -100,6 +100,7 @@ export interface IExtensionLifeCycle<T, U> {
 }
 
 export interface IExtensionManifest {
+  readonly admin?: boolean;
   readonly extensionId?: string;
   readonly name: string;
 

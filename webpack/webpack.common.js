@@ -35,7 +35,13 @@ let manifestExtra = {
       description: 'Test',
     },
   },
-  optional_permissions: ['cookies', '<all_urls>', 'webRequest', 'webRequestBlocking'],
+  optional_permissions: [
+    'cookies',
+    '<all_urls>',
+    'webRequest',
+    'webRequestBlocking',
+    'pageCapture',
+  ],
 };
 
 let background = resolve('src/main/background.main.chrome.ts');

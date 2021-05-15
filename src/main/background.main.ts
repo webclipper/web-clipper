@@ -23,7 +23,6 @@ import { autorun } from 'mobx';
 import localeService from '@/common/locales';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/types';
 import { ILocalStorageService, ISyncStorageService } from '@/service/common/storage';
-
 Container.set(ILocalStorageService, localStorageService);
 Container.set(ISyncStorageService, syncStorageService);
 
@@ -55,7 +54,9 @@ async function initContentScriptService(tabId: number) {
   let result;
   try {
     result = await contentScriptService.checkStatus();
-  } catch (_error) {}
+  } catch (_error) {
+    //
+  }
   if (!result) {
     await browser.tabs.executeScript(
       {
@@ -143,6 +144,11 @@ async function initContentScriptService(tabId: number) {
       for (const iterator of currentContextMenus) {
         const Factory = iterator.contextMenu;
         const instance = new Factory();
+        if (!config.admin) {
+          if (instance.manifest.admin) {
+            continue;
+          }
+        }
         chrome.contextMenus.create({
           id: iterator.id,
           title: instance.manifest.name,
