@@ -23,20 +23,20 @@ class BrowserConfigService implements IConfigService {
   public readonly localVersion = packageJson.version;
 
   load = async () => {
+    const iconsFile = await request.get('/icon.js');
+    const matchResult: string[] = iconsFile.match(/id="([A-Za-z]+)"/g) || [];
+    const remoteIcons = matchResult.map(o => o.match(/id="([A-Za-z]+)"/)![1]);
+    runInAction(() => {
+      remoteIcons.forEach(icon => {
+        this.remoteIconSet.add(icon);
+      });
+    });
     try {
       if (config.loadRemoteConfig) {
         this.config = await request.get<RemoteConfig>(`${config.resourceHost}/config.json`);
       }
       runInAction(() => {
         this.isLatestVersion = !hasUpdate(this.config.chromeWebStoreVersion, this.localVersion);
-      });
-      const iconsFile = await request.get('/icon.js');
-      const matchResult: string[] = iconsFile.match(/id="([A-Za-z]+)"/g) || [];
-      const remoteIcons = matchResult.map(o => o.match(/id="([A-Za-z]+)"/)![1]);
-      runInAction(() => {
-        remoteIcons.forEach(icon => {
-          this.remoteIconSet.add(icon);
-        });
       });
     } catch (_error) {
       console.log('Load Config Error');
