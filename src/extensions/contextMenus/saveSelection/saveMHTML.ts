@@ -1,5 +1,6 @@
 import { IPermissionsService } from '@/service/common/permissions';
 import { Container } from 'typedi';
+import { VSBuffer } from '@/common/buffer';
 import { ContextMenuExtension } from '../../contextMenus';
 import pako from 'pako';
 
@@ -25,8 +26,9 @@ class ContextMenu extends ContextMenuExtension {
     const url = tab.url;
     const memory = await mhtml.arrayBuffer();
     const view = new Uint8Array(memory);
-    const value = pako.deflate(view, { to: 'string' });
-    console.log({ value, title, url });
+    const value = pako.deflate(view);
+
+    console.log({ value: VSBuffer.wrap(value).toString(), title, url });
   }
 
   private saveAsMHTML(tabId: number) {
