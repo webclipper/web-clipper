@@ -1,8 +1,9 @@
+import { getSignedPostUrl } from './../../../common/server';
 import { IPermissionsService } from '@/service/common/permissions';
 import { Container } from 'typedi';
-import { VSBuffer } from '@/common/buffer';
 import { ContextMenuExtension } from '../../contextMenus';
 import pako from 'pako';
+import request from 'umi-request';
 
 class ContextMenu extends ContextMenuExtension {
   static id = 'contextMenus.saveMHTML.save';
@@ -22,13 +23,25 @@ class ContextMenu extends ContextMenuExtension {
       permissions: ['pageCapture'],
     });
     const mhtml = await this.saveAsMHTML(tab.id!);
-    const title = tab.title;
-    const url = tab.url;
+    // const title = tab.title;
+    // const url = tab.url;
     const memory = await mhtml.arrayBuffer();
     const view = new Uint8Array(memory);
-    const value = pako.deflate(view);
-
-    console.log({ value: VSBuffer.wrap(value).toString(), title, url });
+    const value = pako.gzip(view);
+    const file = new Blob([value]);
+    const signResult = await getSignedPostUrl({ size: file.size, bizType: 'storead' });
+    const { key, host, signature, OSSAccessKeyId, policy } = signResult.result;
+    let param = new FormData(); // 创建form对象
+    param.append('key', key);
+    param.append('policy', policy);
+    param.append('OSSAccessKeyId', OSSAccessKeyId);
+    param.append('success_action_status', '200');
+    param.append('signature', signature);
+    param.append('file', file);
+    await request.post(host, {
+      data: param,
+      requestType: 'form',
+    });
   }
 
   private saveAsMHTML(tabId: number) {

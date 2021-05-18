@@ -1,3 +1,4 @@
+import { IPowerpackService } from '@/service/common/powerpack';
 import { IWebRequestService } from '@/service/common/webRequest';
 import { WebRequestChannel } from '@/service/webRequest/common/webRequestIPC';
 import { IContentScriptService } from '@/service/common/contentScript';
@@ -29,6 +30,7 @@ Container.set(ISyncStorageService, syncStorageService);
 import '@/service/extension/browser/extensionContainer';
 import '@/service/extension/browser/extensionService';
 import { IExtensionContainer, IExtensionService } from '@/service/common/extension';
+import '@/service/powerpackService';
 
 const backgroundIPCServer: IChannelServer = new BackgroundIPCServer();
 
@@ -89,6 +91,7 @@ async function initContentScriptService(tabId: number) {
 (async () => {
   await syncStorageService.init();
   await localStorageService.init();
+  await Container.get(IPowerpackService).startup();
   const trackService = Container.get(ITrackService);
   await trackService.init();
   const preferenceService = Container.get(IPreferenceService);

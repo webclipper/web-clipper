@@ -97,6 +97,17 @@ export const ocr = (data: OCRRequestBody) => {
   return request.post<IResponse<string>>('service/ocr', { data });
 };
 
+export const getSignedPostUrl = (data: { size: number; bizType: 'storead' }) => {
+  return request.post<
+    IResponse<{
+      key: string;
+      OSSAccessKeyId: string;
+      signature: string;
+      host: string;
+      policy: string;
+    }>
+  >('v1/file/getSignedPostUrl', { data });
+};
 export interface IClearlyRequest {
   html: string;
   title: string;
