@@ -106,7 +106,9 @@ const Page: React.FC<PageProps> = ({
           })(
             <Select disabled>
               {Object.values(servicesMeta).map(o => (
-                <Select.Option key={o.type}>{o.name}</Select.Option>
+                <Select.Option key={o.type} value={o.type}>
+                  {o.name}
+                </Select.Option>
               ))}
             </Select>
           )}

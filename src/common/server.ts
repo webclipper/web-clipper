@@ -108,13 +108,3 @@ export const getSignedPostUrl = (data: { size: number; bizType: 'storead' }) => 
     }>
   >('v1/file/getSignedPostUrl', { data });
 };
-export interface IClearlyRequest {
-  html: string;
-  title: string;
-  url: string;
-}
-export const clearly = (data: IClearlyRequest) => {
-  return request.post<IResponse<string>>('service/clearly', {
-    data: { ...data, timezone: dayjs.tz.guess() },
-  });
-};

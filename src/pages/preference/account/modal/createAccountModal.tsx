@@ -117,7 +117,7 @@ const Page: React.FC<PageProps> = ({
           })(
             <Select showSearch disabled={verified} onChange={changeType}>
               {Object.values(servicesMeta).map(o => (
-                <Select.Option key={o.type} label={o.name}>
+                <Select.Option key={o.type} label={o.name} value={o.type}>
                   {o.name}
                 </Select.Option>
               ))}

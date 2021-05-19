@@ -33,7 +33,7 @@ import { routerRedux } from 'dva';
 import { localStorageService, syncStorageService } from '@/common/chrome/storage';
 import { initAccounts } from '@/actions/account';
 import copyToClipboard from 'copy-to-clipboard';
-import { ocr, clearly } from '@/common/server';
+import { ocr } from '@/common/server';
 import remark from 'remark';
 import remakPangu from '@web-clipper/remark-pangu';
 import { IExtensionService } from '@/service/common/extension';
@@ -114,6 +114,7 @@ builder
   .takeEvery(asyncEditImageHosting.started, function*(payload, { call, put }) {
     const { id, value, closeModal } = payload;
     try {
+      //@ts-ignore
       const imageHostingList = yield call(storage.editImageHostingById, id, {
         ...value,
         id,
@@ -198,6 +199,7 @@ builder
     }
 
     if (run) {
+      //@ts-ignore
       result = yield call(contentScriptService.runScript, id, 'run');
     }
     const state: GlobalStore = yield select(state => state);
@@ -242,11 +244,8 @@ builder
             const response = await ocr(r);
             return response.result;
           },
-          clearly: async r => {
-            const response = await clearly(r);
-            return response.result;
-          },
         };
+        //@ts-ignore
         result = yield call(afterRun, context);
       } catch (error) {
         message.error(error.message);
