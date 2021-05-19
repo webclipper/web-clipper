@@ -696,17 +696,18 @@
   dependencies:
     "@types/node" "*"
 
+"@types/chrome@^0.0.141":
+  version "0.0.141"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.141.tgz#337648651a2b75a74bf3038680dc0e47ddd75d07"
+  integrity sha512-0bYsCxGKo9xdrNHiqWRjPVygDRfKA2EczhXJmKjkfBF+KQc0BFKejtdFV28ygcVH3RTjGZ+ccoJ3bb8wKFacbw==
+  dependencies:
+    "@types/filesystem" "*"
+    "@types/har-format" "*"
+
 "@types/chrome@^0.0.88":
   version "0.0.88"
   resolved "https://registry.nlark.com/@types/chrome/download/@types/chrome-0.0.88.tgz#0041a101d69f78008910927c5b3299a00d8660db"
   integrity sha1-AEGhAdafeACJEJJ8WzKZoA2GYNs=
-  dependencies:
-    "@types/filesystem" "*"
-
-"@types/chrome@^0.0.91":
-  version "0.0.91"
-  resolved "https://registry.nlark.com/@types/chrome/download/@types/chrome-0.0.91.tgz#4b3996f55f344057e6a677c8366aa98080c6e380"
-  integrity sha1-SzmW9V80QFfmpnfINmqpgIDG44A=
   dependencies:
     "@types/filesystem" "*"
 
@@ -768,6 +769,11 @@
   dependencies:
     "@types/minimatch" "*"
     "@types/node" "*"
+
+"@types/har-format@*":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@types/har-format/-/har-format-1.2.5.tgz#4f6648814d0fdcb6a510e3364a9db439a753c4b1"
+  integrity sha512-IG8AE1m2pWtPqQ7wXhFhy6Q59bwwnLwO36v5Rit2FrbXCIp8Sk8E2PfUCreyrdo17STwFSKDAkitVuVYbpEHvQ==
 
 "@types/history@*", "@types/history@^4.7.2":
   version "4.7.8"
