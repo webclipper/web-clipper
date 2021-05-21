@@ -100,6 +100,8 @@
   "contextMenus.selection.save.description": "",
   "contextMenus.selection.save.template": "",
   "contextMenus.selection.save.title": "",
+  "extension.link.config.autoRunExclude": "",
+  "extension.link.config.template": "",
   "hooks.useOriginForm.origin.message": "",
   "page.complete.close": "",
   "page.complete.error": "",

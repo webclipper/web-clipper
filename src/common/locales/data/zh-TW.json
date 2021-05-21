@@ -100,6 +100,8 @@
   "contextMenus.selection.save.description": "",
   "contextMenus.selection.save.template": "",
   "contextMenus.selection.save.title": "",
+  "extension.link.config.autoRunExclude": "",
+  "extension.link.config.template": "",
   "hooks.useOriginForm.origin.message": "格式錯誤,示例 https://developer.mozilla.org",
   "page.complete.close": "關閉 Web Clipper",
   "page.complete.error": "发生錯誤",
