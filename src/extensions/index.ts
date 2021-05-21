@@ -1,4 +1,4 @@
-import { IExtensionWithId } from './common';
+import { IExtensionWithId, ToolExtension, TextExtension } from './common';
 import { IContextMenuExtensionFactory } from './contextMenus';
 
 const context = require.context('./extensions', true, /\.(ts|tsx)$/);
@@ -16,8 +16,16 @@ export const contextMenus = contextMenusContext.keys().map(key => {
 
 export const extensions: IExtensionWithId[] = context.keys().map(key => {
   const id = key.slice(2, key.length - 3);
+  const extension = context(key).default;
+  if (extension instanceof ToolExtension || extension instanceof TextExtension) {
+    return {
+      ...context(key).default,
+      id,
+      router: `/plugins/${id}`,
+    };
+  }
   return {
-    ...context(key).default,
+    factory: extension,
     id,
     router: `/plugins/${id}`,
   };

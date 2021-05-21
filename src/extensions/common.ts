@@ -169,6 +169,7 @@ export interface IExtensionWithId<T = any, U = any> {
   readonly id: string;
   readonly router: string;
   readonly type: ExtensionType;
+  readonly factory?: any;
   readonly manifest: IExtensionManifest;
   readonly extensionLifeCycle: IExtensionLifeCycle<T, U>;
 }

@@ -1,5 +1,6 @@
 import 'regenerator-runtime/runtime';
 import 'reflect-metadata';
+import { ILocaleService } from './../service/common/locale';
 import Container from 'typedi';
 import { IWebRequestService } from '@/service/common/webRequest';
 import { WebRequestChannelClient } from '@/service/webRequest/common/webRequestIPC';
@@ -11,6 +12,8 @@ import '@/service/request/tool/basic';
 import '@/service/config/browser/configService';
 import '@/service/powerpackService';
 import '@/service/trackService';
+import localeService from '@/common/locales';
+Container.set(ILocaleService, localeService);
 import '@/service/extension/browser/extensionService';
 import '@/service/extension/browser/extensionContainer';
 import '@/service/permissions/chrome/permissionsService';
