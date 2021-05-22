@@ -9,6 +9,7 @@ import { IConfigService } from '@/service/common/config';
 import Container from 'typedi';
 import { useObserver } from 'mobx-react';
 import { useFetch } from '@shihengtech/hooks';
+import LinkRender from '@/components/LinkRender';
 
 const Changelog: React.FC = () => {
   const { locale } = useSelector(({ userPreference: { locale } }: GlobalStore) => {
@@ -33,7 +34,7 @@ const Changelog: React.FC = () => {
   if (loading || !changelog) {
     return <Skeleton active />;
   }
-  return <ReactMarkdown source={changelog} />;
+  return <ReactMarkdown components={{ a: LinkRender } as any}>{changelog}</ReactMarkdown>;
 };
 
 export default Changelog;

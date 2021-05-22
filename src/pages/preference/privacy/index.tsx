@@ -35,7 +35,8 @@ const Changelog: React.FC = () => {
   if (loading || !changelog) {
     return <Skeleton active />;
   }
-  return <ReactMarkdown source={changelog} renderers={{ link: LinkRender }} />;
+
+  return <ReactMarkdown components={{ a: LinkRender } as any}>{changelog}</ReactMarkdown>;
 };
 
 export default Changelog;
