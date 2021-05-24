@@ -1,4 +1,4 @@
-import { getSignedPostUrl } from './../../../common/server';
+import { getSignedPostUrl, postArticle } from './../../../common/server';
 import { IPermissionsService } from '@/service/common/permissions';
 import { Container } from 'typedi';
 import { ContextMenuExtension } from '../../contextMenus';
@@ -23,8 +23,8 @@ class ContextMenu extends ContextMenuExtension {
       permissions: ['pageCapture'],
     });
     const mhtml = await this.saveAsMHTML(tab.id!);
-    // const title = tab.title;
-    // const url = tab.url;
+    const title = tab.title!;
+    const url = tab.url!;
     const memory = await mhtml.arrayBuffer();
     const view = new Uint8Array(memory);
     const value = pako.gzip(view);
@@ -42,6 +42,7 @@ class ContextMenu extends ContextMenuExtension {
       data: param,
       requestType: 'form',
     });
+    await postArticle({ url, title, key });
   }
 
   private saveAsMHTML(tabId: number) {

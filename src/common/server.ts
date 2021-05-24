@@ -108,3 +108,15 @@ export const getSignedPostUrl = (data: { size: number; bizType: 'storead' }) => 
     }>
   >('v1/file/getSignedPostUrl', { data });
 };
+
+export const postArticle = (data: { url: string; title: string; key: string }) => {
+  return request.post<
+    IResponse<{
+      key: string;
+      OSSAccessKeyId: string;
+      signature: string;
+      host: string;
+      policy: string;
+    }>
+  >('v1/storead/article', { data });
+};
