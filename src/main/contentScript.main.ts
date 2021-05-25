@@ -1,9 +1,9 @@
-import { ILocaleService } from './../service/common/locale';
 import { localStorageService, syncStorageService } from '@/common/chrome/storage';
 import { ILocalStorageService, ISyncStorageService } from '@/service/common/storage';
 import 'regenerator-runtime/runtime';
 import 'reflect-metadata';
 import Container from 'typedi';
+import { ILocaleService } from '@/service/common/locale';
 Container.set(ILocalStorageService, localStorageService);
 Container.set(ISyncStorageService, syncStorageService);
 import { IChannelServer } from '@/service/common/ipc';

@@ -1,6 +1,6 @@
 import 'regenerator-runtime/runtime';
 import 'reflect-metadata';
-import { ILocaleService } from './../service/common/locale';
+import { ILocaleService } from '@/service/common/locale';
 import Container from 'typedi';
 import { IWebRequestService } from '@/service/common/webRequest';
 import { WebRequestChannelClient } from '@/service/webRequest/common/webRequestIPC';
