@@ -7,4 +7,4 @@ export interface ILocaleService {
   format(descriptor: MessageDescriptor): string;
 }
 
-export const ILocaleService = new Token<ILocaleService>();
+export const ILocaleService = new Token<ILocaleService>('locale');
