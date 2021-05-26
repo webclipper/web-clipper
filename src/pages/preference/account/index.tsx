@@ -191,12 +191,12 @@ class Page extends React.Component<PageProps, PageState> {
             </Col>
           ))}
           <Col span={8}>
-            <div>
+            <div className={styles.createButton}>
               <Button
-                className={styles.createButton}
                 type="dashed"
                 onClick={() => toggleAccountModal()}
                 block
+                style={{ height: '100%' }}
               >
                 <PlusOutlined />
                 <FormattedMessage id="preference.account.add" defaultMessage="Bind Account" />
