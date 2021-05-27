@@ -401,7 +401,7 @@
     react-sticky-box "^0.9.3"
     resize-observer-polyfill "^1.5.1"
 
-"@formily/core@2.0.0-beta.47", "@formily/core@^2.0.0-beta.47":
+"@formily/core@2.0.0-beta.47":
   version "2.0.0-beta.47"
   resolved "https://registry.nlark.com/@formily/core/download/@formily/core-2.0.0-beta.47.tgz#98a99f0be224448d88e58844d8b1edd58d410752"
   integrity sha1-mKmfC+IkRI2I5YhE2LHt1Y1BB1I=
@@ -409,6 +409,15 @@
     "@formily/reactive" "2.0.0-beta.47"
     "@formily/shared" "2.0.0-beta.47"
     "@formily/validator" "2.0.0-beta.47"
+
+"@formily/core@2.0.0-beta.57", "@formily/core@^2.0.0-beta.47":
+  version "2.0.0-beta.57"
+  resolved "https://registry.yarnpkg.com/@formily/core/-/core-2.0.0-beta.57.tgz#7804960ef6ae60eca3bca346491e18788ee630f2"
+  integrity sha512-FCHygnd3ZjwwhpXfwC5UXaMbZ/hfWpmiB9aEYJPJmaNf8a7JTPOq5a5y/VTE13qwJydmtH294yUoXLOlMMOnXA==
+  dependencies:
+    "@formily/reactive" "2.0.0-beta.57"
+    "@formily/shared" "2.0.0-beta.57"
+    "@formily/validator" "2.0.0-beta.57"
 
 "@formily/json-schema@2.0.0-beta.47":
   version "2.0.0-beta.47"
@@ -419,12 +428,26 @@
     "@formily/reactive" "2.0.0-beta.47"
     "@formily/shared" "2.0.0-beta.47"
 
+"@formily/json-schema@2.0.0-beta.57":
+  version "2.0.0-beta.57"
+  resolved "https://registry.yarnpkg.com/@formily/json-schema/-/json-schema-2.0.0-beta.57.tgz#fe702f86a211da0b32067becb2c074baa98338f4"
+  integrity sha512-oYjSFY3MOQOnjHZe7nXx2d9u5O+OiLbncJALimJnMQ1+IueucLfhBTSDJGWBBKulKRAzf8xMn65/ffl5/0c05A==
+  dependencies:
+    "@formily/core" "2.0.0-beta.57"
+    "@formily/reactive" "2.0.0-beta.57"
+    "@formily/shared" "2.0.0-beta.57"
+
 "@formily/path@2.0.0-beta.47":
   version "2.0.0-beta.47"
   resolved "https://registry.nlark.com/@formily/path/download/@formily/path-2.0.0-beta.47.tgz#dd0d0cf7bcc0f6dee7fef5200c09740a3e1f48bd"
   integrity sha1-3Q0M97zA9t7n/vUgDAl0Cj4fSL0=
 
-"@formily/react@2.0.0-beta.47", "@formily/react@^2.0.0-beta.47":
+"@formily/path@2.0.0-beta.57":
+  version "2.0.0-beta.57"
+  resolved "https://registry.yarnpkg.com/@formily/path/-/path-2.0.0-beta.57.tgz#de7cba5d84147786a4e41cc81b009ab7a20c3c14"
+  integrity sha512-tE1TeMeKeFep0p3LwK9tz0UmS6saAwX6zGuDXytd2xtLPgVEy+M4152wK7Cuvg+1IHYITjin6GDjumumUYba7w==
+
+"@formily/react@2.0.0-beta.47":
   version "2.0.0-beta.47"
   resolved "https://registry.nlark.com/@formily/react/download/@formily/react-2.0.0-beta.47.tgz#dfd48171c17313cda1b01d669a51996a56184a95"
   integrity sha1-39SBccFzE82hsB1mmlGZalYYSpU=
@@ -437,6 +460,19 @@
     "@formily/validator" "2.0.0-beta.47"
     hoist-non-react-statics "^3.3.2"
 
+"@formily/react@^2.0.0-beta.57":
+  version "2.0.0-beta.57"
+  resolved "https://registry.yarnpkg.com/@formily/react/-/react-2.0.0-beta.57.tgz#c8c4c1eb75470d98d478ea0610a506b71ff7321d"
+  integrity sha512-JiQFyd6n5NJqdywTnVt120CV6lncz8f3KE2sBMuepwxVodXHMXLigGQ8OVDXc03TQ8xwa2a4S7TDszWWYSMqJg==
+  dependencies:
+    "@formily/core" "2.0.0-beta.57"
+    "@formily/json-schema" "2.0.0-beta.57"
+    "@formily/reactive" "2.0.0-beta.57"
+    "@formily/reactive-react" "2.0.0-beta.57"
+    "@formily/shared" "2.0.0-beta.57"
+    "@formily/validator" "2.0.0-beta.57"
+    hoist-non-react-statics "^3.3.2"
+
 "@formily/reactive-react@2.0.0-beta.47":
   version "2.0.0-beta.47"
   resolved "https://registry.nlark.com/@formily/reactive-react/download/@formily/reactive-react-2.0.0-beta.47.tgz#1149ac3a5a8c6d0887260a1364b4c7ec496c2019"
@@ -445,10 +481,23 @@
     "@formily/reactive" "2.0.0-beta.47"
     hoist-non-react-statics "^3.3.2"
 
+"@formily/reactive-react@2.0.0-beta.57":
+  version "2.0.0-beta.57"
+  resolved "https://registry.yarnpkg.com/@formily/reactive-react/-/reactive-react-2.0.0-beta.57.tgz#969d0446e5937d85e068c11c18b0bcb0dfa59f05"
+  integrity sha512-0CXwMDWxMdUzU9QJv4GhMcfj/kGpWUQa0Hr43MD5Y4Q7to8Xzc943U6egBGvprWA1oxZtZKc4nf5j+t5Od+ycw==
+  dependencies:
+    "@formily/reactive" "2.0.0-beta.57"
+    hoist-non-react-statics "^3.3.2"
+
 "@formily/reactive@2.0.0-beta.47":
   version "2.0.0-beta.47"
   resolved "https://registry.nlark.com/@formily/reactive/download/@formily/reactive-2.0.0-beta.47.tgz#d54ff3d69c8154e192e9e7f48116d396d19a708e"
   integrity sha1-1U/z1pyBVOGS6ef0gRbTltGacI4=
+
+"@formily/reactive@2.0.0-beta.57":
+  version "2.0.0-beta.57"
+  resolved "https://registry.yarnpkg.com/@formily/reactive/-/reactive-2.0.0-beta.57.tgz#64885c62eb4db23403350cc8b4e9e2dc15ca130b"
+  integrity sha512-pbX1oH2FP8iPeDSY/m/w9WHniQsxIbEJT9Z492brALQeMCoWW680mJmkScIffUGjxWZJfO7e6/0ewkfM7PpXIQ==
 
 "@formily/shared@2.0.0-beta.47":
   version "2.0.0-beta.47"
@@ -463,12 +512,32 @@
     pascal-case "^3.1.1"
     upper-case "^2.0.1"
 
+"@formily/shared@2.0.0-beta.57":
+  version "2.0.0-beta.57"
+  resolved "https://registry.yarnpkg.com/@formily/shared/-/shared-2.0.0-beta.57.tgz#a07ab7cd6e323edc1427c4f5ec262bf5a745f37e"
+  integrity sha512-AACx4qCn2Keyz1rN/Jew2yvGRQT8IozU9Q/XSSnZsK9nMQNfzl9GM0X5RFR8vCzSHeVXTxwp1TMH6rJqF3geYw==
+  dependencies:
+    "@formily/path" "2.0.0-beta.57"
+    camel-case "^4.1.1"
+    lower-case "^2.0.1"
+    no-case "^3.0.4"
+    param-case "^3.0.4"
+    pascal-case "^3.1.1"
+    upper-case "^2.0.1"
+
 "@formily/validator@2.0.0-beta.47":
   version "2.0.0-beta.47"
   resolved "https://registry.nlark.com/@formily/validator/download/@formily/validator-2.0.0-beta.47.tgz#061ef7fdd0cdd61ea76314eb7d387f2b8b5e5a78"
   integrity sha1-Bh73/dDN1h6nYxTrfTh/K4teWng=
   dependencies:
     "@formily/shared" "2.0.0-beta.47"
+
+"@formily/validator@2.0.0-beta.57":
+  version "2.0.0-beta.57"
+  resolved "https://registry.yarnpkg.com/@formily/validator/-/validator-2.0.0-beta.57.tgz#ec1c670edda679e98aa7a8a1233affc6c2cdc770"
+  integrity sha512-AJVzH4VfiQMRwvm4ovsmfxigsGMqyZDGvDT8tanHp4YI2cAyj2dwZo+SuvS43NXa7X+zEsvIrHs39TwNHh/scA==
+  dependencies:
+    "@formily/shared" "2.0.0-beta.57"
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
