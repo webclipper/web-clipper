@@ -1,3 +1,4 @@
+import { ILocaleService } from '@/service/common/locale';
 import { IPowerpackService } from '@/service/common/powerpack';
 import { IWebRequestService } from '@/service/common/webRequest';
 import { WebRequestChannel } from '@/service/webRequest/common/webRequestIPC';
@@ -22,6 +23,7 @@ import { IPreferenceService } from '@/service/common/preference';
 import '@/service/preference/browser/preferenceService';
 import { autorun } from 'mobx';
 import localeService from '@/common/locales';
+Container.set(ILocaleService, localeService);
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/types';
 import { ILocalStorageService, ISyncStorageService } from '@/service/common/storage';
 Container.set(ILocalStorageService, localStorageService);
