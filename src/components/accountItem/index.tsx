@@ -47,13 +47,10 @@ export default class Page extends React.Component<PageProps> {
         </div>
         <div className={styles.operation}>
           <Button className={styles.editButton} type="primary" onClick={this.handleEdit}>
-            <FormattedMessage
-              id="component.accountItem.edit"
-              defaultMessage="Edit"
-            ></FormattedMessage>
+            <FormattedMessage id="component.accountItem.edit"></FormattedMessage>
           </Button>
           <Button type="primary" danger onClick={this.handleDelete}>
-            <FormattedMessage id="component.accountItem.delete" defaultMessage="Delete" />
+            <FormattedMessage id="component.accountItem.delete" />
           </Button>
         </div>
       </div>

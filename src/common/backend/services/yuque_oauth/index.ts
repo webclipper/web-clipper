@@ -20,7 +20,6 @@ export default (): ServiceMeta => {
   return {
     name: localeService.format({
       id: 'backend.services.yuque_oauth.name',
-      defaultMessage: 'Yuque Oauth',
     }),
     icon: 'yuque',
     type: 'yuque_oauth',

@@ -7,7 +7,6 @@ export default () => {
   return {
     name: localeService.format({
       id: 'backend.services.wiznote.name',
-      defaultMessage: 'WizNote',
     }),
     icon: 'wiznote',
     type: 'WizNote',
