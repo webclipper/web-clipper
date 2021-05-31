@@ -81,10 +81,10 @@ const config = () => {
                   </Form>
                   <Button
                     onClick={() => {
-                      normalForm.setValues(toJS(config?.default));
+                      normalForm.setValues(toJS(config?.default), 'overwrite');
                     }}
                   >
-                    恢复默认设置1
+                    恢复默认设置
                   </Button>
                 </div>
               </div>
