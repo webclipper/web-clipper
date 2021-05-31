@@ -100,7 +100,7 @@
   "contextMenus.selection.save.description": "保存选择的内容",
   "contextMenus.selection.save.template": "来源：[{title}]({url})\n\n## 摘录内容 \n{content}\n## 想法",
   "contextMenus.selection.save.title": "保存选择的内容",
-  "extension.link.config.autoRunExclude": "排除自动运行",
+  "extension.link.config.autoRunExclude": "禁用自动运行",
   "extension.link.config.template": "模板",
   "hooks.useOriginForm.origin.message": "格式错误,示例 https://developer.mozilla.org",
   "page.complete.close": "关闭 Web Clipper",

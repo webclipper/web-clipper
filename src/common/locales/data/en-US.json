@@ -100,7 +100,7 @@
   "contextMenus.selection.save.description": "Save selection context",
   "contextMenus.selection.save.template": "Save From : [{title}]({url}) \n\n## Content\n{content}\n## Note",
   "contextMenus.selection.save.title": "Save selection",
-  "extension.link.config.autoRunExclude": "AutoRunExclude",
+  "extension.link.config.autoRunExclude": "AutoRun Exclude",
   "extension.link.config.template": "Template",
   "hooks.useOriginForm.origin.message": "",
   "page.complete.close": "",

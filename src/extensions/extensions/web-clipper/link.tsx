@@ -25,7 +25,7 @@ export default class Link extends ToolExtension<any> {
                 'x-component-props': { autoSize: true },
               },
               autoRunExclude: {
-                type: 'string',
+                type: 'array',
                 title: localeService.format({
                   id: 'extension.link.config.autoRunExclude',
                 }),
@@ -36,6 +36,7 @@ export default class Link extends ToolExtension<any> {
           },
           default: {
             template: '[{TITLE}]({URL}) \n\n {DOCUMENT}',
+            autoRunExclude: [],
           },
         },
         i18nManifest: {

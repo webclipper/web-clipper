@@ -120,7 +120,7 @@ export interface IExtensionManifest {
 
   readonly config?: {
     scheme: ISchema;
-    default: { [key: string]: string };
+    default: { [key: string]: string | string[] };
   };
 
   readonly i18nManifest?: {

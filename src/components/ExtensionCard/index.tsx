@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Modal, Select } from 'antd';
+import { Button, Card, Modal, Select } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { SerializedExtensionInfo } from '@/extensions/common';
 import IconFont from '@/components/IconFont';
@@ -79,6 +79,13 @@ const config = () => {
                   <Form form={normalForm} layout="vertical">
                     <SchemaField schema={config!.scheme} />
                   </Form>
+                  <Button
+                    onClick={() => {
+                      normalForm.setValues(toJS(config?.default));
+                    }}
+                  >
+                    恢复默认设置1
+                  </Button>
                 </div>
               </div>
             );
