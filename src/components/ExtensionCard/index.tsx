@@ -12,6 +12,7 @@ import Container from 'typedi';
 import { IExtensionContainer, IExtensionService } from '@/service/common/extension';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import './index.less';
+import localeService from '@/common/locales/index';
 
 interface ExtensionCardProps {
   manifest: SerializedExtensionInfo['manifest'];
@@ -84,7 +85,7 @@ const config = () => {
                       normalForm.setValues(toJS(config?.default), 'overwrite');
                     }}
                   >
-                    恢复默认设置
+                    {localeService.format({ id: 'preference.extensions.form.reset' })}
                   </Button>
                 </div>
               </div>

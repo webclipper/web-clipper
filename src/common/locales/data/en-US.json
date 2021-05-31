@@ -138,6 +138,7 @@
   "preference.extensions.clipExtensions.tooltip": "Click on the 🌟 to choose the default extension.",
   "preference.extensions.ConfiguredAsDefaultExtension": "",
   "preference.extensions.contextMenus": "Context Menus",
+  "preference.extensions.form.reset": "Rest",
   "preference.extensions.install": "",
   "preference.extensions.no.Description": "",
   "preference.extensions.require.powerpack": "",

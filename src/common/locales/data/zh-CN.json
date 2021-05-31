@@ -138,6 +138,7 @@
   "preference.extensions.clipExtensions.tooltip": "点击 🌟选择默认插件",
   "preference.extensions.ConfiguredAsDefaultExtension": "设置成默认扩展",
   "preference.extensions.contextMenus": "右键菜单",
+  "preference.extensions.form.reset": "恢复默认设置",
   "preference.extensions.install": "安装",
   "preference.extensions.no.Description": "没有描述",
   "preference.extensions.require.powerpack": "请购买加强包",
