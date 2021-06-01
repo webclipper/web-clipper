@@ -8,13 +8,15 @@ const masterCommitsCount = execSync(`git rev-list --count ${branch}`)
 
 console.log('masterCommitsCount', masterCommitsCount);
 
-function getVersion(version) {
-  console.log('getVersion', version);
+function getVersion(version, beta) {
   const currentVersion = semver.parse(version);
   if (Array.isArray(currentVersion.prerelease) && currentVersion.prerelease.length > 0) {
-    return semver.coerce(version).version.replace(/.[0-9]$/, `.${masterCommitsCount}`);
+    return version;
   }
-  return version;
+  if (!beta) {
+    return version;
+  }
+  return semver.coerce(version).version.replace(/.[0-9]$/, `.${masterCommitsCount}`);
 }
 
 module.exports = getVersion;

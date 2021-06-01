@@ -63,7 +63,7 @@ function pack({ targetBrowser, beta }) {
       const packageJSON = JSON.parse(
         fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf-8')
       );
-      manifestJSON.version = getVersion(packageJSON.version);
+      manifestJSON.version = getVersion(packageJSON.version, true);
       console.log(`Current Version ${manifestJSON.version}`);
       fs.writeFileSync(manifest, JSON.stringify(manifestJSON));
     }
