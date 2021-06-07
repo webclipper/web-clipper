@@ -119,7 +119,14 @@ async function initContentScriptService(tabId: number) {
         const Factory = iterator.contextMenu;
         const instance = new Factory();
         if (iterator.id === 'contextMenus.selection.save') {
+          let config: unknown;
+          if (instance.manifest.extensionId) {
+            config =
+              extensionService.getExtensionConfig(instance.manifest.extensionId!) ||
+              instance.manifest.config?.default;
+          }
           instance.run((await Container.get(ITabService).getCurrent()) as any, {
+            config,
             contentScriptService,
             initContentScriptService,
           });
@@ -154,12 +161,20 @@ async function initContentScriptService(tabId: number) {
             continue;
           }
         }
+
         chrome.contextMenus.create({
           id: iterator.id,
           title: instance.manifest.name,
           contexts: instance.manifest.contexts,
           onclick: (_info, tab) => {
+            let config: unknown;
+            if (instance.manifest.extensionId) {
+              config =
+                extensionService.getExtensionConfig(instance.manifest.extensionId!) ||
+                instance.manifest.config?.default;
+            }
             instance.run(tab!, {
+              config,
               contentScriptService,
               initContentScriptService,
             });

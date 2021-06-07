@@ -98,7 +98,7 @@
   "component.powerpackForm.expired": "",
   "component.powerpackForm.required": "",
   "contextMenus.selection.save.description": "Save selection context",
-  "contextMenus.selection.save.template": "Save From : [{title}]({url}) \n\n## Content\n{content}\n## Note",
+  "contextMenus.selection.save.template": "Save From : [{TITLE}]({URL}) \n\n## Content\n{CONTENT}\n## Note",
   "contextMenus.selection.save.title": "Save selection",
   "extension.link.config.autoRunExclude": "AutoRun Exclude",
   "extension.link.config.template": "Template",

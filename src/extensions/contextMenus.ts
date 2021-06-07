@@ -17,6 +17,7 @@ export interface IContextMenuExtension {
 }
 
 export interface IContextMenuContext {
+  config: unknown;
   contentScriptService: IContentScriptService;
   initContentScriptService(id: number): Promise<void>;
 }
