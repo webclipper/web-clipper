@@ -35,6 +35,7 @@ export type TRequestOption =
 
 export interface IRequestService {
   request<T>(url: string, options: TRequestOption): Promise<T>;
+  download(url: string): Promise<Blob>;
 }
 
 export type RequestInterceptor = (

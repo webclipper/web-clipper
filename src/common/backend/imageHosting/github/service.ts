@@ -1,6 +1,5 @@
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
 import { BlobToBase64 } from '@/common/blob';
-import Axios from 'axios';
 import { UploadImageRequest, ImageHostingService } from '../interface';
 import { isUndefined } from 'lodash';
 import { GithubClient } from '../../clients/github/client';
@@ -31,8 +30,7 @@ export default class GithubImageHostingService implements ImageHostingService {
   };
 
   uploadImageUrl = async (url: string) => {
-    const image = await Axios.get(url, { responseType: 'blob' });
-    const imageBlob = image.data;
+    const imageBlob = await Container.get(IBasicRequestService).download(url);
     const imageBase64 = await BlobToBase64(imageBlob);
     return this.uploadAsBase64(imageBase64);
   };

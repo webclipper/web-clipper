@@ -1,8 +1,9 @@
+import { IBasicRequestService } from '@/service/common/request';
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
 import { Base64ImageToBlob } from '@/common/blob';
-import axios from 'axios';
 import { UploadImageRequest, ImageHostingService } from '../interface';
 import { extend, RequestMethod } from 'umi-request';
+import Container from 'typedi';
 
 export interface JoplinImageHostingOption {
   token: string;
@@ -30,8 +31,7 @@ export default class YuqueImageHostingService implements ImageHostingService {
   };
 
   uploadImageUrl = async (url: string) => {
-    const res = await axios.get(url, { responseType: 'blob' });
-    let blob: Blob = res.data;
+    let blob: Blob = await Container.get(IBasicRequestService).download(url);
     if (blob.type === 'image/webp') {
       blob = blob.slice(0, blob.size, 'image/jpeg');
     }

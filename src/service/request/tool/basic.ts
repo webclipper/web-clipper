@@ -1,11 +1,19 @@
+import { IPermissionsService } from './../../common/permissions';
 import { extend, RequestMethod } from 'umi-request';
 import { IRequestService, IBasicRequestService, TRequestOption } from '@/service/common/request';
-import { Service } from 'typedi';
-
+import Container, { Service } from 'typedi';
+import axios from 'axios';
 class BasicRequestService implements IRequestService {
   private requestMethod: RequestMethod;
   constructor() {
     this.requestMethod = extend({});
+  }
+
+  async download(url: string) {
+    const permissionsService = Container.get(IPermissionsService);
+    await permissionsService.request({ origins: [`${new URL(url).origin}/*`] });
+    const res = await axios.get(url, { responseType: 'blob' });
+    return res.data;
   }
 
   request(url: string, options: TRequestOption) {
