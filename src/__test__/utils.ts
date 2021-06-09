@@ -18,4 +18,8 @@ export class MockRequestService implements IRequestService {
     this.mock.request(url, options);
     return this.handler(url, options);
   }
+
+  download(url: string): Promise<Blob> {
+    return Promise.resolve(new Blob([url]));
+  }
 }
