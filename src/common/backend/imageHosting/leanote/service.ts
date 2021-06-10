@@ -1,9 +1,10 @@
+import { IBasicRequestService } from '@/service/common/request';
 import { Base64ImageToBlob } from '@/common/blob';
-import axios from 'axios';
 import { UploadImageRequest, ImageHostingService } from '../interface';
 import backend from '../..';
 import { message } from 'antd';
 import localeService from '@/common/locales';
+import Container from 'typedi';
 
 /**
  * Use leanote as image hosting service by embbeding images to note body
@@ -19,8 +20,7 @@ export default class LeanoteImageHostingService implements ImageHostingService {
   };
 
   uploadImageUrl = async (url: string) => {
-    const res = await axios.get(url, { responseType: 'blob' });
-    let blob: Blob = res.data;
+    let blob: Blob = await Container.get(IBasicRequestService).download(url);
     if (blob.type === 'image/webp') {
       blob = blob.slice(0, blob.size, 'image/jpeg');
     }

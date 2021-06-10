@@ -1,9 +1,10 @@
+import { IBasicRequestService } from '@/service/common/request';
 import { Base64ImageToBlob } from '@/common/blob';
-import axios from 'axios';
 import { UploadImageRequest, ImageHostingService } from '../interface';
 import md5 from '@web-clipper/shared/lib/md5';
 import { extend } from 'umi-request';
 import localeService from '@/common/locales';
+import Container from 'typedi';
 
 const request = extend({});
 
@@ -57,8 +58,7 @@ export default class YuqueImageHostingService implements ImageHostingService {
   };
 
   uploadImageUrl = async (url: string) => {
-    const res = await axios.get(url, { responseType: 'blob' });
-    let blob: Blob = res.data;
+    let blob: Blob = await Container.get(IBasicRequestService).download(url);
     if (blob.type === 'image/webp') {
       blob = blob.slice(0, blob.size, 'image/jpeg');
     }
