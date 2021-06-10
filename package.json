@@ -97,6 +97,7 @@
     "@types/showdown": "^1.9.3",
     "@types/tldjs": "^2.3.0",
     "@types/webpack-env": "^1.13.9",
+    "axios": "^0.21.1",
     "clean-webpack-plugin": "^0.1.19",
     "compressing": "^1.4.0",
     "copy-webpack-plugin": "^5.1.1",
