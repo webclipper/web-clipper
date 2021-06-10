@@ -42,6 +42,6 @@ export default class LeanoteImageHostingService implements ImageHostingService {
         defaultMessage: 'Image will be attached only if the current clipping is saved',
       })
     );
-    return backend.getDocumentService()!.uploadBlob(blob);
+    return (backend.getDocumentService()! as any).uploadBlob(blob);
   };
 }

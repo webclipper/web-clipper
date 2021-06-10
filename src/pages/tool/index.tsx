@@ -164,7 +164,7 @@ const Page = React.memo<PageProps>(
 
     const overlay = useMemo(() => {
       return (
-        <Menu onClick={e => dispatch(asyncChangeAccount.started({ id: e.key }))}>
+        <Menu onClick={e => dispatch(asyncChangeAccount.started({ id: e.key as string }))}>
           {props.accounts.map(o => (
             <Menu.Item key={o.id} title={o.name}>
               <UserItem

@@ -83,7 +83,9 @@ export default class extends Component<YuqueFormProps & FormComponentProps> {
           })(
             <Select>
               {RepositoryTypeOptions.map(o => (
-                <Select.Option key={o.key}>{o.label}</Select.Option>
+                <Select.Option key={o.key} value={o.key}>
+                  {o.label}
+                </Select.Option>
               ))}
             </Select>
           )}

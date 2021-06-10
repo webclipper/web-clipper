@@ -52,7 +52,7 @@ const RepositorySelect: React.FC<RepositorySelectProps> = ({ repositories, ...pr
       {Object.values(repositoryInGroup).map(group => (
         <Select.OptGroup key={group.groupId} label={group.groupName}>
           {group.repositories.map(({ id, name, disabled }) => (
-            <Select.Option disabled={disabled} key={id}>
+            <Select.Option disabled={disabled} key={id} value={id}>
               {name}
             </Select.Option>
           ))}
@@ -62,4 +62,4 @@ const RepositorySelect: React.FC<RepositorySelectProps> = ({ repositories, ...pr
   );
 };
 
-export default forwardRef(RepositorySelect);
+export default (forwardRef(RepositorySelect as any) as unknown) as typeof RepositorySelect;

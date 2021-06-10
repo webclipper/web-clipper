@@ -15,7 +15,7 @@ const Page: React.FC<DvaRouterProps> = () => {
 
   useEffect(() => {
     if (history?.location?.search) {
-      const query = parse(history.location.search.slice(1)) as PageQuery;
+      const query = (parse(history.location.search.slice(1)) as unknown) as PageQuery;
       (async () => {
         const powerpackService = Container.get(IPowerpackService);
         const tabService = Container.get(ITabService);

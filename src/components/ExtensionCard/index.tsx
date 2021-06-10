@@ -22,7 +22,7 @@ interface ExtensionCardProps {
 
 const ExtensionSelect: React.FC<{ value: string; onChange: any }> = ({ value, onChange }) => {
   const extensionContainer = Container.get(IExtensionContainer);
-  const [_toolExtensions, clipExtensions] = useFilterExtensions(extensionContainer.extensions);
+  const [, clipExtensions] = useFilterExtensions(extensionContainer.extensions);
 
   return (
     <Select
