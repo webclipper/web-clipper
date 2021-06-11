@@ -70,7 +70,6 @@ $ yarn test
 
 ### Feedback
 
-| Type     | Link                                                                               |
-| -------- | ---------------------------------------------------------------------------------- |
-| DingTalk | ![](https://raw.githubusercontent.com/webclipper/web-clipper/master/DingTalk.jpeg) |
-| Telegram | [Link](https://t.me/joinchat/HoVttRRUIA6aXASixzoqAw)                               |
+| Type     | Link                                                 |
+| -------- | ---------------------------------------------------- |
+| Telegram | [Link](https://t.me/joinchat/HoVttRRUIA6aXASixzoqAw) |
