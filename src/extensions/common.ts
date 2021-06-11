@@ -216,3 +216,15 @@ export interface IContextMenusWithId {
   id: string;
   contextMenu: IContextMenuExtensionFactory;
 }
+
+export function getLocaleExtensionManifest(manifest: IExtensionManifest, locale: string) {
+  const { i18nManifest, ...rest } = manifest;
+  let localeManifest = {};
+  if (i18nManifest && typeof i18nManifest === 'object') {
+    localeManifest = i18nManifest[locale];
+  }
+  return {
+    ...rest,
+    ...localeManifest,
+  };
+}

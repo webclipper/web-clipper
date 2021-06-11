@@ -1166,11 +1166,6 @@
     "@types/chrome" "^0.0.88"
     "@web-clipper/shared" "^0.1.3"
 
-"@web-clipper/extensions@^0.0.17":
-  version "0.0.17"
-  resolved "https://registry.nlark.com/@web-clipper/extensions/download/@web-clipper/extensions-0.0.17.tgz#3aab8855aedbf31c0f736d879cfc166b627974d6"
-  integrity sha1-OquIVa7b8xwPc22HnPwWa2J5dNY=
-
 "@web-clipper/highlight@^0.1.3":
   version "0.1.3"
   resolved "https://registry.nlark.com/@web-clipper/highlight/download/@web-clipper/highlight-0.1.3.tgz#25c7655f8832bda684949c0949e9c82d0bbdc810"

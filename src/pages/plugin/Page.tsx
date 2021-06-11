@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, router } from 'dva';
-import { ExtensionType } from '@web-clipper/extensions';
+import { ExtensionType } from '@/extensions/common';
 import TextEditor from './TextEditor';
 import { DvaRouterProps } from '@/common/types';
 import { useObserver } from 'mobx-react';

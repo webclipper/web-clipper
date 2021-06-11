@@ -10,7 +10,6 @@ import { isEqual } from 'lodash';
 import { ToolContainer } from 'components/container';
 import { selectRepository, asyncChangeAccount } from 'pageActions/clipper';
 import { asyncRunExtension } from 'pageActions/userPreference';
-import { InitContext } from '@web-clipper/extensions';
 import Section from 'components/section';
 import { DvaRouterProps } from 'common/types';
 import useFilterExtensions from '@/common/hooks/useFilterExtensions';
@@ -25,7 +24,7 @@ import IconAvatar from '@/components/avatar';
 import UserItem from '@/components/userItem';
 import { IContentScriptService } from '@/service/common/contentScript';
 import { IExtensionService, IExtensionContainer } from '@/service/common/extension';
-import { IExtensionWithId } from '@/extensions/common';
+import { IExtensionWithId, InitContext } from '@/extensions/common';
 import usePowerpack from '@/common/hooks/usePowerpack';
 
 const mapStateToProps = ({

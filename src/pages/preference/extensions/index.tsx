@@ -5,12 +5,11 @@ import useFilterExtensions from '@/common/hooks/useFilterExtensions';
 import { FormattedMessage } from 'react-intl';
 import ExtensionCard from '@/components/ExtensionCard';
 import styles from './index.less';
-import { ExtensionType } from '@web-clipper/extensions';
+import { ExtensionType, IExtensionWithId } from '@/extensions/common';
 import IconFont from '@/components/IconFont';
 import Container from 'typedi';
 import { IExtensionService, IExtensionContainer } from '@/service/common/extension';
 import { useObserver } from 'mobx-react';
-import { IExtensionWithId } from '@/extensions/common';
 
 const Page: React.FC = () => {
   const extensionService = Container.get(IExtensionService);

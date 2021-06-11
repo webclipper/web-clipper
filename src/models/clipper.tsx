@@ -5,7 +5,6 @@ import { BUILT_IN_IMAGE_HOSTING_ID } from '@/common/backend/imageHosting/interfa
 import { updateClipperHeader } from './../actions/clipper';
 import { asyncRunExtension } from './../actions/userPreference';
 import { CompleteStatus } from 'common/backend/interface';
-import { ExtensionType } from '@web-clipper/extensions';
 import { CreateDocumentRequest, UnauthorizedError } from '@/common/backend/services/interface';
 import { GlobalStore, ClipperStore } from '@/common/types';
 import { DvaModelBuilder, removeActionNamespace } from 'dva-model-creator';
@@ -25,6 +24,7 @@ import { routerRedux } from 'dva';
 import { asyncUpdateAccount } from '@/actions/account';
 import { channel } from 'redux-saga';
 import { IExtensionService, IExtensionContainer } from '@/service/common/extension';
+import { ExtensionType } from '@/extensions/common';
 
 const defaultState: ClipperStore = {
   clipperHeaderForm: {
