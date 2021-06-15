@@ -66,6 +66,7 @@
   "backend.services.mail.form.send.html.or.markdown": "发送 Html 或 Markdown",
   "backend.services.mail.form.send.to": "发送給",
   "backend.services.mail.name": "郵件",
+  "backend.services.notion-official-api.name": "",
   "backend.services.notion.unauthorizedErrorMessage": "授權失敗，請登錄網頁版 Notion。",
   "backend.services.onenote_oauth.name": "OneNote",
   "backend.services.server_chan.accessToken.message": "請輸入 AccessToken",
