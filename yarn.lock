@@ -1210,10 +1210,10 @@
     "@types/chrome" "^0.0.88"
     blueimp-md5 "^2.11.0"
 
-"@web-clipper/turndown@^0.4.4":
-  version "0.4.4"
-  resolved "https://registry.nlark.com/@web-clipper/turndown/download/@web-clipper/turndown-0.4.4.tgz?cache=0&sync_timestamp=1620658088079&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40web-clipper%2Fturndown%2Fdownload%2F%40web-clipper%2Fturndown-0.4.4.tgz#df10e778548243a4a9b91a14bbf61fdcb519cd4c"
-  integrity sha1-3xDneFSCQ6SpuRoUu/Yf3LUZzUw=
+"@web-clipper/turndown@^0.4.6":
+  version "0.4.6"
+  resolved "https://registry.nlark.com/@web-clipper/turndown/download/@web-clipper/turndown-0.4.6.tgz?cache=0&sync_timestamp=1623951211778&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40web-clipper%2Fturndown%2Fdownload%2F%40web-clipper%2Fturndown-0.4.6.tgz#a3cc8f7a3ebd3e28e9bd76c80376f94a2fb8b1e5"
+  integrity sha1-o8yPej69PijpvXbIA3b5Si+4seU=
   dependencies:
     "@types/mz" "^0.0.32"
     "@types/turndown" "^5.0.0"
@@ -1535,7 +1535,7 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-antd@^4.16.3:
+antd@4.16.3:
   version "4.16.3"
   resolved "https://registry.nlark.com/antd/download/antd-4.16.3.tgz?cache=0&sync_timestamp=1623726212202&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fantd%2Fdownload%2Fantd-4.16.3.tgz#9836613eaeabb55a0bcd4423551df699d65f67a8"
   integrity sha1-mDZhPq6rtVoLzUQjVR32mdZfZ6g=
