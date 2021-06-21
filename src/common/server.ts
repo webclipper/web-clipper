@@ -9,6 +9,7 @@ import { LOCAL_ACCESS_TOKEN_LOCALE_KEY } from './modelTypes/userPreference';
 import { IResponse } from './types';
 import timezone from 'dayjs/plugin/timezone';
 import dayjs from 'dayjs';
+import { generateUuid } from '@web-clipper/shared/lib/uuid';
 
 dayjs.extend(timezone);
 
@@ -21,6 +22,9 @@ const request = extend({
 request.interceptors.request.use(
   (url, options) => {
     const powerpackService = Container.get(IPowerpackService);
+    if (!localStorageService.get('d-request-id')) {
+      localStorageService.set('d-request-id', generateUuid());
+    }
     return {
       url,
       options: {
@@ -28,6 +32,7 @@ request.interceptors.request.use(
         headers: {
           ...options.headers,
           token: powerpackService.accessToken || '',
+          'd-request-id': localStorageService.get('d-request-id', generateUuid()),
           locale: localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, getLanguage()),
         },
       },
