@@ -219,6 +219,13 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      WEB_CLIPPER_VERSION: JSON.stringify(
+        process.env.NODE_ENV === 'development'
+          ? getVersion(packageJson.version, true)
+          : getVersion(packageJson.version, false)
+      ),
+    }),
     process.env.NODE_ENV === 'development'
       ? new ExtensionReloader({
           port: 9091,

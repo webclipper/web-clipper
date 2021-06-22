@@ -18,5 +18,8 @@ interface Type<T> extends Function {
 /// <reference path="../../node_modules/@types/chrome/index.d.ts"/>
 
 interface Window {
+  WEB_CLIPPER_VERSION: string;
   _gaq: string[][];
 }
+
+declare const WEB_CLIPPER_VERSION: string;

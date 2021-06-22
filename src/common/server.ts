@@ -22,8 +22,9 @@ const request = extend({
 request.interceptors.request.use(
   (url, options) => {
     const powerpackService = Container.get(IPowerpackService);
+    let requestId = generateUuid();
     if (!localStorageService.get('d-request-id')) {
-      localStorageService.set('d-request-id', generateUuid());
+      localStorageService.set('d-request-id', requestId);
     }
     return {
       url,
@@ -32,7 +33,8 @@ request.interceptors.request.use(
         headers: {
           ...options.headers,
           token: powerpackService.accessToken || '',
-          'd-request-id': localStorageService.get('d-request-id', generateUuid()),
+          'd-request-id': localStorageService.get('d-request-id', requestId),
+          'web-clipper-version': `${WEB_CLIPPER_VERSION}`,
           locale: localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, getLanguage()),
         },
       },
@@ -91,6 +93,12 @@ export const sentToKindle = (data: SendToKindleRequestBody) => {
 
 export const refresh = () => {
   return request.get<IResponse<string>>('refresh');
+};
+
+export interface WebClipperRemoteConfig {}
+
+export const fetchRemoteConfig = () => {
+  return request.get<IResponse<WebClipperRemoteConfig>>('v1/config');
 };
 
 export interface OCRRequestBody {
