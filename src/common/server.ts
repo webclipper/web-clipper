@@ -95,7 +95,30 @@ export const refresh = () => {
   return request.get<IResponse<string>>('refresh');
 };
 
-export interface WebClipperRemoteConfig {}
+export interface WebClipperRemoteConfig {
+  resource: {
+    host: string;
+    privacy: string;
+    changelog: string;
+  };
+  yuque_oauth: {
+    clientId: string;
+    callback: string;
+    scope: string;
+  };
+  onenote_oauth: {
+    clientId: string;
+    callback: string;
+  };
+  google_oauth: {
+    clientId: string;
+    callback: string;
+  };
+  github_oauth: {
+    clientId: string;
+    callback: string;
+  };
+}
 
 export const fetchRemoteConfig = () => {
   return request.get<IResponse<WebClipperRemoteConfig>>('v1/config');
