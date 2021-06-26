@@ -24,3 +24,5 @@ export interface WebClipperConfiguration {
 }
 
 export interface IConfigurationService {}
+
+export type GetLocalConfiguration = () => {};
