@@ -1,4 +1,4 @@
-const getCommitsCount = require('./get-commits-count');
+const { getCommitsCount } = require('./get-commits-count');
 
 it('test getCommitsCount', () => {
   expect(typeof getCommitsCount()).toEqual('number');

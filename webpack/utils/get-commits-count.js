@@ -9,4 +9,4 @@ const getCommitsCount = () => {
   return parseInt(commitsCount, 10);
 };
 
-module.exports = getCommitsCount;
+module.exports = { getCommitsCount };
