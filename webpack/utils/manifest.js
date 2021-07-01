@@ -19,4 +19,71 @@ function isBeta() {
   return version !== packageVersion;
 }
 
-module.exports = { getBasicManifest, isBeta };
+function generateManifest(options) {
+  const { publishToStore, targetBrowser, basicManifest } = options;
+  if (targetBrowser === 'Chrome') {
+    return {
+      ...basicManifest,
+      permissions: [
+        'activeTab',
+        'storage',
+        'https://api.clipper.website/*',
+        'https://resource.clipper.website/*',
+        'contextMenus',
+      ],
+      commands: {
+        'toggle-feature-foo': {
+          suggested_key: {
+            default: 'Alt+S',
+          },
+          description: 'Test',
+        },
+      },
+      optional_permissions: [
+        'cookies',
+        '<all_urls>',
+        'webRequest',
+        'webRequestBlocking',
+        'pageCapture',
+      ],
+    };
+  }
+  if (targetBrowser === 'Firefox') {
+    let extra = {};
+    if (!publishToStore) {
+      extra = {
+        applications: {
+          gecko: {
+            id: 'web-clipper@web-clipper',
+          },
+        },
+      };
+    }
+    return {
+      ...basicManifest,
+      ...extra,
+      commands: {
+        'toggle-feature-foo': {
+          suggested_key: {
+            default: 'Alt+S',
+          },
+          description: 'Test',
+        },
+      },
+      permissions: [
+        'contextMenus',
+        'activeTab',
+        'webRequest',
+        'webRequestBlocking',
+        'storage',
+        'https://api.clipper.website/*',
+        'https://resource.clipper.website/*',
+        'cookies',
+        '<all_urls>',
+      ],
+    };
+  }
+  throw Error(`unknown ${targetBrowser}`);
+}
+
+module.exports = { getBasicManifest, isBeta, generateManifest };
