@@ -3,7 +3,7 @@
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true,
-    "target": "ESNext",
+    "target": "ES2018",
     "module": "CommonJS",
     "declaration": false,
     "noImplicitAny": true,

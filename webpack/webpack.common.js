@@ -8,74 +8,22 @@ const tsImportPluginFactory = require('ts-import-plugin');
 const WebpackCreateExtensionManifestPlugin = require('webpack-create-extension-manifest-plugin');
 const fs = require('fs');
 
-const { getBasicManifest } = require('./utils/manifest');
+const { getBasicManifest, generateManifest } = require('./utils/manifest');
 const basicManifest = getBasicManifest();
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
 
-const distFiles = fs.readdirSync(resolve('dist')).filter(o => o !== '.gitkeep');
+const publishToStore = process.env.PUBLISH_TO_STORE === 'true';
+const targetBrowser = process.env.TARGET_BROWSER || 'Chrome';
 
-let manifestExtra = {
-  ...basicManifest,
-  permissions: [
-    'activeTab',
-    'storage',
-    'https://api.clipper.website/*',
-    'https://resource.clipper.website/*',
-    'contextMenus',
-  ],
-  commands: {
-    'toggle-feature-foo': {
-      suggested_key: {
-        default: 'Alt+S',
-      },
-      description: 'Test',
-    },
-  },
-  optional_permissions: [
-    'cookies',
-    '<all_urls>',
-    'webRequest',
-    'webRequestBlocking',
-    'pageCapture',
-  ],
-};
+const manifestExtra = generateManifest({ targetBrowser, publishToStore, basicManifest });
+const distFiles = fs.readdirSync(resolve('dist')).filter(o => o !== '.gitkeep');
 
 let background = resolve('src/main/background.main.chrome.ts');
 let tool = resolve('src/main/tool.main.chrome.ts');
-
-if (process.env.TARGET_BROWSER === 'Firefox') {
-  manifestExtra = {
-    ...basicManifest,
-    commands: {
-      'toggle-feature-foo': {
-        suggested_key: {
-          default: 'Alt+S',
-        },
-        description: 'Test',
-      },
-    },
-    permissions: [
-      'contextMenus',
-      'activeTab',
-      'webRequest',
-      'webRequestBlocking',
-      'storage',
-      'https://api.clipper.website/*',
-      'https://resource.clipper.website/*',
-      'cookies',
-      '<all_urls>',
-    ],
-  };
-  if (process.env.FF_RELEASE !== 'true') {
-    manifestExtra.applications = {
-      gecko: {
-        id: 'web-clipper@web-clipper',
-      },
-    };
-  }
+if (targetBrowser === 'Firefox') {
   background = resolve('src/main/background.main.firefox.ts');
   tool = resolve('src/main/tool.main.firefox.ts');
 }

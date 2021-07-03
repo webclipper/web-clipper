@@ -1,17 +1,24 @@
-import { IWebpackProcessEnv } from './types';
+import { IWebpackProcessEnv, TBuildTarget } from './types';
 import { fork } from 'child_process';
 
-export function build({ targetBrowser }) {
+interface IBuildOptions {
+  targetBrowser: TBuildTarget;
+  publishToStore: boolean;
+}
+
+export function build(options: IBuildOptions) {
   const buildScript = require.resolve('../build');
   const buildEnv: IWebpackProcessEnv = Object.create(process.env);
   buildEnv.NODE_ENV = 'production';
-  buildEnv.TARGET_BROWSER = targetBrowser;
-
+  buildEnv.TARGET_BROWSER = options.targetBrowser;
+  if (options.publishToStore) {
+    buildEnv.PUBLISH_TO_STORE = 'true';
+  }
   const cp = fork(buildScript, [], {
     env: (buildEnv as unknown) as typeof process.env,
     silent: true,
   });
-  cp.stderr.on('data', e => console.log(e.toString()));
+  cp.stderr!.on('data', e => console.log(e.toString()));
   return new Promise(r => {
     cp.on('message', r);
   });
