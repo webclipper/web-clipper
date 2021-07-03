@@ -6,5 +6,5 @@ COPY . .
 
 RUN yarn
 
-RUN FF_RELEASE=true node script/ci.js
+RUN TARGET_BROWSER=Firefox PUBLISH_TO_STORE=true yarn ts-node script/release.ts
 
