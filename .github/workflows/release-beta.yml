@@ -2,7 +2,7 @@ name: Release Web Clipper Beta
 on:
   push:
     tags:
-      - 'v*'
+      - '**-alpha'
 
 jobs:
   build:
