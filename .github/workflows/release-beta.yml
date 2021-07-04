@@ -3,6 +3,7 @@ on:
   push:
     tags:
       - '**-alpha'
+      - '**-beta'
 
 jobs:
   build:
