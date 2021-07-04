@@ -1,5 +1,4 @@
-name: Release Web Clipper
-
+name: Release Web Clipper Beta
 on:
   push:
     tags:
