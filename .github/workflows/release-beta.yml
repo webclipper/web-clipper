@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Upload Release Asset
+    name: Release Web Clipper Beta
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
