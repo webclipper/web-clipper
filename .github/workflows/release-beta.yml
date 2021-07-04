@@ -20,6 +20,7 @@ jobs:
         run: |
           npm run release
         env:
+          DIST_TYPE: Beta
           GITHUB_BRANCH: ${{ github.ref }}
       - name: Create Release
         id: create_release

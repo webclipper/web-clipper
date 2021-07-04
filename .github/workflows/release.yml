@@ -21,6 +21,7 @@ jobs:
         run: |
           npm run release
         env:
+          DIST_TYPE: Release
           GITHUB_BRANCH: ${{ github.ref }}
       - name: Create Release
         id: create_release
