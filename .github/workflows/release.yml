@@ -2,8 +2,10 @@ name: Release Web Clipper
 
 on:
   push:
+    tags-ignore:
+      - '**-alpha'
     tags:
-      - 'v*'
+      - 'v*.*.*'
 
 jobs:
   build:
