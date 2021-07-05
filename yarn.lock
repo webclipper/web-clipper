@@ -1230,10 +1230,10 @@
     "@types/chrome" "^0.0.88"
     blueimp-md5 "^2.11.0"
 
-"@web-clipper/turndown@^0.4.6":
-  version "0.4.6"
-  resolved "https://registry.nlark.com/@web-clipper/turndown/download/@web-clipper/turndown-0.4.6.tgz?cache=0&sync_timestamp=1623951211778&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40web-clipper%2Fturndown%2Fdownload%2F%40web-clipper%2Fturndown-0.4.6.tgz#a3cc8f7a3ebd3e28e9bd76c80376f94a2fb8b1e5"
-  integrity sha1-o8yPej69PijpvXbIA3b5Si+4seU=
+"@web-clipper/turndown@^0.4.8":
+  version "0.4.8"
+  resolved "https://registry.yarnpkg.com/@web-clipper/turndown/-/turndown-0.4.8.tgz#4d05bd68a9c47eb93b1c0bf5eb6ea0ccdb8e6910"
+  integrity sha512-BBeS7ajhiGmZGZ6KkL3UNdmXWG0+6G+6TDjdjXmDFY3BvV0dPRSwA8XS1hfBUwG6mc/OD1JOcdNt7pxWeAq5jQ==
   dependencies:
     "@types/mz" "^0.0.32"
     "@types/turndown" "^5.0.0"
