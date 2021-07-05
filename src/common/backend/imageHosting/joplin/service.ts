@@ -11,8 +11,10 @@ export interface JoplinImageHostingOption {
 
 export default class YuqueImageHostingService implements ImageHostingService {
   private request: RequestMethod;
+  private token: string;
 
   constructor({ token }: JoplinImageHostingOption) {
+    this.token = token;
     this.request = extend({
       prefix: 'http://localhost:41184/',
       params: {
@@ -22,7 +24,7 @@ export default class YuqueImageHostingService implements ImageHostingService {
   }
 
   getId() {
-    return 'joplin';
+    return this.token;
   }
 
   uploadImage = async ({ data }: UploadImageRequest) => {

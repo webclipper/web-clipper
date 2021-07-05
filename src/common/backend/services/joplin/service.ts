@@ -14,7 +14,7 @@ export default class JoplinDocumentService implements DocumentService {
   constructor(private config: JoplinBackendServiceConfig) {}
 
   getId() {
-    return 'joplin';
+    return this.config.token;
   }
 
   getUserInfo = async () => {
