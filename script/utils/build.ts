@@ -1,8 +1,8 @@
-import { IWebpackProcessEnv, TBuildTarget } from './types';
+import { IWebpackProcessEnv, TTargetBrowser } from './types';
 import { fork } from 'child_process';
 
 interface IBuildOptions {
-  targetBrowser: TBuildTarget;
+  targetBrowser: TTargetBrowser;
   publishToStore: boolean;
 }
 

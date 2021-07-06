@@ -1,12 +1,12 @@
 import path from 'path';
-import { TBuildTarget } from './types';
+import { TTargetBrowser } from './types';
 import compressing from 'compressing';
 import fs from 'fs';
 const pump = require('pump');
 interface IPackOptions {
   distDir: string;
   releaseDir: string;
-  targetBrowser: TBuildTarget;
+  targetBrowser: TTargetBrowser;
 }
 
 export function pack(options: IPackOptions) {
