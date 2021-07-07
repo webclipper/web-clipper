@@ -745,10 +745,10 @@
   dependencies:
     "@types/tern" "*"
 
-"@types/crypto-js@^3.1.43":
-  version "3.1.47"
-  resolved "https://registry.npm.taobao.org/@types/crypto-js/download/@types/crypto-js-3.1.47.tgz?cache=0&sync_timestamp=1613378490325&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fcrypto-js%2Fdownload%2F%40types%2Fcrypto-js-3.1.47.tgz#36e549dd3f1322742a3a738e7c113ebe48221860"
-  integrity sha1-NuVJ3T8TInQqOnOOfBE+vkgiGGA=
+"@types/crypto-js@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@types/crypto-js/-/crypto-js-4.0.2.tgz#4524325a175bf819fec6e42560c389ce1fb92c97"
+  integrity sha512-sCVniU+h3GcGqxOmng11BRvf9TfN9yIs8KKjB8C8d75W69cpTfZG80gau9yTx5SxF3gvHGbJhdESzzvnjtf3Og==
 
 "@types/enzyme-adapter-react-16@^1.0.3":
   version "1.0.6"
