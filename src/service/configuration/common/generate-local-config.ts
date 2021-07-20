@@ -1,7 +1,7 @@
 import { WebClipperConfiguration } from '@/service/common/configuration';
 
 interface IGenerateLocalConfigOptions {
-  we: 'w';
+  locale: string;
 }
 
 const generateLocalConfig = (_options: IGenerateLocalConfigOptions): WebClipperConfiguration => {
