@@ -12,9 +12,9 @@ const generateLocalConfig = (_options: IGenerateLocalConfigOptions): WebClipperC
       changelog: '',
     },
     yuque_oauth: {
-      clientId: '',
-      callback: '',
-      scope: '',
+      clientId: 'D1AwzCeDPLFWGfcGv7ze',
+      callback: 'http://webclipper-oauth.yfd.im/yuque_oauth',
+      scope: '94f779401c7bed8734ce',
     },
     onenote_oauth: {
       clientId: '',
