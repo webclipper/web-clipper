@@ -23,12 +23,18 @@ export class SiYuanClient {
   };
 
   createNote = async (data: CreateDocumentRequest) => {
-    await this.request.post<{ data: { files: string[] } }>(`/api/filetree/createDocWithMd`, {
-      data: {
-        notebook: data.repositoryId,
-        path: `${data.title}.sy`,
-        markdown: data.content,
-      },
-    });
+    const response = await this.request.post<{ code: number; msg: string }>(
+      `/api/filetree/createDocWithMd`,
+      {
+        data: {
+          notebook: data.repositoryId,
+          path: `${data.title}.sy`,
+          markdown: data.content,
+        },
+      }
+    );
+    if (response.code !== 0) {
+      throw new Error(response.msg);
+    }
   };
 }
