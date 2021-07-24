@@ -37,4 +37,17 @@ export class SiYuanClient {
       throw new Error(response.msg);
     }
   };
+
+  uploadImage = async (blob: Blob, notebook: string) => {
+    let formData = new FormData();
+    formData.append('assetsDirPath', `/${notebook}/assets/`);
+    formData.append('file[]', new File([blob], `${Date.now()}.png`));
+    const response = await this.request.postForm<{ code: number; msg: string }>(
+      `/api/asset/upload`,
+      {
+        data: formData,
+      }
+    );
+    console.log('response', response);
+  };
 }
