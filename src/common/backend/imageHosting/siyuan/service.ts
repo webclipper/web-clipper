@@ -23,13 +23,15 @@ export default class YuqueImageHostingService implements ImageHostingService {
 
   uploadImage = async ({ data }: UploadImageRequest) => {
     const blob = Base64ImageToBlob(data);
-    this.siyuan.we(blob, this.context?.currentRepository.id!);
-    return '';
+    return this.siyuan.uploadImage(blob, this.context?.currentRepository.id!);
   };
 
   uploadImageUrl = async (url: string) => {
-    console.log('context', this.context, url);
-    return 'this.uploadBlob(blob);';
+    let blob: Blob = await Container.get(IBasicRequestService).download(url);
+    if (blob.type === 'image/webp') {
+      blob = blob.slice(0, blob.size, 'image/jpeg');
+    }
+    return this.siyuan.uploadImage(blob, this.context?.currentRepository.id!);
   };
 
   updateContext = (context: { currentRepository: Repository }) => {
