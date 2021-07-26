@@ -1,16 +1,13 @@
-import { IExtendRequestHelper } from '@/service/common/request';
-import { Repository } from '../../services/interface';
+import { AbstractJoplinClient } from './basic';
 import {
-  IJoplinClient,
+  Repository,
   JoplinFolderItem,
   JoplinTag,
   JoplinCreateDocumentRequest,
   IPageRes,
 } from './types';
 
-export class JoplinClient implements IJoplinClient {
-  constructor(private request: IExtendRequestHelper) {}
-
+export class JoplinClient extends AbstractJoplinClient {
   support = async (): Promise<boolean> => {
     let tags = await this.request.get<IPageRes<JoplinTag>>('tags');
     return typeof tags.has_more === 'boolean';

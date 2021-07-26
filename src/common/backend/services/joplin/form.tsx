@@ -3,7 +3,7 @@ import '@ant-design/compatible/assets/index.less';
 import { Input, Checkbox } from 'antd';
 import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React, { Fragment } from 'react';
-import { JoplinBackendServiceConfig } from './interface';
+import { JoplinBackendServiceConfig } from '../../clients/joplin';
 import { FormattedMessage } from 'react-intl';
 
 interface FormProps extends FormComponentProps {

@@ -2,12 +2,14 @@ import { RequestHelper } from '@/service/request/common/request';
 import { IBasicRequestService } from './../../../../service/common/request';
 import { Container } from 'typedi';
 import { DocumentService } from './../../index';
+
 import {
+  LegacyJoplinClient,
+  JoplinClient,
   JoplinBackendServiceConfig,
   JoplinCreateDocumentRequest,
   IJoplinClient,
-} from './interface';
-import { LegacyJoplinClient, JoplinClient } from '../../clients/joplin';
+} from '../../clients/joplin';
 
 const HOST = 'http://localhost:41184/';
 

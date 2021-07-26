@@ -1,9 +1,13 @@
 import { Repository, CreateDocumentRequest } from '../../services/interface';
 
+export { Repository } from '../../services/interface';
+export { CreateDocumentRequest } from '../../services/interface';
+
 export interface IJoplinClient {
   getTags(filterTags: boolean): Promise<JoplinTag[]>;
   getRepositories(): Promise<Repository[]>;
   createDocument(data: JoplinCreateDocumentRequest): Promise<void>;
+  uploadBlob(blob: Blob): Promise<string>;
 }
 
 export interface JoplinTag {

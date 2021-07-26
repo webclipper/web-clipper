@@ -1,10 +1,8 @@
-import { IExtendRequestHelper } from '@/service/common/request';
 import { Repository } from './../../services/interface';
-import { IJoplinClient, JoplinFolderItem, JoplinTag, JoplinCreateDocumentRequest } from './types';
+import { JoplinFolderItem, JoplinTag, JoplinCreateDocumentRequest } from './types';
+import { AbstractJoplinClient } from './basic';
 
-export class LegacyJoplinClient implements IJoplinClient {
-  constructor(private request: IExtendRequestHelper) {}
-
+export class LegacyJoplinClient extends AbstractJoplinClient {
   getRepositories = async () => {
     const repositories: Repository[] = [];
     const folders = await this.request.get<JoplinFolderItem[]>('folders');
