@@ -1,11 +1,13 @@
+import { RequestHelper } from '@/service/request/common/request';
+import { IBasicRequestService } from './../../../../service/common/request';
+import { Container } from 'typedi';
 import { DocumentService } from './../../index';
 import {
   JoplinBackendServiceConfig,
   JoplinCreateDocumentRequest,
   IJoplinClient,
 } from './interface';
-import { LegacyJoplinClient } from './LegacyJoplinClient';
-import { JoplinClient } from './JoplinClient';
+import { LegacyJoplinClient, JoplinClient } from '../../clients/joplin';
 
 const HOST = 'http://localhost:41184/';
 
@@ -49,10 +51,17 @@ export default class JoplinDocumentService implements DocumentService {
   }
 
   private async _getJoplinClient(): Promise<IJoplinClient> {
-    const client = new JoplinClient(this.config.token, HOST);
+    const request = new RequestHelper({
+      baseURL: HOST,
+      request: Container.get(IBasicRequestService),
+      params: {
+        token: this.config.token,
+      },
+    });
+    const client = new JoplinClient(request);
     if (await client.support()) {
       return client;
     }
-    return new LegacyJoplinClient(this.config.token, HOST);
+    return new LegacyJoplinClient(request);
   }
 }

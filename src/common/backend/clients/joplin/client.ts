@@ -1,26 +1,24 @@
-import { extend, RequestMethod } from 'umi-request';
-import { Repository } from '../interface';
+import { IExtendRequestHelper } from '@/service/common/request';
+import { Repository } from '../../services/interface';
 import {
   IJoplinClient,
   JoplinFolderItem,
   JoplinTag,
   JoplinCreateDocumentRequest,
-} from './interface';
+  IPageRes,
+} from './types';
 
-export class LegacyJoplinClient implements IJoplinClient {
-  private request: RequestMethod;
-  constructor(token: string, host: string) {
-    this.request = extend({
-      prefix: host,
-      params: {
-        token: token,
-      },
-    });
-  }
+export class JoplinClient implements IJoplinClient {
+  constructor(private request: IExtendRequestHelper) {}
+
+  support = async (): Promise<boolean> => {
+    let tags = await this.request.get<IPageRes<JoplinTag>>('tags');
+    return typeof tags.has_more === 'boolean';
+  };
 
   getRepositories = async () => {
     const repositories: Repository[] = [];
-    const folders = await this.request.get<JoplinFolderItem[]>('folders');
+    const folders = await this.pageToAllList(this.getFolderByPageNumber);
     folders.forEach(folder => {
       repositories.push({
         id: folder.id,
@@ -43,13 +41,13 @@ export class LegacyJoplinClient implements IJoplinClient {
   };
 
   getTags = async (filterTags: boolean) => {
-    let tags = await this.request.get<JoplinTag[]>('tags');
+    let tags = await this.pageToAllList<JoplinTag>(this.getTagsByPageNumber);
     if (filterTags) {
       tags = (
         await Promise.all(
           tags.map(async tag => {
-            console.log(this);
             const notes = await this.request.get<unknown[]>(`tags/${tag.id}/notes`);
+            console.log('notes', notes);
             if (notes.length === 0) {
               return null;
             }
@@ -71,5 +69,28 @@ export class LegacyJoplinClient implements IJoplinClient {
         source_url: data.url,
       },
     });
+  };
+
+  private getTagsByPageNumber = async (page: number) => {
+    return this.request.get<IPageRes<JoplinTag>>(`tags?page=${page}`);
+  };
+
+  private getFolderByPageNumber = async (page: number) => {
+    return this.request.get<IPageRes<JoplinFolderItem>>(`folders?page=${page}`);
+  };
+
+  private pageToAllList = async <T>(
+    getOnePage: (page: number) => Promise<IPageRes<T>>
+  ): Promise<T[]> => {
+    let hasMore = true;
+    let startPageNumber = 1;
+    let result: T[] = [];
+    while (hasMore) {
+      const response = await getOnePage(startPageNumber);
+      result = result.concat(response.items);
+      hasMore = response.has_more;
+      startPageNumber++;
+    }
+    return result;
   };
 }
