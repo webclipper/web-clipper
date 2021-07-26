@@ -1,7 +1,13 @@
 import { CreateDocumentRequest } from './../../services/interface';
 import { IExtendRequestHelper } from '@/service/common/request';
 import { RequestHelper } from '@/service/request/common/request';
-import { ISiyuanClientOptions } from './types';
+import {
+  ISiyuanClientOptions,
+  ISiyuanUploadImageResponse,
+  ISiyuanFetchNotesResponse,
+} from './types';
+
+const SIYUAN_BASE_URL = 'http://127.0.0.1:6806/';
 
 export class SiYuanClient {
   private options: ISiyuanClientOptions;
@@ -10,13 +16,13 @@ export class SiYuanClient {
   constructor(options: ISiyuanClientOptions) {
     this.options = options;
     this.request = new RequestHelper({
-      baseURL: 'http://127.0.0.1:6806',
+      baseURL: SIYUAN_BASE_URL,
       request: this.options.request,
     });
   }
 
   listNotebooks = async (): Promise<string[]> => {
-    const res = await this.request.post<{ data: { files: string[] } }>(`/api/notebook/ls`, {
+    const res = await this.request.post<ISiyuanFetchNotesResponse>(`api/notebook/ls`, {
       data: {},
     });
     return res.data.files.map(p => p.split('/')[p.split('/').length - 1]);
@@ -24,7 +30,7 @@ export class SiYuanClient {
 
   createNote = async (data: CreateDocumentRequest) => {
     const response = await this.request.post<{ code: number; msg: string }>(
-      `/api/filetree/createDocWithMd`,
+      `api/filetree/createDocWithMd`,
       {
         data: {
           notebook: data.repositoryId,
@@ -40,18 +46,12 @@ export class SiYuanClient {
 
   uploadImage = async (blob: Blob, notebook: string) => {
     let formData = new FormData();
-    formData.append('assetsDirPath', `/${notebook}/assets/`);
+    formData.append('assetsDirPath', `${notebook}/assets/`);
     const fileName = `${Date.now()}.png`;
     formData.append('file[]', new File([blob], fileName));
-    const response = await this.request.postForm<{
-      data: {
-        succMap: {
-          [key: string]: string;
-        };
-      };
-    }>(`/api/asset/upload`, {
+    const response = await this.request.postForm<ISiyuanUploadImageResponse>(`api/asset/upload`, {
       data: formData,
     });
-    return `http://127.0.0.1:6806/${response.data.succMap[fileName]}`;
+    return `${SIYUAN_BASE_URL}${response.data.succMap[fileName]}`;
   };
 }
