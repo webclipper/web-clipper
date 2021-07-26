@@ -22,13 +22,13 @@ describe('test RequestHelper', () => {
 
     request.get('https://clipper.website');
     expect(mockRequestService.mock.request.mock.calls[1]).toEqual([
-      'https://clipper.website',
+      'https://clipper.website/',
       { method: 'get', headers: {} },
     ]);
 
     request.get('http://clipper.website');
     expect(mockRequestService.mock.request.mock.calls[2]).toEqual([
-      'http://clipper.website',
+      'http://clipper.website/',
       { method: 'get', headers: {} },
     ]);
   });
@@ -103,6 +103,58 @@ describe('test RequestHelper', () => {
         requestType: 'json',
         data: { name: 'DiamondYuan' },
         headers: { token: '123456' },
+      },
+    ]);
+  });
+});
+
+describe('test params', () => {
+  it('support overwrite params', () => {
+    const mockRequestService = new MockRequestService(() => {
+      return '';
+    });
+    const request = new RequestHelper({
+      baseURL: 'https://api.clipper.website/',
+      params: {
+        token: '12345',
+      },
+      request: mockRequestService,
+    });
+    request.post('DiamondYuan?token=123', {
+      data: { name: 'DiamondYuan' },
+    });
+    expect(mockRequestService.mock.request.mock.calls[0]).toEqual([
+      'https://api.clipper.website/DiamondYuan?token=123',
+      {
+        method: 'post',
+        requestType: 'json',
+        data: { name: 'DiamondYuan' },
+        headers: {},
+      },
+    ]);
+  });
+
+  it('support add params', () => {
+    const mockRequestService = new MockRequestService(() => {
+      return '';
+    });
+    const request = new RequestHelper({
+      baseURL: 'https://api.clipper.website/',
+      params: {
+        token: '12345',
+      },
+      request: mockRequestService,
+    });
+    request.post('DiamondYuan?hello=world', {
+      data: { name: 'DiamondYuan' },
+    });
+    expect(mockRequestService.mock.request.mock.calls[0]).toEqual([
+      'https://api.clipper.website/DiamondYuan?hello=world&token=12345',
+      {
+        method: 'post',
+        requestType: 'json',
+        data: { name: 'DiamondYuan' },
+        headers: {},
       },
     ]);
   });

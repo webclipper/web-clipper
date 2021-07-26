@@ -70,8 +70,17 @@ export class RequestHelper implements IExtendRequestHelper {
     } else {
       requestUrl = `${this.options.baseURL}${url}`;
     }
+    const parsedUrl = new URL(requestUrl);
+    if (this.options.params) {
+      const keys = Object.keys(this.options.params);
+      for (const key of keys) {
+        if (!parsedUrl.searchParams.has(key)) {
+          parsedUrl.searchParams.append(key, this.options.params[key]);
+        }
+      }
+    }
     return {
-      url: requestUrl,
+      url: parsedUrl.href,
       options: {
         ...options,
         headers: {

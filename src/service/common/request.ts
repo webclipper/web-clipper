@@ -62,6 +62,7 @@ export interface IHelperOptions {
   baseURL?: string;
   headers?: Record<string, string>;
   request: IRequestService;
+  params?: Record<string, string>;
   interceptors?: {
     request?: RequestInterceptor[] | RequestInterceptor;
   };
