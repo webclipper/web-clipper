@@ -3,6 +3,7 @@ import { DocumentService } from '../../index';
 import { IBasicRequestService } from '@/service/common/request';
 import { Container } from 'typedi';
 import { SiYuanClient } from '../../clients/siyuan/client';
+import localeService from '@/common/locales';
 
 /**
  *
@@ -35,7 +36,9 @@ export default class LeanoteDocumentService implements DocumentService {
       (name): Repository => {
         return {
           groupId: 'siyuan',
-          groupName: '笔记本',
+          groupName: localeService.format({
+            id: 'backend.services.siyuan.notes',
+          }),
           id: name,
           name: name,
         };

@@ -15,15 +15,12 @@ request.interceptors.response.use(
     } = {
       429: localeService.format({
         id: 'backend.imageHosting.yuque_oauth.error_429',
-        defaultMessage: 'Requests are too frequent.Request limit 100 per hour.',
       }),
       401: localeService.format({
         id: 'backend.imageHosting.yuque_oauth.error_401',
-        defaultMessage: 'No permission, need to delete the current account and re authorize.',
       }),
       403: localeService.format({
         id: 'backend.imageHosting.yuque_oauth.error_403',
-        defaultMessage: 'No permission, need to delete the current account and re authorize.',
       }),
     };
     if (codeMaps[response.status]) {

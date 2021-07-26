@@ -1,3 +1,4 @@
+import localeService from '@/common/locales';
 import { ServiceMeta } from './../interface';
 import Service from './service';
 
@@ -6,7 +7,9 @@ import Service from './service';
  */
 export default () => {
   return {
-    name: 'Siyuan',
+    name: localeService.format({
+      id: 'backend.services.siyuan.name',
+    }),
     icon: 'siyuan',
     type: 'siyuan',
     service: Service,

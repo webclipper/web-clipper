@@ -70,6 +70,8 @@
   "backend.services.onenote_oauth.name": "OneNote",
   "backend.services.server_chan.accessToken.message": "請輸入 AccessToken",
   "backend.services.server_chan.name": "Server醬",
+  "backend.services.siyuan.name": "",
+  "backend.services.siyuan.notes": "",
   "backend.services.ticktick.headerForm.applyTags": "選擇標簽",
   "backend.services.ticktick.name": "TickTick",
   "backend.services.ticktick.rootGroup": "根目錄",
