@@ -1,3 +1,4 @@
+import { CompleteStatus } from 'common/backend/interface';
 import { Repository, CreateDocumentRequest } from './../interface';
 import { DocumentService } from '../../index';
 import { IBasicRequestService } from '@/service/common/request';
@@ -46,7 +47,10 @@ export default class LeanoteDocumentService implements DocumentService {
     );
   };
 
-  createDocument = async (data: CreateDocumentRequest): Promise<void> => {
-    await this.client.createNote(data);
+  createDocument = async (data: CreateDocumentRequest): Promise<CompleteStatus | void> => {
+    const id = await this.client.createNote(data);
+    return {
+      href: `siyuan://blocks/${id}`,
+    };
   };
 }

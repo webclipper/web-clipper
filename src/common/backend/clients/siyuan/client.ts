@@ -29,7 +29,7 @@ export class SiYuanClient {
   };
 
   createNote = async (data: CreateDocumentRequest) => {
-    const response = await this.request.post<{ code: number; msg: string }>(
+    const response = await this.request.post<{ code: number; msg: string; data: string }>(
       `api/filetree/createDocWithMd`,
       {
         data: {
@@ -42,6 +42,7 @@ export class SiYuanClient {
     if (response.code !== 0) {
       throw new Error(response.msg);
     }
+    return response.data;
   };
 
   uploadImage = async (blob: Blob, notebook: string) => {
