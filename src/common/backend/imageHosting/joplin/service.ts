@@ -10,7 +10,7 @@ export interface JoplinImageHostingOption {
   token: string;
 }
 
-export default class YuqueImageHostingService implements ImageHostingService {
+export default class JoplinImageHostingService implements ImageHostingService {
   private client: IJoplinClient;
   private token: string;
 
