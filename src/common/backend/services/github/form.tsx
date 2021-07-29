@@ -21,9 +21,7 @@ const GenerateNewTokenUrl = `https://github.com/settings/tokens/new?${stringify(
 
 const visibilityOptions = [
   {
-    label: (
-      <FormattedMessage id="backend.services.github.form.visibility.all" defaultMessage="All" />
-    ),
+    label: <FormattedMessage id="backend.services.github.form.visibility.all" />,
     value: 'all',
   },
   {

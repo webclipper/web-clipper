@@ -21,27 +21,15 @@ const GenerateNewTokenUrl = `https://github.com/settings/tokens/new?${stringify(
 
 const visibilityOptions = [
   {
-    label: (
-      <FormattedMessage id="backend.services.github.form.visibility.all" defaultMessage="All" />
-    ),
+    label: <FormattedMessage id="backend.services.github.form.visibility.all" />,
     value: 'all',
   },
   {
-    label: (
-      <FormattedMessage
-        id="backend.services.github.form.visibility.public"
-        defaultMessage="Public"
-      />
-    ),
+    label: <FormattedMessage id="backend.services.github.form.visibility.public" />,
     value: 'public',
   },
   {
-    label: (
-      <FormattedMessage
-        id="backend.services.github.form.visibility.private"
-        defaultMessage="Private"
-      />
-    ),
+    label: <FormattedMessage id="backend.services.github.form.visibility.private" />,
     value: 'private',
   },
 ];
@@ -62,14 +50,7 @@ const GithubForm: React.FC<GithubFormProps & FormComponentProps> = ({
   }
   return (
     <Fragment>
-      <Form.Item
-        label={
-          <FormattedMessage
-            id="backend.services.github.form.visibility"
-            defaultMessage="Visibility"
-          />
-        }
-      >
+      <Form.Item label={<FormattedMessage id="backend.services.github.form.visibility" />}>
         {getFieldDecorator('visibility', {
           initialValue: visibility,
         })(

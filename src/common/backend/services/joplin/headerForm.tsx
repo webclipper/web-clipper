@@ -28,7 +28,6 @@ const HeaderForm: React.FC<FormComponentProps> = ({ form: { getFieldDecorator } 
             style={{ width: '100%' }}
             placeholder={locale.format({
               id: 'backend.services.joplin.headerForm.tags',
-              defaultMessage: 'Tags',
             })}
             loading={tagResponse.loading}
           >

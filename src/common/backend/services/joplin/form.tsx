@@ -25,20 +25,13 @@ const InitForm: React.FC<FormProps> = ({ form: { getFieldDecorator }, info, veri
           ],
         })(<Input disabled={verified} />)}
       </Form.Item>
-      <Form.Item
-        label={
-          <FormattedMessage id="backend.services.joplin.filter_tags" defaultMessage="Filter tags" />
-        }
-      >
+      <Form.Item label={<FormattedMessage id="backend.services.joplin.filter_tags" />}>
         {getFieldDecorator('filterTags', {
           initialValue: info?.filterTags ?? false,
           valuePropName: 'checked',
         })(
           <Checkbox>
-            <FormattedMessage
-              id="backend.services.joplin.filter_unused_tags"
-              defaultMessage="Filter unused tags"
-            />
+            <FormattedMessage id="backend.services.joplin.filter_unused_tags" />
           </Checkbox>
         )}
       </Form.Item>
