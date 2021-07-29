@@ -66,10 +66,7 @@ const Page: React.FC = () => {
                 defaultMessage="Automatic operation is prohibited"
               />
             ) : (
-              <FormattedMessage
-                id="preference.extensions.runAutomaticOnSaving"
-                defaultMessage="Run Automatic On Saving"
-              />
+              <FormattedMessage id="preference.extensions.runAutomaticOnSaving" />
             )
           }
         >

@@ -124,12 +124,7 @@ const ExtensionCard: React.FC<ExtensionCardProps> = ({ manifest, actions, classN
         title={<Card.Meta avatar={<IconFont type={manifest.icon} />} title={manifest.name} />}
       >
         <div style={{ height: 30 }}>
-          {manifest.description || (
-            <FormattedMessage
-              id="preference.extensions.no.Description"
-              defaultMessage="No Description"
-            />
-          )}
+          {manifest.description || <FormattedMessage id="preference.extensions.no.Description" />}
         </div>
       </Card>
     </React.Fragment>

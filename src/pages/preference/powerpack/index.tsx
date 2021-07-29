@@ -97,7 +97,7 @@ const Powerpack: React.FC = () => {
               )}`}
               target="_blank"
             >
-              <FormattedMessage id="preference.powerpack.upgrade" defaultMessage="Upgrade" />
+              <FormattedMessage id="preference.powerpack.upgrade" />
             </Button>,
           ]}
         >
@@ -107,7 +107,7 @@ const Powerpack: React.FC = () => {
             description={userInfo.email}
           />
           <div>
-            <FormattedMessage id="preference.powerpack.expiry" defaultMessage="Expiry" /> :
+            <FormattedMessage id="preference.powerpack.expiry" /> :
             {dayjs(userInfo.expire_date)
               .add(1, 'day')
               .format('YYYY-MM-DD')}
@@ -121,17 +121,13 @@ const Powerpack: React.FC = () => {
     return (
       <div>
         <h1>
-          <FormattedMessage
-            id="preference.powerpack.failed"
-            defaultMessage="Failed to
-          load powerpack info."
-          />
+          <FormattedMessage id="preference.powerpack.failed" />
         </h1>
         <Button type="primary" onClick={powerpackService.startup}>
-          <FormattedMessage id="preference.powerpack.reload" defaultMessage="Reload" />
+          <FormattedMessage id="preference.powerpack.reload" />
         </Button>
         <Button style={{ marginLeft: 8 }} onClick={powerpackService.logout}>
-          <FormattedMessage id="preference.powerpack.logout" defaultMessage="Logout" />
+          <FormattedMessage id="preference.powerpack.logout" />
         </Button>
       </div>
     );

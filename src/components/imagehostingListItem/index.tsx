@@ -32,10 +32,7 @@ export default class Page extends React.Component<PageProps> {
     const {
       name,
       remark = (
-        <FormattedMessage
-          id="component.imagehostingListItem.noDescription"
-          defaultMessage="No Description"
-        ></FormattedMessage>
+        <FormattedMessage id="component.imagehostingListItem.noDescription"></FormattedMessage>
       ),
       icon,
     } = this.props;
@@ -49,10 +46,10 @@ export default class Page extends React.Component<PageProps> {
 
     const actions = [
       <a key="edit" onClick={this.handleEditAccount}>
-        <FormattedMessage id="component.imagehostingListItem.edit" defaultMessage="Edit" />
+        <FormattedMessage id="component.imagehostingListItem.edit" />
       </a>,
       <a key="delete" onClick={this.handleDeleteAccount}>
-        <FormattedMessage id="component.imagehostingListItem.delete" defaultMessage="Delete" />
+        <FormattedMessage id="component.imagehostingListItem.delete" />
       </a>,
     ];
 
