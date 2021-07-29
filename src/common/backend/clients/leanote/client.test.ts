@@ -7,7 +7,7 @@ describe('test LeanoteClient', () => {
     const expectedResponseToken = { Token: 'SomeToken' };
     const mockRequestService = new MockRequestService(() => expectedResponseToken);
     const inputStub = {
-      leanote_host: 'leanote_host',
+      leanote_host: 'https://localhost',
       email: 'email',
       pwd: 'pwd',
       token_cached: 'OldToken',
@@ -22,7 +22,7 @@ describe('test LeanoteClient', () => {
   test('test repository', async () => {
     const notebookListStubResponse = [{ NotebookId: 1, Title: 'some_notebook_title' }];
     const inputStub = {
-      leanote_host: 'leanote_host',
+      leanote_host: 'https://localhost',
       email: '',
       pwd: '',
       token_cached: 'some_token_when_already_logged',
@@ -37,7 +37,7 @@ describe('test LeanoteClient', () => {
 
   test('test create document', async () => {
     const inputStub = {
-      leanote_host: 'leanote_host',
+      leanote_host: 'https://localhost',
       email: '',
       pwd: '',
       token_cached: 'some_token_when_already_logged',
