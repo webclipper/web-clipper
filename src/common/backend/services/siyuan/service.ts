@@ -10,10 +10,13 @@ import localeService from '@/common/locales';
  *
  * Document service for self hosted leanote or leanote.com
  */
-export default class LeanoteDocumentService implements DocumentService {
+export default class SiYuanDocumentService implements DocumentService {
   private client: SiYuanClient;
-  constructor() {
-    this.client = new SiYuanClient({ request: Container.get(IBasicRequestService) });
+  constructor(config: { accessToken?: string }) {
+    this.client = new SiYuanClient({
+      request: Container.get(IBasicRequestService),
+      accessToken: config.accessToken,
+    });
   }
 
   /** Unique account identification */

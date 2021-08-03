@@ -2,6 +2,7 @@ import { IRequestService } from '@/service/common/request';
 
 export interface ISiyuanClientOptions {
   request: IRequestService;
+  accessToken?: string;
 }
 
 export interface ISiyuanUploadImageResponse {

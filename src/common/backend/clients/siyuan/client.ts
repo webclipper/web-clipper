@@ -15,8 +15,13 @@ export class SiYuanClient {
 
   constructor(options: ISiyuanClientOptions) {
     this.options = options;
+    const headers: Record<string, string> = {};
+    if (options.accessToken) {
+      headers.Authorization = `Token ${options.accessToken}`;
+    }
     this.request = new RequestHelper({
       baseURL: SIYUAN_BASE_URL,
+      headers: headers,
       request: this.options.request,
     });
   }

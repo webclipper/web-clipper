@@ -1,6 +1,7 @@
 import localeService from '@/common/locales';
 import { ServiceMeta } from './../interface';
 import Service from './service';
+import form from './form';
 
 /**
  * @see https://github.com/siyuan-note/siyuan/issues/1266
@@ -11,6 +12,7 @@ export default () => {
       id: 'backend.services.siyuan.name',
     }),
     icon: 'siyuan',
+    form,
     type: 'siyuan',
     service: Service,
     homePage: 'https://b3log.org/siyuan/',
