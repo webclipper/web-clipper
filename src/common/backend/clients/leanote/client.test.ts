@@ -14,8 +14,9 @@ describe('test LeanoteClient', () => {
     };
     const client = new LeanoteClient(inputStub, mockRequestService);
     const result = await client.login();
-    const expectUrlGenerated = `${inputStub.leanote_host}/api/auth/login?email=${inputStub.email}&pwd=${inputStub.pwd}`;
+    const expectUrlGenerated = `${inputStub.leanote_host}/api/auth/login`;
     expect(mockRequestService.mock.request.mock.calls[0][0]).toEqual(expectUrlGenerated);
+    //TODO add test
     expect(result).toEqual(expectedResponseToken.Token);
   });
 
