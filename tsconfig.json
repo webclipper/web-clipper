@@ -17,7 +17,7 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "lib": ["dom", "ES2021"],
+    "lib": ["dom", "es2020", "es5", "ESNext.String"],
     "inlineSources": true,
     "esModuleInterop": true,
     "jsx": "react",

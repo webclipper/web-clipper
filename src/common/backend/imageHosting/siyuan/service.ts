@@ -11,9 +11,10 @@ export interface YuqueImageHostingOption {
 export default class SiYuanImageHostingService implements ImageHostingService {
   private context: { currentRepository: Repository } | null = null;
   private siyuan: SiYuanClient;
-  constructor() {
+  constructor(config: { accessToken?: string }) {
     this.siyuan = new SiYuanClient({
       request: Container.get(IBasicRequestService),
+      accessToken: config.accessToken,
     });
   }
 
