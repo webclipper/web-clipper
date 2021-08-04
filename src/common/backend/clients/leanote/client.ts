@@ -85,9 +85,20 @@ export default class LeanoteClient {
     if (!this.config.email || !this.config.pwd || this.config.email === '') {
       throw new Error('Cannot login');
     }
-    const data = await this.request.get<LeanoteResponse>(
-      `/api/auth/login?email=${this.config.email}&pwd=${this.config.pwd}`
-    );
+    /**
+     * change: get method=>postForm method
+     * Remark :
+     * The username and password fields need to be placed in the request body
+     * 用户名和密码的字段需要放在请求体
+     */
+
+    let formData = new FormData();
+    formData.append('email', this.config.email);
+    formData.append('pwd', this.config.pwd);
+
+    const data = await this.request.postForm<LeanoteResponse>(`/api/auth/login`, {
+      data: formData,
+    });
     this.config.token_cached = data.Token;
     return data.Token;
   };
