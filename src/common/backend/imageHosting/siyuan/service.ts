@@ -8,7 +8,7 @@ export interface YuqueImageHostingOption {
   access_token: string;
 }
 
-export default class YuqueImageHostingService implements ImageHostingService {
+export default class SiYuanImageHostingService implements ImageHostingService {
   private context: { currentRepository: Repository } | null = null;
   private siyuan: SiYuanClient;
   constructor() {
