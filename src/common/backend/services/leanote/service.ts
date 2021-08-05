@@ -39,14 +39,15 @@ export default class LeanoteDocumentService implements DocumentService {
 
   /**
    * If not logged, login then fetch notebook as repository
+   * change：getSyncNotebooks => getNotebooks
    *
    * @see documentation https://github.com/leanote/leanote/wiki/leanote-api
    */
   getRepositories = async () => {
-    let response = await this.client.getSyncNotebooks();
+    let response = await this.client.getNotebooks();
     if ((response as any).Msg && (response as any).Msg === 'NOTLOGIN') {
       await this.client.login();
-      response = await this.client.getSyncNotebooks();
+      response = await this.client.getNotebooks();
     }
     return response.map(function(leanoteNotebook: LeanoteNotebook) {
       return {
