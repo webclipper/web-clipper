@@ -40,7 +40,7 @@ export class SiYuanClient {
         data: {
           notebook: data.repositoryId,
           path: `${data.title}.sy`,
-          markdown: data.content,
+          markdown: data.content.replaceAll(SIYUAN_BASE_URL, ''),
         },
       }
     );
