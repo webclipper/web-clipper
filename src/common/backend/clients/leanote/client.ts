@@ -105,12 +105,27 @@ export default class LeanoteClient {
 
   /**
    * Perform a GET in getSyncNotebooks api to find notebooks
-   *
+   * Get notebooks which need be synced
+   * need Params: afterUsn(int, the usn bigger than it is need be synced)
+   *              maxEntry(int) Number returned by getSyncNotebooks api
+   * leanote:
+   *      afterUsn : Default value = 0
+   *      maxEntry : if maxEntry==0;maxEntry=100
    * @see documentation https://github.com/leanote/leanote/wiki/leanote-api
    */
   getSyncNotebooks = async () => {
     return this.request.get<LeanoteNotebook[]>(
       `/api/notebook/getSyncNotebooks?token=${this.config.token_cached}`
+    );
+  };
+  /**
+   * Perform a GET in getNotebooks api to find all notebooks
+   *
+   * @see documentation https://github.com/leanote/leanote/wiki/leanote-api
+   */
+  getNotebooks = async () => {
+    return this.request.get<LeanoteNotebook[]>(
+      `/api/notebook/getNotebooks?token=${this.config.token_cached}`
     );
   };
 }
