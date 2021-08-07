@@ -29,7 +29,7 @@ const RepositorySelect: React.FC<RepositorySelectProps> = ({ repositories, ...pr
     const repositoryInGroup: RepositoryInGroup = {};
     repositories.forEach(o => {
       if (searchKey) {
-        if (!o.name.includes(searchKey)) {
+        if (!o.name.toLocaleLowerCase().includes(searchKey.toLocaleLowerCase())) {
           return;
         }
       }
