@@ -13,7 +13,6 @@ export default (): ImageHostingServiceMeta => {
     builtIn: true,
     builtInRemark: localeService.format({
       id: 'backend.imageHosting.yuque_oauth.builtInRemark',
-      defaultMessage: 'Yuque built in image hosting service.',
     }),
   };
 };

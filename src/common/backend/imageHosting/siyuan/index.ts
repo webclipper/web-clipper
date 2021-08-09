@@ -6,7 +6,6 @@ export default (): ImageHostingServiceMeta => {
   return {
     name: localeService.format({
       id: 'backend.imageHosting.siyuan.name',
-      defaultMessage: 'SiYuan',
     }),
     icon: 'siyuan',
     type: 'siyuan',
