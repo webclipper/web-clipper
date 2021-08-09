@@ -51,6 +51,10 @@ class LocaleService {
     }
     return this.intl.formatMessage(descriptor, values);
   }
+
+  getMessage(key: string): string {
+    return this.intl?.messages[key].toString() ?? '';
+  }
 }
 
 export default new LocaleService();

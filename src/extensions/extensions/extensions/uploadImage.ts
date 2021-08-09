@@ -5,6 +5,7 @@ export default new ToolExtension(
     name: 'Upload Image',
     icon: 'sync',
     version: '0.0.1',
+    automatic: true,
     description: 'Upload images to image host.',
     i18nManifest: {
       'zh-CN': { name: '上传图片', description: '把文章内图片上传到图床' },

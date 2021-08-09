@@ -30,9 +30,7 @@ class ContextMenu extends ContextMenuExtension {
           },
         },
         default: {
-          template: localeService.format({
-            id: 'contextMenus.selection.save.template',
-          }),
+          template: localeService.getMessage('contextMenus.selection.save.template'),
         },
       },
       version: '0.0.1',
