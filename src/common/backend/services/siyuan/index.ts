@@ -17,7 +17,7 @@ export default () => {
     service: Service,
     homePage: 'https://b3log.org/siyuan/',
     permission: {
-      origins: ['http://localhost:6806/*', 'http://127.0.0.1:6806//*'],
+      origins: ['http://localhost:6806/*', 'http://127.0.0.1:6806/*'],
     },
   } as ServiceMeta;
 };
