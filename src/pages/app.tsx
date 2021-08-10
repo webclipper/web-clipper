@@ -25,7 +25,7 @@ Container.set(ILocalStorageService, localStorageService);
 Container.set(ISyncStorageService, syncStorageService);
 import '@/service/preference/browser/preferenceService';
 import { IPreferenceService } from '@/service/common/preference';
-
+import '@/services/environment/common/environmentService';
 const { Route, Switch, Router, withRouter } = router;
 
 function withTool(WrappedComponent: any): any {

@@ -31,6 +31,7 @@ export const getLanguage = () => {
 
 class LocaleService {
   private intl?: IntlShape;
+  private _locale?: string;
   async init() {
     const locale = localStorageService.get(LOCAL_USER_PREFERENCE_LOCALE_KEY, getLanguage());
     const messages = (localesMap.get(locale) || localesMap.get('en-US'))!.messages;
@@ -43,6 +44,11 @@ class LocaleService {
       cache
     );
     this.intl = intl;
+    this._locale = locale;
+  }
+
+  get locale() {
+    return this._locale ?? getLanguage();
   }
 
   format(descriptor: MessageDescriptor, values?: Record<string, any>): string {

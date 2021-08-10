@@ -1,42 +1,21 @@
 import React from 'react';
-import { GlobalStore } from '@/common/types';
-import { useSelector } from 'dva';
 import { Skeleton } from 'antd';
 import ReactMarkdown from 'react-markdown';
 import LinkRender from '@/components/LinkRender';
-import config from '@/config';
-import request from 'umi-request';
 import Container from 'typedi';
-import { IConfigService } from '@/service/common/config';
-import { useObserver } from 'mobx-react';
 import { useFetch } from '@shihengtech/hooks';
+import { IEnvironmentService } from '@/services/environment/common/environment';
 
-const Changelog: React.FC = () => {
-  const { locale } = useSelector(({ userPreference: { locale } }: GlobalStore) => {
-    return {
-      locale,
-    };
-  });
-  const configService = Container.get(IConfigService);
-  const workLocale = useObserver(() => {
-    let workLocale = 'en-US';
+const Privacy: React.FC = () => {
+  const environmentService = Container.get(IEnvironmentService);
+  const { loading, data: privacy } = useFetch(async () => {
+    return environmentService.privacy();
+  }, []);
 
-    if (configService.config?.privacyLocale.some(o => o === locale)) {
-      workLocale = locale;
-    }
-    return workLocale;
-  });
-
-  const { loading, data: changelog } = useFetch(
-    () => request.get(`${config.resourceHost}/privacy/PRIVACY.${workLocale}.md`),
-    []
-  );
-
-  if (loading || !changelog) {
+  if (loading || !privacy) {
     return <Skeleton active />;
   }
-
-  return <ReactMarkdown components={{ a: LinkRender } as any}>{changelog}</ReactMarkdown>;
+  return <ReactMarkdown components={{ a: LinkRender } as any}>{privacy}</ReactMarkdown>;
 };
 
-export default Changelog;
+export default Privacy;
