@@ -14,5 +14,5 @@ export interface ISiyuanUploadImageResponse {
 }
 
 export interface ISiyuanFetchNotesResponse {
-  data: { files: string[] | { name: string; id: string }[] };
+  data: { files: string[] | { name: string; id: string; closed?: boolean }[] };
 }
