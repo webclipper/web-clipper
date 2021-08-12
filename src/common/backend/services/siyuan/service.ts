@@ -35,16 +35,15 @@ export default class SiYuanDocumentService implements DocumentService {
 
   getRepositories = async () => {
     let response = await this.client.listNotebooks();
-    console.log('response', response);
     return response.map(
-      (name): Repository => {
+      ({ name, id }): Repository => {
         return {
           groupId: 'siyuan',
           groupName: localeService.format({
             id: 'backend.services.siyuan.notes',
           }),
-          id: name,
-          name: name,
+          id,
+          name,
         };
       }
     );

@@ -26,11 +26,19 @@ export class SiYuanClient {
     });
   }
 
-  listNotebooks = async (): Promise<string[]> => {
+  listNotebooks = async (): Promise<{ id: string; name: string }[]> => {
     const res = await this.request.post<ISiyuanFetchNotesResponse>(`api/notebook/ls`, {
       data: {},
     });
-    return res.data.files.map(p => p.split('/')[p.split('/').length - 1]);
+    return res.data.files.map(p => {
+      if (typeof p === 'object') {
+        return p;
+      }
+      return {
+        name: p.split('/')[p.split('/').length - 1],
+        id: p.split('/')[p.split('/').length - 1],
+      };
+    });
   };
 
   createNote = async (data: CreateDocumentRequest) => {
