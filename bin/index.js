@@ -1,5 +1,5 @@
-import { hideBin } from 'yargs/helpers';
-
-const [application, ...args] = hideBin(process.argv);
-
-console.log(application, args);
+#!/usr/bin/env node
+require('ts-node').register({
+  transpileOnly: true,
+});
+require('./main');

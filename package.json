@@ -14,8 +14,7 @@
     "release:ff": "bash script/release_ff.sh",
     "lint": "eslint --ext .js,.ts,.tsx .",
     "lint-staged": "lint-staged",
-    "format": "node script/formatLocaleMessage.js",
-    "format_new": "web-clipper format"
+    "format": "web-clipper format"
   },
   "lint-staged": {
     "src/**/*.{ts, tsx}": [
