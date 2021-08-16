@@ -50,6 +50,7 @@ export class BackendService implements IBackendService {
   }
 
   async refreshToken(): Promise<string> {
-    return this.request.get<string>('refresh');
+    const token = await this.request.get<{ result: string }>('refresh');
+    return token.result;
   }
 }

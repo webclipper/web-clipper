@@ -1,3 +1,4 @@
+import { PowerpackService } from './../service/powerpackService';
 import { ILocaleService } from '@/service/common/locale';
 import { IPowerpackService } from '@/service/common/powerpack';
 import { IWebRequestService } from '@/service/common/webRequest';
@@ -9,7 +10,7 @@ import { ITrackService } from '@/service/common/track';
 import * as browser from '@web-clipper/chrome-promise';
 import config from '@/config';
 import packageJson from '@/../package.json';
-import Container from 'typedi';
+import Container, { Service } from 'typedi';
 import { IPermissionsService } from '@/service/common/permissions';
 import { PermissionsChannel } from '@/service/permissions/common/permissionsIpc';
 import { ITabService } from '@/service/common/tab';
@@ -28,7 +29,10 @@ import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/types';
 import { ILocalStorageService, ISyncStorageService } from '@/service/common/storage';
 Container.set(ILocalStorageService, localStorageService);
 Container.set(ISyncStorageService, syncStorageService);
-
+import '@/service/request/tool/basic';
+import { IBackendService } from '@/services/backend/common/backend';
+import { BackendService } from '@/services/backend/common/backendService';
+Service(IBackendService)(BackendService);
 import '@/service/extension/browser/extensionContainer';
 import '@/service/extension/browser/extensionService';
 import { IExtensionContainer, IExtensionService } from '@/service/common/extension';
@@ -93,6 +97,7 @@ async function initContentScriptService(tabId: number) {
 (async () => {
   await syncStorageService.init();
   await localStorageService.init();
+  Service(IPowerpackService)(PowerpackService);
   await Container.get(IPowerpackService).startup();
   const trackService = Container.get(ITrackService);
   await trackService.init();

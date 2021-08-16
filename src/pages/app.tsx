@@ -1,4 +1,4 @@
-import Container from 'typedi';
+import Container, { Service } from 'typedi';
 import React from 'react';
 import dva, { router } from 'dva';
 import { createHashHistory } from 'history';
@@ -26,6 +26,9 @@ Container.set(ISyncStorageService, syncStorageService);
 import '@/service/preference/browser/preferenceService';
 import { IPreferenceService } from '@/service/common/preference';
 import '@/services/environment/common/environmentService';
+import { BackendService } from '@/services/backend/common/backendService';
+import { IBackendService } from '@/services/backend/common/backend';
+import { PowerpackService } from '@/service/powerpackService';
 const { Route, Switch, Router, withRouter } = router;
 
 function withTool(WrappedComponent: any): any {
@@ -47,8 +50,10 @@ export default async () => {
   await localStorageService.init();
   await localeService.init();
   Container.get(IConfigService).load();
-  Container.get(IPowerpackService).startup();
   Container.get(ITrackService).init();
+  Service(IBackendService)(BackendService);
+  Service(IPowerpackService)(PowerpackService);
+  Container.get(IPowerpackService).startup();
   await Container.get(IPreferenceService).init();
   const app = dva({
     namespacePrefixWarning: false,
