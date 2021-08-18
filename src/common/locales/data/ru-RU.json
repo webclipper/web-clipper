@@ -184,6 +184,7 @@
   "tool.clipExtensions": "",
   "tool.repository": "",
   "tool.save": "",
+  "tool.saveButton.noRepository": "",
   "tool.title": "Сохранить контент",
   "tool.title.required": "",
   "tool.toolExtensions": ""

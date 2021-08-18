@@ -184,6 +184,7 @@
   "tool.clipExtensions": "剪藏扩展",
   "tool.repository": "知识库",
   "tool.save": "保存内容",
+  "tool.saveButton.noRepository": "请选择你要保存的知识库",
   "tool.title": "笔记标题",
   "tool.title.required": "请输入笔记标题",
   "tool.toolExtensions": "工具扩展"

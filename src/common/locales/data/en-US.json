@@ -184,6 +184,7 @@
   "tool.clipExtensions": "Clip Extension",
   "tool.repository": "Repository",
   "tool.save": "Save Content",
+  "tool.saveButton.noRepository": "Please select a repository",
   "tool.title": "Title",
   "tool.title.required": "Title is Required",
   "tool.toolExtensions": "Tool Extension"

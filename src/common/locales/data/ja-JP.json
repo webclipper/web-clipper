@@ -184,6 +184,7 @@
   "tool.clipExtensions": "",
   "tool.repository": "",
   "tool.save": "コンテンツを保存する",
+  "tool.saveButton.noRepository": "",
   "tool.title": "記事タイトル",
   "tool.title.required": "",
   "tool.toolExtensions": ""

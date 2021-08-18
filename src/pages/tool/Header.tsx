@@ -12,6 +12,7 @@ import { updateClipperHeader, asyncCreateDocument } from '@/actions/clipper';
 import { isEqual } from 'lodash';
 import { ServiceMeta, Repository } from '@/common/backend';
 import classNames from 'classnames';
+import localeService from '@/common/locales';
 
 type PageProps = FormComponentProps & {
   pathname: string;
@@ -86,12 +87,19 @@ const ClipperHeader: React.FC<PageProps> = props => {
         className={styles.saveButton}
         size="large"
         type="primary"
+        title={
+          !currentRepository
+            ? localeService.format({
+                id: 'tool.saveButton.noRepository',
+              })
+            : ''
+        }
         onClick={handleSubmit}
         loading={loading}
         disabled={loading || pathname === '/' || !currentRepository}
         block
       >
-        {<FormattedMessage id="tool.save" defaultMessage="Save Content" />}
+        <FormattedMessage id="tool.save" defaultMessage="Save Content" />
       </Button>
     </Section>
   );

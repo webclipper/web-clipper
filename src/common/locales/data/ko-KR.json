@@ -184,6 +184,7 @@
   "tool.clipExtensions": "",
   "tool.repository": "",
   "tool.save": "컨텐츠 저장",
+  "tool.saveButton.noRepository": "",
   "tool.title": "컨텐츠 저장",
   "tool.title.required": "",
   "tool.toolExtensions": ""

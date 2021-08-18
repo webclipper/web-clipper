@@ -184,6 +184,7 @@
   "tool.clipExtensions": "剪藏擴展",
   "tool.repository": "知識庫",
   "tool.save": "保存內容",
+  "tool.saveButton.noRepository": "",
   "tool.title": "筆記標題",
   "tool.title.required": "請輸入筆記標題",
   "tool.toolExtensions": "工具擴展"
