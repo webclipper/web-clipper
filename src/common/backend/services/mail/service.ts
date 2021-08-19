@@ -1,6 +1,7 @@
+import { Container } from 'typedi';
 import { CompleteStatus } from 'common/backend/interface';
+import { IBackendService, PostMailRequestBody } from '@/services/backend/common/backend';
 import { DocumentService, CreateDocumentRequest } from '../../index';
-import { postMail, PostMailRequestBody } from '@/common/server';
 import showdown from 'showdown';
 import { MailBackendServiceConfig } from './interface';
 
@@ -47,7 +48,7 @@ export default class MailDocumentService implements DocumentService {
     } else {
       postBody.text = info.content;
     }
-    await postMail(postBody);
+    await Container.get(IBackendService).sendEmail(postBody);
     return {
       href: `https://${this.config.home}`,
     };

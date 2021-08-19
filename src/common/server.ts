@@ -70,17 +70,6 @@ export const getUserInfo = () => {
   return request.get<IResponse<PowerpackUserInfo>>('user');
 };
 
-export interface PostMailRequestBody {
-  to: string;
-  subject: string;
-  html?: string;
-  text?: string;
-}
-
-export const postMail = (data: PostMailRequestBody) => {
-  return request.post('service/email', { data });
-};
-
 export interface SendToKindleRequestBody {
   to: string;
   title: string;
@@ -89,39 +78,6 @@ export interface SendToKindleRequestBody {
 
 export const sentToKindle = (data: SendToKindleRequestBody) => {
   return request.post('service/sendToKindle', { data });
-};
-
-export const refresh = () => {
-  return request.get<IResponse<string>>('refresh');
-};
-
-export interface WebClipperRemoteConfig {
-  resource: {
-    host: string;
-    privacy: string;
-    changelog: string;
-  };
-  yuque_oauth: {
-    clientId: string;
-    callback: string;
-    scope: string;
-  };
-  onenote_oauth: {
-    clientId: string;
-    callback: string;
-  };
-  google_oauth: {
-    clientId: string;
-    callback: string;
-  };
-  github_oauth: {
-    clientId: string;
-    callback: string;
-  };
-}
-
-export const fetchRemoteConfig = () => {
-  return request.get<IResponse<WebClipperRemoteConfig>>('v1/config');
 };
 
 export interface OCRRequestBody {

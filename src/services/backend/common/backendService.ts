@@ -1,3 +1,4 @@
+import { IResponse } from '@/common/types';
 import { ILocalStorageService } from '@/service/common/storage';
 import { IPowerpackService } from '@/service/common/powerpack';
 import { RequestHelper } from '@/service/request/common/request';
@@ -8,7 +9,7 @@ import {
 } from '@/service/common/request';
 import { ILocaleService } from '@/service/common/locale';
 import { Inject, Container } from 'typedi';
-import { IBackendService } from './backend';
+import { IBackendService, PostMailRequestBody, WebClipperRemoteConfig } from './backend';
 import config from '@/config';
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
 
@@ -52,5 +53,15 @@ export class BackendService implements IBackendService {
   async refreshToken(): Promise<string> {
     const token = await this.request.get<{ result: string }>('refresh');
     return token.result;
+  }
+
+  async sendEmail(data: PostMailRequestBody): Promise<void> {
+    await this.request.post('service/email', { data });
+    return;
+  }
+
+  async fetchRemoteConfig(): Promise<WebClipperRemoteConfig> {
+    const response = await this.request.get<IResponse<WebClipperRemoteConfig>>('v1/config');
+    return response.result;
   }
 }
