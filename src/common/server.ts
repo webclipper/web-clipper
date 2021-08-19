@@ -1,5 +1,5 @@
 import { Container } from 'typedi';
-import { PowerpackUserInfo, IPowerpackService } from '@/service/common/powerpack';
+import { IPowerpackService } from '@/service/common/powerpack';
 import { getLanguage } from './locales/index';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/modelTypes/userPreference';
 import { extend } from 'umi-request';
@@ -65,10 +65,6 @@ request.interceptors.response.use(
   },
   { global: false }
 );
-
-export const getUserInfo = () => {
-  return request.get<IResponse<PowerpackUserInfo>>('user');
-};
 
 export interface SendToKindleRequestBody {
   to: string;

@@ -1,6 +1,6 @@
 import { IResponse } from '@/common/types';
 import { ILocalStorageService } from '@/service/common/storage';
-import { IPowerpackService } from '@/service/common/powerpack';
+import { IPowerpackService, PowerpackUserInfo } from '@/service/common/powerpack';
 import { RequestHelper } from '@/service/request/common/request';
 import {
   IBasicRequestService,
@@ -9,7 +9,13 @@ import {
 } from '@/service/common/request';
 import { ILocaleService } from '@/service/common/locale';
 import { Inject, Container } from 'typedi';
-import { IBackendService, PostMailRequestBody, WebClipperRemoteConfig } from './backend';
+import {
+  SendToKindleRequestBody,
+  IBackendService,
+  OCRRequestBody,
+  PostMailRequestBody,
+  WebClipperRemoteConfig,
+} from './backend';
 import config from '@/config';
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
 
@@ -62,6 +68,21 @@ export class BackendService implements IBackendService {
 
   async fetchRemoteConfig(): Promise<WebClipperRemoteConfig> {
     const response = await this.request.get<IResponse<WebClipperRemoteConfig>>('v1/config');
+    return response.result;
+  }
+
+  async getUserInfo(): Promise<PowerpackUserInfo> {
+    const response = await this.request.get<IResponse<PowerpackUserInfo>>('user');
+    return response.result;
+  }
+
+  async sentToKindle(data: SendToKindleRequestBody): Promise<void> {
+    await this.request.post('service/sendToKindle', { data });
+    return;
+  }
+
+  async ocr(data: OCRRequestBody): Promise<string> {
+    const response = await this.request.post<IResponse<string>>('service/ocr', { data });
     return response.result;
   }
 }

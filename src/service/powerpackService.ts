@@ -1,6 +1,4 @@
 import { IBackendService } from './../services/backend/common/backend';
-import { IResponse } from '@/common/types';
-import { getUserInfo } from '@/common/server';
 import { IStorageService } from '@web-clipper/shared/lib/storage';
 import { ILocalStorageService } from '@/service/common/storage';
 import {
@@ -63,9 +61,9 @@ export class PowerpackService implements IPowerpackService {
     runInAction(() => {
       this.accessToken = accessToken;
     });
-    const response: IResponse<PowerpackUserInfo> = await getUserInfo();
+    const response: PowerpackUserInfo = await this.backendService.getUserInfo();
     runInAction(() => {
-      this.userInfo = response.result;
+      this.userInfo = response;
     });
   };
 
