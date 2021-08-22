@@ -1,7 +1,8 @@
-import { SendToKindleRequestBody, sentToKindle } from './../../../server';
+import { IBackendService, SendToKindleRequestBody } from '@/services/backend/common/backend';
 import { CompleteStatus } from 'common/backend/interface';
 import { DocumentService, CreateDocumentRequest } from '../../index';
 import { MailBackendServiceConfig } from './interface';
+import Container from 'typedi';
 
 export default class MailDocumentService implements DocumentService {
   private config: MailBackendServiceConfig;
@@ -40,7 +41,7 @@ export default class MailDocumentService implements DocumentService {
       title: info.title,
       content: info.content,
     };
-    await sentToKindle(postBody);
+    Container.get(IBackendService).sentToKindle(postBody);
     return {
       href: `https://www.amazon.cn/hz/mycd/myx#/home/content/pdocs/dateDsc/`,
     };

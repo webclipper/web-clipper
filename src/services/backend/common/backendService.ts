@@ -25,6 +25,7 @@ export class BackendService implements IBackendService {
     @Inject(ILocaleService) localeService: ILocaleService,
     @Inject(IBasicRequestService) private basicRequestService: IRequestService
   ) {
+    //TODO handle 401
     this.request = new RequestHelper({
       baseURL: `${config.serverHost}/api/`,
       request: this.basicRequestService,
