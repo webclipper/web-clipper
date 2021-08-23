@@ -10,8 +10,12 @@ export interface YuqueImageHostingOption {
 }
 
 export default class YuqueImageHostingService implements ImageHostingService {
+  private secretToken?: string;
+  constructor(info: { secretToken?: string }) {
+    this.secretToken = info.secretToken;
+  }
   getId = () => {
-    return md5('sm.ms');
+    return md5(this.secretToken ?? 'sm.ms');
   };
 
   uploadImage = async ({ data }: UploadImageRequest) => {
@@ -31,11 +35,32 @@ export default class YuqueImageHostingService implements ImageHostingService {
     let formData = new FormData();
     formData.append('smfile', blob);
     formData.append('ssl', 'true');
-    const request = new RequestHelper({ request: Container.get(IBasicRequestService) });
-    const result = await request.postForm<{ data: { url: string } }>(
-      `https://sm.ms/api/v2/upload`,
-      { data: formData }
-    );
+    let headers: { Authorization?: string } = {};
+    if (this.secretToken) {
+      headers.Authorization = this.secretToken;
+    }
+    const request = new RequestHelper({
+      request: Container.get(IBasicRequestService),
+      headers: headers,
+    });
+    const result = await request.postForm<
+      { data: { url: string } } | { code: string; success: false; images: string; message: string }
+    >(`https://sm.ms/api/v2/upload`, { data: formData });
+    if (isFail(result)) {
+      if (result.code !== 'image_repeated') {
+        throw new Error(result.message);
+      }
+      return result.images;
+    }
     return result.data.url;
   };
+}
+
+function isFail(
+  rs: { data: { url: string } } | { code: string; success: false; images: string }
+): rs is { code: string; success: false; images: string } {
+  if (!(rs as { code: string; success: false; images: string }).success) {
+    return true;
+  }
+  return false;
 }
