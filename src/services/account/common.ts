@@ -1,4 +1,4 @@
-import { AccountPreference } from './modelTypes/account';
+import { AccountPreference } from '@/common/modelTypes/account';
 
 export function unpackAccountPreference(account: AccountPreference) {
   const {

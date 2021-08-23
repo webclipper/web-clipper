@@ -18,7 +18,7 @@ import {
   watchActionChannel,
 } from 'pageActions/clipper';
 import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
-import { unpackAccountPreference } from '@/common/account';
+import { unpackAccountPreference } from '@/services/account/common';
 import { notification, Button } from 'antd';
 import { routerRedux } from 'dva';
 import { asyncUpdateAccount } from '@/actions/account';
