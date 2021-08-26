@@ -16,14 +16,14 @@ const Page: React.FC = () => {
   const extensionContainer = Container.get(IExtensionContainer);
   const {
     disabledExtensions,
-    disabledAutomaticExtensions,
+    enabledAutomaticExtensionIds,
     defaultExtensionId,
     extensions,
     contextMenus,
   } = useObserver(() => {
     return {
       defaultExtensionId: extensionService.DefaultExtensionId,
-      disabledAutomaticExtensions: extensionService.DisabledAutomaticExtensionIds,
+      enabledAutomaticExtensionIds: extensionService.EnabledAutomaticExtensionIds,
       disabledExtensions: extensionService.DisabledExtensionIds,
       extensions: extensionContainer.extensions,
       contextMenus: extensionContainer.contextMenus,
@@ -56,7 +56,7 @@ const Page: React.FC = () => {
       );
     }
     if (e.manifest.automatic) {
-      const automaticDisabled = disabledAutomaticExtensions.some(o => o === e.id);
+      const automaticDisabled = enabledAutomaticExtensionIds.every(o => o !== e.id);
       actions.push(
         <Tooltip
           title={

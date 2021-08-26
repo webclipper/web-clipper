@@ -43,6 +43,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
   })
   .takeEvery(watchActionChannel, function*(_, { put, take }) {
     while (true) {
+      //@ts-ignore
       const action = yield take(actionChannel);
       yield put(action);
     }
@@ -73,6 +74,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     const documentService = documentServiceFactory(type, info);
     const permissionsService = Container.get(IPermissionsService);
     if (selectState.servicesMeta[type]?.permission) {
+      //@ts-ignore
       const hasPermissions = yield call(
         permissionsService.contains,
         selectState.servicesMeta[type]?.permission!
@@ -187,13 +189,13 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
       }
       const extensions = Container.get(IExtensionContainer).extensions;
       const extension = extensions.find(o => o.router === pathname);
-      const disabledAutomaticExtensions = Container.get(IExtensionService)
-        .DisabledAutomaticExtensionIds;
+      const enabledAutomaticExtensionIds = Container.get(IExtensionService)
+        .EnabledAutomaticExtensionIds;
       const automaticExtensions = extensions.filter(
         o =>
           o.type === ExtensionType.Tool &&
           o.manifest.automatic &&
-          disabledAutomaticExtensions.every(id => id !== o.id)
+          enabledAutomaticExtensionIds.some(id => id !== o.id)
       );
       return {
         repositoryId,

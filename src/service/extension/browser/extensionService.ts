@@ -1,5 +1,5 @@
 import {
-  LOCAL_EXTENSIONS_DISABLED_AUTOMATIC_EXTENSIONS_KEY,
+  LOCAL_EXTENSIONS_ENABLE_AUTOMATIC_EXTENSIONS_KEY,
   LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY,
 } from '@/common/modelTypes/extensions';
 import { IStorageService } from '@web-clipper/shared/lib/storage';
@@ -16,7 +16,7 @@ class ExtensionService implements IExtensionService {
   public DisabledExtensionIds: string[] = [];
 
   @observable
-  public DisabledAutomaticExtensionIds: string[] = [];
+  public EnabledAutomaticExtensionIds: string[] = [];
 
   constructor(
     @Inject(ILocalStorageService) private localStorageService: IStorageService,
@@ -31,7 +31,7 @@ class ExtensionService implements IExtensionService {
     this.localStorageService.onDidChangeStorage(e => {
       if (
         [
-          LOCAL_EXTENSIONS_DISABLED_AUTOMATIC_EXTENSIONS_KEY,
+          LOCAL_EXTENSIONS_ENABLE_AUTOMATIC_EXTENSIONS_KEY,
           LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY,
         ].includes(e)
       ) {
@@ -67,7 +67,7 @@ class ExtensionService implements IExtensionService {
   }
 
   async toggleAutomaticExtension(id: string) {
-    await this.toggleStorageData(LOCAL_EXTENSIONS_DISABLED_AUTOMATIC_EXTENSIONS_KEY, id);
+    await this.toggleStorageData(LOCAL_EXTENSIONS_ENABLE_AUTOMATIC_EXTENSIONS_KEY, id);
   }
 
   private async toggleStorageData(key: string, id: string) {
@@ -87,8 +87,12 @@ class ExtensionService implements IExtensionService {
       this.localStorageService.get(LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY, '[]')
     ) as string[];
 
-    this.DisabledAutomaticExtensionIds = JSON.parse(
-      this.localStorageService.get(LOCAL_EXTENSIONS_DISABLED_AUTOMATIC_EXTENSIONS_KEY, '[]')
+    this.DisabledExtensionIds = JSON.parse(
+      this.localStorageService.get(LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY, '[]')
+    ) as string[];
+
+    this.EnabledAutomaticExtensionIds = JSON.parse(
+      this.localStorageService.get(LOCAL_EXTENSIONS_ENABLE_AUTOMATIC_EXTENSIONS_KEY, '[]')
     ) as string[];
   }
 }

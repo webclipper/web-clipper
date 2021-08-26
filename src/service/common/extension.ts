@@ -1,13 +1,16 @@
 import { IExtensionWithId, IContextMenusWithId } from '@/extensions/common';
 import { Token } from 'typedi';
-export interface Extension {}
+
+export interface Extension {
+  //
+}
 
 export interface IExtensionService {
   DefaultExtensionId: string | null;
 
   DisabledExtensionIds: string[];
 
-  DisabledAutomaticExtensionIds: string[];
+  EnabledAutomaticExtensionIds: string[];
 
   getExtensionConfig<T>(id: string): T | undefined;
 

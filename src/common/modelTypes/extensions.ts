@@ -6,5 +6,6 @@ export interface ExtensionStore {
 }
 
 export const LOCAL_EXTENSIONS_DISABLED_EXTENSIONS_KEY = 'local.extensions.disabled.extensions';
-export const LOCAL_EXTENSIONS_DISABLED_AUTOMATIC_EXTENSIONS_KEY =
+
+export const LOCAL_EXTENSIONS_ENABLE_AUTOMATIC_EXTENSIONS_KEY =
   'local.extensions.enable.automatic.extensions';
