@@ -1,5 +1,7 @@
+import { IBasicRequestService } from '@/service/common/request';
+import { Container } from 'typedi';
+import { RequestHelper } from '@/service/request/common/request';
 import { DocumentService } from './../../index';
-import axios, { AxiosInstance } from 'axios';
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
 import * as qs from 'qs';
 import md5 from '@web-clipper/shared/lib/md5';
@@ -19,19 +21,22 @@ const HOST = 'https://www.yuque.com';
 const BASE_URL = `${HOST}/api/v2/`;
 
 export default class YuqueDocumentService implements DocumentService {
-  private request: AxiosInstance;
+  private request: RequestHelper;
   private userInfo?: YuqueUserInfoResponse;
   private config: YuqueBackendServiceConfig;
   private repositories: YuqueRepository[];
 
   constructor({ accessToken, repositoryType = RepositoryType.all }: YuqueBackendServiceConfig) {
     this.config = { accessToken, repositoryType };
-    this.request = axios.create({
+    this.request = new RequestHelper({
       baseURL: BASE_URL,
-      headers: { 'X-Auth-Token': accessToken },
-      timeout: 5000,
-      transformResponse: [data => JSON.parse(data).data],
-      withCredentials: true,
+      headers: {
+        'X-Auth-Token': accessToken,
+      },
+      request: Container.get(IBasicRequestService),
+      interceptors: {
+        response: e => (e as any).data,
+      },
     });
     this.repositories = [];
   }
@@ -89,10 +94,12 @@ export default class YuqueDocumentService implements DocumentService {
       private: true,
     };
     const response = await this.request.post<YuqueCreateDocumentResponse>(
-      `/repos/${repositoryId}/docs`,
-      qs.stringify(request)
+      `repos/${repositoryId}/docs`,
+      {
+        data: request,
+      }
     );
-    const data = response.data;
+    const data = response;
     return {
       href: `${HOST}/${repository.namespace}/${data.slug}`,
       repositoryId,
@@ -105,13 +112,11 @@ export default class YuqueDocumentService implements DocumentService {
     if (!this.userInfo) {
       this.userInfo = await this.getYuqueUserInfo();
     }
-    return (await this.request.get<YuqueGroupResponse[]>(`users/${this.userInfo.login}/groups`))
-      .data;
+    return this.request.get<YuqueGroupResponse[]>(`users/${this.userInfo.login}/groups`);
   };
 
   private getYuqueUserInfo = async () => {
-    const response = await this.request.get<YuqueUserInfoResponse>('user');
-    return response.data;
+    return this.request.get<YuqueUserInfoResponse>('user');
   };
 
   private getAllRepositories = async (isGroup: boolean, groupId: number, groupName: string) => {
@@ -140,7 +145,7 @@ export default class YuqueDocumentService implements DocumentService {
       const response = await this.request.get<YuqueRepositoryResponse[]>(
         `${isGroup ? 'groups' : 'users'}/${slug}/repos?${qs.stringify(query)}`
       );
-      return response.data;
+      return response;
     } catch (_error) {
       return [];
     }

@@ -1,3 +1,4 @@
+import { ResponseInterceptor } from './../../common/request';
 import {
   IGetFormRequestOptions,
   IHelperOptions,
@@ -10,7 +11,9 @@ import {
 } from '@/service/common/request';
 
 export class RequestHelper implements IExtendRequestHelper {
-  constructor(private options: IHelperOptions) {}
+  constructor(private options: IHelperOptions) {
+    //
+  }
 
   post<T>(url: string, options: Omit<IPostRequestOptions, 'method' | 'requestType'>) {
     return this.request<T>(url, {
@@ -42,7 +45,7 @@ export class RequestHelper implements IExtendRequestHelper {
     });
   }
 
-  private async request<T>(url: string, options: TRequestOption) {
+  private async request<T>(url: string, options: TRequestOption): Promise<T> {
     let requestUrl = url;
     let requestOptions = options;
     let requestInterceptors: RequestInterceptor[] | RequestInterceptor =
@@ -57,7 +60,17 @@ export class RequestHelper implements IExtendRequestHelper {
       requestUrl = res.url ?? requestUrl;
       requestOptions = res.options ?? requestOptions;
     }
-    return this.options.request.request<T>(requestUrl, requestOptions);
+    let result = await this.options.request.request<T>(requestUrl, requestOptions);
+
+    let responseInterceptors: ResponseInterceptor[] | ResponseInterceptor =
+      this.options.interceptors?.response ?? [];
+    if (responseInterceptors && !Array.isArray(responseInterceptors)) {
+      responseInterceptors = [responseInterceptors] as ResponseInterceptor[];
+    }
+    for (const interceptor of responseInterceptors) {
+      result = interceptor(result) as T;
+    }
+    return result;
   }
 
   private basicRequestInterceptors(

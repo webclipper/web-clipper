@@ -28,19 +28,15 @@ export default class YuqueDocumentService implements DocumentService {
 
   constructor({ access_token, repositoryType = RepositoryType.all }: YuqueBackendServiceConfig) {
     this.config = { access_token, repositoryType };
-    // this.request = axios.create({
-    //   baseURL: BASE_URL,
-    //   headers: { 'X-Auth-Token': access_token },
-    //   timeout: 5000,
-    //   transformResponse: [data => JSON.parse(data).data],
-    //   withCredentials: true,
-    // });
     this.request = new RequestHelper({
       baseURL: BASE_URL,
       headers: {
         'X-Auth-Token': access_token,
       },
       request: Container.get(IBasicRequestService),
+      interceptors: {
+        response: e => (e as any).data,
+      },
     });
     this.repositories = [];
   }
@@ -98,7 +94,7 @@ export default class YuqueDocumentService implements DocumentService {
       private: true,
     };
     const response = await this.request.post<YuqueCreateDocumentResponse>(
-      `/repos/${repositoryId}/docs`,
+      `repos/${repositoryId}/docs`,
       {
         data: request,
       }

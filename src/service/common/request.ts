@@ -46,6 +46,8 @@ export type RequestInterceptor = (
   options?: TRequestOption;
 };
 
+export type ResponseInterceptor = (data: unknown) => unknown;
+
 export interface IExtendRequestHelper {
   post<T>(url: string, options: Omit<IPostRequestOptions, 'method' | 'requestType'>): Promise<T>;
   postForm<T>(
@@ -65,6 +67,7 @@ export interface IHelperOptions {
   params?: Record<string, string>;
   interceptors?: {
     request?: RequestInterceptor[] | RequestInterceptor;
+    response?: ResponseInterceptor[] | ResponseInterceptor;
   };
 }
 
