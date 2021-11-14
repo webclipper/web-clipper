@@ -72,7 +72,8 @@
     "showdown": "^1.9.0",
     "tldjs": "^2.3.1",
     "typedi": "^0.8.0",
-    "umi-request": "^1.2.15"
+    "umi-request": "^1.2.15",
+    "cos-js-sdk-v5": "^1.2.21"
   },
   "devDependencies": {
     "@types/yargs": "^17.0.2",
