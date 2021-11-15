@@ -62,17 +62,69 @@ export default class YuqueDocumentService implements DocumentService<OneNoteBack
     const response = await this.request.get<OneNoteNotebooksResponse>(
       '/v1.0/me/onenote/notebooks??expand=sections,sectionGroups'
     );
-    this.repositories = _.flatten(
-      response.data.value.map(({ id: groupId, displayName: groupName, sections }) => {
-        return sections.map(({ id, displayName: name }) => ({
-          name,
-          id,
-          groupId,
-          groupName,
-        }));
-      })
-    );
+
+    let promises = await response.data.value.map(({ id: groupId, displayName: groupName }) => {
+      return this.getSections(true, groupId, '', groupId, groupName);
+    });
+
+    for (const p of promises) {
+      this.repositories.push(..._.flatten(await p));
+    }
+
     return this.repositories;
+  };
+
+  /**
+   * Add sections recursively (even for those in Section Groups)
+   *
+   * @param {boolean} notebook In Microsoft API, the topmost level should be "notebooks",
+   *                           then "sectionGroups" in later levels
+   * @param {string} preId The id passing in.
+   * @param {string} prefix to denote names of Section Groups.
+   * @param {sring} groupId for notebook id.
+   * @param {string} groupName for notebook name.
+   */
+  getSections = async (
+    notebook: boolean,
+    preId: string,
+    prefix: string,
+    groupId: string,
+    groupName: string
+  ): Promise<Repository[]> => {
+    let repos = [];
+
+    // Handle sections
+    const sectionsRes = await this.request.get<OneNoteNotebooksResponse>(
+      `/v1.0/users/me/onenote/${notebook ? 'notebooks/' : 'sectionGroups/'}${preId}/sections`
+    );
+    repos.push(
+      ..._.flatten(
+        sectionsRes.data.value.map(({ id, displayName: tempName }) => {
+          let name = (prefix === '' ? '' : `${prefix}-`) + tempName;
+          return {
+            name,
+            id,
+            groupId,
+            groupName,
+          };
+        })
+      )
+    );
+
+    // Handle sectionGroups recursively
+    const sectionGroupsRes = await this.request.get<OneNoteNotebooksResponse>(
+      `/v1.0/users/me/onenote/${notebook ? 'notebooks/' : 'sectionGroups/'}${preId}/sectionGroups`
+    );
+    let promises = await sectionGroupsRes.data.value.map(({ id, displayName: subPrefix }) => {
+      let newPrefix = (prefix === '' ? '' : `${prefix}-`) + subPrefix;
+      return this.getSections(false, id, newPrefix, groupId, groupName);
+    });
+
+    for (const p of promises) {
+      repos.push(..._.flatten(await p));
+    }
+
+    return repos;
   };
 
   createDocument = async (info: CreateDocumentRequest): Promise<any> => {
