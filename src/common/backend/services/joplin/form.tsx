@@ -23,7 +23,7 @@ const InitForm: React.FC<FormProps> = ({ form: { getFieldDecorator }, info }) =>
               message: 'Authorization token is required!',
             },
           ],
-        })(<Input.TextArea />)}
+        })(<Input.TextArea autoSize />)}
       </Form.Item>
       <Form.Item label={<FormattedMessage id="backend.services.joplin.filter_tags" />}>
         {getFieldDecorator('filterTags', {
