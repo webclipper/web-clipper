@@ -30,7 +30,7 @@ export class SiYuanClient {
     const res = await this.request.post<ISiyuanFetchNotesResponse>(`api/notebook/lsNotebooks`, {
       data: {},
     });
-    return res.data.files
+    return (res.data.notebooks ?? res.data.files ?? [])
       .map(p => {
         if (typeof p === 'object') {
           return p;
