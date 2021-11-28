@@ -39,13 +39,7 @@ function generateManifest(options) {
           description: 'Test',
         },
       },
-      optional_permissions: [
-        'cookies',
-        '<all_urls>',
-        'webRequest',
-        'webRequestBlocking',
-        'pageCapture',
-      ],
+      optional_permissions: ['cookies', '<all_urls>', 'webRequest', 'webRequestBlocking'],
     };
   }
   if (targetBrowser === 'Firefox') {

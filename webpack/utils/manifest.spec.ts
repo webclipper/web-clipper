@@ -54,13 +54,7 @@ const CHROME_MANIFEST = {
     'contextMenus',
   ],
   commands: { 'toggle-feature-foo': { suggested_key: { default: 'Alt+S' }, description: 'Test' } },
-  optional_permissions: [
-    'cookies',
-    '<all_urls>',
-    'webRequest',
-    'webRequestBlocking',
-    'pageCapture',
-  ],
+  optional_permissions: ['cookies', '<all_urls>', 'webRequest', 'webRequestBlocking'],
 };
 
 describe('test generateManifest', () => {
