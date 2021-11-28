@@ -47,17 +47,41 @@ export default class JoplinDocumentService implements DocumentService {
 
   private async getJoplinClient(): Promise<IJoplinClient> {
     if (!this.client) {
-      this.client = this._getJoplinClient();
+      this.client = this.getSupportToken();
     }
     return this.client;
   }
 
-  private async _getJoplinClient(): Promise<IJoplinClient> {
+  private async getSupportToken() {
+    const tokens = this.config.token
+      .split('\n')
+      .map(o => o.trim())
+      .filter(p => !!p);
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
+      try {
+        const client = await this._getJoplinClient(token);
+        const repositories = await client.getRepositories();
+        if (Array.isArray(repositories)) {
+          console.log(`Check token ${i} success.`);
+          return client;
+        }
+        return client;
+      } catch (_error) {
+        //
+        console.log(`Check token ${i} error.`);
+      }
+    }
+
+    throw new Error('invalid Token');
+  }
+
+  private async _getJoplinClient(token: string): Promise<IJoplinClient> {
     const request = new RequestHelper({
       baseURL: HOST,
       request: Container.get(IBasicRequestService),
       params: {
-        token: this.config.token,
+        token,
       },
     });
     const client = new JoplinClient(request);

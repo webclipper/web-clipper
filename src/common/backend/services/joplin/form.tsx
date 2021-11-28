@@ -11,7 +11,7 @@ interface FormProps extends FormComponentProps {
   info?: JoplinBackendServiceConfig;
 }
 
-const InitForm: React.FC<FormProps> = ({ form: { getFieldDecorator }, info, verified }) => {
+const InitForm: React.FC<FormProps> = ({ form: { getFieldDecorator }, info }) => {
   return (
     <Fragment>
       <Form.Item label="Authorization token">
@@ -23,7 +23,7 @@ const InitForm: React.FC<FormProps> = ({ form: { getFieldDecorator }, info, veri
               message: 'Authorization token is required!',
             },
           ],
-        })(<Input disabled={verified} />)}
+        })(<Input.TextArea autoSize />)}
       </Form.Item>
       <Form.Item label={<FormattedMessage id="backend.services.joplin.filter_tags" />}>
         {getFieldDecorator('filterTags', {
