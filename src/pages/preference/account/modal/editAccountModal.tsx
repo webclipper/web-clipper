@@ -51,8 +51,10 @@ const Page: React.FC<PageProps> = ({
     type,
     accountStatus: { verified, repositories, userInfo, id },
     verifyAccount,
+    loadAccount,
     serviceForm,
     verifying,
+    okText: verifyText,
   } = useVerifiedAccount({
     form,
     services: servicesMeta,
@@ -88,14 +90,19 @@ const Page: React.FC<PageProps> = ({
     <Modal
       visible={visible}
       title={<ModalTitle />}
-      okText={okText}
+      okText={verified ? okText : verifyText}
       okType="primary"
       okButtonProps={{
         loading: verifying,
-        disabled: !verified,
       }}
       onCancel={onCancel}
-      onOk={() => onEdit(currentAccount.id, userInfo, id!)}
+      onOk={() => {
+        if (verified) {
+          onEdit(currentAccount.id, userInfo, id!);
+        } else {
+          loadAccount();
+        }
+      }}
     >
       <Form labelCol={{ span: 7, offset: 0 }} wrapperCol={{ span: 17 }}>
         <Form.Item

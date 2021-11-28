@@ -73,7 +73,7 @@ export default class JoplinDocumentService implements DocumentService {
       }
     }
 
-    throw new Error('Token 错误');
+    throw new Error('invalid Token');
   }
 
   private async _getJoplinClient(token: string): Promise<IJoplinClient> {

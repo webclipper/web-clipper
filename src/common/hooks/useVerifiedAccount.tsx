@@ -116,7 +116,7 @@ const useVerifiedAccount = ({ form, services, initAccount }: UseVerifiedAccountP
       return;
     }
     run(formInfo);
-  }, [verifiedRef, formInfo, run]);
+  }, [verifiedRef, formInfo, run, form]);
 
   return {
     type,
