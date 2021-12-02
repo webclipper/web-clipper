@@ -63,7 +63,7 @@
     "qs": "^6.7.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-intl": "^3.9.2",
+    "react-intl": "^5.23.0",
     "react-markdown": "^6.0.2",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "^0.13.3",
