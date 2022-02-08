@@ -22,6 +22,8 @@
   "backend.imageHosting.yuque_oauth.error_429": "请求太频繁，接口限制每小时最多 100 次。",
   "backend.imageHosting.yuque_oauth.name": "语雀(一键授权)",
   "backend.imageHosting.yuque.name": "语雀",
+  "backend.imageHosting.wiznote.name": "为知笔记",
+  "backend.imageHosting.wiznote.builtInRemark": "为知笔记内置图床",
   "backend.not.unavailable": "暂时无法剪辑此类型的页面。\n\n刷新页面可以解决。",
   "backend.services.baklib.form.authentication": "授权",
   "backend.services.baklib.headerForm.channel": "栏目",
