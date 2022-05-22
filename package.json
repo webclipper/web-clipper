@@ -8,8 +8,9 @@
   "scripts": {
     "test": "jest",
     "cov": "jest --coverage",
-    "dev": "NODE_ENV=development webpack --config webpack/webpack.dev.js --watch",
-    "dev:ff": "TARGET_BROWSER=Firefox NODE_ENV=development webpack --config webpack/webpack.dev.js --watch",
+    "dev": "cross-env NODE_ENV=development yarn _dev",
+    "dev:dd": "cross-env TARGET_BROWSER=Firefox NODE_ENV=development yarn _dev",
+    "_dev": "webpack --config webpack/webpack.dev.js --watch",
     "release": "ts-node script/release.ts",
     "release:ff": "bash script/release_ff.sh",
     "lint": "eslint --ext .js,.ts,.tsx .",
@@ -75,8 +76,6 @@
     "umi-request": "^1.2.15"
   },
   "devDependencies": {
-    "@types/yargs": "^17.0.2",
-    "yargs": "^17.1.1",
     "@diamondyuan/eslint-config-react-typescript": "^7.0.1",
     "@types/chrome": "^0.0.141",
     "@types/classnames": "^2.2.9",
@@ -100,10 +99,12 @@
     "@types/showdown": "^1.9.3",
     "@types/tldjs": "^2.3.0",
     "@types/webpack-env": "^1.13.9",
+    "@types/yargs": "^17.0.2",
     "axios": "^0.21.1",
     "clean-webpack-plugin": "^0.1.19",
     "compressing": "^1.4.0",
     "copy-webpack-plugin": "^5.1.1",
+    "cross-env": "^7.0.3",
     "css-loader": "^1.0.0",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.14.0",
@@ -131,7 +132,8 @@
     "webpack-cli": "^3.3.2",
     "webpack-create-extension-manifest-plugin": "^1.1.0",
     "webpack-extension-reloader": "^1.1.4",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "yargs": "^17.1.1"
   },
   "manifest": {
     "manifest_version": 2,
