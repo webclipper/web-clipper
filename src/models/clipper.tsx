@@ -195,7 +195,7 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
         o =>
           o.type === ExtensionType.Tool &&
           o.manifest.automatic &&
-          enabledAutomaticExtensionIds.some(id => id !== o.id)
+          enabledAutomaticExtensionIds.some(id => id === o.id)
       );
       return {
         repositoryId,
