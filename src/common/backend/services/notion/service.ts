@@ -138,7 +138,7 @@ export default class NotionDocumentService implements DocumentService {
     }
 
     const documentId = await this.createEmptyFile(repository, content);
-    const fileUrl = await this.getFileUrl(fileName);
+    const fileUrl = await this.getFileUrl(encodeURI(fileName));
     await axios.put(fileUrl.signedPutUrl, `${content}`, {
       headers: {
         'Content-Type': 'text/markdown',
