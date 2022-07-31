@@ -1228,14 +1228,6 @@
     unist-util-is "^2.1.1"
     unist-util-visit "^1.1.3"
 
-"@web-clipper/shared@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.nlark.com/@web-clipper/shared/download/@web-clipper/shared-0.0.20.tgz"
-  integrity sha1-t/k7hiOteGwtsPxn6aiILJWGqX4=
-  dependencies:
-    "@types/chrome" "^0.0.88"
-    blueimp-md5 "^2.11.0"
-
 "@web-clipper/shared@^0.1.3":
   version "0.1.3"
   resolved "https://registry.nlark.com/@web-clipper/shared/download/@web-clipper/shared-0.1.3.tgz"
