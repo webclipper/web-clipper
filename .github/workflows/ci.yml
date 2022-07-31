@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '12.x'
       - name: Install Dependencies
-        run: npm install
+        run: npm install --force
       - run: npm run lint
       - run: npm run cov
         env:
