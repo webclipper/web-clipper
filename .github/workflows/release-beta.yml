@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
       - name: Install Dependencies
         run: |
-          npm install
+          npm install --force
       - name: Build project
         run: |
           npm run release
