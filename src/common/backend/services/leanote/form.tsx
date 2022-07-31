@@ -75,7 +75,7 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
       >
         {getFieldDecorator('pwd', {
           initialValue: initData.pwd,
-        })(<Input disabled={editMode} />)}
+        })(<Input disabled={editMode} type="password" />)}
       </Form.Item>
     </Fragment>
   );
