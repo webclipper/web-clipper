@@ -137,7 +137,7 @@ export default class TickTickDocumentService implements DocumentService {
           priority: 0,
           progress: 0,
           assignee: null,
-          kind: "NOTE",
+          kind: 'NOTE',
           sortOrder: -4611733297427382000,
           startDate: null,
           isFloating: false,
