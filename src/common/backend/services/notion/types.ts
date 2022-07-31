@@ -6,10 +6,9 @@ export interface NotionUserContent {
       [uuid: string]: {
         role: string;
         value: {
+          name: string;
           id: string;
           email: string;
-          given_name: string;
-          family_name: string;
           profile_photo: string;
         };
       };
@@ -42,6 +41,22 @@ export interface NotionUserContent {
         };
       };
     };
+    collection: {
+      [uuid: string]: {
+        role: string;
+        value: {
+          id: string;
+          version: string;
+          parent_id: string;
+          name: string[][];
+        };
+      };
+    };
+  };
+}
+
+export interface RecentPages {
+  recordMap: {
     collection: {
       [uuid: string]: {
         role: string;

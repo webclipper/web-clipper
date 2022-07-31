@@ -1,12 +1,12 @@
-import { CompleteStatus, UnauthorizedError } from './../interface';
-import { DocumentService, CreateDocumentRequest } from '../../index';
-import axios, { AxiosInstance } from 'axios';
-import { generateUuid } from '@web-clipper/shared/lib/uuid';
 import localeService from '@/common/locales';
-import { NotionRepository, NotionUserContent } from './types';
-import { IWebRequestService } from '@/service/common/webRequest';
-import Container from 'typedi';
 import { ICookieService } from '@/service/common/cookie';
+import { IWebRequestService } from '@/service/common/webRequest';
+import { generateUuid } from '@web-clipper/shared/lib/uuid';
+import axios, { AxiosInstance } from 'axios';
+import Container from 'typedi';
+import { CreateDocumentRequest, DocumentService } from '../../index';
+import { CompleteStatus, UnauthorizedError } from './../interface';
+import { NotionRepository, NotionUserContent, RecentPages } from './types';
 
 const PAGE = 'page';
 const COLLECTION_VIEW_PAGE = 'collection_view_page';
@@ -62,9 +62,9 @@ export default class NotionDocumentService implements DocumentService {
     }
     const user = this.userContent.recordMap.notion_user;
     const userInfo = Object.values(user)[0];
-    const { email, profile_photo, given_name, family_name } = userInfo.value;
+    const { email, profile_photo, name } = userInfo.value;
     return {
-      name: `${given_name}${family_name}`,
+      name,
       avatar: profile_photo,
       homePage: 'https://www.notion.so/',
       description: email,
@@ -77,52 +77,19 @@ export default class NotionDocumentService implements DocumentService {
     }
 
     const spaces = this.userContent.recordMap.space;
-    const blocks = this.userContent.recordMap.block;
-    const collections = this.userContent.recordMap.collection;
 
-    if (!blocks) {
-      this.repositories = [];
-      return [];
-    }
+    const userId = Object.keys(this.userContent.recordMap.notion_user)[0] as string;
 
-    const result: NotionRepository[] = [];
-    Object.values(blocks).forEach(({ value }) => {
-      if (
-        value.type === PAGE &&
-        !!value.properties &&
-        !!value.properties.title &&
-        !!spaces[value.parent_id]
-      ) {
-        result.push({
-          id: value.id,
-          name: value.properties.title.toString(),
-          groupId: spaces[value.parent_id].value.domain,
-          groupName: spaces[value.parent_id].value.name,
-          pageType: PAGE,
-        });
-      }
+    const result: Array<NotionRepository[]> = await Promise.all(
+      Object.keys(spaces).map(async p => {
+        const space = spaces[p];
+        const recentPages = await this.getRecentPageVisits(space.value.id, userId);
+        return this.loadSpace(p, space.value.name, recentPages);
+      })
+    );
 
-      if (
-        value.type === COLLECTION_VIEW_PAGE &&
-        !!value.collection_id &&
-        !!collections[value.collection_id] &&
-        !!collections[value.collection_id].value &&
-        !!collections[value.collection_id].value.name &&
-        !!spaces[value.parent_id]
-      ) {
-        result.push({
-          id: collections[value.collection_id].value.id,
-          name: collections[value.collection_id].value.name.toString(),
-          groupId: spaces[value.parent_id].value.domain,
-          groupName: spaces[value.parent_id].value.name,
-          pageType: COLLECTION_VIEW_PAGE,
-        });
-      }
-    });
-
-    this.repositories = result;
-
-    return result;
+    this.repositories = result.flat() as NotionRepository[];
+    return this.repositories;
   };
 
   createDocument = async ({
@@ -279,6 +246,79 @@ export default class NotionDocumentService implements DocumentService {
     });
     return result.data;
   };
+
+  private async loadSpace(
+    spaceId: string,
+    spaceName: string,
+    recentPages: RecentPages
+  ): Promise<NotionRepository[]> {
+    const response = await this.requestWithCookie.post<{
+      pages: string[];
+      recordMap: {
+        block: {
+          [id: string]: {
+            value: {
+              collection_id: string;
+              id: string;
+              type: string;
+              space_id: '268d56f2-ce25-4cbe-9ab6-ed7a280c89cb';
+              properties: {
+                title: string[];
+              };
+            };
+          };
+        };
+      };
+    }>('api/v3/getUserSharedPagesInSpace', {
+      includeDeleted: false,
+      includeTeamSharedPages: false,
+      spaceId,
+    });
+
+    const pages: string[] = response.data.pages as string[];
+
+    return pages
+      .map((pageId): NotionRepository | null => {
+        const value = response.data.recordMap.block[pageId]!.value;
+        if (value.type === PAGE && !!value.properties && !!value.properties.title) {
+          return {
+            id: value.id,
+            name: value.properties.title.toString(),
+            groupId: spaceId,
+            groupName: spaceName,
+            pageType: PAGE,
+          };
+        }
+        const collections = recentPages.recordMap.collection;
+        console.log(collections, value, collections[value.collection_id]);
+        if (
+          value.type === COLLECTION_VIEW_PAGE &&
+          !!value.collection_id &&
+          !!collections[value.collection_id] &&
+          !!collections[value.collection_id].value &&
+          !!collections[value.collection_id].value &&
+          !!collections[value.collection_id].value.name
+        ) {
+          return {
+            id: collections[value.collection_id].value.id,
+            name: collections[value.collection_id].value.name.toString(),
+            groupId: spaceId,
+            groupName: spaceName,
+            pageType: COLLECTION_VIEW_PAGE,
+          };
+        }
+        return null;
+      })
+      .filter((p): p is NotionRepository => !!p);
+  }
+
+  private async getRecentPageVisits(spaceId: string, userId: string): Promise<RecentPages> {
+    const res = await this.requestWithCookie.post<RecentPages>('api/v3/getRecentPageVisits', {
+      spaceId,
+      userId,
+    });
+    return res.data;
+  }
 
   private getUserContent = async () => {
     const response = await this.requestWithCookie.post<NotionUserContent>('api/v3/loadUserContent');
