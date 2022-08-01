@@ -1,15 +1,16 @@
 import { IRequestService, TRequestOption } from '@/service/common/request';
+import { vi, Mock } from 'vitest';
 
 type TMockRequestServiceHandler = (url: string, options?: TRequestOption) => any;
 
 export class MockRequestService implements IRequestService {
   public mock: {
-    request: jest.Mock;
+    request: Mock;
   };
   private handler: TMockRequestServiceHandler;
   constructor(handler: TMockRequestServiceHandler) {
     this.mock = {
-      request: jest.fn(),
+      request: vi.fn(),
     };
     this.handler = handler;
   }
