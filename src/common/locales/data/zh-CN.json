@@ -85,6 +85,7 @@
   "backend.services.wiznote.form.origin": "Origin",
   "backend.services.wiznote.name": "为知笔记",
   "backend.services.wolai.unauthorizedErrorMessage": "授权失败，请登录网页版 Wolai",
+  "backend.services.flowus.unauthorizedErrorMessage": "授权失败，请登录网页版 FlowUs",
   "backend.services.youdao.name": "有道云笔记",
   "backend.services.youdao.unauthorizedErrorMessage": "授权失败，请登录网页版有道云笔记。",
   "backend.services.yuque_oauth.name": "语雀(一键授权)",

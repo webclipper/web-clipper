@@ -83,6 +83,7 @@
   "backend.services.wiznote.form.origin": "Origin",
   "backend.services.wiznote.name": "為知筆記",
   "backend.services.wolai.unauthorizedErrorMessage": "授權失敗，請登錄網頁版 Wolai",
+  "backend.services.flowus.unauthorizedErrorMessage": "授權失敗，請登錄網頁版 FlowUs",
   "backend.services.youdao.name": "有道雲筆記",
   "backend.services.youdao.unauthorizedErrorMessage": "授權失敗，請登錄網頁版有道雲筆記。",
   "backend.services.yuque_oauth.name": "語雀(一鍵授權)",
