@@ -6,8 +6,8 @@
     "web-clipper": "bin/index.js"
   },
   "scripts": {
-    "test": "jest",
-    "cov": "jest --coverage",
+    "test": "vitest",
+    "cov": "vitest --coverage",
     "dev": "cross-env NODE_ENV=development yarn _dev",
     "dev:dd": "cross-env TARGET_BROWSER=Firefox NODE_ENV=development yarn _dev",
     "_dev": "webpack --config webpack/webpack.dev.js --watch",
@@ -75,7 +75,6 @@
     "umi-request": "^1.2.15"
   },
   "devDependencies": {
-    "vitest": "^0.20.2",
     "@diamondyuan/eslint-config-react-typescript": "^7.0.1",
     "@types/chrome": "^0.0.141",
     "@types/classnames": "^2.2.9",
@@ -121,6 +120,7 @@
     "ts-node": "^10.2.0",
     "typescript": "^3.7.3",
     "url-loader": "^3.0.0",
+    "vitest": "^0.20.3",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.2",
     "webpack-create-extension-manifest-plugin": "^1.1.0",
