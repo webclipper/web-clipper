@@ -30,6 +30,7 @@ You can use Web Clipper to save anything on the web to anywhere.
 - [wolai](https://www.wolai.com/)
 - [Leanote](https://github.com/leanote/leanote)
 - [Flomo](https://flomoapp.com/)
+- [FlowUs](https://flowus.cn/)
 
 ### Install
 
