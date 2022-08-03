@@ -119,7 +119,7 @@
     "ts-loader": "^6.2.1",
     "ts-node": "^10.2.0",
     "typescript": "^3.7.3",
-    "url-loader": "^3.0.0",
+    "url-loader": "^4.1.1",
     "vitest": "^0.20.3",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.2",
