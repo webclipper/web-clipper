@@ -261,7 +261,7 @@ export default class NotionDocumentService implements DocumentService {
               collection_id: string;
               id: string;
               type: string;
-              space_id: '268d56f2-ce25-4cbe-9ab6-ed7a280c89cb';
+              space_id: string;
               properties: {
                 title: string[];
               };
@@ -290,12 +290,11 @@ export default class NotionDocumentService implements DocumentService {
           };
         }
         const collections = recentPages.recordMap.collection;
-        console.log(collections, value, collections[value.collection_id]);
         if (
           value.type === COLLECTION_VIEW_PAGE &&
           !!value.collection_id &&
+          !!collections &&
           !!collections[value.collection_id] &&
-          !!collections[value.collection_id].value &&
           !!collections[value.collection_id].value &&
           !!collections[value.collection_id].value.name
         ) {

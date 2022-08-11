@@ -57,7 +57,7 @@ export interface NotionUserContent {
 
 export interface RecentPages {
   recordMap: {
-    collection: {
+    collection?: {
       [uuid: string]: {
         role: string;
         value: {

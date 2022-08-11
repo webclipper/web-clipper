@@ -1,7 +1,7 @@
 {
   "name": "web-clipper",
   "version": "1.31.0",
-  "description": "Universal open source web clipper for Notion,OneNote,Joplin,Yuque,Bear,Github and more notes.",
+  "description": "Universal open source web clipper.",
   "bin": {
     "web-clipper": "bin/index.js"
   },
