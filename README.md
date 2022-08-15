@@ -36,11 +36,11 @@ You can use Web Clipper to save anything on the web to anywhere.
 
 - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/universal-web-clipper/) 1.30.0
 
-- [Chrome](https://chrome.google.com/webstore/detail/web-clipper/mhfbofiokmppgdliakminbgdgcmbhbac) 1.30.0
+- [Chrome](https://chrome.google.com/webstore/detail/web-clipper/mhfbofiokmppgdliakminbgdgcmbhbac) 1.32.0
 
-- [Chrome Beta](https://chrome.google.com/webstore/detail/web-clipper/finhmpmkpbacljcdemplngnnjdenihpp?hl=zh-CN&authuser=0) 1.28.4
+- [Chrome Beta](https://chrome.google.com/webstore/detail/web-clipper/finhmpmkpbacljcdemplngnnjdenihpp?hl=zh-CN&authuser=0) 1.32.0
 
-- [Edge](https://microsoftedge.microsoft.com/addons/detail/opejamnnohhbjflpbhnmdlknhjkfhfdp) 1.30.0
+- [Edge](https://microsoftedge.microsoft.com/addons/detail/opejamnnohhbjflpbhnmdlknhjkfhfdp) 1.31.0
 
 ps: Because the review takes a week, the version will fall behind.
 
@@ -74,3 +74,13 @@ $ yarn test
 | Type     | Link                                                 |
 | -------- | ---------------------------------------------------- |
 | Telegram | [Link](https://t.me/joinchat/HoVttRRUIA6aXASixzoqAw) |
+
+### Sponsors
+
+#### 感谢 [FlowUs 息流](https://flowus.cn/product) 赞助本项目
+
+FlowUs 息流是一款为个人和团队打造的新一代知识管理与协作平台，以云端空间承载，配合灵活的信息搭建能力，为用户在工作、生活、学习中提供更多效率与专注。
+
+产品覆盖移动及 PC 端全生态链条，依托 FlowUs 息流，团队和个人用户能够实现项目管理、知识库、企业网盘、内部工作流等一站式解决方案。
+
+**官网**: [https://flowus.cn/product](https://flowus.cn/product)
