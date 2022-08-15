@@ -17,20 +17,23 @@ You can use Web Clipper to save anything on the web to anywhere.
 
 ### Support Site
 
-- [Github](https://github.com)
-- [Yuque](https://www.yuque.com)
-- [Notion](https://www.notion.so/)
-- [Youdao](https://note.youdao.com/)
-- [OneNote](https://www.onenote.com/)
-- [Bear](https://bear.app)
-- [Joplin](https://joplinapp.org/)
-- [Server Chan](http://sc.ftqq.com/3.version)
-- [dida365](https://dida365.com/)
-- [baklib](https://www.baklib-free.com/)
-- [wolai](https://www.wolai.com/)
-- [Leanote](https://github.com/leanote/leanote)
-- [Flomo](https://flomoapp.com/)
 - [FlowUs](https://flowus.cn/)
+
+  <img style="width:100px" src="https://github.com/webclipper/web-clipper/blob/master/flowus-logo.jpg?raw=true">
+
+* [Github](https://github.com)
+* [Yuque](https://www.yuque.com)
+* [Notion](https://www.notion.so/)
+* [Youdao](https://note.youdao.com/)
+* [OneNote](https://www.onenote.com/)
+* [Bear](https://bear.app)
+* [Joplin](https://joplinapp.org/)
+* [Server Chan](http://sc.ftqq.com/3.version)
+* [dida365](https://dida365.com/)
+* [baklib](https://www.baklib-free.com/)
+* [wolai](https://www.wolai.com/)
+* [Leanote](https://github.com/leanote/leanote)
+* [Flomo](https://flomoapp.com/)
 
 ### Install
 
@@ -78,8 +81,6 @@ $ yarn test
 ### Sponsors
 
 #### 感谢 [FlowUs 息流](https://flowus.cn/product) 赞助本项目
-
-![FlowUs](https://github.com/webclipper/web-clipper/blob/master/flowus-logo.png?raw=true)
 
 FlowUs 息流是一款为个人和团队打造的新一代知识管理与协作平台，以云端空间承载，配合灵活的信息搭建能力，为用户在工作、生活、学习中提供更多效率与专注。
 
