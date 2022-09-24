@@ -28,7 +28,12 @@ export default class ObsidianDocumentService implements DocumentService {
           return Promise.reject(new UnauthorizedError(error.response.data.message));
         }
         if (error.response?.data?.errorCode) {
-          return Promise.reject(new HttpError(error.response.data.message));
+          return Promise.reject(
+            new HttpError({
+              status: error.response.data.errorCode,
+              message: error.response.data.message,
+            })
+          );
         }
         return Promise.reject(error);
       }
