@@ -27,10 +27,13 @@ type PageOwnProps = {
 };
 type PageProps = PageOwnProps & FormComponentProps;
 
-const ModalTitle = () => (
+interface ModalTtileProps {
+  link?: string;
+}
+const ModalTitle = ({ link }: ModalTtileProps) => (
   <div className={styles.modalTitle}>
-    <FormattedMessage id="preference.accountList.addAccount" defaultMessage="Add Account" />
-    <a href={'https://www.yuque.com/yuqueclipper/help_cn/bind_account'} target="_blank">
+    <FormattedMessage id="preference.accountList.editAccount" defaultMessage="Edit Account" />
+    <a href={link ?? 'https://www.yuque.com/yuqueclipper/help_cn/bind_account'} target="_blank">
       <QuestionCircleOutlined />
     </a>
   </div>
