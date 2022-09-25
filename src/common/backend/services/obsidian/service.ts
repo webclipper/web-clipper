@@ -56,13 +56,18 @@ export default class ObsidianDocumentService implements DocumentService {
   };
 
   createDocument = async ({
-    // repositoryId,
+    url,
     title,
     content,
   }: CreateDocumentRequest): Promise<CompleteStatus> => {
+    const fullPath = pathJoin([this.config.directory ?? '', `${title}.md`]);
     await this.request.put(
-      `/vault/${encodeURIComponent(pathJoin([this.config.directory ?? '', `${title}.md`]))}`,
-      content,
+      `/vault/${encodeURIComponent(fullPath)}`,
+      `---
+source: ${url}
+---
+${content}
+`,
       {
         headers: {
           'Content-type': 'text/markdown',
@@ -70,7 +75,7 @@ export default class ObsidianDocumentService implements DocumentService {
       }
     );
     return {
-      href: `obsidian://open?file=${title}`,
+      href: `obsidian://open?file=${encodeURIComponent(title)}`,
     };
   };
 
