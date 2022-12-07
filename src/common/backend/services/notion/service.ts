@@ -132,6 +132,7 @@ export default class NotionDocumentService implements DocumentService {
     if (!this.userContent) {
       this.userContent = await this.getUserContent();
     }
+    const spaceId = Object.values(this.userContent.recordMap.space)[0].value.id;
     const documentId = generateUuid();
     const parentId = repository.id;
     const userId = Object.values(this.userContent.recordMap.notion_user)[0].value.id;
@@ -147,6 +148,7 @@ export default class NotionDocumentService implements DocumentService {
           args: {
             type: 'page',
             id: documentId,
+            space_id: spaceId,
             version: 1,
           },
         },
@@ -159,6 +161,7 @@ export default class NotionDocumentService implements DocumentService {
             parent_id: parentId,
             parent_table: 'block',
             alive: true,
+            space_id: spaceId,
           },
         },
         {
@@ -166,7 +169,10 @@ export default class NotionDocumentService implements DocumentService {
           id: parentId,
           path: ['content'],
           command: 'listAfter',
-          args: { id: documentId },
+          args: {
+            id: documentId,
+            space_id: spaceId,
+          },
         },
         {
           id: documentId,
@@ -178,6 +184,7 @@ export default class NotionDocumentService implements DocumentService {
             created_time: time,
             last_edited_time: time,
             last_edited_by: userId,
+            space_id: spaceId,
           },
         },
         {
@@ -185,7 +192,10 @@ export default class NotionDocumentService implements DocumentService {
           table: 'block',
           path: [],
           command: 'update',
-          args: { last_edited_time: time },
+          args: {
+            last_edited_time: time,
+            space_id: spaceId,
+          },
         },
         {
           id: documentId,
@@ -199,7 +209,10 @@ export default class NotionDocumentService implements DocumentService {
           table: 'block',
           path: [],
           command: 'update',
-          args: { last_edited_time: time },
+          args: {
+            last_edited_time: time,
+            space_id: spaceId,
+          },
         },
       ];
     } else if (repository.pageType === COLLECTION_VIEW_PAGE) {
@@ -212,6 +225,7 @@ export default class NotionDocumentService implements DocumentService {
           args: {
             type: 'page',
             id: documentId,
+            space_id: spaceId,
             version: 1,
           },
         },
@@ -223,6 +237,7 @@ export default class NotionDocumentService implements DocumentService {
           args: {
             parent_id: parentId,
             parent_table: 'collection',
+            space_id: spaceId,
             alive: true,
           },
         },
