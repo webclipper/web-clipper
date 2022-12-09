@@ -19,7 +19,8 @@ import {
 } from './type';
 import { generateUuid } from '@web-clipper/shared/lib/uuid';
 import { flowusOrigin } from '.';
-
+import showdown from 'showdown';
+const converter = new showdown.Converter({});
 export default class FlowUsDocumentService implements DocumentService {
   private request: RequestMethod;
   private repositories: FlowUsRepository[];
@@ -148,13 +149,23 @@ export default class FlowUsDocumentService implements DocumentService {
       throw new Error('Illegal repository');
     }
     const documentId = await this.createEmptyPage(repository, title);
+    const html = `<!DOCTYPE html>
+    <html>
+      <head>
+        <title>${title}</title>
+      </head>
+      <body>
+       ${converter.makeHtml(`${content}`)}
+      </body>
+    </html>`;
     const ossInfo = await this.requestWithCookie<FlowUsResponse<OSSInfo>>(header => {
       return this.request.post(`import_temp_file?source=web-clipper`, {
         headers: {
           [header.name]: header.value,
         },
         data: {
-          content,
+          content: html,
+          extName: 'html',
         },
       });
     });
@@ -173,7 +184,7 @@ export default class FlowUsDocumentService implements DocumentService {
             blockId: documentId,
             spaceId: repository.groupId,
             importOptions: {
-              type: 'markdown',
+              type: 'html',
               ossName: ossInfo.data.ossName,
             },
           },
