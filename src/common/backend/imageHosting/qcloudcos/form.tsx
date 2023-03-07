@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.less';
-import { Input, InputNumber } from 'antd';
+import { Input, InputNumber, Checkbox } from 'antd';
 import { QcloudCosImageHostingOption } from './service';
 
 interface Props extends FormComponentProps {
@@ -62,6 +62,16 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
             },
           ],
         })(<Input.Password placeholder="please input SecretKey" min={0}></Input.Password>)}
+      </Form.Item>
+      <Form.Item label="PrivateRead">
+        {getFieldDecorator('privateRead', {
+          initialValue: initInfo.privateRead,
+          rules: [
+            {
+              required: true,
+            },
+          ],
+        })(<Checkbox />)}
       </Form.Item>
       <Form.Item label="Expires">
         {getFieldDecorator('expires', {

@@ -12,6 +12,7 @@ export interface QcloudCosImageHostingOption {
   folder: string;
   secretId: string;
   secretKey: string;
+  privateRead: boolean;
   expires: number;
 }
 
@@ -66,7 +67,7 @@ export default class QcloudCosImageHostingService implements ImageHostingService
         Bucket: this.config.bucket,
         Region: this.config.region,
         Key: `${this.config.folder}${folderName}/${fileName}`,
-        Sign: true,
+        Sign: this.config.privateRead,
         Expires: this.config.expires,
       },
       (err, data) => {
