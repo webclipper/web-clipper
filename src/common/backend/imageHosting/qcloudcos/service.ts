@@ -51,7 +51,10 @@ export default class QcloudCosImageHostingService implements ImageHostingService
 
     const fileName = this.generateFilename(blob);
     const date = new Date();
-    const folderName = `${date.getFullYear()}${date.getMonth()}${date.getDay()}`;
+    const folderName = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(
+      2,
+      '0'
+    )}${String(date.getDate()).padStart(2, '0')}`;
     let cos = new COS({
       SecretId: this.config.secretId,
       SecretKey: this.config.secretKey,
