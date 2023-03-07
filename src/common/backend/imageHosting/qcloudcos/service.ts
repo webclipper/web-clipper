@@ -1,11 +1,18 @@
-// import { IBasicRequestService } from '@/service/common/request';
-// import { RequestHelper } from '@/service/request/common/request';
-import { UploadImageRequest, ImageHostingService } from '../interface';
+import { IBasicRequestService } from '@/service/common/request';
 import { Base64ImageToBlob } from '@/common/blob';
-// import Container from 'typedi';
+import { UploadImageRequest, ImageHostingService } from '../interface';
+import { generateUuid } from '@web-clipper/shared/lib/uuid';
+import Container from 'typedi';
+import { isUndefined } from 'lodash';
+import COS from 'cos-js-sdk-v5';
 
 export interface QcloudCosImageHostingOption {
-  appId: string;
+  bucket: string;
+  region: string;
+  folder: string;
+  secretId: string;
+  secretKey: string;
+  expires: number;
 }
 
 export default class QcloudCosImageHostingService implements ImageHostingService {
@@ -16,33 +23,56 @@ export default class QcloudCosImageHostingService implements ImageHostingService
   }
 
   getId = () => {
-    return this.config.clientId;
+    return this.config.bucket;
   };
 
   uploadImage = async ({ data }: UploadImageRequest) => {
     const blob = Base64ImageToBlob(data);
-    return this.uploadBlob(blob);
+    return this.uploadAsBlob(blob);
   };
 
   uploadImageUrl = async (url: string) => {
-    return this.uploadBlob(url);
+    const imageBlob = await Container.get(IBasicRequestService).download(url);
+    return this.uploadAsBlob(imageBlob);
   };
 
-  private uploadBlob = async (blob: Blob | string): Promise<string> => {
-    console.log(blob);
-    return 'test';
-    // let formData = new FormData();
-    // formData.append('image', blob);
-    // const request = new RequestHelper({ request: Container.get(IBasicRequestService) });
-    // const result = await request.postForm<{ data: { link: string } }>(
-    //   `https://api.QcloudCos.com/3/image`,
-    //   {
-    //     data: formData,
-    //     headers: {
-    //       Authorization: `Client-ID ${this.config.clientId}`,
-    //     },
-    //   }
-    // );
-    // return result.data.link;
+  private generateFilename = (blob: Blob): string => {
+    const matchedSuffix: any = blob.type.match(/^image\/(.*)/);
+    const suffix: string = matchedSuffix[1];
+    return `${generateUuid()}.${suffix}`;
+  };
+
+  private uploadAsBlob = async (blob: Blob): Promise<string> => {
+    if (isUndefined(this.config.folder)) this.config.folder = '';
+    if (this.config.folder.startsWith('/')) this.config.folder.substr(1);
+    if (!this.config.folder.endsWith('/') && this.config.folder.length > 0)
+      this.config.folder += '/';
+
+    const fileName = this.generateFilename(blob);
+    const date = new Date();
+    const folderName = `${date.getFullYear()}${date.getMonth()}${date.getDay()}`;
+    let cos = new COS({
+      SecretId: this.config.secretId,
+      SecretKey: this.config.secretKey,
+    });
+    await cos.putObject({
+      Bucket: this.config.bucket,
+      Region: this.config.region,
+      Key: `${this.config.folder}${folderName}/${fileName}`,
+      Body: blob,
+    });
+    return cos.getObjectUrl(
+      {
+        Bucket: this.config.bucket,
+        Region: this.config.region,
+        Key: `${this.config.folder}${folderName}/${fileName}`,
+        Sign: true,
+        Expires: this.config.expires,
+      },
+      (err, data) => {
+        if (err) throw err;
+        return data.Url;
+      }
+    );
   };
 }

@@ -5,7 +5,7 @@ import Service from './service';
 export default (): ImageHostingServiceMeta => {
   return {
     name: 'QcloudCos',
-    icon: 'qcloudcos',
+    icon: 'qq',
     type: 'qcloudcos',
     service: Service,
     form: Form,

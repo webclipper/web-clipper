@@ -48,6 +48,7 @@
     "classnames": "^2.2.6",
     "codemirror": "^5.47.0",
     "copy-to-clipboard": "^3.2.0",
+    "cos-js-sdk-v5": "^1.4.15",
     "dayjs": "^1.10.4",
     "dva": "^2.6.0-beta.19",
     "dva-loading": "^3.0.19",
