@@ -1,8 +1,6 @@
-import { IBackendService, SendToKindleRequestBody } from '@/services/backend/common/backend';
 import { CompleteStatus } from 'common/backend/interface';
-import { DocumentService, CreateDocumentRequest } from '../../index';
+import { DocumentService } from '../../index';
 import { MailBackendServiceConfig } from './interface';
-import Container from 'typedi';
 
 export default class MailDocumentService implements DocumentService {
   private config: MailBackendServiceConfig;
@@ -35,15 +33,7 @@ export default class MailDocumentService implements DocumentService {
     ];
   };
 
-  createDocument = async (info: CreateDocumentRequest): Promise<CompleteStatus> => {
-    const postBody: SendToKindleRequestBody = {
-      to: `${this.config.to}${this.config.domain}`,
-      title: info.title,
-      content: info.content,
-    };
-    Container.get(IBackendService).sentToKindle(postBody);
-    return {
-      href: `https://www.amazon.cn/hz/mycd/myx#/home/content/pdocs/dateDsc/`,
-    };
+  createDocument = async (): Promise<CompleteStatus> => {
+    throw new Error('send to kindle is not supported');
   };
 }

@@ -6959,6 +6959,14 @@ raphael@2.3.0:
   dependencies:
     eve-raphael "0.5.0"
 
+raw-loader@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.npmmirror.com/raw-loader/-/raw-loader-4.0.2.tgz#1aac6b7d1ad1501e66efdac1522c73e59a584eb6"
+  integrity sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==
+  dependencies:
+    loader-utils "^2.0.0"
+    schema-utils "^3.0.0"
+
 rc-align@^4.0.0:
   version "4.0.9"
   resolved "https://registry.npm.taobao.org/rc-align/download/rc-align-4.0.9.tgz"
@@ -8939,10 +8947,10 @@ typescript@4.2.4:
   resolved "https://registry.nlark.com/typescript/download/typescript-4.2.4.tgz"
   integrity sha1-hhC1l0feAo/aiYqK7w4QPxVtCWE=
 
-typescript@^3.7.3:
-  version "3.9.9"
-  resolved "https://registry.nlark.com/typescript/download/typescript-3.9.9.tgz"
-  integrity sha1-5pkFxUvAaB0FGL1NWHzG8tCxpnQ=
+typescript@^5.1.6:
+  version "5.1.6"
+  resolved "https://registry.npmmirror.com/typescript/-/typescript-5.1.6.tgz#02f8ac202b6dad2c0dd5e0913745b47a37998274"
+  integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
 
 ua-parser-js@^0.7.18:
   version "0.7.28"

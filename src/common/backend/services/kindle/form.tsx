@@ -6,7 +6,6 @@ import React, { Fragment } from 'react';
 import { MailBackendServiceConfig } from './interface';
 import { FormattedMessage } from 'react-intl';
 import i18n from '@/common/locales';
-import PowerpackForm from '@/components/powerpackForm';
 
 interface OneNoteProps {
   verified?: boolean;
@@ -27,7 +26,6 @@ const DomainSelect = (
 
 const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
   const {
-    form,
     form: { getFieldDecorator },
     info,
   } = props;
@@ -38,7 +36,6 @@ const ExtraForm: React.FC<OneNoteProps & FormComponentProps> = props => {
   }
   return (
     <Fragment>
-      <PowerpackForm form={form} />
       <Form.Item
         label={
           <FormattedMessage id="backend.services.kindle.form.send.to" defaultMessage="Send to" />

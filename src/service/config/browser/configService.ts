@@ -1,5 +1,4 @@
 import { hasUpdate } from '@/common/version';
-import config from '@/config';
 import { RemoteConfig as _RemoteConfig, IConfigService } from '@/service/common/config';
 import { Service } from 'typedi';
 import packageJson from '@/../package.json';
@@ -32,9 +31,6 @@ class BrowserConfigService implements IConfigService {
       });
     });
     try {
-      if (config.loadRemoteConfig) {
-        this.config = await request.get<RemoteConfig>(`${config.resourceHost}/config.json`);
-      }
       runInAction(() => {
         this.isLatestVersion = !hasUpdate(this.config.chromeWebStoreVersion, this.localVersion);
       });
