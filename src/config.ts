@@ -24,7 +24,6 @@ let config: WebClipperConfig = {
   yuqueScope: 'doc,group,repo,attach_upload',
   oneNoteClientId: '563571ad-cfcd-442a-aa34-046bad24b1b6',
   oneNoteCallBack: 'https://webclipper-oauth.yfd.im/onenote_oauth',
-  // oneNoteCallBack: 'http://localhost:3000/onenote_oauth',
   loadRemoteConfig: true,
 };
 
@@ -33,11 +32,8 @@ if (process.env.NODE_ENV === 'development') {
     admin: true,
     loadRemoteConfig: false,
     icon: 'icon-dev.png',
-    yuqueClientId: 'fylbi7lzfNjhkfyi0hJp',
-    yuqueCallback: 'http://webclipper-oauth.test.yfd.im/yuque_oauth',
     oneNoteClientId: '01c7500b-98dd-4f37-813f-a959382793ac',
     oneNoteCallBack: 'https://webclipper-oauth.test.yfd.im/onenote_oauth',
-    // oneNoteCallBack: 'http://localhost:3000/onenote_oauth',
   });
 }
 
