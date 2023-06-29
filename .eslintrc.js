@@ -6,6 +6,7 @@ module.exports = {
     'arrow-body-style': 'off',
     'no-redeclare': 'off',
     'prettier/prettier': 'error',
+    '@typescript-eslint/no-unused-vars': 'off',
   },
   settings: {
     'import/resolver': {

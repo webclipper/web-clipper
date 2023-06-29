@@ -4,7 +4,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtensionReloader = require('webpack-extension-reloader');
-const tsImportPluginFactory = require('ts-import-plugin');
 const WebpackCreateExtensionManifestPlugin = require('webpack-create-extension-manifest-plugin');
 const fs = require('fs');
 
@@ -65,22 +64,16 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.md$/,
+        use: 'raw-loader',
+      },
+      {
         test: /\.(jsx|tsx|js|ts)$/,
         loader: 'ts-loader',
         options: {
           transpileOnly: true,
           getCustomTransformers: () => ({
-            before: [
-              tsImportPluginFactory([
-                {
-                  style: false,
-                  libraryName: 'lodash',
-                  libraryDirectory: null,
-                  camel2DashComponentName: false,
-                },
-                { style: true },
-              ]),
-            ],
+            before: [],
           }),
           compilerOptions: {
             module: 'esnext',

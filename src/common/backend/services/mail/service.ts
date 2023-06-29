@@ -1,11 +1,6 @@
-import { Container } from 'typedi';
 import { CompleteStatus } from 'common/backend/interface';
-import { IBackendService, PostMailRequestBody } from '@/services/backend/common/backend';
-import { DocumentService, CreateDocumentRequest } from '../../index';
-import showdown from 'showdown';
+import { DocumentService } from '../../index';
 import { MailBackendServiceConfig } from './interface';
-
-const converter = new showdown.Converter();
 
 export default class MailDocumentService implements DocumentService {
   private config: MailBackendServiceConfig;
@@ -38,19 +33,7 @@ export default class MailDocumentService implements DocumentService {
     ];
   };
 
-  createDocument = async (info: CreateDocumentRequest): Promise<CompleteStatus> => {
-    const postBody: PostMailRequestBody = {
-      to: this.config.to,
-      subject: info.title,
-    };
-    if (this.config.html) {
-      postBody.html = converter.makeHtml(info.content);
-    } else {
-      postBody.text = info.content;
-    }
-    await Container.get(IBackendService).sendEmail(postBody);
-    return {
-      href: `https://${this.config.home}`,
-    };
+  createDocument = async (): Promise<CompleteStatus> => {
+    throw new Error('send email is not supported yet');
   };
 }

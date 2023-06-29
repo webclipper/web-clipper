@@ -1,37 +1,49 @@
-import { IBasicRequestService, IRequestService } from '@/service/common/request';
 import { ILocaleService } from '@/service/common/locale';
 import { Inject, Service } from 'typedi';
 import { IEnvironmentService } from './environment';
 
-const privacyLocale = ['en-US', 'zh-CN'];
-const changelogLocale = ['en-US', 'zh-CN'];
+//@ts-ignore
+import ChangelogEnUS from './changelog/CHANGELOG.en-US.md';
+//@ts-ignore
+import ChangelogZhCN from './changelog/CHANGELOG.zh-CN.md';
+//@ts-ignore
+import PrivacyEnUS from './privacy/PRIVACY.en-US.md';
+//@ts-ignore
+import PrivacyZhCN from './privacy/PRIVACY.zh-CN.md';
+
+const privacyLocale = {
+  'en-US': PrivacyEnUS,
+  'zh-CN': PrivacyZhCN,
+} as const;
+
+const changelogLocale = {
+  'en-US': ChangelogEnUS,
+  'zh-CN': ChangelogZhCN,
+} as const;
+
+type Locale = 'en-US' | 'zh-CN';
+
+function keys<T>(data: T): (keyof T)[] {
+  return (Object.keys(data as any) as any) as (keyof T)[];
+}
 
 export class EnvironmentService implements IEnvironmentService {
-  constructor(
-    @Inject(ILocaleService) private localeService: ILocaleService,
-    @Inject(IBasicRequestService) private basicRequestService: IRequestService
-  ) {}
+  constructor(@Inject(ILocaleService) private localeService: ILocaleService) {}
 
   async privacy(): Promise<string> {
-    let workLocale = 'en-US';
-    if (privacyLocale.some(o => o === this.localeService.locale)) {
-      workLocale = this.localeService.locale;
+    let workLocale: Locale = 'en-US';
+    if (keys(privacyLocale).some(o => o === this.localeService.locale)) {
+      workLocale = this.localeService.locale as Locale;
     }
-    const privacyUrl = `${await this.resourceHost()}/privacy/PRIVACY.${workLocale}.md`;
-    return this.basicRequestService.request(privacyUrl, { method: 'get' });
+    return privacyLocale[workLocale];
   }
 
   async changelog(): Promise<string> {
-    let workLocale = 'en-US';
-    if (changelogLocale.some(o => o === this.localeService.locale)) {
-      workLocale = this.localeService.locale;
+    let workLocale: Locale = 'en-US';
+    if (Object.keys(changelogLocale).some(o => o === this.localeService.locale)) {
+      workLocale = this.localeService.locale as Locale;
     }
-    const changelogUrl = `${await this.resourceHost()}/changelog/CHANGELOG.${workLocale}.md`;
-    return this.basicRequestService.request(changelogUrl, { method: 'get' });
-  }
-
-  async resourceHost(): Promise<string> {
-    return 'https://resource.clipper.website';
+    return changelogLocale[workLocale];
   }
 }
 
