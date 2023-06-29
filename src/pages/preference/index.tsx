@@ -20,7 +20,6 @@ import Base from './base';
 import { DvaRouterProps, GlobalStore } from '@/common/types';
 import Changelog from './changelog';
 import IconFont from '@/components/IconFont';
-import Powerpack from './powerpack';
 import Privacy from './privacy';
 import locale from '@/common/locales';
 import Container from 'typedi';
@@ -64,12 +63,6 @@ const tabs = [
     icon: <SettingOutlined />,
     title: <FormattedMessage id="preference.tab.basic" defaultMessage="Basic" />,
     component: Base,
-  },
-  {
-    path: 'powerpack',
-    icon: <IconFont type="powerpack" />,
-    title: <FormattedMessage id="preference.tab.powerpack" defaultMessage="Powerpack" />,
-    component: Powerpack,
   },
   {
     path: 'privacy',
