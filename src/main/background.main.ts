@@ -176,7 +176,6 @@ async function initContentScriptService(tabId: number) {
   browser.browserAction.onClicked.addListener(async tab => {
     const tabId = tab.id;
     if (!tabId) {
-      trackService.trackEvent('Load_Web_Clipper', packageJson.version, 'error');
       alert(
         localeService.format({
           id: 'backend.not.unavailable',
@@ -186,7 +185,6 @@ async function initContentScriptService(tabId: number) {
       );
       return;
     }
-    trackService.trackEvent('Load_Web_Clipper', packageJson.version, 'success');
     await initContentScriptService(tabId);
     contentScriptService.toggle();
   });
