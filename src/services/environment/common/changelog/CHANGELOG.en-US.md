@@ -1,3 +1,37 @@
+## 1.34.0
+
+`2023-07-01`
+
+- ✨ Removed Powerpack and account system
+
+  - Removed email sending
+  - Removed sending to Kindle
+  - Removed OCR
+
+- ✨ Removed all remote data
+
+  - Changelog
+  - Privacy policy
+  - Remote configuration file
+
+## 1.33.0
+
+`2022-12-15`
+
+- 🐛 fix: import to flowus with html content
+
+## 1.32.0
+
+`2022-08-11`
+
+- 🐛 fix: fix notion auth problem
+
+## 1.31.0
+
+`2022-08-11`
+
+- 🐛 feat: support flowus
+
 ## 1.30.0
 
 `2021-3-26`
