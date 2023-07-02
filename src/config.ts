@@ -32,8 +32,6 @@ if (process.env.NODE_ENV === 'development') {
     admin: true,
     loadRemoteConfig: false,
     icon: 'icon-dev.png',
-    oneNoteClientId: '01c7500b-98dd-4f37-813f-a959382793ac',
-    oneNoteCallBack: 'https://webclipper-oauth.test.yfd.im/onenote_oauth',
   });
 }
 
