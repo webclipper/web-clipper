@@ -1,4 +1,3 @@
-import { ITrackService } from '@/service/common/track';
 import { IContentScriptService } from '@/service/common/contentScript';
 import { ITabService } from '@/service/common/tab';
 import { Container } from 'typedi';
@@ -346,11 +345,5 @@ builder
       servicesMeta,
     };
   });
-
-builder.subscript(function trackLoadPage({ history }) {
-  history.listen(e => {
-    Container.get(ITrackService).trackEvent('Open_Page', e.pathname);
-  });
-});
 
 export default builder.build();
