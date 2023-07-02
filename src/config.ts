@@ -6,8 +6,6 @@ interface WebClipperConfig {
   yuqueScope: string;
   oneNoteCallBack: string;
   oneNoteClientId: string;
-  loadRemoteConfig: boolean;
-  admin: boolean;
 }
 
 export interface RemoteConfig {
@@ -16,7 +14,6 @@ export interface RemoteConfig {
 }
 
 let config: WebClipperConfig = {
-  admin: false,
   icon: 'icon.png',
   iconDark: 'icon-dark.png',
   yuqueClientId: 'D1AwzCeDPLFWGfcGv7ze',
@@ -24,13 +21,10 @@ let config: WebClipperConfig = {
   yuqueScope: 'doc,group,repo,attach_upload',
   oneNoteClientId: '563571ad-cfcd-442a-aa34-046bad24b1b6',
   oneNoteCallBack: 'https://webclipper-oauth.yfd.im/onenote_oauth',
-  loadRemoteConfig: true,
 };
 
 if (process.env.NODE_ENV === 'development') {
   config = Object.assign({}, config, {
-    admin: true,
-    loadRemoteConfig: false,
     icon: 'icon-dev.png',
   });
 }

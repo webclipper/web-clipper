@@ -150,11 +150,6 @@ async function initContentScriptService(tabId: number) {
       for (const iterator of currentContextMenus) {
         const Factory = iterator.contextMenu;
         const instance = new Factory();
-        if (!config.admin) {
-          if (instance.manifest.admin) {
-            continue;
-          }
-        }
 
         chrome.contextMenus.create({
           id: iterator.id,
