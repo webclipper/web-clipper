@@ -239,9 +239,6 @@ builder
           React,
           pangu,
           config,
-          ocr: async () => {
-            throw new Error('');
-          },
         };
         //@ts-ignore
         result = yield call(afterRun, context);
