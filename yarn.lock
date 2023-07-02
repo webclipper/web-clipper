@@ -615,13 +615,6 @@
   resolved "https://registry.npmmirror.com/@types/chai/-/chai-4.3.5.tgz#ae69bcbb1bebb68c4ac0b11e9d8ed04526b3562b"
   integrity sha512-mEo1sAde+UCE6b2hxn332f1g1E8WfYRu6p5SvTKr2ZKC1f7gFJXk4h5PyGP9Dt6gCaG8y8XhwnXWC6Iy2cmBng==
 
-"@types/cheerio@*":
-  version "0.22.28"
-  resolved "https://registry.nlark.com/@types/cheerio/download/@types/cheerio-0.22.28.tgz"
-  integrity sha1-kICKq7RP7ED6KVD0xyNR4+TrBls=
-  dependencies:
-    "@types/node" "*"
-
 "@types/chrome@^0.0.141":
   version "0.0.141"
   resolved "https://registry.nlark.com/@types/chrome/download/@types/chrome-0.0.141.tgz"
@@ -650,21 +643,6 @@
   integrity sha1-xScZh4BWoha8BYibRqQdTrFDRCM=
   dependencies:
     "@types/tern" "*"
-
-"@types/enzyme-adapter-react-16@^1.0.3":
-  version "1.0.6"
-  resolved "https://registry.npm.taobao.org/@types/enzyme-adapter-react-16/download/@types/enzyme-adapter-react-16-1.0.6.tgz?cache=0&sync_timestamp=1613379543776&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fenzyme-adapter-react-16%2Fdownload%2F%40types%2Fenzyme-adapter-react-16-1.0.6.tgz"
-  integrity sha1-isp64v1scTfYabZhbmltIbuLDOw=
-  dependencies:
-    "@types/enzyme" "*"
-
-"@types/enzyme@*":
-  version "3.10.8"
-  resolved "https://registry.npm.taobao.org/@types/enzyme/download/@types/enzyme-3.10.8.tgz?cache=0&sync_timestamp=1613378492318&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fenzyme%2Fdownload%2F%40types%2Fenzyme-3.10.8.tgz"
-  integrity sha1-rXrJ06895v0Gc3cxI/r7xj21DUI=
-  dependencies:
-    "@types/cheerio" "*"
-    "@types/react" "*"
 
 "@types/estree@*":
   version "0.0.47"
@@ -864,13 +842,6 @@
   version "3.0.8"
   resolved "https://registry.npm.taobao.org/@types/redux-logger/download/@types/redux-logger-3.0.8.tgz"
   integrity sha1-H7bSaRe7GYeSuxz1f+sxyuFTLF0=
-  dependencies:
-    redux "^4.0.0"
-
-"@types/remote-redux-devtools@^0.5.3":
-  version "0.5.4"
-  resolved "https://registry.npm.taobao.org/@types/remote-redux-devtools/download/@types/remote-redux-devtools-0.5.4.tgz"
-  integrity sha1-UJ0w1hrmDS/Jm8ENqDLb2nEVywo=
   dependencies:
     redux "^4.0.0"
 
