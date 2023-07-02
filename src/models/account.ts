@@ -11,6 +11,7 @@ import {
 } from '@/actions/account';
 import { asyncChangeAccount } from '@/actions/clipper';
 import { message } from 'antd';
+import { getServices } from '@/common/backend';
 
 const initState: GlobalStore['account'] = {
   accounts: [],
@@ -38,7 +39,8 @@ model
     if (typeof accountsString !== 'string') {
       accountsString = JSON.stringify(accountsString);
     }
-    const accounts = <AccountPreference[]>JSON.parse(accountsString);
+    let accounts = <AccountPreference[]>JSON.parse(accountsString);
+    accounts = accounts.filter(account => getServices().some(o => o.type === account.type));
     yield put(initAccounts.done({ result: { accounts, defaultAccountId } }));
   })
   .case(initAccounts.done, (s, { result: { accounts, defaultAccountId } }) => ({
