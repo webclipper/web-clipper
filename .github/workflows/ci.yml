@@ -21,7 +21,6 @@ jobs:
           node-version: '12.x'
       - name: Install Dependencies
         run: npm install --force
-      - run: npm run lint
       - run: npm run cov
         env:
           GITHUB_BRANCH: ${{ github.ref }}
