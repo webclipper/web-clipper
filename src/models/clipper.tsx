@@ -61,9 +61,9 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     };
     const selectState: ReturnType<typeof selector> = yield select(selector);
     const { accounts, imageHosting } = selectState;
-    const currentAccount = accounts.find(o => o.id === payload.id);
+    let currentAccount = accounts.find(o => o.id === payload.id);
     if (!currentAccount) {
-      throw new Error('Load Account Error,Account not exist.');
+      return;
     }
     const {
       id,
