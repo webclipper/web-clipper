@@ -76,6 +76,7 @@
     "umi-request": "^1.2.15"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "^0.32.2",
     "@diamondyuan/eslint-config-react-typescript": "^7.0.1",
     "@types/chrome": "^0.0.141",
     "@types/classnames": "^2.2.9",
@@ -97,7 +98,6 @@
     "@types/webpack-env": "^1.13.9",
     "@types/yargs": "^17.0.2",
     "axios": "^0.21.1",
-    "c8": "^7.12.0",
     "clean-webpack-plugin": "^0.1.19",
     "compressing": "^1.4.0",
     "copy-webpack-plugin": "^5.1.1",
