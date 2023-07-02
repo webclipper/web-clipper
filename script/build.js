@@ -11,7 +11,10 @@ function send(data) {
   });
 }
 
-compiler.run(() => {
+compiler.run(err => {
+  if (err) {
+    console.log(err);
+  }
   send({
     type: 'Success',
   });

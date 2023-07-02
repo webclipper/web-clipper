@@ -16,9 +16,8 @@ export function build(options: IBuildOptions) {
   }
   const cp = fork(buildScript, [], {
     env: (buildEnv as unknown) as typeof process.env,
-    silent: true,
+    stdio: 'inherit',
   });
-  cp.stderr!.on('data', e => console.log(e.toString()));
   return new Promise(r => {
     cp.on('message', r);
   });
