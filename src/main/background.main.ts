@@ -4,7 +4,6 @@ import { WebRequestChannel } from '@/service/webRequest/common/webRequestIPC';
 import { IContentScriptService } from '@/service/common/contentScript';
 import { ContentScriptChannelClient } from '@/service/contentScript/common/contentScriptIPC';
 import { PopupContentScriptIPCClient } from '@/service/ipc/browser/popup/ipcClient';
-import { ITrackService } from '@/service/common/track';
 import * as browser from '@web-clipper/chrome-promise';
 import config from '@/config';
 import packageJson from '@/../package.json';
@@ -91,8 +90,6 @@ async function initContentScriptService(tabId: number) {
 (async () => {
   await syncStorageService.init();
   await localStorageService.init();
-  const trackService = Container.get(ITrackService);
-  await trackService.init();
   const preferenceService = Container.get(IPreferenceService);
   await preferenceService.init();
   await localeService.init();

@@ -121,7 +121,7 @@
     "ts-node": "^10.2.0",
     "typescript": "^5.1.6",
     "url-loader": "^3.0.0",
-    "vitest": "^0.20.3",
+    "vitest": "^0.32.2",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.2",
     "webpack-create-extension-manifest-plugin": "^1.1.0",

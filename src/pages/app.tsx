@@ -19,7 +19,6 @@ import { message } from 'antd';
 import { IConfigService } from '@/service/common/config';
 import { ILocalStorageService, ISyncStorageService } from '@/service/common/storage';
 import './app.less';
-import { ITrackService } from '@/service/common/track';
 Container.set(ILocalStorageService, localStorageService);
 Container.set(ISyncStorageService, syncStorageService);
 import '@/service/preference/browser/preferenceService';
@@ -46,7 +45,6 @@ export default async () => {
   await localStorageService.init();
   await localeService.init();
   Container.get(IConfigService).load();
-  Container.get(ITrackService).init();
   await Container.get(IPreferenceService).init();
   const app = dva({
     namespacePrefixWarning: false,
