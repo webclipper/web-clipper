@@ -172,6 +172,13 @@
   resolved "https://registry.nlark.com/@braintree/sanitize-url/download/@braintree/sanitize-url-3.1.0.tgz"
   integrity sha1-j/cdUQU81e5JgeWlAdgKU2JE9/0=
 
+"@buttercup/fetch@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.npmmirror.com/@buttercup/fetch/-/fetch-0.1.1.tgz#ccdffc74c9aaf95a0b99dd6807441f2019d5de42"
+  integrity sha512-RwBiPEmPaZv3oLOPY0fcmAGYdd3A4FDoYDc7JN+qxGTXumrYAYEC1RpyCM2pHSr6RYpuaAeg4A1fJy+PiigPIA==
+  optionalDependencies:
+    node-fetch "^3.3.0"
+
 "@cspotcode/source-map-consumer@0.8.0":
   version "0.8.0"
   resolved "https://registry.nlark.com/@cspotcode/source-map-consumer/download/@cspotcode/source-map-consumer-0.8.0.tgz"
@@ -483,7 +490,7 @@
   dependencies:
     "@formily/shared" "2.0.0-beta.47"
 
-"@istanbuljs/schema@^0.1.2", "@istanbuljs/schema@^0.1.3":
+"@istanbuljs/schema@^0.1.2":
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.3.tgz#e45e384e4b8ec16bce2fd903af78450f6bf7ec98"
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
@@ -1120,13 +1127,6 @@
   integrity sha1-JcdlX4gyvaaElJwJSenILQu9yBA=
   dependencies:
     jquery "^3.4.1"
-
-"@web-clipper/message-listener-combiner@^0.1.0":
-  version "0.1.1"
-  resolved "https://registry.nlark.com/@web-clipper/message-listener-combiner/download/@web-clipper/message-listener-combiner-0.1.1.tgz"
-  integrity sha1-YkG+IUQI+Yd5zr2tJsKkEZ7Y/8I=
-  dependencies:
-    dva-model-creator "^0.3.0"
 
 "@web-clipper/readability@^0.3.0":
   version "0.3.0"
@@ -1803,6 +1803,11 @@ balanced-match@^1.0.0:
   resolved "https://registry.nlark.com/balanced-match/download/balanced-match-1.0.2.tgz"
   integrity sha1-6D46fj8wCzTLnYf2FfoMvzV2kO4=
 
+base-64@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/base-64/-/base-64-1.0.0.tgz#09d0f2084e32a3fd08c2475b973788eee6ae8f4a"
+  integrity sha512-kwDPIFCGx0NZHog36dj+tHiwP4QMzsZ3AgMViUBKI0+V5n4U0ufTCUMhnQ04diaRI8EX/QcPfql7zlhZ7j4zgg==
+
 base64-js@^1.0.2, base64-js@^1.3.1:
   version "1.5.1"
   resolved "https://registry.npm.taobao.org/base64-js/download/base64-js-1.5.1.tgz"
@@ -1900,6 +1905,13 @@ brace-expansion@^1.1.7:
   dependencies:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
+
+brace-expansion@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmmirror.com/brace-expansion/-/brace-expansion-2.0.1.tgz#1edc459e0f0c548486ecf9fc99f2221364b9a0ae"
+  integrity sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==
+  dependencies:
+    balanced-match "^1.0.0"
 
 braces@^2.3.1, braces@^2.3.2:
   version "2.3.2"
@@ -2050,23 +2062,10 @@ builtin-status-codes@^3.0.0:
   resolved "https://registry.npm.taobao.org/builtin-status-codes/download/builtin-status-codes-3.0.0.tgz"
   integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
 
-c8@^7.12.0:
-  version "7.12.0"
-  resolved "https://registry.yarnpkg.com/c8/-/c8-7.12.0.tgz#402db1c1af4af5249153535d1c84ad70c5c96b14"
-  integrity sha512-CtgQrHOkyxr5koX1wEUmN/5cfDa2ckbHRA4Gy5LAL0zaCFtVWJS5++n+w4/sr2GWGerBxgTjpKeDclk/Qk6W/A==
-  dependencies:
-    "@bcoe/v8-coverage" "^0.2.3"
-    "@istanbuljs/schema" "^0.1.3"
-    find-up "^5.0.0"
-    foreground-child "^2.0.0"
-    istanbul-lib-coverage "^3.2.0"
-    istanbul-lib-report "^3.0.0"
-    istanbul-reports "^3.1.4"
-    rimraf "^3.0.2"
-    test-exclude "^6.0.0"
-    v8-to-istanbul "^9.0.0"
-    yargs "^16.2.0"
-    yargs-parser "^20.2.9"
+byte-length@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmmirror.com/byte-length/-/byte-length-1.0.2.tgz#ba5a5909240b0121c079b7f7b15248d6f08223cc"
+  integrity sha512-ovBpjmsgd/teRmgcPh23d4gJvxDoXtAzEL9xTfMU8Yc2kqCDb7L9jAG0XHl1nzuGl+h3ebCIF1i62UFyA9V/2Q==
 
 cac@^6.7.14:
   version "6.7.14"
@@ -2256,6 +2255,11 @@ character-reference-invalid@^1.0.0:
   version "1.1.4"
   resolved "https://registry.npm.taobao.org/character-reference-invalid/download/character-reference-invalid-1.1.4.tgz?cache=0&sync_timestamp=1615289558686&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcharacter-reference-invalid%2Fdownload%2Fcharacter-reference-invalid-1.1.4.tgz"
   integrity sha1-CDMpzaDq4nKrPbvzfpo4LBOvFWA=
+
+charenc@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmmirror.com/charenc/-/charenc-0.0.2.tgz#c0a1d2f3a7092e03774bfa83f14c0fc5790a8667"
+  integrity sha512-yrLQ/yVUFXkzg7EDQsPieE/53+0RlaWTs+wBrvW36cyilJ2SaDWfl4Yj7MtLTXleV9uEKefbAGUPv2/iWSooRA==
 
 check-error@^1.0.2:
   version "1.0.2"
@@ -2742,6 +2746,11 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.1, cross-spawn@^7.0.2:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
+crypt@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmmirror.com/crypt/-/crypt-0.0.2.tgz#88d7ff7ec0dfb86f713dc87bbb42d044d3e6c41b"
+  integrity sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==
+
 crypto-browserify@^3.11.0:
   version "3.12.0"
   resolved "https://registry.npm.taobao.org/crypto-browserify/download/crypto-browserify-3.12.0.tgz"
@@ -3113,6 +3122,11 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
+data-uri-to-buffer@^4.0.0:
+  version "4.0.1"
+  resolved "https://registry.npmmirror.com/data-uri-to-buffer/-/data-uri-to-buffer-4.0.1.tgz#d8feb2b2881e6a4f58c2e08acfd0e2834e26222e"
+  integrity sha512-0R9ikRb668HB7QDxT1vkpuUBtqc53YyAwMwGeUFKRojY/NWKvdZ+9UYtRfGmhqNbRkTSVpMbmyhXipFFv2cb/A==
+
 data-urls@^1.0.0:
   version "1.1.0"
   resolved "https://registry.npm.taobao.org/data-urls/download/data-urls-1.1.0.tgz"
@@ -3418,13 +3432,6 @@ dva-loading@^3.0.19:
   integrity sha1-wN0vsIFJJ1K5ktnOJwG4iCUYbgI=
   dependencies:
     "@babel/runtime" "^7.0.0"
-
-dva-model-creator@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.npm.taobao.org/dva-model-creator/download/dva-model-creator-0.3.0.tgz"
-  integrity sha1-KMzX3jHL+kqaPBEdiDfb2r+GYrA=
-  dependencies:
-    warning "^4.0.3"
 
 dva-model-creator@^0.4.3:
   version "0.4.3"
@@ -3989,6 +3996,13 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.6:
   resolved "https://registry.npm.taobao.org/fast-levenshtein/download/fast-levenshtein-2.0.6.tgz"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
 
+fast-xml-parser@^4.2.4:
+  version "4.2.5"
+  resolved "https://registry.npmmirror.com/fast-xml-parser/-/fast-xml-parser-4.2.5.tgz#a6747a09296a6cb34f2ae634019bf1738f3b421f"
+  integrity sha512-B9/wizE4WngqQftFPmdaMYlXoJlJOYxGQOanC77fq9k8+Z0v5dDSVh+3glErdIROP//s/jgb7ZuxKfB8nVyo0g==
+  dependencies:
+    strnum "^1.0.5"
+
 fastparse@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/fastparse/download/fastparse-1.1.2.tgz"
@@ -4020,6 +4034,14 @@ fd-slicer@~1.1.0:
   integrity sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=
   dependencies:
     pend "~1.2.0"
+
+fetch-blob@^3.1.2, fetch-blob@^3.1.4:
+  version "3.2.0"
+  resolved "https://registry.npmmirror.com/fetch-blob/-/fetch-blob-3.2.0.tgz#f09b8d4bbd45adc6f0c20b7e787e793e309dcce9"
+  integrity sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==
+  dependencies:
+    node-domexception "^1.0.0"
+    web-streams-polyfill "^3.0.3"
 
 figgy-pudding@^3.5.1:
   version "3.5.2"
@@ -4129,14 +4151,6 @@ find-up@^4.0.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
-find-up@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/find-up/-/find-up-5.0.0.tgz#4c92819ecb7083561e4f4a240a86be5198f536fc"
-  integrity sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==
-  dependencies:
-    locate-path "^6.0.0"
-    path-exists "^4.0.0"
-
 findup-sync@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/findup-sync/download/findup-sync-3.0.0.tgz"
@@ -4195,14 +4209,6 @@ for-in@^1.0.2:
   resolved "https://registry.npm.taobao.org/for-in/download/for-in-1.0.2.tgz"
   integrity sha1-gQaNKVqBQuwKxybG4iAMMPttXoA=
 
-foreground-child@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/foreground-child/-/foreground-child-2.0.0.tgz#71b32800c9f15aa8f2f83f4a6bd9bff35d861a53"
-  integrity sha512-dCIq9FpEcyQyXKCkyzmlPTFNgrCzPudOe+mhvJU5zAtlBnGVy2yKxtfsxK2tQBThwq225jcvBjpw1Gr40uzZCA==
-  dependencies:
-    cross-spawn "^7.0.0"
-    signal-exit "^3.0.2"
-
 forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.nlark.com/forever-agent/download/forever-agent-0.6.1.tgz"
@@ -4216,6 +4222,13 @@ form-data@~2.3.2:
     asynckit "^0.4.0"
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
+
+formdata-polyfill@^4.0.10:
+  version "4.0.10"
+  resolved "https://registry.npmmirror.com/formdata-polyfill/-/formdata-polyfill-4.0.10.tgz#24807c31c9d402e002ab3d8c720144ceb8848423"
+  integrity sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==
+  dependencies:
+    fetch-blob "^3.1.2"
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -4605,6 +4618,11 @@ homedir-polyfill@^1.0.1:
   dependencies:
     parse-passwd "^1.0.0"
 
+hot-patcher@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmmirror.com/hot-patcher/-/hot-patcher-2.0.0.tgz#10a21b5bb4f5757316c41fc98794c11192a0a41e"
+  integrity sha512-rwJ0ZqSFgm+5oD0KiGBVinyPWRJESRSsHlEWDzZjyOe/OfhD9tynHqUyUIGX2fWuV+BihW4nXxeoZRJVHid64w==
+
 html-encoding-sniffer@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/html-encoding-sniffer/download/html-encoding-sniffer-1.0.2.tgz"
@@ -4961,7 +4979,7 @@ is-boolean-object@^1.1.0:
   dependencies:
     call-bind "^1.0.2"
 
-is-buffer@^1.1.5:
+is-buffer@^1.1.5, is-buffer@~1.1.6:
   version "1.1.6"
   resolved "https://registry.npm.taobao.org/is-buffer/download/is-buffer-1.1.6.tgz"
   integrity sha1-76ouqdqg16suoTqXsritUf776L4=
@@ -5282,7 +5300,7 @@ istanbul-lib-source-maps@^4.0.1:
     istanbul-lib-coverage "^3.0.0"
     source-map "^0.6.1"
 
-istanbul-reports@^3.1.4, istanbul-reports@^3.1.5:
+istanbul-reports@^3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/istanbul-reports/-/istanbul-reports-3.1.5.tgz#cc9a6ab25cb25659810e4785ed9d9fb742578bae"
   integrity sha512-nUsEMa9pBt/NOHqbcbeJEgqIlY/K7rVWUX6Lql2orY5e9roQOthbR3vtY4zzf2orPELg80fnxxk9zUyPlgwD1w==
@@ -5493,6 +5511,11 @@ klona@^2.0.4:
   resolved "https://registry.npmmirror.com/klona/-/klona-2.0.5.tgz#d166574d90076395d9963aa7a928fabb8d76afbc"
   integrity sha512-pJiBpiXMbt7dkzXe8Ghj/u4FfXOOa98fPW+bihOJ4SjnoijweJrNThJfd3ifXpXhREjpoF2mZVH1GfS9LV3kHQ==
 
+layerr@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.npmmirror.com/layerr/-/layerr-0.1.2.tgz#16c8e7fb042d3595ab15492bdad088f31d7afd15"
+  integrity sha512-ob5kTd9H3S4GOG2nVXyQhOu9O8nBgP555XxWPkJI0tR0JeRilfyTp8WtPdIJHLXBmHMSdEq5+KMxiYABeScsIQ==
+
 left-pad@^1.3.0:
   version "1.3.0"
   resolved "https://registry.npm.taobao.org/left-pad/download/left-pad-1.3.0.tgz"
@@ -5696,13 +5719,6 @@ locate-path@^5.0.0:
   integrity sha1-Gvujlq/WdqbUJQTQpno6frn2KqA=
   dependencies:
     p-locate "^4.1.0"
-
-locate-path@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-6.0.0.tgz#55321eb309febbc59c4801d931a72452a681d286"
-  integrity sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==
-  dependencies:
-    p-locate "^5.0.0"
 
 lodash.camelcase@^4.3.0:
   version "4.3.0"
@@ -5909,6 +5925,15 @@ md5.js@^1.3.4:
     hash-base "^3.0.0"
     inherits "^2.0.1"
     safe-buffer "^5.1.2"
+
+md5@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmmirror.com/md5/-/md5-2.3.0.tgz#c3da9a6aae3a30b46b7b0c349b87b110dc3bda4f"
+  integrity sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==
+  dependencies:
+    charenc "0.0.2"
+    crypt "0.0.2"
+    is-buffer "~1.1.6"
 
 mdast-util-compact@^1.0.0:
   version "1.0.4"
@@ -6127,6 +6152,13 @@ minimatch@^3.0.4:
   dependencies:
     brace-expansion "^1.1.7"
 
+minimatch@^5.1.0:
+  version "5.1.6"
+  resolved "https://registry.npmmirror.com/minimatch/-/minimatch-5.1.6.tgz#1cfcb8cf5522ea69952cd2af95ae09477f122a96"
+  integrity sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==
+  dependencies:
+    brace-expansion "^2.0.1"
+
 minimist@^1.2.0, minimist@^1.2.5:
   version "1.2.5"
   resolved "https://registry.nlark.com/minimist/download/minimist-1.2.5.tgz?cache=0&sync_timestamp=1618847181284&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fminimist%2Fdownload%2Fminimist-1.2.5.tgz"
@@ -6301,6 +6333,11 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   resolved "https://registry.npm.taobao.org/neo-async/download/neo-async-2.6.2.tgz"
   integrity sha1-tKr7k+OustgXTKU88WOrfXMIMF8=
 
+nested-property@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmmirror.com/nested-property/-/nested-property-4.0.0.tgz#a67b5a31991e701e03cdbaa6453bc5b1011bb88d"
+  integrity sha512-yFehXNWRs4cM0+dz7QxCd06hTbWbSkV0ISsqBfkntU6TOY4Qm3Q88fRRLOddkGh2Qq6dZvnKVAahfhjcUvLnyA==
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.npm.taobao.org/nice-try/download/nice-try-1.0.5.tgz"
@@ -6321,6 +6358,11 @@ no-case@^3.0.4:
     lower-case "^2.0.2"
     tslib "^2.0.3"
 
+node-domexception@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/node-domexception/-/node-domexception-1.0.0.tgz#6888db46a1f71c0b76b3f7555016b63fe64766e5"
+  integrity sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==
+
 node-fetch@^1.0.1:
   version "1.7.3"
   resolved "https://registry.nlark.com/node-fetch/download/node-fetch-1.7.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fnode-fetch%2Fdownload%2Fnode-fetch-1.7.3.tgz"
@@ -6328,6 +6370,15 @@ node-fetch@^1.0.1:
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
+
+node-fetch@^3.3.0:
+  version "3.3.1"
+  resolved "https://registry.npmmirror.com/node-fetch/-/node-fetch-3.3.1.tgz#b3eea7b54b3a48020e46f4f88b9c5a7430d20b2e"
+  integrity sha512-cRVc/kyto/7E5shrWca1Wsea4y6tL9iYJE5FBCius3JQfb/4P4I295PfhgbJQBLTx6lATE4z+wK0rPM4VS2uow==
+  dependencies:
+    data-uri-to-buffer "^4.0.0"
+    fetch-blob "^3.1.4"
+    formdata-polyfill "^4.0.10"
 
 "node-libs-browser@^1.0.0 || ^2.0.0", node-libs-browser@^2.2.1:
   version "2.2.1"
@@ -6572,13 +6623,6 @@ p-limit@^2.0.0, p-limit@^2.2.0, p-limit@^2.2.1, p-limit@^2.3.0:
   dependencies:
     p-try "^2.0.0"
 
-p-limit@^3.0.2:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-3.1.0.tgz#e1daccbe78d0d1388ca18c64fea38e3e57e3706b"
-  integrity sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==
-  dependencies:
-    yocto-queue "^0.1.0"
-
 p-limit@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmmirror.com/p-limit/-/p-limit-4.0.0.tgz#914af6544ed32bfa54670b061cafcbd04984b644"
@@ -6599,13 +6643,6 @@ p-locate@^4.1.0:
   integrity sha1-o0KLtwiLOmApL2aRkni3wpetTwc=
   dependencies:
     p-limit "^2.2.0"
-
-p-locate@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/p-locate/-/p-locate-5.0.0.tgz#83c8315c6785005e3bd021839411c9e110e6d834"
-  integrity sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==
-  dependencies:
-    p-limit "^3.0.2"
 
 p-map@^2.0.0:
   version "2.1.0"
@@ -6787,6 +6824,11 @@ path-parse@^1.0.6:
   version "1.0.6"
   resolved "https://registry.nlark.com/path-parse/download/path-parse-1.0.6.tgz"
   integrity sha1-1i27VnlAXXLEc37FhgDp3c8G0kw=
+
+path-posix@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/path-posix/-/path-posix-1.0.0.tgz#06b26113f56beab042545a23bfa88003ccac260f"
+  integrity sha512-1gJ0WpNIiYcQydgg3Ed8KzvIqTsDpNwq+cjBCssvBtuTWjEqY1AW+i+OepiEMqDCzyro9B2sLAe4RBPajMYFiA==
 
 path-to-regexp@^1.7.0:
   version "1.8.0"
@@ -7154,6 +7196,11 @@ querystring@0.2.0:
   version "0.2.0"
   resolved "https://registry.npm.taobao.org/querystring/download/querystring-0.2.0.tgz"
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
+
+querystringify@^2.1.1:
+  version "2.2.0"
+  resolved "https://registry.npmmirror.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
+  integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
 
 queue-microtask@^1.2.2:
   version "1.2.3"
@@ -7998,6 +8045,11 @@ require-main-filename@^2.0.0:
   resolved "https://registry.npm.taobao.org/require-main-filename/download/require-main-filename-2.0.0.tgz"
   integrity sha1-0LMp7MfMD2Fkn2IhW+aa9UqomJs=
 
+requires-port@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
+  integrity sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==
+
 resize-observer-polyfill@^1.5.0, resize-observer-polyfill@^1.5.1:
   version "1.5.1"
   resolved "https://registry.nlark.com/resize-observer-polyfill/download/resize-observer-polyfill-1.5.1.tgz"
@@ -8726,6 +8778,11 @@ strip-outer@^1.0.1:
   dependencies:
     escape-string-regexp "^1.0.2"
 
+strnum@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmmirror.com/strnum/-/strnum-1.0.5.tgz#5c4e829fe15ad4ff0d20c3db5ac97b73c9b072db"
+  integrity sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==
+
 style-loader@^0.23.1:
   version "0.23.1"
   resolved "https://registry.npm.taobao.org/style-loader/download/style-loader-0.23.1.tgz"
@@ -9408,6 +9465,11 @@ urix@^0.1.0:
   resolved "https://registry.nlark.com/urix/download/urix-0.1.0.tgz"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
 
+url-join@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmmirror.com/url-join/-/url-join-4.0.1.tgz#b642e21a2646808ffa178c4c5fda39844e12cde7"
+  integrity sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA==
+
 url-loader@^3.0.0:
   version "3.0.0"
   resolved "https://registry.nlark.com/url-loader/download/url-loader-3.0.0.tgz"
@@ -9416,6 +9478,14 @@ url-loader@^3.0.0:
     loader-utils "^1.2.3"
     mime "^2.4.4"
     schema-utils "^2.5.0"
+
+url-parse@^1.5.10:
+  version "1.5.10"
+  resolved "https://registry.npmmirror.com/url-parse/-/url-parse-1.5.10.tgz#9d3c2f736c1d75dd3bd2be507dcc111f1e2ea9c1"
+  integrity sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==
+  dependencies:
+    querystringify "^2.1.1"
+    requires-port "^1.0.0"
 
 url@^0.11.0:
   version "0.11.0"
@@ -9479,15 +9549,6 @@ v8-compile-cache@^2.0.3, v8-compile-cache@^2.1.1:
   version "2.3.0"
   resolved "https://registry.npm.taobao.org/v8-compile-cache/download/v8-compile-cache-2.3.0.tgz"
   integrity sha1-LeGWGMZtwkfc+2+ZM4A12CRaLO4=
-
-v8-to-istanbul@^9.0.0:
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/v8-to-istanbul/-/v8-to-istanbul-9.0.1.tgz#b6f994b0b5d4ef255e17a0d17dc444a9f5132fa4"
-  integrity sha512-74Y4LqY74kLE6IFyIjPtkSTWzUZmj8tdHT9Ii/26dvQ6K9Dl2NbEfj0XgU2sHCtKgt5VupqhlO/5aWuqS+IY1w==
-  dependencies:
-    "@jridgewell/trace-mapping" "^0.3.12"
-    "@types/istanbul-lib-coverage" "^2.0.1"
-    convert-source-map "^1.6.0"
 
 v8-to-istanbul@^9.1.0:
   version "9.1.0"
@@ -9632,6 +9693,30 @@ watchpack@^1.7.4:
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
+
+web-streams-polyfill@^3.0.3:
+  version "3.2.1"
+  resolved "https://registry.npmmirror.com/web-streams-polyfill/-/web-streams-polyfill-3.2.1.tgz#71c2718c52b45fd49dbeee88634b3a60ceab42a6"
+  integrity sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==
+
+webdav@^5.2.2:
+  version "5.2.2"
+  resolved "https://registry.npmmirror.com/webdav/-/webdav-5.2.2.tgz#06b568be1a4a9730800b690b7e6fa9876e3a820a"
+  integrity sha512-CTnhTTKug7pKbMqcvrnGNr4rV9qhWXV1sLk1PpN4BOskqDT+cEfFx4Y4VlcFXUX6lSUFsQBm9Ka8+6dIe0doQQ==
+  dependencies:
+    "@buttercup/fetch" "^0.1.1"
+    base-64 "^1.0.0"
+    byte-length "^1.0.2"
+    fast-xml-parser "^4.2.4"
+    he "^1.2.0"
+    hot-patcher "^2.0.0"
+    layerr "^0.1.2"
+    md5 "^2.3.0"
+    minimatch "^5.1.0"
+    nested-property "^4.0.0"
+    path-posix "^1.0.0"
+    url-join "^4.0.1"
+    url-parse "^1.5.10"
 
 webextension-polyfill@^0.5.0:
   version "0.5.0"
@@ -9939,7 +10024,7 @@ yargs-parser@^15.0.1:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
 
-yargs-parser@^20.2.2, yargs-parser@^20.2.9:
+yargs-parser@^20.2.2:
   version "20.2.9"
   resolved "https://registry.nlark.com/yargs-parser/download/yargs-parser-20.2.9.tgz?cache=0&sync_timestamp=1624233514145&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fyargs-parser%2Fdownload%2Fyargs-parser-20.2.9.tgz"
   integrity sha1-LrfcOwKJcY/ClfNidThFxBoMlO4=
@@ -9977,19 +10062,6 @@ yargs@^14.2:
     y18n "^4.0.0"
     yargs-parser "^15.0.1"
 
-yargs@^16.2.0:
-  version "16.2.0"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-16.2.0.tgz#1c82bf0f6b6a66eafce7ef30e376f49a12477f66"
-  integrity sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==
-  dependencies:
-    cliui "^7.0.2"
-    escalade "^3.1.1"
-    get-caller-file "^2.0.5"
-    require-directory "^2.1.1"
-    string-width "^4.2.0"
-    y18n "^5.0.5"
-    yargs-parser "^20.2.2"
-
 yargs@^17.1.1:
   version "17.1.1"
   resolved "https://registry.nlark.com/yargs/download/yargs-17.1.1.tgz"
@@ -10022,11 +10094,6 @@ yn@3.1.1:
   version "3.1.1"
   resolved "https://registry.npm.taobao.org/yn/download/yn-3.1.1.tgz"
   integrity sha1-HodAGgnXZ8HV6rJqbkwYUYLS61A=
-
-yocto-queue@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
-  integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
 yocto-queue@^1.0.0:
   version "1.0.0"
