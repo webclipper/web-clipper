@@ -1,3 +1,15 @@
+## Sponsors
+
+### 感谢 [FlowUs 息流](https://flowus.cn/product) 赞助本项目
+
+FlowUs 息流是一款为个人和团队打造的新一代知识管理与协作平台，以云端空间承载，配合灵活的信息搭建能力，为用户在工作、生活、学习中提供更多效率与专注。
+
+产品覆盖移动及 PC 端全生态链条，依托 FlowUs 息流，团队和个人用户能够实现项目管理、知识库、企业网盘、内部工作流等一站式解决方案。
+
+**官网**: [https://flowus.cn/product](https://flowus.cn/product)
+
+![FlowUs](https://github.com/webclipper/web-clipper/blob/master/flowus.png?raw=true)
+
 ## 1.34.0
 
 `2023-07-01`
