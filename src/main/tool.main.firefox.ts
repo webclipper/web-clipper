@@ -13,7 +13,6 @@ import { PopupIpcClient, PopupContentScriptIPCClient } from '@/service/ipc/brows
 import '@/service/request/tool/basic';
 import '@/service/config/browser/configService';
 import '@/service/powerpackService';
-import '@/service/trackService';
 import localeService from '@/common/locales';
 Container.set(ILocaleService, localeService);
 import '@/service/extension/browser/extensionService';
