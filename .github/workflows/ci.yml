@@ -25,4 +25,3 @@ jobs:
       - run: npm run cov
         env:
           GITHUB_BRANCH: ${{ github.ref }}
-      - uses: codecov/codecov-action@v1
