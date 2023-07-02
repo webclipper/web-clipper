@@ -12,7 +12,6 @@ import { ITabService } from '@/service/common/tab';
 import { PopupIpcClient, PopupContentScriptIPCClient } from '@/service/ipc/browser/popup/ipcClient';
 import '@/service/request/tool/basic';
 import '@/service/config/browser/configService';
-import '@/service/powerpackService';
 import localeService from '@/common/locales';
 Container.set(ILocaleService, localeService);
 import '@/service/extension/browser/extensionService';

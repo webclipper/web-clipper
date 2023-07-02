@@ -9,7 +9,7 @@
     "test": "vitest",
     "cov": "vitest --coverage",
     "dev": "cross-env NODE_ENV=development yarn _dev",
-    "dev:dd": "cross-env TARGET_BROWSER=Firefox NODE_ENV=development yarn _dev",
+    "dev:ff": "cross-env TARGET_BROWSER=Firefox NODE_ENV=development yarn _dev",
     "_dev": "webpack --config webpack/webpack.dev.js --watch",
     "release": "ts-node script/release.ts",
     "release:ff": "bash script/release_ff.sh",
