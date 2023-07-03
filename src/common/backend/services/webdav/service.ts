@@ -1,10 +1,10 @@
 import { WebDAVServiceConfig } from './interface';
 import { DocumentService, CreateDocumentRequest, Repository } from './../interface';
-import { extend, RequestMethod } from 'umi-request';
+import { FileStat, WebDAVClient, createClient } from 'webdav/web';
 
 export default class WebDAVDocumentService implements DocumentService {
   private auth: string;
-  private request: RequestMethod;
+  private client: WebDAVClient;
 
   constructor(private config: WebDAVServiceConfig) {
     this.auth = btoa(`${this.config.username}:${this.config.password}`);
@@ -13,11 +13,10 @@ export default class WebDAVDocumentService implements DocumentService {
     } = {
       'https://dav.jianguoyun.com': 'https://dav.jianguoyun.com/dav',
     };
-    this.request = extend({
-      prefix: originData[this.config.origin] ?? this.config.origin,
-      headers: {
-        Authorization: `Basic ${this.auth}`,
-      },
+    const entryPoint = originData[this.config.origin] ?? this.config.origin;
+    this.client = createClient(entryPoint, {
+      username: this.config.username,
+      password: this.config.password,
     });
   }
 
@@ -44,32 +43,21 @@ export default class WebDAVDocumentService implements DocumentService {
   };
 
   getChildrenList = async (parent = '/'): Promise<{ displayname: string; href: string }[]> => {
-    const result = await this.request(parent, {
-      method: 'PROPFIND',
-    });
-    const folder = new DOMParser().parseFromString(result, 'text/xml');
-    const list = Array.from(folder.getElementsByTagName('d:response')).map(file => {
-      const href = file.getElementsByTagName('d:href')[0];
-      const displayname = file.getElementsByTagName('d:displayname')[0];
-      return {
-        href: href.textContent!,
-        displayname: displayname.textContent!,
-      };
-    });
+    const list = await this.client.getDirectoryContents(parent).then(files =>
+      (files as FileStat[]).map(file => ({
+        href: file.filename,
+        displayname: file.basename,
+      }))
+    );
+    console.log({ list });
 
-    const root = list.shift();
-    return list.map(o => ({
-      ...o,
-      href: o.href?.replace(root!.href!, '/'),
-    }));
+    return list;
   };
 
   createDocument = async (info: CreateDocumentRequest): Promise<void> => {
-    await this.request.put<{ errmsg: string; errno: number }>(
-      `${info.repositoryId}${info.title}.md`,
-      {
-        data: info.content,
-      }
+    await this.client.putFileContents(
+      `${info.repositoryId}/${info.title.replace(/[\\/]/g, '_')}.md`,
+      info.content
     );
     return;
   };
