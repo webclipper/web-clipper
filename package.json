@@ -71,7 +71,7 @@
     "short-uuid": "^3.1.1",
     "showdown": "^1.9.0",
     "tldjs": "^2.3.1",
-    "typedi": "^0.8.0",
+    "typedi": "^0.10.0",
     "umi-request": "^1.2.15",
     "webdav": "^5.2.2"
   },
