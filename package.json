@@ -123,7 +123,7 @@
     "webpack-cli": "^3.3.2",
     "webpack-create-extension-manifest-plugin": "^1.1.0",
     "webpack-extension-reloader": "^1.1.4",
-    "webpack-merge": "^4.2.2",
+    "webpack-merge": "^5.9.0",
     "yargs": "^17.1.1"
   },
   "manifest": {
