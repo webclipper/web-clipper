@@ -38,7 +38,7 @@ const useOriginForm = ({ initStatus, form, originKey }: UseOriginFormProps) => {
           const _url = new URL(value);
           if (_url.origin !== value) {
             form.setFieldsValue({
-              [key]: _url.origin,
+              [key]: _url.toString(),
             });
             callback();
           }
