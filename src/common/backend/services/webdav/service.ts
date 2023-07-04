@@ -1,6 +1,8 @@
 import { WebDAVServiceConfig } from './interface';
 import { DocumentService, CreateDocumentRequest, Repository } from './../interface';
-import { FileStat, WebDAVClient, createClient } from 'webdav/web';
+//@ts-ignore
+//@TODO use webdav/web
+import { FileStat, WebDAVClient, createClient } from 'webdav/dist/web';
 
 export default class WebDAVDocumentService implements DocumentService {
   private auth: string;
