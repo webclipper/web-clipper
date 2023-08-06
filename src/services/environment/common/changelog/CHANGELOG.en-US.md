@@ -1,3 +1,9 @@
+## 1.35.0
+
+`2023-08-06`
+
+- Optimized the support for Webdav.
+
 ## 1.34.0
 
 `2023-07-01`

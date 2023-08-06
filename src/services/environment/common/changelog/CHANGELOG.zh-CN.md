@@ -10,6 +10,12 @@ FlowUs 息流是一款为个人和团队打造的新一代知识管理与协作�
 
 ![FlowUs](https://github.com/webclipper/web-clipper/blob/master/flowus.png?raw=true)
 
+## 1.35.0
+
+`2023-08-06`
+
+- 优化了 Webdav 的支持
+
 ## 1.34.0
 
 `2023-07-01`
@@ -20,7 +26,7 @@ FlowUs 息流是一款为个人和团队打造的新一代知识管理与协作�
   - 删除了发送到 kindle
   - 删除了 ocr 功能
 
-- ✨ 移除了所有远程数据
+- ✨ 移除了所有从服务器获取的数据，改为从本地获取
 
   - 更新日志
   - 隐私协议
