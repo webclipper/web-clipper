@@ -294,6 +294,10 @@ export default class WolaiDocumentService implements DocumentService {
           name: 'cookie',
           value: cookieString,
         },
+        {
+          name: 'origin',
+          value: 'https://www.wolai.com',
+        },
       ],
     });
     try {
