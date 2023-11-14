@@ -70,6 +70,7 @@
   "backend.services.mail.name": "郵件",
   "backend.services.notion.unauthorizedErrorMessage": "授權失敗，請登錄網頁版 Notion。",
   "backend.services.onenote_oauth.name": "OneNote",
+  "backend.services.qcloud.name": "騰訊雲",
   "backend.services.server_chan.accessToken.message": "請輸入 AccessToken",
   "backend.services.server_chan.name": "Server醬",
   "backend.services.siyuan.form.accessToken": "",

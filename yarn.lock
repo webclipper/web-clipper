@@ -1285,6 +1285,11 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
+"@xmldom/xmldom@^0.8.6":
+  version "0.8.10"
+  resolved "https://mirrors.cloud.tencent.com/npm/@xmldom/xmldom/-/xmldom-0.8.10.tgz#a1337ca426aa61cef9fe15b5b28e340a72f6fa99"
+  integrity sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.nlark.com/@xtuc/ieee754/download/@xtuc/ieee754-1.2.0.tgz"
@@ -2615,6 +2620,13 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.nlark.com/core-util-is/download/core-util-is-1.0.2.tgz"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
+
+cos-js-sdk-v5@^1.4.21:
+  version "1.4.21"
+  resolved "https://mirrors.cloud.tencent.com/npm/cos-js-sdk-v5/-/cos-js-sdk-v5-1.4.21.tgz#c3c5ccb879b32839f9717c208601273f9b06ab9d"
+  integrity sha512-6cR53IZF2o17uaPr8XJSMa+Q73P9pgDFD5IYGcIfJn06JJaK6hGX43nv5DJ17uQYmwQBIqNeZOF97I7ClrsNdA==
+  dependencies:
+    "@xmldom/xmldom" "^0.8.6"
 
 cosmiconfig@^5.2.1:
   version "5.2.1"
