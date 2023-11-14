@@ -69,7 +69,7 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
           valuePropName: 'checked',
           rules: [
             {
-              required: true,
+              required: false,
             },
           ],
         })(<Checkbox />)}
