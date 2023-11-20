@@ -33,7 +33,7 @@
     "@ant-design/icons": "^4.2.2",
     "@diamondyuan/eslint": "^7.0.4",
     "@formily/antd": "^2.0.0-beta.47",
-    "@formily/core": "^2.0.0-beta.47",
+    "@formily/core": "^2.2.29",
     "@formily/react": "^2.0.0-beta.47",
     "@shihengtech/hooks": "^0.0.16",
     "@web-clipper/area-selector": "^0.1.3",
