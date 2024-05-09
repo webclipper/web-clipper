@@ -56,6 +56,7 @@
     "hypermd": "^0.3.11",
     "immutability-helper": "^3.0.1",
     "jquery": "^3.4.0",
+    "js-base64": "^3.7.7",
     "lodash": "^4.17.20",
     "mobx": "^5.15.1",
     "mobx-react": "^6.1.4",

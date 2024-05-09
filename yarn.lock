@@ -5304,6 +5304,11 @@ jquery@^3.4.0, jquery@^3.4.1:
   resolved "https://registry.npm.taobao.org/jquery/download/jquery-3.6.0.tgz?cache=0&sync_timestamp=1614705221099&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjquery%2Fdownload%2Fjquery-3.6.0.tgz"
   integrity sha1-xyoJ8Vwb3OFC9J2/EXC9+K2sJHA=
 
+js-base64@^3.7.7:
+  version "3.7.7"
+  resolved "https://registry.npmmirror.com/js-base64/-/js-base64-3.7.7.tgz#e51b84bf78fbf5702b9541e2cb7bfcb893b43e79"
+  integrity sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==
+
 js-string-escape@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmmirror.com/js-string-escape/-/js-string-escape-1.0.1.tgz#e2625badbc0d67c7533e9edc1068c587ae4137ef"
