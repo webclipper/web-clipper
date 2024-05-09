@@ -28,7 +28,7 @@ export interface WordpressUser {
 }
 
 export class WordPressDocumentService implements DocumentService {
-  private config: WordPressServiceConfig;
+  protected config: WordPressServiceConfig;
 
   constructor(config: WordPressServiceConfig) {
     this.config = config;
@@ -76,7 +76,6 @@ export class WordPressDocumentService implements DocumentService {
         },
         content: {
           raw: request.content,
-          rendered: request.content,
         },
         categories: [Number(request.repositoryId)],
       }),

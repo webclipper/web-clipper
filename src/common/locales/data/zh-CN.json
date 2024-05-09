@@ -102,6 +102,8 @@
   "backend.services.wordpress.form.username": "用户名",
   "backend.services.wordpress.form.authentication": "授权",
   "backend.services.wordpress.form.pwd": "应用密码",
+  "backend.imageHosting.wordpress.name": "WordPress媒体库",
+  "backend.imageHosting.wordpress.builtInRemark": "WordPress媒体库集成。",
   "background.not_support_message": "暂时无法剪辑此类型的页面。",
   "component.accountItem.delete": "删除",
   "component.accountItem.edit": "编辑",
