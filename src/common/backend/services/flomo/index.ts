@@ -9,7 +9,7 @@ export default () => {
     homePage: 'https://flomoapp.com/',
     permission: {
       origins: ['https://flomoapp.com/*'],
-      permissions: ['cookies', 'webRequest', 'webRequestBlocking'],
+      permissions: ['cookies'],
     },
   };
 };

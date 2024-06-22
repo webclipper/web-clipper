@@ -14,7 +14,7 @@ export default (): ServiceMeta => {
     service: Service,
     permission: {
       origins: ['https://api.dida365.com/*'],
-      permissions: ['webRequest', 'webRequestBlocking'],
+      permissions: [],
     },
   };
 };

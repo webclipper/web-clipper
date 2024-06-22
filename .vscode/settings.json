@@ -5,17 +5,9 @@
   "eslint.packageManager": "yarn",
   "editor.tabSize": 2,
   "files.insertFinalNewline": true,
-  "cSpell.words": [
-    "dida",
-    "hosting",
-    "image",
-    "option",
-    "repos",
-    "ticktick",
-    "yuque"
-  ],
+  "cSpell.words": ["dida", "hosting", "image", "option", "repos", "ticktick", "yuque"],
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   }
 }

@@ -1,11 +1,7 @@
-import { getBuildOptions } from './utils/get-build-options';
-import { TDistType, IReleaseProcessEnv } from './utils/types';
-import { build } from './utils/build';
-import { pack } from './utils/pack';
-import path from 'path';
+import { fork } from 'child_process';
 import fs from 'fs';
-
-const { isBeta } = require('../webpack/utils/manifest');
+import path from 'path';
+import { pack } from './utils/pack';
 
 (async () => {
   const releaseDir = path.join(__dirname, '../release');
@@ -13,16 +9,19 @@ const { isBeta } = require('../webpack/utils/manifest');
   if (!fs.existsSync(releaseDir)) {
     fs.mkdirSync(releaseDir);
   }
-  const buildEnv = (process.env as unknown) as IReleaseProcessEnv;
-  const buildOptions = getBuildOptions(buildEnv);
-  const CurrentDistType: TDistType = isBeta() ? 'Beta' : 'Release';
-  if (!buildOptions.distType.has(CurrentDistType)) {
-    process.exit(100);
-  }
-  console.log('buildOptions: \n', buildOptions);
-  for (const iterator of buildOptions.targetBrowser) {
-    console.log(`Release: ${iterator} PublishToStore: ${buildOptions.publishToStore}`);
-    await build({ targetBrowser: iterator, publishToStore: buildOptions.publishToStore });
-    await pack({ targetBrowser: iterator, releaseDir, distDir });
-  }
+  await build();
+  await pack({ releaseDir, distDir });
 })();
+
+function build() {
+  const buildScript = require.resolve('./build');
+  const buildEnv = Object.create(process.env);
+  buildEnv.NODE_ENV = 'production';
+  const cp = fork(buildScript, [], {
+    env: buildEnv as unknown as typeof process.env,
+    stdio: 'inherit',
+  });
+  return new Promise((r) => {
+    cp.on('message', r);
+  });
+}

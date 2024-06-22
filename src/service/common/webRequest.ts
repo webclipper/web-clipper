@@ -23,6 +23,8 @@ export interface IWebRequestService {
   end(webBlockHeader: WebBlockHeader): Promise<void>;
 
   requestInBackground<T>(url: string, options?: RequestInBackgroundOptions): Promise<T>;
+
+  changeUrl(url: string, query: WebBlockHeader): Promise<string>;
 }
 
-export const IWebRequestService = new Token<IWebRequestService>();
+export const IWebRequestService = new Token<IWebRequestService>('IWebRequestService');

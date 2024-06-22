@@ -6,4 +6,4 @@ export interface ICookieService {
   getAllCookieStores(): Promise<chrome.cookies.CookieStore[]>;
 }
 
-export const ICookieService = new Token<ICookieService>();
+export const ICookieService = new Token<ICookieService>('ICookieService');

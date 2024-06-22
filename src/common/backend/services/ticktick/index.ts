@@ -15,7 +15,7 @@ export default (): ServiceMeta => {
     service: Service,
     permission: {
       origins: ['https://api.ticktick.com/*'],
-      permissions: ['webRequest', 'webRequestBlocking'],
+      permissions: [],
     },
   };
 };

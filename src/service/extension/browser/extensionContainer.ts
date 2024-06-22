@@ -18,24 +18,26 @@ class ExtensionContainer implements IExtensionContainer {
 
   constructor(
     @Inject(ILocalStorageService) private localStorageService: IStorageService,
-    @Inject(ILocaleService) localeService: ILocaleService
+    @Inject(ILocaleService) private localeService: ILocaleService
   ) {
-    localeService.init().then(() => {
+    this.localeService.init().then(() => {
       this.init();
     });
-    this.localStorageService.onDidChangeStorage(e => {
+    this.localStorageService.onDidChangeStorage((e) => {
       if (e === LOCAL_USER_PREFERENCE_LOCALE_KEY) {
         this.init();
       }
     });
   }
 
-  private init() {
+  async init() {
+    await this.localeService.init();
+    await this.localeService.init();
     const locale = this.localStorageService.get(
       LOCAL_USER_PREFERENCE_LOCALE_KEY,
       navigator.language
     );
-    const internalExtensions = extensions.map(e => {
+    const internalExtensions = extensions.map((e) => {
       let extensionInstance: any = e;
       if (e.factory) {
         const Factory = e.factory;

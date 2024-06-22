@@ -1,7 +1,7 @@
-import { Repository, CreateDocumentRequest } from '../../services/interface';
+import type { Repository, CreateDocumentRequest } from '../../services/interface';
 
-export { Repository } from '../../services/interface';
-export { CreateDocumentRequest } from '../../services/interface';
+export type { Repository } from '../../services/interface';
+export type { CreateDocumentRequest } from '../../services/interface';
 
 export interface IJoplinClient {
   getTags(filterTags: boolean): Promise<JoplinTag[]>;

@@ -14,7 +14,7 @@ export default () => {
     service: Service,
     form: Form,
     permission: {
-      permissions: ['cookies', 'webRequest', 'webRequestBlocking'],
+      permissions: ['cookies'],
     },
   };
 };

@@ -10,11 +10,7 @@ import {
 
 export class PopupIpcClient implements IChannelClient {
   getChannel(channelName: string) {
-    return new ChannelClient(
-      chrome.runtime.connect({
-        name: channelName,
-      })
-    );
+    return new ChannelClient(channelName);
   }
 }
 

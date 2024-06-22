@@ -14,4 +14,4 @@ export interface IPermissionsService {
   remove(permissions: Permissions): Promise<boolean>;
 }
 
-export const IPermissionsService = new Token<IPermissionsService>();
+export const IPermissionsService = new Token<IPermissionsService>('IPermissionsService');

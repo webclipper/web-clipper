@@ -33,7 +33,7 @@ export default class WolaiDocumentService implements DocumentService {
      * TODO handle error
      */
     request.interceptors.response.use(
-      response => {
+      (response) => {
         if (response.clone().status === 401) {
           throw new UnauthorizedError(
             localeService.format({
@@ -85,8 +85,8 @@ export default class WolaiDocumentService implements DocumentService {
     }
 
     const result: WolaiRepository[] = [];
-    Object.values(blocks).forEach(value => {
-      const space = workspaces.find(workspace => workspace.id === value.parent_id);
+    Object.values(blocks).forEach((value) => {
+      const space = workspaces.find((workspace) => workspace.id === value.parent_id);
       if (value.type === PAGE && !!value.attributes && !!value.attributes.title && !!space) {
         result.push({
           id: value.id,
@@ -111,7 +111,7 @@ export default class WolaiDocumentService implements DocumentService {
   }: CreateDocumentRequest): Promise<CompleteStatus> => {
     const fileName = `${title}.md`;
     const filekey = `import/${this.getUuid()}/${fileName}`;
-    const repository = this.repositories.find(o => o.id === repositoryId);
+    const repository = this.repositories.find((o) => o.id === repositoryId);
     if (!repository) {
       throw new Error('Illegal repository');
     }
@@ -125,35 +125,35 @@ export default class WolaiDocumentService implements DocumentService {
     if (code !== 1000) throw new Error('getSignedPostUrl error');
 
     const formData = new FormData();
-    Object.keys(data.policyData.formData).forEach(key => {
+    Object.keys(data.policyData.formData).forEach((key) => {
       formData.append(key, data.policyData.formData[key]);
     });
     formData.append('key', filekey);
     formData.append('success_action_status', '200');
     formData.append('file', file);
-    await this.requestWithCookie(header => {
+    await this.requestWithCookie(async (header) => {
       //TODO fixme
-      return extend({}).post(data.policyData.url, {
+      return extend({}).post(await this.webRequestService.changeUrl(data.policyData.url, header), {
         headers: {
           [header.name]: header.value,
         },
         data: formData,
       });
     });
-    await this.requestWithCookie(header => {
-      return this.request.post('v1/import/getImportPageData', {
-        headers: {
-          [header.name]: header.value,
-        },
-        data: {
-          spaceId: repository.spaceId,
-          type: 'string',
-          bucket: data.policyData.bucket,
-          filename: filekey,
-          pageTitle: title,
-          pageId: documentId,
-        },
-      });
+    await this.requestWithCookie(async (header) => {
+      return this.request.post(
+        await this.webRequestService.changeUrl('v1/import/getImportPageData', header),
+        {
+          data: {
+            spaceId: repository.spaceId,
+            type: 'string',
+            bucket: data.policyData.bucket,
+            filename: filekey,
+            pageTitle: title,
+            pageId: documentId,
+          },
+        }
+      );
     });
     return {
       href: `https://www.wolai.com/${documentId}`,
@@ -231,49 +231,45 @@ export default class WolaiDocumentService implements DocumentService {
         },
       ],
     };
-    await this.requestWithCookie(header => {
-      return this.request.post('v1/transaction/updateChanges', {
-        data: operations,
-        headers: {
-          [header.name]: header.value,
-        },
-      });
+    await this.requestWithCookie(async (header) => {
+      return this.request.post(
+        await this.webRequestService.changeUrl('v1/transaction/updateChanges', header),
+        {
+          data: operations,
+        }
+      );
     });
     return documentId;
   };
 
   getFileUrl = async (repository: WolaiRepository, file: File) => {
-    return this.requestWithCookie(header => {
-      return this.request.post('v1/file/getSignedPostUrl', {
-        headers: {
-          [header.name]: header.value,
-        },
-        data: {
-          spaceId: repository.spaceId,
-          fileSize: file.size,
-          type: 'import',
-        },
-      });
+    return this.requestWithCookie(async (header) => {
+      return this.request.post(
+        await this.webRequestService.changeUrl('v1/file/getSignedPostUrl', header),
+        {
+          data: {
+            spaceId: repository.spaceId,
+            fileSize: file.size,
+            type: 'import',
+          },
+        }
+      );
     });
   };
 
   private getUserContent = async () => {
-    return this.requestWithCookie<WolaiUserContent>(header => {
-      return this.request.post<WolaiUserContent>('v1/transaction/getUserData', {
-        headers: {
-          [header.name]: header.value,
-        },
-      });
+    return this.requestWithCookie<WolaiUserContent>(async (header) => {
+      return this.request.post<WolaiUserContent>(
+        await this.webRequestService.changeUrl('v1/transaction/getUserData', header)
+      );
     });
   };
 
   private fetchUserInfo = async () => {
-    return this.requestWithCookie<WolaiUserInfo>(header => {
-      return this.request.post<WolaiUserInfo>('v1/authentication/user/getUserInfo', {
-        headers: {
-          [header.name]: header.value,
-        },
-      });
+    return this.requestWithCookie<WolaiUserInfo>(async (header) => {
+      return this.request.post<WolaiUserInfo>(
+        await this.webRequestService.changeUrl('v1/authentication/user/getUserInfo', header)
+      );
     });
   };
 
@@ -286,7 +282,7 @@ export default class WolaiDocumentService implements DocumentService {
     const cookies = await this.cookieService.getAll({
       url: origin,
     });
-    const cookieString = cookies.map(o => `${o.name}=${o.value}`).join(';');
+    const cookieString = cookies.map((o) => `${o.name}=${o.value}`).join(';');
     const header = await this.webRequestService.startChangeHeader({
       urls: [`${origin}*`],
       requestHeaders: [

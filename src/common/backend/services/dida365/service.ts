@@ -45,7 +45,7 @@ export default class Dida365DocumentService implements DocumentService {
       prefix: `https://api.dida365.com/api/v2/`,
     });
     request.interceptors.response.use(
-      response => {
+      (response) => {
         if (response.clone().status === 401) {
           throw new UnauthorizedError(
             localeService.format({
@@ -78,17 +78,17 @@ export default class Dida365DocumentService implements DocumentService {
 
   getTags = async (): Promise<string[]> => {
     const dida365CheckResponse = await this.request.get<Dida365CheckResponse>(`batch/check/0`);
-    return dida365CheckResponse.tags.map(o => o.name);
+    return dida365CheckResponse.tags.map((o) => o.name);
   };
 
   getRepositories = async (): Promise<Repository[]> => {
     const dida365CheckResponse = await this.request.get<Dida365CheckResponse>(`batch/check/0`);
     const groupMap = new Map<string, string>();
-    dida365CheckResponse.projectGroups.forEach(group => {
+    dida365CheckResponse.projectGroups.forEach((group) => {
       groupMap.set(group.id, group.name);
     });
     return dida365CheckResponse.projectProfiles
-      .filter(o => !o.closed)
+      .filter((o) => !o.closed)
       .map(({ id, name, groupId }) => ({
         id: id,
         name: name,
@@ -121,12 +121,10 @@ export default class Dida365DocumentService implements DocumentService {
     });
 
     const settings = await this.request.get<{ timeZone: string }>(
-      'user/preferences/settings?includeWeb=true'
+      await webRequestService.changeUrl('user/preferences/settings?includeWeb=true', header)
     );
 
-    const id = generateUuid()
-      .replace(/-/g, '')
-      .slice(0, 24);
+    const id = generateUuid().replace(/-/g, '').slice(0, 24);
     const data = {
       add: [
         {
@@ -155,7 +153,7 @@ export default class Dida365DocumentService implements DocumentService {
       delete: [],
     };
 
-    await this.request.post('batch/task', {
+    await this.request.post(await webRequestService.changeUrl('batch/task', header), {
       data: data,
       headers: {
         [header.name]: header.value,

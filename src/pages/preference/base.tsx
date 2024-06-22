@@ -21,7 +21,7 @@ type PageStateProps = ReturnType<typeof mapStateToProps>;
 
 type PageProps = PageStateProps & DvaRouterProps;
 
-const Base: React.FC<PageProps> = props => {
+const Base: React.FC<PageProps> = (props) => {
   const { dispatch } = props;
 
   const { iconColor, preferenceService } = useObserver(() => {
@@ -42,7 +42,7 @@ const Base: React.FC<PageProps> = props => {
           onChange={(e: string) => dispatch(asyncSetLocaleToStorage(e))}
           dropdownMatchSelectWidth={false}
         >
-          {locales.map(o => (
+          {locales.map((o) => (
             <Select.Option key={o.locale} value={o.locale}>
               {o.name}
             </Select.Option>
@@ -91,7 +91,7 @@ const Base: React.FC<PageProps> = props => {
               name: <FormattedMessage id="preference.basic.iconColor.light" />,
               value: 'light',
             },
-          ].map(o => (
+          ].map((o) => (
             <Select.Option key={o.value} value={o.value}>
               {o.name}
             </Select.Option>

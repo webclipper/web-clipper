@@ -9,7 +9,7 @@ import { IServerChannel, IChannel } from '@/service/common/ipc';
 export class TabChannel implements IServerChannel {
   constructor(private service: ITabService) {}
 
-  call = async (
+  callCommand = async (
     context: chrome.runtime.Port['sender'],
     command: string,
     arg: any

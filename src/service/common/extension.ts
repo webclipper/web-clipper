@@ -6,6 +6,7 @@ export interface Extension {
 }
 
 export interface IExtensionService {
+  init(): Promise<void>;
   DefaultExtensionId: string | null;
 
   DisabledExtensionIds: string[];
@@ -24,6 +25,7 @@ export interface IExtensionService {
 }
 
 export interface IExtensionContainer {
+  init(): Promise<void>;
   extensions: IExtensionWithId[];
   contextMenus: IContextMenusWithId[];
 }

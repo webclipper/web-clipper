@@ -45,7 +45,7 @@ export default class TickTickDocumentService implements DocumentService {
       prefix: `https://api.ticktick.com/api/v2/`,
     });
     request.interceptors.response.use(
-      response => {
+      (response) => {
         if (response.clone().status === 401) {
           throw new UnauthorizedError(
             localeService.format({
@@ -78,17 +78,17 @@ export default class TickTickDocumentService implements DocumentService {
 
   getTags = async (): Promise<string[]> => {
     const TickTickCheckResponse = await this.request.get<TickTickCheckResponse>(`batch/check/0`);
-    return TickTickCheckResponse.tags.map(o => o.name);
+    return TickTickCheckResponse.tags.map((o) => o.name);
   };
 
   getRepositories = async (): Promise<Repository[]> => {
     const TickTickCheckResponse = await this.request.get<TickTickCheckResponse>(`batch/check/0`);
     const groupMap = new Map<string, string>();
-    TickTickCheckResponse.projectGroups.forEach(group => {
+    TickTickCheckResponse.projectGroups.forEach((group) => {
       groupMap.set(group.id, group.name);
     });
     return TickTickCheckResponse.projectProfiles
-      .filter(o => !o.closed)
+      .filter((o) => !o.closed)
       .map(({ id, name, groupId }) => ({
         id: id,
         name: name,
@@ -109,7 +109,6 @@ export default class TickTickDocumentService implements DocumentService {
 
   createDocument = async (request: TickTickCreateDocumentRequest): Promise<CompleteStatus> => {
     const webRequestService = Container.get(IWebRequestService);
-
     const header = await webRequestService.startChangeHeader({
       urls: ['https://api.ticktick.com/*'],
       requestHeaders: [
@@ -121,12 +120,10 @@ export default class TickTickDocumentService implements DocumentService {
     });
 
     const settings = await this.request.get<{ timeZone: string }>(
-      'user/preferences/settings?includeWeb=true'
+      await webRequestService.changeUrl('user/preferences/settings?includeWeb=true', header)
     );
 
-    const id = generateUuid()
-      .replace(/-/g, '')
-      .slice(0, 24);
+    const id = generateUuid().replace(/-/g, '').slice(0, 24);
     const data = {
       add: [
         {
@@ -155,7 +152,7 @@ export default class TickTickDocumentService implements DocumentService {
       delete: [],
     };
 
-    await this.request.post('batch/task', {
+    await this.request.post(await webRequestService.changeUrl('batch/task', header), {
       data: data,
       headers: {
         [header.name]: header.value,

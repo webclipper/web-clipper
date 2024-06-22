@@ -23,12 +23,12 @@ class ExtensionService implements IExtensionService {
     @Inject(ISyncStorageService) private syncStorageService: IStorageService
   ) {
     this.init();
-    this.syncStorageService.onDidChangeStorage(e => {
+    this.syncStorageService.onDidChangeStorage((e) => {
       if (['defaultPluginId'].includes(e)) {
         this.init();
       }
     });
-    this.localStorageService.onDidChangeStorage(e => {
+    this.localStorageService.onDidChangeStorage((e) => {
       if (
         [
           LOCAL_EXTENSIONS_ENABLE_AUTOMATIC_EXTENSIONS_KEY,
@@ -72,14 +72,14 @@ class ExtensionService implements IExtensionService {
 
   private async toggleStorageData(key: string, id: string) {
     let extensions = JSON.parse(this.localStorageService.get(key, '[]')) as string[];
-    const newExtensions = extensions.filter(o => o !== id);
+    const newExtensions = extensions.filter((o) => o !== id);
     if (newExtensions.length === extensions.length) {
       newExtensions.push(id);
     }
     await this.localStorageService.set(key, JSON.stringify(newExtensions));
   }
 
-  private init() {
+  async init() {
     const DefaultExtensionId = this.syncStorageService.get('defaultPluginId');
     this.DefaultExtensionId = DefaultExtensionId ?? null;
 

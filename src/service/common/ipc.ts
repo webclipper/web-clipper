@@ -2,7 +2,7 @@ import { generateUuid } from '@web-clipper/shared/lib/uuid';
 import { SerializedError } from '@/common/error';
 
 export interface IServerChannel<C = any> {
-  call<T = any>(context: C, command: string, arg?: any): Promise<T>;
+  callCommand<T = any>(context: C, command: string, arg?: any): Promise<T>;
 }
 
 export interface IChannel {
@@ -34,42 +34,30 @@ export interface IPCMessageResponse<T = any> {
 }
 
 export class ChannelClient implements IChannel {
-  private port: chrome.runtime.Port;
-  constructor(port: chrome.runtime.Port) {
-    this.port = port;
-  }
+  constructor(private channelName: string) {}
 
-  call<T>(command: string, arg?: any): Promise<T> {
+  async call<T>(command: string, arg?: any): Promise<T> {
     const uuid = generateUuid();
-    this.port.postMessage({
+    const response: any = await chrome.runtime.sendMessage({
       uuid,
       command: command,
       arg,
+      channelName: this.channelName,
     });
-    return new Promise<T>((resolve, reject) => {
-      const handler = (message: IPCMessageResponse) => {
-        if (message.uuid !== uuid) {
-          return;
-        }
-        this.port.onMessage.removeListener(handler);
-        if (message.error) {
-          const errorData: SerializedError = message.error.data;
-          if (errorData.$isError) {
-            const error = new Error(errorData.message);
-            error.name = errorData.name;
-            error.stack = errorData.stack;
-            reject(error);
-          } else {
-            reject(message.error.data);
-          }
-          return;
-        }
-        if (message.result) {
-          resolve(message.result.data);
-          return;
-        }
-      };
-      this.port.onMessage.addListener(handler);
-    });
+    if (response.error) {
+      const errorData: SerializedError = response.error.data;
+      if (errorData.$isError) {
+        const error = new Error(errorData.message);
+        error.name = errorData.name;
+        error.stack = errorData.stack;
+        throw error;
+      } else {
+        throw response.error.data;
+      }
+    }
+    if (response.result) {
+      return response.result.data;
+    }
+    throw new Error('some error');
   }
 }

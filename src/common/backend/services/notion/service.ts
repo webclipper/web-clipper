@@ -7,6 +7,7 @@ import Container from 'typedi';
 import { CreateDocumentRequest, DocumentService } from '../../index';
 import { CompleteStatus, UnauthorizedError } from './../interface';
 import { NotionRepository, NotionUserContent, RecentPages } from './types';
+import queryString from 'query-string';
 
 const PAGE = 'page';
 const COLLECTION_VIEW_PAGE = 'collection_view_page';
@@ -35,8 +36,8 @@ export default class NotionDocumentService implements DocumentService {
     this.webRequestService = Container.get(IWebRequestService);
     this.cookieService = Container.get(ICookieService);
     this.request.interceptors.response.use(
-      r => r,
-      error => {
+      (r) => r,
+      (error) => {
         if (error.response && error.response.status === 401) {
           return Promise.reject(
             new UnauthorizedError(
@@ -81,7 +82,7 @@ export default class NotionDocumentService implements DocumentService {
     const userId = Object.keys(this.userContent.recordMap.notion_user)[0] as string;
 
     const result: Array<NotionRepository[]> = await Promise.all(
-      Object.keys(spaces).map(async p => {
+      Object.keys(spaces).map(async (p) => {
         const space = spaces[p];
         const recentPages = await this.getRecentPageVisits(space.value.id, userId);
         return this.loadSpace(p, space.value.name, recentPages);
@@ -99,7 +100,7 @@ export default class NotionDocumentService implements DocumentService {
   }: CreateDocumentRequest): Promise<CompleteStatus> => {
     let fileName = `${title}.md`;
 
-    const repository = this.repositories.find(o => o.id === repositoryId);
+    const repository = this.repositories.find((o) => o.id === repositoryId);
     if (!repository) {
       throw new Error('Illegal repository');
     }
@@ -347,7 +348,7 @@ export default class NotionDocumentService implements DocumentService {
       const cookies = await this.cookieService.getAll({
         url: origin,
       });
-      const cookieString = cookies.map(o => `${o.name}=${o.value}`).join(';');
+      const cookieString = cookies.map((o) => `${o.name}=${o.value}`).join(';');
       const header = await this.webRequestService.startChangeHeader({
         urls: [`${origin}*`],
         requestHeaders: [
@@ -362,11 +363,11 @@ export default class NotionDocumentService implements DocumentService {
         ],
       });
       try {
-        const result = await this.request.post<T>(url, data, {
-          headers: {
-            [header.name]: header.value,
-          },
-        });
+        const result = await this.request.post<T>(
+          await this.webRequestService.changeUrl(url, header),
+          data,
+          {}
+        );
         await this.webRequestService.end(header);
         return result;
       } catch (error) {

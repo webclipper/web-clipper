@@ -14,4 +14,4 @@ export interface IContentScriptService {
   getPageUrl(): Promise<string>;
 }
 
-export const IContentScriptService = new Token<IContentScriptService>();
+export const IContentScriptService = new Token<IContentScriptService>('IContentScriptService');

@@ -20,7 +20,7 @@ export class ContentScriptIPCServer implements IChannelServer {
         (async () => {
           let response: IPCMessageResponse;
           try {
-            const result = await server.call(sender, message.command, message.arg);
+            const result = await server.callCommand(sender, message.command, message.arg);
             response = {
               uuid,
               result: { data: result },

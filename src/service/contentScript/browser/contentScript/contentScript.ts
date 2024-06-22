@@ -1,7 +1,6 @@
 import { IContentScriptService, IToggleConfig } from '@/service/common/contentScript';
 import { Service, Inject } from 'typedi';
 import styles from '@/service/contentScript/browser/contentScript/contentScript.less';
-import * as browser from '@web-clipper/chrome-promise';
 import * as QRCode from 'qrcode';
 import { Readability } from '@web-clipper/readability';
 import AreaSelector from '@web-clipper/area-selector';
@@ -25,9 +24,9 @@ class ContentScriptService implements IContentScriptService {
     $(`.${styles.toolFrame}`).hide();
   }
   async toggle(config: IToggleConfig) {
-    let src = browser.extension.getURL('tool.html');
+    let src = chrome.runtime.getURL('tool.html');
     if (config) {
-      src = `${browser.extension.getURL('tool.html')}#${config.pathname}?${config.query}`;
+      src = `${chrome.runtime.getURL('tool.html')}#${config.pathname}?${config.query}`;
     }
     if ($(`.${styles.toolFrame}`).length === 0) {
       if (config) {

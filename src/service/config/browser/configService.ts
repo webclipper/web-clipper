@@ -5,7 +5,6 @@ import packageJson from '@/../package.json';
 import localConfig from '@/../config.json';
 import { observable, ObservableSet, runInAction } from 'mobx';
 import request from 'umi-request';
-import * as browser from '@web-clipper/chrome-promise';
 
 type RemoteConfig = _RemoteConfig;
 
@@ -40,7 +39,7 @@ class BrowserConfigService implements IConfigService {
   };
 
   get id() {
-    const url = browser.extension.getURL('tool.html');
+    const url = chrome.runtime.getURL('tool.html');
     const match = /(chrome-extension|moz-extension):\/\/(.*)\/tool.html/.exec(url);
     if (!match) {
       throw new Error('Get ExtensionId failed');

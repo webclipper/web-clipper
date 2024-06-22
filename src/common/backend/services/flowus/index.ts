@@ -12,7 +12,7 @@ export default (): ServiceMeta => {
     service: Service,
     permission: {
       origins: [`${flowusOrigin}/*`],
-      permissions: ['cookies', 'webRequest', 'webRequestBlocking'],
+      permissions: ['cookies'],
     },
   };
 };

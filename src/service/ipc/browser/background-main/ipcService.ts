@@ -1,36 +1,28 @@
-import {
-  IChannelServer,
-  IServerChannel,
-  IPCMessageRequest,
-  IPCMessageResponse,
-} from '@/service/common/ipc';
 import { transformErrorForSerialization } from '@/common/error';
+import { IChannelServer, IServerChannel } from '@/service/common/ipc';
 
 export class BackgroundIPCServer implements IChannelServer {
   public registerChannel(channelName: string, server: IServerChannel) {
-    chrome.runtime.onConnect.addListener(port => {
-      if (port.name !== channelName) {
-        return;
+    chrome.runtime.onMessage.addListener((message: any, _sender, sendResponse) => {
+      if (channelName !== message.channelName) {
+        return false;
       }
-      port.onMessage.addListener(
-        async (message: IPCMessageRequest, currentPort: chrome.runtime.Port) => {
-          const { uuid, command, arg } = message;
-          let response: IPCMessageResponse;
-          try {
-            const result = await server.call(currentPort.sender, command, arg);
-            response = {
-              uuid,
-              result: { data: result },
-            };
-          } catch (error) {
-            response = {
-              uuid,
-              error: { data: transformErrorForSerialization(error) },
-            };
-          }
-          port.postMessage(response);
-        }
-      );
+      const { uuid, command, arg } = message;
+      server
+        .callCommand(_sender, command, arg)
+        .then((result) => {
+          sendResponse({
+            uuid,
+            result: { data: result },
+          });
+        })
+        .catch((error) => {
+          sendResponse({
+            uuid,
+            error: { data: transformErrorForSerialization(error) },
+          });
+        });
+      return true;
     });
   }
 }

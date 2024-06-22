@@ -4,7 +4,7 @@ import { IServerChannel, IChannel } from '@/service/common/ipc';
 export class ContentScriptChannel implements IServerChannel {
   constructor(private service: IContentScriptService) {}
 
-  call = async (
+  callCommand = async (
     _context: chrome.runtime.Port['sender'],
     command: string,
     arg: any

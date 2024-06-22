@@ -42,7 +42,7 @@ export default class FlowUsDocumentService implements DocumentService {
     this.cookieService = Container.get(ICookieService);
 
     request.interceptors.response.use(
-      response => {
+      (response) => {
         if (response.status === 401) {
           throw new UnauthorizedError(
             localeService.format({
@@ -95,30 +95,33 @@ export default class FlowUsDocumentService implements DocumentService {
     const result: FlowUsRepository[] = [];
     //拉取可用空间
     const userSpaces = Object.values(spaceViews)
-      .filter(spaceView => spaces[spaceView.spaceId])
-      .map(spaceView => spaces[spaceView.spaceId]);
+      .filter((spaceView) => spaces[spaceView.spaceId])
+      .map((spaceView) => spaces[spaceView.spaceId]);
 
     if (!this.tocPageBlocks) {
-      const allPromise = userSpaces.map(space => {
+      const allPromise = userSpaces.map((space) => {
         return this.getSpaceRoot(space.uuid);
       });
       const allToc = await Promise.all(allPromise);
-      this.tocPageBlocks = allToc.reduce((pre, cur) => {
-        if (!cur.data.blocks) return pre;
-        Object.values(cur.data.blocks).forEach(b => {
-          //保存所有的页面/多维表块
-          if ([0, 18, 19].includes(b.type)) {
-            pre[b.uuid] = b;
-          }
-        });
-        return pre;
-      }, {} as Record<string, Block>);
+      this.tocPageBlocks = allToc.reduce(
+        (pre, cur) => {
+          if (!cur.data.blocks) return pre;
+          Object.values(cur.data.blocks).forEach((b) => {
+            //保存所有的页面/多维表块
+            if ([0, 18, 19].includes(b.type)) {
+              pre[b.uuid] = b;
+            }
+          });
+          return pre;
+        },
+        {} as Record<string, Block>
+      );
 
-      userSpaces.forEach(sp => {
-        sp.subNodes.forEach(id => {
+      userSpaces.forEach((sp) => {
+        sp.subNodes.forEach((id) => {
           const block = this.tocPageBlocks?.[id];
           if (!block) return;
-          if (block.permissions.some(o => o.type === 'illegal')) return;
+          if (block.permissions.some((o) => o.type === 'illegal')) return;
           if (block.permissions.length === 0) return;
           const { role } = getPermission(block, this.userInfo?.uuid!, sp.permissionGroups ?? []);
           if (role === 'editor' || role === 'writer') {
@@ -144,7 +147,7 @@ export default class FlowUsDocumentService implements DocumentService {
     title,
     content,
   }: CreateDocumentRequest): Promise<CompleteStatus> => {
-    const repository = this.repositories.find(o => o.id === repositoryId);
+    const repository = this.repositories.find((o) => o.id === repositoryId);
     if (!repository) {
       throw new Error('Illegal repository');
     }
@@ -158,23 +161,26 @@ export default class FlowUsDocumentService implements DocumentService {
        ${converter.makeHtml(`${content}`)}
       </body>
     </html>`;
-    const ossInfo = await this.requestWithCookie<FlowUsResponse<OSSInfo>>(header => {
-      return this.request.post(`import_temp_file?source=web-clipper`, {
-        headers: {
-          [header.name]: header.value,
-        },
-        data: {
-          content: html,
-          extName: 'html',
-        },
-      });
+    const ossInfo = await this.requestWithCookie<FlowUsResponse<OSSInfo>>(async (header) => {
+      return this.request.post(
+        await this.webRequestService.changeUrl(`import_temp_file?source=web-clipper`, header),
+        {
+          headers: {
+            [header.name]: header.value,
+          },
+          data: {
+            content: html,
+            extName: 'html',
+          },
+        }
+      );
     });
     if (ossInfo.code !== 200) {
       throw new Error('upload md content failed');
     }
     //导入
-    const res = await this.requestWithCookie<FlowUsResponse<{ taskId: string }>>(header => {
-      return this.request.post('enqueueTask', {
+    const res = await this.requestWithCookie<FlowUsResponse<{ taskId: string }>>(async (header) => {
+      return this.request.post(await this.webRequestService.changeUrl(`enqueueTask`, header), {
         headers: {
           [header.name]: header.value,
         },
@@ -198,8 +204,8 @@ export default class FlowUsDocumentService implements DocumentService {
 
     const waitResult = async () => {
       await sleep(2000);
-      const res = await this.requestWithCookie<FlowUsResponse<TaskResult>>(header => {
-        return this.request.post('getTasks', {
+      const res = await this.requestWithCookie<FlowUsResponse<TaskResult>>(async (header) => {
+        return this.request.post(await this.webRequestService.changeUrl('getTasks', header), {
           headers: {
             [header.name]: header.value,
           },
@@ -285,13 +291,16 @@ export default class FlowUsDocumentService implements DocumentService {
         },
       ],
     };
-    await this.requestWithCookie(header => {
-      return this.request.post('blocks/transactions', {
-        data: operations,
-        headers: {
-          [header.name]: header.value,
-        },
-      });
+    await this.requestWithCookie(async (header) => {
+      return this.request.post(
+        await this.webRequestService.changeUrl('blocks/transactions', header),
+        {
+          data: operations,
+          headers: {
+            [header.name]: header.value,
+          },
+        }
+      );
     });
     return documentId;
   };
@@ -316,42 +325,42 @@ export default class FlowUsDocumentService implements DocumentService {
         },
       ],
     };
-    await this.requestWithCookie(header => {
-      return this.request.post('blocks/transactions', {
-        data: operations,
-        headers: {
-          [header.name]: header.value,
-        },
-      });
+    await this.requestWithCookie(async (header) => {
+      return this.request.post(
+        await this.webRequestService.changeUrl('blocks/transactions', header),
+        {
+          data: operations,
+          headers: {
+            [header.name]: header.value,
+          },
+        }
+      );
     });
   };
 
   private getUserSpaces = async () => {
-    return this.requestWithCookie<FlowUsResponse<FlowUsSpace>>(header => {
-      return this.request.get(`users/${this.userInfo?.uuid}/root`, {
-        headers: {
-          [header.name]: header.value,
-        },
-      });
+    return this.requestWithCookie<FlowUsResponse<FlowUsSpace>>(async (header) => {
+      return this.request.get(
+        await this.webRequestService.changeUrl(`users/${this.userInfo?.uuid}/root`, header),
+        {
+          headers: {
+            [header.name]: header.value,
+          },
+        }
+      );
     });
   };
   private getSpaceRoot = async (spaceId: string) => {
-    return this.requestWithCookie<FlowUsToc>(header => {
-      return this.request.get<FlowUsToc>(`spaces/${spaceId}/root`, {
-        headers: {
-          [header.name]: header.value,
-        },
-      });
+    return this.requestWithCookie<FlowUsToc>(async (header) => {
+      return this.request.get<FlowUsToc>(
+        await this.webRequestService.changeUrl(`spaces/${spaceId}/root`, header)
+      );
     });
   };
 
   private fetchUserInfo = async () => {
-    return this.requestWithCookie<FlowUsResponse<FlowUsUserInfo>>(header => {
-      return this.request.get('users/me', {
-        headers: {
-          [header.name]: header.value,
-        },
-      });
+    return this.requestWithCookie<FlowUsResponse<FlowUsUserInfo>>(async (header) => {
+      return this.request.get(await this.webRequestService.changeUrl('users/me', header));
     });
   };
 
@@ -364,7 +373,7 @@ export default class FlowUsDocumentService implements DocumentService {
     const cookies = await this.cookieService.getAll({
       url: flowusOrigin,
     });
-    const cookieString = cookies.map(o => `${o.name}=${o.value}`).join(';');
+    const cookieString = cookies.map((o) => `${o.name}=${o.value}`).join(';');
     const header = await this.webRequestService.startChangeHeader({
       urls: [`${flowusOrigin}*`],
       requestHeaders: [
@@ -397,7 +406,7 @@ function getImageCdnUrl(ossName?: string) {
   return `https://cdn.allflow.cn/${ossName}?${imgProcess}`;
 }
 const sleep = (durationInMs: number): Promise<void> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, durationInMs);
   });
 };
@@ -418,7 +427,7 @@ const getPermission = (block: Block, userId: string, permissionGroups: any[]) =>
       value: any,
       role?: keyof typeof ROLE_WEIGHT
     ) => {
-      const permissions = block.permissions.find(p => p[type] === value);
+      const permissions = block.permissions.find((p) => p[type] === value);
       if (
         permissions &&
         role &&
@@ -429,10 +438,10 @@ const getPermission = (block: Block, userId: string, permissionGroups: any[]) =>
       }
     };
     const newPermissions = block.permissions
-      .filter(o => {
+      .filter((o) => {
         return o.type !== 'illegal' && o.type !== 'restricted';
       })
-      .map(o => {
+      .map((o) => {
         if (o.type === 'space') {
           return getBiggerRole('type', o.type, o.role) || o;
         }
@@ -444,26 +453,26 @@ const getPermission = (block: Block, userId: string, permissionGroups: any[]) =>
         }
         return o;
       });
-    const diffPermissions = block.permissions.filter(o => {
+    const diffPermissions = block.permissions.filter((o) => {
       if (o.type === 'illegal' || o.type === 'restricted') {
         return false;
       }
       if (o.type === 'space' || o.type === 'public') {
-        return newPermissions.every(p => p.type !== o.type);
+        return newPermissions.every((p) => p.type !== o.type);
       }
       if (o.type === 'group') {
-        return newPermissions.every(p => p.groupId !== o.groupId);
+        return newPermissions.every((p) => p.groupId !== o.groupId);
       }
-      return newPermissions.every(p => p.userId !== o.userId);
+      return newPermissions.every((p) => p.userId !== o.userId);
     });
     data.permissions = [...newPermissions, ...diffPermissions];
-    const ownPermission = data.permissions.find(p => p.userId === userId);
-    const groupPermissions = data.permissions.filter(p => {
-      const group = permissionGroups?.find(g => g.id === p.groupId);
+    const ownPermission = data.permissions.find((p) => p.userId === userId);
+    const groupPermissions = data.permissions.filter((p) => {
+      const group = permissionGroups?.find((g) => g.id === p.groupId);
       return group?.userIds.includes(userId);
     });
     const allPermissions = [ownPermission, ...groupPermissions];
-    const spacePermission = block.permissions.find(p => p.type === 'space');
+    const spacePermission = block.permissions.find((p) => p.type === 'space');
     allPermissions.push(spacePermission);
     data.roleWithoutPublic = allPermissions.reduce(
       (pre: keyof typeof ROLE_WEIGHT, permission: Block['permissions'][0] | undefined) => {

@@ -2,16 +2,18 @@ import { Inject, Service } from 'typedi';
 import { observable } from 'mobx';
 import { ISyncStorageService } from '@/service/common/storage';
 import { IStorageService } from '@web-clipper/shared/lib/storage';
-import { IPreferenceService, IUserPreference, TIconColor } from '@/service/common/preference';
+import { IPreferenceService } from '@/service/common/preference';
+import type { IUserPreference, TIconColor } from '@/service/common/preference';
 
 class PreferenceService implements IPreferenceService {
   @observable
   public userPreference: IUserPreference = {
-    iconColor: 'auto',
+    iconColor: 'dark',
   };
 
   constructor(@Inject(ISyncStorageService) private syncStorageService: IStorageService) {
-    this.syncStorageService.onDidChangeStorage(e => {
+    console.log('this.syncStorageService', this.syncStorageService);
+    this.syncStorageService.onDidChangeStorage((e) => {
       if (e === 'iconColor') {
         this.userPreference.iconColor = this.getIconColor();
       }

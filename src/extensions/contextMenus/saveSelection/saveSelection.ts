@@ -39,7 +39,7 @@ class ContextMenu extends ContextMenuExtension {
   }
 
   async run(tab: chrome.tabs.Tab, context: IContextMenuContext): Promise<void> {
-    await context.initContentScriptService(tab.id!);
+    // await context.initContentScriptService(tab.id!);
     const content = await context.contentScriptService.getSelectionMarkdown();
     const config = (await context.config!) as { template: string };
     const note = localeService.format(

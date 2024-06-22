@@ -4,7 +4,7 @@ import { ICookieService } from '@/service/common/cookie';
 export class CookieChannel implements IServerChannel {
   constructor(private service: ICookieService) {}
 
-  call = async (
+  callCommand = async (
     _context: chrome.runtime.Port['sender'],
     command: string,
     arg: any

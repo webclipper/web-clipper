@@ -47,4 +47,4 @@ export abstract class AbstractTabService implements ITabService {
   abstract create(createProperties: chrome.tabs.CreateProperties): Promise<chrome.tabs.Tab>;
 }
 
-export const ITabService = new Token<ITabService>();
+export const ITabService = new Token<ITabService>('ITabService');
