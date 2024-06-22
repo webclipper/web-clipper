@@ -57,15 +57,14 @@ ps: Because the review takes a week, the version will fall behind.
 ```bash
 $ git clone https://github.com/webclipper/web-clipper.git
 $ cd web-clipper
-$ yarn
-$ yarn dev # Chrome
-$ yarn dev:ff # Firebox
+$ npm i
+$ npm run dev
 ```
 
 ### Test
 
 ```bash
-$ yarn test
+$ npm run test
 ```
 
 ### Feedback
