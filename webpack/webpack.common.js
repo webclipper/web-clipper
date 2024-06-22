@@ -158,6 +158,11 @@ module.exports = {
     ),
     new CopyWebpackPlugin([
       {
+        from: resolve('chrome/html'),
+        to: resolve('dist'),
+        ignore: ['.*'],
+      },
+      {
         from: resolve('chrome/js'),
         to: resolve('dist'),
         ignore: ['.*'],
