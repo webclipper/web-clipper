@@ -1,3 +1,17 @@
+## 1.37.0
+
+`2024-06-22`
+
+- Migrate to Manifest V3
+- Support tencent cos as imangeHost
+
+## 1.36.0
+
+`2023-11-14`
+
+- Add German language
+- Fix wolai issue
+
 ## 1.35.0
 
 `2023-08-06`
