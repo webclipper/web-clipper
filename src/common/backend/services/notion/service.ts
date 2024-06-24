@@ -7,7 +7,6 @@ import Container from 'typedi';
 import { CreateDocumentRequest, DocumentService } from '../../index';
 import { CompleteStatus, UnauthorizedError } from './../interface';
 import { NotionRepository, NotionUserContent, RecentPages } from './types';
-import queryString from 'query-string';
 
 const PAGE = 'page';
 const COLLECTION_VIEW_PAGE = 'collection_view_page';
@@ -112,6 +111,10 @@ export default class NotionDocumentService implements DocumentService {
         'Content-Type': 'text/markdown',
       },
     });
+    if (!this.userContent) {
+      this.userContent = await this.getUserContent();
+    }
+    const spaceId = Object.values(this.userContent.recordMap.space)[0].value.id;
     await this.requestWithCookie.post('api/v3/enqueueTask', {
       task: {
         eventName: 'importFile',
@@ -119,7 +122,11 @@ export default class NotionDocumentService implements DocumentService {
           fileURL: fileUrl.url,
           fileName,
           importType: 'ReplaceBlock',
-          pageId: documentId,
+          block: {
+            id: documentId,
+            spaceId: spaceId,
+          },
+          spaceId: spaceId,
         },
       },
     });
