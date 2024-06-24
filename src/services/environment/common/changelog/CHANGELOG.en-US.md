@@ -1,3 +1,9 @@
+## 1.37.2
+
+`2024-06-24`
+
+- Fix the problem of formatting error after saving to notion.
+
 ## 1.37.1
 
 `2024-06-22`
