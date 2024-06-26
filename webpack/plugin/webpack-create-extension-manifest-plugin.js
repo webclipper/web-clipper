@@ -58,7 +58,7 @@ class WebpackCreateExtensionManifestPlugin {
           },
         ],
         host_permissions: ['https://api.clipper.website/*', 'https://resource.clipper.website/*'],
-        optional_host_permissions: ['https://*/*', 'http://*/*'],
+        optional_host_permissions: ['https://*/*', 'http://*/*', '<all_urls>'],
         optional_permissions: ['cookies'],
         permissions: [
           'activeTab',
