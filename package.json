@@ -1,6 +1,6 @@
 {
   "name": "web-clipper",
-  "version": "1.37.2",
+  "version": "1.37.3",
   "description": "Universal open source web clipper.",
   "bin": {
     "web-clipper": "bin/index.js"
