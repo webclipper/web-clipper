@@ -37,9 +37,9 @@ You can use Web Clipper to save anything on the web to anywhere.
 
 ### Install
 
-- [Chrome](https://chrome.google.com/webstore/detail/web-clipper/mhfbofiokmppgdliakminbgdgcmbhbac) 1.37.0
+- [Chrome](https://chrome.google.com/webstore/detail/web-clipper/mhfbofiokmppgdliakminbgdgcmbhbac)
 
-- [Edge](https://microsoftedge.microsoft.com/addons/detail/opejamnnohhbjflpbhnmdlknhjkfhfdp) 1.37.0
+- [Edge](https://microsoftedge.microsoft.com/addons/detail/opejamnnohhbjflpbhnmdlknhjkfhfdp)
 
 ps: Because the review takes a week, the version will fall behind.
 
@@ -60,6 +60,10 @@ $ cd web-clipper
 $ npm i
 $ npm run dev
 ```
+
+- You should load the 'dist/chrome' folder in Chrome.
+
+- You should load the 'dist/manifest.json' folder in Firefox.
 
 ### Test
 

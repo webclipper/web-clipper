@@ -5,6 +5,7 @@ import packageJson from '@/../package.json';
 import localConfig from '@/../config.json';
 import { observable, ObservableSet, runInAction } from 'mobx';
 import request from 'umi-request';
+import { getResourcePath } from '@/common/getResource';
 
 type RemoteConfig = _RemoteConfig;
 
@@ -21,11 +22,11 @@ class BrowserConfigService implements IConfigService {
   public readonly localVersion = packageJson.version;
 
   load = async () => {
-    const iconsFile = await request.get('/icon.js');
+    const iconsFile = await request.get('./icon.js');
     const matchResult: string[] = iconsFile.match(/id="([A-Za-z]+)"/g) || [];
-    const remoteIcons = matchResult.map(o => o.match(/id="([A-Za-z]+)"/)![1]);
+    const remoteIcons = matchResult.map((o) => o.match(/id="([A-Za-z]+)"/)![1]);
     runInAction(() => {
-      remoteIcons.forEach(icon => {
+      remoteIcons.forEach((icon) => {
         this.remoteIconSet.add(icon);
       });
     });

@@ -11,6 +11,7 @@ import { ContentScriptContext } from '@/extensions/common';
 import { localStorageService } from '@/common/chrome/storage';
 import { LOCAL_USER_PREFERENCE_LOCALE_KEY } from '@/common/types';
 import { IExtensionContainer } from '@/service/common/extension';
+import { getResourcePath } from '@/common/getResource';
 
 const turndownService = new TurndownService({ codeBlockStyle: 'fenced' });
 turndownService.use(plugins);
@@ -24,9 +25,10 @@ class ContentScriptService implements IContentScriptService {
     $(`.${styles.toolFrame}`).hide();
   }
   async toggle(config: IToggleConfig) {
-    let src = chrome.runtime.getURL('tool.html');
+    const toolPath = getResourcePath('tool.html');
+    let src = chrome.runtime.getURL(toolPath);
     if (config) {
-      src = `${chrome.runtime.getURL('tool.html')}#${config.pathname}?${config.query}`;
+      src = `${chrome.runtime.getURL(toolPath)}#${config.pathname}?${config.query}`;
     }
     if ($(`.${styles.toolFrame}`).length === 0) {
       if (config) {
@@ -82,7 +84,7 @@ class ContentScriptService implements IContentScriptService {
 
   async runScript(id: string, lifeCycle: 'run' | 'destroy') {
     const extensions = this.extensionContainer.extensions;
-    const extension = extensions.find(o => o.id === id);
+    const extension = extensions.find((o) => o.id === id);
     const lifeCycleFunc = extension?.extensionLifeCycle[lifeCycle];
     if (!lifeCycleFunc) {
       return;

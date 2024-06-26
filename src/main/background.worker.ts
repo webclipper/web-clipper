@@ -35,6 +35,7 @@ import { ISyncStorageService } from '@/service/common/storage';
 import localeService from '@/common/locales';
 import { ILocaleService } from '@/service/common/locale';
 import { IExtensionContainer, IExtensionService } from '@/service/common/extension';
+import { getResourcePath } from '@/common/getResource';
 Container.set(ILocaleService, localeService);
 
 function main() {
@@ -58,7 +59,9 @@ function main() {
         contentScriptService.toggle();
       })
       .catch((e) => {
-        chrome.tabs.create({ url: `${chrome.runtime.getURL('error.html')}?message=${e.message}` });
+        chrome.tabs.create({
+          url: `${chrome.runtime.getURL(getResourcePath('error.html'))}?message=${e.message}`,
+        });
       });
   });
   backgroundIPCServer.registerChannel(

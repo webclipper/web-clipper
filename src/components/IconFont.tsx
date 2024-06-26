@@ -6,10 +6,10 @@ import Container from 'typedi';
 import { IConfigService } from '@/service/common/config';
 import { Observer, useObserver } from 'mobx-react';
 
-const IconFont: React.FC<IconProps> = props => {
+const IconFont: React.FC<IconProps> = (props) => {
   const configService = Container.get(IConfigService);
   const IconFont = useObserver(() => {
-    return createFromIconfontCN({ scriptUrl: 'icon.js' });
+    return createFromIconfontCN({ scriptUrl: './icon.js' });
   });
   return (
     <Observer>

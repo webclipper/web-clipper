@@ -21,7 +21,7 @@ module.exports = {
     background: resolve('src/main/background.worker.ts'),
   },
   output: {
-    path: resolve('dist'),
+    path: resolve('dist/chrome'),
     filename: '[name].js',
   },
   optimization: {
@@ -159,26 +159,26 @@ module.exports = {
     new CopyWebpackPlugin([
       {
         from: resolve('chrome/html'),
-        to: resolve('dist'),
+        to: resolve('dist/chrome'),
         ignore: ['.*'],
       },
       {
         from: resolve('chrome/js'),
-        to: resolve('dist'),
+        to: resolve('dist/chrome'),
         ignore: ['.*'],
       },
       {
         from: resolve('chrome/icons'),
-        to: resolve('dist'),
+        to: resolve('dist/chrome'),
         ignore: ['.*'],
       },
     ]),
     new WebpackCreateExtensionManifestPlugin({
-      output: resolve('dist/manifest.json'),
+      output: resolve('dist'),
     }),
     new HtmlWebpackPlugin({
       title: 'Web Clipper',
-      filename: resolve('dist/tool.html'),
+      filename: resolve('dist/chrome/tool.html'),
       chunks: ['tool'],
       template: 'src/index.html',
     }),

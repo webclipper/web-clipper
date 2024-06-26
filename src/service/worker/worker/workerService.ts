@@ -1,15 +1,15 @@
-import { IContentScriptService } from '@/service/common/contentScript';
 import { IExtensionContainer, IExtensionService } from '@/service/common/extension';
 import Container, { Service } from 'typedi';
 import { IWorkerService } from '../common';
+import { getResourcePath } from '@/common/getResource';
 
 class WorkerService implements IWorkerService {
   constructor() {}
   async changeIcon(iconColor: string): Promise<void> {
     if (iconColor === 'light') {
-      chrome.action.setIcon({ path: 'icon-dark.png' });
+      chrome.action.setIcon({ path: await getResourcePath('icon-dark.png') });
     } else {
-      chrome.action.setIcon({ path: 'icon.png' });
+      chrome.action.setIcon({ path: await getResourcePath('icon.png') });
     }
   }
   async initContextMenu(): Promise<void> {
