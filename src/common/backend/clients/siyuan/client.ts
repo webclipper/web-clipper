@@ -63,9 +63,9 @@ export class SiYuanClient {
     return response.data;
   };
 
-  uploadImage = async (blob: Blob, notebook: string) => {
+  uploadImage = async (blob: Blob) => {
     let formData = new FormData();
-    formData.append('assetsDirPath', `${notebook}/assets/`);
+    formData.append('assetsDirPath', '/assets/');
     const fileName = `${Date.now()}.png`;
     formData.append('file[]', new File([blob], fileName));
     const response = await this.request.postForm<ISiyuanUploadImageResponse>(`api/asset/upload`, {

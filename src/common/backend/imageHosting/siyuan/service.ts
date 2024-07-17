@@ -24,7 +24,7 @@ export default class SiYuanImageHostingService implements ImageHostingService {
 
   uploadImage = async ({ data }: UploadImageRequest) => {
     const blob = Base64ImageToBlob(data);
-    return this.siyuan.uploadImage(blob, this.context?.currentRepository.id!);
+    return this.siyuan.uploadImage(blob);
   };
 
   uploadImageUrl = async (url: string) => {
@@ -32,7 +32,7 @@ export default class SiYuanImageHostingService implements ImageHostingService {
     if (blob.type === 'image/webp') {
       blob = blob.slice(0, blob.size, 'image/jpeg');
     }
-    return this.siyuan.uploadImage(blob, this.context?.currentRepository.id!);
+    return this.siyuan.uploadImage(blob);
   };
 
   updateContext = (context: { currentRepository: Repository }) => {
