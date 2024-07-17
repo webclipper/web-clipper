@@ -22,7 +22,11 @@ import { pack } from './utils/pack';
   const manifestConfig = path.join(__dirname, '../dist/manifest.json');
   const content = fs.readFileSync(manifestConfig, 'utf-8');
   const manifest = JSON.parse(content);
-  delete manifest.browser_specific_settings;
+  manifest.browser_specific_settings = {
+    gecko: {
+      id: '{3fbb1f97-0acf-49a0-8348-36e91bef22ea}',
+    },
+  };
   manifest.name = 'Universal Web Clipper';
   fs.writeFileSync(manifestConfig, JSON.stringify(manifest, null, 2));
   await pack({
