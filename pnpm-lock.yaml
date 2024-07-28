@@ -74,6 +74,12 @@ dependencies:
   filenamify:
     specifier: ^4.1.0
     version: 4.3.0
+  form-data:
+    specifier: ^2.3.3
+    version: 2.3.3
+  history:
+    specifier: 4.10.1
+    version: 4.10.1
   hypermd:
     specifier: ^0.3.11
     version: 0.3.11(codemirror@5.65.17)
@@ -116,6 +122,12 @@ dependencies:
   react-markdown:
     specifier: ^6.0.2
     version: 6.0.3(@types/react@17.0.80)(react@17.0.2)
+  redux:
+    specifier: 4.2.1
+    version: 4.2.1
+  redux-saga:
+    specifier: ^0.16.2
+    version: 0.16.2
   reflect-metadata:
     specifier: ^0.1.13
     version: 0.1.14
@@ -134,6 +146,9 @@ dependencies:
   tldjs:
     specifier: ^2.3.1
     version: 2.3.1
+  turndown:
+    specifier: 5.0.3
+    version: 5.0.3
   typedi:
     specifier: ^0.8.0
     version: 0.8.0
@@ -2415,6 +2430,7 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
     dev: false
+    bundledDependencies: false
 
   /create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
