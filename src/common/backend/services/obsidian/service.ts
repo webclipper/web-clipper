@@ -18,7 +18,7 @@ export default class ObsidianService implements DocumentService {
   };
 
   getRepositories = async () => {
-    const folders = this.config.folder.split('\n').map((folder) => {
+    const folders = (this.config.folder || '').split('\n').map((folder) => {
       return {
         id: folder,
         name: folder,
