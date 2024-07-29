@@ -18,22 +18,23 @@ You can use Web Clipper to save anything on the web to anywhere.
 ### Support Site
 
 - [FlowUs](https://flowus.cn/)
-
-  <img style="width:100px" src="https://github.com/webclipper/web-clipper/blob/master/flowus-logo.jpg?raw=true">
-
-* [Github](https://github.com)
-* [Yuque](https://www.yuque.com)
-* [Notion](https://www.notion.so/)
-* [Youdao](https://note.youdao.com/)
-* [OneNote](https://www.onenote.com/)
-* [Bear](https://bear.app)
-* [Joplin](https://joplinapp.org/)
-* [Server Chan](http://sc.ftqq.com/3.version)
-* [dida365](https://dida365.com/)
-* [baklib](https://www.baklib-free.com/)
-* [wolai](https://www.wolai.com/)
-* [Leanote](https://github.com/leanote/leanote)
-* [Flomo](https://flomoapp.com/)
+- [Obsidian](https://obsidian.md/)
+- [Github](https://github.com)
+- [Yuque](https://www.yuque.com)
+- [Notion](https://www.notion.so/)
+- [Youdao](https://note.youdao.com/)
+- [OneNote](https://www.onenote.com/)
+- [Bear](https://bear.app)
+- [Joplin](https://joplinapp.org/)
+- [Server Chan](http://sc.ftqq.com/3.version)
+- [dida365](https://dida365.com/)
+- [baklib](https://www.baklib-free.com/)
+- [wolai](https://www.wolai.com/)
+- [Leanote](https://github.com/leanote/leanote)
+- [Flomo](https://flomoapp.com/)
+- [Siyuan](https://b3log.org/siyuan)
+- [Ulysses](https://ulysses.app/)
+- [Confluence](https://www.atlassian.com/software/confluence)
 
 ### Install
 
@@ -49,8 +50,6 @@ ps: Because the review takes a week, the version will fall behind.
 2. Go to **chrome://extensions/** and check the box for **Developer mode** in the top right.
 3. Locate the ZIP file on your computer and unzip it.
 4. Go back to the chrome://extensions/ page and click the **Load unpacked extension** button and select the unzipped folder for your extension to install it.
-
-[Canary](https://github.com/webclipper/web-clipper/releases/tag/canary)
 
 ### Develop
 
