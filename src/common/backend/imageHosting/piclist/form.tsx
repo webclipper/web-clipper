@@ -28,7 +28,7 @@ export default ({ form: { getFieldDecorator }, info }: Props) => {
       <Form.Item label="Key">
         {getFieldDecorator('key', {
           initialValue: initInfo.key,
-        })(<Input placeholder="please input piclist upload key if needed"></Input>)}
+        })(<Input placeholder="please input upload key (if needed)"></Input>)}
       </Form.Item>
     </Fragment>
   );

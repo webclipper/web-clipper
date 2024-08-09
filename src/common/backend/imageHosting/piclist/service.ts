@@ -42,9 +42,9 @@ export default class PiclistImageHostingService implements ImageHostingService {
     let formData = new FormData();
     formData.append('image', blob);
     let result = await request.postForm<{ success: boolean, result: string[] }>(
-      this.config.uploadUrl,
+      uploadUrl,
       {
-        "data": formData,
+        data: formData,
       }
     );
     if(!result.success)
