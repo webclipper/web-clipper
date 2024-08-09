@@ -5,7 +5,7 @@ import Service from './service';
 export default (): ImageHostingServiceMeta => {
   return {
     name: 'piclist',
-    icon: 'github',
+    icon: 'piclist',
     type: 'piclist',
     service: Service,
     form: Form,
