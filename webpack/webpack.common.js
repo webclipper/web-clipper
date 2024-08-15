@@ -169,7 +169,7 @@ module.exports = {
       },
       {
         from: resolve('chrome/icons'),
-        to: resolve('dist/chrome'),
+        to: resolve('dist/chrome/icons'),
         ignore: ['.*'],
       },
     ]),

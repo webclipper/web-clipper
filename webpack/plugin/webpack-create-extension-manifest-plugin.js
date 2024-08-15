@@ -37,7 +37,7 @@ async function getChromeManifest() {
       service_worker: './background.js',
     },
     icons: {
-      128: 'icon.png',
+      128: 'icons/icon.png',
     },
     commands: {
       'save-selection': {
@@ -76,7 +76,7 @@ async function getFirefoxManifest() {
       scripts: ['chrome/background.js'],
     },
     icons: {
-      128: 'chrome/icon.png',
+      128: 'chrome/icons/icon.png',
     },
     commands: {
       'save-selection': {

@@ -14,8 +14,8 @@ export interface RemoteConfig {
 }
 
 let config: WebClipperConfig = {
-  icon: 'icon.png',
-  iconDark: 'icon-dark.png',
+  icon: 'icons/icon.png',
+  iconDark: 'icons/icon-dark.png',
   yuqueClientId: 'D1AwzCeDPLFWGfcGv7ze',
   yuqueCallback: 'http://webclipper-oauth.yfd.im/yuque_oauth',
   yuqueScope: 'doc,group,repo,attach_upload',
@@ -25,7 +25,7 @@ let config: WebClipperConfig = {
 
 if (process.env.NODE_ENV === 'development') {
   config = Object.assign({}, config, {
-    icon: 'icon-dev.png',
+    icon: 'icons/icon-dev.png',
   });
 }
 

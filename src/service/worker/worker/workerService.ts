@@ -7,9 +7,9 @@ class WorkerService implements IWorkerService {
   constructor() {}
   async changeIcon(iconColor: string): Promise<void> {
     if (iconColor === 'light') {
-      chrome.action.setIcon({ path: await getResourcePath('icon-dark.png') });
+      chrome.action.setIcon({ path: await getResourcePath('icons/icon-dark.png') });
     } else {
-      chrome.action.setIcon({ path: await getResourcePath('icon.png') });
+      chrome.action.setIcon({ path: await getResourcePath('icons/icon.png') });
     }
   }
   async initContextMenu(): Promise<void> {
