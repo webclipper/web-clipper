@@ -38,7 +38,7 @@ export default class Page extends React.Component<PageProps> {
     } = this.props;
     let avatar;
 
-    if (icon.startsWith('http')) {
+    if (icon.startsWith('http') || icon.indexOf('/') != -1) {
       avatar = <Avatar src={icon} className={styles.avatar} />;
     } else {
       avatar = <IconFont type={icon} style={{ fontSize: 32 }} />;

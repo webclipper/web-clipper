@@ -19,7 +19,7 @@ const IconAvatar: React.FC<IconAvatarProps> = ({ avatar, size, icon: _icon }) =>
   } else {
     fontSize = size;
   }
-  if (icon.startsWith('http')) {
+  if (icon.startsWith('http') || icon.indexOf('/') != -1) {
     return <Avatar size={fontSize} src={icon} />;
   }
   return <IconFont style={{ fontSize }} type={icon} />;
