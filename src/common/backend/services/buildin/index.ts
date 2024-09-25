@@ -11,8 +11,8 @@ export default (): ServiceMeta => {
     homePage: 'https://buildin.ai/',
     service: Service,
     permission: {
-      origins: [`${buildinOrigin}/*`],
-      permissions: ['cookies', 'webRequest', 'webRequestBlocking'],
+      origins: [`${buildinOrigin}/*`, '<all_urls>'],
+      permissions: ['cookies'],
     },
   };
 };
