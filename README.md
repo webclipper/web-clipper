@@ -21,6 +21,7 @@ You can use Web Clipper to save anything on the web to anywhere.
 - [Obsidian](https://obsidian.md/)
 - [Github](https://github.com)
 - [Yuque](https://www.yuque.com)
+- [Buildin.AI](https://buildin.ai/product)
 - [Notion](https://www.notion.so/)
 - [Youdao](https://note.youdao.com/)
 - [OneNote](https://www.onenote.com/)
