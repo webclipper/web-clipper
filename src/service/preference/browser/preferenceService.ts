@@ -12,7 +12,6 @@ class PreferenceService implements IPreferenceService {
   };
 
   constructor(@Inject(ISyncStorageService) private syncStorageService: IStorageService) {
-    console.log('this.syncStorageService', this.syncStorageService);
     this.syncStorageService.onDidChangeStorage((e) => {
       if (e === 'iconColor') {
         this.userPreference.iconColor = this.getIconColor();
