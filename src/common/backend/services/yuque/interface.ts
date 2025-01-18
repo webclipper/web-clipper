@@ -1,4 +1,4 @@
-import { CompleteStatus, CreateDocumentRequest } from './../interface';
+import { CompleteStatus, CreateDocumentRequest, UpdateTOCRequest } from './../interface';
 import { Repository } from '../interface';
 
 export enum RepositoryType {
@@ -52,4 +52,9 @@ export interface YuqueCompleteStatus extends CompleteStatus {
 
 export interface YuqueCreateDocumentRequest extends CreateDocumentRequest {
   slug?: string;
+}
+
+export interface YuqueUpdateTOCRequest extends UpdateTOCRequest{
+  repositoryId: string;
+  documentId: number[];
 }
