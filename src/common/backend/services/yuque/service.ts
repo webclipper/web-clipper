@@ -15,7 +15,7 @@ import {
   YuqueRepository,
   YuqueCompleteStatus,
   YuqueCreateDocumentRequest,
-  UpdateTOCRequest,
+  YuqueUpdateTOCRequest,
 } from './interface';
 
 const HOST = 'https://www.yuque.com';
@@ -102,7 +102,7 @@ export default class YuqueDocumentService implements DocumentService {
     );
     const data = response;
 
-    await this.updateTOC({ repositoryId, documentId: data.id.toString() });
+    await this.updateYuqueTOC({ repositoryId, documentId: [data.id] });
 
     return {
       href: `${HOST}/${repository.namespace}/${data.slug}`,
@@ -155,18 +155,23 @@ export default class YuqueDocumentService implements DocumentService {
     }
   };
 
-  private updateTOC = async (request: UpdateTOCRequest) => {
-    const { repositoryId, documentId } = request;
+  private updateYuqueTOC = async (info: YuqueUpdateTOCRequest) => {
+    const { repositoryId, documentId } = info;
     const requestBody = {
       action: 'prependNode',
-      action_mode: 'sibling',
-      node_uuid: repositoryId,
-      doc_ids: [documentId],
+      action_mode: 'child',
+      doc_ids: documentId,
       type: 'DOC',
     };
 
-    await this.request.put<YuqueRepositoryResponse[]>(`repos/${repositoryId}/toc`, {
-      data: requestBody,
-    });
+    try {
+      const response = await this.request.put(`repos/${repositoryId}/toc`, {
+        data: requestBody,
+			});
+      return response;
+    } catch (_error) {
+      return {};
+    }
+
   };
 }
