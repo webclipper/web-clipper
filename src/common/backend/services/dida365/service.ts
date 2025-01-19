@@ -25,11 +25,11 @@ interface Dida365CheckResponse {
     closed: boolean;
     groupId: string;
   }[];
-  projectGroups: {
+  projectGroups?: {
     id: string;
     name: string;
   }[];
-  tags: {
+  tags?: {
     name: string;
   }[];
 }
@@ -84,9 +84,12 @@ export default class Dida365DocumentService implements DocumentService {
   getRepositories = async (): Promise<Repository[]> => {
     const dida365CheckResponse = await this.request.get<Dida365CheckResponse>(`batch/check/0`);
     const groupMap = new Map<string, string>();
-    dida365CheckResponse.projectGroups.forEach((group) => {
-      groupMap.set(group.id, group.name);
-    });
+    if (dida365CheckResponse.projectGroups) { // 检查 projectGroups 是否存在
+      dida365CheckResponse.projectGroups.forEach((group) => {
+        groupMap.set(group.id, group.name);
+      });
+    }
+
     return dida365CheckResponse.projectProfiles
       .filter((o) => !o.closed)
       .map(({ id, name, groupId }) => ({
