@@ -6,10 +6,15 @@ export default new TextExtension<SelectAreaPosition>(
     name: 'Screenshots',
     icon: 'picture',
     version: '0.0.1',
-    i18nManifest: {
-      'zh-CN': { name: '截图' },
-    },
-  },
+		i18nManifest: {
+			'de-DE': { name: 'Screenshots', description: 'Speichern Sie den aktuellen Inhalt als Bild.' },
+			'en-US': { name: 'Screenshots', description: 'Save current clipping content as an image.' },
+			'ja-JP': { name: 'スクリーンショット', description: '現在のクリップ内容を画像として保存します。' },
+			'ko-KR': { name: '스크린샷', description: '현재 클립 내용을 이미지로 저장합니다.' },
+			'ru-RU': { name: 'Скриншоты', description: 'Сохранить текущее содержимое как изображение.' },
+			'zh-CN': { name: '截图', description: '将当前剪藏内容保存为图片' }, // 保留简体中文
+		}
+	},
   {
     init: ({ currentImageHostingService }) => !!currentImageHostingService,
     run: async context => {
