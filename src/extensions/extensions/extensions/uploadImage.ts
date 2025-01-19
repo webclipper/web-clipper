@@ -8,6 +8,11 @@ export default new ToolExtension(
     automatic: true,
     description: 'Upload images to image host.',
     i18nManifest: {
+      'de-DE': { name: 'Bild hochladen', description: 'Bilder auf den Bildhost hochladen.' },
+      'en-US': { name: 'Upload Image', description: 'Upload images to image host.' },
+      'ja-JP': { name: '画像をアップロード', description: '画像を画像ホストにアップロードします。' },
+      'ko-KR': { name: '이미지 업로드', description: '이미지를 이미지 호스트에 업로드합니다.' },
+      'ru-RU': { name: 'Загрузить изображение', description: 'Загрузить изображения на хост изображений.' },
       'zh-CN': { name: '上传图片', description: '把文章内图片上传到图床' },
     },
   },

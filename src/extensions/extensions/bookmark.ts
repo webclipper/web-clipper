@@ -7,11 +7,16 @@ export default new TextExtension(
     description: 'Add bookmark.',
     icon: 'link',
     i18nManifest: {
-      'zh-CN': { name: '书签', description: '添加书签' },
+			'de-DE': { name: 'Lesezeichen', description: 'Lesezeichen hinzufügen.' },
+			'en-US': { name: 'Bookmark', description: 'Add bookmark.' },
+			'ja-JP': { name: 'ブックマーク', description: 'ブックマークを追加します。' },
+			'ko-KR': { name: '북마크', description: '북마크 추가.' },
+			'ru-RU': { name: 'Закладка', description: 'Добавить закладку.' },
+			'zh-CN': { name: '书签', description: '添加书签' },
     },
   },
   {
-    run: async context => {
+    run: async (context) => {
       const { document, locale } = context;
       switch (locale) {
         case 'zh-CN': {
