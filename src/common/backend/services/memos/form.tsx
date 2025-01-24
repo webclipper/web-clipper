@@ -3,16 +3,16 @@ import '@ant-design/compatible/assets/index.less';
 import { Input } from 'antd';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
 import React, { Fragment } from 'react';
-import { BaklibBackendServiceConfig } from './interface';
+import { MemosBackendServiceConfig } from './interface';
 import useOriginForm from '@/hooks/useOriginForm';
 import { FormattedMessage } from 'react-intl';
 
-interface BaklibFormProps {
+interface MemosFormProps {
   verified?: boolean;
-  info?: BaklibBackendServiceConfig;
+  info?: MemosBackendServiceConfig;
 }
 
-const FormItem: React.FC<BaklibFormProps & FormComponentProps> = props => {
+const FormItem: React.FC<MemosFormProps & FormComponentProps> = props => {
   const {
     form,
     form: { getFieldDecorator },
@@ -25,7 +25,7 @@ const FormItem: React.FC<BaklibFormProps & FormComponentProps> = props => {
     initStatus: !!info,
   });
 
-  let initData: Partial<BaklibBackendServiceConfig> = {};
+  let initData: Partial<MemosBackendServiceConfig> = {};
   if (info) {
     initData = info;
   }
@@ -34,11 +34,17 @@ const FormItem: React.FC<BaklibFormProps & FormComponentProps> = props => {
     <Fragment>
       <Form.Item label="Host">
         {getFieldDecorator('origin', {
-          initialValue: initData.origin || 'https://www.baklib.com',
+          initialValue: initData.origin || 'https://demo.usememos.com',
           rules: [
             {
               required: true,
-              message: 'Host is required!',
+              message: (
+								<FormattedMessage
+                id="backend.services.memos.form.authentication"
+                defaultMessage="Host URL requeired!"
+              />
+							),
+							type: 'url',
             },
             ...formRules,
           ],
@@ -46,8 +52,8 @@ const FormItem: React.FC<BaklibFormProps & FormComponentProps> = props => {
           <Input.Search
             enterButton={
               <FormattedMessage
-                id="backend.services.baklib.form.authentication"
-                defaultMessage="Authentication"
+                id="backend.services.memos.form.hostTest"
+                defaultMessage="test"
               />
             }
             disabled={editMode || formVerified}
@@ -61,10 +67,16 @@ const FormItem: React.FC<BaklibFormProps & FormComponentProps> = props => {
           rules: [
             {
               required: true,
-              message: 'AccessToken is required!',
+              message: (
+								<FormattedMessage
+                id="backend.services.memos.accessToken.message"
+                defaultMessage='AccessToken is required!'
+              />),
             },
           ],
-        })(<Input disabled={editMode || verified || !formVerified} />)}
+        })(<Input
+					disabled={editMode || verified || !formVerified}
+					/>)}
       </Form.Item>
     </Fragment>
   );

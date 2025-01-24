@@ -7,6 +7,7 @@ coverage/
 tmp/
 .DS_Store
 .idea
+.vscode
 yarn-error.log
 dll/
 webclipper.zip

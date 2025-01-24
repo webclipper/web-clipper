@@ -1,30 +1,20 @@
-import { DocumentService, CreateDocumentRequest } from '../../index';
+import { DocumentService } from '../../index';
 import { extend, RequestMethod } from 'umi-request';
-import md5 from '@web-clipper/shared/lib/md5';
-import { MemosBackendServiceConfig } from './interface';
 import { CompleteStatus } from '../interface';
 import { Repository } from '@/common/backend/services/interface';
+import {
+	MemosBackendServiceConfig,
+	MemoCreateDocumentRequest,
+	MemosUserResponse,
+	MemosUserInfo
+} from './interface';
 
-interface MemosUserResponse {
-  name: string;
-  username: string;
-  email: string;
-  avatarUrl: string;
-  description: string;
-}
-
-interface UserInfo {
-  name: string;
-  avatar: string;
-  homePage: string;
-  description: string;
-}
 
 export default class MemosDocumentService implements DocumentService {
   private request: RequestMethod;
   private token: string;
   private origin: string;
-	private userInfo: UserInfo | null;
+	private UserInfo: MemosUserInfo | null;
 
   constructor({ accessToken, origin }: MemosBackendServiceConfig) {
     const realHost = origin || 'https://demo.usememos.com';
@@ -54,17 +44,17 @@ export default class MemosDocumentService implements DocumentService {
     );
     this.token = accessToken;
     this.origin = realHost;
-    this.userInfo = null;
+    this.UserInfo = null;
   }
 
   getId = () => {
 		return '0';
 	};
 
-  getUserInfo = async (): Promise<UserInfo> => {
+  getUserInfo = async (): Promise<MemosUserInfo> => {
     const response = await this.request.post<MemosUserResponse>('v1/auth/status');
 
-    const userInfo: UserInfo = {
+    const MemosUserInfo: MemosUserInfo = {
       name: response.username || 'Memos User',
       avatar: response.avatarUrl
         ? `${this.origin}${response.avatarUrl}`
@@ -73,16 +63,25 @@ export default class MemosDocumentService implements DocumentService {
       description: response.description || 'Memos User',
     };
 
-    this.userInfo = userInfo;
-    return userInfo;
+    this.UserInfo = MemosUserInfo;
+    return MemosUserInfo;
   };
 
+  private addTag = (tags: string, content: string): string => {
+    const tagArray = tags.split(',').map(tag => tag.trim()).filter(tag => tag);
+    const formattedTags = tagArray.map(tag => `#${tag}`).join(' ');
+    return `${content}\n${formattedTags}`;
+  };
 
   createDocument = async (
-    info: CreateDocumentRequest
+    info: MemoCreateDocumentRequest
   ): Promise<CompleteStatus> => {
-    if (!this.userInfo) {
-      this.userInfo = await this.getUserInfo();
+    if (!this.UserInfo) {
+      this.UserInfo = await this.getUserInfo();
+    }
+
+    if (info.tags) {
+      info.content = this.addTag(info.tags, info.content);
     }
 
     const response = await this.request.post<{
@@ -92,12 +91,12 @@ export default class MemosDocumentService implements DocumentService {
     }>('v1/memos', {
       data: {
         content: info.content,
-        visibility: 'PRIVATE',
+        visibility: info.visibility || 'PRIVATE',
       },
     });
 
     return {
-      href: `${this.origin}/u/${this.userInfo.name}`,
+      href: `${this.origin}/u/${this.UserInfo.name}`,
     };
   };
 
