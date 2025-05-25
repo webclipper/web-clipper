@@ -97,7 +97,7 @@
     "style-loader": "^0.23.1",
     "terser-webpack-plugin": "^2.3.1",
     "ts-loader": "^6.2.1",
-    "ts-node": "^10.2.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.1.6",
     "url-loader": "^3.0.0",
     "vitest": "^0.32.2",
