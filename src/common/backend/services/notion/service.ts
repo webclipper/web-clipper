@@ -76,6 +76,10 @@ export default class NotionDocumentService implements DocumentService {
       this.userContent = await this.getUserContent();
     }
 
+    if (!this.userContent.recordMap.space) {
+      return [];
+    }
+
     const spaces = this.userContent.recordMap.space;
 
     const userId = Object.keys(this.userContent.recordMap.notion_user)[0] as string;
