@@ -248,7 +248,7 @@ devDependencies:
     specifier: ^6.2.1
     version: 6.2.2(typescript@5.5.4)
   ts-node:
-    specifier: ^10.2.0
+    specifier: ^10.9.2
     version: 10.9.2(@types/node@22.0.0)(typescript@5.5.4)
   typescript:
     specifier: ^5.1.6
@@ -4052,7 +4052,7 @@ packages:
     resolution: {integrity: sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw==}
     engines: {node: '>= 4.0'}
     os: [darwin]
-    deprecated: The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2
+    deprecated: Upgrade to fsevents v2 to mitigate potential security issues
     requiresBuild: true
     dependencies:
       bindings: 1.5.0
