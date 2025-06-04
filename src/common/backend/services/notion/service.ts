@@ -76,14 +76,8 @@ export default class NotionDocumentService implements DocumentService {
       this.userContent = await this.getUserContent();
     }
 
-    if (!this.userContent.recordMap.space) {
-      return [];
-    }
-
-    const spaces = this.userContent.recordMap.space;
-
     const userId = Object.keys(this.userContent.recordMap.notion_user)[0] as string;
-
+    const spaces = (await this.getSpaces(userId)) as any;
     const result: Array<NotionRepository[]> = await Promise.all(
       Object.keys(spaces).map(async (p) => {
         const space = spaces[p];
@@ -94,6 +88,17 @@ export default class NotionDocumentService implements DocumentService {
 
     this.repositories = result.flat() as NotionRepository[];
     return this.repositories;
+  };
+
+  getSpaces = async (userId: string) => {
+    const response = await this.requestWithCookie.post<{
+      users: {
+        [id: string]: {
+          space: any;
+        };
+      };
+    }>('/api/v3/getSpacesInitial');
+    return response.data.users[userId].space;
   };
 
   createDocument = async ({
@@ -118,7 +123,7 @@ export default class NotionDocumentService implements DocumentService {
     if (!this.userContent) {
       this.userContent = await this.getUserContent();
     }
-    const spaceId = Object.values(this.userContent.recordMap.space)[0].value.id;
+    const spaceId = await this.getSpaceId();
     await this.requestWithCookie.post('api/v3/enqueueTask', {
       task: {
         eventName: 'importFile',
@@ -140,11 +145,21 @@ export default class NotionDocumentService implements DocumentService {
     };
   };
 
+  getSpaceId = async () => {
+    if (!this.userContent) {
+      this.userContent = await this.getUserContent();
+    }
+
+    const userId = Object.keys(this.userContent.recordMap.notion_user)[0] as string;
+    const spaces = (await this.getSpaces(userId)) as any;
+    return Object.keys(spaces)[0];
+  };
+
   createEmptyFile = async (repository: NotionRepository, title: string) => {
     if (!this.userContent) {
       this.userContent = await this.getUserContent();
     }
-    const spaceId = Object.values(this.userContent.recordMap.space)[0].value.id;
+    const spaceId = await this.getSpaceId();
     const documentId = generateUuid();
     const parentId = repository.id;
     const userId = Object.values(this.userContent.recordMap.notion_user)[0].value.id;

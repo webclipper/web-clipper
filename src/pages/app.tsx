@@ -49,15 +49,16 @@ export default async () => {
   const app = dva({
     namespacePrefixWarning: false,
     history: createHashHistory(),
-    onError: e => {
+    onError: (e) => {
       (e as any).preventDefault();
       message.destroy();
       message.error(e.message);
+      message.error(e.stack);
     },
   });
   app.use(createLoading());
 
-  app.router(router => {
+  app.router((router) => {
     return (
       <LocalWrapper>
         <Router history={router!.history}>
