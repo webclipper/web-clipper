@@ -12,7 +12,7 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
 
-// const distFiles = fs.readdirSync(resolve('dist')).filter((o) => o !== '.gitkeep');
+const distFiles = fs.readdirSync(resolve('dist')).filter((o) => o !== '.gitkeep');
 
 module.exports = {
   entry: {
@@ -149,13 +149,13 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
     }),
-    // new CleanWebpackPlugin(
-    //   distFiles.map((p) => `dist/${p}`),
-    //   {
-    //     root: path.resolve(__dirname, '../'),
-    //     verbose: true,
-    //   }
-    // ),
+    new CleanWebpackPlugin(
+      distFiles.map((p) => `dist/${p}`),
+      {
+        root: path.resolve(__dirname, '../'),
+        verbose: true,
+      }
+    ),
     new CopyWebpackPlugin([
       {
         from: resolve('chrome/html'),
