@@ -1,4 +1,15 @@
+## 1.40.0
+
+`2025-06-02`
+
+- Fix dida365 error
+- Fix Yuque not showing in TOC issue
+- Support memos
+- Add filename support for piclist image hosting
+- Fix Notion error
+
 ## 1.39.0
+
 `2024-09-25`
 
 - Support BuildinAI
@@ -361,8 +372,8 @@ Thanks @Touma-Kazusa and @Okami Wong
 - 🐛 Fix crash when local is not zh-CN or en-US
 - 🐛 Fixed okText of account modal.
 - 🐛 Fix full page extension.
-- 💄 Add Icon For Setting Page.
-- 💄 Change name of notion.
+- 💄 Add Icon For Setting Page.
+- 💄 Change name of notion.
 - 🌐 Add more translate.
 
 ## 1.7.1

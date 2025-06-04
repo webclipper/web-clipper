@@ -1,4 +1,15 @@
+## 1.40.0
+
+`2025-06-02`
+
+- 修复 dida365 的报错
+- 修复 Yuque 不显示在 TOC 的问题
+- 支持 memos
+- 上传piclist图床增加filename
+- 修复 Notion 保存的问题
+
 ## 1.39.0
+
 `2024-09-25`
 
 - 支持 BuildinAI
