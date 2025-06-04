@@ -66,5 +66,3 @@ async function updateMenu() {
 
   workerService.initContextMenu();
 }
-
-console.log('111222');
