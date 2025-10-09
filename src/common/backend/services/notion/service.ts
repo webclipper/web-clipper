@@ -164,6 +164,7 @@ export default class NotionDocumentService implements DocumentService {
             spaceId: spaceId,
           },
           spaceId: spaceId,
+          signedToken: fileUrl.signedToken,
         },
       },
     });
@@ -318,6 +319,7 @@ export default class NotionDocumentService implements DocumentService {
     const result = await this.requestWithCookie.post<{
       url: string;
       signedPutUrl: string;
+      signedToken: string;
     }>('api/v3/getUploadFileUrl', {
       bucket: 'temporary',
       name: fileName,
