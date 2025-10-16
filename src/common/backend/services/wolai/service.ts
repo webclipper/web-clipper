@@ -128,7 +128,7 @@ export default class WolaiDocumentService implements DocumentService {
     Object.keys(data.policyData.formData).forEach((key) => {
       formData.append(key, data.policyData.formData[key]);
     });
-    formData.append('key', filekey);
+    formData.append('key', data.fileUrl);
     formData.append('success_action_status', '200');
     formData.append('file', file);
     await this.requestWithCookie(async (header) => {
@@ -148,7 +148,7 @@ export default class WolaiDocumentService implements DocumentService {
             spaceId: repository.spaceId,
             type: 'string',
             bucket: data.policyData.bucket,
-            filename: filekey,
+            filename: data.fileUrl,
             pageTitle: title,
             pageId: documentId,
           },
@@ -244,6 +244,9 @@ export default class WolaiDocumentService implements DocumentService {
 
   getFileUrl = async (repository: WolaiRepository, file: File) => {
     return this.requestWithCookie(async (header) => {
+      // FIXME: 这里简单获取了文件后缀名，考虑到网页上的文件类型都是比较简单的，不会有类似 xxx.tar.gz 这种长后缀
+      // 构造一个合法的新文件名，避免上传接口报错
+      const fileName = `${this.getUuid()}.${file?.name?.split('.').pop()}`
       return this.request.post(
         await this.webRequestService.changeUrl('v1/file/getSignedPostUrl', header),
         {
@@ -251,6 +254,7 @@ export default class WolaiDocumentService implements DocumentService {
             spaceId: repository.spaceId,
             fileSize: file.size,
             type: 'import',
+            fileName,
           },
         }
       );
