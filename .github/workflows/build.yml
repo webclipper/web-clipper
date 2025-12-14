@@ -1,0 +1,51 @@
+name: Build Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      
+      - name: Install Dependencies
+        run: npm install --force
+
+      - name: Build 
+        run: npm run dev
+
+      - name: Build and Package
+        run: npm run release
+
+      - name: Inspect Build Output (Debug)
+        run: |
+          echo "Listing root directory:"
+          ls -F
+          echo "Listing dist directory (if exists):"
+          ls -F dist || echo "Dist folder not found"
+
+      - name: Upload Chrome Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-clipper-chrome  # 在 GitHub 页面上显示的名字
+          path: release/web-clipper-chrome.zip
+
+      - name: Upload Firefox Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-clipper-firefox
+          path: release/web-clipper-firefox.zip
+
+      - name: Upload Firefox Store Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-clipper-firefox-store
+          path: release/web-clipper-firefox-store.zip

@@ -14,3 +14,5 @@ webclipper.zip
 
 .now
 release
+package-lock.json
+pnpm-lock.yaml

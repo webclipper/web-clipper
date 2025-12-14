@@ -12,7 +12,10 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
 
-const distFiles = fs.readdirSync(resolve('dist')).filter((o) => o !== '.gitkeep');
+const distPath = resolve('dist');
+const distFiles = fs.existsSync(distPath)
+  ? fs.readdirSync(distPath).filter((o) => o !== '.gitkeep')
+  : [];
 
 module.exports = {
   entry: {

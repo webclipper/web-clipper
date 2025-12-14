@@ -17,6 +17,7 @@ You can use Web Clipper to save anything on the web to anywhere.
 
 ### Support Site
 
+- [Feishu (Lark)](https://www.feishu.cn/) (Requires [Self-Hosted Worker](docs/feishu-oauth-guide.md))
 - [FlowUs](https://flowus.cn/)
 - [Obsidian](https://obsidian.md/)
 - [Github](https://github.com)
@@ -55,10 +56,10 @@ ps: Because the review takes a week, the version will fall behind.
 ### Develop
 
 ```bash
-$ git clone https://github.com/webclipper/web-clipper.git
-$ cd web-clipper
-$ npm i
-$ npm run dev
+git clone https://github.com/webclipper/web-clipper.git
+cd web-clipper
+npm i
+npm run dev
 ```
 
 - You should load the 'dist/chrome' folder in Chrome.
@@ -68,7 +69,7 @@ $ npm run dev
 ### Test
 
 ```bash
-$ npm run test
+npm run test
 ```
 
 ### Feedback
