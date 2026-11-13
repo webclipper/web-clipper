@@ -4,18 +4,20 @@ import { DocumentService } from '../../index';
 import { IBasicRequestService } from '@/service/common/request';
 import { Container } from 'typedi';
 import { SiYuanClient } from '../../clients/siyuan/client';
+import { ISiyuanBackendServiceConfig } from '../../clients/siyuan/types';
 import localeService from '@/common/locales';
 
 /**
  *
- * Document service for self hosted leanote or leanote.com
+ * Document service for SiYuan Note, support self hosted and remote address
  */
 export default class SiYuanDocumentService implements DocumentService {
   private client: SiYuanClient;
-  constructor(config: { accessToken?: string }) {
+  constructor(config: ISiyuanBackendServiceConfig = {}) {
     this.client = new SiYuanClient({
       request: Container.get(IBasicRequestService),
       accessToken: config.accessToken,
+      origin: config.origin,
     });
   }
 

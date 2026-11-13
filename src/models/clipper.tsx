@@ -17,7 +17,11 @@ import {
   changeData,
   watchActionChannel,
 } from 'pageActions/clipper';
-import backend, { documentServiceFactory, imageHostingServiceFactory } from 'common/backend';
+import backend, {
+  documentServiceFactory,
+  imageHostingServiceFactory,
+  getServicePermission,
+} from 'common/backend';
 import { unpackAccountPreference } from '@/services/account/common';
 import { notification, Button } from 'antd';
 import { routerRedux } from 'dva';
@@ -73,16 +77,14 @@ const model = new DvaModelBuilder(defaultState, 'clipper')
     } = unpackAccountPreference(currentAccount);
     const documentService = documentServiceFactory(type, info);
     const permissionsService = Container.get(IPermissionsService);
-    if (selectState.servicesMeta[type]?.permission) {
+    const permission = getServicePermission(selectState.servicesMeta[type], info);
+    if (permission) {
       //@ts-ignore
-      const hasPermissions = yield call(
-        permissionsService.contains,
-        selectState.servicesMeta[type]?.permission!
-      );
+      const hasPermissions = yield call(permissionsService.contains, permission);
       if (!hasPermissions) {
         const key = `open${Date.now()}`;
         const close = () => {
-          permissionsService.request(selectState.servicesMeta[type]?.permission!).then(re => {
+          permissionsService.request(permission).then(re => {
             if (re) {
               actionChannel.put(asyncChangeAccount.started({ id }));
             }

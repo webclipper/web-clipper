@@ -5,7 +5,7 @@ import '@ant-design/compatible/assets/index.less';
 import { Modal, Select, Divider } from 'antd';
 import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import styles from './index.less';
-import { ImageHostingServiceMeta, BUILT_IN_IMAGE_HOSTING_ID } from 'common/backend';
+import { ImageHostingServiceMeta, BUILT_IN_IMAGE_HOSTING_ID, getServicePermission } from 'common/backend';
 import { UserPreferenceStore, ImageHosting } from '@/common/types';
 import { FormattedMessage } from 'react-intl';
 import useVerifiedAccount from '@/common/hooks/useVerifiedAccount';
@@ -76,7 +76,8 @@ const Page: React.FC<PageProps> = ({
   const handleOk = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     const type = getFieldValue('type');
-    const permission = servicesMeta[type]?.permission;
+    // 思源笔记这类支持自定义接口地址的服务，需要按当前填写的配置计算 host 权限
+    const permission = getServicePermission(servicesMeta[type], form.getFieldsValue());
     if (permission) {
       const result = await Container.get(IPermissionsService).request(permission);
       if (!result) {

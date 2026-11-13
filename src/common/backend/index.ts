@@ -30,6 +30,20 @@ export function documentServiceFactory(type: string, info?: any) {
   throw new Error('unSupport type');
 }
 
+/**
+ * 计算某个后端服务在指定配置下所需的权限，兼容静态配置与函数式配置。
+ */
+export function getServicePermission(
+  service?: ServiceMeta,
+  info?: any
+): chrome.permissions.Permissions | undefined {
+  const permission = service?.permission;
+  if (!permission) {
+    return undefined;
+  }
+  return typeof permission === 'function' ? permission(info) : permission;
+}
+
 export function imageHostingServiceFactory(type: string, info?: any) {
   const service = getImageHostingServices().find(o => o.type === type);
   if (service) {

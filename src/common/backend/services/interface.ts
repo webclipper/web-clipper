@@ -36,6 +36,14 @@ export interface Repository {
   disabled?: boolean;
 }
 
+/**
+ * 大多数服务的权限是固定的，但是像思源笔记这种允许自定义接口地址的服务，
+ * 需要根据当前账号的配置动态计算需要申请的 host 权限，因此这里允许传入函数。
+ */
+export type ServicePermission =
+  | chrome.permissions.Permissions
+  | ((info?: any) => chrome.permissions.Permissions);
+
 export interface ServiceMeta {
   /**
    * Name of Backend Service
@@ -64,7 +72,7 @@ export interface ServiceMeta {
   complete?: any;
   oauthUrl?: string;
   headerForm?: any;
-  permission?: chrome.permissions.Permissions;
+  permission?: ServicePermission;
 }
 
 export interface UpdateTOCRequest {}

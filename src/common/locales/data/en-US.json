@@ -73,6 +73,8 @@
   "backend.services.server_chan.accessToken.message": "",
   "backend.services.server_chan.name": "ServerChan",
   "backend.services.siyuan.form.accessToken": "Token",
+  "backend.services.siyuan.form.authentication": "Authorize",
+  "backend.services.siyuan.form.origin": "API address",
   "backend.services.siyuan.name": "SiYuan Note",
   "backend.services.siyuan.notes": "Notes",
   "backend.services.ticktick.headerForm.applyTags": "",

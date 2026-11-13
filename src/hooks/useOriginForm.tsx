@@ -54,7 +54,7 @@ const useOriginForm = ({ initStatus, form, originKey }: UseOriginFormProps) => {
       },
     },
   ];
-  return { verified, handleAuthentication, formRules };
+  return { verified, handleAuthentication, formRules, requestOriginPermission };
 };
 
 export default useOriginForm;
