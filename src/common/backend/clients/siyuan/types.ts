@@ -1,8 +1,17 @@
 import { IRequestService } from '@/service/common/request';
 
+export interface ISiyuanBackendServiceConfig {
+  accessToken?: string;
+  /**
+   * 思源笔记内核的接口地址，支持远端地址，默认 http://127.0.0.1:6806/
+   */
+  origin?: string;
+}
+
 export interface ISiyuanClientOptions {
   request: IRequestService;
   accessToken?: string;
+  origin?: string;
 }
 
 export interface ISiyuanUploadImageResponse {
