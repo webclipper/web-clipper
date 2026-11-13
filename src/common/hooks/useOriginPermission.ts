@@ -7,9 +7,10 @@ const useOriginPermission = (initData: boolean) => {
   const permissionsService = Container.get(IPermissionsService);
   const requestOriginPermission = async (origin: string) => {
     const result = await permissionsService.request({
-      origins: [`${origin}/*`],
+      origins: [`${origin.replace(/\/+$/, '')}/*`],
     });
     setVerified(result);
+    return result;
   };
   return [verified, requestOriginPermission] as const;
 };

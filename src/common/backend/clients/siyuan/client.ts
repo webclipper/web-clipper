@@ -6,21 +6,22 @@ import {
   ISiyuanUploadImageResponse,
   ISiyuanFetchNotesResponse,
 } from './types';
-
-const SIYUAN_BASE_URL = 'http://127.0.0.1:6806/';
+import { normalizeSiyuanBaseUrl } from './utils';
 
 export class SiYuanClient {
   private options: ISiyuanClientOptions;
   private request: IExtendRequestHelper;
+  private baseUrl: string;
 
   constructor(options: ISiyuanClientOptions) {
     this.options = options;
+    this.baseUrl = normalizeSiyuanBaseUrl(options.origin);
     const headers: Record<string, string> = {};
     if (options.accessToken) {
       headers.Authorization = `Token ${options.accessToken}`;
     }
     this.request = new RequestHelper({
-      baseURL: SIYUAN_BASE_URL,
+      baseURL: this.baseUrl,
       headers: headers,
       request: this.options.request,
     });
@@ -53,7 +54,7 @@ export class SiYuanClient {
         data: {
           notebook: data.repositoryId,
           path: `${data.title}.sy`,
-          markdown: data.content.replaceAll(SIYUAN_BASE_URL, ''),
+          markdown: data.content.replaceAll(this.baseUrl, ''),
         },
       }
     );
@@ -71,6 +72,6 @@ export class SiYuanClient {
     const response = await this.request.postForm<ISiyuanUploadImageResponse>(`api/asset/upload`, {
       data: formData,
     });
-    return `${SIYUAN_BASE_URL}${response.data.succMap[fileName]}`;
+    return `${this.baseUrl}${response.data.succMap[fileName]}`;
   };
 }

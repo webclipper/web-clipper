@@ -93,7 +93,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        include: /node_modules\/antd|@ant-design|@formily/,
+        include: /[\\/]node_modules[\\/]antd|@ant-design|@formily/,
         use: [
           {
             loader: 'style-loader',
