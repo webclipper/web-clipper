@@ -1,3 +1,14 @@
+## 1.43.1
+
+`2026-11-18`
+
+- Fix Dida365 account binding by including login credentials, and update list and tag retrieval endpoints
+- Fix incorrect group labels and HTTP 403 errors when saving to Dida365
+- Improve Dida365 save error checks and request-header rule cleanup, and correct saved-page links
+- Transfer Obsidian content through the clipboard to avoid long-note truncation in URLs; report clipboard failures explicitly
+- Make clipboard write permission optional and request it when binding or using Obsidian; saving replaces the current clipboard contents
+- Rename the existing Confluence integration to Confluence 6
+
 ## 1.43.0
 
 `2026-11-18`
