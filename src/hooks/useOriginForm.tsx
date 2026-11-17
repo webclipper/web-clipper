@@ -6,11 +6,14 @@ import { FormComponentProps } from '@ant-design/compatible/lib/form';
 interface UseOriginFormProps extends FormComponentProps {
   initStatus: boolean;
   originKey?: string;
+  normalizeOrigin?: (origin: string) => string;
 }
 
-const useOriginForm = ({ initStatus, form, originKey }: UseOriginFormProps) => {
+const useOriginForm = ({ initStatus, form, originKey, normalizeOrigin }: UseOriginFormProps) => {
   const key = originKey || 'origin';
-  const [verified, requestOriginPermission] = useOriginPermission(initStatus);
+  const [verified, requestPermission] = useOriginPermission(initStatus);
+  const requestOriginPermission = (origin: string) =>
+    requestPermission(normalizeOrigin ? normalizeOrigin(origin) : origin);
   const handleAuthentication = () => {
     form.validateFields([key], async (err, value) => {
       if (err) {
@@ -35,12 +38,11 @@ const useOriginForm = ({ initStatus, form, originKey }: UseOriginFormProps) => {
           return callback();
         }
         try {
-          const _url = new URL(value);
+          const _url = new URL(normalizeOrigin ? normalizeOrigin(value) : value);
           if (_url.origin !== value) {
             form.setFieldsValue({
               [key]: _url.toString(),
             });
-            callback();
           }
           callback();
         } catch (_error) {

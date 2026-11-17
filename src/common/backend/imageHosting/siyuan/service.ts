@@ -1,6 +1,7 @@
 import { Base64ImageToBlob } from '@/common/blob';
 import { Container } from 'typedi';
 import { IBasicRequestService } from './../../../../service/common/request';
+import { getSiyuanAccountId } from '../../clients/siyuan/utils';
 import { SiYuanClient } from './../../clients/siyuan/client';
 import { UploadImageRequest, ImageHostingService } from '../interface';
 import { Repository } from '../../services/interface';
@@ -11,7 +12,7 @@ export interface YuqueImageHostingOption {
 export default class SiYuanImageHostingService implements ImageHostingService {
   private context: { currentRepository: Repository } | null = null;
   private siyuan: SiYuanClient;
-  constructor(config: { accessToken?: string; origin?: string } = {}) {
+  constructor(private config: { accessToken?: string; origin?: string } = {}) {
     this.siyuan = new SiYuanClient({
       request: Container.get(IBasicRequestService),
       accessToken: config.accessToken,
@@ -20,7 +21,7 @@ export default class SiYuanImageHostingService implements ImageHostingService {
   }
 
   getId() {
-    return 'siyuan';
+    return getSiyuanAccountId(this.config.origin);
   }
 
   uploadImage = async ({ data }: UploadImageRequest) => {

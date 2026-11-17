@@ -5,6 +5,7 @@ import { IBasicRequestService } from '@/service/common/request';
 import { Container } from 'typedi';
 import { SiYuanClient } from '../../clients/siyuan/client';
 import { ISiyuanBackendServiceConfig } from '../../clients/siyuan/types';
+import { getSiyuanAccountId } from '../../clients/siyuan/utils';
 import localeService from '@/common/locales';
 
 /**
@@ -13,7 +14,7 @@ import localeService from '@/common/locales';
  */
 export default class SiYuanDocumentService implements DocumentService {
   private client: SiYuanClient;
-  constructor(config: ISiyuanBackendServiceConfig = {}) {
+  constructor(private config: ISiyuanBackendServiceConfig = {}) {
     this.client = new SiYuanClient({
       request: Container.get(IBasicRequestService),
       accessToken: config.accessToken,
@@ -23,7 +24,7 @@ export default class SiYuanDocumentService implements DocumentService {
 
   /** Unique account identification */
   getId = () => {
-    return 'siyuan';
+    return getSiyuanAccountId(this.config.origin);
   };
 
   getUserInfo = async () => {

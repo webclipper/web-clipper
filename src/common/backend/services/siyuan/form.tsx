@@ -6,7 +6,7 @@ import React, { Fragment } from 'react';
 import localeService from '@/common/locales';
 import useOriginForm from '@/hooks/useOriginForm';
 import { ISiyuanBackendServiceConfig } from '../../clients/siyuan/types';
-import { DEFAULT_SIYUAN_BASE_URL } from '../../clients/siyuan/utils';
+import { DEFAULT_SIYUAN_BASE_URL, normalizeSiyuanBaseUrl } from '../../clients/siyuan/utils';
 
 interface SiyuanFormProps {
   verified?: boolean;
@@ -25,6 +25,7 @@ const form: React.FC<FormComponentProps & SiyuanFormProps> = props => {
   const { requestOriginPermission, formRules } = useOriginForm({
     form,
     initStatus: false,
+    normalizeOrigin: normalizeSiyuanBaseUrl,
   });
 
   /**

@@ -1,3 +1,5 @@
+import md5 from '@web-clipper/shared/lib/md5';
+
 /**
  * 思源笔记内核默认只监听本机 127.0.0.1:6806，
  * 这里的默认值仅作为未填写接口地址时的兜底。
@@ -21,8 +23,16 @@ export const normalizeSiyuanBaseUrl = (origin?: string): string => {
   if (!input) {
     return DEFAULT_SIYUAN_BASE_URL;
   }
+  if (/^[a-z][a-z\d+.-]*:\/\//i.test(input) && !/^https?:\/\//i.test(input)) {
+    throw new Error('仅支持 HTTP 或 HTTPS 接口地址');
+  }
   const withProtocol = /^https?:\/\//i.test(input) ? input : `http://${input}`;
-  return `${withProtocol.replace(/\/+$/, '')}/`;
+  const url = new URL(withProtocol);
+  if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.search || url.hash) {
+    throw new Error('请输入不含凭据、查询参数和片段的 HTTP 或 HTTPS 接口地址');
+  }
+  url.pathname = `${url.pathname.replace(/\/+$/, '')}/`;
+  return url.href;
 };
 
 /**
@@ -35,4 +45,13 @@ export const getSiyuanPermissionOrigins = (origin?: string): string[] => {
     origins.push(customOrigin);
   }
   return origins;
+};
+
+// 默认本地服务保留旧 ID，远端服务按规范化地址区分。
+export const getSiyuanAccountId = (origin?: string): string => {
+  const baseUrl = normalizeSiyuanBaseUrl(origin);
+  if (baseUrl === DEFAULT_SIYUAN_BASE_URL || baseUrl === 'http://localhost:6806/') {
+    return 'siyuan';
+  }
+  return `siyuan:${md5(baseUrl)}`;
 };
