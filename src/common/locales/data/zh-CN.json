@@ -1,4 +1,5 @@
 {
+  "backend.services.obsidian.clipboardFailed": "无法将正文复制到剪贴板，请将焦点切回剪藏窗口后重试保存。",
   "auth.modal.title": "账户配置",
   "backend.error.store": "插件商店不允许执行脚本",
   "backend.imageHosting.baklib.builtInRemark": "Baklib 内置图床",

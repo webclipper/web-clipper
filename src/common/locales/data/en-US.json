@@ -1,4 +1,5 @@
 {
+  "backend.services.obsidian.clipboardFailed": "Could not copy the content to the clipboard. Please focus the Web Clipper window and try saving again.",
   "auth.modal.title": "Account Config",
   "backend.error.store": "The extensions gallery cannot be scripted.",
   "backend.imageHosting.baklib.builtInRemark": "Baklib built in image hosting service.",

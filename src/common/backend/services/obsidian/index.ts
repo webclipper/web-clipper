@@ -13,5 +13,8 @@ export default (): ServiceMeta => {
     icon: 'obsidian',
     type: 'obsidian',
     service: Service,
+    permission: {
+      permissions: ['clipboardWrite'],
+    },
   };
 };
