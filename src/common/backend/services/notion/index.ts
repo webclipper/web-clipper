@@ -6,10 +6,10 @@ export default (): ServiceMeta => {
     name: 'Notion',
     icon: 'https://www.notion.so/images/favicon.ico',
     type: 'notion',
-    homePage: 'https://www.notion.so/',
+    homePage: 'https://app.notion.com/',
     service: Service,
     permission: {
-      origins: ['https://www.notion.so/*'],
+      origins: ['https://www.notion.so/*', 'https://app.notion.com/*'],
       permissions: ['cookies'],
     },
   };
