@@ -42,7 +42,8 @@ export default class Dida365DocumentService implements DocumentService {
 
   constructor() {
     const request = extend({
-      prefix: `https://api.dida365.com/api/v2/`,
+      prefix: `https://api.dida365.com/api/`,
+      credentials: 'include',
     });
     request.interceptors.response.use(
       (response) => {
@@ -67,7 +68,7 @@ export default class Dida365DocumentService implements DocumentService {
   };
 
   getUserInfo = async () => {
-    const response = await this.request.get<Dida365Profile>('user/profile');
+    const response = await this.request.get<Dida365Profile>('v2/user/profile');
     return {
       name: response.name,
       avatar: response.picture,
@@ -77,14 +78,15 @@ export default class Dida365DocumentService implements DocumentService {
   };
 
   getTags = async (): Promise<string[]> => {
-    const dida365CheckResponse = await this.request.get<Dida365CheckResponse>(`batch/check/0`);
-    return dida365CheckResponse.tags.map((o) => o.name);
+    const dida365CheckResponse = await this.request.get<Dida365CheckResponse>(`v3/batch/check/0`);
+    return (dida365CheckResponse.tags ?? []).map((o) => o.name);
   };
 
   getRepositories = async (): Promise<Repository[]> => {
-    const dida365CheckResponse = await this.request.get<Dida365CheckResponse>(`batch/check/0`);
+    const dida365CheckResponse = await this.request.get<Dida365CheckResponse>(`v3/batch/check/0`);
     const groupMap = new Map<string, string>();
-    if (dida365CheckResponse.projectGroups) { // 检查 projectGroups 是否存在
+    if (dida365CheckResponse.projectGroups) {
+      // 检查 projectGroups 是否存在
       dida365CheckResponse.projectGroups.forEach((group) => {
         groupMap.set(group.id, group.name);
       });
@@ -124,7 +126,7 @@ export default class Dida365DocumentService implements DocumentService {
     });
 
     const settings = await this.request.get<{ timeZone: string }>(
-      await webRequestService.changeUrl('user/preferences/settings?includeWeb=true', header)
+      await webRequestService.changeUrl('v2/user/preferences/settings?includeWeb=true', header)
     );
 
     const id = generateUuid().replace(/-/g, '').slice(0, 24);
@@ -156,7 +158,7 @@ export default class Dida365DocumentService implements DocumentService {
       delete: [],
     };
 
-    await this.request.post(await webRequestService.changeUrl('batch/task', header), {
+    await this.request.post(await webRequestService.changeUrl('v2/batch/task', header), {
       data: data,
       headers: {
         [header.name]: header.value,
