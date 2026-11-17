@@ -1,3 +1,14 @@
+## 1.43.0
+
+`2026-11-18`
+
+- Add PicGo Server image hosting with optional secret authentication
+- Support custom SiYuan API addresses and separate accounts for different servers, including built-in image hosting
+- Fix SiYuan address validation and permission requests when the protocol is omitted, preserving existing local accounts
+- Update Notion authentication, workspace data handling, and Markdown import integration
+- Fix Notion page titles, destination workspaces, timestamps, and links that opened a 404 page after saving
+- Fix dependency stylesheet builds on Windows
+
 ## 1.42.0
 
 `2025-10-21`
