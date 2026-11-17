@@ -3,7 +3,7 @@ import Form from './form';
 
 export default () => {
   return {
-    name: 'Confluence',
+    name: 'Confluence 6',
     icon: 'confluence',
     type: 'confluence',
     service: Service,
